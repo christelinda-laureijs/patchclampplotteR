@@ -1,0 +1,10 @@
+Package: patchclampplotteR
+Type: Package
+Title: Plot and Analyze Raw Patch Clamp Electrophysiology Data
+Version: 0.1.0
+Author: Christelinda Laureijs
+Maintainer: Christelinda Laureijs <cslaureijs@gmail.com>
+Description: Create publication-quality figures from whole-cell patch clamp electrophysiology data.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
