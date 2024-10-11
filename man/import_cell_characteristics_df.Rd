@@ -55,11 +55,11 @@ single cell.
 list of numeric values (using \code{stringr::str_split()}). It will also convert
 blanks and \code{NA} values to 0. This allows access to be visualized as a
 sparkline in the \code{R_a} column of the interactive summary table made with
-\code{\link[=make_interactive_summary_table]{make_interactive_summary_table()}}.
+make_interactive_summary_table().
 }
 
 \examples{
-import_cell_characteristics_df(load_ext_data("sample-cell-characteristics.csv"))
+import_cell_characteristics_df(load_ext_data("sample_cell_characteristics.csv"))
 
 }
 \seealso{

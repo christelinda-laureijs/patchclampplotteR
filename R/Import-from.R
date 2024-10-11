@@ -2,3 +2,7 @@
 
 #' @importFrom magrittr %>%
 magrittr::`%>%`
+
+
+#' @importFrom rlang .data
+rlang::.data

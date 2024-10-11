@@ -3,3 +3,4 @@
 export(import_cell_characteristics_df)
 export(load_ext_data)
 importFrom(magrittr,"%>%")
+importFrom(rlang,.data)

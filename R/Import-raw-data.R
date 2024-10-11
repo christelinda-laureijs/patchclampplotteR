@@ -42,12 +42,12 @@
 #' list of numeric values (using `stringr::str_split()`). It will also convert
 #' blanks and `NA` values to 0. This allows access to be visualized as a
 #' sparkline in the `R_a` column of the interactive summary table made with
-#' [make_interactive_summary_table()].
+#' make_interactive_summary_table().
 #'
 #' @export
 #'
 #' @examples
-#' import_cell_characteristics_df(load_ext_data("sample-cell-characteristics.csv"))
+#' import_cell_characteristics_df(load_ext_data("sample_cell_characteristics.csv"))
 #'
 #' @seealso make_interactive_summary_table() to generate an interactive table
 #'   with cell characteristics and raw data as sparklines.
