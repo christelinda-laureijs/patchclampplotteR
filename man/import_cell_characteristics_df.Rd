@@ -59,11 +59,10 @@ sparkline in the \code{R_a} column of the interactive summary table made with
 }
 
 \examples{
-import_cell_characteristics_df(filename =
-"data/sample-cell-characteristics.csv")
+import_cell_characteristics_df(load_ext_data("sample-cell-characteristics.csv"))
 
 }
 \seealso{
-\code{\link[=make_interactive_summary_table]{make_interactive_summary_table()}} to generate an interactive table
+make_interactive_summary_table() to generate an interactive table
 with cell characteristics and raw data as sparklines.
 }

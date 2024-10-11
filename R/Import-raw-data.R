@@ -47,18 +47,21 @@
 #' @export
 #'
 #' @examples
-#' import_cell_characteristics_df(filename =
-#' "data/sample-cell-characteristics.csv")
+#' import_cell_characteristics_df(load_ext_data("sample-cell-characteristics.csv"))
 #'
-#' @seealso [make_interactive_summary_table()] to generate an interactive table
+#' @seealso make_interactive_summary_table() to generate an interactive table
 #'   with cell characteristics and raw data as sparklines.
 
 import_cell_characteristics_df <- function(filename) {
   cell_characteristics <- utils::read.csv(here::here(filename)) %>%
     dplyr::mutate(
-      R_a = lapply(stringr::str_split(R_a, pattern = ", "), FUN = as.numeric),
-      R_a = lapply(R_a, FUN = tidyr::replace_na, replace = 0),
-      letter = factor(letter)
+      R_a = lapply(stringr::str_split(.data$R_a, pattern = ", "), FUN = as.numeric),
+      R_a = lapply(.data$R_a, FUN = tidyr::replace_na, replace = 0),
+      letter = factor(.data$letter)
     )
   assign("cell_characteristics", cell_characteristics, envir = .GlobalEnv)
 }
+
+
+# sample_cell_characteristics <- read.csv("C:/Users/cslau/OneDrive/Documents/sample-cell-characteristics.csv")
+# write.csv(sample_cell_characteristics, "inst/extdata/sample_cell_characteristics.csv")

@@ -1,7 +1,25 @@
-# Documentation for sample datasets
+#' Get path to external file
+#'
+#' Access sample files in `inst/extdata`
+#' directory.
+#'
+#' @param file Name of file. If `NULL`, the example files will be listed.
+#' @export
+#' @examples
+#' load_ext_data()
+#' load_ext_data("sample_cell_characteristics.csv")
+load_ext_data <- function(file = NULL) {
+  if (is.null(file)) {
+    dir(system.file("extdata", package = "patchclampplotteR"))
+  } else {
+    system.file("extdata", file, package = "patchclampplotteR", mustWork = TRUE)
+  }
+}
+
+
 
 #' Cell Characteristics Data
-#'
+#' @name sample_cell_characteristics
 #' @format A dataframe with 19 rows and 11 columns
 #'
 #' \describe{
@@ -16,7 +34,6 @@
 #'  \item{treatment}{A character value such as "Control" or "HNMPA".}
 #'  \item{category}{A numeric value representing the experiment type. Used to assign top-level groups for further analyses, with `treatment` as subgroups.}
 #'  \item{R_a}{A list of values for the access resistance, which would have been monitored at several timepoints throughout the recording. See the section `R_a` formatting below.}
-#'}
+#' }
 #'
-#'@export
-"sample-cell-characteristics.csv"
+#'
