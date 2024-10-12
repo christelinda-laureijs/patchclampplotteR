@@ -36,4 +36,17 @@ load_ext_data <- function(file = NULL) {
 #'  \item{R_a}{A list of values for the access resistance, which would have been monitored at several timepoints throughout the recording. See the section `R_a` formatting below.}
 #' }
 #'
+
+
+#' Sample ABF file
 #'
+#' @format data
+#' \describe{
+#'  \item{episode}{A factor representing the sweeep, such as "epi1".}
+#'  \item{time_sec}{Time in seconds.}
+#'  \item{time}{Time in ms*100.}
+#'  \item{voltage}{Numeric value representing voltage in mV.}
+#'  \item{current}{Numeric value representing current amplitude in pA.}
+#'}
+#'
+"sample_abf"
