@@ -5,7 +5,8 @@
 \alias{sample_abf}
 \title{Sample ABF file}
 \format{
-data
+An Axon Binary Format (.abf) file with 10000 observations of 5
+variables.
 \describe{
 \item{episode}{A factor representing the sweep, such as "epi1".}
 \item{time_sec}{Time in seconds.}
@@ -15,6 +16,12 @@ data
 }
 }
 \description{
-Sample ABF file
+This is an excerpt from a raw recording file exported from Clampfit as an
+.abf file. It can be read using the import_ABF_file() function, which will
+convert it into a regular dataframe for further manipulation and plotting in
+R. It is used to demonstrate the make_representative_traces() function.
+}
+\examples{
+import_ABF_file(load_ext_data("sample_abf.abf"))
 }
 \keyword{data}

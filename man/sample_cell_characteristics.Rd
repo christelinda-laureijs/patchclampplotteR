@@ -21,6 +21,24 @@ A dataframe with 19 rows and 11 columns
 }
 }
 \description{
-Sample_cell_characteristics
+This dataset provides an example of the type of cell characteristics that you
+should be recording for your data. The dataset contains columns for the animal
+number, age, sex, the synapses being recorded from, and treatments applied.
+There is also a column for access, which is stored as a list.
+
+The most important column is \code{letter}. This is a unique identifier that
+you will assign to each recording. The \code{letter} column will enable you to
+link all information relevant to the recording (evoked current data,
+spontaneous current data, animal data like age, sex, etc.) from different
+files.
+
+The information in your cell_characteristics dataset will be merged with raw
+recording data in functions like make_normalized_EPSC_data(). This will enable
+you to analyze relationships between properties like age and current
+amplitude.
+}
+\examples{
+utils::read.csv(load_ext_data("sample_cell_characteristics.csv"))
+
 }
 \keyword{data}

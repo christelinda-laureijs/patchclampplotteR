@@ -18,6 +18,24 @@ load_ext_data <- function(file = NULL) {
 
 #' Sample_cell_characteristics
 #'
+#' @description
+#'  This dataset provides an example of the type of cell characteristics that you
+#'should be recording for your data. The dataset contains columns for the animal
+#'number, age, sex, the synapses being recorded from, and treatments applied.
+#'There is also a column for access, which is stored as a list.
+#'
+#'The most important column is \code{letter}. This is a unique identifier that
+#'you will assign to each recording. The \code{letter} column will enable you to
+#'link all information relevant to the recording (evoked current data,
+#'spontaneous current data, animal data like age, sex, etc.) from different
+#'files.
+#'
+#'The information in your cell_characteristics dataset will be merged with raw
+#'recording data in functions like make_normalized_EPSC_data(). This will enable
+#'you to analyze relationships between properties like age and current
+#'amplitude.
+#'
+#'
 #' @name sample_cell_characteristics
 #' @docType data
 #' @format A dataframe with 19 rows and 11 columns
@@ -35,12 +53,22 @@ load_ext_data <- function(file = NULL) {
 #'  \item{R_a}{A list of values for the access resistance, which would have been monitored at several timepoints throughout the recording. See the section `R_a` formatting below.}
 #' }
 #' @keywords data
+#' @examples
+#' utils::read.csv(load_ext_data("sample_cell_characteristics.csv"))
+#'
 NULL
 
 #' Sample ABF file
+#'
+#' This is an excerpt from a raw recording file exported from Clampfit as an
+#' .abf file. It can be read using the import_ABF_file() function, which will
+#' convert it into a regular dataframe for further manipulation and plotting in
+#' R. It is used to demonstrate the make_representative_traces() function.
+#'
 #' @name sample_abf
 #' @docType data
-#' @format data
+#' @format An Axon Binary Format (.abf) file with 10000 observations of 5
+#' variables.
 #' \describe{
 #'  \item{episode}{A factor representing the sweep, such as "epi1".}
 #'  \item{time_sec}{Time in seconds.}
@@ -49,5 +77,5 @@ NULL
 #'  \item{current}{Numeric value representing current amplitude in pA.}
 #'}
 #' @keywords data
-#'
+#' @examples import_ABF_file(load_ext_data("sample_abf.abf"))
 NULL
