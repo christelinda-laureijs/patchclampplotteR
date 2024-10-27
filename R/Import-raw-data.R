@@ -75,8 +75,8 @@ import_cell_characteristics_df <- function(filename) {
 # sample_cell_characteristics <- read.csv("C:/Users/cslau/OneDrive/Documents/sample-cell-characteristics.csv")
 # write.csv(sample_cell_characteristics, "inst/extdata/sample_cell_characteristics.csv")
 
-# sample_eEPSC_data <- read.csv("C:/Users/cslau/OneDrive/Desktop/Masters-Work/crosby-lab-code/Data/Sample-eEPSC-data.csv")
-# write.csv(sample_eEPSC_data, "inst/extdata/sample_eEPSC_data.csv")
+sample_eEPSC_data <- read.csv("C:/Users/cslau/OneDrive/Desktop/Masters-Work/crosby-lab-code/Data/Sample-eEPSC-data.csv")
+write.csv(sample_eEPSC_data, "inst/extdata/sample_eEPSC_data.csv", row.names = FALSE)
 
 
 #' Normalize raw current data
