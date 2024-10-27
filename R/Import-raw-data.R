@@ -58,8 +58,7 @@ import_cell_characteristics_df <- function(filename) {
       R_a = lapply(stringr::str_split(.data$R_a, pattern = ", "), FUN = as.numeric),
       R_a = lapply(.data$R_a, FUN = tidyr::replace_na, replace = 0),
       letter = factor(.data$letter)
-    ) %>%
-    invisible()
+    )
 }
 
 
