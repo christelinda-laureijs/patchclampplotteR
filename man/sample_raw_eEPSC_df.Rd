@@ -3,7 +3,7 @@
 \docType{data}
 \name{sample_raw_eEPSC_df}
 \alias{sample_raw_eEPSC_df}
-\title{sample_raw_eEPSC_df}
+\title{Sample raw eEPSC data}
 \format{
 An .rda file containing 5680 objects of 20 variables.
 \describe{

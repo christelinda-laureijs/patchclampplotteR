@@ -1,4 +1,4 @@
-#' Sample_cell_characteristics
+#' Sample cell characteristics
 #'
 #' @description
 #'This dataset provides an example of the type of cell characteristics that you
@@ -76,7 +76,7 @@ NULL
 
 
 
-#' sample_raw_eEPSC_df
+#' Sample raw eEPSC data
 #'
 #' This is an example of the raw eEPSC data produced using
 #' [make_normalized_EPSC_data()]. It is useful for demonstrating functions that
@@ -136,4 +136,31 @@ NULL
 #' @keywords data
 #'
 #' @seealso [make_normalized_EPSC_data()] and [make_pruned_EPSC_data()]
+NULL
+
+
+#' Sample treatment colour theme
+#'
+#' This is an example of the dataframe used to specify a colour theme for each
+#' treatment. It is used to create a consistent colour scheme across all plots
+#' produced with this package.
+#'
+#' @name sample_treatment_names_and_colours
+#' @docType data
+#' @format An .rda file containing 4 objects of 4 variables
+#' \describe{
+#'  \itemize{
+#'  \item `treatment` A character value specifying the treatment applied (e.g.
+#'  "Control", "HNMPA").
+#'  \item `display_names` A character value with the same treatment names as in
+#'  `treatment` except you would replace underscores with spaces and add line
+#'  breaks if needed. This is to create more attractive, human-readable axis
+#'  labels and table values.
+#'  \item `colours` A character value with hex colour values.
+#'  \item `very_pale_colours` A character value with hex colour values. These
+#'  are all lighter than the colours in `colours` and they are used to create
+#'  contrast in summary plots with both sexes.
+#'}
+#'}
+#' @keywords data
 NULL

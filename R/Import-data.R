@@ -89,6 +89,7 @@ import_cell_characteristics_df <- function(filename) {
     )
 }
 
+
 #' Import raw .abf files as a dataframe
 #'
 #' `import_ABF_file()` is a wrapper around `abftools::abf2_load()` and
@@ -115,7 +116,41 @@ import_ABF_file <-
   }
 
 
+# sample_cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
+# usethis::use_data(sample_cell_characteristics)
 
+# sample_treatment_names_and_colours <- data.frame(
+#   treatment = c(
+#     "Control",
+#     "HNMPA",
+#     "PPP",
+#     "PPP_and_HNMPA"
+#   ),
+#   display_names = c(
+#     "Control",
+#     "HNMPA",
+#     "PPP",
+#     "PPP\n&\nHNMPA"
+#   ),
+#   colours = c(
+#     "#6600cc",
+#     "#e86c00",
+#     "#0093fb",
+#     "#411900"
+#   ),
+#   very_pale_colours = c(
+#     "#d6b8f5",
+#     "#ffc38f",
+#     "#8fd0ff",
+#     "#bf9b84"
+#   )
+# )
+#
+
+#usethis::use_data(sample_treatment_names_and_colours)
+
+
+# write.csv(sample_treatment_names_and_colours, "inst/extdata/sample_treatment_names_and_colours.csv", row.names = FALSE)
 # sample_cell_characteristics <- read.csv("C:/Users/cslau/OneDrive/Documents/sample-cell-characteristics.csv")
 # write.csv(sample_cell_characteristics, "inst/extdata/sample_cell_characteristics.csv", row.names = FALSE)
 #
