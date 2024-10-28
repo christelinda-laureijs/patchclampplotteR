@@ -69,7 +69,7 @@ make_interactive_summary_table().
 }
 
 \examples{
-import_cell_characteristics_df(load_ext_data("sample_cell_characteristics.csv"))
+import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
 
 }
 \seealso{

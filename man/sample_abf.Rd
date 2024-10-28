@@ -22,6 +22,6 @@ convert it into a regular dataframe for further manipulation and plotting in
 R. It is used to demonstrate the \code{\link[=make_representative_sp_trace]{make_representative_sp_trace()}} function.
 }
 \examples{
-import_ABF_file(load_ext_data("sample_abf.abf"))
+import_ABF_file(import_ext_data("sample_abf.abf"))
 }
 \keyword{data}

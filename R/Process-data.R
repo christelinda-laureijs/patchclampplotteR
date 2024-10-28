@@ -1,10 +1,11 @@
 #' Import and normalize raw current data
 #'
 #' `make_normalized_EPSC_df()` creates a dataframe of evoked or spontaneous
-#' current data from a raw .csv file. The function will create a new column containing the evoked or spontaneous current amplitudes normalized relative
+#' current data from a raw .csv file. The function will create a new column
+#' containing the evoked or spontaneous current amplitudes normalized relative
 #' to the mean current amplitude during the baseline period. For evoked current
-#' data, the function also adds a column for the paired pulse ratio (`PPR = P2/P1`,
-#' where `P2` is the amplitude of the second evoked current).
+#' data, the function also adds a column for the paired pulse ratio (`PPR =
+#' P2/P1`, where `P2` is the amplitude of the second evoked current).
 #'
 #' @param filename A filepath to a .csv file. See add_new_cells() for the
 #'   function that will merge raw data (a .csv with 4 columns: `letter`, `ID`,
@@ -49,12 +50,13 @@
 #'  \item `baseline_mean` A numeric value representing the mean evoked current
 #'  amplitude during the baseline period. There is a different baseline_mean for
 #'  each letter.
-#'  \item `P1_transformed` (for evoked currents only) A numeric value representing the first evoked current
+#'  \item `P1_transformed` (for evoked currents only) A numeric value
+#'  representing the first evoked current
 #'  amplitude (pA) normalized relative to the mean amplitude during the
 #'  recording's baseline.
-#'  \item `P2_transformed` (for evoked currents only) A numeric value representing the second evoked
-#'  current amplitude (pA) normalized relative to the mean amplitude during the
-#'  recording's baseline.
+#'  \item `P2_transformed` (for evoked currents only) A numeric value
+#'  representing the second evoked current amplitude (pA) normalized relative to
+#'  the mean amplitude during the recording's baseline.
 #'  \item `amplitude_transformed` (for spontaneous currents only) A numeric
 #'  value representing the spontaneous current amplitude (pA) normalized
 #'  relative to the mean amplitude during the recording's baseline.
@@ -89,7 +91,9 @@
 #'
 #' **Evoked current data**:
 #'
-#' If the data are evoked currents (`current_type == "eEPSC"`), the data must contain the basic columns mentioned in **Required basic columns** plus these columns:
+#' If the data are evoked currents (`current_type == "eEPSC"`), the data must
+#' contain the basic columns mentioned in **Required basic columns** plus these
+#' columns:
 #'
 #' \itemize{
 #'  \item `P1` A numeric value representing the
@@ -100,7 +104,9 @@
 #'
 #' **Spontaneous current data:**
 #'
-#' If the data are spontaneous currents (`current_type == "sEPSC"`), the data must contain the basic columns mentioned in **Required basic columns** plus these columns:
+#' If the data are spontaneous currents (`current_type == "sEPSC"`), the data
+#' must contain the basic columns mentioned in **Required basic columns** plus
+#' these columns:
 #'\itemize{
 #'  \item `recording_num` A numeric value representing the recording number.
 #'  This was incorporated before we switched to concatenating all recordings
@@ -303,13 +309,20 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #' equivalent to GraphPad Prism's "prune rows" function to reduce data to
 #' summary values for every n rows.
 #'
-#' @param data A `data.frame` object generated using [make_normalized_EPSC_data()].
+#' @param data A `data.frame` object generated using
+#'   [make_normalized_EPSC_data()].
 #' It must contain the columns outlined in the Required columns section below.
 #' @inheritParams make_normalized_EPSC_data
-#' @param interval_length Length of each interval (in minutes). Used to divide the dataset into broad ranges for statistical analysis. Defaults to 1 for one summary point per minute.
+#' @param interval_length Length of each interval (in minutes). Used to divide
+#'   the dataset into broad ranges for statistical analysis. Defaults to 1 for
+#'   one summary point per minute.
 #'
 #'
-#' @returns A list with 3 named elements. These elements are dataframes that can be viewed and used for further analyses in R. I highly recommend assigning the list to an object named something like `pruned_eEPSC_df` to make it easy to reference the dataframes with logical names (e.g. `pruned_eEPSC_df$all_cells`). The dataframes are:
+#' @returns A list with 3 named elements. These elements are dataframes that can
+#'   be viewed and used for further analyses in R. I highly recommend assigning
+#'   the list to an object named something like `pruned_eEPSC_df` to make it
+#'   easy to reference the dataframes with logical names (e.g.
+#'   `pruned_eEPSC_df$all_cells`). The dataframes are:
 #'\itemize{
 #'  \item `individual_cells` A dataframe containing current data for each
 #'  individual cell, but the data are reduced to a summary  point per per minute
@@ -461,7 +474,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         category = unique(.data$category),
         interval = unique(.data$interval),
         synapses = unique(.data$synapses),
-        time = dplyr::last(.data$time) # Time value at the end of the interval; used for plots
+        time = dplyr::last(.data$time) # Time at interval end; used for plots
       ) %>%
       dplyr::group_by(.data$letter) %>%
       # Obtain normalized frequency
@@ -579,16 +592,26 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #' (e.g. 30 minutes) into evenly-spaced intervals (e.g. 5 minutes). It will
 #' generate summary data like the mean current amplitude for each interval. This
 #' can be useful for inserting into statistical models to compare effect sizes
-#' across broad stretches of time. The interval length would have been previously specified in [make_normalized_EPSC_data()] using the `interval_length` argument.
+#' across broad stretches of time. The interval length would have been
+#' previously specified in [make_normalized_EPSC_data()] using the
+#' `interval_length` argument.
 #'
 #' @inheritParams make_pruned_EPSC_data
-#' @inheritSection make_pruned_EPSC_data Required columns
-#' @returns A dataframe with summary data such as the mean current amplitude, coefficient of variation, standard deviation, standard error, variance, variance-to-mean ratio, and inverse coefficient of variation squared for each interval.
+#'
+#' @inheritSection make_normalized_EPSC_data Required basic columns
+#' @inheritSection make_pruned_EPSC_data Required evoked currents columns
+#' @inheritSection make_pruned_EPSC_data Required spontaneous currents columns
+#' @returns A dataframe with summary data such as the mean current amplitude,
+#'   coefficient of variation, standard deviation, standard error, variance,
+#'   variance-to-mean ratio, and inverse coefficient of variation squared for
+#'   each interval.
 #'
 #' @export
 #' @examples
 #'
-#' make_summary_EPSC_data(data = sample_raw_eEPSC_df, current_type = "eEPSC")
+#' make_summary_EPSC_data(
+#'   data = sample_raw_eEPSC_df,
+#'   current_type = "eEPSC")
 #'
 make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
                                    current_type = "eEPSC",
@@ -666,4 +689,5 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
     ))
   }
 
+  return(summary_df)
 }
