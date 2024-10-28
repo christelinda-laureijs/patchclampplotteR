@@ -5,7 +5,7 @@
 \title{Prune and summarize current data per minute}
 \usage{
 make_pruned_EPSC_data(
-  data = raw_eEPSC_df,
+  data = patchclampplotteR::sample_raw_eEPSC_df,
   current_type = "eEPSC",
   min_time_value = 0,
   max_time_value = 25,
@@ -37,25 +37,23 @@ frequency stimulation. Defaults to 5.}
 resulting object should be saved as an RDS file in the raw data folder.}
 }
 \value{
-Three dataframes that can be viewed and used for further analyses in R. These are:
+A list with 3 named elements. These elements are dataframes that can be viewed and used for further analyses in R. I highly recommend assigning the list to an object named something like \code{pruned_eEPSC_df} to make it easy to reference the dataframes with logical names (e.g. \code{pruned_eEPSC_df$all_cells}). The dataframes are:
 \itemize{
-\item \code{pruned_eEPSC_df_individual_cells}/\code{pruned_sEPSC_df_individual_cells}
-A dataframe containing current data for each individual cell, but the data
-are reduced to a summary  point per per minute (or another value if a
-different \code{interval_length} is set). #'  New columns include mean amplitude
-(\code{mean_P1} in pA), standard deviation (\code{sd_P1}), standard error (\code{se}),
-coefficient of variation (\code{cv}) and, inverse coefficient of variation
-squared (\code{cv_inverse_square}).
-\item \code{pruned_eEPSC_df_all_cells}/\code{pruned_sEPSC_df_all_cells} A dataframe
-consisting of data grouped per __
-\item \code{pruned_eEPSC_df_for_table}/\code{pruned_sEPSC_df_for_table} A dataframe
-containing two columns: letter and \code{P1_transformed} (for \code{eEPSC}) or
-\code{spont_amplitude_transformed} (for \code{sEPSC}). The current data
-(\verb{P1_transformed``spont_amplitude_transformed}) is collapsed into a single
-row for each letter, with the current data for each letter stored as a list.
-This is required to create sparklines of current amplitude over time within
-the cell summary table. See \code{\link[=make_cell_summary_df]{make_cell_summary_df()}} and
-\code{\link[=make_interactive_summary_table]{make_interactive_summary_table()}}.
+\item \code{individual_cells} A dataframe containing current data for each
+individual cell, but the data are reduced to a summary  point per per minute
+(or another value if a different \code{interval_length} is set). New columns
+include mean amplitude (\code{mean_P1} in pA), standard deviation (\code{sd_P1}),
+standard error (\code{se}), coefficient of variation (\code{cv}) and, inverse
+coefficient of variation squared (\code{cv_inverse_square}).
+\item \code{all_cells} A dataframe consisting of all data within a single
+treatment grouped and summarized per minute.
+\item \code{for_table} A dataframe containing two columns: letter and
+\code{P1_transformed} (for \code{eEPSC}) or \code{spont_amplitude_transformed} (for
+\code{sEPSC}). The current data (\verb{P1_transformed``spont_amplitude_transformed})
+is collapsed into a single row for each letter, with the current data for
+each letter stored as a list. This is required to create sparklines of
+current amplitude over time within the cell summary table. See
+\code{\link[=make_cell_summary_df]{make_cell_summary_df()}} and \code{\link[=make_interactive_summary_table]{make_interactive_summary_table()}}.
 }
 }
 \description{
@@ -73,7 +71,7 @@ columns:
 
 \itemize{
 \item \code{PPR} A numeric value that represents the paired pulse ratio (PPR) of
-the evoked currents, generated using \code{dplyr::mutate(PPR = P2/P1)} in
+the evoked currents, generated in
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}
 \item \code{interval} A character value indicating the interval that the data
 belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
@@ -88,7 +86,7 @@ each letter. Generated automatically in \code{\link[=make_normalized_EPSC_data]{
 amplitude (pA) normalized relative to the mean amplitude during the
 recording's baseline. Generated automatically in
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
-\item \code{P2-transformed} A numeric value representing the second evoked
+\item \code{P2_transformed} A numeric value representing the second evoked
 current amplitude (pA) normalized relative to the mean amplitude during the
 recording's baseline. Generated automatically in
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
@@ -148,7 +146,7 @@ example, use \verb{3.1.1} for animal #3, slice #1, cell #1.
 
 \strong{Evoked current data}:
 
-If the data are evoked currents (current_type == "eEPSC"), the data must contain the basic columns mentioned in \strong{Required basic columns} plus these columns:
+If the data are evoked currents (\code{current_type == "eEPSC"}), the data must contain the basic columns mentioned in \strong{Required basic columns} plus these columns:
 
 \itemize{
 \item \code{P1} A numeric value representing the
@@ -159,7 +157,7 @@ amplitude of the second evoked current in pA.
 
 \strong{Spontaneous current data:}
 
-If the data are spontaneous currents (current_type == "sEPSC"), the data must contain the basic columns mentioned in \strong{Required basic columns} plus these columns:
+If the data are spontaneous currents (\code{current_type == "sEPSC"}), the data must contain the basic columns mentioned in \strong{Required basic columns} plus these columns:
 \itemize{
 \item \code{recording_num} A numeric value representing the recording number.
 This was incorporated before we switched to concatenating all recordings
@@ -180,7 +178,7 @@ current in pA.
 }
 
 \examples{
-make_pruned_EPSC_data(data = raw_eEPSC_df,
+make_pruned_EPSC_data(data = sample_raw_eEPSC_df,
   current_type = "eEPSC",
   min_time_value = 0,
   max_time_value = 25,

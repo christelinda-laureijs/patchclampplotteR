@@ -70,7 +70,7 @@ each letter.
 \item \code{P1_transformed} (for evoked currents only) A numeric value representing the first evoked current
 amplitude (pA) normalized relative to the mean amplitude during the
 recording's baseline.
-\item \code{P2-transformed} (for evoked currents only) A numeric value representing the second evoked
+\item \code{P2_transformed} (for evoked currents only) A numeric value representing the second evoked
 current amplitude (pA) normalized relative to the mean amplitude during the
 recording's baseline.
 \item \code{amplitude_transformed} (for spontaneous currents only) A numeric
@@ -80,8 +80,7 @@ relative to the mean amplitude during the recording's baseline.
 }
 \description{
 \code{make_normalized_EPSC_df()} creates a dataframe of evoked or spontaneous
-current data from a raw .csv file. The function will create a new column
-containing the evoked or spontaneous current amplitudes normalized relative
+current data from a raw .csv file. The function will create a new column containing the evoked or spontaneous current amplitudes normalized relative
 to the mean current amplitude during the baseline period. For evoked current
 data, the function also adds a column for the paired pulse ratio (\code{PPR = P2/P1},
 where \code{P2} is the amplitude of the second evoked current).
@@ -116,7 +115,7 @@ example, use \verb{3.1.1} for animal #3, slice #1, cell #1.
 
 \strong{Evoked current data}:
 
-If the data are evoked currents (current_type == "eEPSC"), the data must contain the basic columns mentioned in \strong{Required basic columns} plus these columns:
+If the data are evoked currents (\code{current_type == "eEPSC"}), the data must contain the basic columns mentioned in \strong{Required basic columns} plus these columns:
 
 \itemize{
 \item \code{P1} A numeric value representing the
@@ -127,7 +126,7 @@ amplitude of the second evoked current in pA.
 
 \strong{Spontaneous current data:}
 
-If the data are spontaneous currents (current_type == "sEPSC"), the data must contain the basic columns mentioned in \strong{Required basic columns} plus these columns:
+If the data are spontaneous currents (\code{current_type == "sEPSC"}), the data must contain the basic columns mentioned in \strong{Required basic columns} plus these columns:
 \itemize{
 \item \code{recording_num} A numeric value representing the recording number.
 This was incorporated before we switched to concatenating all recordings

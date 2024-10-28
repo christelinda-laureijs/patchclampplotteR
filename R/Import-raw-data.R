@@ -1,3 +1,21 @@
+#' Get path to external file
+#'
+#' Access sample files in `inst/extdata`
+#' directory.
+#'
+#' @param file Name of file. If `NULL`, the example files will be listed.
+#' @export
+#' @examples
+#' load_ext_data()
+#' load_ext_data("sample_cell_characteristics.csv")
+load_ext_data <- function(file = NULL) {
+  if (is.null(file)) {
+    dir(system.file("extdata", package = "patchclampplotteR"))
+  } else {
+    system.file("extdata", file, package = "patchclampplotteR", mustWork = TRUE)
+  }
+}
+
 #' Import cell characteristics
 #'
 #' `import_cell_characteristics_df()` is a wrapper around `read.csv()` to import
@@ -170,7 +188,7 @@ write.csv(sample_eEPSC_data, "inst/extdata/sample_eEPSC_data.csv", row.names = F
 #'
 #' **Evoked current data**:
 #'
-#' If the data are evoked currents (current_type == "eEPSC"), the data must contain the basic columns mentioned in **Required basic columns** plus these columns:
+#' If the data are evoked currents (`current_type == "eEPSC"`), the data must contain the basic columns mentioned in **Required basic columns** plus these columns:
 #'
 #' \itemize{
 #'  \item `P1` A numeric value representing the
@@ -181,7 +199,7 @@ write.csv(sample_eEPSC_data, "inst/extdata/sample_eEPSC_data.csv", row.names = F
 #'
 #' **Spontaneous current data:**
 #'
-#' If the data are spontaneous currents (current_type == "sEPSC"), the data must contain the basic columns mentioned in **Required basic columns** plus these columns:
+#' If the data are spontaneous currents (`current_type == "sEPSC"`), the data must contain the basic columns mentioned in **Required basic columns** plus these columns:
 #'\itemize{
 #'  \item `recording_num` A numeric value representing the recording number.
 #'  This was incorporated before we switched to concatenating all recordings
@@ -226,7 +244,6 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
                                       interval_length = 5,
                                       negative_transform_currents = "yes",
                                       save_output_as_RDS = "no") {
-
   list_of_argument_names <- c(filename, current_type)
 
   if (is.null(current_type) ||
@@ -269,7 +286,12 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
   }
 
   if (max_time_value %% baseline_length != 0) {
-    stop("max_time_value is ", max_time_value, ", which is not divisible by interval_length, ", interval_length)
+    stop(
+      "max_time_value is ",
+      max_time_value,
+      ", which is not divisible by interval_length, ",
+      interval_length
+    )
   }
 
   raw_df <- utils::read.csv(here::here(filename), header = TRUE) %>%
@@ -288,23 +310,35 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 
   if (current_type == "sEPSC") {
     raw_df <- raw_df %>%
-      dplyr::rename(ID = .data$id, X = .data$x, Y = .data$y)
+      dplyr::rename(ID = .data$id,
+                    X = .data$x,
+                    Y = .data$y)
   }
 
   raw_df <- raw_df %>%
-    dplyr::mutate(dplyr::across(c(
-      .data$ID, .data$letter, .data$category, .data$treatment, .data$sex, .data$synapses
-    ), as.factor)) %>%
+    dplyr::mutate(dplyr::across(
+      c(
+        .data$ID,
+        .data$letter,
+        .data$category,
+        .data$treatment,
+        .data$sex,
+        .data$synapses
+      ),
+      as.factor
+    )) %>%
     dplyr::filter(.data$time <= max_time_value)
 
 
   if (current_type == "eEPSC") {
     if (negative_transform_currents == "yes") {
       raw_df <- raw_df %>%
-        dplyr::mutate(P1 = .data$P1 * -1,
-                      # Need positive current amplitude values to make plots more intuitive
-                      P2 = .data$P2 * -1,
-                      PPR = .data$P2 / .data$P1)
+        dplyr::mutate(
+          P1 = .data$P1 * -1,
+          # Need positive current amplitude values to make plots more intuitive
+          P2 = .data$P2 * -1,
+          PPR = .data$P2 / .data$P1
+        )
     } else {
       raw_df <- raw_df %>%
         dplyr::mutate(PPR = .data$P2 / .data$P1)
@@ -315,16 +349,17 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 
 
   time_sequence <- seq(from = min_time_value, to = max_time_value, by = interval_length)
-  time_labels <- utils::head(paste0("t", time_sequence, "to", time_sequence + interval_length),
-                      -1)
+  time_labels <- utils::head(paste0("t", time_sequence, "to", time_sequence + interval_length),-1)
 
   raw_df <- raw_df %>%
-    dplyr::mutate(interval = cut(
-      .data$time,
-      breaks = time_sequence,
-      include.lowest = TRUE,
-      labels = time_labels
-    )) %>%
+    dplyr::mutate(
+      interval = cut(
+        .data$time,
+        breaks = time_sequence,
+        include.lowest = TRUE,
+        labels = time_labels
+      )
+    ) %>%
     dplyr::group_by(.data$letter)
 
   # Within each cell, normalize all of the eEPSC amplitudes
@@ -373,24 +408,24 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #' @param interval_length Length of each interval (in minutes). Used to divide the dataset into broad ranges for statistical analysis. Defaults to 1 for one summary point per minute.
 #'
 #'
-#' @returns Three dataframes that can be viewed and used for further analyses in R. These are:
-#'  * `pruned_eEPSC_df_individual_cells`/`pruned_sEPSC_df_individual_cells`
-#'  A dataframe containing current data for each individual cell, but the data
-#'  are reduced to a summary  point per per minute (or another value if a
-#'  different `interval_length` is set). New columns include mean amplitude
-#'  (`mean_P1` in pA), standard deviation (`sd_P1`), standard error (`se`),
-#'  coefficient of variation (`cv`) and, inverse coefficient of variation
-#'  squared (`cv_inverse_square`).
-#'  * `pruned_eEPSC_df_all_cells`/`pruned_sEPSC_df_all_cells` A dataframe
-#'  consisting of data grouped per __
-#'  * `pruned_eEPSC_df_for_table`/`pruned_sEPSC_df_for_table` A dataframe
-#'  containing two columns: letter and `P1_transformed` (for `eEPSC`) or
-#'  `spont_amplitude_transformed` (for `sEPSC`). The current data
-#'  (`P1_transformed``spont_amplitude_transformed`) is collapsed into a single
-#'  row for each letter, with the current data for each letter stored as a list.
-#'  This is required to create sparklines of current amplitude over time within
-#'  the cell summary table. See [make_cell_summary_df()] and
-#'  [make_interactive_summary_table()].
+#' @returns A list with 3 named elements. These elements are dataframes that can be viewed and used for further analyses in R. I highly recommend assigning the list to an object named something like `pruned_eEPSC_df` to make it easy to reference the dataframes with logical names (e.g. `pruned_eEPSC_df$all_cells`). The dataframes are:
+#'\itemize{
+#'  \item `individual_cells` A dataframe containing current data for each
+#'  individual cell, but the data are reduced to a summary  point per per minute
+#'  (or another value if a different `interval_length` is set). New columns
+#'  include mean amplitude (`mean_P1` in pA), standard deviation (`sd_P1`),
+#'  standard error (`se`), coefficient of variation (`cv`) and, inverse
+#'  coefficient of variation squared (`cv_inverse_square`).
+#'  \item `all_cells` A dataframe consisting of all data within a single
+#'  treatment grouped and summarized per minute.
+#'  \item `for_table` A dataframe containing two columns: letter and
+#'  `P1_transformed` (for `eEPSC`) or `spont_amplitude_transformed` (for
+#'  `sEPSC`). The current data (`P1_transformed``spont_amplitude_transformed`)
+#'  is collapsed into a single row for each letter, with the current data for
+#'  each letter stored as a list. This is required to create sparklines of
+#'  current amplitude over time within the cell summary table. See
+#'  [make_cell_summary_df()] and [make_interactive_summary_table()].
+#'}
 #'
 #' @inheritSection make_normalized_EPSC_data Required basic columns
 #'
@@ -444,14 +479,14 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'
 #' @export
 #' @examples
-#' make_pruned_EPSC_data(data = raw_eEPSC_df,
+#' make_pruned_EPSC_data(data = sample_raw_eEPSC_df,
 #'   current_type = "eEPSC",
 #'   min_time_value = 0,
 #'   max_time_value = 25,
 #'   baseline_length = 5,
 #'   interval_length = 1)
 
-make_pruned_EPSC_data <- function(data = raw_eEPSC_df,
+make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
                                   current_type = "eEPSC",
                                   min_time_value = 0,
                                   max_time_value = 25,
@@ -459,7 +494,8 @@ make_pruned_EPSC_data <- function(data = raw_eEPSC_df,
                                   interval_length = 1,
                                   save_output_as_RDS = "no") {
   time_sequence <- seq(from = min_time_value, to = max_time_value, by = interval_length)
-  time_labels <- utils::head(paste0("t", time_sequence, "to", time_sequence + interval_length),-1)
+  time_labels <- utils::head(paste0("t", time_sequence, "to", time_sequence + interval_length),
+                             -1)
 
   if (is.null(current_type) ||
       length(current_type) != 1L ||
@@ -481,73 +517,65 @@ make_pruned_EPSC_data <- function(data = raw_eEPSC_df,
         labels = time_labels
       )
     ) %>%
-    dplyr::group_by(.data$category, .data$letter, .data$sex, .data$treatment, .data$interval_pruned)
+    dplyr::group_by(.data$category,
+                    .data$letter,
+                    .data$sex,
+                    .data$treatment,
+                    .data$interval_pruned)
 
   if (current_type == "eEPSC") {
     pruned_df_individual_cells <- pruned_df_individual_cells %>%
-      reframe(
+      dplyr::reframe(
         mean_P1 = mean(.data$P1, na.rm = TRUE),
         # Mean amplitude per minute across all cells
-        sd_P1 = sd(.data$P1, na.rm = TRUE),
-        n = n(),
-        se = sd_P1 / sqrt(n),
-        cv = sd_P1 / mean_P1,
-        cv_inverse_square = 1 / (cv ^ 2),
+        sd_P1 = stats::sd(.data$P1, na.rm = TRUE),
+        n = dplyr::n(),
+        se = .data$sd_P1 / sqrt(.data$n),
+        cv = .data$sd_P1 / .data$mean_P1,
+        cv_inverse_square = 1 / (.data$cv ^ 2),
         letter = unique(.data$letter),
         category = unique(.data$category),
-        time = last(.data$time),
-        baseline_mean = unique(baseline_mean),
+        time = dplyr::last(.data$time),
+        baseline_mean = unique(.data$baseline_mean),
         synapses = unique(.data$synapses)
       )
 
     pruned_df_for_table <- pruned_df_individual_cells %>%
       dplyr::group_by(.data$letter) %>%
-      dplyr::summarize(P1_transformed = list(mean_P1))
+      dplyr::summarize(P1_transformed = list(.data$mean_P1))
   }
 
   if (current_type == "sEPSC") {
     pruned_df_individual_cells <- pruned_df_individual_cells %>%
-      reframe(
+      dplyr::reframe(
         mean_amplitude = mean(.data$amplitude_transformed, na.rm = TRUE),
         mean_raw_amplitude = mean(.data$amplitude, na.rm = TRUE),
-        sd_amplitude = sd(.data$amplitude_transformed, na.rm = TRUE),
-        n = n(),
+        sd_amplitude = stats::sd(.data$amplitude_transformed, na.rm = TRUE),
+        n = dplyr::n(),
         # Gets number of currents within each minute
-        frequency = n / 60,
+        frequency = .data$n / 60,
         # Frequency in Hz
-        se = sd_amplitude / sqrt(n),
+        se = .data$sd_amplitude / sqrt(.data$n),
         letter = unique(.data$letter),
         category = unique(.data$category),
-        interval = unique(interval),
+        interval = unique(.data$interval),
         synapses = unique(.data$synapses),
-        time = last(time) # Time value at the end of the interval; used for plots
+        time = dplyr::last(.data$time) # Time value at the end of the interval; used for plots
       ) %>%
       dplyr::group_by(.data$letter) %>%
       # Obtain normalized frequency
       dplyr::mutate(
-        baseline_range = (time <= baseline_length),
-        baseline_mean_frequency = sum(frequency * baseline_range) / sum(baseline_range),
-        frequency_transformed = (frequency / baseline_mean_frequency) * 100
+        baseline_range = (.data$time <= baseline_length),
+        baseline_mean_frequency = sum(.data$frequency * .data$baseline_range) / sum(.data$baseline_range),
+        frequency_transformed = (.data$frequency / .data$baseline_mean_frequency) * 100
       )
 
     pruned_df_for_table <- pruned_df_individual_cells %>%
       dplyr::group_by(.data$letter) %>%
-      dplyr::summarize(spont_amplitude_transformed = list(mean_amplitude))
+      dplyr::summarize(spont_amplitude_transformed = list(.data$mean_amplitude))
   }
 
-  assign(
-    paste0("pruned_", current_type, "_df_individual_cells"),
-    pruned_df_individual_cells,
-    envir = .GlobalEnv
-  )
-
-  assign(
-    paste0("pruned_", current_type, "_df_for_table"),
-    pruned_df_for_table,
-    envir = .GlobalEnv
-  )
-
-  if (save_RDS_files == "yes") {
+  if (save_output_as_RDS == "yes") {
     saveRDS(pruned_df_individual_cells, file = here::here(
       paste0(
         "Data/Output-Data-from-R/pruned_",
@@ -562,31 +590,40 @@ make_pruned_EPSC_data <- function(data = raw_eEPSC_df,
     pruned_df_all_cells <- data %>%
       dplyr::mutate(
         interval_pruned = cut(
-          time,
+          .data$time,
           breaks = time_sequence,
           include.lowest = TRUE,
           labels = time_labels
         )
       ) %>%
-      dplyr::group_by(.data$category, .data$letter, .data$sex, .data$treatment, interval_pruned) %>%
-      reframe(
-        mean_P1 = mean(P1_transformed, na.rm = TRUE),
-        sd_P1 = sd(P1_transformed, na.rm = TRUE),
-        n = n(),
-        se = sd_P1 / sqrt(n),
-        cv = sd_P1 / mean_P1 * 100,
+      dplyr::group_by(
+        .data$category,
+        .data$letter,
+        .data$sex,
+        .data$treatment,
+        .data$interval_pruned
+      ) %>%
+      dplyr::reframe(
+        mean_P1 = mean(.data$P1_transformed, na.rm = TRUE),
+        sd_P1 = stats::sd(.data$P1_transformed, na.rm = TRUE),
+        n = dplyr::n(),
+        se = .data$sd_P1 / sqrt(.data$n),
+        cv = .data$sd_P1 / .data$mean_P1 * 100,
         letter = unique(.data$letter),
         category = unique(.data$category),
-        time = last(time)
+        time = dplyr::last(.data$time)
       ) %>%
-      dplyr::group_by(.data$category, interval_pruned, .data$sex, .data$treatment) %>%
-      reframe(
-        mean_P1_all_cells = mean(mean_P1, na.rm = TRUE),
-        sd_P1_all_cells = sd(mean_P1, na.rm = TRUE),
-        n = n(),
-        se_P1_all_cells = sd_P1_all_cells / sqrt(n),
-        cv_P1_all_cells = sd_P1_all_cells / mean_P1_all_cells * 100,
-        time = last(time),
+      dplyr::group_by(.data$category,
+                      .data$interval_pruned,
+                      .data$sex,
+                      .data$treatment) %>%
+      dplyr::reframe(
+        mean_P1_all_cells = mean(.data$mean_P1, na.rm = TRUE),
+        sd_P1_all_cells = stats::sd(.data$mean_P1, na.rm = TRUE),
+        n = dplyr::n(),
+        se_P1_all_cells = .data$sd_P1_all_cells / sqrt(.data$n),
+        cv_P1_all_cells = .data$sd_P1_all_cells / .data$mean_P1_all_cells * 100,
+        time = dplyr::last(.data$time),
         category = unique(.data$category),
 
       )
@@ -595,29 +632,29 @@ make_pruned_EPSC_data <- function(data = raw_eEPSC_df,
   if (current_type == "sEPSC") {
     pruned_df_all_cells <- pruned_df_individual_cells %>%
       dplyr::ungroup() %>%
-      dplyr::group_by(.data$category, .data$interval_pruned, .data$sex, .data$treatment) %>%
-      reframe(
-        mean_all_amplitude = mean(mean_amplitude, na.rm = TRUE),
-        mean_all_raw_amplitude = mean(mean_raw_amplitude, na.rm = TRUE),
-        sd_all_amplitude = sd(mean_amplitude, na.rm = TRUE),
-        n = n(),
-        se_amplitude = sd_all_amplitude / sqrt(n),
-        sd_all_raw_amplitude = sd(mean_raw_amplitude, na.rm = TRUE),
-        se_raw_amplitude = sd_all_raw_amplitude / sqrt(n),
-        mean_all_frequency = mean(frequency_transformed, na.rm = TRUE),
-        sd_all_frequency = sd(frequency_transformed, na.rm = TRUE),
-        se_frequency = sd_all_frequency / sqrt(n),
-        mean_all_raw_frequency = mean(frequency, na.rm = TRUE),
-        sd_all_raw_frequency = sd(frequency, na.rm = TRUE),
-        se_raw_frequency = sd_all_raw_frequency / sqrt(n),
-        time = last(time),
-        interval = unique(interval),
+      dplyr::group_by(.data$category,
+                      .data$interval_pruned,
+                      .data$sex,
+                      .data$treatment) %>%
+      dplyr::reframe(
+        mean_all_amplitude = mean(.data$mean_amplitude, na.rm = TRUE),
+        mean_all_raw_amplitude = mean(.data$mean_raw_amplitude, na.rm = TRUE),
+        sd_all_amplitude = stats::sd(.data$mean_amplitude, na.rm = TRUE),
+        n = dplyr::n(),
+        se_amplitude = .data$sd_all_amplitude / sqrt(.data$n),
+        sd_all_raw_amplitude = stats::sd(.data$mean_raw_amplitude, na.rm = TRUE),
+        se_raw_amplitude = .data$sd_all_raw_amplitude / sqrt(.data$n),
+        mean_all_frequency = mean(.data$frequency_transformed, na.rm = TRUE),
+        sd_all_frequency = stats::sd(.data$frequency_transformed, na.rm = TRUE),
+        se_frequency = .data$sd_all_frequency / sqrt(.data$n),
+        mean_all_raw_frequency = mean(.data$frequency, na.rm = TRUE),
+        sd_all_raw_frequency = stats::sd(.data$frequency, na.rm = TRUE),
+        se_raw_frequency = .data$sd_all_raw_frequency / sqrt(.data$n),
+        time = dplyr::last(.data$time),
+        interval = unique(.data$interval),
         category = unique(.data$category)
       )
   }
-  assign(paste0("pruned_", current_type, "_df_all_cells"),
-         pruned_df_all_cells,
-         envir = .GlobalEnv)
 
   if (save_output_as_RDS == "yes") {
     saveRDS(pruned_df_all_cells, file = here::here(
@@ -628,4 +665,8 @@ make_pruned_EPSC_data <- function(data = raw_eEPSC_df,
       )
     ))
   }
+
+  return(list(individual_cells = pruned_df_individual_cells,
+              for_table = pruned_df_for_table,
+              all_cells = pruned_df_all_cells))
 }
