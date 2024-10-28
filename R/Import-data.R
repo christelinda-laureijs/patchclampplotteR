@@ -149,6 +149,8 @@ import_ABF_file <-
 
 #usethis::use_data(sample_treatment_names_and_colours)
 
+# sample_summary_eEPSC_df <- make_summary_EPSC_data()
+# usethis::use_data(sample_summary_eEPSC_df)
 
 # write.csv(sample_treatment_names_and_colours, "inst/extdata/sample_treatment_names_and_colours.csv", row.names = FALSE)
 # sample_cell_characteristics <- read.csv("C:/Users/cslau/OneDrive/Documents/sample-cell-characteristics.csv")
@@ -156,3 +158,39 @@ import_ABF_file <-
 #
 # sample_eEPSC_data <- read.csv("C:/Users/cslau/OneDrive/Desktop/Masters-Work/crosby-lab-code/Data/Sample-eEPSC-data.csv")
 # write.csv(sample_eEPSC_data, "inst/extdata/sample_eEPSC_data.csv", row.names = FALSE)
+
+
+#' Import theme
+#'
+#' @param filename A filepath to a .csv file. Must contain two columns:
+#'
+#' \itemize{
+#' \item `option` The name of the parameter. Required parameters include `line_col`, `baseline_colour`, etc.
+#' \item `value` The value of the parameter
+#' }
+#'
+#' @return
+#' A dataframe with one column and row names.
+#' @export
+#'
+#' @examples
+#'
+#'import_theme_colours(import_ext_data("sample_theme_options.csv"))
+#'
+#'
+import_theme_colours <- function(filename) {
+  theme_options <- utils::read.csv(here::here(filename)) %>%
+    tibble::column_to_rownames(var = "option")
+}
+# theme_options <- read.csv("C:/Users/cslau/OneDrive/Desktop/Masters-Work/crosby-lab-code/Templates/Theme-options.csv")
+# sample_theme_options <- theme_options
+# usethis::use_data(sample_theme_options)
+#write.csv(theme_options, "inst/extdata/sample_theme_options.csv", row.names = FALSE)
+#
+# theme_options <- tibble::column_to_rownames(theme_options, "option")
+# theme_options["line_col", "value"]
+
+# ggplot2::ggplot(cars, ggplot2::aes(x = dist, y = speed)) +
+#   ggplot2::geom_point(col = theme_options["line_col", "value"])
+
+# TODO Document theme options dataset --------

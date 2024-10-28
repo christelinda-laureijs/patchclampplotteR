@@ -15,11 +15,13 @@ Depends:
 Imports: 
     abftools,
     dplyr,
+    ggforce,
     ggplot2,
     here,
     magrittr,
     rlang,
     stringr,
+    tibble,
     tidyr,
     utils
 Suggests: 
