@@ -1,27 +1,4 @@
-#' Import raw .abf files as a dataframe
-#'
-#' `import_ABF_file()` is a wrapper around `abftools::abf2_load()` and
-#' `abftools::MeltAbf()`. It converts the array from `abf2_load()` into a
-#' dataframe, and it also converts time to minutes
-#'
-#' @param file_name Filepath to an .abf file (e.g. "Data/23711004.abf")
-#'
-#' @returns A dataframe
-#'
-#' @export
-#'
-#' @examples
-#' import_ABF_file(load_ext_data("sample_abf.abf"))
 
-import_ABF_file <-
-  function(file_name) {
-    abftools::abf2_load(here::here(file_name)) %>%
-      abftools::MeltAbf() %>%
-      dplyr::rename("current" = .data$chan1, "voltage" = .data$chan2) %>%
-      dplyr::rename_with(tolower) %>%
-      dplyr::mutate(time_sec = .data$time / 10000) %>%
-      invisible()
-  }
 
 
 

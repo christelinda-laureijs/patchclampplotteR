@@ -36,7 +36,7 @@
 #' }
 #' @keywords data
 #' @examples
-#' utils::read.csv(load_ext_data("sample_cell_characteristics.csv"))
+#' utils::read.csv(import_ext_data("sample_cell_characteristics.csv"))
 #'
 #' @seealso [import_cell_characteristics_df()] and [make_normalized_EPSC_data()]
 #'
@@ -61,7 +61,7 @@ NULL
 #'  \item{current}{Numeric value representing current amplitude in pA.}
 #'}
 #' @keywords data
-#' @examples import_ABF_file(load_ext_data("sample_abf.abf"))
+#' @examples import_ABF_file(import_ext_data("sample_abf.abf"))
 NULL
 
 
