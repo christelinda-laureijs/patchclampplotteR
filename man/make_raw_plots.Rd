@@ -74,7 +74,7 @@ one recording.
 }
 \description{
 This function enables you to create a scatterplot of raw evoked (or
-spontaneous) current frequency over time in minutes. The plot title will be
+spontaneous) current amplitude over time in minutes. The plot title will be
 pulled from the recording ID (the \code{letter} column in the raw data), and the
 subtitle will include the sex and treatment. The plot will also contain a
 horizontal line annotation displayed over the time region where a hormone was

@@ -189,12 +189,14 @@ make_baseline_comparison_plot <- function(data,
       ),
       treatment = factor(.data$treatment, levels = treatment_info$display_names)
     ) %>%
-    ggplot2::ggplot(ggplot2::aes(
-      x = .data$treatment,
-      y = .data[[y_var]],
-      color = .data$treatment,
-      shape = .data$sex
-    )) +
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x = .data$treatment,
+        y = .data[[y_var]],
+        color = .data$treatment,
+        shape = .data$sex
+      )
+    ) +
     ggplot2::labs(x = NULL, y = y_title) +
     ggforce::geom_sina(
       bw = 12,
@@ -212,10 +214,12 @@ make_baseline_comparison_plot <- function(data,
     ggplot2::scale_color_manual(breaks = treatment_info$display_names,
                                 values = treatment_info$colours) +
     ggplot2::scale_shape_manual(values = c(17, 16)) +
-    ggplot2::theme(legend.position = "right",
-                   legend.background = ggplot2::element_rect(fill = NA),
+    ggplot2::theme(
+      legend.position = "right",
+      legend.background = ggplot2::element_rect(fill = NA),
     ) +
-    ggplot2::guides(color = "none", shape = ggplot2::guide_legend(reverse = TRUE))
+    ggplot2::guides(color = "none",
+                    shape = ggplot2::guide_legend(reverse = TRUE))
 
   if (large_axis_text == "yes") {
     baseline_comparison_plot <- baseline_comparison_plot +
@@ -250,7 +254,7 @@ make_baseline_comparison_plot <- function(data,
 #' Make raw current plots
 #'
 #' This function enables you to create a scatterplot of raw evoked (or
-#' spontaneous) current frequency over time in minutes. The plot title will be
+#' spontaneous) current amplitude over time in minutes. The plot title will be
 #' pulled from the recording ID (the `letter` column in the raw data), and the
 #' subtitle will include the sex and treatment. The plot will also contain a
 #' horizontal line annotation displayed over the time region where a hormone was
@@ -341,7 +345,9 @@ make_raw_plots <-
     if (is.null(hormone_added) ||
         length(hormone_added) != 1L ||
         !is.character(hormone_added)) {
-      stop("\"hormone_added\" must be a character. Use \"HFS\" for high-frequency stimulation or \"Insulin\", \"CCK\", etc. for any hormones")
+      stop(
+        "\"hormone_added\" must be a character. Use \"HFS\" for high-frequency stimulation or \"Insulin\", \"CCK\", etc. for any hormones"
+      )
     }
 
     if (!save_plot_png %in% c("yes", "no")) {
@@ -357,11 +363,10 @@ make_raw_plots <-
       )
     }
 
-    if (!is.null(hormone_end_time) & !is.numeric(hormone_end_time)) {
-      stop(
-        "\"hormone_end_time\" must be numeric
-        (e.g. 25 for a hormone ending at 25 minutes)."
-      )
+    if (!is.null(hormone_end_time) &
+        !is.numeric(hormone_end_time)) {
+      stop("\"hormone_end_time\" must be numeric
+        (e.g. 25 for a hormone ending at 25 minutes).")
     }
 
     df <- data %>%
@@ -541,7 +546,11 @@ make_raw_plots <-
           ggplot2::annotate(
             geom = "segment",
             x = hormone_or_HFS_start_time,
-            xend = if (is.null(hormone_end_time)) {xmax} else {hormone_end_time},
+            xend = if (is.null(hormone_end_time)) {
+              xmax
+            } else {
+              hormone_end_time
+            },
             y = ymax + 0.1 * ymax,
             yend = ymax + 0.1 * ymax,
             colour = theme_options["line_col", "value"],
@@ -606,6 +615,401 @@ make_raw_plots <-
   }
 
 
+#' Make a summary plot for a specific treatment
+#'
+#' This function enables you to create a scatterplot of mean evoked (or
+#' spontaneous) current amplitude over over time in minutes. The data are summarized by treatment and sex, and averaged per minute. The data are presented as mean +/- the standard error.
+#'
+#' @inheritParams make_raw_plots
+#'
+#' @return A ggplot object
+#' @export
+#'
+#' @examples
+make_summary_plot <- function(plot_category,
+                              plot_treatment,
+                              data,
+                              current_type,
+                              parameter,
+                              hormone_added,
+                              hormone_or_HFS_start_time,
+                              include_representative_trace = "yes",
+                              signif_stars = "no",
+                              large_axis_text = "no",
+                              shade_intervals = "no",
+                              theme_options,
+                              treatment_colour_theme,
+                              save_plot_png = "no") {
+  if (is.null(current_type) ||
+      length(current_type) != 1L ||
+      !current_type %in% c("eEPSC", "sEPSC")) {
+    stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+  }
+
+  if (is.null(hormone_added) ||
+      length(hormone_added) != 1L ||
+      !is.character(hormone_added)) {
+    stop("\"hormone_added\" must be a character. Use \"HFS\" for high-frequency stimulation or \"Insulin\", \"CCK\", etc. for any hormones")
+  }
+
+  if (!save_plot_png %in% c("yes", "no")) {
+    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+  }
+
+
+  if (is.null(hormone_or_HFS_start_time) ||
+      !is.numeric(hormone_or_HFS_start_time)) {
+    stop(
+      "\"hormone_or_HFS_start_time\" must be numeric (e.g. 5 for HFS or a hormone applied at five minutes into the recording)."
+    )
+  }
+
+  df <-
+    data %>% dplyr::filter(.data$category == plot_category) %>% dplyr::filter(.data$treatment == plot_treatment)
+
+  plot_colour <- treatment_colour_theme %>%
+    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::pull(.data$colours)
+
+  plot_colour_pale <- treatment_colour_theme %>%
+    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::pull(.data$very_pale_colours)
+
+  if (current_type == "eEPSC") {
+    allowed_parameters_list <- "\"amplitude\""
+
+    if (!parameter %in% c("amplitude")) {
+      stop(
+        "parameter must be ",
+        allowed_parameters_list,
+        " for current_type \"",
+        current_type,
+        "\". \nCheck parameter, current_type or data."
+      )
+    }
+
+    if (parameter == "amplitude") {
+      y_var <- "mean_P1_all_cells"
+      se_var <- "se_P1_all_cells"
+      filepath <- "Figures/Evoked-currents/Output-summary-plots"
+      file_name_ending <- ""
+
+      if (large_axis_text == "yes") {
+        y_title <- "eEPSC Amplitude\n(% Baseline)"
+      } else {
+        y_title <- "eEPSC Amplitude (% Baseline)"
+      }
+    }
+  }
+
+
+  if (current_type == "sEPSC") {
+    filepath <- "Figures/Spontaneous-currents/Output-summary-plots"
+
+    allowed_parameters_list <- "\"amplitude\", \"raw_amplitude\", \"raw_frequency\", or \"frequency\""
+
+    if (!parameter %in% c("amplitude",
+                          "raw_amplitude",
+                          "frequency",
+                          "raw_frequency")) {
+      stop(
+        "parameter must be ",
+        allowed_parameters_list,
+        " for current_type \"",
+        current_type,
+        "\". \nCheck parameter, current_type or data."
+      )
+    }
+
+
+    if (parameter == "amplitude") {
+      y_var <- "mean_all_amplitude"
+      se_var <- "se_amplitude"
+      file_name_ending <- paste0("_", parameter)
+
+      if (large_axis_text == "yes") {
+        y_title <- "sEPSC Amplitude\n(% Baseline)"
+      } else {
+        y_title <- "sEPSC Amplitude (% Baseline)"
+      }
+
+    }
+
+    if (parameter == "raw_amplitude") {
+      y_var <- "mean_all_raw_amplitude"
+      se_var <- "se_raw_amplitude"
+      file_name_ending <- paste0("_", parameter)
+
+      y_title <- "sEPSC Amplitude (pA)"
+
+    }
+
+    if (parameter == "frequency") {
+      y_var <- "mean_all_frequency"
+      se_var <- "se_frequency"
+      file_name_ending <- paste0("_", parameter)
+
+      if (large_axis_text == "yes") {
+        y_title <- "sEPSC Frequency\n(% Baseline)"
+      } else {
+        y_title <- "sEPSC Frequency (% Baseline)"
+      }
+    }
+
+    if (parameter == "raw_frequency") {
+      y_var <- "mean_all_raw_frequency"
+      se_var <- "se_frequency"
+      file_name_ending <- paste0("_", parameter)
+
+      y_title <- "sEPSC Frequency (Hz)"
+
+    }
+  }
+
+  treatment_plot <- df %>%
+    ggplot2::ggplot(ggplot2::aes(
+      x = .data$time,
+      y = .data[[y_var]],
+      ymin = .data[[y_var]] - .data[[se_var]],
+      ymax = .data[[y_var]] + .data[[se_var]]
+    ))
+
+  if (shade_intervals == "yes") {
+    treatment_plot <- treatment_plot +
+      ggplot2::geom_rect(ggplot2::aes(
+        xmin = 5,
+        xmax = 10,
+        ymin = -5,
+        ymax = y_axis_limit
+      ), fill = theme_options["rectangle_shading_colour", "value"]) +
+      ggplot2::geom_rect(ggplot2::aes(
+        xmin = 15,
+        xmax = 20,
+        ymin = -5,
+        ymax = y_axis_limit
+      ), fill = theme_options["rectangle_shading_colour", "value"])
+  }
+
+  treatment_plot <- treatment_plot +
+    ggplot2::geom_pointrange(
+      ggplot2::aes(color = .data$sex, shape = .data$sex),
+      size = if (large_axis_text == "yes") {
+        1.3
+      } else {
+        0.9
+      },
+      alpha = 1,
+      position = ggplot2::position_dodge(width = if (current_type == "eEPSC") {
+        0.3
+      } else {
+        0
+      })
+    ) +
+    ggplot2::geom_hline(yintercept = 100, linetype = "dashed") +
+    ggplot2::coord_cartesian(ylim = c(0, y_axis_limit)) +
+    ggplot2::labs(
+      x = "Time (min)",
+      y = y_title,
+      shape = "Sex",
+      color = "Sex"
+    )
+
+  if (large_axis_text == "yes") {
+    treatment_plot <- treatment_plot +
+      ggplot2::theme(
+        axis.title = ggplot2::element_text(size = 24, face = "plain"),
+        legend.title = ggplot2::element_blank(),
+        legend.position = "inside",
+        legend.position.inside = c(0.17, 0.13),
+        legend.text = ggplot2::element_text(size = 14),
+        legend.key.spacing.y = grid::unit(0.5, "cm"),
+        legend.background = ggplot2::element_rect(fill = NA)
+      )
+  }
+
+  # Nested if statements enable correct legend labels even if only one sex is present
+
+  if (is.na(df$n[df$sex == "Female"][1])) {
+    treatment_plot <- treatment_plot +
+      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"])), labels = c((paste0(
+        "Males, n = ", df$n[df$sex == "Male"][1]
+      )))) +
+      ggplot2::scale_color_manual(values = c(plot_colour), labels = c((paste0(
+        "Males, n = ", df$n[df$sex == "Male"][1]
+      ))))
+
+  } else if (is.na(df$n[df$sex == "Male"][1])) {
+    treatment_plot <- treatment_plot +
+      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"])), labels = c((paste0(
+        "Females, n = ", df$n[df$sex == "Female"][1]
+      )))) +
+      ggplot2::scale_color_manual(values = c(plot_colour_pale),
+                                  labels = c((paste0(
+                                    "Females, n = ", df$n[df$sex == "Female"][1]
+                                  ))))
+  } else {
+    treatment_plot <- treatment_plot +
+      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])),
+                                  labels = c((paste0(
+                                    "Females, n = ", df$n[df$sex == "Female"][1]
+                                  )), (paste0(
+                                    "Males, n = ", df$n[df$sex == "Male"][1]
+                                  )))) +
+      ggplot2::scale_color_manual(values = c(plot_colour_pale, plot_colour),
+                                  labels = c((paste0(
+                                    "Females, n = ", df$n[df$sex == "Female"][1]
+                                  )), (paste0(
+                                    "Males, n = ", df$n[df$sex == "Male"][1]
+                                  ))))
+  }
+
+  # Get limits of x- and y-axes
+  ymax <- y_axis_limit - 25
+  xmax <-
+    ggplot2::layer_scales(treatment_plot)$x$get_limits()[2]
+
+  # If hormone_added = Insulin, CCK, i.e. anything other than "HFS" (high frequency stimulation),
+  # add an annotated line over the application period:
+
+  if (hormone_added != "HFS") {
+    treatment_plot <-
+      treatment_plot +
+      ggplot2::annotate(
+        geom = "segment",
+        x = hormone_or_HFS_start_time,
+        xend = xmax,
+        y = ymax,
+        yend = ymax,
+        colour = theme_options["line_col", "value"],
+        linewidth = 0.5
+      ) +
+      ggplot2::annotate(
+        geom = "text",
+        x = hormone_or_HFS_start_time,
+        y = ymax + 0.06 * ymax,
+        label = hormone_added,
+        size = if (large_axis_text == "yes") {
+          6
+        } else {
+          4
+        },
+        hjust = 0
+      )
+  }
+
+  # If plot_category = 1 or 3 (experiments involving HFS) add an annotation arrow at 5 minutes
+  if (hormone_added == "HFS") {
+    # Get limits of x- and y-axes
+    ymax <- ggplot2::layer_scales(treatment_plot)$y$get_limits()[2]
+    xmax <- ggplot2::layer_scales(treatment_plot)$x$get_limits()[2]
+    ymax2 <- ggplot2::layer_scales(treatment_plot)$y$get_limits()[2]
+
+    # Add an arrow showing when HFS was applied (x = 5 min)
+    treatment_plot <-
+      treatment_plot +
+      ggplot2::annotate(
+        geom = "segment",
+        x = hormone_or_HFS_start_time,
+        y = ymax + 0.22 * ymax,
+        xend = hormone_or_HFS_start_time,
+        yend = ymax + 0.10 * ymax,
+        arrow = grid::arrow(type = "closed", length = grid::unit(0.02, "npc"))
+      )
+
+    # Add "HFS" text label
+    treatment_plot <-
+      treatment_plot +
+      ggplot2::annotate(
+        geom = "text",
+        x = hormone_or_HFS_start_time,
+        y = ymax + 0.27 * ymax,
+        label = "HFS",
+        size = 3.5,
+        hjust = 0.5
+      )
+  }
+
+  if (signif_stars == "yes") {
+    t_test_df <- get(paste0("t_test_", current_type, "_", parameter))
+
+    treatment_plot <- treatment_plot +
+      ggplot2::geom_text(
+        data = t_test_df %>% dplyr::filter(.data$treatment == plot_treatment),
+        ggplot2::aes(
+          x = asterisk_time,
+          y = y_axis_limit - 50,
+          label = significance_stars
+        ),
+        inherit.aes = FALSE,
+        size = 8
+      )
+  }
+
+  if (include_representative_trace == "yes") {
+    representative_trace_file <- paste0(
+      "Figures/Representative-Traces/Category-",
+      plot_category,
+      "-",
+      plot_treatment,
+      "-Trace.png"
+    )
+
+    # Representative traces must be saved as PNGS with the following file name convention:
+    # Category-[number]-[treatment]-Trace.png or a warning will display about a missing file
+    # e.g. "Category-2-Control-Trace.png"
+
+    if (file.exists(here::here(representative_trace_file))) {
+      representative_trace <- png::readPNG(here::here(representative_trace_file)) %>% rasterGrob()
+
+      treatment_plot <- treatment_plot +
+        ggplot2::annotation_custom(
+          representative_trace,
+          xmin = 1,
+          xmax = 8,
+          ymin = 0,
+          ymax = 40
+        )
+    } else {
+      warning(
+        "The file here::here(Figures/Representative-Traces/Category-",
+        plot_category,
+        "-",
+        plot_treatment,
+        "-Trace.png) does not exist. Plotting without a representative trace."
+      )
+    }
+  }
+
+
+  if (large_axis_text == "yes") {
+    text_size <- "_LARGE_text"
+  } else {
+    text_size <- ""
+  }
+
+  if (save_plot_png == "yes") {
+    ggplot2::ggsave(
+      treatment_plot,
+      path = here::here(filepath),
+      file = paste0(
+        "Summary-plot-",
+        plot_treatment,
+        "-category-",
+        plot_category,
+        file_name_ending,
+        text_size,
+        ".png"
+      ),
+      width = 10,
+      height = 7,
+      units = "in",
+      dpi = 300,
+      scaling = 1.25
+    )
+  }
+  treatment_plot
+}
+
 
 # rawplots <- make_raw_plots(
 #   data = sample_raw_eEPSC_df,
@@ -636,4 +1040,3 @@ make_raw_plots <-
 #     linewidth = 0.6
 #   ) +
 #   ggplot2::theme(axis.text = ggplot2::element_text(family = NULL))
-
