@@ -182,11 +182,17 @@ import_theme_colours <- function(filename) {
   theme_options <- utils::read.csv(here::here(filename)) %>%
     tibble::column_to_rownames(var = "option")
 }
+
+
+
+
 # theme_options <- read.csv("C:/Users/cslau/OneDrive/Desktop/Masters-Work/crosby-lab-code/Templates/Theme-options.csv")
 # sample_theme_options <- theme_options
-# usethis::use_data(sample_theme_options)
+#usethis::use_data(sample_theme_options, overwrite = TRUE)
 #write.csv(theme_options, "inst/extdata/sample_theme_options.csv", row.names = FALSE)
 #
+#sample_theme_options <- import_theme_colours("C:/Users/cslau/OneDrive/Desktop/Masters-Work/crosby-lab-code/Templates/Theme-options.csv")
+
 # theme_options <- tibble::column_to_rownames(theme_options, "option")
 # theme_options["line_col", "value"]
 

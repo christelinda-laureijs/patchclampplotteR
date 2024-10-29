@@ -475,7 +475,7 @@ make_raw_plots <-
         )
 
       } else {
-        list_of_plots[[i]] <- ggplot2::ggplot(plot_df, ggplot2::aes(x = .data$time, y = .data[[parameter]]))
+        list_of_plots[[i]] <- ggplot2::ggplot(plot_df, ggplot2::aes(x = .data$time, y = .data[[parameter]])) + ggplot2::geom_point(shape = as.numeric(theme_options["male_shape", "value"]))
 
       }
 
@@ -491,41 +491,41 @@ make_raw_plots <-
         ) +
         ggplot2::labs(x = "Time (min)", y = y_title)
 
-      if (current_type == "sEPSC" &
-          pruned == "yes" &
-          parameter == "amplitude") {
-        list_of_plots[[i]] <- list_of_plots[[i]] +
-          ggplot2::geom_pointrange(
-            shape = if (unique(plot_df$sex) == "Male") {
-              as.numeric(theme_options["male_shape", "value"])
-            } else {
-              as.numeric(theme_options["female_shape", "value"])
-            },
-            colour = plot_colour,
-            size = 1,
-            alpha = 1
-          )
-      } else {
-        list_of_plots[[i]] <- list_of_plots[[i]] +
-          ggplot2::geom_point(
-            shape = if (unique(plot_df$sex) == "Male") {
-              as.numeric(theme_options["male_shape", "value"])
-            } else {
-              as.numeric(theme_options["female_shape", "value"])
-            },
-            colour = plot_colour,
-            size = if (current_type == "sEPSC" & pruned == "no") {
-              1
-            } else {
-              3.5
-            },
-            alpha = if (pruned == "yes") {
-              1
-            } else {
-              0.7
-            }
-          )
-      }
+      # if (current_type == "sEPSC" &
+      #     pruned == "yes" &
+      #     parameter == "amplitude") {
+      #   list_of_plots[[i]] <- list_of_plots[[i]] +
+      #     ggplot2::geom_pointrange(
+      #       shape = if (unique(plot_df$sex) == "Male") {
+      #         as.numeric(theme_options["male_shape", "value"])
+      #       } else {
+      #         as.numeric(theme_options["female_shape", "value"])
+      #       },
+      #       colour = plot_colour,
+      #       size = 1,
+      #       alpha = 1
+      #     )
+      # } else {
+      #   list_of_plots[[i]] <- list_of_plots[[i]] +
+      #     ggplot2::geom_point(
+      #       shape = if (unique(plot_df$sex) == "Male") {
+      #         as.numeric(theme_options["male_shape", "value"])
+      #       } else {
+      #         as.numeric(theme_options["female_shape", "value"])
+      #       },
+      #       colour = plot_colour,
+      #       size = if (current_type == "sEPSC" & pruned == "no") {
+      #         1
+      #       } else {
+      #         3.5
+      #       },
+      #       alpha = if (pruned == "yes") {
+      #         1
+      #       } else {
+      #         0.7
+      #       }
+      #     )
+      # }
 
       # Get limits of x- and y-axes
       ymax <- ggplot2::layer_scales(list_of_plots[[i]])$y$get_limits()[2]
@@ -544,7 +544,7 @@ make_raw_plots <-
             xend = if (is.null(hormone_end_time)) {xmax} else {hormone_end_time},
             y = ymax + 0.1 * ymax,
             yend = ymax + 0.1 * ymax,
-            colour = as.numeric(theme_options["line_col", "value"]),
+            colour = theme_options["line_col", "value"],
             linewidth = 0.6
           )
 
@@ -606,3 +606,35 @@ make_raw_plots <-
 
     return(list_of_plots)
   }
+
+
+
+# rawplots <- make_raw_plots(
+#   data = sample_raw_eEPSC_df,
+#   plot_treatment = "Control",
+#   plot_category = 2,
+#   current_type = "eEPSC",
+#   parameter = "P1",
+#   pruned = "no",
+#   hormone_added = "Insulin",
+#   hormone_or_HFS_start_time = 5,
+#   hormone_end_time = 25,
+#   theme_options = sample_theme_options,
+#   treatment_colour_theme = sample_treatment_names_and_colours
+# )
+
+#
+# data <- dplyr::filter(sample_raw_eEPSC_df, letter == "AO")
+#
+# ggplot2::ggplot(data = data, ggplot2::aes(x = .data$time, y = .data$P1)) +
+#   ggplot2::geom_point() +
+#   ggplot2::annotate(
+#     geom = "segment",
+#     x = 4,
+#     xend = 20,
+#     y = 60 + 0.1 * 60,
+#     yend = 60 + 0.1 * 60,
+#     colour = sample_theme_options["line_col", "value"],
+#     linewidth = 0.6
+#   )
+
