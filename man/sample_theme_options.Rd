@@ -18,6 +18,7 @@ labels and table values.
 }
 }
 \description{
-This is an example of the dataframe used to specify the colour themes and plot options (like line thickness).
+This is an example of the dataframe used to specify the colour themes and
+plot options (like line thickness).
 }
 \keyword{data}

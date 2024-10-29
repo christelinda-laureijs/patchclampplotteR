@@ -74,7 +74,12 @@ they will all go in subfolders below Figures/ in your project directory.}
 A ggplot object
 }
 \description{
-Make baseline comparison plot
+This function creates a scatterplot of parameters such as raw amplitude
+grouped according to treatment. The data are limited to values from the
+baseline period, allowing for a quick comparison of baseline parameters
+across treatments. For evoked currents, only raw amplitude is available for
+comparison. For spontaneous currents, raw amplitude and raw frequency during
+the baseline period can be plotted.
 }
 \examples{
 make_baseline_comparison_plot(

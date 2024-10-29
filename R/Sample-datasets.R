@@ -224,7 +224,8 @@ NULL
 
 #' Sample theme options
 #'
-#' This is an example of the dataframe used to specify the colour themes and plot options (like line thickness).
+#' This is an example of the dataframe used to specify the colour themes and
+#' plot options (like line thickness).
 #'
 #' @name sample_theme_options
 #' @docType data
