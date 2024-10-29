@@ -475,7 +475,7 @@ make_raw_plots <-
         )
 
       } else {
-        list_of_plots[[i]] <- ggplot2::ggplot(plot_df, ggplot2::aes(x = .data$time, y = .data[[parameter]])) + ggplot2::geom_point(shape = as.numeric(theme_options["male_shape", "value"]))
+        list_of_plots[[i]] <- ggplot2::ggplot(plot_df, ggplot2::aes(x = .data$time, y = .data[[parameter]]))
 
       }
 
@@ -491,41 +491,41 @@ make_raw_plots <-
         ) +
         ggplot2::labs(x = "Time (min)", y = y_title)
 
-      # if (current_type == "sEPSC" &
-      #     pruned == "yes" &
-      #     parameter == "amplitude") {
-      #   list_of_plots[[i]] <- list_of_plots[[i]] +
-      #     ggplot2::geom_pointrange(
-      #       shape = if (unique(plot_df$sex) == "Male") {
-      #         as.numeric(theme_options["male_shape", "value"])
-      #       } else {
-      #         as.numeric(theme_options["female_shape", "value"])
-      #       },
-      #       colour = plot_colour,
-      #       size = 1,
-      #       alpha = 1
-      #     )
-      # } else {
-      #   list_of_plots[[i]] <- list_of_plots[[i]] +
-      #     ggplot2::geom_point(
-      #       shape = if (unique(plot_df$sex) == "Male") {
-      #         as.numeric(theme_options["male_shape", "value"])
-      #       } else {
-      #         as.numeric(theme_options["female_shape", "value"])
-      #       },
-      #       colour = plot_colour,
-      #       size = if (current_type == "sEPSC" & pruned == "no") {
-      #         1
-      #       } else {
-      #         3.5
-      #       },
-      #       alpha = if (pruned == "yes") {
-      #         1
-      #       } else {
-      #         0.7
-      #       }
-      #     )
-      # }
+      if (current_type == "sEPSC" &
+          pruned == "yes" &
+          parameter == "amplitude") {
+        list_of_plots[[i]] <- list_of_plots[[i]] +
+          ggplot2::geom_pointrange(
+            shape = if (unique(plot_df$sex) == "Male") {
+              as.numeric(theme_options["male_shape", "value"])
+            } else {
+              as.numeric(theme_options["female_shape", "value"])
+            },
+            colour = plot_colour,
+            size = 1,
+            alpha = 1
+          )
+      } else {
+        list_of_plots[[i]] <- list_of_plots[[i]] +
+          ggplot2::geom_point(
+            shape = if (unique(plot_df$sex) == "Male") {
+              as.numeric(theme_options["male_shape", "value"])
+            } else {
+              as.numeric(theme_options["female_shape", "value"])
+            },
+            colour = plot_colour,
+            size = if (current_type == "sEPSC" & pruned == "no") {
+              1
+            } else {
+              3.5
+            },
+            alpha = if (pruned == "yes") {
+              1
+            } else {
+              0.7
+            }
+          )
+      }
 
       # Get limits of x- and y-axes
       ymax <- ggplot2::layer_scales(list_of_plots[[i]])$y$get_limits()[2]
@@ -556,8 +556,7 @@ make_raw_plots <-
             y = ymax2 + 0.16 * ymax2,
             label = hormone_added,
             size = 4,
-            hjust = 0,
-            family = theme_options["plot_font_family", "value"]
+            hjust = 0
           )
       }
 
@@ -585,8 +584,7 @@ make_raw_plots <-
             y = ymax + 0.27 * ymax,
             label = "HFS",
             size = 3.5,
-            hjust = 0.5,
-            family = theme_options["plot_font_family", "value"]
+            hjust = 0.5
           )
       }
 
@@ -636,5 +634,6 @@ make_raw_plots <-
 #     yend = 60 + 0.1 * 60,
 #     colour = sample_theme_options["line_col", "value"],
 #     linewidth = 0.6
-#   )
+#   ) +
+#   ggplot2::theme(axis.text = ggplot2::element_text(family = NULL))
 
