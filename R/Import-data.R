@@ -193,7 +193,9 @@ import_theme_colours <- function(filename) {
 #
 
 # Use This code below
-#sample_theme_options <- import_theme_colours("C:/Users/cslau/OneDrive/Desktop/Masters-Work/crosby-lab-code/Templates/Theme-options.csv")
+# sample_theme_options <- import_theme_colours("C:/Users/cslau/OneDrive/Desktop/Masters-Work/crosby-lab-code/Templates/Theme-options.csv")
+
+
 #usethis::use_data(sample_theme_options, overwrite = TRUE)
 #theme_options <- tibble::column_to_rownames(theme_options, "option")
 # theme_options["line_col", "value"]

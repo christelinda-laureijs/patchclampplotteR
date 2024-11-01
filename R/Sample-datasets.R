@@ -232,9 +232,31 @@ NULL
 #' @format An .rda file containing 23 objects of 2 variables
 #' \describe{
 #'  \itemize{
-#'  \item `option` A character value specifying the treatment applied (e.g.
+#'  \item `gray_shading_colour` Hex code for the colour used to fill the violin plots
+#'  \item `line_col`
+#'  \item `rectangle_shading_colour` Hex code for the colour used to shade the rectangles
+#'  \item `plot_font_family`
+#'  \item `plot_light_font_family`
+#'  \item `significance_stars_font`
+#'  \item `male_shape` Numeric value representing the point shape used for data values where `Sex == Male`
+#'  \item `female_shape` Numeric value representing the point shape used for data values where `Sex == Female`
+#'  \item `mean_point_colour`
+#'  \item `baseline_group_colour`
+#'  \item `post_hormone_group_colour`
+#'  \item `connecting_line_width`
+#'  \item `connecting_line_colour_aps`
+#'  \item `connecting_line_width_PPR`
+#'  \item `mean_point_size`
+#'  \item `geom_sina_size`
+#'  \item `geom_signif_text_size`
+#'  \item `AP_trace_size`
+#'  \item `scale_bar_shift_y`
+#'  \item `scale_bar_shift_x`
+#'  \item `y_axis_limit`
+#'  \item `PPR_y_min`
+#'  \item `PPR_y_max`
 #'  "Control", "HNMPA").
-#'  \item `value` A character value with the same treatment names as in
+#'  \item `line_col` A character value with the same treatment names as in
 #'  `treatment` except you would replace underscores with spaces and add line
 #'  breaks if needed. This is to create more attractive, human-readable axis
 #'  labels and table values.

@@ -693,3 +693,234 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 
   return(summary_df)
 }
+
+
+#' Perform t-tests for EPSC summary plots
+#'
+#' This function enables you to perform a series of paired t-tests comparing the
+#' mean current amplitude within each interval relative to the mean current
+#' amplitude during the baseline. This uses the `paired_t_test` function from
+#' `rstatix`, with `paired = TRUE` and Holm's adjustment for multiple
+#' comparisons (`p.adjust.method = "holm"`). The resulting output table can also
+#' be used to apply significance stars to the plot in `make_summary_plot()`.
+#'
+#' @inheritParams make_baseline_comparison_plot
+#' @inheritParams make_normalized_EPSC_data
+#' @param test_category A numeric value describing the experimental category. In
+#'   the sample dataset for this package, 2 represents experiments where insulin
+#'   was applied continuously after a 5-minute baseline period.
+#' @param parameter A character value specifying the parameter to be plotted on
+#'   the y-axis. For evoked currents (`current_type = "eEPSC"`), the available
+#'   parameter is "amplitude", which contains amplitudes normalized relative to
+#'   the baseline. For spontaneous currents (`current_type = "sEPSC"`), the
+#'   available parameters are "amplitude" (normalized currents),
+#'   "raw_amplitude", "frequency" (normalized frequency) or "raw_frequency".
+#'
+#' @return A dataframe
+#' @export
+#'
+#' @seealso [make_normalized_EPSC_data()] for an example of how the normalized
+#'   current amplitudes were created.
+#'
+#' @examples
+#' perform_t_tests_for_summary_plot(data = sample_summary_eEPSC_df,
+#'  test_category = 2,
+#'  include_all_treatments = "yes",
+#'  treatment_colour_theme = sample_treatment_names_and_colours,
+#'  parameter = "amplitude",
+#'  baseline_interval = "t0to5",
+#'  interval_length = 5,
+#'  list_of_treatments = NULL,
+#'  current_type = "eEPSC",
+#'  save_output_as_RDS = "no")
+
+perform_t_tests_for_summary_plot <- function(data,
+                                             test_category,
+                                             include_all_treatments = "yes",
+                                             list_of_treatments = NULL,
+                                             treatment_colour_theme,
+                                             baseline_interval,
+                                             interval_length,
+                                             parameter,
+                                             current_type,
+                                             save_output_as_RDS = "no") {
+  if (is.null(current_type) ||
+      length(current_type) != 1L ||
+      !current_type %in% c("eEPSC", "sEPSC")) {
+    stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+  }
+
+  if (include_all_treatments == "yes") {
+    treatment_info <- treatment_colour_theme
+    t_test_data <- data %>%
+      dplyr::semi_join(treatment_info, by = c("treatment")) %>%
+      dplyr::filter(.data$treatment %in% treatment_info$treatment)
+
+    if (!is.null(list_of_treatments)) {
+      warning(
+        "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
+      )
+    }
+
+  } else {
+    if (is.null(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is NULL.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    if (!is.character(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is not a character object.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    if (is.null(baseline_interval) ||
+        !is.character(baseline_interval)) {
+      stop("'baseline_interval' must be a character (e.g. \"t0to5\" or \"t0to3\")")
+    }
+
+    treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments)
+    t_test_data <- data %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments) %>%
+      droplevels()
+  }
+
+  if (current_type == "eEPSC") {
+    allowed_parameters_list <- "\"amplitude\""
+
+    if (!parameter %in% c("amplitude")) {
+      stop(
+        "parameter must be ",
+        allowed_parameters_list,
+        " for current_type \"",
+        current_type,
+        "\". \nCheck parameter, current_type or data."
+      )
+    }
+
+    if (parameter == "amplitude") {
+      t_test_results <- t_test_data %>%
+        dplyr::filter(.data$category == test_category) %>%
+        dplyr::group_by(.data$treatment) %>%
+        rstatix::pairwise_t_test(
+          mean_P1_transformed ~ interval,
+          ref.group = baseline_interval,
+          paired = TRUE,
+          p.adjust.method = "holm"
+        )
+    }
+  }
+
+  if (current_type == "sEPSC") {
+    allowed_parameters_list <- "\"amplitude\", \"raw_amplitude\", \"raw_frequency\", or \"frequency\""
+
+    if (!parameter %in% c("amplitude",
+                          "raw_amplitude",
+                          "frequency",
+                          "raw_frequency")) {
+      stop(
+        "parameter must be ",
+        allowed_parameters_list,
+        " for current_type \"",
+        current_type,
+        "\". \nCheck parameter, current_type or data."
+      )
+    }
+
+    if (parameter == "amplitude") {
+      t_test_results <- t_test_data %>%
+        dplyr::filter(.data$category == test_category) %>%
+        dplyr::group_by(.data$treatment) %>%
+        rstatix::pairwise_t_test(
+          mean_transformed_amplitude ~ interval,
+          ref.group = baseline_interval,
+          paired = TRUE,
+          p.adjust.method = "holm"
+        )
+    }
+
+    if (parameter == "raw_amplitude") {
+      t_test_results <- t_test_data %>%
+        dplyr::filter(.data$category == test_category) %>%
+        dplyr::group_by(.data$treatment) %>%
+        rstatix::pairwise_t_test(
+          mean_raw_amplitude ~ interval,
+          ref.group = baseline_interval,
+          paired = TRUE,
+          p.adjust.method = "holm"
+        )
+    }
+
+    if (parameter == "frequency") {
+      t_test_results <- t_test_data %>%
+        dplyr::filter(.data$category == test_category) %>%
+        dplyr::group_by(.data$treatment) %>%
+        rstatix::pairwise_t_test(
+          mean_transformed_frequency ~ interval,
+          ref.group = baseline_interval,
+          paired = TRUE,
+          p.adjust.method = "holm"
+        )
+    }
+
+    if (parameter == "raw_frequency") {
+      t_test_results <- t_test_data %>%
+        dplyr::filter(.data$category == test_category) %>%
+        dplyr::group_by(.data$treatment) %>%
+        rstatix::pairwise_t_test(
+          mean_raw_frequency ~ interval,
+          ref.group = baseline_interval,
+          paired = TRUE,
+          p.adjust.method = "holm"
+        )
+    }
+  }
+
+  t_test_table <- t_test_results %>%
+    dplyr::mutate(
+      statistic = round(.data$statistic, 2),
+      p_string = lazyWeave::pvalString(.data$p.adj),
+      significance_stars = dplyr::case_when(.data$p.adj.signif == "ns" ~ "", T ~ .data$p.adj.signif)
+    )
+
+  # Need sequence of integers from 1 to the maximum number of intervals
+  # to generate asterisk_time as a function of the number of intervals
+  integer_sequence <- seq(1, length(unique(t_test_table$group2)), by = 1)
+
+  positions_df <- data.frame(
+    group2 = unique(t_test_table$group2),
+    asterisk_time = (interval_length / 2) + interval_length * integer_sequence
+  )
+
+  t_test_table <- merge(positions_df, t_test_table, by = "group2") %>%
+    dplyr::select(
+      .data$treatment,
+      .data$.y.,
+      .data$group1,
+      .data$group2,
+      .data$n1,
+      .data$n1,
+      .data$statistic,
+      .data$df,
+      .data$p_string,
+      .data$significance_stars,
+      .data$asterisk_time
+    ) %>%
+    dplyr::arrange(match(.data$treatment, treatment_info$treatment))
+
+  if (save_output_as_RDS == "yes") {
+    saveRDS(t_test_table, file = here::here(
+      paste0("Data/Output-Data-from-R/t_test_", current_type, ".RDS")
+    ))
+  }
+
+  return(t_test_table)
+}

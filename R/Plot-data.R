@@ -537,8 +537,9 @@ make_raw_plots <-
       xmax <- ggplot2::layer_scales(list_of_plots[[i]])$x$get_limits()[2]
       ymax2 <- ggplot2::layer_scales(list_of_plots[[i]])$y$get_limits()[2]
 
-      # If hormone_added = Insulin, CCK, i.e. anything other than "HFS" (high frequency stimulation),
-      # add an annotated line over the application period:
+      # If hormone_added = Insulin, CCK, i.e. anything other than "HFS" (high
+      # frequency stimulation), add an annotated line over the application
+      # period:
 
       if (hormone_added != "HFS") {
         list_of_plots[[i]] <-
@@ -614,6 +615,8 @@ make_raw_plots <-
     return(list_of_plots)
   }
 
+# TODO : Provide filepath location for include_representative_trace, finish signif_stars description...
+# TODO check above, and also fix documentation in make_basleine_comparison plot, find way to add sample t test values-----
 
 #' Make a summary plot for a specific treatment
 #'
@@ -621,9 +624,16 @@ make_raw_plots <-
 #' spontaneous) current amplitude over over time in minutes. The data are summarized by treatment and sex, and averaged per minute. The data are presented as mean +/- the standard error.
 #'
 #' @inheritParams make_raw_plots
-#'
+#' @param include_representative_trace A character ("yes" or "no") describing if a representative trace should be included as an overlay to the plot. This pulls from a png file stored in `Figures/Representative-Traces/`". Please specify the file-name in `representative_trace_filename`.
+#' @param representative_trace_filename A character value describing the filename of the representative trace. This should be the name of a .png file stored within the subfolder `Figures/Representative-Traces/`.
+#' @param signif_stars A character ("yes" or "no") describing if significance stars should be included as an overlay in the plot.
+#' @param large_axis_text A character ("yes" or "no"). If "yes", a ggplot theme
+#'   layer will be applied which increases the size of the axis text.
+#' @param shade_intervals A character ("yes" or "no"). If "yes", a ggplot theme
+#'   layer will be applied which adds lightly shaded rectangles to highlight 5-minute intervals.
 #' @return A ggplot object
 #' @export
+#'
 #'
 #' @examples
 make_summary_plot <- function(plot_category,
@@ -633,7 +643,8 @@ make_summary_plot <- function(plot_category,
                               parameter,
                               hormone_added,
                               hormone_or_HFS_start_time,
-                              include_representative_trace = "yes",
+                              include_representative_trace = "no",
+                              representative_trace_filename,
                               signif_stars = "no",
                               large_axis_text = "no",
                               shade_intervals = "no",
@@ -654,6 +665,23 @@ make_summary_plot <- function(plot_category,
 
   if (!save_plot_png %in% c("yes", "no")) {
     stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!include_representative_trace %in% c("yes", "no")) {
+    stop("'include_representative_trace' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (include_representative_trace == "yes") {
+    if (is.null(representative_trace_filename) ||
+        !is.character(representative_trace_filename)) {
+      stop(
+        "'include_representative_trace' is 'yes' but the filename is not
+           specified or it is not a character value. Please define the filename
+           as a character in
+        'representative_trace_filename'"
+      )
+    }
+
   }
 
 
@@ -780,13 +808,13 @@ make_summary_plot <- function(plot_category,
         xmin = 5,
         xmax = 10,
         ymin = -5,
-        ymax = y_axis_limit
+        ymax = as.numeric(theme_options["y_axis_limit", "value"])
       ), fill = theme_options["rectangle_shading_colour", "value"]) +
       ggplot2::geom_rect(ggplot2::aes(
         xmin = 15,
         xmax = 20,
         ymin = -5,
-        ymax = y_axis_limit
+        ymax = as.numeric(theme_options["y_axis_limit", "value"])
       ), fill = theme_options["rectangle_shading_colour", "value"])
   }
 
@@ -806,7 +834,7 @@ make_summary_plot <- function(plot_category,
       })
     ) +
     ggplot2::geom_hline(yintercept = 100, linetype = "dashed") +
-    ggplot2::coord_cartesian(ylim = c(0, y_axis_limit)) +
+    ggplot2::coord_cartesian(ylim = c(0, as.numeric(theme_options["y_axis_limit", "value"]))) +
     ggplot2::labs(
       x = "Time (min)",
       y = y_title,
@@ -864,7 +892,7 @@ make_summary_plot <- function(plot_category,
   }
 
   # Get limits of x- and y-axes
-  ymax <- y_axis_limit - 25
+  ymax <- as.numeric(theme_options["y_axis_limit", "value"]) - 25
   xmax <-
     ggplot2::layer_scales(treatment_plot)$x$get_limits()[2]
 
@@ -937,7 +965,7 @@ make_summary_plot <- function(plot_category,
         data = t_test_df %>% dplyr::filter(.data$treatment == plot_treatment),
         ggplot2::aes(
           x = asterisk_time,
-          y = y_axis_limit - 50,
+          y = as.numeric(theme_options["y_axis_limit", "value"]) - 50,
           label = significance_stars
         ),
         inherit.aes = FALSE,
@@ -959,7 +987,7 @@ make_summary_plot <- function(plot_category,
     # e.g. "Category-2-Control-Trace.png"
 
     if (file.exists(here::here(representative_trace_file))) {
-      representative_trace <- png::readPNG(here::here(representative_trace_file)) %>% rasterGrob()
+      representative_trace <- png::readPNG(here::here(representative_trace_file)) %>% grid::rasterGrob()
 
       treatment_plot <- treatment_plot +
         ggplot2::annotation_custom(

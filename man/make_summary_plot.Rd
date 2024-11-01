@@ -12,7 +12,8 @@ make_summary_plot(
   parameter,
   hormone_added,
   hormone_or_HFS_start_time,
-  include_representative_trace = "yes",
+  include_representative_trace = "no",
+  representative_trace_filename,
   signif_stars = "no",
   large_axis_text = "no",
   shade_intervals = "no",
@@ -50,6 +51,18 @@ annotation arrow will be added instead.}
 \item{hormone_or_HFS_start_time}{A numeric value indicating the time (in
 minutes) when a hormone was added or when HFS was applied. This will set
 the annotation line start point.}
+
+\item{include_representative_trace}{A character ("yes" or "no") describing if a representative trace should be included as an overlay to the plot. This pulls from a png file stored in \verb{Figures/Representative-Traces/}". Please specify the file-name in \code{representative_trace_filename}.}
+
+\item{representative_trace_filename}{A character value describing the filename of the representative trace. This should be the name of a .png file stored within the subfolder \verb{Figures/Representative-Traces/}.}
+
+\item{signif_stars}{A character ("yes" or "no") describing if significance stars should be included as an overlay in the plot.}
+
+\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
+layer will be applied which increases the size of the axis text.}
+
+\item{shade_intervals}{A character ("yes" or "no"). If "yes", a ggplot theme
+layer will be applied which adds lightly shaded rectangles to highlight 5-minute intervals.}
 
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should
