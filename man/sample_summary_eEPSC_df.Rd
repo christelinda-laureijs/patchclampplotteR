@@ -14,7 +14,8 @@ assign top-level groups for further analyses, with \code{treatment} as subgroups
 recording. Used to link data sets for evoked or spontaneous currents and
 cell-characteristics.
 \item \code{sex} A factor with two levels (e.g. "Male" or "Female").
-\item \code{treatment} A factor based on the treatment applied (e.g. "Control", "HNMPA").
+\item \code{treatment} A factor based on the treatment applied (e.g. "Control",
+"HNMPA").
 \item \code{interval} A factor indicating the interval that the data
 point belongs to. For example, \code{interval} will be "t0to5" for any data
 points from 0 to 5 minutes. Example values: "t0to5", "t5to10", etc.
@@ -31,9 +32,12 @@ not baseline transformed).
 \item \code{sd} The standard deviation of the mean current values.
 \item \code{cv} The coefficient of variation of the mean current values.
 \item \code{se} The standard error of the mean current values.
-\item \code{cv_inverse_square} The inverse coefficient of variation squared of the mean current values. Calculated by using (\code{1/cv^2}), where \code{cv} is the coefficient of variation. Useful for variance analysis.
-\item \code{variance} The variance of the current values, calculated using \code{stats::var()}.
-\item \code{VMR} The variance-to-mean ratio, calculated using \code{variance/mean_P1_transformed}. Useful for variance analysis.
+\item \code{cv_inverse_square} The inverse coefficient of variation squared of
+the mean current values. Calculated by using (\code{1/cv^2}), where \code{cv} is the
+coefficient of variation. Useful for variance analysis. \item \code{variance} The
+variance of the current values, calculated using \code{stats::var()}.
+\item \code{VMR} The variance-to-mean ratio, calculated using
+\code{variance/mean_P1_transformed}. Useful for variance analysis.
 \item \code{age} A numeric value representing the animal's age. Can be any value
 as long as the time units are consistent throughout (e.g. don't mix up days
 and months when reporting animal ages).

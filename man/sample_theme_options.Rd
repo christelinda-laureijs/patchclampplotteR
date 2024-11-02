@@ -8,14 +8,18 @@
 An .rda file containing 23 objects of 2 variables
 \describe{
 \itemize{
-\item \code{gray_shading_colour} Hex code for the colour used to fill the violin plots
+\item \code{gray_shading_colour} Hex code for the colour used to fill the violin
+plots
 \item \code{line_col}
-\item \code{rectangle_shading_colour} Hex code for the colour used to shade the rectangles
+\item \code{rectangle_shading_colour} Hex code for the colour used to shade the
+rectangles
 \item \code{plot_font_family}
 \item \code{plot_light_font_family}
 \item \code{significance_stars_font}
-\item \code{male_shape} Numeric value representing the point shape used for data values where \code{Sex == Male}
-\item \code{female_shape} Numeric value representing the point shape used for data values where \code{Sex == Female}
+\item \code{male_shape} Numeric value representing the point shape used for data
+values where \code{Sex == Male}
+\item \code{female_shape} Numeric value representing the point shape used for
+data values where \code{Sex == Female}
 \item \code{mean_point_colour}
 \item \code{baseline_group_colour}
 \item \code{post_hormone_group_colour}

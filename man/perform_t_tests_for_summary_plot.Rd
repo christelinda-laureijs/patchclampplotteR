@@ -70,7 +70,7 @@ mean current amplitude within each interval relative to the mean current
 amplitude during the baseline. This uses the \code{paired_t_test} function from
 \code{rstatix}, with \code{paired = TRUE} and Holm's adjustment for multiple
 comparisons (\code{p.adjust.method = "holm"}). The resulting output table can also
-be used to apply significance stars to the plot in \code{make_summary_plot()}.
+be used to apply significance stars to the plot in \code{\link[=make_summary_plot]{make_summary_plot()}}.
 }
 \examples{
 perform_t_tests_for_summary_plot(data = sample_summary_eEPSC_df,

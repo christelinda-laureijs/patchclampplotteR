@@ -14,6 +14,7 @@ make_summary_plot(
   hormone_or_HFS_start_time,
   include_representative_trace = "no",
   representative_trace_filename,
+  t_test_df,
   signif_stars = "no",
   large_axis_text = "no",
   shade_intervals = "no",
@@ -29,8 +30,7 @@ used to differentiate different protocol types.}
 \item{plot_treatment}{A character value specifying the treatment you would
 like to plot (e.g. "Control").}
 
-\item{data}{A dataframe containing the raw evoked current data generated from
-\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.}
+\item{data}{A dataframe containing pruned summary data for all cells. This is the third element of the list generated from \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}.}
 
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
@@ -52,17 +52,29 @@ annotation arrow will be added instead.}
 minutes) when a hormone was added or when HFS was applied. This will set
 the annotation line start point.}
 
-\item{include_representative_trace}{A character ("yes" or "no") describing if a representative trace should be included as an overlay to the plot. This pulls from a png file stored in \verb{Figures/Representative-Traces/}". Please specify the file-name in \code{representative_trace_filename}.}
+\item{include_representative_trace}{A character ("yes" or "no") describing if
+a representative trace should be included as an overlay to the plot. This
+pulls from a png file stored in \verb{Figures/Representative-Traces/}". Please
+specify the file-name in \code{representative_trace_filename}.}
 
-\item{representative_trace_filename}{A character value describing the filename of the representative trace. This should be the name of a .png file stored within the subfolder \verb{Figures/Representative-Traces/}.}
+\item{representative_trace_filename}{A character value describing the
+filename of the representative trace. This should be the name of a .png
+file stored within the subfolder \verb{Figures/Representative-Traces/}.}
 
-\item{signif_stars}{A character ("yes" or "no") describing if significance stars should be included as an overlay in the plot.}
+\item{t_test_df}{A dataframe of t-test results, which has been generated
+using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}.}
+
+\item{signif_stars}{A character ("yes" or "no") describing if significance
+stars should be included as an overlay in the plot. If "yes", you must
+specify a dataframe containing the results of a t-test, which is generated
+using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}.}
 
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the size of the axis text.}
 
 \item{shade_intervals}{A character ("yes" or "no"). If "yes", a ggplot theme
-layer will be applied which adds lightly shaded rectangles to highlight 5-minute intervals.}
+layer will be applied which adds lightly shaded rectangles to highlight
+5-minute intervals.}
 
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should
@@ -82,5 +94,32 @@ A ggplot object
 }
 \description{
 This function enables you to create a scatterplot of mean evoked (or
-spontaneous) current amplitude over over time in minutes. The data are summarized by treatment and sex, and averaged per minute. The data are presented as mean +/- the standard error.
+spontaneous) current amplitude over over time in minutes. The data are
+summarized by treatment and sex, and averaged per minute. The data are
+presented as mean +/- the standard error.
+}
+\examples{
+
+make_summary_plot(plot_category = 2,
+ plot_treatment = "Control",
+ data = sample_pruned_eEPSC_df$all_cells,
+ current_type = "eEPSC",
+ parameter = "amplitude",
+ include_representative_trace = "no",
+ signif_stars = "yes",
+ t_test_df = sample_eEPSC_t_test_df,
+ hormone_added = "Insulin",
+ large_axis_text = "no",
+ shade_intervals = "no",
+ hormone_or_HFS_start_time = 5,
+ treatment_colour_theme = sample_treatment_names_and_colours,
+ theme_options = sample_theme_options
+)
+}
+\seealso{
+\code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}} which produces the significance
+stars appended to the plot.
+
+\code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}} for the function that will produce the
+summary data used in this plot.
 }
