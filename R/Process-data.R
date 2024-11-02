@@ -702,7 +702,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #' amplitude during the baseline. This uses the `paired_t_test` function from
 #' `rstatix`, with `paired = TRUE` and Holm's adjustment for multiple
 #' comparisons (`p.adjust.method = "holm"`). The resulting output table can also
-#' be used to apply significance stars to the plot in `make_summary_plot()`.
+#' be used to apply significance stars to the plot in [make_summary_plot()].
 #'
 #' @inheritParams make_baseline_comparison_plot
 #' @inheritParams make_normalized_EPSC_data

@@ -615,27 +615,64 @@ make_raw_plots <-
     return(list_of_plots)
   }
 
-# TODO : Provide filepath location for include_representative_trace, finish signif_stars description...
-# TODO check above, and also fix documentation in make_basleine_comparison plot, find way to add sample t test values-----
+# TODO : Provide filepath location for include_representative_trace, finish
+# signif_stars description... TODO check above, and also fix documentation in
+# make_baseline_comparison plot, find way to add sample t test values-----
 
 #' Make a summary plot for a specific treatment
 #'
 #' This function enables you to create a scatterplot of mean evoked (or
-#' spontaneous) current amplitude over over time in minutes. The data are summarized by treatment and sex, and averaged per minute. The data are presented as mean +/- the standard error.
+#' spontaneous) current amplitude over over time in minutes. The data are
+#' summarized by treatment and sex, and averaged per minute. The data are
+#' presented as mean +/- the standard error.
 #'
 #' @inheritParams make_raw_plots
-#' @param include_representative_trace A character ("yes" or "no") describing if a representative trace should be included as an overlay to the plot. This pulls from a png file stored in `Figures/Representative-Traces/`". Please specify the file-name in `representative_trace_filename`.
-#' @param representative_trace_filename A character value describing the filename of the representative trace. This should be the name of a .png file stored within the subfolder `Figures/Representative-Traces/`.
-#' @param signif_stars A character ("yes" or "no") describing if significance stars should be included as an overlay in the plot.
+#' @param data A dataframe containing pruned summary data for all cells. This is the third element of the list generated from [make_pruned_EPSC_data()].
+#' @param include_representative_trace A character ("yes" or "no") describing if
+#'   a representative trace should be included as an overlay to the plot. This
+#'   pulls from a png file stored in `Figures/Representative-Traces/`". Please
+#'   specify the file-name in `representative_trace_filename`.
+#' @param representative_trace_filename A character value describing the
+#'   filename of the representative trace. This should be the name of a .png
+#'   file stored within the subfolder `Figures/Representative-Traces/`.
+#' @param signif_stars A character ("yes" or "no") describing if significance
+#'   stars should be included as an overlay in the plot. If "yes", you must
+#'   specify a dataframe containing the results of a t-test, which is generated
+#'   using [perform_t_tests_for_summary_plot()].
+#' @param t_test_df A dataframe of t-test results, which has been generated
+#'   using [perform_t_tests_for_summary_plot()].
 #' @param large_axis_text A character ("yes" or "no"). If "yes", a ggplot theme
 #'   layer will be applied which increases the size of the axis text.
 #' @param shade_intervals A character ("yes" or "no"). If "yes", a ggplot theme
-#'   layer will be applied which adds lightly shaded rectangles to highlight 5-minute intervals.
+#'   layer will be applied which adds lightly shaded rectangles to highlight
+#'   5-minute intervals.
 #' @return A ggplot object
 #' @export
 #'
+#' @seealso [perform_t_tests_for_summary_plot()] which produces the significance
+#'   stars appended to the plot.
+#' @seealso [make_pruned_EPSC_data()] for the function that will produce the
+#'   summary data used in this plot.
 #'
 #' @examples
+#'
+#' make_summary_plot(plot_category = 2,
+#'  plot_treatment = "Control",
+#'  data = sample_pruned_eEPSC_df$all_cells,
+#'  current_type = "eEPSC",
+#'  parameter = "amplitude",
+#'  include_representative_trace = "no",
+#'  signif_stars = "yes",
+#'  t_test_df = sample_eEPSC_t_test_df,
+#'  hormone_added = "Insulin",
+#'  large_axis_text = "no",
+#'  shade_intervals = "no",
+#'  hormone_or_HFS_start_time = 5,
+#'  treatment_colour_theme = sample_treatment_names_and_colours,
+#'  theme_options = sample_theme_options
+#')
+
+
 make_summary_plot <- function(plot_category,
                               plot_treatment,
                               data,
@@ -645,6 +682,7 @@ make_summary_plot <- function(plot_category,
                               hormone_or_HFS_start_time,
                               include_representative_trace = "no",
                               representative_trace_filename,
+                              t_test_df,
                               signif_stars = "no",
                               large_axis_text = "no",
                               shade_intervals = "no",
@@ -667,6 +705,10 @@ make_summary_plot <- function(plot_category,
     stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
   }
 
+  if (!signif_stars %in% c("yes", "no")) {
+    stop("'signif_stars' argument must be one of: 'yes' or 'no'")
+  }
+
   if (!include_representative_trace %in% c("yes", "no")) {
     stop("'include_representative_trace' argument must be one of: 'yes' or 'no'")
   }
@@ -684,11 +726,19 @@ make_summary_plot <- function(plot_category,
 
   }
 
+  if (signif_stars == "yes" & is.null(t_test_df)) {
+    stop(
+      "signif_stars == 'yes' but you did not specify a dataframe
+      containing t-test summary data"
+    )
+  }
+
 
   if (is.null(hormone_or_HFS_start_time) ||
       !is.numeric(hormone_or_HFS_start_time)) {
     stop(
-      "\"hormone_or_HFS_start_time\" must be numeric (e.g. 5 for HFS or a hormone applied at five minutes into the recording)."
+      "\"hormone_or_HFS_start_time\" must be numeric
+      (e.g. 5 for HFS or a hormone applied at five minutes into the recording)."
     )
   }
 
@@ -734,7 +784,8 @@ make_summary_plot <- function(plot_category,
   if (current_type == "sEPSC") {
     filepath <- "Figures/Spontaneous-currents/Output-summary-plots"
 
-    allowed_parameters_list <- "\"amplitude\", \"raw_amplitude\", \"raw_frequency\", or \"frequency\""
+    allowed_parameters_list <- "\"amplitude\", \"raw_amplitude\",
+    \"raw_frequency\", or \"frequency\""
 
     if (!parameter %in% c("amplitude",
                           "raw_amplitude",
@@ -958,15 +1009,13 @@ make_summary_plot <- function(plot_category,
   }
 
   if (signif_stars == "yes") {
-    t_test_df <- get(paste0("t_test_", current_type, "_", parameter))
-
     treatment_plot <- treatment_plot +
       ggplot2::geom_text(
         data = t_test_df %>% dplyr::filter(.data$treatment == plot_treatment),
         ggplot2::aes(
-          x = asterisk_time,
+          x = .data$asterisk_time,
           y = as.numeric(theme_options["y_axis_limit", "value"]) - 50,
-          label = significance_stars
+          label = .data$significance_stars
         ),
         inherit.aes = FALSE,
         size = 8

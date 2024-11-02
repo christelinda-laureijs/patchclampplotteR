@@ -28,8 +28,10 @@
 #'  \item{cell}{A character or numeric value representing the cell. For example,
 #'  use `3.1.1` for animal #3, slice #1, cell #1.}
 #'  \item{sex}{A character value such as "Male" or "Female".}
-#'  \item{X}{A numeric value representing the x-value of the cell's location in µm.}
-#'  \item{Y}{A numeric value representing the y-value of the cell's location in µm.}
+#'  \item{X}{A numeric value representing the x-value of the cell's location in
+#'  µm.}
+#'  \item{Y}{A numeric value representing the y-value of the cell's location in
+#'  µm.}
 #'  \item{age}{A numeric value representing the animal's age. Can be any value
 #'  as long as the time units are consistent throughout (e.g. don't mix up days
 #'  and months when reporting animal ages). Do not use characters (e.g. avoid
@@ -156,7 +158,8 @@ NULL
 #'  recording. Used to link data sets for evoked or spontaneous currents and
 #'  cell-characteristics.
 #'  \item `sex` A factor with two levels (e.g. "Male" or "Female").
-#'  \item `treatment` A factor based on the treatment applied (e.g. "Control", "HNMPA").
+#'  \item `treatment` A factor based on the treatment applied (e.g. "Control",
+#'  "HNMPA").
 #'  \item `interval` A factor indicating the interval that the data
 #'  point belongs to. For example, `interval` will be "t0to5" for any data
 #'  points from 0 to 5 minutes. Example values: "t0to5", "t5to10", etc.
@@ -173,9 +176,12 @@ NULL
 #'  \item `sd` The standard deviation of the mean current values.
 #'  \item `cv` The coefficient of variation of the mean current values.
 #'  \item `se` The standard error of the mean current values.
-#'  \item `cv_inverse_square` The inverse coefficient of variation squared of the mean current values. Calculated by using (`1/cv^2`), where `cv` is the coefficient of variation. Useful for variance analysis.
-#'  \item `variance` The variance of the current values, calculated using `stats::var()`.
-#'  \item `VMR` The variance-to-mean ratio, calculated using `variance/mean_P1_transformed`. Useful for variance analysis.
+#'  \item `cv_inverse_square` The inverse coefficient of variation squared of
+#'  the mean current values. Calculated by using (`1/cv^2`), where `cv` is the
+#'  coefficient of variation. Useful for variance analysis. \item `variance` The
+#'  variance of the current values, calculated using `stats::var()`.
+#'  \item `VMR` The variance-to-mean ratio, calculated using
+#'  `variance/mean_P1_transformed`. Useful for variance analysis.
 #'  \item `age` A numeric value representing the animal's age. Can be any value
 #'  as long as the time units are consistent throughout (e.g. don't mix up days
 #'  and months when reporting animal ages).
@@ -232,14 +238,18 @@ NULL
 #' @format An .rda file containing 23 objects of 2 variables
 #' \describe{
 #'  \itemize{
-#'  \item `gray_shading_colour` Hex code for the colour used to fill the violin plots
+#'  \item `gray_shading_colour` Hex code for the colour used to fill the violin
+#'  plots
 #'  \item `line_col`
-#'  \item `rectangle_shading_colour` Hex code for the colour used to shade the rectangles
+#'  \item `rectangle_shading_colour` Hex code for the colour used to shade the
+#'  rectangles
 #'  \item `plot_font_family`
 #'  \item `plot_light_font_family`
 #'  \item `significance_stars_font`
-#'  \item `male_shape` Numeric value representing the point shape used for data values where `Sex == Male`
-#'  \item `female_shape` Numeric value representing the point shape used for data values where `Sex == Female`
+#'  \item `male_shape` Numeric value representing the point shape used for data
+#'  values where `Sex == Male`
+#'  \item `female_shape` Numeric value representing the point shape used for
+#'  data values where `Sex == Female`
 #'  \item `mean_point_colour`
 #'  \item `baseline_group_colour`
 #'  \item `post_hormone_group_colour`
@@ -260,6 +270,85 @@ NULL
 #'  `treatment` except you would replace underscores with spaces and add line
 #'  breaks if needed. This is to create more attractive, human-readable axis
 #'  labels and table values.
+#'}
+#'}
+#' @keywords data
+NULL
+
+
+
+
+#' Sample eEPSC t-test results
+#'
+#' This is an example of the dataframe of t-test results produced using
+#' [perform_t_tests_for_summary_plot()]. The dataframe can be used for further
+#' statistical analyses, and it also has specialized columns to add significance
+#' stars to the plot produced with [make_summary_plot()].
+#'
+#' @name sample_eEPSC_t_test_df
+#' @docType data
+#' @format An .rda file containing 16 objects of 10 variables
+#' \describe{
+#'  \itemize{
+#'  \item `treatment` A character value specifying the treatment applied (e.g.
+#'  "Control", "HNMPA").
+#'  \item `.y.` A character value describing the parameter compared with the
+#'  t-test. In this case, this uses the mean normalized amplitude of the first
+#'  evoked current ("mean_P1_transformed") which has been generated using
+#'  [make_pruned_EPSC_data()].
+#'  \item `group1` A character value describing the first group used in the
+#'  paired t-test. This is the baseline interval, "t0to5".
+#'  \item `group2` A character value describing the second group used in
+#'  the paired t-test. Examples include "t5to10" and "t10to15".
+#'  \item `n1` The number of paired values used in the comparison.
+#'  \item `statistic` The test statistic.
+#'  \item `df` The degrees of freedom
+#'  \item `p_string` The p-value expressed as a character value using
+#'  `lazyWeave::pvalString()`, which rounds the values and expresses them
+#'  according to typical published values (e.g. > 0.99, < 0.001 instead of
+#'  exact values)
+#'  \item `significance_stars` A character value containing asterisks indicating
+#'  significance. `p < 0.05 = *`, `p < 0.01 = **`, and `p < 0.001 = ***`.
+#'  \item `asterisk_time` A numeric value indicating the time value where a
+#'  significance star will be added. This is the midpoint of each interval. For
+#'  example, the `asterisk_time` for an interval from `5` to `10` minutes will
+#'  be `7.5` minutes.
+#'}
+#'}
+#' @keywords data
+NULL
+
+#' Sample pruned eEPSC dataframe
+#'
+#' This is an example of the dataframe of excitatory current amplitudes produced
+#' using [make_pruned_EPSC_data()]. This dataset is a list with three dataframes
+#' containing the pruned data. It can be used for further statistical analyses
+#' or for plotting. [make_raw_plots()] and [make_summary_plot()] in particular
+#' depend heavily on this type of dataset.
+#'
+#' \itemize{
+#'  \item `individual_cells` is used to make pruned plots of individual
+#'  recordings using [make_raw_plots()].
+#'  \item `for_table` is used to make the experiment overview table
+#'  \item `all_cells` is used in [make_summary_plot()]
+#' }
+#'
+#' @name sample_pruned_eEPSC_df
+#' @docType data
+#' @format An list of 3 dataframes: `individual_cells`, `for_table` and
+#'   `all_cells`.
+#' \describe{
+#'  \itemize{
+#'  \item `individual_cells` is used to make pruned plots of individual
+#'  recordings using [make_raw_plots()]. For an explanation of each variable
+#'  included in this dataframe, please see the documentation for
+#'  [make_pruned_EPSC_data()].
+#'  \item `for_table` is used to make the experiment overview table. For an
+#'  explanation of each variable included in this dataframe, please see the
+#'  documentation for [make_pruned_EPSC_data()].
+#'  \item `all_cells` is used in [make_summary_plot()]. For an explanation of
+#'  each variable included in this dataframe, please see the documentation for
+#'  [make_pruned_EPSC_data()].
 #'}
 #'}
 #' @keywords data
