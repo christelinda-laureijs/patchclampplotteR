@@ -16,21 +16,23 @@ make_pruned_EPSC_data(
 }
 \arguments{
 \item{data}{A \code{data.frame} object generated using
-make_normalized_EPSC_data().
-It must contain the columns outlined in the Required columns section below.}
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}. It must contain the columns outlined in the
+Required columns section below, which will already be generated for you
+from the output of \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.}
 
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
 
-\item{min_time_value}{Minimum time value (in minutes), which defaults to 0.}
+\item{min_time_value}{Minimum time value (numeric; in minutes), which
+defaults to 0.}
 
-\item{max_time_value}{Maximum recording length (in minutes). All data points
-will be filtered to time values less than or equal to this value. Defaults
-to 25.}
+\item{max_time_value}{Maximum recording length (numeric; in minutes). All
+data points will be filtered to time values less than or equal to this
+value. Defaults to 25.}
 
-\item{baseline_length}{Length of the baseline (in minutes). Refers to data
-collected before applying a hormone, antagonist, or a protocol like high
-frequency stimulation. Defaults to 5.}
+\item{baseline_length}{Length of the baseline (numeric; in minutes). Refers
+to data collected before applying a hormone, antagonist, or a protocol like
+high frequency stimulation. Defaults to 5.}
 
 \item{interval_length}{Length of each interval (in minutes). Used to divide
 the dataset into broad ranges for statistical analysis. Defaults to 1 for
@@ -40,27 +42,105 @@ one summary point per minute.}
 resulting object should be saved as an RDS file in the raw data folder.}
 }
 \value{
-A list with 3 named elements. These elements are dataframes that can
-be viewed and used for further analyses in R. I highly recommend assigning
-the list to an object named something like \code{pruned_eEPSC_df} to make it
-easy to reference the dataframes with logical names (e.g.
-\code{pruned_eEPSC_df$all_cells}). The dataframes are:
+A list containing 3 dataframes that can be viewed and used for
+further analyses in R. These dataframes are:
+
+\itemize{
+\item \code{individual_cells}
+\item \code{for_table}
+\item \code{all_cells}
+}
+
+I highly recommend assigning the list to an object
+named something like \code{pruned_eEPSC_df} to make it easy to reference the
+dataframes with logical names (e.g. \code{pruned_eEPSC_df$all_cells}). The
+dataframes are:
+
 \itemize{
 \item \code{individual_cells} A dataframe containing current data for each
 individual cell, but the data are reduced to a summary  point per per minute
-(or another value if a different \code{interval_length} is set). New columns
-include mean amplitude (\code{mean_P1} in pA), standard deviation (\code{sd_P1}),
-standard error (\code{se}), coefficient of variation (\code{cv}) and, inverse
-coefficient of variation squared (\code{cv_inverse_square}).
-\item \code{all_cells} A dataframe consisting of all data within a single
-treatment grouped and summarized per minute.
+(or another value if a different \code{interval_length} is set). This dataframe
+contains columns already in the raw data, like \code{category}, \code{letter} and
+\code{sex} plus  new columns.
+
+New columns for evoked current data (\code{current_type == "eEPSC"}) include:
+\itemize{
+\item \code{interval_pruned} A character value describing the interval that was
+used for the pruning function. If the data are pruned per minute, this
+will be "t0to1", "t1to2", "t2to3", etc.
+\item \code{mean_P1} The mean amplitude (in pA) of the first evoked current
+(P1) during a specific interval. This is an average of all data points
+within each interval. For example, the \code{mean_P1} for the interval "t0to1"
+contains the average current amplitude of all data points within the first
+minute of the recording.
+\item \code{sd_P1} The standard deviation of P1.
+\item \code{n} The number of data points used.
+\item \code{se} The standard error of P1.
+\item \code{cv} The coefficient of variation of P1.
+\item \code{cv_inverse_square} The inverse coefficient of variation, which is
+then squared. This is to enable variance analysis, as in
+\href{https://doi.org/10.1016/j.jneumeth.2019.108526}{Huijstee & Kessels (2020)}.
+\item \code{baseline_mean} The mean amplitude of the first evoked current
+during the baseline period.
+\item \verb{category, letter, sex, treatment, etc.} Columns which are
+from the raw data. For a definition of these columns, please see the
+documentation for \code{\link[=make_normalized_EPSC_df]{make_normalized_EPSC_df()}}.
+\item \code{time} The upper time value of the interval (e.g. 2 minutes for
+"t1to2") which is used on the x-axis of plots such as in
+\code{\link[=make_raw_plots]{make_raw_plots()}}.
+}
+
+New columns for spontaneous current data (\code{current_type == "sEPSC"})
+include:
+\itemize{
+\item \code{mean_amplitude} The mean amplitude of the normalized spontaneous
+current amplitude for a specific interval (obtained from
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}).
+\item \code{mean_raw_amplitude} The mean amplitude of the raw spontaneous
+current amplitude for a specific interval.
+\item \code{sd_amplitude} The standard deviation of the normalized spontaneous
+current amplitudes.
+\item \code{n} The number of currents
+\item \code{frequency} The frequency (in Hz) of currents during the interval.
+\item \code{se} The standard error of the normalized spontaneous current
+amplitudes.
+\item \verb{letter, category, interval, synapses} Columns inherited from the
+raw data.
+\item \code{time} The upper time value of the interval (e.g. 2 minutes for
+"t1to2") which is used on the x-axis of plots such as in
+\code{\link[=make_summary_plot]{make_summary_plot()}}.
+\item \code{baseline_range} A logical value required for the baseline
+transformation. It is set to TRUE when time is within the baseline period
+(e.g. Time <= 5) and FALSE at all other times.
+\item \code{baseline_mean_frequency} The mean spontaneous frequency during the
+baseline period.
+\item \code{frequency_transformed} The spontaneous current frequency (in Hz),
+normalized relative to the baseline current frequency.
+}
+
 \item \code{for_table} A dataframe containing two columns: letter and
 \code{P1_transformed} (for \code{eEPSC}) or \code{spont_amplitude_transformed} (for
-\code{sEPSC}). The current data (\verb{P1_transformed``spont_amplitude_transformed})
-is collapsed into a single row for each letter, with the current data for
-each letter stored as a list. This is required to create sparklines of
-current amplitude over time within the cell summary table. See
-make_cell_summary_df() and make_interactive_summary_table().
+\code{sEPSC}). The current data is collapsed into a single row for each letter,
+with the current data for each letter stored as a list. This is required to
+create sparklines of current amplitude over time within the cell summary
+table. See make_cell_summary_df() and make_interactive_summary_table().
+
+\item \code{all_cells} A dataframe consisting of all data within a single
+treatment grouped and summarized per minute (or some other variable if you
+change \code{interval_length} to be something other than \code{1}). Columns like
+\code{category} and \code{sex} are retained from the raw data. New columns for evoked
+current data (\code{current_type == "eEPSC"}) are:
+\itemize{
+\item \code{interval_pruned} A character value describing the interval that was
+used for the pruning function. If the data are pruned per minute, this
+will be "t0to1", "t1to2", "t2to3", etc.
+\item \code{mean_P1_all_cells} The mean amplitude (in pA) of the first evoked
+current (P1) during a specific interval across all cells.
+\item \code{sd_P1_all_cells} The standard deviation of P1.
+\item \code{n} The number of data points used.
+\item \code{se_P1_all_cells} The standard error of P1.
+\item \code{cv_P1_all_cells} The coefficient of variation of P1.
+}
 }
 }
 \description{
@@ -72,32 +152,36 @@ summary values for every n rows.
 }
 \section{Required evoked currents columns}{
 
-See sample_raw_eEPSC_df for an example of what the final dataset would look
-like. If the data are evoked currents (current_type == "eEPSC"), the data
-must contain the basic columns mentioned in \strong{Required basic columns} plus
-these columns:
+
+These columns will all be generated automatically in
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}, but for more details, you can look at
+\link{sample_raw_eEPSC_df} to see an example of what the incoming raw dataset in
+the \code{data} argument should look like. If the data are evoked currents
+(\code{current_type == "eEPSC"}), the data must contain the basic columns
+mentioned in \strong{Required basic columns} plus these columns:
 
 \itemize{
 \item \code{PPR} A numeric value that represents the paired pulse ratio (PPR) of
 the evoked currents, generated in
-make_normalized_EPSC_data()
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}
 \item \code{interval} A character value indicating the interval that the data
 belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
-automatically in make_normalized_EPSC_data().
+automatically in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{baseline_range} A logical value required for the baseline
 transformation. It is set to TRUE when time is within the baseline period
-(e.g. Time <= 5) and FALSE at all other times.
+(e.g. \code{time <= 5}) and FALSE at all other times. Generated automatically in
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{baseline_mean} A numeric value representing the mean evoked current
 amplitude during the baseline period. There is a different baseline_mean for
-each letter. Generated automatically in make_normalized_EPSC_data().
+each letter. Generated automatically in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{P1_transformed} A numeric value representing the first evoked current
 amplitude (pA) normalized relative to the mean amplitude during the
 recording's baseline. Generated automatically in
-make_normalized_EPSC_data().
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{P2_transformed} A numeric value representing the second evoked
 current amplitude (pA) normalized relative to the mean amplitude during the
 recording's baseline. Generated automatically in
-make_normalized_EPSC_data().
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 }
 }
 
@@ -110,17 +194,17 @@ columns:
 \itemize{
 \item \code{interval} A character value indicating the interval that the data
 belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
-automatically in make_normalized_EPSC_data().
+automatically in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{baseline_range} A logical value required for the baseline
 transformation. It is set to TRUE when time is within the baseline period
 (e.g. Time <= 5) and FALSE at all other times.
 \item \code{baseline_mean} A numeric value representing the mean evoked current
 amplitude during the baseline period. There is a different baseline_mean for
-each letter. Generated automatically in make_normalized_EPSC_data().
+each letter. Generated automatically in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{amplitude_transformed} A numeric value representing the spontaneous
 current amplitude (pA) normalized relative to the mean amplitude during the
 recording's baseline. Generated automatically in
-make_normalized_EPSC_data().
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 }
 }
 
@@ -196,4 +280,12 @@ make_pruned_EPSC_data(data = sample_raw_eEPSC_df,
   max_time_value = 25,
   baseline_length = 5,
   interval_length = 1)
+}
+\seealso{
+\code{\link[=make_variance_data]{make_variance_data()}} to see an example of how you can use pruned
+data to perform variance analysis to determine the mechanism of changing
+synaptic plasticity.
+
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}} for a description of how baseline
+normalization works.
 }

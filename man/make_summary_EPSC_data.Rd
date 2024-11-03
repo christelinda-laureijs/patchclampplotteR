@@ -12,8 +12,9 @@ make_summary_EPSC_data(
 }
 \arguments{
 \item{data}{A \code{data.frame} object generated using
-make_normalized_EPSC_data().
-It must contain the columns outlined in the Required columns section below.}
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}. It must contain the columns outlined in the
+Required columns section below, which will already be generated for you
+from the output of \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.}
 
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
@@ -25,7 +26,7 @@ resulting object should be saved as an RDS file in the raw data folder.}
 A dataframe with summary data such as the mean current amplitude,
 coefficient of variation, standard deviation, standard error, variance,
 variance-to-mean ratio, and inverse coefficient of variation squared for
-each interval. See sample_summary_eEPSC_df for detailed information on
+each interval. See \link{sample_summary_eEPSC_df} for detailed information on
 the columns and what they mean.
 }
 \description{
@@ -34,7 +35,7 @@ the columns and what they mean.
 generate summary data like the mean current amplitude for each interval. This
 can be useful for inserting into statistical models to compare effect sizes
 across broad stretches of time. The interval length would have been
-previously specified in make_normalized_EPSC_data() using the
+previously specified in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}} using the
 \code{interval_length} argument.
 }
 \section{Required basic columns}{
@@ -104,32 +105,36 @@ current in pA.
 
 \section{Required evoked currents columns}{
 
-See sample_raw_eEPSC_df for an example of what the final dataset would look
-like. If the data are evoked currents (current_type == "eEPSC"), the data
-must contain the basic columns mentioned in \strong{Required basic columns} plus
-these columns:
+
+These columns will all be generated automatically in
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}, but for more details, you can look at
+\link{sample_raw_eEPSC_df} to see an example of what the incoming raw dataset in
+the \code{data} argument should look like. If the data are evoked currents
+(\code{current_type == "eEPSC"}), the data must contain the basic columns
+mentioned in \strong{Required basic columns} plus these columns:
 
 \itemize{
 \item \code{PPR} A numeric value that represents the paired pulse ratio (PPR) of
 the evoked currents, generated in
-make_normalized_EPSC_data()
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}
 \item \code{interval} A character value indicating the interval that the data
 belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
-automatically in make_normalized_EPSC_data().
+automatically in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{baseline_range} A logical value required for the baseline
 transformation. It is set to TRUE when time is within the baseline period
-(e.g. Time <= 5) and FALSE at all other times.
+(e.g. \code{time <= 5}) and FALSE at all other times. Generated automatically in
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{baseline_mean} A numeric value representing the mean evoked current
 amplitude during the baseline period. There is a different baseline_mean for
-each letter. Generated automatically in make_normalized_EPSC_data().
+each letter. Generated automatically in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{P1_transformed} A numeric value representing the first evoked current
 amplitude (pA) normalized relative to the mean amplitude during the
 recording's baseline. Generated automatically in
-make_normalized_EPSC_data().
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{P2_transformed} A numeric value representing the second evoked
 current amplitude (pA) normalized relative to the mean amplitude during the
 recording's baseline. Generated automatically in
-make_normalized_EPSC_data().
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 }
 }
 
@@ -142,17 +147,17 @@ columns:
 \itemize{
 \item \code{interval} A character value indicating the interval that the data
 belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
-automatically in make_normalized_EPSC_data().
+automatically in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{baseline_range} A logical value required for the baseline
 transformation. It is set to TRUE when time is within the baseline period
 (e.g. Time <= 5) and FALSE at all other times.
 \item \code{baseline_mean} A numeric value representing the mean evoked current
 amplitude during the baseline period. There is a different baseline_mean for
-each letter. Generated automatically in make_normalized_EPSC_data().
+each letter. Generated automatically in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{amplitude_transformed} A numeric value representing the spontaneous
 current amplitude (pA) normalized relative to the mean amplitude during the
 recording's baseline. Generated automatically in
-make_normalized_EPSC_data().
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 }
 }
 

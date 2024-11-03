@@ -14,15 +14,16 @@
 #'   "Required columns" below.
 #' @param current_type A character describing the current type. Allowed values
 #'   are "eEPSC" or "sEPSC".
-#' @param min_time_value Minimum time value (in minutes), which defaults to 0.
-#' @param max_time_value Maximum recording length (in minutes). All data points
-#'   will be filtered to time values less than or equal to this value. Defaults
-#'   to 25.
-#' @param baseline_length Length of the baseline (in minutes). Refers to data
-#'   collected before applying a hormone, antagonist, or a protocol like high
-#'   frequency stimulation. Defaults to 5.
-#' @param interval_length Length of each interval (in minutes). Used to divide
-#'   the dataset into broad ranges for statistical analysis. Important!
+#' @param min_time_value Minimum time value (numeric; in minutes), which
+#'   defaults to 0.
+#' @param max_time_value Maximum recording length (numeric; in minutes). All
+#'   data points will be filtered to time values less than or equal to this
+#'   value. Defaults to 25.
+#' @param baseline_length Length of the baseline (numeric; in minutes). Refers
+#'   to data collected before applying a hormone, antagonist, or a protocol like
+#'   high frequency stimulation. Defaults to 5.
+#' @param interval_length Length of each interval (numeric; in minutes). Used to
+#'   divide the dataset into broad ranges for statistical analysis. Important!
 #'   `max_recording_length` must be evenly divisible by `interval_length`.
 #'   Defaults to 5.
 #' @param negative_transform_currents A character ("yes" or "no") describing if
@@ -310,66 +311,148 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #' summary values for every n rows.
 #'
 #' @param data A `data.frame` object generated using
-#'   make_normalized_EPSC_data().
-#' It must contain the columns outlined in the Required columns section below.
+#'   [make_normalized_EPSC_data()]. It must contain the columns outlined in the
+#'   Required columns section below, which will already be generated for you
+#'   from the output of [make_normalized_EPSC_data()].
 #' @inheritParams make_normalized_EPSC_data
 #' @param interval_length Length of each interval (in minutes). Used to divide
 #'   the dataset into broad ranges for statistical analysis. Defaults to 1 for
 #'   one summary point per minute.
 #'
+#' @returns A list containing 3 dataframes that can be viewed and used for
+#'   further analyses in R. These dataframes are:
 #'
-#' @returns A list with 3 named elements. These elements are dataframes that can
-#'   be viewed and used for further analyses in R. I highly recommend assigning
-#'   the list to an object named something like `pruned_eEPSC_df` to make it
-#'   easy to reference the dataframes with logical names (e.g.
-#'   `pruned_eEPSC_df$all_cells`). The dataframes are:
+#'   \itemize{
+#'    \item `individual_cells`
+#'    \item `for_table`
+#'    \item `all_cells`
+#'   }
+#'
+#'   I highly recommend assigning the list to an object
+#'   named something like `pruned_eEPSC_df` to make it easy to reference the
+#'   dataframes with logical names (e.g. `pruned_eEPSC_df$all_cells`). The
+#'   dataframes are:
+#'
 #'\itemize{
 #'  \item `individual_cells` A dataframe containing current data for each
 #'  individual cell, but the data are reduced to a summary  point per per minute
-#'  (or another value if a different `interval_length` is set). New columns
-#'  include mean amplitude (`mean_P1` in pA), standard deviation (`sd_P1`),
-#'  standard error (`se`), coefficient of variation (`cv`) and, inverse
-#'  coefficient of variation squared (`cv_inverse_square`).
-#'  \item `all_cells` A dataframe consisting of all data within a single
-#'  treatment grouped and summarized per minute.
+#'  (or another value if a different `interval_length` is set). This dataframe
+#'  contains columns already in the raw data, like `category`, `letter` and
+#'  `sex` plus  new columns.
+#'
+#'  New columns for evoked current data (`current_type == "eEPSC"`) include:
+#'  \itemize{
+#'    \item `interval_pruned` A character value describing the interval that was
+#'    used for the pruning function. If the data are pruned per minute, this
+#'    will be "t0to1", "t1to2", "t2to3", etc.
+#'    \item `mean_P1` The mean amplitude (in pA) of the first evoked current
+#'    (P1) during a specific interval. This is an average of all data points
+#'    within each interval. For example, the `mean_P1` for the interval "t0to1"
+#'    contains the average current amplitude of all data points within the first
+#'    minute of the recording.
+#'    \item `sd_P1` The standard deviation of P1.
+#'    \item `n` The number of data points used.
+#'    \item `se` The standard error of P1.
+#'    \item `cv` The coefficient of variation of P1.
+#'    \item `cv_inverse_square` The inverse coefficient of variation, which is
+#'    then squared. This is to enable variance analysis, as in
+#'    [Huijstee & Kessels (2020)](https://doi.org/10.1016/j.jneumeth.2019.108526).
+#'    \item `baseline_mean` The mean amplitude of the first evoked current
+#'    during the baseline period.
+#'    \item `category, letter, sex, treatment, etc.` Columns which are
+#'    from the raw data. For a definition of these columns, please see the
+#'    documentation for [make_normalized_EPSC_df()].
+#'    \item `time` The upper time value of the interval (e.g. 2 minutes for
+#'    "t1to2") which is used on the x-axis of plots such as in
+#'    [make_raw_plots()].
+#'  }
+#'
+#'  New columns for spontaneous current data (`current_type == "sEPSC"`)
+#'  include:
+#'  \itemize{
+#'    \item `mean_amplitude` The mean amplitude of the normalized spontaneous
+#'    current amplitude for a specific interval (obtained from
+#'    [make_normalized_EPSC_data()]).
+#'    \item `mean_raw_amplitude` The mean amplitude of the raw spontaneous
+#'    current amplitude for a specific interval.
+#'    \item `sd_amplitude` The standard deviation of the normalized spontaneous
+#'    current amplitudes.
+#'    \item `n` The number of currents
+#'    \item `frequency` The frequency (in Hz) of currents during the interval.
+#'    \item `se` The standard error of the normalized spontaneous current
+#'    amplitudes.
+#'    \item `letter, category, interval, synapses` Columns inherited from the
+#'    raw data.
+#'    \item `time` The upper time value of the interval (e.g. 2 minutes for
+#'    "t1to2") which is used on the x-axis of plots such as in
+#'    [make_summary_plot()].
+#'  \item `baseline_range` A logical value required for the baseline
+#'  transformation. It is set to TRUE when time is within the baseline period
+#'  (e.g. Time <= 5) and FALSE at all other times.
+#'    \item `baseline_mean_frequency` The mean spontaneous frequency during the
+#'    baseline period.
+#'    \item `frequency_transformed` The spontaneous current frequency (in Hz),
+#'    normalized relative to the baseline current frequency.
+#'  }
+#'
 #'  \item `for_table` A dataframe containing two columns: letter and
 #'  `P1_transformed` (for `eEPSC`) or `spont_amplitude_transformed` (for
-#'  `sEPSC`). The current data (`P1_transformed``spont_amplitude_transformed`)
-#'  is collapsed into a single row for each letter, with the current data for
-#'  each letter stored as a list. This is required to create sparklines of
-#'  current amplitude over time within the cell summary table. See
-#'  make_cell_summary_df() and make_interactive_summary_table().
+#'  `sEPSC`). The current data is collapsed into a single row for each letter,
+#'  with the current data for each letter stored as a list. This is required to
+#'  create sparklines of current amplitude over time within the cell summary
+#'  table. See make_cell_summary_df() and make_interactive_summary_table().
+#'
+#'  \item `all_cells` A dataframe consisting of all data within a single
+#'  treatment grouped and summarized per minute (or some other variable if you
+#'  change `interval_length` to be something other than `1`). Columns like
+#'  `category` and `sex` are retained from the raw data. New columns for evoked
+#'  current data (`current_type == "eEPSC"`) are:
+#'  \itemize{
+#'    \item `interval_pruned` A character value describing the interval that was
+#'    used for the pruning function. If the data are pruned per minute, this
+#'    will be "t0to1", "t1to2", "t2to3", etc.
+#'    \item `mean_P1_all_cells` The mean amplitude (in pA) of the first evoked
+#'    current (P1) during a specific interval across all cells.
+#'    \item `sd_P1_all_cells` The standard deviation of P1.
+#'    \item `n` The number of data points used.
+#'    \item `se_P1_all_cells` The standard error of P1.
+#'    \item `cv_P1_all_cells` The coefficient of variation of P1.
+#'  }
 #'}
 #'
 #' @inheritSection make_normalized_EPSC_data Required basic columns
 #'
 #' @section Required evoked currents columns:
-#' See sample_raw_eEPSC_df for an example of what the final dataset would look
-#' like. If the data are evoked currents (current_type == "eEPSC"), the data
-#' must contain the basic columns mentioned in **Required basic columns** plus
-#' these columns:
+#'
+#' These columns will all be generated automatically in
+#' [make_normalized_EPSC_data()], but for more details, you can look at
+#' [sample_raw_eEPSC_df] to see an example of what the incoming raw dataset in
+#' the `data` argument should look like. If the data are evoked currents
+#' (`current_type == "eEPSC"`), the data must contain the basic columns
+#' mentioned in **Required basic columns** plus these columns:
 #'
 #' \itemize{
 #'  \item `PPR` A numeric value that represents the paired pulse ratio (PPR) of
 #'  the evoked currents, generated in
-#'  make_normalized_EPSC_data()
+#'  [make_normalized_EPSC_data()]
 #'  \item `interval` A character value indicating the interval that the data
 #'  belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
-#'  automatically in make_normalized_EPSC_data().
+#'  automatically in [make_normalized_EPSC_data()].
 #'  \item `baseline_range` A logical value required for the baseline
 #'  transformation. It is set to TRUE when time is within the baseline period
-#'  (e.g. Time <= 5) and FALSE at all other times.
+#'  (e.g. `time <= 5`) and FALSE at all other times. Generated automatically in
+#'  [make_normalized_EPSC_data()].
 #'  \item `baseline_mean` A numeric value representing the mean evoked current
 #'  amplitude during the baseline period. There is a different baseline_mean for
-#'  each letter. Generated automatically in make_normalized_EPSC_data().
+#'  each letter. Generated automatically in [make_normalized_EPSC_data()].
 #'  \item `P1_transformed` A numeric value representing the first evoked current
 #'  amplitude (pA) normalized relative to the mean amplitude during the
 #'  recording's baseline. Generated automatically in
-#'  make_normalized_EPSC_data().
+#'  [make_normalized_EPSC_data()].
 #'  \item `P2_transformed` A numeric value representing the second evoked
 #'  current amplitude (pA) normalized relative to the mean amplitude during the
 #'  recording's baseline. Generated automatically in
-#'  make_normalized_EPSC_data().
+#'  [make_normalized_EPSC_data()].
 #'}
 #' @section Required spontaneous currents columns:
 #' If the data are spontaneous currents (current_type == "sEPSC"), the data must
@@ -379,20 +462,29 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'\itemize{
 #'  \item `interval` A character value indicating the interval that the data
 #'  belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
-#'  automatically in make_normalized_EPSC_data().
+#'  automatically in [make_normalized_EPSC_data()].
 #'  \item `baseline_range` A logical value required for the baseline
 #'  transformation. It is set to TRUE when time is within the baseline period
-#'  (e.g. Time <= 5) and FALSE at all other times.
+#'  (e.g. Time <= 5) and FALSE at all other times. Generated
+#'  automatically in [make_normalized_EPSC_data()].
 #'  \item `baseline_mean` A numeric value representing the mean evoked current
 #'  amplitude during the baseline period. There is a different baseline_mean for
-#'  each letter. Generated automatically in make_normalized_EPSC_data().
+#'  each letter. Generated automatically in [make_normalized_EPSC_data()].
 #'  \item `amplitude_transformed` A numeric value representing the spontaneous
 #'  current amplitude (pA) normalized relative to the mean amplitude during the
 #'  recording's baseline. Generated automatically in
-#'  make_normalized_EPSC_data().
+#'  [make_normalized_EPSC_data()].
 #'}
 #'
 #' @export
+#'
+#' @seealso [make_variance_data()] to see an example of how you can use pruned
+#'   data to perform variance analysis to determine the mechanism of changing
+#'   synaptic plasticity.
+#'
+#' @seealso [make_normalized_EPSC_data()] for a description of how baseline
+#'   normalization works.
+#'
 #' @examples
 #' make_pruned_EPSC_data(data = sample_raw_eEPSC_df,
 #'   current_type = "eEPSC",
@@ -594,7 +686,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #' generate summary data like the mean current amplitude for each interval. This
 #' can be useful for inserting into statistical models to compare effect sizes
 #' across broad stretches of time. The interval length would have been
-#' previously specified in make_normalized_EPSC_data() using the
+#' previously specified in [make_normalized_EPSC_data()] using the
 #' `interval_length` argument.
 #'
 #' @inheritParams make_pruned_EPSC_data
@@ -605,7 +697,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #' @returns A dataframe with summary data such as the mean current amplitude,
 #'   coefficient of variation, standard deviation, standard error, variance,
 #'   variance-to-mean ratio, and inverse coefficient of variation squared for
-#'   each interval. See sample_summary_eEPSC_df for detailed information on
+#'   each interval. See [sample_summary_eEPSC_df] for detailed information on
 #'   the columns and what they mean.
 #'
 #' @export
@@ -923,4 +1015,139 @@ perform_t_tests_for_summary_plot <- function(data,
   }
 
   return(t_test_table)
+}
+
+
+
+#' Make variance analysis dataframe
+#'
+#' `make_variance_data` creates a dataframe containing variance measures at two
+#' time points. They are the baseline period and a user-specified interval after
+#' a hormone or protocol has been applied. The variance measures are the inverse
+#' coefficient of variation squared and the variance-to-mean ratio (VMR). A
+#' "before vs. after" comparison of these two variance measures is useful to
+#' determine which mechanism is involved in modifying synaptic plasticity. For
+#' more information, please see [Huijstee & Kessels
+#' (2020)](https://doi.org/10.1016/j.jneumeth.2019.108526).
+#'
+#' @inheritParams make_baseline_comparison_plot
+#' @inheritParams make_normalized_EPSC_data
+#' @param df_category A numeric value describing the experimental category. In
+#'   the sample dataset for this package, 2 represents experiments where insulin
+#'   was applied continuously after a 5-minute baseline period. Here,
+#'   `plot_treatment` represents antagonists that were present on the brain
+#'   slice, or the animals were fasted, etc.
+#' @param post_hormone_interval A character value indicating the name of the
+#'   interval used as "after" timepoint for comparison. Defaults to "t20to25",
+#'   but can be changed. Make sure that this matches an interval present in
+#'   `data`
+#'
+#' @return A dataframe
+#'
+#' @export
+#'
+#' @examples
+#'
+#' make_variance_data(data = sample_summary_eEPSC_df,
+#'  df_category = 2,
+#'  include_all_treatments = "yes",
+#'  list_of_treatments = NULL,
+#'  baseline_interval = "t0to5",
+#'  post_hormone_interval = "t20to25",
+#'  treatment_colour_theme = sample_treatment_names_and_colours,
+#'  save_output_as_RDS = "no"
+#' )
+#'
+
+make_variance_data <- function(data,
+                               df_category,
+                               include_all_treatments = "yes",
+                               list_of_treatments = NULL,
+                               baseline_interval,
+                               post_hormone_interval,
+                               treatment_colour_theme,
+                               save_output_as_RDS = "no") {
+
+  if (!save_output_as_RDS %in% c("yes", "no")) {
+    stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+  }
+
+
+  if (include_all_treatments == "yes") {
+    dataframe <- data %>%
+      dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
+      droplevels()
+
+    treatment_info <- treatment_colour_theme
+
+    if (!is.null(list_of_treatments)) {
+      warning(
+        "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
+      )
+    }
+
+  } else {
+    if (is.null(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is NULL.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    if (!is.character(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is not a character object.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    if (is.null(baseline_interval) ||
+        !is.character(baseline_interval)) {
+      stop("'baseline_interval' must be a character (e.g. \"t0to5\", \"t0to3\")")
+    }
+
+    if (is.null(post_hormone_interval) ||
+        !is.character(post_hormone_interval)) {
+      stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
+    }
+
+    dataframe <- data %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments) %>%
+      droplevels()
+
+    treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments)
+  }
+
+
+
+  variance_data <- dataframe %>%
+    dplyr::filter(.data$category == df_category) %>%
+    dplyr::filter(.data$interval == baseline_interval |
+                    .data$interval == post_hormone_interval) %>%
+    dplyr::mutate(
+      state = dplyr::case_when(
+        interval == baseline_interval ~ "Baseline",
+        interval == post_hormone_interval ~ "Post-modification",
+        T ~ interval
+      )
+    ) %>%
+    dplyr::group_by(.data$treatment, state) %>%
+    dplyr::mutate(
+      mean_cv_inverse_square = mean(.data$cv_inverse_square),
+      mean_VMR = mean(VMR)
+    ) %>%
+    dplyr::arrange(match(.data$treatment, treatment_info$display_names))
+
+  return(variance_data)
+
+  if (save_output_as_RDS == "yes") {
+    saveRDS(variance_data, file = here::here(
+      paste0("Data/Output-Data-from-R/variance_data.RDS")
+    ))
+  }
 }

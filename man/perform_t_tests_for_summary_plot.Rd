@@ -43,8 +43,8 @@ interval used as the baseline. Defaults to "t0to5", but can be changed.
 Make sure that this matches the baseline interval that you set in
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.}
 
-\item{interval_length}{Length of each interval (in minutes). Used to divide
-the dataset into broad ranges for statistical analysis. Important!
+\item{interval_length}{Length of each interval (numeric; in minutes). Used to
+divide the dataset into broad ranges for statistical analysis. Important!
 \code{max_recording_length} must be evenly divisible by \code{interval_length}.
 Defaults to 5.}
 

@@ -25,18 +25,19 @@ factors like \code{animal}, \code{age}, \code{sex}, \code{synapses}). Please see
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
 
-\item{min_time_value}{Minimum time value (in minutes), which defaults to 0.}
+\item{min_time_value}{Minimum time value (numeric; in minutes), which
+defaults to 0.}
 
-\item{max_time_value}{Maximum recording length (in minutes). All data points
-will be filtered to time values less than or equal to this value. Defaults
-to 25.}
+\item{max_time_value}{Maximum recording length (numeric; in minutes). All
+data points will be filtered to time values less than or equal to this
+value. Defaults to 25.}
 
-\item{baseline_length}{Length of the baseline (in minutes). Refers to data
-collected before applying a hormone, antagonist, or a protocol like high
-frequency stimulation. Defaults to 5.}
+\item{baseline_length}{Length of the baseline (numeric; in minutes). Refers
+to data collected before applying a hormone, antagonist, or a protocol like
+high frequency stimulation. Defaults to 5.}
 
-\item{interval_length}{Length of each interval (in minutes). Used to divide
-the dataset into broad ranges for statistical analysis. Important!
+\item{interval_length}{Length of each interval (numeric; in minutes). Used to
+divide the dataset into broad ranges for statistical analysis. Important!
 \code{max_recording_length} must be evenly divisible by \code{interval_length}.
 Defaults to 5.}
 
