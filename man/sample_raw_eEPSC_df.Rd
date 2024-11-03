@@ -56,11 +56,11 @@ recording's baseline.
 }
 \description{
 This is an example of the raw eEPSC data produced using
-make_normalized_EPSC_data()]. It is useful for demonstrating functions that
-build off of this dataset, such as make_pruned_EPSC_data()] and plotting
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}. It is useful for demonstrating functions that
+build off of this dataset, such as \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}} and plotting
 functions.
 }
 \seealso{
-make_normalized_EPSC_data()] and make_pruned_EPSC_data()]
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}} and \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}
 }
 \keyword{data}

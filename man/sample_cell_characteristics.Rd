@@ -46,7 +46,7 @@ files.
 
 You should import this .csv file using the import_cell_characteristics_df()]
 function, which will format it in a format that makes it easy to merge with
-raw recording data in functions like make_normalized_EPSC_data()]. This will
+raw recording data in functions like \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}. This will
 enable you to analyze relationships between properties like age and current
 amplitude.
 }
@@ -55,6 +55,6 @@ utils::read.csv(import_ext_data("sample_cell_characteristics.csv"))
 
 }
 \seealso{
-import_cell_characteristics_df()] and make_normalized_EPSC_data()]
+\code{\link[=import_cell_characteristics_df]{import_cell_characteristics_df()}} and \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}
 }
 \keyword{data}

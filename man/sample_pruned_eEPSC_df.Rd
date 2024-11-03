@@ -10,15 +10,56 @@ An list of 3 dataframes: \code{individual_cells}, \code{for_table} and
 \describe{
 \itemize{
 \item \code{individual_cells} is used to make pruned plots of individual
-recordings using \code{\link[=make_raw_plots]{make_raw_plots()}}. For an explanation of each variable
-included in this dataframe, please see the documentation for
-\code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}.
-\item \code{for_table} is used to make the experiment overview table. For an
-explanation of each variable included in this dataframe, please see the
-documentation for \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}.
-\item \code{all_cells} is used in \code{\link[=make_summary_plot]{make_summary_plot()}}. For an explanation of
-each variable included in this dataframe, please see the documentation for
-\code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}.
+recordings using \code{\link[=make_raw_plots]{make_raw_plots()}}.
+\itemize{
+\item \code{interval_pruned} A character value describing the interval that was
+used for the pruning function. If the data are pruned per minute, this
+will be "t0to1", "t1to2", "t2to3", etc.
+\item \code{mean_P1} The mean amplitude (in pA) of the first evoked current
+(P1) during a specific interval. This is an average of all data points
+within each interval. For example, the \code{mean_P1} for the interval "t0to1"
+contains the average current amplitude of all data points within the first
+minute of the recording.
+\item \code{sd_P1} The standard deviation of P1.
+\item \code{n} The number of data points used.
+\item \code{se} The standard error of P1.
+\item \code{cv} The coefficient of variation of P1.
+\item \code{cv_inverse_square} The inverse coefficient of variation, which is
+then squared. This is to enable variance analysis, as in
+\href{https://doi.org/10.1016/j.jneumeth.2019.108526}{Huijstee & Kessels (2020)}.
+\item \code{baseline_mean} The mean amplitude of the first evoked current
+during the baseline period.
+\item \verb{category, letter, sex, treatment, etc.} Columns which are
+from the raw data. For a definition of these columns, please see the
+documentation for \code{\link[=make_normalized_EPSC_df]{make_normalized_EPSC_df()}}.
+\item \code{time} The upper time value of the interval (e.g. 2 minutes for
+"t1to2") which is used on the x-axis of plots such as in
+\code{\link[=make_raw_plots]{make_raw_plots()}}.
+}
+
+\item \code{for_table} A dataframe containing two columns: letter and
+\code{P1_transformed}. The current data is collapsed into a single row for each
+letter, with the current data for each letter stored as a list. This is
+required to create sparklines of current amplitude over time within the cell
+summary table. See make_cell_summary_df() and
+make_interactive_summary_table().
+
+\item \code{all_cells} A dataframe consisting of all data within a single
+treatment grouped and summarized per minute (or some other variable if you
+change \code{interval_length} to be something other than \code{1}). Columns like
+\code{category} and \code{sex} are retained from the raw data. New columns for evoked
+current data (\code{current_type == "eEPSC"}) are:
+\itemize{
+\item \code{interval_pruned} A character value describing the interval that was
+used for the pruning function. If the data are pruned per minute, this
+will be "t0to1", "t1to2", "t2to3", etc.
+\item \code{mean_P1_all_cells} The mean amplitude (in pA) of the first evoked
+current (P1) during a specific interval across all cells.
+\item \code{sd_P1_all_cells} The standard deviation of P1.
+\item \code{n} The number of data points used.
+\item \code{se_P1_all_cells} The standard error of P1.
+\item \code{cv_P1_all_cells} The coefficient of variation of P1.
+}
 }
 }
 }

@@ -14,7 +14,7 @@
 #'
 #'You should import this .csv file using the import_cell_characteristics_df()]
 #'function, which will format it in a format that makes it easy to merge with
-#'raw recording data in functions like make_normalized_EPSC_data()]. This will
+#'raw recording data in functions like [make_normalized_EPSC_data()]. This will
 #'enable you to analyze relationships between properties like age and current
 #'amplitude.
 #'
@@ -50,7 +50,7 @@
 #' @examples
 #' utils::read.csv(import_ext_data("sample_cell_characteristics.csv"))
 #'
-#' @seealso import_cell_characteristics_df()] and make_normalized_EPSC_data()]
+#' @seealso [import_cell_characteristics_df()] and [make_normalized_EPSC_data()]
 #'
 NULL
 
@@ -81,8 +81,8 @@ NULL
 #' Sample raw eEPSC data
 #'
 #' This is an example of the raw eEPSC data produced using
-#' make_normalized_EPSC_data()]. It is useful for demonstrating functions that
-#' build off of this dataset, such as make_pruned_EPSC_data()] and plotting
+#' [make_normalized_EPSC_data()]. It is useful for demonstrating functions that
+#' build off of this dataset, such as [make_pruned_EPSC_data()] and plotting
 #' functions.
 #'
 #' @name sample_raw_eEPSC_df
@@ -137,14 +137,14 @@ NULL
 #'}
 #' @keywords data
 #'
-#' @seealso make_normalized_EPSC_data()] and make_pruned_EPSC_data()]
+#' @seealso [make_normalized_EPSC_data()] and [make_pruned_EPSC_data()]
 NULL
 
 #' Sample summary eEPSC data
 #'
 #' This is an example of the summary eEPSC data produced using
-#' make_normalized_EPSC_data()]. It is useful for demonstrating functions that
-#' build off of this dataset, such as make_pruned_EPSC_data()] and plotting
+#' [make_normalized_EPSC_data()]. It is useful for demonstrating functions that
+#' build off of this dataset, such as [make_pruned_EPSC_data()] and plotting
 #' functions.
 #'
 #' @name sample_summary_eEPSC_df
@@ -167,7 +167,7 @@ NULL
 #'  amplitude (in pA normalized to the baseline amplitude) of the first evoked
 #'  current. The values used to produce mean_P1_transformed come from all data
 #'  points within each interval (the length of the interval was specified in
-#'  make_normalized_EPSC_data()]).
+#'  [make_normalized_EPSC_data()]).
 #'  \item `mean_P1_raw` The same values as those in `mean_P1_transformed` except
 #'  these values contain raw values for current amplitude (e.g. the data were
 #'  not baseline transformed).
@@ -197,7 +197,7 @@ NULL
 #'}
 #' @keywords data
 #'
-#' @seealso make_normalized_EPSC_data()] and make_pruned_EPSC_data()]
+#' @seealso [make_normalized_EPSC_data()] and [make_pruned_EPSC_data()]
 NULL
 
 
@@ -340,15 +340,56 @@ NULL
 #' \describe{
 #'  \itemize{
 #'  \item `individual_cells` is used to make pruned plots of individual
-#'  recordings using [make_raw_plots()]. For an explanation of each variable
-#'  included in this dataframe, please see the documentation for
-#'  [make_pruned_EPSC_data()].
-#'  \item `for_table` is used to make the experiment overview table. For an
-#'  explanation of each variable included in this dataframe, please see the
-#'  documentation for [make_pruned_EPSC_data()].
-#'  \item `all_cells` is used in [make_summary_plot()]. For an explanation of
-#'  each variable included in this dataframe, please see the documentation for
-#'  [make_pruned_EPSC_data()].
+#'  recordings using [make_raw_plots()].
+#'  \itemize{
+#'    \item `interval_pruned` A character value describing the interval that was
+#'    used for the pruning function. If the data are pruned per minute, this
+#'    will be "t0to1", "t1to2", "t2to3", etc.
+#'    \item `mean_P1` The mean amplitude (in pA) of the first evoked current
+#'    (P1) during a specific interval. This is an average of all data points
+#'    within each interval. For example, the `mean_P1` for the interval "t0to1"
+#'    contains the average current amplitude of all data points within the first
+#'    minute of the recording.
+#'    \item `sd_P1` The standard deviation of P1.
+#'    \item `n` The number of data points used.
+#'    \item `se` The standard error of P1.
+#'    \item `cv` The coefficient of variation of P1.
+#'    \item `cv_inverse_square` The inverse coefficient of variation, which is
+#'    then squared. This is to enable variance analysis, as in
+#'    [Huijstee & Kessels (2020)](https://doi.org/10.1016/j.jneumeth.2019.108526).
+#'    \item `baseline_mean` The mean amplitude of the first evoked current
+#'    during the baseline period.
+#'    \item `category, letter, sex, treatment, etc.` Columns which are
+#'    from the raw data. For a definition of these columns, please see the
+#'    documentation for [make_normalized_EPSC_df()].
+#'    \item `time` The upper time value of the interval (e.g. 2 minutes for
+#'    "t1to2") which is used on the x-axis of plots such as in
+#'    [make_raw_plots()].
+#'  }
+#'
+#'  \item `for_table` A dataframe containing two columns: letter and
+#'  `P1_transformed`. The current data is collapsed into a single row for each
+#'  letter, with the current data for each letter stored as a list. This is
+#'  required to create sparklines of current amplitude over time within the cell
+#'  summary table. See make_cell_summary_df() and
+#'  make_interactive_summary_table().
+#'
+#'  \item `all_cells` A dataframe consisting of all data within a single
+#'  treatment grouped and summarized per minute (or some other variable if you
+#'  change `interval_length` to be something other than `1`). Columns like
+#'  `category` and `sex` are retained from the raw data. New columns for evoked
+#'  current data (`current_type == "eEPSC"`) are:
+#'  \itemize{
+#'    \item `interval_pruned` A character value describing the interval that was
+#'    used for the pruning function. If the data are pruned per minute, this
+#'    will be "t0to1", "t1to2", "t2to3", etc.
+#'    \item `mean_P1_all_cells` The mean amplitude (in pA) of the first evoked
+#'    current (P1) during a specific interval across all cells.
+#'    \item `sd_P1_all_cells` The standard deviation of P1.
+#'    \item `n` The number of data points used.
+#'    \item `se_P1_all_cells` The standard error of P1.
+#'    \item `cv_P1_all_cells` The coefficient of variation of P1.
+#'  }
 #'}
 #'}
 #' @keywords data

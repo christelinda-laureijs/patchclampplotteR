@@ -197,7 +197,8 @@ belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
 automatically in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{baseline_range} A logical value required for the baseline
 transformation. It is set to TRUE when time is within the baseline period
-(e.g. Time <= 5) and FALSE at all other times.
+(e.g. Time <= 5) and FALSE at all other times. Generated
+automatically in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{baseline_mean} A numeric value representing the mean evoked current
 amplitude during the baseline period. There is a different baseline_mean for
 each letter. Generated automatically in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
