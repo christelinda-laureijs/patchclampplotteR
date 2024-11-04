@@ -84,10 +84,6 @@ significance stars through \code{ggsignif::geom_signif()}.
 This allows you to visually determine if a change in synaptic plasticity is
 due to a pre- or post-synaptic mechanism. For more information, please see
 \href{https://doi.org/10.1016/j.jneumeth.2019.108526}{Huijstee & Kessels (2020)}.
-
-You may customize the baseline and post-modification label to any value if
-"Baseline" and "Post-hormone" do not work. For example, you may want to use
-the hormone name instead of "Post-hormone".
 }
 \examples{
 make_variance_comparison_plot(data = sample_eEPSC_variance_df,

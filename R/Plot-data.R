@@ -1119,11 +1119,6 @@ make_summary_plot <- function(plot_category,
 #' due to a pre- or post-synaptic mechanism. For more information, please see
 #' [Huijstee & Kessels (2020)](https://doi.org/10.1016/j.jneumeth.2019.108526).
 #'
-#'
-#' You may customize the baseline and post-modification label to any value if
-#' "Baseline" and "Post-hormone" do not work. For example, you may want to use
-#' the hormone name instead of "Post-hormone".
-#'
 #' @inheritParams make_raw_plots
 #' @inheritParams make_baseline_comparison_plot
 #'
@@ -1342,6 +1337,73 @@ make_variance_comparison_plot <- function(data,
 }
 
 
+#' Make a plot of coefficient of variation over time
+#'
+#' `make_cv_plot()` enables you to save a plot of the coefficient of variation in evoked current amplitudes over time.
+#'
+#' @inheritParams make_raw_plots
+#' @param data A dataframe of the pruned current data for all cells. This is the
+#'   third dataframe in the list generated from [make_pruned_EPSC_data()].
+#'
+#' @export
+#'
+#' @returns A ggplot object. If `save_plot_png == "yes"` it will also generate a
+#'   .png file in the folder `Figures/Evoked-currents/CV` relative to the
+#'   project directory. The treatment will be included with the filename.
+#'
+#' @examples
+#' make_cv_plot(
+#'   data = sample_pruned_eEPSC_df$all_cells,
+#'   plot_treatment = "Control",
+#'   theme_options = sample_theme_options,
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   save_plot_png = "no"
+#')
+#'
+#' @seealso [make_variance_comparison_plot()] to make plots of inverse
+#'   coefficient of variation squared and VMR, which are useful to determine if
+#'   a mechanism is pre- or post-synaptic.
+
+
+make_cv_plot <- function(data,
+                         plot_treatment = "Control",
+                         treatment_colour_theme,
+                         theme_options,
+                         save_plot_png = "no") {
+
+  if (!save_plot_png %in% c("yes", "no")) {
+    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+  }
+
+
+  plot_colour <- treatment_colour_theme %>%
+    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::pull(.data$colours)
+
+  cv_plot <- data %>%
+    dplyr::filter(.data$treatment == plot_treatment) %>%
+    ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data$cv_P1_all_cells)) +
+    ggplot2::geom_point(color = plot_colour) +
+    ggplot2::labs(x = "Time (min)", y = "CV")
+
+  if (save_plot_png == "yes") {
+    ggplot2::ggsave(
+      plot = cv_plot,
+      path = here::here("Figures/Evoked-currents/CV"),
+      file = paste0("CV_plot", plot_treatment, ".png"),
+      width = 7,
+      height = 5,
+      units = "in",
+      dpi = 600
+    )
+
+  }
+
+  return(cv_plot)
+}
+
+
+
 #' Make a PPR plot for a single treatment
 #'
 #' `make_PPR_plot_one_treatment()` creates a categorical scatter plot with
@@ -1362,10 +1424,9 @@ make_variance_comparison_plot <- function(data,
 #'
 #' @export
 #'
-#' @returns A ggplot object. If save_plot_png is defined as "yes" in the Global
-#'   Environment, it will also generate a .png file in the folder
-#'   `Figures/Evoked-currents/PPR` relative to the project directory. The
-#'   treatment will be included in the filename.
+#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
+#'   a .png file in the folder `Figures/Evoked-currents/PPR` relative to the
+#'   project directory. The treatment will be included in the filename.
 #'
 #' @examples
 #' make_PPR_plot_one_treatment(data = sample_PPR_df,
@@ -1376,7 +1437,7 @@ make_variance_comparison_plot <- function(data,
 #'   post_modification_label = "Insulin",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   theme_options = sample_theme_options,
-#'   save_plot_png = "no)
+#'   save_plot_png = "no")
 #'
 #' @seealso [make_PPR_plot_multiple_treatments()] to plot changes in PPR for multiple treatments.
 
@@ -1406,7 +1467,7 @@ make_PPR_plot_one_treatment <- function(data,
     dplyr::filter(.data$treatment == plot_treatment) %>%
     dplyr::filter(.data$category == plot_category) %>%
     dplyr::mutate(
-      state = case_match(
+      state = dplyr::case_match(
         .data$state,
         "Baseline" ~ baseline_label,
         "Post-modification" ~ post_modification_label
@@ -1428,14 +1489,14 @@ make_PPR_plot_one_treatment <- function(data,
     ggplot2::geom_line(
       ggplot2::aes(group = .data$letter),
       color = plot_colour,
-      linewidth = connecting_line_width_PPR,
+      linewidth = as.numeric(theme_options["connecting_line_width_PPR","value"]),
       alpha = 0.3
     ) +
     ggplot2::stat_summary(
       fun.data = ggplot2::mean_se,
       geom = "pointrange",
-      color = mean_point_colour,
-      size = mean_point_size + 0.2,
+      color = theme_options["mean_point_colour","value"],
+      size = as.numeric(theme_options["mean_point_size","value"]) + 0.2,
       alpha = 1,
       position = ggplot2::position_nudge(x = -0.04),
       show.legend = FALSE
@@ -1458,7 +1519,6 @@ make_PPR_plot_one_treatment <- function(data,
         "ns" = 2
       ),
       vjust = -0.3,
-      family = significance_stars_font,
       textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
       size = 0.4,
       y_position = 2.5
@@ -1489,4 +1549,168 @@ make_PPR_plot_one_treatment <- function(data,
 
 
   return(PPR_one_plot)
+}
+
+
+#' Make a PPR plot for multiple treatments
+#'
+#' `make_PPR_plot_multiple_treatments()` creates a categorical scatter plot with
+#' experimental state (i.e. grouped as baseline/before and after) and treatment
+#' on the x-axis, and the paired-pulse ratio (PPR) on the y-axis. There are also
+#' lines connecting the "before" data point to the "after" data point for each
+#' letter. It is the same as [make_PPR_plot_one_treatment()] but for more
+#' than one treatment.
+#'
+#' @inheritParams make_baseline_comparison_plot
+#' @inheritParams make_variance_comparison_plot
+#' @inheritParams make_raw_plots
+
+#' @param data Paired pulse ratio data generated from [make_PPR_data()].
+#'
+#' @export
+#'
+#' @returns A ggplot object. If save_plot_png is defined as "yes" in the Global Environment, it will also generate a .png file in the folder `Figures/Evoked-currents/PPR` relative to the project directory.
+#'
+#' @examples
+#' make_PPR_plot_multiple_treatments(data = sample_PPR_df,
+#'   include_all_treatments = "yes",
+#'   plot_category = 2,
+#'   baseline_label = "B",
+#'   post_modification_label = "I",
+#'   theme_options = sample_theme_options,
+#'   treatment_colour_theme = sample_treatment_names_and_colours)
+#'
+#' @seealso [make_PPR_plot_one_treatment()] to plot changes in PPR for a single treatment.
+
+make_PPR_plot_multiple_treatments <- function(data,
+                                              include_all_treatments = "yes",
+                                              list_of_treatments = NULL,
+                                              plot_category,
+                                              baseline_label,
+                                              post_modification_label,
+                                              treatment_colour_theme,
+                                              theme_options,
+                                              filename_suffix = "",
+                                              save_plot_png = "no") {
+  if (!include_all_treatments %in% c("yes", "no")) {
+    stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!save_plot_png %in% c("yes", "no")) {
+    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (include_all_treatments == "yes") {
+    treatment_info <- treatment_colour_theme
+    plot_data <- data %>%
+      dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
+      droplevels()
+
+    if (!is.null(list_of_treatments)) {
+      warning(
+        "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
+      )
+    }
+
+  } else {
+    if (is.null(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is NULL.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    if (!is.character(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is not a character object.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments)
+    plot_data <- data %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments) %>%
+      droplevels()
+  }
+
+  PPR_summary_plot <- plot_data %>%
+    dplyr::filter(.data$category == plot_category) %>%
+    dplyr::mutate(
+      state = dplyr::case_match(.data$state, "Baseline" ~ baseline_label, "Post-modification" ~ post_modification_label),
+      treatment = stringr::str_replace_all(
+        .data$treatment,
+        stats::setNames(treatment_info$display_names, treatment_info$treatment)
+      ),
+      treatment = factor(.data$treatment, levels = treatment_info$display_names)
+    ) %>%
+    dplyr::group_by(.data$treatment, .data$state, .data$letter, .data$sex) %>%
+    dplyr::summarize(mean_PPR = mean(.data$PPR)) %>%
+    dplyr::ungroup() %>%
+    ggplot2::ggplot(ggplot2::aes(x = .data$state, y = .data$mean_PPR)) +
+    ggplot2::geom_point(
+      ggplot2::aes(color = .data$treatment),
+      size = 2,
+      position = ggplot2::position_jitter(0.01),
+      alpha = 0.9
+    ) +
+    ggplot2::geom_line(ggplot2::aes(color = .data$treatment, group = .data$letter),
+                       linewidth = as.numeric(theme_options["connecting_line_width_PPR","value"]),
+                       alpha = 0.3) +
+    ggsignif::geom_signif(
+      comparisons = list(c(baseline_label, post_modification_label)),
+      test = "t.test",
+      test.args = list(paired = TRUE),
+      map_signif_level = c(
+        "***" = 0.001,
+        "**" = 0.01,
+        "*" = 0.05,
+        "ns" = 2
+      ),
+      vjust = -0.3,
+      textsize = 4,
+      size = 0.3,
+      margin_top = 0.1,
+      extend_line = 0.03
+    ) +
+    ggplot2::facet_wrap(
+      ~ .data$treatment,
+      ncol = length(treatment_info$treatment),
+      strip.position = "bottom"
+    ) +
+    ggplot2::scale_color_manual(breaks = treatment_info$display_names,
+                                values = treatment_info$colours) +
+    ggplot2::theme(
+      strip.text = ggplot2::element_text(size = 10),
+      strip.placement = "outside",
+      panel.spacing.x = grid::unit(2, "mm"),
+      legend.position = "none"
+    ) +
+    ggplot2::stat_summary(
+      fun.data = ggplot2::mean_se,
+      geom = "pointrange",
+      color = theme_options["mean_point_colour","value"],
+      size = as.numeric(theme_options["mean_point_size","value"]) + 0.25,
+      alpha = 0.9
+    ) +
+    ggplot2::labs(x = NULL, y = "Paired pulse ratio") +
+    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
+
+  if (save_plot_png == "yes") {
+    ggplot2::ggsave(
+      plot = PPR_summary_plot,
+      path = here::here("Figures/Evoked-currents/PPR"),
+      file = paste0("PPR_Summary_plot", filename_suffix, ".png"),
+      width = 7,
+      height = 5,
+      units = "in",
+      dpi = 300
+    )
+  }
+
+  return(PPR_summary_plot)
 }

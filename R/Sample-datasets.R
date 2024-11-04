@@ -57,9 +57,9 @@ NULL
 #' Sample ABF file
 #'
 #' This is an excerpt from a raw recording file exported from Clampfit as an
-#' .abf file. It can be read using the import_ABF_file()] function, which will
+#' .abf file. It can be read using the [import_ABF_file()] function, which will
 #' convert it into a regular dataframe for further manipulation and plotting in
-#' R. It is used to demonstrate the make_representative_sp_trace()] function.
+#' R. It is used to demonstrate the [make_representative_sp_trace()] function.
 #'
 #' @name sample_abf
 #' @docType data
