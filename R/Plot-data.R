@@ -716,7 +716,9 @@ make_summary_plot <- function(plot_category,
   if (is.null(hormone_added) ||
       length(hormone_added) != 1L ||
       !is.character(hormone_added)) {
-    stop("\"hormone_added\" must be a character. Use \"HFS\" for high-frequency stimulation or \"Insulin\", \"CCK\", etc. for any hormones")
+    stop(
+      "\"hormone_added\" must be a character. Use \"HFS\" for high-frequency stimulation or \"Insulin\", \"CCK\", etc. for any hormones"
+    )
   }
 
   if (!save_plot_png %in% c("yes", "no")) {
@@ -878,13 +880,15 @@ make_summary_plot <- function(plot_category,
         xmax = 10,
         ymin = -5,
         ymax = as.numeric(theme_options["y_axis_limit", "value"])
-      ), fill = theme_options["rectangle_shading_colour", "value"]) +
+      ),
+      fill = theme_options["rectangle_shading_colour", "value"]) +
       ggplot2::geom_rect(ggplot2::aes(
         xmin = 15,
         xmax = 20,
         ymin = -5,
         ymax = as.numeric(theme_options["y_axis_limit", "value"])
-      ), fill = theme_options["rectangle_shading_colour", "value"])
+      ),
+      fill = theme_options["rectangle_shading_colour", "value"])
   }
 
   treatment_plot <- treatment_plot +
@@ -1370,7 +1374,6 @@ make_cv_plot <- function(data,
                          treatment_colour_theme,
                          theme_options,
                          save_plot_png = "no") {
-
   if (!save_plot_png %in% c("yes", "no")) {
     stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
   }
@@ -1489,14 +1492,14 @@ make_PPR_plot_one_treatment <- function(data,
     ggplot2::geom_line(
       ggplot2::aes(group = .data$letter),
       color = plot_colour,
-      linewidth = as.numeric(theme_options["connecting_line_width_PPR","value"]),
+      linewidth = as.numeric(theme_options["connecting_line_width_PPR", "value"]),
       alpha = 0.3
     ) +
     ggplot2::stat_summary(
       fun.data = ggplot2::mean_se,
       geom = "pointrange",
-      color = theme_options["mean_point_colour","value"],
-      size = as.numeric(theme_options["mean_point_size","value"]) + 0.2,
+      color = theme_options["mean_point_colour", "value"],
+      size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
       alpha = 1,
       position = ggplot2::position_nudge(x = -0.04),
       show.legend = FALSE
@@ -1641,7 +1644,11 @@ make_PPR_plot_multiple_treatments <- function(data,
   PPR_summary_plot <- plot_data %>%
     dplyr::filter(.data$category == plot_category) %>%
     dplyr::mutate(
-      state = dplyr::case_match(.data$state, "Baseline" ~ baseline_label, "Post-modification" ~ post_modification_label),
+      state = dplyr::case_match(
+        .data$state,
+        "Baseline" ~ baseline_label,
+        "Post-modification" ~ post_modification_label
+      ),
       treatment = stringr::str_replace_all(
         .data$treatment,
         stats::setNames(treatment_info$display_names, treatment_info$treatment)
@@ -1658,11 +1665,15 @@ make_PPR_plot_multiple_treatments <- function(data,
       position = ggplot2::position_jitter(0.01),
       alpha = 0.9
     ) +
-    ggplot2::geom_line(ggplot2::aes(color = .data$treatment, group = .data$letter),
-                       linewidth = as.numeric(theme_options["connecting_line_width_PPR","value"]),
-                       alpha = 0.3) +
+    ggplot2::geom_line(
+      ggplot2::aes(color = .data$treatment, group = .data$letter),
+      linewidth = as.numeric(theme_options["connecting_line_width_PPR", "value"]),
+      alpha = 0.3
+    ) +
     ggsignif::geom_signif(
-      comparisons = list(c(baseline_label, post_modification_label)),
+      comparisons = list(c(
+        baseline_label, post_modification_label
+      )),
       test = "t.test",
       test.args = list(paired = TRUE),
       map_signif_level = c(
@@ -1693,8 +1704,8 @@ make_PPR_plot_multiple_treatments <- function(data,
     ggplot2::stat_summary(
       fun.data = ggplot2::mean_se,
       geom = "pointrange",
-      color = theme_options["mean_point_colour","value"],
-      size = as.numeric(theme_options["mean_point_size","value"]) + 0.25,
+      color = theme_options["mean_point_colour", "value"],
+      size = as.numeric(theme_options["mean_point_size", "value"]) + 0.25,
       alpha = 0.9
     ) +
     ggplot2::labs(x = NULL, y = "Paired pulse ratio") +

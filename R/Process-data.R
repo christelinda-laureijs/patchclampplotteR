@@ -257,7 +257,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 
 
   time_sequence <- seq(from = min_time_value, to = max_time_value, by = interval_length)
-  time_labels <- utils::head(paste0("t", time_sequence, "to", time_sequence + interval_length),-1)
+  time_labels <- utils::head(paste0("t", time_sequence, "to", time_sequence + interval_length),
+                             -1)
 
   raw_df <- raw_df %>%
     dplyr::mutate(
@@ -501,8 +502,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
                                   interval_length = 1,
                                   save_output_as_RDS = "no") {
   time_sequence <- seq(from = min_time_value, to = max_time_value, by = interval_length)
-  time_labels <- utils::head(paste0("t", time_sequence, "to", time_sequence + interval_length),
-                             -1)
+  time_labels <- utils::head(paste0("t", time_sequence, "to", time_sequence + interval_length),-1)
 
   if (is.null(current_type) ||
       length(current_type) != 1L ||
@@ -673,9 +673,13 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
     ))
   }
 
-  return(list(individual_cells = pruned_df_individual_cells,
-              for_table = pruned_df_for_table,
-              all_cells = pruned_df_all_cells))
+  return(
+    list(
+      individual_cells = pruned_df_individual_cells,
+      for_table = pruned_df_for_table,
+      all_cells = pruned_df_all_cells
+    )
+  )
 }
 
 
@@ -885,6 +889,14 @@ perform_t_tests_for_summary_plot <- function(data,
       length(current_type) != 1L ||
       !current_type %in% c("eEPSC", "sEPSC")) {
     stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+  }
+
+  if (!save_output_as_RDS %in% c("yes", "no")) {
+    stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!include_all_treatments %in% c("yes", "no")) {
+    stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
   }
 
   if (include_all_treatments == "yes") {
@@ -1122,11 +1134,13 @@ make_variance_data <- function(data,
                                post_hormone_interval,
                                treatment_colour_theme,
                                save_output_as_RDS = "no") {
-
   if (!save_output_as_RDS %in% c("yes", "no")) {
     stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
   }
 
+  if (!include_all_treatments %in% c("yes", "no")) {
+    stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
+  }
 
   if (include_all_treatments == "yes") {
     dataframe <- data %>%
@@ -1201,9 +1215,9 @@ make_variance_data <- function(data,
   return(variance_data)
 
   if (save_output_as_RDS == "yes") {
-    saveRDS(variance_data, file = here::here(
-      paste0("Data/Output-Data-from-R/variance_data.RDS")
-    ))
+    saveRDS(variance_data, file = here::here(paste0(
+      "Data/Output-Data-from-R/variance_data.RDS"
+    )))
   }
 }
 
@@ -1250,16 +1264,20 @@ make_variance_data <- function(data,
 #'
 
 make_PPR_data <- function(data,
-                                                 include_all_treatments = "yes",
-                                                 list_of_treatments = NULL,
-                                                 PPR_min = 0,
-                                                 PPR_max = 5,
-                                                 baseline_interval,
-                                                 post_hormone_interval,
-                                                 save_output_as_RDS = "no",
-                                                 treatment_colour_theme) {
+                          include_all_treatments = "yes",
+                          list_of_treatments = NULL,
+                          PPR_min = 0,
+                          PPR_max = 5,
+                          baseline_interval,
+                          post_hormone_interval,
+                          save_output_as_RDS = "no",
+                          treatment_colour_theme) {
   if (!save_output_as_RDS %in% c("yes", "no")) {
     stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!include_all_treatments %in% c("yes", "no")) {
+    stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
   }
 
 
