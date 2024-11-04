@@ -1206,3 +1206,121 @@ make_variance_data <- function(data,
     ))
   }
 }
+
+
+#' Make paired-pulse ratio (PPR) dataframe for before vs. after comparisons
+#'
+#' This function filters the raw current data into data that belong to one of
+#' two time points. They are the baseline period and a user-specified interval
+#' after a hormone or protocol has been applied. The "before/after" comparison
+#' of the paired-pulse ratio (PPR) is useful to determine which mechanism is
+#' involved in modifying synaptic plasticity. For example, the PPR may be
+#' related to the probability of neurotransmitter release [Oleskevich et al.,
+#' 2000](https://doi.org/10.1111/j.1469-7793.2000.00513.x)
+#'
+#' @inheritParams make_baseline_comparison_plot
+#' @inheritParams make_normalized_EPSC_data
+
+#' @param data A dataframe containing the raw evoked current data generated from
+#'   [make_normalized_EPSC_data()].
+#' @param PPR_min A numeric value representing the minimum PPR value permitted
+#'   in the filtered dataset. Defaults to 0.
+#' @param PPR_max A numeric value representing the maximum PPR value permitted
+#'   in the filtered dataset. Defaults to 5.
+#' @param post_hormone_interval A character value specifying the interval used
+#'   for the data points after a hormone or protocol was applied.
+#'
+#' @return A dataframe containing all of the columns from
+#'   [make_normalized_EPSC_data()], but filtered to only include PPR values
+#'   between `PPR_min` and `PPR_max` within the `baseline_interval` and
+#'   `post_hormone_interval`.
+#'
+#' @export
+#'
+#' @examples
+#'
+#' make_PPR_data(data = sample_raw_eEPSC_df,
+#' include_all_treatments = "yes",
+#' list_of_treatments = NULL,
+#' PPR_min = 0,
+#' PPR_max = 5,
+#' baseline_interval = "t0to5",
+#' post_hormone_interval = "t20to25",
+#' treatment_colour_theme = sample_treatment_names_and_colours)
+#'
+
+make_PPR_data <- function(data,
+                                                 include_all_treatments = "yes",
+                                                 list_of_treatments = NULL,
+                                                 PPR_min = 0,
+                                                 PPR_max = 5,
+                                                 baseline_interval,
+                                                 post_hormone_interval,
+                                                 save_output_as_RDS = "no",
+                                                 treatment_colour_theme) {
+  if (!save_output_as_RDS %in% c("yes", "no")) {
+    stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+  }
+
+
+  if (include_all_treatments == "yes") {
+    dataframe <- data %>%
+      dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
+      droplevels()
+
+    treatment_info <- treatment_colour_theme
+
+    if (!is.null(list_of_treatments)) {
+      warning(
+        "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
+      )
+    }
+
+  } else {
+    if (is.null(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is NULL.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    if (!is.character(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is not a character object.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    dataframe <- data %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments) %>%
+      droplevels()
+
+    treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments)
+  }
+
+  PPR_df <- dataframe %>%
+    dplyr::filter(.data$PPR < PPR_max & .data$PPR > PPR_min) %>%
+    dplyr::filter(.data$interval == baseline_interval |
+                    .data$interval == post_hormone_interval) %>%
+    dplyr::mutate(
+      state = dplyr::case_when(
+        interval == baseline_interval ~ "Baseline",
+        interval == post_hormone_interval ~ "Post-modification",
+        T ~ interval
+      )
+    ) %>%
+    dplyr::arrange(match(.data$treatment, treatment_info$display_names))
+
+  return(PPR_df)
+
+  if (save_output_as_RDS == "yes") {
+    saveRDS(PPR_df, file = here::here(paste0(
+      "Data/Output-Data-from-R/variance_data.RDS"
+    )))
+  }
+}

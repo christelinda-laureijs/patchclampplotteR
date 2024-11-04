@@ -426,3 +426,29 @@ NULL
 #'}
 #' @keywords data
 NULL
+
+
+#' Sample paired-pulse ratio (PPR) dataframe
+#'
+#' This is an example of the raw eEPSC data produced using
+#' [make_normalized_EPSC_data()] after it has been filtered using [make_PPR_data()]. The data are not modified, but they are filtered to only include data within two time intervals (specified in the `baseline_interval` and `post_hormone_interval` arguments). The paired-pulse ratio (PPR) values are also filtered to only include values that fall within `PPR_min` and `PPR_max`, which are two arguments in the [make_PPR_data()] function.
+#'
+#' This data can be used for PPR comparison plots, and further analyses to determine the mechanism of synaptic plasticity.
+#'
+#'
+#' @name sample_PPR_df
+#' @docType data
+#' @format An .rda file containing 2206 objects of 21 variables.
+#' \describe{
+#'  \itemize{
+#'  \item `letter, synapses, sex, etc.` All columns that were produced in
+#'  [make_normalized_EPSC_data()]. Please see [sample_raw_eEPSC_df] for detailed
+#'  column descriptions.
+#'  \item `state` A character ("baseline" or "post-modification") representing
+#'  the timepoint that the data point belongs to.
+#'}
+#'}
+#' @keywords data
+#'
+#' @seealso [make_normalized_EPSC_data()] and [make_PPR_data()]
+NULL
