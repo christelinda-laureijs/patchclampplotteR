@@ -38,6 +38,6 @@ be \code{7.5} minutes.
 This is an example of the dataframe of t-test results produced using
 \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. The dataframe can be used for further
 statistical analyses, and it also has specialized columns to add significance
-stars to the plot produced with \code{\link[=make_summary_plot]{make_summary_plot()}}.
+stars to the plot produced with \code{\link[=plot_summary_current_data]{plot_summary_current_data()}}.
 }
 \keyword{data}

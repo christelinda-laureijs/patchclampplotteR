@@ -59,7 +59,7 @@ NULL
 #' This is an excerpt from a raw recording file exported from Clampfit as an
 #' .abf file. It can be read using the [import_ABF_file()] function, which will
 #' convert it into a regular dataframe for further manipulation and plotting in
-#' R. It is used to demonstrate the [make_representative_sp_trace()] function.
+#' R. It is used to demonstrate the [plot_spontaneous_current_trace()] function.
 #'
 #' @name sample_abf
 #' @docType data
@@ -283,7 +283,7 @@ NULL
 #' This is an example of the dataframe of t-test results produced using
 #' [perform_t_tests_for_summary_plot()]. The dataframe can be used for further
 #' statistical analyses, and it also has specialized columns to add significance
-#' stars to the plot produced with [make_summary_plot()].
+#' stars to the plot produced with [plot_summary_current_data()].
 #'
 #' @name sample_eEPSC_t_test_df
 #' @docType data
@@ -323,14 +323,14 @@ NULL
 #' This is an example of the dataframe of excitatory current amplitudes produced
 #' using [make_pruned_EPSC_data()]. This dataset is a list with three dataframes
 #' containing the pruned data. It can be used for further statistical analyses
-#' or for plotting. [make_raw_plots()] and [make_summary_plot()] in particular
+#' or for plotting. [plot_raw_current_data()] and [plot_summary_current_data()] in particular
 #' depend heavily on this type of dataset.
 #'
 #' \itemize{
 #'  \item `individual_cells` is used to make pruned plots of individual
-#'  recordings using [make_raw_plots()].
+#'  recordings using [plot_raw_current_data()].
 #'  \item `for_table` is used to make the experiment overview table
-#'  \item `all_cells` is used in [make_summary_plot()]
+#'  \item `all_cells` is used in [plot_summary_current_data()]
 #' }
 #'
 #' @name sample_pruned_eEPSC_df
@@ -340,7 +340,7 @@ NULL
 #' \describe{
 #'  \itemize{
 #'  \item `individual_cells` is used to make pruned plots of individual
-#'  recordings using [make_raw_plots()].
+#'  recordings using [plot_raw_current_data()].
 #'  \itemize{
 #'    \item `interval_pruned` A character value describing the interval that was
 #'    used for the pruning function. If the data are pruned per minute, this
@@ -364,7 +364,7 @@ NULL
 #'    documentation for [make_normalized_EPSC_data()].
 #'    \item `time` The upper time value of the interval (e.g. 2 minutes for
 #'    "t1to2") which is used on the x-axis of plots such as in
-#'    [make_raw_plots()].
+#'    [plot_raw_current_data()].
 #'  }
 #'
 #'  \item `for_table` A dataframe containing two columns: letter and

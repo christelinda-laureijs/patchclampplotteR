@@ -19,7 +19,7 @@ variables.
 This is an excerpt from a raw recording file exported from Clampfit as an
 .abf file. It can be read using the \code{\link[=import_ABF_file]{import_ABF_file()}} function, which will
 convert it into a regular dataframe for further manipulation and plotting in
-R. It is used to demonstrate the \code{\link[=make_representative_sp_trace]{make_representative_sp_trace()}} function.
+R. It is used to demonstrate the \code{\link[=plot_spontaneous_current_trace]{plot_spontaneous_current_trace()}} function.
 }
 \examples{
 import_ABF_file(import_ext_data("sample_abf.abf"))

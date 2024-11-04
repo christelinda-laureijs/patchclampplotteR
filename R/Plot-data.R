@@ -54,7 +54,7 @@
 #' @export
 #'
 #' @examples
-#' make_baseline_comparison_plot(
+#' plot_baseline_data(
 #'  data = sample_summary_eEPSC_df,
 #'  treatment_colour_theme = sample_treatment_names_and_colours,
 #'  theme_options = sample_theme_options,
@@ -67,7 +67,7 @@
 #'  plot_width = 8,
 #'  save_plot_png = "no"
 #')
-make_baseline_comparison_plot <- function(data,
+plot_baseline_data <- function(data,
                                           treatment_colour_theme,
                                           theme_options,
                                           include_all_treatments = "yes",
@@ -320,7 +320,7 @@ make_baseline_comparison_plot <- function(data,
 #'
 #' @examples
 #'
-#' make_raw_plots(
+#' plot_raw_current_data(
 #'  data = sample_raw_eEPSC_df,
 #'  plot_treatment = "Control",
 #'  plot_category = 2,
@@ -334,7 +334,7 @@ make_baseline_comparison_plot <- function(data,
 #' )
 #'
 #'
-make_raw_plots <-
+plot_raw_current_data <-
   function(data,
            plot_treatment,
            plot_category,
@@ -635,7 +635,7 @@ make_raw_plots <-
 #' summarized by treatment and sex, and averaged per minute. The data are
 #' presented as mean +/- the standard error.
 #'
-#' @inheritParams make_raw_plots
+#' @inheritParams plot_raw_current_data
 #' @param data A dataframe containing pruned summary data for all cells. This is the third element of the list generated from [make_pruned_EPSC_data()].
 #' @param include_representative_trace A character ("yes" or "no") describing if
 #'   a representative trace should be included as an overlay to the plot. This
@@ -674,7 +674,7 @@ make_raw_plots <-
 #'
 #' @examples
 #'
-#' make_summary_plot(plot_category = 2,
+#' plot_summary_current_data(plot_category = 2,
 #'  plot_treatment = "Control",
 #'  data = sample_pruned_eEPSC_df$all_cells,
 #'  current_type = "eEPSC",
@@ -691,7 +691,7 @@ make_raw_plots <-
 #')
 
 
-make_summary_plot <- function(plot_category,
+plot_summary_current_data <- function(plot_category,
                               plot_treatment,
                               data,
                               current_type,
@@ -1111,7 +1111,7 @@ make_summary_plot <- function(plot_category,
 
 #' Plot variance comparison for a treatment
 #'
-#' `make_variance_comparison_plot()` creates a connected  plot with time as a
+#' `plot_variance_comparison_data()` creates a connected  plot with time as a
 #' categorical variable (i.e. baseline/before and after) on the x-axis and the
 #' variance measure on the y-axis. There are also lines
 #' connecting the "before" data point to the "after" data point for each letter.
@@ -1123,8 +1123,8 @@ make_summary_plot <- function(plot_category,
 #' due to a pre- or post-synaptic mechanism. For more information, please see
 #' [Huijstee & Kessels (2020)](https://doi.org/10.1016/j.jneumeth.2019.108526).
 #'
-#' @inheritParams make_raw_plots
-#' @inheritParams make_baseline_comparison_plot
+#' @inheritParams plot_raw_current_data
+#' @inheritParams plot_baseline_data
 #'
 #' @param data A dataframe generated using [make_variance_data()].
 #' @param variance_measure A character value ("cv" or "VMR"). The variance
@@ -1145,7 +1145,7 @@ make_summary_plot <- function(plot_category,
 #' @export
 #'
 #' @examples
-#' make_variance_comparison_plot(data = sample_eEPSC_variance_df,
+#' plot_variance_comparison_data(data = sample_eEPSC_variance_df,
 #' plot_category = 2,
 #' plot_treatment = "Control",
 #' large_axis_text = "no",
@@ -1157,7 +1157,7 @@ make_summary_plot <- function(plot_category,
 #' theme_options = sample_theme_options)
 #'
 
-make_variance_comparison_plot <- function(data,
+plot_variance_comparison_data <- function(data,
                                           plot_category,
                                           plot_treatment,
                                           large_axis_text = "no",
@@ -1343,9 +1343,9 @@ make_variance_comparison_plot <- function(data,
 
 #' Make a plot of coefficient of variation over time
 #'
-#' `make_cv_plot()` enables you to save a plot of the coefficient of variation in evoked current amplitudes over time.
+#' `plot_cv_data()` enables you to save a plot of the coefficient of variation in evoked current amplitudes over time.
 #'
-#' @inheritParams make_raw_plots
+#' @inheritParams plot_raw_current_data
 #' @param data A dataframe of the pruned current data for all cells. This is the
 #'   third dataframe in the list generated from [make_pruned_EPSC_data()].
 #'
@@ -1356,7 +1356,7 @@ make_variance_comparison_plot <- function(data,
 #'   project directory. The treatment will be included with the filename.
 #'
 #' @examples
-#' make_cv_plot(
+#' plot_cv_data(
 #'   data = sample_pruned_eEPSC_df$all_cells,
 #'   plot_treatment = "Control",
 #'   theme_options = sample_theme_options,
@@ -1364,12 +1364,12 @@ make_variance_comparison_plot <- function(data,
 #'   save_plot_png = "no"
 #')
 #'
-#' @seealso [make_variance_comparison_plot()] to make plots of inverse
+#' @seealso [plot_variance_comparison_data()] to make plots of inverse
 #'   coefficient of variation squared and VMR, which are useful to determine if
 #'   a mechanism is pre- or post-synaptic.
 
 
-make_cv_plot <- function(data,
+plot_cv_data <- function(data,
                          plot_treatment = "Control",
                          treatment_colour_theme,
                          theme_options,
@@ -1409,7 +1409,7 @@ make_cv_plot <- function(data,
 
 #' Make a PPR plot for a single treatment
 #'
-#' `make_PPR_plot_one_treatment()` creates a categorical scatter plot with
+#' `plot_PPR_data_one_treatment()` creates a categorical scatter plot with
 #' experimental state (i.e. baseline/before and after) on the x-axis and the
 #' paired-pulse ratio (PPR) on the y-axis. There are also lines connecting the
 #' "before" data point to the "after" data point for each letter.
@@ -1419,9 +1419,9 @@ make_cv_plot <- function(data,
 #'
 #' You may customize the baseline and post-modification label to any value if "Baseline" and "Post-hormone" do not work. For example, you may want to use the hormone name instead of "Post-hormone"
 #'
-#' @inheritParams make_raw_plots
-#' @inheritParams make_summary_plot
-#' @inheritParams make_variance_comparison_plot
+#' @inheritParams plot_raw_current_data
+#' @inheritParams plot_summary_current_data
+#' @inheritParams plot_variance_comparison_data
 #'
 #' @param data Paired pulse ratio data generated from [make_PPR_data()].
 #'
@@ -1432,7 +1432,7 @@ make_cv_plot <- function(data,
 #'   project directory. The treatment will be included in the filename.
 #'
 #' @examples
-#' make_PPR_plot_one_treatment(data = sample_PPR_df,
+#' plot_PPR_data_one_treatment(data = sample_PPR_df,
 #'   plot_treatment = "Control",
 #'   plot_category = 2,
 #'   large_axis_text = "no",
@@ -1442,9 +1442,9 @@ make_cv_plot <- function(data,
 #'   theme_options = sample_theme_options,
 #'   save_plot_png = "no")
 #'
-#' @seealso [make_PPR_plot_multiple_treatments()] to plot changes in PPR for multiple treatments.
+#' @seealso [plot_PPR_data_multiple_treatments()] to plot changes in PPR for multiple treatments.
 
-make_PPR_plot_one_treatment <- function(data,
+plot_PPR_data_one_treatment <- function(data,
                                         plot_treatment = "Control",
                                         plot_category,
                                         large_axis_text = "no",
@@ -1557,16 +1557,16 @@ make_PPR_plot_one_treatment <- function(data,
 
 #' Make a PPR plot for multiple treatments
 #'
-#' `make_PPR_plot_multiple_treatments()` creates a categorical scatter plot with
+#' `plot_PPR_data_multiple_treatments()` creates a categorical scatter plot with
 #' experimental state (i.e. grouped as baseline/before and after) and treatment
 #' on the x-axis, and the paired-pulse ratio (PPR) on the y-axis. There are also
 #' lines connecting the "before" data point to the "after" data point for each
-#' letter. It is the same as [make_PPR_plot_one_treatment()] but for more
+#' letter. It is the same as [plot_PPR_data_one_treatment()] but for more
 #' than one treatment.
 #'
-#' @inheritParams make_baseline_comparison_plot
-#' @inheritParams make_variance_comparison_plot
-#' @inheritParams make_raw_plots
+#' @inheritParams plot_baseline_data
+#' @inheritParams plot_variance_comparison_data
+#' @inheritParams plot_raw_current_data
 
 #' @param data Paired pulse ratio data generated from [make_PPR_data()].
 #'
@@ -1575,7 +1575,7 @@ make_PPR_plot_one_treatment <- function(data,
 #' @returns A ggplot object. If save_plot_png is defined as "yes" in the Global Environment, it will also generate a .png file in the folder `Figures/Evoked-currents/PPR` relative to the project directory.
 #'
 #' @examples
-#' make_PPR_plot_multiple_treatments(data = sample_PPR_df,
+#' plot_PPR_data_multiple_treatments(data = sample_PPR_df,
 #'   include_all_treatments = "yes",
 #'   plot_category = 2,
 #'   baseline_label = "B",
@@ -1583,9 +1583,9 @@ make_PPR_plot_one_treatment <- function(data,
 #'   theme_options = sample_theme_options,
 #'   treatment_colour_theme = sample_treatment_names_and_colours)
 #'
-#' @seealso [make_PPR_plot_one_treatment()] to plot changes in PPR for a single treatment.
+#' @seealso [plot_PPR_data_one_treatment()] to plot changes in PPR for a single treatment.
 
-make_PPR_plot_multiple_treatments <- function(data,
+plot_PPR_data_multiple_treatments <- function(data,
                                               include_all_treatments = "yes",
                                               list_of_treatments = NULL,
                                               plot_category,

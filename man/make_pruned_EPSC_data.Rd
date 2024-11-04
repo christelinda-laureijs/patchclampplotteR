@@ -87,7 +87,7 @@ from the raw data. For a definition of these columns, please see the
 documentation for \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{time} The upper time value of the interval (e.g. 2 minutes for
 "t1to2") which is used on the x-axis of plots such as in
-\code{\link[=make_raw_plots]{make_raw_plots()}}.
+\code{\link[=plot_raw_current_data]{plot_raw_current_data()}}.
 }
 
 New columns for spontaneous current data (\code{current_type == "sEPSC"})
@@ -108,7 +108,7 @@ amplitudes.
 raw data.
 \item \code{time} The upper time value of the interval (e.g. 2 minutes for
 "t1to2") which is used on the x-axis of plots such as in
-\code{\link[=make_summary_plot]{make_summary_plot()}}.
+\code{\link[=plot_summary_current_data]{plot_summary_current_data()}}.
 \item \code{baseline_range} A logical value required for the baseline
 transformation. It is set to TRUE when time is within the baseline period
 (e.g. Time <= 5) and FALSE at all other times.

@@ -365,7 +365,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'    documentation for [make_normalized_EPSC_data()].
 #'    \item `time` The upper time value of the interval (e.g. 2 minutes for
 #'    "t1to2") which is used on the x-axis of plots such as in
-#'    [make_raw_plots()].
+#'    [plot_raw_current_data()].
 #'  }
 #'
 #'  New columns for spontaneous current data (`current_type == "sEPSC"`)
@@ -386,7 +386,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'    raw data.
 #'    \item `time` The upper time value of the interval (e.g. 2 minutes for
 #'    "t1to2") which is used on the x-axis of plots such as in
-#'    [make_summary_plot()].
+#'    [plot_summary_current_data()].
 #'  \item `baseline_range` A logical value required for the baseline
 #'  transformation. It is set to TRUE when time is within the baseline period
 #'  (e.g. Time <= 5) and FALSE at all other times.
@@ -843,9 +843,9 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #' amplitude during the baseline. This uses the `paired_t_test` function from
 #' `rstatix`, with `paired = TRUE` and Holm's adjustment for multiple
 #' comparisons (`p.adjust.method = "holm"`). The resulting output table can also
-#' be used to apply significance stars to the plot in [make_summary_plot()].
+#' be used to apply significance stars to the plot in [plot_summary_current_data()].
 #'
-#' @inheritParams make_baseline_comparison_plot
+#' @inheritParams plot_baseline_data
 #' @inheritParams make_normalized_EPSC_data
 #' @param test_category A numeric value describing the experimental category. In
 #'   the sample dataset for this package, 2 represents experiments where insulin
@@ -1087,7 +1087,7 @@ perform_t_tests_for_summary_plot <- function(data,
 #' more information, please see [Huijstee & Kessels
 #' (2020)](https://doi.org/10.1016/j.jneumeth.2019.108526).
 #'
-#' @inheritParams make_baseline_comparison_plot
+#' @inheritParams plot_baseline_data
 #' @inheritParams make_normalized_EPSC_data
 #' @param df_category A numeric value describing the experimental category. In
 #'   the sample dataset for this package, 2 represents experiments where insulin
@@ -1232,7 +1232,7 @@ make_variance_data <- function(data,
 #' related to the probability of neurotransmitter release [Oleskevich et al.,
 #' 2000](https://doi.org/10.1111/j.1469-7793.2000.00513.x)
 #'
-#' @inheritParams make_baseline_comparison_plot
+#' @inheritParams plot_baseline_data
 #' @inheritParams make_normalized_EPSC_data
 
 #' @param data A dataframe containing the raw evoked current data generated from

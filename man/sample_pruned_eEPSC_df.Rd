@@ -10,7 +10,7 @@ An list of 3 dataframes: \code{individual_cells}, \code{for_table} and
 \describe{
 \itemize{
 \item \code{individual_cells} is used to make pruned plots of individual
-recordings using \code{\link[=make_raw_plots]{make_raw_plots()}}.
+recordings using \code{\link[=plot_raw_current_data]{plot_raw_current_data()}}.
 \itemize{
 \item \code{interval_pruned} A character value describing the interval that was
 used for the pruning function. If the data are pruned per minute, this
@@ -34,7 +34,7 @@ from the raw data. For a definition of these columns, please see the
 documentation for \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{time} The upper time value of the interval (e.g. 2 minutes for
 "t1to2") which is used on the x-axis of plots such as in
-\code{\link[=make_raw_plots]{make_raw_plots()}}.
+\code{\link[=plot_raw_current_data]{plot_raw_current_data()}}.
 }
 
 \item \code{for_table} A dataframe containing two columns: letter and
@@ -67,15 +67,15 @@ current (P1) during a specific interval across all cells.
 This is an example of the dataframe of excitatory current amplitudes produced
 using \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}. This dataset is a list with three dataframes
 containing the pruned data. It can be used for further statistical analyses
-or for plotting. \code{\link[=make_raw_plots]{make_raw_plots()}} and \code{\link[=make_summary_plot]{make_summary_plot()}} in particular
+or for plotting. \code{\link[=plot_raw_current_data]{plot_raw_current_data()}} and \code{\link[=plot_summary_current_data]{plot_summary_current_data()}} in particular
 depend heavily on this type of dataset.
 }
 \details{
 \itemize{
 \item \code{individual_cells} is used to make pruned plots of individual
-recordings using \code{\link[=make_raw_plots]{make_raw_plots()}}.
+recordings using \code{\link[=plot_raw_current_data]{plot_raw_current_data()}}.
 \item \code{for_table} is used to make the experiment overview table
-\item \code{all_cells} is used in \code{\link[=make_summary_plot]{make_summary_plot()}}
+\item \code{all_cells} is used in \code{\link[=plot_summary_current_data]{plot_summary_current_data()}}
 }
 }
 \keyword{data}
