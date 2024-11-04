@@ -361,7 +361,7 @@ NULL
 #'    during the baseline period.
 #'    \item `category, letter, sex, treatment, etc.` Columns which are
 #'    from the raw data. For a definition of these columns, please see the
-#'    documentation for [make_normalized_EPSC_df()].
+#'    documentation for [make_normalized_EPSC_data()].
 #'    \item `time` The upper time value of the interval (e.g. 2 minutes for
 #'    "t1to2") which is used on the x-axis of plots such as in
 #'    [make_raw_plots()].
@@ -390,6 +390,38 @@ NULL
 #'    \item `se_P1_all_cells` The standard error of P1.
 #'    \item `cv_P1_all_cells` The coefficient of variation of P1.
 #'  }
+#'}
+#'}
+#' @keywords data
+NULL
+
+
+
+#' Sample evoked currents variance dataframe
+#'
+#' This is an example of the dataframe generated from evoked current summmary
+#' data processed using the function [make_variance_data()]. It contains new
+#' columns for the mean variance-to-mean ratio (VMR) and mean inverse
+#' coefficient of variation squared for two time intervals. They are the
+#' baseline period ("t0to5"), and a time interval after a hormone or protocol
+#' has been applied (in this case, "t20to25"). It can be used for further
+#' analyses and also to make the variance comparison plots.
+#'
+#' @name sample_eEPSC_variance_df
+#' @docType data
+#' @format An .rda file containing 38 objects of 23 variables
+#' \describe{
+#' \itemize{
+#' \item `state` A character value describing if a data point belongs to the
+#' baseline interval ("Baseline") or an interval after a hormone or protocol has
+#' been applied ("Post-modification"). These intervals are selected from
+#' `baseline_interval` and `post_hormone_interval`.
+#'  \item `mean_cv_inverse_square` The mean inverse coefficient of variation
+#'  squared within a specific state.
+#'  \item `mean_VMR` The mean variance-to-mean ratio within a specific state.
+#'  \item `category, letter, sex, treatment, etc.` Other columns which are
+#'  imported directly from the summary data without modifications. For a
+#'  detailed description of these columns, please see [sample_summary_eEPSC_df].
 #'}
 #'}
 #' @keywords data

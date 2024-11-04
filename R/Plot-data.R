@@ -216,7 +216,7 @@ make_baseline_comparison_plot <- function(data,
     ggplot2::scale_shape_manual(values = c(17, 16)) +
     ggplot2::theme(
       legend.position = "right",
-      legend.background = ggplot2::element_rect(fill = NA),
+      legend.background = ggplot2::element_rect(fill = NA)
     ) +
     ggplot2::guides(color = "none",
                     shape = ggplot2::guide_legend(reverse = TRUE))
@@ -614,10 +614,6 @@ make_raw_plots <-
 
     return(list_of_plots)
   }
-
-# TODO : Provide filepath location for include_representative_trace, finish
-# signif_stars description... TODO check above, and also fix documentation in
-# make_baseline_comparison plot, find way to add sample t test values-----
 
 #' Make a summary plot for a specific treatment
 #'
@@ -1086,6 +1082,240 @@ make_summary_plot <- function(plot_category,
   }
   treatment_plot
 }
+
+#' Plot variance comparison for a treatment
+#'
+#' `make_variance_comparison_plot()` creates a connected  plot with time as a
+#' categorical variable (i.e. baseline/before and after) on the x-axis and the
+#' variance measure on the y-axis. There are also lines
+#' connecting the "before" data point to the "after" data point for each letter.
+#'
+#' The function will perform a paired wilcox test and add brackets with
+#' significance stars through ggsignif::geom_signif().
+#'
+#' This allows you to visually determine if a change in synaptic plasticity is
+#' due to a pre- or post-synaptic mechanism. For more information, please see
+#' [Huijstee & Kessels (2020)](https://doi.org/10.1016/j.jneumeth.2019.108526).
+#'
+#'
+#' You may customize the baseline and post-modification label to any value if
+#' "Baseline" and "Post-hormone" do not work. For example, you may want to use
+#' the hormone name instead of "Post-hormone".
+#'
+#' @inheritParams make_PPR_plot_single_treatment
+#' @inheritParams make_baseline_comparison_plot
+#'
+#' @param variance_measure A character value ("cv" or "VMR"). The variance
+#'   measures can be either the inverse coefficient of variation squared
+#'   (`variance_measure == "cv"`) or variance-to-mean ratio (`variance_measure
+#'   == "VMR"`).
+#' @param post_hormone_interval A character value specifying the interval used
+#'   for the data points after a hormone or protocol was applied. This must
+#'   match the `post_hormone_interval` used in [make_variance_data()].
+#'
+#'
+#' @export
+#'
+#' @examples
+#' make_variance_comparison_plot(data = sample_eEPSC_variance_df,
+#' plot_category = 2,
+#' plot_treatment = "Control",
+#' large_axis_text = "no",
+#' variance_measure = "cv",
+#' baseline_interval = "t0to5",
+#' post_hormone_interval = "t20to25",
+#' post_modification_label = "Insulin",
+#' treatment_colour_theme = sample_treatment_names_and_colours,
+#' theme_options = sample_theme_options)
+#'
+
+
+
+make_variance_comparison_plot <- function(data,
+                                          plot_category,
+                                          plot_treatment,
+                                          large_axis_text = "no",
+                                          variance_measure,
+                                          baseline_interval,
+                                          post_hormone_interval,
+                                          baseline_label = "Baseline",
+                                          post_modification_label,
+                                          treatment_colour_theme,
+                                          save_plot_png = "no",
+                                          theme_options) {
+  if (is.null(post_hormone_interval) ||
+      !is.character(post_hormone_interval)) {
+    stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
+  }
+
+
+  plot_colour <- treatment_colour_theme %>%
+    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::pull(.data$colours)
+
+  variance_comparison_data <- data %>%
+    dplyr::filter(.data$category == plot_category) %>%
+    dplyr::filter(.data$treatment == plot_treatment)
+
+  allowed_parameters_list <- "\"cv\" or \"VMR\""
+
+
+  if (!variance_measure %in% c("cv", "VMR")) {
+    stop("parameter must be ", allowed_parameters_list)
+  }
+
+
+  if (variance_measure == "cv") {
+    variance_comparison_plot <- variance_comparison_data %>%
+      ggplot2::ggplot(
+        ggplot2::aes(
+          x = .data$interval,
+          y = .data$cv_inverse_square,
+          group = .data$letter
+        )
+      ) +
+      ggplot2::labs(y = "1/CV<sup>2</sup>") +
+      ggsignif::geom_signif(
+        comparisons = list(c(
+          baseline_interval, post_hormone_interval
+        )),
+        test = "wilcox.test",
+        test.args = list(paired = TRUE),
+        map_signif_level = c(
+          "***" = 0.001,
+          "**" = 0.01,
+          "*" = 0.05,
+          "ns" = 2
+        ),
+        vjust = -0.3,
+        textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
+        size = 0.4
+      ) +
+      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
+  }
+
+  if (variance_measure == "VMR") {
+    variance_comparison_plot <- variance_comparison_data %>%
+      ggplot2::ggplot(ggplot2::aes(
+        x = .data$interval,
+        y = .data$VMR,
+        group = .data$letter
+      )) +
+      ggplot2::labs(y = "VMR") +
+      ggsignif::geom_signif(
+        comparisons = list(c(
+          baseline_interval, post_hormone_interval
+        )),
+        test = "wilcox.test",
+        test.args = list(paired = TRUE),
+        map_signif_level = c(
+          "***" = 0.001,
+          "**" = 0.01,
+          "*" = 0.05,
+          "ns" = 2
+        ),
+        vjust = -0.3,
+        textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
+        size = 0.4
+      ) +
+      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
+  }
+
+  variance_comparison_plot <- variance_comparison_plot +
+    ggplot2::geom_point(color = theme_options["connecting_line_colour", "value"], size = 1.8) +
+    ggplot2::geom_line(color = theme_options["connecting_line_colour", "value"], linewidth = 0.4) +
+    ggplot2::labs(x = NULL) +
+    ggplot2::scale_x_discrete(labels = c(baseline_label, post_modification_label)) +
+    ggplot2::theme(axis.title.y = ggtext::element_markdown())
+
+  if (variance_measure == "cv") {
+    variance_comparison_plot <- variance_comparison_plot +
+      ggplot2::annotate(
+        geom = "segment",
+        x = baseline_interval,
+        xend = post_hormone_interval,
+        y = variance_comparison_data$mean_cv_inverse_square[variance_comparison_data$interval == baseline_interval][1],
+        yend = variance_comparison_data$mean_cv_inverse_square[variance_comparison_data$interval == post_hormone_interval][1],
+        color = plot_colour,
+        linewidth = 1.2
+      ) +
+      ggplot2::annotate(
+        geom = "point",
+        x = baseline_interval,
+        y = variance_comparison_data$mean_cv_inverse_square[variance_comparison_data$interval == baseline_interval][1],
+        color = plot_colour,
+        size = 2.5
+      ) +
+      ggplot2::annotate(
+        geom = "point",
+        x = post_hormone_interval,
+        y = variance_comparison_data$mean_cv_inverse_square[variance_comparison_data$interval == post_hormone_interval][1],
+        color = plot_colour,
+        size = 2.5
+      )
+  }
+
+  if (variance_measure == "VMR") {
+    variance_comparison_plot <- variance_comparison_plot +
+      ggplot2::annotate(
+        geom = "segment",
+        x = baseline_interval,
+        xend = post_hormone_interval,
+        y = variance_comparison_data$mean_VMR[variance_comparison_data$interval == baseline_interval][1],
+        yend = variance_comparison_data$mean_VMR[variance_comparison_data$interval == post_hormone_interval][1],
+        color = plot_colour,
+        linewidth = 1.2
+      ) +
+      ggplot2::annotate(
+        geom = "point",
+        x = baseline_interval,
+        y = variance_comparison_data$mean_VMR[variance_comparison_data$interval == baseline_interval][1],
+        color = plot_colour,
+        size = 2.5
+      ) +
+      ggplot2::annotate(
+        geom = "point",
+        x = post_hormone_interval,
+        y = variance_comparison_data$mean_VMR[variance_comparison_data$interval == post_hormone_interval][1],
+        color = plot_colour,
+        size = 2.5
+      )
+  }
+
+
+  if (large_axis_text == "yes") {
+    variance_comparison_plot <- variance_comparison_plot +
+      ggplot2::theme(
+        axis.text.x = ggplot2::element_text(size = 24, margin = ggplot2::margin(t = 10)),
+        axis.title.y = ggtext::element_markdown(size = 28, face = "plain")
+      )
+  }
+
+  if (save_plot_png == "yes") {
+    ggplot2::ggsave(
+      plot = variance_comparison_plot,
+      path = here::here("Figures/Evoked-currents/CV"),
+      file = paste0(
+        "Variance-comparison-category-",
+        plot_category,
+        "-",
+        plot_treatment,
+        "-",
+        variance_measure,
+        ".png"
+      ),
+      width = 7,
+      height = 5,
+      units = "in",
+      dpi = 300
+    )
+  }
+
+  return(variance_comparison_plot)
+}
+
+
+
 
 
 # rawplots <- make_raw_plots(

@@ -84,7 +84,7 @@ then squared. This is to enable variance analysis, as in
 during the baseline period.
 \item \verb{category, letter, sex, treatment, etc.} Columns which are
 from the raw data. For a definition of these columns, please see the
-documentation for \code{\link[=make_normalized_EPSC_df]{make_normalized_EPSC_df()}}.
+documentation for \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{time} The upper time value of the interval (e.g. 2 minutes for
 "t1to2") which is used on the x-axis of plots such as in
 \code{\link[=make_raw_plots]{make_raw_plots()}}.

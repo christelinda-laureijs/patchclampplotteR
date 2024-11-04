@@ -81,7 +81,7 @@ relative to the mean amplitude during the recording's baseline.
 }
 }
 \description{
-\code{make_normalized_EPSC_df()} creates a dataframe of evoked or spontaneous
+\code{make_normalized_EPSC_data()} creates a dataframe of evoked or spontaneous
 current data from a raw .csv file. The function will create a new column
 containing the evoked or spontaneous current amplitudes normalized relative
 to the mean current amplitude during the baseline period. For evoked current

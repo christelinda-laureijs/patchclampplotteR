@@ -1,6 +1,6 @@
 #' Import and normalize raw current data
 #'
-#' `make_normalized_EPSC_df()` creates a dataframe of evoked or spontaneous
+#' `make_normalized_EPSC_data()` creates a dataframe of evoked or spontaneous
 #' current data from a raw .csv file. The function will create a new column
 #' containing the evoked or spontaneous current amplitudes normalized relative
 #' to the mean current amplitude during the baseline period. For evoked current
@@ -361,7 +361,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'    during the baseline period.
 #'    \item `category, letter, sex, treatment, etc.` Columns which are
 #'    from the raw data. For a definition of these columns, please see the
-#'    documentation for [make_normalized_EPSC_df()].
+#'    documentation for [make_normalized_EPSC_data()].
 #'    \item `time` The upper time value of the interval (e.g. 2 minutes for
 #'    "t1to2") which is used on the x-axis of plots such as in
 #'    [make_raw_plots()].
@@ -1087,7 +1087,17 @@ perform_t_tests_for_summary_plot <- function(data,
 #'   but can be changed. Make sure that this matches an interval present in
 #'   `data`
 #'
-#' @return A dataframe
+#' @return A dataframe containing all of the columns within the summary data
+#'   (see [sample_summary_eEPSC_df] for a detailed description of these columns)
+#'   plus three additional columns:
+#' \itemize{
+#' \item `state` A character value describing if a data point belongs to the
+#' baseline interval ("Baseline") or an interval after a hormone or protocol has
+#' been applied ("Post-modification"). These intervals are selected from
+#' `baseline_interval` and `post_hormone_interval`.
+#'  \item `mean_cv_inverse_square` The mean inverse coefficient of variation squared within a specific state.
+#'  \item `mean_VMR` The mean variance-to-mean ratio within a specific state.
+#'}
 #'
 #' @export
 #'
@@ -1181,10 +1191,10 @@ make_variance_data <- function(data,
         T ~ interval
       )
     ) %>%
-    dplyr::group_by(.data$treatment, state) %>%
+    dplyr::group_by(.data$treatment, .data$state) %>%
     dplyr::mutate(
       mean_cv_inverse_square = mean(.data$cv_inverse_square),
-      mean_VMR = mean(VMR)
+      mean_VMR = mean(.data$VMR)
     ) %>%
     dplyr::arrange(match(.data$treatment, treatment_info$display_names))
 

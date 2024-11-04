@@ -52,7 +52,17 @@ should look like.}
 resulting object should be saved as an RDS file in the raw data folder.}
 }
 \value{
-A dataframe
+A dataframe containing all of the columns within the summary data
+(see \link{sample_summary_eEPSC_df} for a detailed description of these columns)
+plus three additional columns:
+\itemize{
+\item \code{state} A character value describing if a data point belongs to the
+baseline interval ("Baseline") or an interval after a hormone or protocol has
+been applied ("Post-modification"). These intervals are selected from
+\code{baseline_interval} and \code{post_hormone_interval}.
+\item \code{mean_cv_inverse_square} The mean inverse coefficient of variation squared within a specific state.
+\item \code{mean_VMR} The mean variance-to-mean ratio within a specific state.
+}
 }
 \description{
 \code{make_variance_data} creates a dataframe containing variance measures at two
