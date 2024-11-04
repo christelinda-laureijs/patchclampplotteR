@@ -853,7 +853,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #'   available parameters are "amplitude" (normalized currents),
 #'   "raw_amplitude", "frequency" (normalized frequency) or "raw_frequency".
 #'
-#' @return A dataframe
+#' @returns A dataframe
 #' @export
 #'
 #' @seealso [make_normalized_EPSC_data()] for an example of how the normalized
@@ -1087,7 +1087,7 @@ perform_t_tests_for_summary_plot <- function(data,
 #'   but can be changed. Make sure that this matches an interval present in
 #'   `data`
 #'
-#' @return A dataframe containing all of the columns within the summary data
+#' @returns A dataframe containing all of the columns within the summary data
 #'   (see [sample_summary_eEPSC_df] for a detailed description of these columns)
 #'   plus three additional columns:
 #' \itemize{
@@ -1230,7 +1230,7 @@ make_variance_data <- function(data,
 #' @param post_hormone_interval A character value specifying the interval used
 #'   for the data points after a hormone or protocol was applied.
 #'
-#' @return A dataframe containing all of the columns from
+#' @returns A dataframe containing all of the columns from
 #'   [make_normalized_EPSC_data()], but filtered to only include PPR values
 #'   between `PPR_min` and `PPR_max` within the `baseline_interval` and
 #'   `post_hormone_interval`.
@@ -1320,7 +1320,7 @@ make_PPR_data <- function(data,
 
   if (save_output_as_RDS == "yes") {
     saveRDS(PPR_df, file = here::here(paste0(
-      "Data/Output-Data-from-R/variance_data.RDS"
+      "Data/Output-Data-from-R/PPR_df.RDS"
     )))
   }
 }

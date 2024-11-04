@@ -20,8 +20,16 @@ make_variance_comparison_plot(
 )
 }
 \arguments{
-\item{data}{A dataframe containing the summary data generated from
-\code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}}.}
+\item{data}{A dataframe generated using \code{\link[=make_variance_data]{make_variance_data()}}.}
+
+\item{plot_category}{A numeric value specifying the category, which can be
+used to differentiate different protocol types. In the sample dataset for
+this package, \code{plot_category == 2} represents experiments where insulin was
+applied continuously after a 5-minute baseline period.}
+
+\item{plot_treatment}{A character value specifying the treatment you would
+like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
+were present on the brain slice, or the animals were fasted, etc.}
 
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the axis text.}
@@ -39,6 +47,13 @@ Make sure that this matches the baseline interval that you set in
 for the data points after a hormone or protocol was applied. This must
 match the \code{post_hormone_interval} used in \code{\link[=make_variance_data]{make_variance_data()}}.}
 
+\item{baseline_label}{A character value for the x-axis label applied to the
+pre-hormone state. Defaults to "Baseline".}
+
+\item{post_modification_label}{A character value for x-axis label applied to
+the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
+will likely change this to the hormone or protocol name.}
+
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
@@ -52,6 +67,10 @@ they will all go in subfolders below Figures/ in your project directory.}
 \link{sample_theme_options} for an example of what this dataframe should
 look like.}
 }
+\value{
+A ggplot object. If \code{save_plot_png == "yes"}, it will also generate a
+.png file exported to \code{Figures/Evoked-currents/Variance-plots}. The plot will be named in the form of "Variance-comparison-category-\code{plot_category}-\code{plot_treatment}-\code{variance_measure}.png". An example filename is "Variance-comparison-category-2-Control-cv.png"
+}
 \description{
 \code{make_variance_comparison_plot()} creates a connected  plot with time as a
 categorical variable (i.e. baseline/before and after) on the x-axis and the
@@ -60,7 +79,7 @@ connecting the "before" data point to the "after" data point for each letter.
 }
 \details{
 The function will perform a paired wilcox test and add brackets with
-significance stars through ggsignif::geom_signif().
+significance stars through \code{ggsignif::geom_signif()}.
 
 This allows you to visually determine if a change in synaptic plasticity is
 due to a pre- or post-synaptic mechanism. For more information, please see

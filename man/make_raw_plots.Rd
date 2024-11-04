@@ -24,10 +24,13 @@ make_raw_plots(
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.}
 
 \item{plot_treatment}{A character value specifying the treatment you would
-like to plot (e.g. "Control").}
+like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
+were present on the brain slice, or the animals were fasted, etc.}
 
 \item{plot_category}{A numeric value specifying the category, which can be
-used to differentiate different protocol types.}
+used to differentiate different protocol types. In the sample dataset for
+this package, \code{plot_category == 2} represents experiments where insulin was
+applied continuously after a 5-minute baseline period.}
 
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
@@ -70,7 +73,13 @@ should look like.}
 }
 \value{
 A list of ggplot objects, where each list element is a scatterplot of
-one recording.
+one recording. If \code{save_plot_png == "yes"}, it will also generate a .png
+file from each ggplot element in the list. The figures will be exported to
+\code{Figures/Evoked-currents/Output-individual-plots} or
+\code{Figures/Spontaneous-currents/Output-individual-plots}, depending on the
+\code{current_type}. The .png filename will contain the \code{letter}. If the data
+are pruned, the filename will also include \verb{_pruned} in the filename.
+Example filenames include "A.png", and "A_pruned.png".
 }
 \description{
 This function enables you to create a scatterplot of raw evoked (or

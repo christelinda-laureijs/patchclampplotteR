@@ -71,7 +71,10 @@ saved as a .png using ggsave. The filepath depends on the current type, but
 they will all go in subfolders below Figures/ in your project directory.}
 }
 \value{
-A ggplot object
+A ggplot object. If \code{save_plot_png == "yes"}, it will also generate a
+.png file in \code{Figures/Evoked-currents/Output-summary-plots} or
+\code{Figures/Spontaneous-currents/Output-summary-plots}. The .png filename will
+contain the \code{parameter}.
 }
 \description{
 This function creates a scatterplot of parameters such as raw amplitude
@@ -92,6 +95,7 @@ make_baseline_comparison_plot(
  parameter = "raw_amplitude",
  baseline_interval = "t0to5",
  large_axis_text = "no",
- plot_width = 8
+ plot_width = 8,
+ save_plot_png = "no"
 )
 }

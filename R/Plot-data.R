@@ -47,7 +47,10 @@
 #'   saved as a .png using ggsave. The filepath depends on the current type, but
 #'   they will all go in subfolders below Figures/ in your project directory.
 #'
-#' @return A ggplot object
+#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate a
+#'   .png file in `Figures/Evoked-currents/Output-summary-plots` or
+#'   `Figures/Spontaneous-currents/Output-summary-plots`. The .png filename will
+#'   contain the `parameter`.
 #' @export
 #'
 #' @examples
@@ -61,7 +64,8 @@
 #'  parameter = "raw_amplitude",
 #'  baseline_interval = "t0to5",
 #'  large_axis_text = "no",
-#'  plot_width = 8
+#'  plot_width = 8,
+#'  save_plot_png = "no"
 #')
 make_baseline_comparison_plot <- function(data,
                                           treatment_colour_theme,
@@ -266,9 +270,12 @@ make_baseline_comparison_plot <- function(data,
 #' @param data A dataframe containing the raw evoked current data generated from
 #'   [make_normalized_EPSC_data()].
 #' @param plot_treatment A character value specifying the treatment you would
-#'   like to plot (e.g. "Control").
+#'   like to plot (e.g. "Control"). `plot_treatment` represents antagonists that
+#'   were present on the brain slice, or the animals were fasted, etc.
 #' @param plot_category A numeric value specifying the category, which can be
-#'   used to differentiate different protocol types.
+#'   used to differentiate different protocol types. In the sample dataset for
+#'   this package, `plot_category == 2` represents experiments where insulin was
+#'   applied continuously after a 5-minute baseline period.
 #' @param current_type A character describing the current type. Allowed values
 #'   are "eEPSC" or "sEPSC".
 #' @param parameter A character value specifying the parameter to be plotted on
@@ -301,8 +308,14 @@ make_baseline_comparison_plot <- function(data,
 #'   [sample_treatment_names_and_colours] for an example of what this dataframe
 #'   should look like.
 #'
-#' @return A list of ggplot objects, where each list element is a scatterplot of
-#'   one recording.
+#' @returns A list of ggplot objects, where each list element is a scatterplot of
+#'   one recording. If `save_plot_png == "yes"`, it will also generate a .png
+#'   file from each ggplot element in the list. The figures will be exported to
+#'   `Figures/Evoked-currents/Output-individual-plots` or
+#'   `Figures/Spontaneous-currents/Output-individual-plots`, depending on the
+#'   `current_type`. The .png filename will contain the `letter`. If the data
+#'   are pruned, the filename will also include `_pruned` in the filename.
+#'   Example filenames include "A.png", and "A_pruned.png".
 #' @export
 #'
 #' @examples
@@ -642,7 +655,16 @@ make_raw_plots <-
 #' @param shade_intervals A character ("yes" or "no"). If "yes", a ggplot theme
 #'   layer will be applied which adds lightly shaded rectangles to highlight
 #'   5-minute intervals.
-#' @return A ggplot object
+#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate a
+#'   .png file exported to `Figures/Evoked-currents/Output-summary-plots` or
+#'   `Figures/Spontaneous-currents/Output-summary-plots`, depending on the
+#'   `current_type`. The .png filename will be in this format:
+#'   "Summary-plot-`plot_treatment`-category-`plot_category`-`file_name_ending`-`text_size`.png".
+#'   The `file_name_ending` and `text_size` will only be added on if you are
+#'   using a An example filename is: "Summary-plot-Control-category-2.png" or
+#'   "Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
+#'   currents.
+#'
 #' @export
 #'
 #' @seealso [perform_t_tests_for_summary_plot()] which produces the significance
@@ -1091,7 +1113,7 @@ make_summary_plot <- function(plot_category,
 #' connecting the "before" data point to the "after" data point for each letter.
 #'
 #' The function will perform a paired wilcox test and add brackets with
-#' significance stars through ggsignif::geom_signif().
+#' significance stars through `ggsignif::geom_signif()`.
 #'
 #' This allows you to visually determine if a change in synaptic plasticity is
 #' due to a pre- or post-synaptic mechanism. For more information, please see
@@ -1102,9 +1124,10 @@ make_summary_plot <- function(plot_category,
 #' "Baseline" and "Post-hormone" do not work. For example, you may want to use
 #' the hormone name instead of "Post-hormone".
 #'
-#' @inheritParams make_PPR_plot_single_treatment
+#' @inheritParams make_raw_plots
 #' @inheritParams make_baseline_comparison_plot
 #'
+#' @param data A dataframe generated using [make_variance_data()].
 #' @param variance_measure A character value ("cv" or "VMR"). The variance
 #'   measures can be either the inverse coefficient of variation squared
 #'   (`variance_measure == "cv"`) or variance-to-mean ratio (`variance_measure
@@ -1112,7 +1135,13 @@ make_summary_plot <- function(plot_category,
 #' @param post_hormone_interval A character value specifying the interval used
 #'   for the data points after a hormone or protocol was applied. This must
 #'   match the `post_hormone_interval` used in [make_variance_data()].
-#'
+#' @param baseline_label A character value for the x-axis label applied to the
+#'   pre-hormone state. Defaults to "Baseline".
+#' @param post_modification_label A character value for x-axis label applied to
+#'   the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
+#'   will likely change this to the hormone or protocol name.
+#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate a
+#'   .png file exported to `Figures/Evoked-currents/Variance-plots`. The plot will be named in the form of "Variance-comparison-category-`plot_category`-`plot_treatment`-`variance_measure`.png". An example filename is "Variance-comparison-category-2-Control-cv.png"
 #'
 #' @export
 #'
@@ -1128,8 +1157,6 @@ make_summary_plot <- function(plot_category,
 #' treatment_colour_theme = sample_treatment_names_and_colours,
 #' theme_options = sample_theme_options)
 #'
-
-
 
 make_variance_comparison_plot <- function(data,
                                           plot_category,
@@ -1294,7 +1321,7 @@ make_variance_comparison_plot <- function(data,
   if (save_plot_png == "yes") {
     ggplot2::ggsave(
       plot = variance_comparison_plot,
-      path = here::here("Figures/Evoked-currents/CV"),
+      path = here::here("Figures/Evoked-currents/Variance-plots"),
       file = paste0(
         "Variance-comparison-category-",
         plot_category,
@@ -1315,35 +1342,151 @@ make_variance_comparison_plot <- function(data,
 }
 
 
+#' Make a PPR plot for a single treatment
+#'
+#' `make_PPR_plot_one_treatment()` creates a categorical scatter plot with
+#' experimental state (i.e. baseline/before and after) on the x-axis and the
+#' paired-pulse ratio (PPR) on the y-axis. There are also lines connecting the
+#' "before" data point to the "after" data point for each letter.
+#'
+#' The function will perform a paired wilcox test and add brackets with
+#' significance stars through `ggsignif::geom_signif()`.
+#'
+#' You may customize the baseline and post-modification label to any value if "Baseline" and "Post-hormone" do not work. For example, you may want to use the hormone name instead of "Post-hormone"
+#'
+#' @inheritParams make_raw_plots
+#' @inheritParams make_summary_plot
+#' @inheritParams make_variance_comparison_plot
+#'
+#' @param data Paired pulse ratio data generated from [make_PPR_data()].
+#'
+#' @export
+#'
+#' @returns A ggplot object. If save_plot_png is defined as "yes" in the Global
+#'   Environment, it will also generate a .png file in the folder
+#'   `Figures/Evoked-currents/PPR` relative to the project directory. The
+#'   treatment will be included in the filename.
+#'
+#' @examples
+#' make_PPR_plot_one_treatment(data = sample_PPR_df,
+#'   plot_treatment = "Control",
+#'   plot_category = 2,
+#'   large_axis_text = "no",
+#'   baseline_label = "Baseline",
+#'   post_modification_label = "Insulin",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   theme_options = sample_theme_options,
+#'   save_plot_png = "no)
+#'
+#' @seealso [make_PPR_plot_multiple_treatments()] to plot changes in PPR for multiple treatments.
+
+make_PPR_plot_one_treatment <- function(data,
+                                        plot_treatment = "Control",
+                                        plot_category,
+                                        large_axis_text = "no",
+                                        baseline_label = "Baseline",
+                                        post_modification_label = "Post-hormone",
+                                        treatment_colour_theme,
+                                        theme_options,
+                                        save_plot_png = "no") {
+  if (!large_axis_text %in% c("yes", "no")) {
+    stop("'large_axis_text' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!save_plot_png %in% c("yes", "no")) {
+    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+  }
+
+  plot_colour <- treatment_colour_theme %>%
+    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::pull(.data$colours)
 
 
+  PPR_one_plot <- data %>%
+    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::filter(.data$category == plot_category) %>%
+    dplyr::mutate(
+      state = case_match(
+        .data$state,
+        "Baseline" ~ baseline_label,
+        "Post-modification" ~ post_modification_label
+      )
+    ) %>%
+    dplyr::group_by(.data$treatment, .data$state, .data$letter, .data$sex) %>%
+    dplyr::summarize(mean_PPR_cell = mean(.data$PPR), .groups = "drop") %>%
+    ggplot2::ggplot(ggplot2::aes(
+      x = .data$state,
+      y = .data$mean_PPR_cell,
+      shape = .data$sex
+    )) +
+    ggplot2::geom_point(
+      size = 4,
+      color = plot_colour,
+      position = ggplot2::position_jitter(width = 0.04, height = 0),
+      alpha = 0.8
+    ) +
+    ggplot2::geom_line(
+      ggplot2::aes(group = .data$letter),
+      color = plot_colour,
+      linewidth = connecting_line_width_PPR,
+      alpha = 0.3
+    ) +
+    ggplot2::stat_summary(
+      fun.data = ggplot2::mean_se,
+      geom = "pointrange",
+      color = mean_point_colour,
+      size = mean_point_size + 0.2,
+      alpha = 1,
+      position = ggplot2::position_nudge(x = -0.04),
+      show.legend = FALSE
+    ) +
+    ggplot2::theme(legend.position = "right") +
+    ggplot2::coord_cartesian(ylim = c(0, 3)) +
+    ggplot2::theme(axis.text.x = ggplot2::element_text(margin = ggplot2::margin(b = 5, t = 5))) +
+    ggplot2::labs(x = NULL, y = "Paired pulse ratio", shape = NULL) +
+    ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+    ggsignif::geom_signif(
+      comparisons = list(c(
+        baseline_label, post_modification_label
+      )),
+      test = "t.test",
+      test.args = list(paired = TRUE),
+      map_signif_level = c(
+        "***" = 0.001,
+        "**" = 0.01,
+        "*" = 0.05,
+        "ns" = 2
+      ),
+      vjust = -0.3,
+      family = significance_stars_font,
+      textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
+      size = 0.4,
+      y_position = 2.5
+    )
 
-# rawplots <- make_raw_plots(
-#   data = sample_raw_eEPSC_df,
-#   plot_treatment = "Control",
-#   plot_category = 2,
-#   current_type = "eEPSC",
-#   parameter = "P1",
-#   pruned = "no",
-#   hormone_added = "Insulin",
-#   hormone_or_HFS_start_time = 5,
-#   hormone_end_time = 25,
-#   theme_options = sample_theme_options,
-#   treatment_colour_theme = sample_treatment_names_and_colours
-# )
+  if (large_axis_text == "yes") {
+    PPR_one_plot <- PPR_one_plot +
+      ggplot2::theme(
+        axis.text.x = ggplot2::element_text(size = 24, margin = ggplot2::margin(t = 10)),
+        axis.title.y = ggplot2::element_text(size = 28, face = "plain"),
+        legend.text = ggplot2::element_text(size = 18),
+        legend.key.spacing.y = grid::unit(0.5, "cm")
+      )
+  }
 
-#
-# data <- dplyr::filter(sample_raw_eEPSC_df, letter == "AO")
-#
-# ggplot2::ggplot(data = data, ggplot2::aes(x = .data$time, y = .data$P1)) +
-#   ggplot2::geom_point() +
-#   ggplot2::annotate(
-#     geom = "segment",
-#     x = 4,
-#     xend = 20,
-#     y = 60 + 0.1 * 60,
-#     yend = 60 + 0.1 * 60,
-#     colour = sample_theme_options["line_col", "value"],
-#     linewidth = 0.6
-#   ) +
-#   ggplot2::theme(axis.text = ggplot2::element_text(family = NULL))
+
+  if (save_plot_png == "yes") {
+    ggplot2::ggsave(
+      plot = PPR_one_plot,
+      path = here::here("Figures/Evoked-currents/PPR"),
+      file = paste0("PPR_comparison-", plot_treatment, ".png"),
+      width = 7,
+      height = 5,
+      units = "in",
+      dpi = 300
+    )
+  }
+
+
+  return(PPR_one_plot)
+}

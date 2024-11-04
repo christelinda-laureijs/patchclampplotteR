@@ -25,10 +25,13 @@ make_summary_plot(
 }
 \arguments{
 \item{plot_category}{A numeric value specifying the category, which can be
-used to differentiate different protocol types.}
+used to differentiate different protocol types. In the sample dataset for
+this package, \code{plot_category == 2} represents experiments where insulin was
+applied continuously after a 5-minute baseline period.}
 
 \item{plot_treatment}{A character value specifying the treatment you would
-like to plot (e.g. "Control").}
+like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
+were present on the brain slice, or the animals were fasted, etc.}
 
 \item{data}{A dataframe containing pruned summary data for all cells. This is the third element of the list generated from \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}.}
 
@@ -90,7 +93,15 @@ saved as a .png using ggsave. The filepath depends on the current type, but
 they will all go in subfolders below Figures/ in your project directory.}
 }
 \value{
-A ggplot object
+A ggplot object. If \code{save_plot_png == "yes"}, it will also generate a
+.png file exported to \code{Figures/Evoked-currents/Output-summary-plots} or
+\code{Figures/Spontaneous-currents/Output-summary-plots}, depending on the
+\code{current_type}. The .png filename will be in this format:
+"Summary-plot-\code{plot_treatment}-category-\code{plot_category}-\code{file_name_ending}-\code{text_size}.png".
+The \code{file_name_ending} and \code{text_size} will only be added on if you are
+using a An example filename is: "Summary-plot-Control-category-2.png" or
+"Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
+currents.
 }
 \description{
 This function enables you to create a scatterplot of mean evoked (or
