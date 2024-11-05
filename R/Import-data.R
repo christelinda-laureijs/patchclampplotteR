@@ -34,7 +34,7 @@ import_ext_data <- function(file = NULL) {
 #' @section Required columns:
 #'
 #'  These columns are required in the raw .csv file:
-#'\itemize{
+#' \itemize{
 #'  \item `letter` A character value that is a unique identifier for a single
 #'  recording. Used to link data sets for evoked or spontaneous currents and
 #'  cell-characteristics. Example: "A"
@@ -54,9 +54,9 @@ import_ext_data <- function(file = NULL) {
 #'  \item `treatment` A character value such as "Control" or "HNMPA".
 #'  \item `category` A numeric value representing the experiment type. Used to
 #'  assign top-level groups for further analyses, with `treatment` as subgroups.
-#'\item `R_a` A list of values for the access resistance, which would have been
-#'monitored at several timepoints throughout the recording. See the section
-#'`R_a` formatting below. }
+#' \item `R_a` A list of values for the access resistance, which would have been
+#' monitored at several timepoints throughout the recording. See the section
+#' `R_a` formatting below. }
 #' @section `R_a` formatting:
 #'
 #' `R_a` is a mandatory column with information about the cell's access
@@ -104,7 +104,6 @@ import_cell_characteristics_df <- function(filename) {
 #'
 #' @examples
 #' import_ABF_file(import_ext_data("sample_abf.abf"))
-
 import_ABF_file <-
   function(file_name) {
     abftools::abf2_load(here::here(file_name)) %>%
@@ -147,7 +146,7 @@ import_ABF_file <-
 # )
 #
 
-#usethis::use_data(sample_treatment_names_and_colours)
+# usethis::use_data(sample_treatment_names_and_colours)
 
 # sample_summary_eEPSC_df <- make_summary_EPSC_data()
 # usethis::use_data(sample_summary_eEPSC_df)
@@ -175,8 +174,7 @@ import_ABF_file <-
 #'
 #' @examples
 #'
-#'import_theme_colours(import_ext_data("sample_theme_options.csv"))
-#'
+#' import_theme_colours(import_ext_data("sample_theme_options.csv"))
 #'
 import_theme_colours <- function(filename) {
   theme_options <- utils::read.csv(here::here(filename)) %>%

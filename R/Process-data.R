@@ -35,7 +35,7 @@
 #'
 #' @returns A dataframe that can be viewed and used for further analyses in R.
 #'   New or modified columns include:
-#'\itemize{
+#' \itemize{
 #'  \item `P1` (for evoked currents only) May be negative-transformed if
 #'  `negative_transform` == "yes"
 #'  \item `P2` (for evoked currents only) May be negative-transformed if
@@ -89,7 +89,7 @@
 #'  assign top-level groups for further analyses, with `treatment` as subgroups.
 #'  \item `cell` A character or numeric value representing the cell. For
 #'  example, use `3.1.1` for animal #3, slice #1, cell #1.
-#'}
+#' }
 #'
 #' **Evoked current data**:
 #'
@@ -109,7 +109,7 @@
 #' If the data are spontaneous currents (`current_type == "sEPSC"`), the data
 #' must contain the basic columns mentioned in **Required basic columns** plus
 #' these columns:
-#'\itemize{
+#' \itemize{
 #'  \item `recording_num` A numeric value representing the recording number.
 #'  This was incorporated before we switched to concatenating all recordings
 #'  into one, but it needs to remain here to prevent breaking previous projects.
@@ -156,8 +156,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
   list_of_argument_names <- c(filename, current_type)
 
   if (is.null(current_type) ||
-      length(current_type) != 1L ||
-      !current_type %in% c("eEPSC", "sEPSC")) {
+    length(current_type) != 1L ||
+    !current_type %in% c("eEPSC", "sEPSC")) {
     stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
   }
 
@@ -219,9 +219,11 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 
   if (current_type == "sEPSC") {
     raw_df <- raw_df %>%
-      dplyr::rename(ID = .data$id,
-                    X = .data$x,
-                    Y = .data$y)
+      dplyr::rename(
+        ID = .data$id,
+        X = .data$x,
+        Y = .data$y
+      )
   }
 
   raw_df <- raw_df %>%
@@ -258,8 +260,10 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 
 
   time_sequence <- seq(from = min_time_value, to = max_time_value, by = interval_length)
-  time_labels <- utils::head(paste0("t", time_sequence, "to", time_sequence + interval_length),
-                             -1)
+  time_labels <- utils::head(
+    paste0("t", time_sequence, "to", time_sequence + interval_length),
+    -1
+  )
 
   raw_df <- raw_df %>%
     dplyr::mutate(
@@ -335,7 +339,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'   dataframes with logical names (e.g. `pruned_eEPSC_df$all_cells`). The
 #'   dataframes are:
 #'
-#'\itemize{
+#' \itemize{
 #'  \item `individual_cells` A dataframe containing current data for each
 #'  individual cell, but the data are reduced to a summary  point per per minute
 #'  (or another value if a different `interval_length` is set). This dataframe
@@ -460,7 +464,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'    frequency of all spontaneous current amplitudes across all cells during
 #'    the interval.
 #'  }
-#'}
+#' }
 #'
 #' @inheritSection make_normalized_EPSC_data Required basic columns
 #'
@@ -495,13 +499,13 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'  current amplitude (pA) normalized relative to the mean amplitude during the
 #'  recording's baseline. Generated automatically in
 #'  [make_normalized_EPSC_data()].
-#'}
+#' }
 #' @section Required spontaneous currents columns:
 #' If the data are spontaneous currents (current_type == "sEPSC"), the data must
 #' contain the basic columns mentioned in **Required basic columns** plus these
 #' columns:
 #'
-#'\itemize{
+#' \itemize{
 #'  \item `interval` A character value indicating the interval that the data
 #'  belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
 #'  automatically in [make_normalized_EPSC_data()].
@@ -516,7 +520,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'  current amplitude (pA) normalized relative to the mean amplitude during the
 #'  recording's baseline. Generated automatically in
 #'  [make_normalized_EPSC_data()].
-#'}
+#' }
 #'
 #' @export
 #'
@@ -528,13 +532,14 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'   normalization works.
 #'
 #' @examples
-#' make_pruned_EPSC_data(data = sample_raw_eEPSC_df,
+#' make_pruned_EPSC_data(
+#'   data = sample_raw_eEPSC_df,
 #'   current_type = "eEPSC",
 #'   min_time_value = 0,
 #'   max_time_value = 25,
 #'   baseline_length = 5,
-#'   interval_length = 1)
-
+#'   interval_length = 1
+#' )
 make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
                                   current_type = "eEPSC",
                                   min_time_value = 0,
@@ -543,11 +548,11 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
                                   interval_length = 1,
                                   save_output_as_RDS = "no") {
   time_sequence <- seq(from = min_time_value, to = max_time_value, by = interval_length)
-  time_labels <- utils::head(paste0("t", time_sequence, "to", time_sequence + interval_length),-1)
+  time_labels <- utils::head(paste0("t", time_sequence, "to", time_sequence + interval_length), -1)
 
   if (is.null(current_type) ||
-      length(current_type) != 1L ||
-      !current_type %in% c("eEPSC", "sEPSC")) {
+    length(current_type) != 1L ||
+    !current_type %in% c("eEPSC", "sEPSC")) {
     stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
   }
 
@@ -565,11 +570,13 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         labels = time_labels
       )
     ) %>%
-    dplyr::group_by(.data$category,
-                    .data$letter,
-                    .data$sex,
-                    .data$treatment,
-                    .data$interval_pruned)
+    dplyr::group_by(
+      .data$category,
+      .data$letter,
+      .data$sex,
+      .data$treatment,
+      .data$interval_pruned
+    )
 
   if (current_type == "eEPSC") {
     pruned_df_individual_cells <- pruned_df_individual_cells %>%
@@ -580,7 +587,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         n = dplyr::n(),
         se = .data$sd_P1 / sqrt(.data$n),
         cv = .data$sd_P1 / .data$mean_P1,
-        cv_inverse_square = 1 / (.data$cv ^ 2),
+        cv_inverse_square = 1 / (.data$cv^2),
         letter = unique(.data$letter),
         category = unique(.data$category),
         time = dplyr::last(.data$time),
@@ -661,10 +668,12 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         category = unique(.data$category),
         time = dplyr::last(.data$time)
       ) %>%
-      dplyr::group_by(.data$category,
-                      .data$interval_pruned,
-                      .data$sex,
-                      .data$treatment) %>%
+      dplyr::group_by(
+        .data$category,
+        .data$interval_pruned,
+        .data$sex,
+        .data$treatment
+      ) %>%
       dplyr::reframe(
         mean_P1_all_cells = mean(.data$mean_P1, na.rm = TRUE),
         sd_P1_all_cells = stats::sd(.data$mean_P1, na.rm = TRUE),
@@ -673,17 +682,18 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         cv_P1_all_cells = .data$sd_P1_all_cells / .data$mean_P1_all_cells * 100,
         time = dplyr::last(.data$time),
         category = unique(.data$category),
-
       )
   }
 
   if (current_type == "sEPSC") {
     pruned_df_all_cells <- pruned_df_individual_cells %>%
       dplyr::ungroup() %>%
-      dplyr::group_by(.data$category,
-                      .data$interval_pruned,
-                      .data$sex,
-                      .data$treatment) %>%
+      dplyr::group_by(
+        .data$category,
+        .data$interval_pruned,
+        .data$sex,
+        .data$treatment
+      ) %>%
       dplyr::reframe(
         mean_all_amplitude = mean(.data$mean_amplitude, na.rm = TRUE),
         mean_all_raw_amplitude = mean(.data$mean_raw_amplitude, na.rm = TRUE),
@@ -789,21 +799,22 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #'  \item `P2_transformed` A numeric value representing the second evoked
 #'  current amplitude (pA) normalized relative to the mean amplitude during the
 #'  recording's baseline.
-#'}
+#' }
 #'
 #' @export
 #' @examples
 #'
 #' make_summary_EPSC_data(
 #'   data = sample_raw_eEPSC_df,
-#'   current_type = "eEPSC")
+#'   current_type = "eEPSC"
+#' )
 #'
 make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
                                    current_type = "eEPSC",
                                    save_output_as_RDS = "no") {
   if (is.null(current_type) ||
-      length(current_type) != 1L ||
-      !current_type %in% c("eEPSC", "sEPSC")) {
+    length(current_type) != 1L ||
+    !current_type %in% c("eEPSC", "sEPSC")) {
     stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
   }
 
@@ -813,11 +824,13 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 
   if (current_type == "eEPSC") {
     summary_df <- data %>%
-      dplyr::group_by(.data$category,
-                      .data$letter,
-                      .data$sex,
-                      .data$treatment,
-                      .data$interval) %>%
+      dplyr::group_by(
+        .data$category,
+        .data$letter,
+        .data$sex,
+        .data$treatment,
+        .data$interval
+      ) %>%
       dplyr::summarize(
         mean_P1_transformed = mean(.data$P1_transformed, na.rm = TRUE),
         mean_P1_raw = mean(.data$P1, na.rm = TRUE),
@@ -825,7 +838,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         sd = stats::sd(.data$P1_transformed, na.rm = TRUE),
         cv = .data$sd / .data$mean_P1_transformed,
         se = stats::sd(.data$P1_transformed, na.rm = TRUE) / sqrt(.data$n),
-        cv_inverse_square = 1 / (.data$cv ^ 2),
+        cv_inverse_square = 1 / (.data$cv^2),
         variance = stats::var(.data$P1_transformed, na.rm = TRUE),
         VMR = .data$variance / .data$mean_P1_transformed,
         age = unique(.data$age),
@@ -842,11 +855,13 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 
   if (current_type == "sEPSC") {
     summary_df <- data %>%
-      dplyr::group_by(.data$category,
-                      .data$letter,
-                      .data$sex,
-                      .data$treatment,
-                      .data$interval) %>%
+      dplyr::group_by(
+        .data$category,
+        .data$letter,
+        .data$sex,
+        .data$treatment,
+        .data$interval
+      ) %>%
       dplyr::summarize(
         mean_transformed_amplitude = mean(.data$mean_amplitude, na.rm = TRUE),
         mean_raw_amplitude = mean(.data$mean_raw_amplitude, na.rm = TRUE),
@@ -906,17 +921,18 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #'   current amplitudes were created.
 #'
 #' @examples
-#' perform_t_tests_for_summary_plot(data = sample_summary_eEPSC_df,
-#'  test_category = 2,
-#'  include_all_treatments = "yes",
-#'  treatment_colour_theme = sample_treatment_names_and_colours,
-#'  parameter = "amplitude",
-#'  baseline_interval = "t0to5",
-#'  interval_length = 5,
-#'  list_of_treatments = NULL,
-#'  current_type = "eEPSC",
-#'  save_output_as_RDS = "no")
-
+#' perform_t_tests_for_summary_plot(
+#'   data = sample_summary_eEPSC_df,
+#'   test_category = 2,
+#'   include_all_treatments = "yes",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   parameter = "amplitude",
+#'   baseline_interval = "t0to5",
+#'   interval_length = 5,
+#'   list_of_treatments = NULL,
+#'   current_type = "eEPSC",
+#'   save_output_as_RDS = "no"
+#' )
 perform_t_tests_for_summary_plot <- function(data,
                                              test_category,
                                              include_all_treatments = "yes",
@@ -928,8 +944,8 @@ perform_t_tests_for_summary_plot <- function(data,
                                              current_type,
                                              save_output_as_RDS = "no") {
   if (is.null(current_type) ||
-      length(current_type) != 1L ||
-      !current_type %in% c("eEPSC", "sEPSC")) {
+    length(current_type) != 1L ||
+    !current_type %in% c("eEPSC", "sEPSC")) {
     stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
   }
 
@@ -952,7 +968,6 @@ perform_t_tests_for_summary_plot <- function(data,
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
-
   } else {
     if (is.null(list_of_treatments)) {
       stop(
@@ -973,7 +988,7 @@ perform_t_tests_for_summary_plot <- function(data,
     }
 
     if (is.null(baseline_interval) ||
-        !is.character(baseline_interval)) {
+      !is.character(baseline_interval)) {
       stop("'baseline_interval' must be a character (e.g. \"t0to5\" or \"t0to3\")")
     }
 
@@ -1013,10 +1028,12 @@ perform_t_tests_for_summary_plot <- function(data,
   if (current_type == "sEPSC") {
     allowed_parameters_list <- "\"amplitude\", \"raw_amplitude\", \"raw_frequency\", or \"frequency\""
 
-    if (!parameter %in% c("amplitude",
-                          "raw_amplitude",
-                          "frequency",
-                          "raw_frequency")) {
+    if (!parameter %in% c(
+      "amplitude",
+      "raw_amplitude",
+      "frequency",
+      "raw_frequency"
+    )) {
       stop(
         "parameter must be ",
         allowed_parameters_list,
@@ -1151,23 +1168,23 @@ perform_t_tests_for_summary_plot <- function(data,
 #' `baseline_interval` and `post_hormone_interval`.
 #'  \item `mean_cv_inverse_square` The mean inverse coefficient of variation squared within a specific state.
 #'  \item `mean_VMR` The mean variance-to-mean ratio within a specific state.
-#'}
+#' }
 #'
 #' @export
 #'
 #' @examples
 #'
-#' make_variance_data(data = sample_summary_eEPSC_df,
-#'  df_category = 2,
-#'  include_all_treatments = "yes",
-#'  list_of_treatments = NULL,
-#'  baseline_interval = "t0to5",
-#'  post_hormone_interval = "t20to25",
-#'  treatment_colour_theme = sample_treatment_names_and_colours,
-#'  save_output_as_RDS = "no"
+#' make_variance_data(
+#'   data = sample_summary_eEPSC_df,
+#'   df_category = 2,
+#'   include_all_treatments = "yes",
+#'   list_of_treatments = NULL,
+#'   baseline_interval = "t0to5",
+#'   post_hormone_interval = "t20to25",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   save_output_as_RDS = "no"
 #' )
 #'
-
 make_variance_data <- function(data,
                                df_category,
                                include_all_treatments = "yes",
@@ -1196,7 +1213,6 @@ make_variance_data <- function(data,
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
-
   } else {
     if (is.null(list_of_treatments)) {
       stop(
@@ -1217,12 +1233,12 @@ make_variance_data <- function(data,
     }
 
     if (is.null(baseline_interval) ||
-        !is.character(baseline_interval)) {
+      !is.character(baseline_interval)) {
       stop("'baseline_interval' must be a character (e.g. \"t0to5\", \"t0to3\")")
     }
 
     if (is.null(post_hormone_interval) ||
-        !is.character(post_hormone_interval)) {
+      !is.character(post_hormone_interval)) {
       stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
     }
 
@@ -1239,7 +1255,7 @@ make_variance_data <- function(data,
   variance_data <- dataframe %>%
     dplyr::filter(.data$category == df_category) %>%
     dplyr::filter(.data$interval == baseline_interval |
-                    .data$interval == post_hormone_interval) %>%
+      .data$interval == post_hormone_interval) %>%
     dplyr::mutate(
       state = dplyr::case_when(
         interval == baseline_interval ~ "Baseline",
@@ -1295,16 +1311,17 @@ make_variance_data <- function(data,
 #'
 #' @examples
 #'
-#' make_PPR_data(data = sample_raw_eEPSC_df,
-#' include_all_treatments = "yes",
-#' list_of_treatments = NULL,
-#' PPR_min = 0,
-#' PPR_max = 5,
-#' baseline_interval = "t0to5",
-#' post_hormone_interval = "t20to25",
-#' treatment_colour_theme = sample_treatment_names_and_colours)
+#' make_PPR_data(
+#'   data = sample_raw_eEPSC_df,
+#'   include_all_treatments = "yes",
+#'   list_of_treatments = NULL,
+#'   PPR_min = 0,
+#'   PPR_max = 5,
+#'   baseline_interval = "t0to5",
+#'   post_hormone_interval = "t20to25",
+#'   treatment_colour_theme = sample_treatment_names_and_colours
+#' )
 #'
-
 make_PPR_data <- function(data,
                           include_all_treatments = "yes",
                           list_of_treatments = NULL,
@@ -1335,7 +1352,6 @@ make_PPR_data <- function(data,
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
-
   } else {
     if (is.null(list_of_treatments)) {
       stop(
@@ -1366,7 +1382,7 @@ make_PPR_data <- function(data,
   PPR_df <- dataframe %>%
     dplyr::filter(.data$PPR < PPR_max & .data$PPR > PPR_min) %>%
     dplyr::filter(.data$interval == baseline_interval |
-                    .data$interval == post_hormone_interval) %>%
+      .data$interval == post_hormone_interval) %>%
     dplyr::mutate(
       state = dplyr::case_when(
         interval == baseline_interval ~ "Baseline",
@@ -1384,6 +1400,3 @@ make_PPR_data <- function(data,
     )))
   }
 }
-
-
-

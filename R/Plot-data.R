@@ -55,38 +55,38 @@
 #'
 #' @examples
 #' plot_baseline_data(
-#'  data = sample_summary_eEPSC_df,
-#'  treatment_colour_theme = sample_treatment_names_and_colours,
-#'  theme_options = sample_theme_options,
-#'  include_all_treatments = "yes",
-#'  list_of_treatments = NULL,
-#'  current_type = "eEPSC",
-#'  parameter = "raw_amplitude",
-#'  baseline_interval = "t0to5",
-#'  large_axis_text = "no",
-#'  plot_width = 8,
-#'  save_plot_png = "no"
-#')
+#'   data = sample_summary_eEPSC_df,
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   theme_options = sample_theme_options,
+#'   include_all_treatments = "yes",
+#'   list_of_treatments = NULL,
+#'   current_type = "eEPSC",
+#'   parameter = "raw_amplitude",
+#'   baseline_interval = "t0to5",
+#'   large_axis_text = "no",
+#'   plot_width = 8,
+#'   save_plot_png = "no"
+#' )
 plot_baseline_data <- function(data,
-                                          treatment_colour_theme,
-                                          theme_options,
-                                          include_all_treatments = "yes",
-                                          list_of_treatments = NULL,
-                                          baseline_interval = "t0to5",
-                                          filename_suffix = "",
-                                          current_type = "eEPSC",
-                                          parameter = "raw_amplitude",
-                                          large_axis_text = "no",
-                                          plot_width = 8,
-                                          save_plot_png = "no") {
+                               treatment_colour_theme,
+                               theme_options,
+                               include_all_treatments = "yes",
+                               list_of_treatments = NULL,
+                               baseline_interval = "t0to5",
+                               filename_suffix = "",
+                               current_type = "eEPSC",
+                               parameter = "raw_amplitude",
+                               large_axis_text = "no",
+                               plot_width = 8,
+                               save_plot_png = "no") {
   if (is.null(current_type) ||
-      length(current_type) != 1L ||
-      !current_type %in% c("eEPSC", "sEPSC")) {
+    length(current_type) != 1L ||
+    !current_type %in% c("eEPSC", "sEPSC")) {
     stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
   }
 
   if (is.null(baseline_interval) ||
-      !is.character(baseline_interval)) {
+    !is.character(baseline_interval)) {
     stop("'baseline_interval' must be a character (e.g. \"t0to5\", \"t0to3\")")
   }
 
@@ -109,7 +109,6 @@ plot_baseline_data <- function(data,
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
-
   } else {
     if (is.null(list_of_treatments)) {
       stop(
@@ -180,7 +179,7 @@ plot_baseline_data <- function(data,
 
     if (parameter == "raw_amplitude") {
       y_var <- "mean_P1_raw"
-      y_title = "Baseline eEPSC Amplitude (pA)"
+      y_title <- "Baseline eEPSC Amplitude (pA)"
     }
   }
 
@@ -215,15 +214,19 @@ plot_baseline_data <- function(data,
       size = as.numeric(theme_options["mean_point_size", "value"]) + 0.02,
       alpha = 0.8
     ) +
-    ggplot2::scale_color_manual(breaks = treatment_info$display_names,
-                                values = treatment_info$colours) +
+    ggplot2::scale_color_manual(
+      breaks = treatment_info$display_names,
+      values = treatment_info$colours
+    ) +
     ggplot2::scale_shape_manual(values = c(17, 16)) +
     ggplot2::theme(
       legend.position = "right",
       legend.background = ggplot2::element_rect(fill = NA)
     ) +
-    ggplot2::guides(color = "none",
-                    shape = ggplot2::guide_legend(reverse = TRUE))
+    ggplot2::guides(
+      color = "none",
+      shape = ggplot2::guide_legend(reverse = TRUE)
+    )
 
   if (large_axis_text == "yes") {
     baseline_comparison_plot <- baseline_comparison_plot +
@@ -321,18 +324,17 @@ plot_baseline_data <- function(data,
 #' @examples
 #'
 #' plot_raw_current_data(
-#'  data = sample_raw_eEPSC_df,
-#'  plot_treatment = "Control",
-#'  plot_category = 2,
-#'  current_type = "eEPSC",
-#'  parameter = "P1",
-#'  pruned = "no",
-#'  hormone_added = "Insulin",
-#'  hormone_or_HFS_start_time = 5,
-#'  theme_options = sample_theme_options,
-#'  treatment_colour_theme = sample_treatment_names_and_colours
+#'   data = sample_raw_eEPSC_df,
+#'   plot_treatment = "Control",
+#'   plot_category = 2,
+#'   current_type = "eEPSC",
+#'   parameter = "P1",
+#'   pruned = "no",
+#'   hormone_added = "Insulin",
+#'   hormone_or_HFS_start_time = 5,
+#'   theme_options = sample_theme_options,
+#'   treatment_colour_theme = sample_treatment_names_and_colours
 #' )
-#'
 #'
 plot_raw_current_data <-
   function(data,
@@ -350,14 +352,14 @@ plot_raw_current_data <-
     list_of_plots <- list()
 
     if (is.null(current_type) ||
-        length(current_type) != 1L ||
-        !current_type %in% c("eEPSC", "sEPSC")) {
+      length(current_type) != 1L ||
+      !current_type %in% c("eEPSC", "sEPSC")) {
       stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
     }
 
     if (is.null(hormone_added) ||
-        length(hormone_added) != 1L ||
-        !is.character(hormone_added)) {
+      length(hormone_added) != 1L ||
+      !is.character(hormone_added)) {
       stop(
         "\"hormone_added\" must be a character. Use \"HFS\" for high-frequency stimulation or \"Insulin\", \"CCK\", etc. for any hormones"
       )
@@ -369,7 +371,7 @@ plot_raw_current_data <-
 
 
     if (is.null(hormone_or_HFS_start_time) ||
-        !is.numeric(hormone_or_HFS_start_time)) {
+      !is.numeric(hormone_or_HFS_start_time)) {
       stop(
         "\"hormone_or_HFS_start_time\" must be numeric (e.g. 5 for
         HFS or a hormone applied at five minutes into the recording)."
@@ -377,7 +379,7 @@ plot_raw_current_data <-
     }
 
     if (!is.null(hormone_end_time) &
-        !is.numeric(hormone_end_time)) {
+      !is.numeric(hormone_end_time)) {
       stop("\"hormone_end_time\" must be numeric
         (e.g. 25 for a hormone ending at 25 minutes).")
     }
@@ -417,8 +419,10 @@ plot_raw_current_data <-
         y_title <- "eEPSC Amplitude (pA)"
 
         if (pruned == "yes") {
-          stop("pruned = \"yes\"), but parameter = \"P1\". ",
-               "\nDid you mean \"mean_P1\"?. ")
+          stop(
+            "pruned = \"yes\"), but parameter = \"P1\". ",
+            "\nDid you mean \"mean_P1\"?. "
+          )
         }
       }
 
@@ -478,8 +482,8 @@ plot_raw_current_data <-
     for (i in letters) {
       plot_df <- df %>% dplyr::filter(.data$letter == i)
       if (current_type == "sEPSC" &
-          pruned == "yes" &
-          parameter == "amplitude") {
+        pruned == "yes" &
+        parameter == "amplitude") {
         y_title <- "sEPSC Amplitude (pA)"
 
         list_of_plots[[i]] <- ggplot2::ggplot(
@@ -491,10 +495,8 @@ plot_raw_current_data <-
             ymax = .data$mean_amplitude + .data$se
           )
         )
-
       } else {
         list_of_plots[[i]] <- ggplot2::ggplot(plot_df, ggplot2::aes(x = .data$time, y = .data[[parameter]]))
-
       }
 
       list_of_plots[[i]] <- list_of_plots[[i]] +
@@ -510,8 +512,8 @@ plot_raw_current_data <-
         ggplot2::labs(x = "Time (min)", y = y_title)
 
       if (current_type == "sEPSC" &
-          pruned == "yes" &
-          parameter == "amplitude") {
+        pruned == "yes" &
+        parameter == "amplitude") {
         list_of_plots[[i]] <- list_of_plots[[i]] +
           ggplot2::geom_pointrange(
             shape = if (unique(plot_df$sex) == "Male") {
@@ -674,48 +676,47 @@ plot_raw_current_data <-
 #'
 #' @examples
 #'
-#' plot_summary_current_data(plot_category = 2,
-#'  plot_treatment = "Control",
-#'  data = sample_pruned_eEPSC_df$all_cells,
-#'  current_type = "eEPSC",
-#'  parameter = "amplitude",
-#'  include_representative_trace = "no",
-#'  signif_stars = "yes",
-#'  t_test_df = sample_eEPSC_t_test_df,
-#'  hormone_added = "Insulin",
-#'  large_axis_text = "no",
-#'  shade_intervals = "no",
-#'  hormone_or_HFS_start_time = 5,
-#'  treatment_colour_theme = sample_treatment_names_and_colours,
-#'  theme_options = sample_theme_options
-#')
-
-
+#' plot_summary_current_data(
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   data = sample_pruned_eEPSC_df$all_cells,
+#'   current_type = "eEPSC",
+#'   parameter = "amplitude",
+#'   include_representative_trace = "no",
+#'   signif_stars = "yes",
+#'   t_test_df = sample_eEPSC_t_test_df,
+#'   hormone_added = "Insulin",
+#'   large_axis_text = "no",
+#'   shade_intervals = "no",
+#'   hormone_or_HFS_start_time = 5,
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   theme_options = sample_theme_options
+#' )
 plot_summary_current_data <- function(plot_category,
-                              plot_treatment,
-                              data,
-                              current_type,
-                              parameter,
-                              hormone_added,
-                              hormone_or_HFS_start_time,
-                              include_representative_trace = "no",
-                              representative_trace_filename,
-                              t_test_df,
-                              signif_stars = "no",
-                              large_axis_text = "no",
-                              shade_intervals = "no",
-                              theme_options,
-                              treatment_colour_theme,
-                              save_plot_png = "no") {
+                                      plot_treatment,
+                                      data,
+                                      current_type,
+                                      parameter,
+                                      hormone_added,
+                                      hormone_or_HFS_start_time,
+                                      include_representative_trace = "no",
+                                      representative_trace_filename,
+                                      t_test_df,
+                                      signif_stars = "no",
+                                      large_axis_text = "no",
+                                      shade_intervals = "no",
+                                      theme_options,
+                                      treatment_colour_theme,
+                                      save_plot_png = "no") {
   if (is.null(current_type) ||
-      length(current_type) != 1L ||
-      !current_type %in% c("eEPSC", "sEPSC")) {
+    length(current_type) != 1L ||
+    !current_type %in% c("eEPSC", "sEPSC")) {
     stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
   }
 
   if (is.null(hormone_added) ||
-      length(hormone_added) != 1L ||
-      !is.character(hormone_added)) {
+    length(hormone_added) != 1L ||
+    !is.character(hormone_added)) {
     stop(
       "\"hormone_added\" must be a character. Use \"HFS\" for high-frequency stimulation or \"Insulin\", \"CCK\", etc. for any hormones"
     )
@@ -735,7 +736,7 @@ plot_summary_current_data <- function(plot_category,
 
   if (include_representative_trace == "yes") {
     if (is.null(representative_trace_filename) ||
-        !is.character(representative_trace_filename)) {
+      !is.character(representative_trace_filename)) {
       stop(
         "'include_representative_trace' is 'yes' but the filename is not
            specified or it is not a character value. Please define the filename
@@ -743,7 +744,6 @@ plot_summary_current_data <- function(plot_category,
         'representative_trace_filename'"
       )
     }
-
   }
 
   if (signif_stars == "yes" & is.null(t_test_df)) {
@@ -755,7 +755,7 @@ plot_summary_current_data <- function(plot_category,
 
 
   if (is.null(hormone_or_HFS_start_time) ||
-      !is.numeric(hormone_or_HFS_start_time)) {
+    !is.numeric(hormone_or_HFS_start_time)) {
     stop(
       "\"hormone_or_HFS_start_time\" must be numeric
       (e.g. 5 for HFS or a hormone applied at five minutes into the recording)."
@@ -763,7 +763,9 @@ plot_summary_current_data <- function(plot_category,
   }
 
   df <-
-    data %>% dplyr::filter(.data$category == plot_category) %>% dplyr::filter(.data$treatment == plot_treatment)
+    data %>%
+    dplyr::filter(.data$category == plot_category) %>%
+    dplyr::filter(.data$treatment == plot_treatment)
 
   plot_colour <- treatment_colour_theme %>%
     dplyr::filter(.data$treatment == plot_treatment) %>%
@@ -807,10 +809,12 @@ plot_summary_current_data <- function(plot_category,
     allowed_parameters_list <- "\"amplitude\", \"raw_amplitude\",
     \"raw_frequency\", or \"frequency\""
 
-    if (!parameter %in% c("amplitude",
-                          "raw_amplitude",
-                          "frequency",
-                          "raw_frequency")) {
+    if (!parameter %in% c(
+      "amplitude",
+      "raw_amplitude",
+      "frequency",
+      "raw_frequency"
+    )) {
       stop(
         "parameter must be ",
         allowed_parameters_list,
@@ -831,7 +835,6 @@ plot_summary_current_data <- function(plot_category,
       } else {
         y_title <- "sEPSC Amplitude (% Baseline)"
       }
-
     }
 
     if (parameter == "raw_amplitude") {
@@ -840,7 +843,6 @@ plot_summary_current_data <- function(plot_category,
       file_name_ending <- paste0("_", parameter)
 
       y_title <- "sEPSC Amplitude (pA)"
-
     }
 
     if (parameter == "frequency") {
@@ -861,7 +863,6 @@ plot_summary_current_data <- function(plot_category,
       file_name_ending <- paste0("_", parameter)
 
       y_title <- "sEPSC Frequency (Hz)"
-
     }
   }
 
@@ -875,20 +876,24 @@ plot_summary_current_data <- function(plot_category,
 
   if (shade_intervals == "yes") {
     treatment_plot <- treatment_plot +
-      ggplot2::geom_rect(ggplot2::aes(
-        xmin = 5,
-        xmax = 10,
-        ymin = -5,
-        ymax = as.numeric(theme_options["y_axis_limit", "value"])
-      ),
-      fill = theme_options["rectangle_shading_colour", "value"]) +
-      ggplot2::geom_rect(ggplot2::aes(
-        xmin = 15,
-        xmax = 20,
-        ymin = -5,
-        ymax = as.numeric(theme_options["y_axis_limit", "value"])
-      ),
-      fill = theme_options["rectangle_shading_colour", "value"])
+      ggplot2::geom_rect(
+        ggplot2::aes(
+          xmin = 5,
+          xmax = 10,
+          ymin = -5,
+          ymax = as.numeric(theme_options["y_axis_limit", "value"])
+        ),
+        fill = theme_options["rectangle_shading_colour", "value"]
+      ) +
+      ggplot2::geom_rect(
+        ggplot2::aes(
+          xmin = 15,
+          xmax = 20,
+          ymin = -5,
+          ymax = as.numeric(theme_options["y_axis_limit", "value"])
+        ),
+        fill = theme_options["rectangle_shading_colour", "value"]
+      )
   }
 
   treatment_plot <- treatment_plot +
@@ -938,30 +943,35 @@ plot_summary_current_data <- function(plot_category,
       ggplot2::scale_color_manual(values = c(plot_colour), labels = c((paste0(
         "Males, n = ", df$n[df$sex == "Male"][1]
       ))))
-
   } else if (is.na(df$n[df$sex == "Male"][1])) {
     treatment_plot <- treatment_plot +
       ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"])), labels = c((paste0(
         "Females, n = ", df$n[df$sex == "Female"][1]
       )))) +
-      ggplot2::scale_color_manual(values = c(plot_colour_pale),
-                                  labels = c((paste0(
-                                    "Females, n = ", df$n[df$sex == "Female"][1]
-                                  ))))
+      ggplot2::scale_color_manual(
+        values = c(plot_colour_pale),
+        labels = c((paste0(
+          "Females, n = ", df$n[df$sex == "Female"][1]
+        )))
+      )
   } else {
     treatment_plot <- treatment_plot +
-      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])),
-                                  labels = c((paste0(
-                                    "Females, n = ", df$n[df$sex == "Female"][1]
-                                  )), (paste0(
-                                    "Males, n = ", df$n[df$sex == "Male"][1]
-                                  )))) +
-      ggplot2::scale_color_manual(values = c(plot_colour_pale, plot_colour),
-                                  labels = c((paste0(
-                                    "Females, n = ", df$n[df$sex == "Female"][1]
-                                  )), (paste0(
-                                    "Males, n = ", df$n[df$sex == "Male"][1]
-                                  ))))
+      ggplot2::scale_shape_manual(
+        values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])),
+        labels = c((paste0(
+          "Females, n = ", df$n[df$sex == "Female"][1]
+        )), (paste0(
+          "Males, n = ", df$n[df$sex == "Male"][1]
+        )))
+      ) +
+      ggplot2::scale_color_manual(
+        values = c(plot_colour_pale, plot_colour),
+        labels = c((paste0(
+          "Females, n = ", df$n[df$sex == "Female"][1]
+        )), (paste0(
+          "Males, n = ", df$n[df$sex == "Male"][1]
+        )))
+      )
   }
 
   # Get limits of x- and y-axes
@@ -1145,18 +1155,19 @@ plot_summary_current_data <- function(plot_category,
 #' @export
 #'
 #' @examples
-#' plot_variance_comparison_data(data = sample_eEPSC_variance_df,
-#' plot_category = 2,
-#' plot_treatment = "Control",
-#' large_axis_text = "no",
-#' variance_measure = "cv",
-#' baseline_interval = "t0to5",
-#' post_hormone_interval = "t20to25",
-#' post_modification_label = "Insulin",
-#' treatment_colour_theme = sample_treatment_names_and_colours,
-#' theme_options = sample_theme_options)
+#' plot_variance_comparison_data(
+#'   data = sample_eEPSC_variance_df,
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   large_axis_text = "no",
+#'   variance_measure = "cv",
+#'   baseline_interval = "t0to5",
+#'   post_hormone_interval = "t20to25",
+#'   post_modification_label = "Insulin",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   theme_options = sample_theme_options
+#' )
 #'
-
 plot_variance_comparison_data <- function(data,
                                           plot_category,
                                           plot_treatment,
@@ -1170,7 +1181,7 @@ plot_variance_comparison_data <- function(data,
                                           save_plot_png = "no",
                                           theme_options) {
   if (is.null(post_hormone_interval) ||
-      !is.character(post_hormone_interval)) {
+    !is.character(post_hormone_interval)) {
     stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
   }
 
@@ -1362,7 +1373,7 @@ plot_variance_comparison_data <- function(data,
 #'   theme_options = sample_theme_options,
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   save_plot_png = "no"
-#')
+#' )
 #'
 #' @seealso [plot_variance_comparison_data()] to make plots of inverse
 #'   coefficient of variation squared and VMR, which are useful to determine if
@@ -1399,7 +1410,6 @@ plot_cv_data <- function(data,
       units = "in",
       dpi = 600
     )
-
   }
 
   return(cv_plot)
@@ -1432,7 +1442,8 @@ plot_cv_data <- function(data,
 #'   project directory. The treatment will be included in the filename.
 #'
 #' @examples
-#' plot_PPR_data_one_treatment(data = sample_PPR_df,
+#' plot_PPR_data_one_treatment(
+#'   data = sample_PPR_df,
 #'   plot_treatment = "Control",
 #'   plot_category = 2,
 #'   large_axis_text = "no",
@@ -1440,7 +1451,8 @@ plot_cv_data <- function(data,
 #'   post_modification_label = "Insulin",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   theme_options = sample_theme_options,
-#'   save_plot_png = "no")
+#'   save_plot_png = "no"
+#' )
 #'
 #' @seealso [plot_PPR_data_multiple_treatments()] to plot changes in PPR for multiple treatments.
 
@@ -1575,13 +1587,15 @@ plot_PPR_data_one_treatment <- function(data,
 #' @returns A ggplot object. If save_plot_png is defined as "yes" in the Global Environment, it will also generate a .png file in the folder `Figures/Evoked-currents/PPR` relative to the project directory.
 #'
 #' @examples
-#' plot_PPR_data_multiple_treatments(data = sample_PPR_df,
+#' plot_PPR_data_multiple_treatments(
+#'   data = sample_PPR_df,
 #'   include_all_treatments = "yes",
 #'   plot_category = 2,
 #'   baseline_label = "B",
 #'   post_modification_label = "I",
 #'   theme_options = sample_theme_options,
-#'   treatment_colour_theme = sample_treatment_names_and_colours)
+#'   treatment_colour_theme = sample_treatment_names_and_colours
+#' )
 #'
 #' @seealso [plot_PPR_data_one_treatment()] to plot changes in PPR for a single treatment.
 
@@ -1614,7 +1628,6 @@ plot_PPR_data_multiple_treatments <- function(data,
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
-
   } else {
     if (is.null(list_of_treatments)) {
       stop(
@@ -1693,8 +1706,10 @@ plot_PPR_data_multiple_treatments <- function(data,
       ncol = length(treatment_info$treatment),
       strip.position = "bottom"
     ) +
-    ggplot2::scale_color_manual(breaks = treatment_info$display_names,
-                                values = treatment_info$colours) +
+    ggplot2::scale_color_manual(
+      breaks = treatment_info$display_names,
+      values = treatment_info$colours
+    ) +
     ggplot2::theme(
       strip.text = ggplot2::element_text(size = 10),
       strip.placement = "outside",
@@ -1778,17 +1793,16 @@ plot_PPR_data_multiple_treatments <- function(data,
 #'
 #' @examples
 #' plot_spontaneous_current_trace(
-#'  file = sample_abf_file,
-#'  plot_colour = "#6600cc",
-#'  include_scale_bar = "yes",
-#'  plot_episode = "epi1",
-#'  scale_bar_x_length = 1,
-#'  scale_bar_y_length = 10,
-#'  plot_x_min = 1,
-#'  plot_x_max = 3
+#'   file = sample_abf_file,
+#'   plot_colour = "#6600cc",
+#'   include_scale_bar = "yes",
+#'   plot_episode = "epi1",
+#'   scale_bar_x_length = 1,
+#'   scale_bar_y_length = 10,
+#'   plot_x_min = 1,
+#'   plot_x_max = 3
 #' )
 #'
-
 plot_spontaneous_current_trace <-
   function(file,
            plot_colour,
@@ -1820,7 +1834,7 @@ plot_spontaneous_current_trace <-
       ggplot2::geom_line(color = plot_colour) +
       ggplot2::theme_void()
 
-    scale_bar_x_length_in_ms <- scale_bar_x_length*1000
+    scale_bar_x_length_in_ms <- scale_bar_x_length * 1000
 
     if (include_scale_bar == "yes") {
       representative_traces_plot <- representative_traces_plot +
@@ -1842,8 +1856,8 @@ plot_spontaneous_current_trace <-
         ) +
         ggplot2::annotate(
           "text",
-          x = scale_bar_x_start - (plot_x_max - plot_x_min)/100,
-          y = scale_bar_y_start + 0.5*scale_bar_y_length,
+          x = scale_bar_x_start - (plot_x_max - plot_x_min) / 100,
+          y = scale_bar_y_start + 0.5 * scale_bar_y_length,
           label = paste0(scale_bar_y_length, " pA"),
           hjust = 1,
           vjust = 0.5,
@@ -1851,7 +1865,7 @@ plot_spontaneous_current_trace <-
         ) +
         ggplot2::annotate(
           "text",
-          x = scale_bar_x_start + 0.5*scale_bar_x_length,
+          x = scale_bar_x_start + 0.5 * scale_bar_x_length,
           y = scale_bar_y_start - 5,
           label = paste0(scale_bar_x_length_in_ms, " ms"),
           hjust = 0.5,
@@ -1919,7 +1933,8 @@ plot_spontaneous_current_trace <-
 #'
 #' @examples
 #'
-#' make_interactive_summary_table(cell_characteristics_dataframe = sample_cell_characteristics,
+#' make_interactive_summary_table(
+#'   cell_characteristics_dataframe = sample_cell_characteristics,
 #'   pruned_eEPSC_dataframe = sample_pruned_eEPSC_df,
 #'   pruned_sEPSC_dataframe = sample_pruned_sEPSC_df,
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
@@ -1927,8 +1942,8 @@ plot_spontaneous_current_trace <-
 #'   list_of_treatments = NULL,
 #'   include_all_categories = "yes",
 #'   list_of_categories = NULL,
-#'   save_output_as_RDS = "no")
-#'
+#'   save_output_as_RDS = "no"
+#' )
 #'
 make_interactive_summary_table <- function(cell_characteristics_dataframe,
                                            pruned_eEPSC_dataframe,
@@ -1939,8 +1954,6 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
                                            include_all_categories = "yes",
                                            list_of_categories = NULL,
                                            save_output_as_RDS = "no") {
-
-
   if (!save_output_as_RDS %in% c("yes", "no")) {
     stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
   }
@@ -1977,8 +1990,10 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
       )
     ) %>%
     dplyr::rename_with(stringr::str_to_title) %>%
-    dplyr::mutate(X = round(.data$X, -1),
-                  Y = round(.data$Y, -1))
+    dplyr::mutate(
+      X = round(.data$X, -1),
+      Y = round(.data$Y, -1)
+    )
 
   if (include_all_treatments == "yes") {
     if (!is.null(list_of_treatments)) {
@@ -1986,7 +2001,6 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
-
   } else {
     if (is.null(list_of_treatments)) {
       stop(
@@ -2017,7 +2031,6 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
         "include_all_categories = \"yes\", but you included a list of categories to filter. All categories will be used."
       )
     }
-
   } else {
     if (is.null(list_of_categories)) {
       stop(
@@ -2111,4 +2124,3 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
 
   return(cell_table)
 }
-
