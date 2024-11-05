@@ -6,6 +6,10 @@
 \alias{patchclampplotteR-package}
 \title{patchclampplotteR: Plot and Analyze Raw Patch Clamp Electrophysiology Data}
 \description{
-Create publication-quality figures from whole-cell patch clamp electrophysiology data.
+Create publication-quality figures of whole-cell patch clamp electrophysiology data. You can plot evoked and spontaneous current amplitude over time, mean evoked/spontaneous data summarized by sex, variance analysis plots, and much more.
+}
+\author{
+\strong{Maintainer}: Christelinda Laureijs \email{cslaureijs@gmail.com} (\href{https://orcid.org/0009-0006-0361-9396}{ORCID})
+
 }
 \keyword{internal}

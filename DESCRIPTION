@@ -2,9 +2,14 @@ Package: patchclampplotteR
 Type: Package
 Title: Plot and Analyze Raw Patch Clamp Electrophysiology Data
 Version: 0.1.0
-Author: Christelinda Laureijs
-Maintainer: Christelinda Laureijs <cslaureijs@gmail.com>
-Description: Create publication-quality figures from whole-cell patch clamp electrophysiology data.
+Authors@R: person("Christelinda", "Laureijs",
+  email = "cslaureijs@gmail.com",
+  role = c("aut", "cre"),
+  comment = c(ORCID = "0009-0006-0361-9396"))
+Description: Create publication-quality figures of whole-cell patch clamp
+  electrophysiology data. You can plot evoked and spontaneous current amplitude
+  over time, mean evoked/spontaneous data summarized by sex,
+  variance analysis plots, and much more. 
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -14,6 +19,7 @@ Depends:
     R (>= 2.10)
 Imports: 
     abftools,
+    dataui,
     dplyr,
     ggforce,
     ggplot2,
