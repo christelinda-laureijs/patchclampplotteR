@@ -84,3 +84,20 @@ plot_summary_current_data(
 ```
 
 <img src="man/figures/README-example-summary-eEPSC-plot-1.png" width="100%" />
+
+Plot a representative recording trace showing spontaneous currents:
+
+``` r
+plot_spontaneous_current_trace(
+  file = sample_abf_file,
+  plot_colour = "#6600cc",
+  include_scale_bar = "yes",
+  plot_episode = "epi1",
+  scale_bar_x_length = 1,
+  scale_bar_y_length = 10,
+  plot_x_min = 1,
+  plot_x_max = 3
+)
+```
+
+<img src="man/figures/README-example-spontaneous-current-trace-plot-1.png" width="100%" />

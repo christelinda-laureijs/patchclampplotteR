@@ -1823,7 +1823,6 @@ plot_PPR_data_multiple_treatments <- function(data,
 #'   (in pA).
 #' @param plot_y_max A numeric value describing the maximum value on the y-axis
 #'   (in pA).
-#' @param plot_font_family A character describing the font family used.
 #' @param save_plot_pngs A character ("yes" or "no") defining if the plot should
 #' be saved as a PNG through `ggplot::ggsave()`
 #'
@@ -1861,8 +1860,7 @@ plot_spontaneous_current_trace <-
            plot_x_max = 5,
            plot_y_min = -100,
            plot_y_max = 35,
-           save_plot_pngs = "no",
-           plot_font_family = NULL) {
+           save_plot_pngs = "no") {
     if (!include_scale_bar %in% c("yes", "no")) {
       stop("'include_scale_bar' argument must be one of: 'yes' or 'no'")
     }
@@ -1905,16 +1903,14 @@ plot_spontaneous_current_trace <-
           y = scale_bar_y_start + 0.5 * scale_bar_y_length,
           label = paste0(scale_bar_y_length, " pA"),
           hjust = 1,
-          vjust = 0.5,
-          family = plot_font_family
+          vjust = 0.5
         ) +
         ggplot2::annotate(
           "text",
           x = scale_bar_x_start + 0.5 * scale_bar_x_length,
           y = scale_bar_y_start - 5,
           label = paste0(scale_bar_x_length_in_ms, " ms"),
-          hjust = 0.5,
-          family = plot_font_family
+          hjust = 0.5
         )
     }
 
