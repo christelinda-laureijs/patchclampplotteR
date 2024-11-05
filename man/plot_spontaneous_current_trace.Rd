@@ -17,8 +17,7 @@ plot_spontaneous_current_trace(
   plot_x_max = 5,
   plot_y_min = -100,
   plot_y_max = 35,
-  save_plot_pngs = "no",
-  plot_font_family = NULL
+  save_plot_pngs = "no"
 )
 }
 \arguments{
@@ -61,8 +60,6 @@ pA) of the scale bar.}
 
 \item{save_plot_pngs}{A character ("yes" or "no") defining if the plot should
 be saved as a PNG through \code{ggplot::ggsave()}}
-
-\item{plot_font_family}{A character describing the font family used.}
 }
 \value{
 A ggplot object. If save_plot_PNGs is defined as "yes" in the Global

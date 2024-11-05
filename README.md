@@ -22,22 +22,6 @@ functions that this package can do (see below for examples!):
 - Compare variance parameters to help determine presynaptic mechanisms.
 - And more!
 
-## Installation
-
-You can install the development version of patchclampplotteR from
-[GitHub](https://github.com/) with:
-
-``` r
-# install.packages("pak")
-pak::pak("christelinda-laureijs/patchclampplotteR")
-```
-
-And then load the package with `library()`:
-
-``` r
-library(patchclampplotteR)
-```
-
 ## Quick Examples
 
 Plot raw evoked currents for a specific cell:
@@ -101,3 +85,19 @@ plot_spontaneous_current_trace(
 ```
 
 <img src="man/figures/README-example-spontaneous-current-trace-plot-1.png" width="100%" />
+
+## Installation
+
+You can install the development version of patchclampplotteR from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("christelinda-laureijs/patchclampplotteR")
+```
+
+And then load the package with `library()`:
+
+``` r
+library(patchclampplotteR)
+```

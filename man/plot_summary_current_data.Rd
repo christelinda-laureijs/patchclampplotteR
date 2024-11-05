@@ -65,7 +65,9 @@ filename of the representative trace. This should be the name of a .png
 file stored within the subfolder \verb{Figures/Representative-Traces/}.}
 
 \item{t_test_df}{A dataframe of t-test results, which has been generated
-using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}.}
+using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. Important note! The t-test
+dataframe must be filtered to match the same conditions in the \code{data}
+argument, or the significance stars will be misleading.}
 
 \item{signif_stars}{A character ("yes" or "no") describing if significance
 stars should be included as an overlay in the plot. If "yes", you must

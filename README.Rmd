@@ -34,20 +34,7 @@ package can do (see below for examples!):
 * Compare variance parameters to help determine presynaptic mechanisms.
 * And more!
 
-
-## Installation
-
-You can install the development version of patchclampplotteR from
-[GitHub](https://github.com/) with:
-
-```{r install-package-demo, warning=FALSE, message=FALSE}
-# install.packages("pak")
-pak::pak("christelinda-laureijs/patchclampplotteR")
-```
-
-And then load the package with `library()`:
-
-```{r load-library}
+```{r include=FALSE}
 library(patchclampplotteR)
 ```
 
@@ -72,7 +59,8 @@ raw_eEPSC_control_plots <- plot_raw_current_data(
 
 raw_eEPSC_control_plots$AO
 ```
-Plot evoked current amplitudes summarized by sex:
+Plot evoked current amplitudes summarized by sex:  
+
 
 ```{r example-summary-eEPSC-plot}
 plot_summary_current_data(
@@ -108,3 +96,18 @@ plot_spontaneous_current_trace(
 )
 ```
 
+## Installation
+
+You can install the development version of patchclampplotteR from
+[GitHub](https://github.com/) with:
+
+```{r install-package-demo, warning=FALSE, message=FALSE}
+# install.packages("pak")
+pak::pak("christelinda-laureijs/patchclampplotteR")
+```
+
+And then load the package with `library()`:
+
+```{r load-library}
+library(patchclampplotteR)
+```

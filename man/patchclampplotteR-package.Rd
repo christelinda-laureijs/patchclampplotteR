@@ -8,6 +8,14 @@
 \description{
 Create publication-quality figures of whole-cell patch clamp electrophysiology data. You can plot evoked and spontaneous current amplitude over time, mean evoked/spontaneous data summarized by sex, variance analysis plots, and much more.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/christelinda-laureijs/patchclampplotteR}
+  \item Report bugs at \url{https://github.com/christelinda-laureijs/patchclampplotteR/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Christelinda Laureijs \email{cslaureijs@gmail.com} (\href{https://orcid.org/0009-0006-0361-9396}{ORCID})
 
