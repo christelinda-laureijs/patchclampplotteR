@@ -32,11 +32,31 @@ You can install the development version of patchclampplotteR from
 pak::pak("christelinda-laureijs/patchclampplotteR")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+And then load the package with `library()`:
 
 ``` r
-#library(patchclampplotteR)
-## basic example code
+library(patchclampplotteR)
 ```
+
+## Quick Examples
+
+Plot raw evoked currents for a specific cell:
+
+``` r
+raw_eEPSC_control_plots <- plot_raw_current_data(
+  data = sample_raw_eEPSC_df,
+  plot_treatment = "Control",
+  plot_category = 2,
+  current_type = "eEPSC",
+  parameter = "P1",
+  pruned = "no",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+  theme_options = sample_theme_options,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
+
+raw_eEPSC_control_plots$AO
+```
+
+<img src="man/figures/README-example-raw-eEPSC-plot-1.png" width="100%" />

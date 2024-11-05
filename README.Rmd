@@ -8,6 +8,8 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  dpi = 300,
+  dev = "png",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -39,17 +41,36 @@ package can do:
 You can install the development version of patchclampplotteR from
 [GitHub](https://github.com/) with:
 
-``` r
+```{r install-package-demo, warning=FALSE, message=FALSE}
 # install.packages("pak")
 pak::pak("christelinda-laureijs/patchclampplotteR")
 ```
 
-## Example
+And then load the package with `library()`:
 
-This is a basic example which shows you how to solve a common problem:
+```{r load-library}
+library(patchclampplotteR)
+```
 
-```{r example}
-#library(patchclampplotteR)
-## basic example code
+
+## Quick Examples
+
+Plot raw evoked currents for a specific cell:
+
+```{r example-raw-eEPSC-plot}
+raw_eEPSC_control_plots <- plot_raw_current_data(
+  data = sample_raw_eEPSC_df,
+  plot_treatment = "Control",
+  plot_category = 2,
+  current_type = "eEPSC",
+  parameter = "P1",
+  pruned = "no",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+  theme_options = sample_theme_options,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
+
+raw_eEPSC_control_plots$AO
 ```
 
