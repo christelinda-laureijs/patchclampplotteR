@@ -651,7 +651,9 @@ plot_raw_current_data <-
 #'   specify a dataframe containing the results of a t-test, which is generated
 #'   using [perform_t_tests_for_summary_plot()].
 #' @param t_test_df A dataframe of t-test results, which has been generated
-#'   using [perform_t_tests_for_summary_plot()].
+#'   using [perform_t_tests_for_summary_plot()]. Important note! The t-test
+#'   dataframe must be filtered to match the same conditions in the `data`
+#'   argument, or the significance stars will be misleading.
 #' @param large_axis_text A character ("yes" or "no"). If "yes", a ggplot theme
 #'   layer will be applied which increases the size of the axis text.
 #' @param shade_intervals A character ("yes" or "no"). If "yes", a ggplot theme
