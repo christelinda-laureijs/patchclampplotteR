@@ -184,6 +184,27 @@ import_theme_colours <- function(filename) {
 }
 
 
+
+# Make reduced sEPSC dataframe for package
+# sample_raw_sEPSC_df <- import_ext_data("sample_sEPSC_data.csv")
+#
+# sample_raw_sEPSC_df <- make_normalized_EPSC_data(
+#   filename = import_ext_data("sample_sEPSC_data.csv"),
+#   current_type = "sEPSC",
+#   min_time_value = 0,
+#   max_time_value = 25,
+#   interval_length = 5,
+#   baseline_length = 5,
+#   negative_transform_currents = "yes"
+# )
+#
+#
+#
+# usethis::use_data(sample_raw_sEPSC_df, overwrite=TRUE, compression = "xz")
+
+
+
+
 # Use This code below
 # sample_theme_options <- import_theme_colours("C:/Users/cslau/OneDrive/Desktop/Masters-Work/crosby-lab-code/Templates/Theme-options.csv")
 # usethis::use_data(sample_theme_options, overwrite = TRUE)

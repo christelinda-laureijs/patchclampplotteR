@@ -23,6 +23,8 @@ Imports:
     lazyWeave,
     magrittr,
     png,
+    reactable,
+    reactablefmtr,
     rlang,
     rstatix,
     stringr,

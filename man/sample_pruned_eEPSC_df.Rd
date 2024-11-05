@@ -31,7 +31,8 @@ then squared. This is to enable variance analysis, as in
 during the baseline period.
 \item \verb{category, letter, sex, treatment, etc.} Columns which are
 from the raw data. For a definition of these columns, please see the
-documentation for \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
+\emph{Required basic columns} section in the documentation for
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{time} The upper time value of the interval (e.g. 2 minutes for
 "t1to2") which is used on the x-axis of plots such as in
 \code{\link[=plot_raw_current_data]{plot_raw_current_data()}}.
@@ -41,8 +42,7 @@ documentation for \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_d
 \code{P1_transformed}. The current data is collapsed into a single row for each
 letter, with the current data for each letter stored as a list. This is
 required to create sparklines of current amplitude over time within the cell
-summary table. See make_cell_summary_df() and
-make_interactive_summary_table().
+summary table. See \code{\link[=make_interactive_summary_table]{make_interactive_summary_table()}}.
 
 \item \code{all_cells} A dataframe consisting of all data within a single
 treatment grouped and summarized per minute (or some other variable if you

@@ -8,6 +8,8 @@
 #' @importFrom ggtext element_markdown
 #' @importFrom lazyWeave pvalString
 #' @importFrom png readPNG
+#' @importFrom reactable reactable
+#' @importFrom reactablefmtr react_sparkline
 #' @importFrom rstatix pairwise_t_test
 ## usethis namespace: end
 NULL

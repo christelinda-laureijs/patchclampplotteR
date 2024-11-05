@@ -80,7 +80,7 @@ ggplot object with an optional scale bar.
 }
 \examples{
 plot_spontaneous_current_trace(
- file = sample_abf,
+ file = sample_abf_file,
  plot_colour = "#6600cc",
  include_scale_bar = "yes",
  plot_episode = "epi1",

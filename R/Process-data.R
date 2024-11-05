@@ -28,7 +28,8 @@
 #'   Defaults to 5.
 #' @param negative_transform_currents A character ("yes" or "no") describing if
 #'   `P1` and `P2` should be negative transformed. If "yes", the values will be
-#'   multiplied by (-1).
+#'   multiplied by (-1). This only applies when `current_type == "eEPSC"` - It
+#'   will be ignored for spontaneous current data.
 #' @param save_output_as_RDS A character ("yes" or "no") describing if the
 #'   resulting object should be saved as an RDS file in the raw data folder.
 #'
@@ -406,8 +407,9 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'  \item `all_cells` A dataframe consisting of all data within a single
 #'  treatment grouped and summarized per minute (or some other variable if you
 #'  change `interval_length` to be something other than `1`). Columns like
-#'  `category` and `sex` are retained from the raw data. New columns for evoked
-#'  current data (`current_type == "eEPSC"`) are:
+#'  `category` and `sex` are retained from the raw data.
+#'
+#'  New columns for evoked current data (`current_type == "eEPSC"`) are:
 #'  \itemize{
 #'    \item `interval_pruned` A character value describing the interval that was
 #'    used for the pruning function. If the data are pruned per minute, this
@@ -418,6 +420,45 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'    \item `n` The number of data points used.
 #'    \item `se_P1_all_cells` The standard error of P1.
 #'    \item `cv_P1_all_cells` The coefficient of variation of P1.
+#'  }
+#'
+#'  New columns for spontaneous current data (`current_type == "sEPSC"`) are:
+#'  \itemize{
+#'    \item `interval_pruned` A character value describing the interval that was
+#'    used for the pruning function. If the data are pruned per minute, this
+#'    will be "t0to1", "t1to2", "t2to3", etc.
+#'    \item `mean_all_amplitude` The mean normalized amplitude (in % Baseline)
+#'    of the spontaneous current amplitudes during a specific interval across
+#'    all cells.
+#'    \item `mean_all_raw_amplitude` The mean raw amplitude (in pA) of the
+#'    spontaneous current amplitudes during a specific interval across all
+#'    cells.
+#'    \item `sd_all_amplitude` The standard deviation of the normalized
+#'    spontaneous current amplitudes across all cells.
+#'    \item `n` The number of data points used.
+#'    \item `se_all_amplitude` The standard error of the normalized spontaneous
+#'    currents across all cells.
+#'    \item `sd_all_raw_amplitude` The standard deviation of the raw
+#'    spontaneous current amplitudes across all cells.
+#'    \item `se_raw_amplitude` The standard error of the raw spontaneous
+#'    currents across all cells.
+#'    \item `mean_all_frequency` The mean normalized frequency (% Baseline
+#'    frequency) of all spontaneous current amplitudes across all cells during
+#'    the interval.
+#'    \item `sd_all_frequency` The standard deviation of the normalized
+#'    frequency of all spontaneous current amplitudes across all cells during
+#'    the interval.
+#'    \item `se_frequency` The standard error of the normalized
+#'    frequency of all spontaneous current amplitudes across all cells during
+#'    the interval.
+#'    \item `mean_all_raw_frequency` The mean raw frequency (Hz) of all
+#'    spontaneous current amplitudes across all cells during the interval.
+#'    \item `sd_all_raw_frequency` The standard deviation of the raw
+#'    frequency of all spontaneous current amplitudes across all cells during
+#'    the interval.
+#'    \item `se_raw_frequency` The standard error of the raw
+#'    frequency of all spontaneous current amplitudes across all cells during
+#'    the interval.
 #'  }
 #'}
 #'
@@ -682,6 +723,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
   )
 }
 
+# TODO add summary current output for spontaneous currents ------
 
 #' Summarize current data per 5-min for statistical tests
 #'

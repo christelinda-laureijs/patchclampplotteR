@@ -128,8 +128,9 @@ table. See make_cell_summary_df() and make_interactive_summary_table().
 \item \code{all_cells} A dataframe consisting of all data within a single
 treatment grouped and summarized per minute (or some other variable if you
 change \code{interval_length} to be something other than \code{1}). Columns like
-\code{category} and \code{sex} are retained from the raw data. New columns for evoked
-current data (\code{current_type == "eEPSC"}) are:
+\code{category} and \code{sex} are retained from the raw data.
+
+New columns for evoked current data (\code{current_type == "eEPSC"}) are:
 \itemize{
 \item \code{interval_pruned} A character value describing the interval that was
 used for the pruning function. If the data are pruned per minute, this
@@ -140,6 +141,45 @@ current (P1) during a specific interval across all cells.
 \item \code{n} The number of data points used.
 \item \code{se_P1_all_cells} The standard error of P1.
 \item \code{cv_P1_all_cells} The coefficient of variation of P1.
+}
+
+New columns for spontaneous current data (\code{current_type == "sEPSC"}) are:
+\itemize{
+\item \code{interval_pruned} A character value describing the interval that was
+used for the pruning function. If the data are pruned per minute, this
+will be "t0to1", "t1to2", "t2to3", etc.
+\item \code{mean_all_amplitude} The mean normalized amplitude (in \% Baseline)
+of the spontaneous current amplitudes during a specific interval across
+all cells.
+\item \code{mean_all_raw_amplitude} The mean raw amplitude (in pA) of the
+spontaneous current amplitudes during a specific interval across all
+cells.
+\item \code{sd_all_amplitude} The standard deviation of the normalized
+spontaneous current amplitudes across all cells.
+\item \code{n} The number of data points used.
+\item \code{se_all_amplitude} The standard error of the normalized spontaneous
+currents across all cells.
+\item \code{sd_all_raw_amplitude} The standard deviation of the raw
+spontaneous current amplitudes across all cells.
+\item \code{se_raw_amplitude} The standard error of the raw spontaneous
+currents across all cells.
+\item \code{mean_all_frequency} The mean normalized frequency (\% Baseline
+frequency) of all spontaneous current amplitudes across all cells during
+the interval.
+\item \code{sd_all_frequency} The standard deviation of the normalized
+frequency of all spontaneous current amplitudes across all cells during
+the interval.
+\item \code{se_frequency} The standard error of the normalized
+frequency of all spontaneous current amplitudes across all cells during
+the interval.
+\item \code{mean_all_raw_frequency} The mean raw frequency (Hz) of all
+spontaneous current amplitudes across all cells during the interval.
+\item \code{sd_all_raw_frequency} The standard deviation of the raw
+frequency of all spontaneous current amplitudes across all cells during
+the interval.
+\item \code{se_raw_frequency} The standard error of the raw
+frequency of all spontaneous current amplitudes across all cells during
+the interval.
 }
 }
 }

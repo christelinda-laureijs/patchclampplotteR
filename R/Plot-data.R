@@ -1778,7 +1778,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #'
 #' @examples
 #' plot_spontaneous_current_trace(
-#'  file = sample_abf,
+#'  file = sample_abf_file,
 #'  plot_colour = "#6600cc",
 #'  include_scale_bar = "yes",
 #'  plot_episode = "epi1",
@@ -1873,4 +1873,242 @@ plot_spontaneous_current_trace <-
 
     representative_traces_plot
   }
+
+
+#' Make interactive overview table of all recordings
+#'
+#' This function pulls information from multiple dataframes to display
+#' everything about a cell (cell characteristics, evoked current data, and
+#' spontaneous current data) in an interactive table. The table is made with
+#' `reactable::reactable()`, so it can be filtered, sorted, and rearranged.
+#'
+#' The table contains sparklines of the evoked current and spontaneous current
+#' amplitudes over time, which allows you to have a quick overview of the
+#' responses of a cell, and d
+#'
+#' The sparklines are colour-coded by treatment, allowing you to quickly
+#' identify trends in response to a hormone/protocol for all cells belonging to
+#' a particular treatment.
+#'
+#' @inheritParams plot_baseline_data
+#' @param cell_characteristics_dataframe A dataframe containing the cell characteristics, generated from [import_cell_characteristics_df()].
+#' @param pruned_eEPSC_dataframe A dataframe containing pruned evoked current
+#'   data, generated from [make_pruned_EPSC_data()], where `current_type ==
+#'   "eEPSC"`.
+#' @param pruned_sEPSC_dataframe A dataframe containing pruned spontaneous
+#'   current data, generated from [make_pruned_EPSC_data()], where `current_type
+#'   == "sEPSC"`.
+#' @param include_all_categories A character ("yes" or "no") specifying if the
+#'   plot will include data from all categories. If "no", you must specify a
+#'   list of categories in `list_of_categories`.
+#' @param list_of_categories A list of character values describing the
+#'   categories that will be in the plot. Defaults to NULL, since
+#'   include_all_categories is "yes" by default.
+#' @param save_output_as_RDS A character ("yes" or "no") describing if the
+#'   resulting object should be saved as an RDS file in the raw data folder.
+#'   Note: This is not the interactive table, but it is the raw dataframe that
+#'   is later inserted into `reactable::reactable()`. This is useful if you want
+#'   to build your own table using a different package, or you want to generate
+#'   a customized reactable table yourself.
+#'
+#' @returns A reactable HTML widget that can be viewed in RStudio or exported in
+#'   RMarkdown HTML documents. If `save_output_as_RDS == "yes"`, the raw
+#'   dataframe used to create the reactable is also exported as an .rds file
+#'   into `Data/Output-Data-from-R/`
+#' @export
+#'
+#' @examples
+#'
+#' make_interactive_summary_table(cell_characteristics_dataframe = sample_cell_characteristics,
+#'   pruned_eEPSC_dataframe = sample_pruned_eEPSC_df,
+#'   pruned_sEPSC_dataframe = sample_pruned_sEPSC_df,
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   include_all_treatments = "yes",
+#'   list_of_treatments = NULL,
+#'   include_all_categories = "yes",
+#'   list_of_categories = NULL,
+#'   save_output_as_RDS = "no")
+#'
+#'
+make_interactive_summary_table <- function(cell_characteristics_dataframe,
+                                           pruned_eEPSC_dataframe,
+                                           pruned_sEPSC_dataframe,
+                                           treatment_colour_theme,
+                                           include_all_treatments = "yes",
+                                           list_of_treatments = NULL,
+                                           include_all_categories = "yes",
+                                           list_of_categories = NULL,
+                                           save_output_as_RDS = "no") {
+
+
+  if (!save_output_as_RDS %in% c("yes", "no")) {
+    stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!include_all_treatments %in% c("yes", "no")) {
+    stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!include_all_categories %in% c("yes", "no")) {
+    stop("'include_all_categories' argument must be one of: 'yes' or 'no'")
+  }
+
+  table_data <-
+    merge(pruned_eEPSC_dataframe$for_table, pruned_sEPSC_dataframe$for_table, by = "letter") %>%
+    merge(cell_characteristics_dataframe, by = "letter") %>%
+    merge(treatment_colour_theme, by = "treatment") %>%
+    dplyr::select(
+      c(
+        .data$letter,
+        .data$display_names,
+        .data$treatment,
+        .data$synapses,
+        .data$sex,
+        .data$P1_transformed,
+        .data$spont_amplitude_transformed,
+        .data$R_a,
+        .data$X,
+        .data$Y,
+        .data$age,
+        .data$animal,
+        .data$category,
+        .data$cell,
+        .data$colours
+      )
+    ) %>%
+    dplyr::rename_with(stringr::str_to_title) %>%
+    dplyr::mutate(X = round(.data$X, -1),
+                  Y = round(.data$Y, -1))
+
+  if (include_all_treatments == "yes") {
+    if (!is.null(list_of_treatments)) {
+      warning(
+        "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
+      )
+    }
+
+  } else {
+    if (is.null(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is NULL.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    if (!is.character(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is not a character object.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    table_data <- table_data %>%
+      dplyr::filter(.data$Treatment %in% list_of_treatments)
+  }
+  # Category filter
+
+  if (include_all_categories == "yes") {
+    if (!is.null(list_of_categories)) {
+      warning(
+        "include_all_categories = \"yes\", but you included a list of categories to filter. All categories will be used."
+      )
+    }
+
+  } else {
+    if (is.null(list_of_categories)) {
+      stop(
+        "include_all_categories = \"",
+        include_all_categories,
+        "\", but list_of_categories is NULL.",
+        "\nDid you forget to add a list of categories?"
+      )
+    }
+
+    if (!is.character(list_of_categories)) {
+      stop(
+        "include_all_categories = \"",
+        include_all_categories,
+        "\", but list_of_categories is not a character object.",
+        "\nDid you forget to add a list of categories?"
+      )
+    }
+
+    table_data <- table_data %>%
+      dplyr::filter(.data$Category %in% list_of_categories)
+  }
+
+  if (save_output_as_RDS == "yes") {
+    saveRDS(table_data, file = here::here(paste0(
+      "Data/Output-Data-from-R/interactive_summary_table_df.RDS"
+    )))
+  }
+
+  cell_table <- reactable::reactable(
+    data = table_data,
+    defaultSorted = c("Category", "Treatment", "Animal"),
+    filterable = TRUE,
+    showPageSizeOptions = TRUE,
+    elementId = "cell-table",
+    defaultPageSize = 15,
+    defaultColDef = reactable::colDef(vAlign = "center", headerVAlign = "center"),
+    columns = list(
+      Colours = reactable::colDef(show = FALSE),
+      Letter = reactable::colDef(
+        name = "Letter",
+        sticky = "left",
+        style = list(borderRight = "1px solid #eee"),
+        headerStyle = list(borderRight = "1px solid #eee")
+      ),
+      Display_names = reactable::colDef(name = "Treatment"),
+      Treatment = reactable::colDef(show = FALSE),
+      Sex = reactable::colDef(
+        name = "Sex",
+        filterMethod = reactable::JS(
+          "function(rows, columnId, filterValue) {
+        return rows.filter(function(row) {
+          return String(row.values[columnId]).toUpperCase() === filterValue.toUpperCase()
+        })
+      }"
+        )
+      ),
+      P1_transformed = reactable::colDef(
+        name = "eEPSC amplitude (pA)",
+        filterable = FALSE,
+        cell = reactablefmtr::react_sparkline(
+          table_data,
+          line_color_ref = "Colours",
+          show_area = TRUE,
+          area_opacity = 1
+        )
+      ),
+      Spont_amplitude_transformed = reactable::colDef(
+        name = "sEPSC amplitude (pA)",
+        filterable = FALSE,
+        cell = reactablefmtr::react_sparkline(
+          table_data,
+          line_color_ref = "Colours",
+          show_area = TRUE,
+          area_opacity = 1
+        )
+      ),
+      R_a = reactable::colDef(
+        name = "Ra (M\u03a9)",
+        filterable = FALSE,
+        cell = reactablefmtr::react_sparkline(
+          table_data,
+          line_color_ref = "Colours",
+          labels = c("first", "last"),
+          decimals = 1
+        )
+      )
+    )
+  )
+
+
+  return(cell_table)
+}
 

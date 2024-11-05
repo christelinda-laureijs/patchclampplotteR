@@ -43,7 +43,8 @@ Defaults to 5.}
 
 \item{negative_transform_currents}{A character ("yes" or "no") describing if
 \code{P1} and \code{P2} should be negative transformed. If "yes", the values will be
-multiplied by (-1).}
+multiplied by (-1). This only applies when \code{current_type == "eEPSC"} - It
+will be ignored for spontaneous current data.}
 
 \item{save_output_as_RDS}{A character ("yes" or "no") describing if the
 resulting object should be saved as an RDS file in the raw data folder.}

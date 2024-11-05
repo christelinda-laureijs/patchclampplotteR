@@ -9,7 +9,8 @@ An .rda file containing 16 objects of 10 variables
 \describe{
 \itemize{
 \item \code{treatment} A character value specifying the treatment applied (e.g.
-"Control", "HNMPA").
+"Control", "HNMPA") such as the antagonists or agonists, or any protocol
+applied to the animals (e.g. "Fasting").
 \item \code{.y.} A character value describing the parameter compared with the
 t-test. In this case, this uses the mean normalized amplitude of the first
 evoked current ("mean_P1_transformed") which has been generated using
