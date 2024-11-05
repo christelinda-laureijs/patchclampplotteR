@@ -75,14 +75,15 @@ more information, please see \href{https://doi.org/10.1016/j.jneumeth.2019.10852
 }
 \examples{
 
-make_variance_data(data = sample_summary_eEPSC_df,
- df_category = 2,
- include_all_treatments = "yes",
- list_of_treatments = NULL,
- baseline_interval = "t0to5",
- post_hormone_interval = "t20to25",
- treatment_colour_theme = sample_treatment_names_and_colours,
- save_output_as_RDS = "no"
+make_variance_data(
+  data = sample_summary_eEPSC_df,
+  df_category = 2,
+  include_all_treatments = "yes",
+  list_of_treatments = NULL,
+  baseline_interval = "t0to5",
+  post_hormone_interval = "t20to25",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_output_as_RDS = "no"
 )
 
 }

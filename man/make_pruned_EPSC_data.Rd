@@ -315,12 +315,14 @@ current in pA.
 }
 
 \examples{
-make_pruned_EPSC_data(data = sample_raw_eEPSC_df,
+make_pruned_EPSC_data(
+  data = sample_raw_eEPSC_df,
   current_type = "eEPSC",
   min_time_value = 0,
   max_time_value = 25,
   baseline_length = 5,
-  interval_length = 1)
+  interval_length = 1
+)
 }
 \seealso{
 \code{\link[=make_variance_data]{make_variance_data()}} to see an example of how you can use pruned

@@ -86,15 +86,17 @@ due to a pre- or post-synaptic mechanism. For more information, please see
 \href{https://doi.org/10.1016/j.jneumeth.2019.108526}{Huijstee & Kessels (2020)}.
 }
 \examples{
-plot_variance_comparison_data(data = sample_eEPSC_variance_df,
-plot_category = 2,
-plot_treatment = "Control",
-large_axis_text = "no",
-variance_measure = "cv",
-baseline_interval = "t0to5",
-post_hormone_interval = "t20to25",
-post_modification_label = "Insulin",
-treatment_colour_theme = sample_treatment_names_and_colours,
-theme_options = sample_theme_options)
+plot_variance_comparison_data(
+  data = sample_eEPSC_variance_df,
+  plot_category = 2,
+  plot_treatment = "Control",
+  large_axis_text = "no",
+  variance_measure = "cv",
+  baseline_interval = "t0to5",
+  post_hormone_interval = "t20to25",
+  post_modification_label = "Insulin",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
+)
 
 }

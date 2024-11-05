@@ -86,16 +86,16 @@ the baseline period can be plotted.
 }
 \examples{
 plot_baseline_data(
- data = sample_summary_eEPSC_df,
- treatment_colour_theme = sample_treatment_names_and_colours,
- theme_options = sample_theme_options,
- include_all_treatments = "yes",
- list_of_treatments = NULL,
- current_type = "eEPSC",
- parameter = "raw_amplitude",
- baseline_interval = "t0to5",
- large_axis_text = "no",
- plot_width = 8,
- save_plot_png = "no"
+  data = sample_summary_eEPSC_df,
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options,
+  include_all_treatments = "yes",
+  list_of_treatments = NULL,
+  current_type = "eEPSC",
+  parameter = "raw_amplitude",
+  baseline_interval = "t0to5",
+  large_axis_text = "no",
+  plot_width = 8,
+  save_plot_png = "no"
 )
 }

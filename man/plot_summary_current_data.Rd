@@ -111,20 +111,21 @@ presented as mean +/- the standard error.
 }
 \examples{
 
-plot_summary_current_data(plot_category = 2,
- plot_treatment = "Control",
- data = sample_pruned_eEPSC_df$all_cells,
- current_type = "eEPSC",
- parameter = "amplitude",
- include_representative_trace = "no",
- signif_stars = "yes",
- t_test_df = sample_eEPSC_t_test_df,
- hormone_added = "Insulin",
- large_axis_text = "no",
- shade_intervals = "no",
- hormone_or_HFS_start_time = 5,
- treatment_colour_theme = sample_treatment_names_and_colours,
- theme_options = sample_theme_options
+plot_summary_current_data(
+  plot_category = 2,
+  plot_treatment = "Control",
+  data = sample_pruned_eEPSC_df$all_cells,
+  current_type = "eEPSC",
+  parameter = "amplitude",
+  include_representative_trace = "no",
+  signif_stars = "yes",
+  t_test_df = sample_eEPSC_t_test_df,
+  hormone_added = "Insulin",
+  large_axis_text = "no",
+  shade_intervals = "no",
+  hormone_or_HFS_start_time = 5,
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
 )
 }
 \seealso{

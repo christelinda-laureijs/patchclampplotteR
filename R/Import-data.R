@@ -29,7 +29,7 @@ import_ext_data <- function(file = NULL) {
 #'   function uses `here::here()` to locate the filepath. See the details below
 #'   for information on required columns.
 #'
-#' @return A dataframe
+#' @returns A dataframe
 #'
 #' @section Required columns:
 #'
@@ -70,14 +70,14 @@ import_ext_data <- function(file = NULL) {
 #' list of numeric values (using `stringr::str_split()`). It will also convert
 #' blanks and `NA` values to 0. This allows access to be visualized as a
 #' sparkline in the `R_a` column of the interactive summary table made with
-#' make_interactive_summary_table().
+#' [make_interactive_summary_table()].
 #'
 #' @export
 #'
 #' @examples
 #' import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
 #'
-#' @seealso make_interactive_summary_table() to generate an interactive table
+#' @seealso [make_interactive_summary_table()] to generate an interactive table
 #'   with cell characteristics and raw data as sparklines.
 
 import_cell_characteristics_df <- function(filename) {

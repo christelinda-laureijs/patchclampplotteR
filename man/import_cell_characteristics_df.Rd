@@ -65,7 +65,7 @@ single cell.
 list of numeric values (using \code{stringr::str_split()}). It will also convert
 blanks and \code{NA} values to 0. This allows access to be visualized as a
 sparkline in the \code{R_a} column of the interactive summary table made with
-make_interactive_summary_table().
+\code{\link[=make_interactive_summary_table]{make_interactive_summary_table()}}.
 }
 
 \examples{
@@ -73,6 +73,6 @@ import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"
 
 }
 \seealso{
-make_interactive_summary_table() to generate an interactive table
+\code{\link[=make_interactive_summary_table]{make_interactive_summary_table()}} to generate an interactive table
 with cell characteristics and raw data as sparklines.
 }

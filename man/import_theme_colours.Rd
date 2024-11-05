@@ -24,5 +24,4 @@ Import theme
 
 import_theme_colours(import_ext_data("sample_theme_options.csv"))
 
-
 }

@@ -69,13 +69,15 @@ letter. It is the same as \code{\link[=plot_PPR_data_one_treatment]{plot_PPR_dat
 than one treatment.
 }
 \examples{
-plot_PPR_data_multiple_treatments(data = sample_PPR_df,
+plot_PPR_data_multiple_treatments(
+  data = sample_PPR_df,
   include_all_treatments = "yes",
   plot_category = 2,
   baseline_label = "B",
   post_modification_label = "I",
   theme_options = sample_theme_options,
-  treatment_colour_theme = sample_treatment_names_and_colours)
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
 
 }
 \seealso{

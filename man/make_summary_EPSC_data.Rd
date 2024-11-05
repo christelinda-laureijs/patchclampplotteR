@@ -210,6 +210,7 @@ recording's baseline. Generated automatically in
 
 make_summary_EPSC_data(
   data = sample_raw_eEPSC_df,
-  current_type = "eEPSC")
+  current_type = "eEPSC"
+)
 
 }

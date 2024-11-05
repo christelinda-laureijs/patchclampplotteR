@@ -69,7 +69,8 @@ significance stars through \code{ggsignif::geom_signif()}.
 You may customize the baseline and post-modification label to any value if "Baseline" and "Post-hormone" do not work. For example, you may want to use the hormone name instead of "Post-hormone"
 }
 \examples{
-plot_PPR_data_one_treatment(data = sample_PPR_df,
+plot_PPR_data_one_treatment(
+  data = sample_PPR_df,
   plot_treatment = "Control",
   plot_category = 2,
   large_axis_text = "no",
@@ -77,7 +78,8 @@ plot_PPR_data_one_treatment(data = sample_PPR_df,
   post_modification_label = "Insulin",
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options,
-  save_plot_png = "no")
+  save_plot_png = "no"
+)
 
 }
 \seealso{

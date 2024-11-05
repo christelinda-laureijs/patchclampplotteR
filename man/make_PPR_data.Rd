@@ -66,13 +66,15 @@ related to the probability of neurotransmitter release \href{https://doi.org/10.
 }
 \examples{
 
-make_PPR_data(data = sample_raw_eEPSC_df,
-include_all_treatments = "yes",
-list_of_treatments = NULL,
-PPR_min = 0,
-PPR_max = 5,
-baseline_interval = "t0to5",
-post_hormone_interval = "t20to25",
-treatment_colour_theme = sample_treatment_names_and_colours)
+make_PPR_data(
+  data = sample_raw_eEPSC_df,
+  include_all_treatments = "yes",
+  list_of_treatments = NULL,
+  PPR_min = 0,
+  PPR_max = 5,
+  baseline_interval = "t0to5",
+  post_hormone_interval = "t20to25",
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
 
 }

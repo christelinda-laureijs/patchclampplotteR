@@ -73,16 +73,18 @@ comparisons (\code{p.adjust.method = "holm"}). The resulting output table can al
 be used to apply significance stars to the plot in \code{\link[=plot_summary_current_data]{plot_summary_current_data()}}.
 }
 \examples{
-perform_t_tests_for_summary_plot(data = sample_summary_eEPSC_df,
- test_category = 2,
- include_all_treatments = "yes",
- treatment_colour_theme = sample_treatment_names_and_colours,
- parameter = "amplitude",
- baseline_interval = "t0to5",
- interval_length = 5,
- list_of_treatments = NULL,
- current_type = "eEPSC",
- save_output_as_RDS = "no")
+perform_t_tests_for_summary_plot(
+  data = sample_summary_eEPSC_df,
+  test_category = 2,
+  include_all_treatments = "yes",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  parameter = "amplitude",
+  baseline_interval = "t0to5",
+  interval_length = 5,
+  list_of_treatments = NULL,
+  current_type = "eEPSC",
+  save_output_as_RDS = "no"
+)
 }
 \seealso{
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}} for an example of how the normalized

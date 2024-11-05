@@ -76,7 +76,8 @@ a particular treatment.
 }
 \examples{
 
-make_interactive_summary_table(cell_characteristics_dataframe = sample_cell_characteristics,
+make_interactive_summary_table(
+  cell_characteristics_dataframe = sample_cell_characteristics,
   pruned_eEPSC_dataframe = sample_pruned_eEPSC_df,
   pruned_sEPSC_dataframe = sample_pruned_sEPSC_df,
   treatment_colour_theme = sample_treatment_names_and_colours,
@@ -84,7 +85,7 @@ make_interactive_summary_table(cell_characteristics_dataframe = sample_cell_char
   list_of_treatments = NULL,
   include_all_categories = "yes",
   list_of_categories = NULL,
-  save_output_as_RDS = "no")
-
+  save_output_as_RDS = "no"
+)
 
 }
