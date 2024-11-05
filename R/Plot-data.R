@@ -1,3 +1,39 @@
+#' Add a customized ggplot2 theme
+#'
+#' @returns A ggplot theme
+#' @export
+#'
+#' @examples
+patchclampplotteR_theme <- function() {
+  ggplot2::theme_classic() %+replace%
+    ggplot2::theme(
+      text = ggplot2::element_text(),
+      plot.title = ggplot2::element_text(
+        color = "black",
+        size = 20,
+        margin = ggplot2::margin(b = 25),
+        hjust = 0.5
+      ),
+      plot.margin = ggplot2::margin(25, 25, 25, 25),
+      plot.caption = ggplot2::element_text(
+        hjust = 0,
+        size = 12
+      ),
+      plot.caption.position = "plot",
+      axis.text = ggplot2::element_text(size = 12, color = "black"),
+      axis.title = ggplot2::element_text(size = 16, face = "bold"),
+      axis.title.y = ggplot2::element_text(
+        margin = ggplot2::margin(r = 25),
+        angle = 90,
+        vjust = 0.5
+      ),
+      axis.title.x = ggplot2::element_text(margin = ggplot2::margin(b = 25, t = 20)),
+      axis.ticks = ggplot2::element_blank(),
+      strip.background = ggplot2::element_rect(color = NA, fill = NA),
+      strip.text = ggplot2::element_text(size = 20)
+    )
+}
+
 #' Make baseline comparison plot
 #'
 #' This function creates a scatterplot of parameters such as raw amplitude
@@ -226,7 +262,8 @@ plot_baseline_data <- function(data,
     ggplot2::guides(
       color = "none",
       shape = ggplot2::guide_legend(reverse = TRUE)
-    )
+    ) +
+    patchclampplotteR_theme()
 
   if (large_axis_text == "yes") {
     baseline_comparison_plot <- baseline_comparison_plot +
@@ -509,7 +546,8 @@ plot_raw_current_data <-
             unique(plot_df$sex)
           )
         ) +
-        ggplot2::labs(x = "Time (min)", y = y_title)
+        ggplot2::labs(x = "Time (min)", y = y_title) +
+        patchclampplotteR_theme()
 
       if (current_type == "sEPSC" &
         pruned == "yes" &
@@ -920,7 +958,8 @@ plot_summary_current_data <- function(plot_category,
       y = y_title,
       shape = "Sex",
       color = "Sex"
-    )
+    ) +
+    patchclampplotteR_theme()
 
   if (large_axis_text == "yes") {
     treatment_plot <- treatment_plot +
@@ -1265,6 +1304,7 @@ plot_variance_comparison_data <- function(data,
     ggplot2::geom_line(color = theme_options["connecting_line_colour", "value"], linewidth = 0.4) +
     ggplot2::labs(x = NULL) +
     ggplot2::scale_x_discrete(labels = c(baseline_label, post_modification_label)) +
+    patchclampplotteR_theme() +
     ggplot2::theme(axis.title.y = ggtext::element_markdown())
 
   if (variance_measure == "cv") {
@@ -1400,7 +1440,8 @@ plot_cv_data <- function(data,
     dplyr::filter(.data$treatment == plot_treatment) %>%
     ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data$cv_P1_all_cells)) +
     ggplot2::geom_point(color = plot_colour) +
-    ggplot2::labs(x = "Time (min)", y = "CV")
+    ggplot2::labs(x = "Time (min)", y = "CV") +
+    patchclampplotteR_theme()
 
   if (save_plot_png == "yes") {
     ggplot2::ggsave(
@@ -1520,6 +1561,7 @@ plot_PPR_data_one_treatment <- function(data,
     ) +
     ggplot2::theme(legend.position = "right") +
     ggplot2::coord_cartesian(ylim = c(0, 3)) +
+    patchclampplotteR_theme() +
     ggplot2::theme(axis.text.x = ggplot2::element_text(margin = ggplot2::margin(b = 5, t = 5))) +
     ggplot2::labs(x = NULL, y = "Paired pulse ratio", shape = NULL) +
     ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
@@ -1712,6 +1754,7 @@ plot_PPR_data_multiple_treatments <- function(data,
       breaks = treatment_info$display_names,
       values = treatment_info$colours
     ) +
+    patchclampplotteR_theme() +
     ggplot2::theme(
       strip.text = ggplot2::element_text(size = 10),
       strip.placement = "outside",
