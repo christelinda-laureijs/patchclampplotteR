@@ -40,5 +40,5 @@ Imports:
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: https://github.com/christelinda-laureijs/patchclampplotteR
+URL: https://github.com/christelinda-laureijs/patchclampplotteR, https://christelinda-laureijs.github.io/patchclampplotteR/
 BugReports: https://github.com/christelinda-laureijs/patchclampplotteR/issues
