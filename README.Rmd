@@ -20,7 +20,12 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of patchclampplotteR is to create a set of user-friendly tools for
+
+```{r header-image, fig.align = 'center', fig.alt = "A banner with pictures of some of the plots that can be created with the patchclampplotteR package.", echo=F}
+knitr::include_graphics("man/figures/README-banner-plot-sampler.png")
+```
+
+The goal of `patchclampplotteR` is to create a set of user-friendly tools for
 electrophysiologists who want to plot and analyze data from whole-cell patch
 clamp electrophysiology recordings. Here's some of the functions that this
 package can do (see below for examples!):

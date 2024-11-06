@@ -6,8 +6,10 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of patchclampplotteR is to create a set of user-friendly tools
-for electrophysiologists who want to plot and analyze data from
+<img src="man/figures/README-banner-plot-sampler.png" alt="A banner with pictures of some of the plots that can be created with the patchclampplotteR package." width="100%" style="display: block; margin: auto;" />
+
+The goal of `patchclampplotteR` is to create a set of user-friendly
+tools for electrophysiologists who want to plot and analyze data from
 whole-cell patch clamp electrophysiology recordings. Here’s some of the
 functions that this package can do (see below for examples!):
 
