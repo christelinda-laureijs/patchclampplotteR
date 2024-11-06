@@ -15,14 +15,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-# patchclampplotteR: Plot and analyze patch clamp data
+# patchclampplotteR <img src="man/figures/logo.png" align="right" height="138" alt="Hex Sticker for patchclampplotter package showing a neuron with electrodes inside it." />
 
 <!-- badges: start -->
 <!-- badges: end -->
 
 
 ```{r header-image, fig.align = 'center', fig.alt = "A banner with pictures of some of the plots that can be created with the patchclampplotteR package.", echo=F}
-knitr::include_graphics("man/figures/README-banner-plot-sampler.png")
+knitr::include_graphics("man/figures/README-plot-sampler.png")
 ```
 
 The goal of `patchclampplotteR` is to create a set of user-friendly tools for

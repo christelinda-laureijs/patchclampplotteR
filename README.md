@@ -1,12 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# patchclampplotteR: Plot and analyze patch clamp data
+# patchclampplotteR <img src="man/figures/logo.png" align="right" height="138" alt="Hex Sticker for patchclampplotter package showing a neuron with electrodes inside it." />
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-<img src="man/figures/README-banner-plot-sampler.png" alt="A banner with pictures of some of the plots that can be created with the patchclampplotteR package." width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-plot-sampler.png" alt="A banner with pictures of some of the plots that can be created with the patchclampplotteR package." width="100%" style="display: block; margin: auto;" />
 
 The goal of `patchclampplotteR` is to create a set of user-friendly
 tools for electrophysiologists who want to plot and analyze data from
