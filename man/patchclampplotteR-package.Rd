@@ -6,12 +6,15 @@
 \alias{patchclampplotteR-package}
 \title{patchclampplotteR: Plot and Analyze Raw Patch Clamp Electrophysiology Data}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Create publication-quality figures of whole-cell patch clamp electrophysiology data. You can plot evoked and spontaneous current amplitude over time, mean evoked/spontaneous data summarized by sex, variance analysis plots, and much more.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://github.com/christelinda-laureijs/patchclampplotteR}
+  \item \url{https://christelinda-laureijs.github.io/patchclampplotteR/}
   \item Report bugs at \url{https://github.com/christelinda-laureijs/patchclampplotteR/issues}
 }
 
