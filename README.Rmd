@@ -21,14 +21,18 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 
+<span style="color:#55b323;font-weight:bold;">patch</span><span
+style="color:#6600cc;font-weight:bold;">clamp</span><span style="color:
+black;font-weight:bold;">plotte</span><span
+style="color:#0093fb;font-weight:bold;">R</span> provides a set of user-friendly
+tools for electrophysiologists who want to plot and analyze data from whole-cell
+patch clamp electrophysiology recordings. Here's some of the functions that this
+package can do (see below for examples!):
+
+
 ```{r header-image, fig.align = 'center', fig.alt = "A banner with pictures of some of the plots that can be created with the patchclampplotteR package.", echo=F}
 knitr::include_graphics("man/figures/README-plot-sampler.png")
 ```
-
-The goal of `patchclampplotteR` is to create a set of user-friendly tools for
-electrophysiologists who want to plot and analyze data from whole-cell patch
-clamp electrophysiology recordings. Here's some of the functions that this
-package can do (see below for examples!):
 
 * Plot raw evoked or spontaneous current amplitudes over time for all recordings at once.
 * Normalize current amplitudes relative to mean baseline values.
@@ -44,7 +48,7 @@ library(patchclampplotteR)
 ```
 
 
-## Quick Examples
+## Examples
 
 Plot raw evoked currents for a specific cell:
 
@@ -86,7 +90,7 @@ plot_summary_current_data(
 )
 ```
 
-Plot a representative recording trace showing spontaneous currents:
+Plot a representative recording trace showing spontaneous currents from a raw Axon Binary File (.ABF):
 
 ```{r example-spontaneous-current-trace-plot}
 plot_spontaneous_current_trace(

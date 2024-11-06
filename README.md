@@ -6,12 +6,14 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-<img src="man/figures/README-plot-sampler.png" alt="A banner with pictures of some of the plots that can be created with the patchclampplotteR package." width="100%" style="display: block; margin: auto;" />
+<span style="color:#55b323;font-weight:bold;">patch</span><span style="color:#6600cc;font-weight:bold;">clamp</span><span style="color:
+black;font-weight:bold;">plotte</span><span style="color:#0093fb;font-weight:bold;">R</span>
+provides a set of user-friendly tools for electrophysiologists who want
+to plot and analyze data from whole-cell patch clamp electrophysiology
+recordings. Here’s some of the functions that this package can do (see
+below for examples!):
 
-The goal of `patchclampplotteR` is to create a set of user-friendly
-tools for electrophysiologists who want to plot and analyze data from
-whole-cell patch clamp electrophysiology recordings. Here’s some of the
-functions that this package can do (see below for examples!):
+<img src="man/figures/README-plot-sampler.png" alt="A banner with pictures of some of the plots that can be created with the patchclampplotteR package." width="100%" style="display: block; margin: auto;" />
 
 - Plot raw evoked or spontaneous current amplitudes over time for all
   recordings at once.
@@ -24,7 +26,7 @@ functions that this package can do (see below for examples!):
 - Compare variance parameters to help determine presynaptic mechanisms.
 - And more!
 
-## Quick Examples
+## Examples
 
 Plot raw evoked currents for a specific cell:
 
@@ -71,7 +73,8 @@ plot_summary_current_data(
 
 <img src="man/figures/README-example-summary-eEPSC-plot-1.png" width="100%" />
 
-Plot a representative recording trace showing spontaneous currents:
+Plot a representative recording trace showing spontaneous currents from
+a raw Axon Binary File (.ABF):
 
 ``` r
 plot_spontaneous_current_trace(
