@@ -4,7 +4,7 @@ This is the first public release of *patchclampplotteR*, a package designed to h
 
 The package can be installed from GitHub by using:
 
-```
+``` r
 pak::pak("christelinda-laureijs/patchclampplotteR")
 ```
 

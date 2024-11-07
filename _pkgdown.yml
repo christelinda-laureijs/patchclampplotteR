@@ -12,6 +12,9 @@ template:
 
         gtag('config', 'G-M92L6F0ZB2');
       </script>
+navbar:
+  structure:
+    left:  [home, reference, news]
 reference:
 - title: Import data
   desc: >
