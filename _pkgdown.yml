@@ -12,3 +12,62 @@ template:
 
         gtag('config', 'G-M92L6F0ZB2');
       </script>
+reference:
+- title: Import data
+  desc: >
+    Functions that import raw data (typically as a comma-separated file (.csv) or Axon Binary Format (.abf) file).
+  contents:
+  - import_ABF_file
+  - import_cell_characteristics_df
+  - import_theme_colours
+  - import_ext_data
+- title: Modify data
+  desc: >
+    Functions that normalize, prune, and summarize the data.
+  contents:
+  - make_normalized_EPSC_data
+  - make_pruned_EPSC_data
+  - make_summary_EPSC_data
+  - make_PPR_data
+  - make_variance_data
+  - make_interactive_summmary_table
+  - perform_t_tests_for_summary_plot
+- title: Plot data
+  desc: >
+    Functions to plot the data.
+  - plot_raw_current_data
+  - plot_summary_current_data
+  - plot_PPR_data_one_treatment
+  - plot_PPR_data_multiple_treatments
+  - plot_baseline_data
+  - plot_cv_data
+  - plot_variance_comparison_data
+  - plot_spontaneous_current_trace
+- title: Sample datasets
+  desc: >
+    Sample datasets for vignettes and examples.
+  - sample_cell_characteristics
+  - sample_abf_file
+  - sample_theme_options
+  - sample_treatment_names_and_colours
+
+- subtitle: Evoked current (eEPSC) data
+  desc: >
+    Sample datasets from recordings measuring evoked current amplitude over time. The paired-pulse ratio (PPR) data are only available for evoked current recordings because the PPR is determined from evoked current amplitudes, not spontaneous currents.
+  - sample_raw_eEPSC_df
+  - sample_pruned_eEPSC_df
+  - sample_summary_eEPSC_df
+  - sample_eEPSC_variance_df
+  - sample_PPR_df
+  - sample_eEPSC_t_test_df
+
+- subtitle: Spontaneous current (sEPSC) data
+  desc: >
+    Sample datasets from recordings measuring spontaneous current amplitude over time. To reduce package size, only the raw and pruned spontaneous current data are included.
+  - sample_raw_sEPSC_df
+  - sample_pruned_sEPSC_df
+
+
+
+
+
