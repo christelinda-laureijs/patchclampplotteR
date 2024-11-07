@@ -91,7 +91,8 @@ were present on the brain slice, or the animals were fasted, etc.</p></dd>
 
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>A dataframe containing pruned summary data for all cells. This is the third element of the list generated from <code><a href="make_pruned_EPSC_data.html">make_pruned_EPSC_data()</a></code>.</p></dd>
+<dd><p>A dataframe containing pruned summary data for all cells. This is
+the third element of the list generated from <code><a href="make_pruned_EPSC_data.html">make_pruned_EPSC_data()</a></code>.</p></dd>
 
 
 <dt id="arg-current-type">current_type<a class="anchor" aria-label="anchor" href="#arg-current-type"></a></dt>
@@ -181,13 +182,16 @@ they will all go in subfolders below Figures/ in your project directory.</p></dd
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A ggplot object. If <code>save_plot_png == "yes"</code>, it will also generate a
-.png file exported to <code>Figures/Evoked-currents/Output-summary-plots</code> or
+    <p>A ggplot object. If <code>save_plot_png == "yes"</code>, it will also generate
+a .png file exported to <code>Figures/Evoked-currents/Output-summary-plots</code> or
 <code>Figures/Spontaneous-currents/Output-summary-plots</code>, depending on the
 <code>current_type</code>. The .png filename will be in this format:
 "Summary-plot-<code>plot_treatment</code>-category-<code>plot_category</code>-<code>file_name_ending</code>-<code>text_size</code>.png".
-The <code>file_name_ending</code> and <code>text_size</code> will only be added on if you are
-using a An example filename is: "Summary-plot-Control-category-2.png" or
+The <code>text_size</code> will only be added on if you are using <code>large_axis_text</code>
+("LARGE" will be included in the filename). The <code>file_name_ending</code> will be
+automatically added on for spontaneous current data to specify what
+parameter is plotted (e.g. "raw_amplitude").</p>
+<p>An example filename is: "Summary-plot-Control-category-2.png" or
 "Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
 currents.</p>
     </div>
