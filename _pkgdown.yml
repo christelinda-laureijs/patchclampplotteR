@@ -30,7 +30,7 @@ reference:
   - make_summary_EPSC_data
   - make_PPR_data
   - make_variance_data
-  - make_interactive_summmary_table
+  - make_interactive_summary_table
   - perform_t_tests_for_summary_plot
 - title: Plot data
   desc: >
