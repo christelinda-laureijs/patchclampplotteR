@@ -12,6 +12,9 @@ template:
 
         gtag('config', 'G-M92L6F0ZB2');
       </script>
+
+
+      <link rel="shortcut icon" href="pkgdown/favicon/favicon.svg" />
 navbar:
   structure:
     left:  [home, reference, news]
