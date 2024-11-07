@@ -3,7 +3,7 @@ template:
   bootstrap: 5
   includes:
     in_header: |
-
+      <!-- favicons -->
       <link rel="icon" type="image/x-icon" href="favicon.ico">
 
       <!-- Google tag (gtag.js) -->
