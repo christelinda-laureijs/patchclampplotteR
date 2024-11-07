@@ -44,6 +44,7 @@ reference:
   - plot_cv_data
   - plot_variance_comparison_data
   - plot_spontaneous_current_trace
+  - patchclampplotteR_theme
 - title: Sample datasets
   desc: >
     Sample datasets for vignettes and examples.
