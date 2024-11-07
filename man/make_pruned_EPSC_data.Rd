@@ -203,7 +203,7 @@ mentioned in \strong{Required basic columns} plus these columns:
 \itemize{
 \item \code{PPR} A numeric value that represents the paired pulse ratio (PPR) of
 the evoked currents, generated in
-\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 \item \code{interval} A character value indicating the interval that the data
 belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
 automatically in \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.

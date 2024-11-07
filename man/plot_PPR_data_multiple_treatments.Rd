@@ -58,7 +58,9 @@ saved as a .png using ggsave. The filepath depends on the current type, but
 they will all go in subfolders below Figures/ in your project directory.}
 }
 \value{
-A ggplot object. If save_plot_png is defined as "yes" in the Global Environment, it will also generate a .png file in the folder \code{Figures/Evoked-currents/PPR} relative to the project directory.
+A ggplot object. If save_plot_png is defined as "yes", it will also
+generate a .png file in the folder \code{Figures/Evoked-currents/PPR} relative
+to the project directory.
 }
 \description{
 \code{plot_PPR_data_multiple_treatments()} creates a categorical scatter plot with

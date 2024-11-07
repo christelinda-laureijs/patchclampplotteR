@@ -480,7 +480,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #' \itemize{
 #'  \item `PPR` A numeric value that represents the paired pulse ratio (PPR) of
 #'  the evoked currents, generated in
-#'  [make_normalized_EPSC_data()]
+#'  [make_normalized_EPSC_data()].
 #'  \item `interval` A character value indicating the interval that the data
 #'  belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
 #'  automatically in [make_normalized_EPSC_data()].
@@ -733,8 +733,6 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
   )
 }
 
-# TODO add summary current output for spontaneous currents ------
-
 #' Summarize current data per 5-min for statistical tests
 #'
 #' `make_summary_EPSC_data()` allows you to divide data from a long recording
@@ -900,7 +898,8 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #' amplitude during the baseline. This uses the `paired_t_test` function from
 #' `rstatix`, with `paired = TRUE` and Holm's adjustment for multiple
 #' comparisons (`p.adjust.method = "holm"`). The resulting output table can also
-#' be used to apply significance stars to the plot in [plot_summary_current_data()].
+#' be used to apply significance stars to the plot in
+#' [plot_summary_current_data()].
 #'
 #' @inheritParams plot_baseline_data
 #' @inheritParams make_normalized_EPSC_data
@@ -1135,7 +1134,7 @@ perform_t_tests_for_summary_plot <- function(data,
 
 
 
-#' Make variance analysis dataframe
+#' Make dataframe with variance measures
 #'
 #' `make_variance_data` creates a dataframe containing variance measures at two
 #' time points. They are the baseline period and a user-specified interval after
@@ -1166,7 +1165,8 @@ perform_t_tests_for_summary_plot <- function(data,
 #' baseline interval ("Baseline") or an interval after a hormone or protocol has
 #' been applied ("Post-modification"). These intervals are selected from
 #' `baseline_interval` and `post_hormone_interval`.
-#'  \item `mean_cv_inverse_square` The mean inverse coefficient of variation squared within a specific state.
+#'  \item `mean_cv_inverse_square` The mean inverse coefficient of variation
+#'  squared within a specific state.
 #'  \item `mean_VMR` The mean variance-to-mean ratio within a specific state.
 #' }
 #'
@@ -1288,7 +1288,7 @@ make_variance_data <- function(data,
 #' of the paired-pulse ratio (PPR) is useful to determine which mechanism is
 #' involved in modifying synaptic plasticity. For example, the PPR may be
 #' related to the probability of neurotransmitter release [Oleskevich et al.,
-#' 2000](https://doi.org/10.1111/j.1469-7793.2000.00513.x)
+#' 2000](https://doi.org/10.1111/j.1469-7793.2000.00513.x).
 #'
 #' @inheritParams plot_baseline_data
 #' @inheritParams make_normalized_EPSC_data

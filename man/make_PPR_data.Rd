@@ -62,7 +62,7 @@ two time points. They are the baseline period and a user-specified interval
 after a hormone or protocol has been applied. The "before/after" comparison
 of the paired-pulse ratio (PPR) is useful to determine which mechanism is
 involved in modifying synaptic plasticity. For example, the PPR may be
-related to the probability of neurotransmitter release \href{https://doi.org/10.1111/j.1469-7793.2000.00513.x}{Oleskevich et al., 2000}
+related to the probability of neurotransmitter release \href{https://doi.org/10.1111/j.1469-7793.2000.00513.x}{Oleskevich et al., 2000}.
 }
 \examples{
 

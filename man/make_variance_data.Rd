@@ -2,7 +2,7 @@
 % Please edit documentation in R/Process-data.R
 \name{make_variance_data}
 \alias{make_variance_data}
-\title{Make variance analysis dataframe}
+\title{Make dataframe with variance measures}
 \usage{
 make_variance_data(
   data,
@@ -60,7 +60,8 @@ plus three additional columns:
 baseline interval ("Baseline") or an interval after a hormone or protocol has
 been applied ("Post-modification"). These intervals are selected from
 \code{baseline_interval} and \code{post_hormone_interval}.
-\item \code{mean_cv_inverse_square} The mean inverse coefficient of variation squared within a specific state.
+\item \code{mean_cv_inverse_square} The mean inverse coefficient of variation
+squared within a specific state.
 \item \code{mean_VMR} The mean variance-to-mean ratio within a specific state.
 }
 }

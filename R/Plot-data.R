@@ -83,8 +83,8 @@ patchclampplotteR_theme <- function() {
 #'   saved as a .png using ggsave. The filepath depends on the current type, but
 #'   they will all go in subfolders below Figures/ in your project directory.
 #'
-#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate a
-#'   .png file in `Figures/Evoked-currents/Output-summary-plots` or
+#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
+#'   a .png file in `Figures/Evoked-currents/Output-summary-plots` or
 #'   `Figures/Spontaneous-currents/Output-summary-plots`. The .png filename will
 #'   contain the `parameter`.
 #' @export
@@ -676,7 +676,8 @@ plot_raw_current_data <-
 #' presented as mean +/- the standard error.
 #'
 #' @inheritParams plot_raw_current_data
-#' @param data A dataframe containing pruned summary data for all cells. This is the third element of the list generated from [make_pruned_EPSC_data()].
+#' @param data A dataframe containing pruned summary data for all cells. This is
+#'   the third element of the list generated from [make_pruned_EPSC_data()].
 #' @param include_representative_trace A character ("yes" or "no") describing if
 #'   a representative trace should be included as an overlay to the plot. This
 #'   pulls from a png file stored in `Figures/Representative-Traces/`". Please
@@ -697,13 +698,17 @@ plot_raw_current_data <-
 #' @param shade_intervals A character ("yes" or "no"). If "yes", a ggplot theme
 #'   layer will be applied which adds lightly shaded rectangles to highlight
 #'   5-minute intervals.
-#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate a
-#'   .png file exported to `Figures/Evoked-currents/Output-summary-plots` or
+#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
+#'   a .png file exported to `Figures/Evoked-currents/Output-summary-plots` or
 #'   `Figures/Spontaneous-currents/Output-summary-plots`, depending on the
 #'   `current_type`. The .png filename will be in this format:
 #'   "Summary-plot-`plot_treatment`-category-`plot_category`-`file_name_ending`-`text_size`.png".
-#'   The `file_name_ending` and `text_size` will only be added on if you are
-#'   using a An example filename is: "Summary-plot-Control-category-2.png" or
+#'   The `text_size` will only be added on if you are using `large_axis_text`
+#'   ("LARGE" will be included in the filename). The `file_name_ending` will be
+#'   automatically added on for spontaneous current data to specify what
+#'   parameter is plotted (e.g. "raw_amplitude").
+#'
+#'   An example filename is: "Summary-plot-Control-category-2.png" or
 #'   "Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
 #'   currents.
 #'
@@ -1190,8 +1195,11 @@ plot_summary_current_data <- function(plot_category,
 #' @param post_modification_label A character value for x-axis label applied to
 #'   the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
 #'   will likely change this to the hormone or protocol name.
-#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate a
-#'   .png file exported to `Figures/Evoked-currents/Variance-plots`. The plot will be named in the form of "Variance-comparison-category-`plot_category`-`plot_treatment`-`variance_measure`.png". An example filename is "Variance-comparison-category-2-Control-cv.png"
+#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
+#'   a .png file exported to `Figures/Evoked-currents/Variance-plots`. The plot
+#'   will be named in the form of
+#'   "Variance-comparison-category-`plot_category`-`plot_treatment`-`variance_measure`.png".
+#'   An example filename is "Variance-comparison-category-2-Control-cv.png".
 #'
 #' @export
 #'
@@ -1396,7 +1404,8 @@ plot_variance_comparison_data <- function(data,
 
 #' Make a plot of coefficient of variation over time
 #'
-#' `plot_cv_data()` enables you to save a plot of the coefficient of variation in evoked current amplitudes over time.
+#' `plot_cv_data()` enables you to save a plot of the coefficient of variation
+#' in evoked current amplitudes over time.
 #'
 #' @inheritParams plot_raw_current_data
 #' @param data A dataframe of the pruned current data for all cells. This is the
@@ -1469,8 +1478,6 @@ plot_cv_data <- function(data,
 #'
 #' The function will perform a paired wilcox test and add brackets with
 #' significance stars through `ggsignif::geom_signif()`.
-#'
-#' You may customize the baseline and post-modification label to any value if "Baseline" and "Post-hormone" do not work. For example, you may want to use the hormone name instead of "Post-hormone"
 #'
 #' @inheritParams plot_raw_current_data
 #' @inheritParams plot_summary_current_data
@@ -1628,7 +1635,9 @@ plot_PPR_data_one_treatment <- function(data,
 #'
 #' @export
 #'
-#' @returns A ggplot object. If save_plot_png is defined as "yes" in the Global Environment, it will also generate a .png file in the folder `Figures/Evoked-currents/PPR` relative to the project directory.
+#' @returns A ggplot object. If save_plot_png is defined as "yes", it will also
+#'   generate a .png file in the folder `Figures/Evoked-currents/PPR` relative
+#'   to the project directory.
 #'
 #' @examples
 #' plot_PPR_data_multiple_treatments(
@@ -1824,14 +1833,12 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' @param plot_y_max A numeric value describing the maximum value on the y-axis
 #'   (in pA).
 #' @param save_plot_pngs A character ("yes" or "no") defining if the plot should
-#' be saved as a PNG through `ggplot::ggsave()`
+#' be saved as a PNG through `ggplot::ggsave()`.
 #'
-#' @returns A ggplot object. If save_plot_PNGs is defined as "yes" in the Global
-#'   Environment, it will also generate a .png file in the folder
+#' @returns A ggplot object. If save_plot_PNGs is defined as "yes", it will also
+#'   generate a .png file in the folder
 #'   `Figures/Spontaneous-currents/Representative-Traces` relative to the
 #'   project directory.
-#'
-#'   `Figures/Spontaneous-currents/Representative-Traces`
 #'
 #' @export
 #'
@@ -1938,15 +1945,16 @@ plot_spontaneous_current_trace <-
 #' `reactable::reactable()`, so it can be filtered, sorted, and rearranged.
 #'
 #' The table contains sparklines of the evoked current and spontaneous current
-#' amplitudes over time, which allows you to have a quick overview of the
-#' responses of a cell, and d
+#' amplitudes over time, which allows you to visually compare the overall
+#' response of a group of cells.
 #'
 #' The sparklines are colour-coded by treatment, allowing you to quickly
 #' identify trends in response to a hormone/protocol for all cells belonging to
 #' a particular treatment.
 #'
 #' @inheritParams plot_baseline_data
-#' @param cell_characteristics_dataframe A dataframe containing the cell characteristics, generated from [import_cell_characteristics_df()].
+#' @param cell_characteristics_dataframe A dataframe containing the cell
+#'   characteristics, generated from [import_cell_characteristics_df()].
 #' @param pruned_eEPSC_dataframe A dataframe containing pruned evoked current
 #'   data, generated from [make_pruned_EPSC_data()], where `current_type ==
 #'   "eEPSC"`.
@@ -1969,7 +1977,7 @@ plot_spontaneous_current_trace <-
 #' @returns A reactable HTML widget that can be viewed in RStudio or exported in
 #'   RMarkdown HTML documents. If `save_output_as_RDS == "yes"`, the raw
 #'   dataframe used to create the reactable is also exported as an .rds file
-#'   into `Data/Output-Data-from-R/`
+#'   into `Data/Output-Data-from-R/`.
 #' @export
 #'
 #' @examples

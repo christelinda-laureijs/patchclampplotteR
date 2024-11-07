@@ -2,7 +2,7 @@
 % Please edit documentation in R/Import-data.R
 \name{import_ext_data}
 \alias{import_ext_data}
-\title{Get path to external file}
+\title{Get path to external data for package examples}
 \usage{
 import_ext_data(file = NULL)
 }

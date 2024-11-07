@@ -3,9 +3,9 @@
 \docType{data}
 \name{sample_eEPSC_variance_df}
 \alias{sample_eEPSC_variance_df}
-\title{Sample evoked currents variance dataframe}
+\title{Variance-to-mean ratio and coefficient of variation of evoked current amplitudes}
 \format{
-An .rda file containing 38 objects of 23 variables
+An .rda file containing 38 objects of 23 variables.
 \describe{
 \itemize{
 \item \code{state} A character value describing if a data point belongs to the

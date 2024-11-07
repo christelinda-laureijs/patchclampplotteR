@@ -59,15 +59,13 @@ pA) of the scale bar.}
 (in pA).}
 
 \item{save_plot_pngs}{A character ("yes" or "no") defining if the plot should
-be saved as a PNG through \code{ggplot::ggsave()}}
+be saved as a PNG through \code{ggplot::ggsave()}.}
 }
 \value{
-A ggplot object. If save_plot_PNGs is defined as "yes" in the Global
-Environment, it will also generate a .png file in the folder
+A ggplot object. If save_plot_PNGs is defined as "yes", it will also
+generate a .png file in the folder
 \code{Figures/Spontaneous-currents/Representative-Traces} relative to the
 project directory.
-
-\code{Figures/Spontaneous-currents/Representative-Traces}
 }
 \description{
 \code{plot_spontaneous_current_trace()} generates a plot of raw current amplitude

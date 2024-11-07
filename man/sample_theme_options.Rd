@@ -3,24 +3,26 @@
 \docType{data}
 \name{sample_theme_options}
 \alias{sample_theme_options}
-\title{Sample theme options}
+\title{A dataframe of theme options for things like colours and line widths}
 \format{
 An .rda file containing 23 objects of 2 variables
 \describe{
 \itemize{
 \item \code{gray_shading_colour} Hex code for the colour used to fill the violin
-plots
-\item \code{line_col}
+plots.
+\item \code{line_col} Hex code for the colour used for the line indicating
+periods when a hormone was applied.
 \item \code{rectangle_shading_colour} Hex code for the colour used to shade the
-rectangles
+rectangles.
 \item \code{plot_font_family}
 \item \code{plot_light_font_family}
 \item \code{significance_stars_font}
 \item \code{male_shape} Numeric value representing the point shape used for data
-values where \code{Sex == Male}
+values where \code{Sex == Male}.
 \item \code{female_shape} Numeric value representing the point shape used for
-data values where \code{Sex == Female}
-\item \code{mean_point_colour}
+data values where \code{Sex == Female}.
+\item \code{mean_point_colour} Hex code for the colour used to fill the violin
+plots
 \item \code{baseline_group_colour}
 \item \code{post_hormone_group_colour}
 \item \code{connecting_line_width}
@@ -33,8 +35,6 @@ data values where \code{Sex == Female}
 \item \code{scale_bar_shift_y}
 \item \code{scale_bar_shift_x}
 \item \code{y_axis_limit}
-\item \code{PPR_y_min}
-\item \code{PPR_y_max}
 "Control", "HNMPA").
 \item \code{line_col} A character value with the same treatment names as in
 \code{treatment} except you would replace underscores with spaces and add line

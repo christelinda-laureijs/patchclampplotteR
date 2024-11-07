@@ -3,7 +3,7 @@
 \docType{data}
 \name{sample_pruned_sEPSC_df}
 \alias{sample_pruned_sEPSC_df}
-\title{Sample pruned sEPSC dataframe}
+\title{Spontaneous current data pruned to a summary point per minute}
 \format{
 An list of 3 dataframes: \code{individual_cells}, \code{for_table} and
 \code{all_cells}.
@@ -108,8 +108,8 @@ dataset.
 \itemize{
 \item \code{individual_cells} is used to make pruned plots of individual
 recordings using \code{\link[=plot_raw_current_data]{plot_raw_current_data()}}.
-\item \code{for_table} is used to make the experiment overview table
-\item \code{all_cells} is used in \code{\link[=plot_summary_current_data]{plot_summary_current_data()}}
+\item \code{for_table} is used to make the experiment overview table.
+\item \code{all_cells} is used in \code{\link[=plot_summary_current_data]{plot_summary_current_data()}}.
 }
 }
 \keyword{data}

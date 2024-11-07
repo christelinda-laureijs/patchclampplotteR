@@ -1,6 +1,6 @@
 # Cell characteristics -----
 
-#' Sample cell characteristics
+#' Information about sex, age, treatment, and animal ID
 #'
 #' @description
 #' This dataset provides an example of the type of cell characteristics that you
@@ -63,12 +63,13 @@ NULL
 # ABF -----
 
 
-#' Sample ABF file
+#' Evoked current recording excerpt
 #'
-#' This is an excerpt from a raw recording file exported from Clampfit as an
-#' .abf file. It can be read using the [import_ABF_file()] function, which will
-#' convert it into a regular dataframe for further manipulation and plotting in
-#' R. It is used to demonstrate the [plot_spontaneous_current_trace()] function.
+#' This is an excerpt from a raw recording of evoked currents exported from
+#' Clampfit as an .abf file. It can be read using the [import_ABF_file()]
+#' function, which will convert it into a regular dataframe for further
+#' manipulation and plotting in R. It is used to demonstrate the
+#' [plot_spontaneous_current_trace()] function.
 #'
 #' @name sample_abf_file
 #' @docType data
@@ -88,7 +89,7 @@ NULL
 # Raw eEPSC -----
 
 
-#' Sample raw evoked current (eEPSC) data
+#' Representative data from a series of evoked (eEPSC) currents
 #'
 #' This is an example of the raw eEPSC data produced using
 #' [make_normalized_EPSC_data()]. It is useful for demonstrating functions that
@@ -155,7 +156,7 @@ NULL
 # Raw sEPSC -----
 
 
-#' Sample raw spontaneous current (sEPSC) data
+#' epresentative data from a series of spontaneous (sEPSC) currents
 #'
 #' This is an example of the raw spontaneous current data produced using
 #' [make_normalized_EPSC_data()]. It is useful for demonstrating functions that
@@ -226,7 +227,7 @@ NULL
 # Summary eEPSC -----
 
 
-#' Sample summary eEPSC data
+#' Evoked current data summarized into 5-minute intervals
 #'
 #' This is an example of the summary eEPSC data produced using
 #' [make_normalized_EPSC_data()]. It is useful for demonstrating functions that
@@ -292,7 +293,7 @@ NULL
 # t-test eEPSC -----
 
 
-#' Sample eEPSC t-test results
+#' Paired t-test results comparing evoked current amplitudes relative to baseline
 #'
 #' This is an example of the dataframe of t-test results produced using
 #' [perform_t_tests_for_summary_plot()]. The dataframe can be used for further
@@ -321,7 +322,7 @@ NULL
 #'  \item `p_string` The p-value expressed as a character value using
 #'  `lazyWeave::pvalString()`, which rounds the values and expresses them
 #'  according to typical published values (e.g. > 0.99, < 0.001 instead of
-#'  exact values)
+#'  exact values).
 #'  \item `significance_stars` A character value containing asterisks indicating
 #'  significance. `p < 0.05 = *`, `p < 0.01 = **`, and `p < 0.001 = ***`.
 #'  \item `asterisk_time` A numeric value indicating the time value where a
@@ -335,13 +336,13 @@ NULL
 
 # Pruned eEPSC -----
 
-#' Sample pruned eEPSC dataframe
+#' Evoked current data pruned to a summary point per minute
 #'
 #' This is an example of the dataframe of excitatory current amplitudes produced
 #' using [make_pruned_EPSC_data()]. This dataset is a list with three dataframes
 #' containing the pruned data. It can be used for further statistical analyses
-#' or for plotting. [plot_raw_current_data()] and [plot_summary_current_data()] in particular
-#' depend heavily on this type of dataset.
+#' or for plotting. [plot_raw_current_data()] and [plot_summary_current_data()]
+#' in particular depend heavily on this type of dataset.
 #'
 #' \itemize{
 #'  \item `individual_cells` is used to make pruned plots of individual
@@ -415,7 +416,7 @@ NULL
 
 # Pruned sEPSC -----
 
-#' Sample pruned sEPSC dataframe
+#' Spontaneous current data pruned to a summary point per minute
 #'
 #' This is an example of the dataframe of spontaneous currents
 #' produced using [make_pruned_EPSC_data()]. This dataset is a list with three
@@ -427,8 +428,8 @@ NULL
 #' \itemize{
 #'  \item `individual_cells` is used to make pruned plots of individual
 #'  recordings using [plot_raw_current_data()].
-#'  \item `for_table` is used to make the experiment overview table
-#'  \item `all_cells` is used in [plot_summary_current_data()]
+#'  \item `for_table` is used to make the experiment overview table.
+#'  \item `all_cells` is used in [plot_summary_current_data()].
 #' }
 #'
 #' @name sample_pruned_sEPSC_df
@@ -529,7 +530,7 @@ NULL
 # Variance eEPSC -----
 
 
-#' Sample evoked currents variance dataframe
+#' Variance-to-mean ratio and coefficient of variation of evoked current amplitudes
 #'
 #' This is an example of the dataframe generated from evoked current summmary
 #' data processed using the function [make_variance_data()]. It contains new
@@ -541,7 +542,7 @@ NULL
 #'
 #' @name sample_eEPSC_variance_df
 #' @docType data
-#' @format An .rda file containing 38 objects of 23 variables
+#' @format An .rda file containing 38 objects of 23 variables.
 #' \describe{
 #' \itemize{
 #' \item `state` A character value describing if a data point belongs to the
@@ -561,12 +562,18 @@ NULL
 
 # PPR eEPSC ------
 
-#' Sample paired-pulse ratio (PPR) dataframe
+#' Evoked current data filtered to focus on paired-pulse ratio (PPR) analysis
 #'
 #' This is an example of the raw eEPSC data produced using
-#' [make_normalized_EPSC_data()] after it has been filtered using [make_PPR_data()]. The data are not modified, but they are filtered to only include data within two time intervals (specified in the `baseline_interval` and `post_hormone_interval` arguments). The paired-pulse ratio (PPR) values are also filtered to only include values that fall within `PPR_min` and `PPR_max`, which are two arguments in the [make_PPR_data()] function.
+#' [make_normalized_EPSC_data()] after it has been filtered using
+#' [make_PPR_data()]. The data are not modified, but they are filtered to only
+#' include data within two time intervals (specified in the `baseline_interval`
+#' and `post_hormone_interval` arguments). The paired-pulse ratio (PPR) values
+#' are also filtered to only include values that fall within `PPR_min` and
+#' `PPR_max`, which are two arguments in the [make_PPR_data()] function.
 #'
-#' This data can be used for PPR comparison plots, and further analyses to determine the mechanism of synaptic plasticity.
+#' This data can be used for PPR comparison plots, and further analyses to
+#' determine the mechanism of synaptic plasticity.
 #'
 #'
 #' @name sample_PPR_df
@@ -590,7 +597,7 @@ NULL
 # Treatment colour theme -----
 
 
-#' Sample treatment colour theme
+#' A dataframe of treatments and their assigned colours for consistency across plots
 #'
 #' This is an example of the dataframe used to specify a colour theme for each
 #' treatment. It is used to create a consistent colour scheme across all plots
@@ -620,7 +627,7 @@ NULL
 
 # Theme options -----
 
-#' Sample theme options
+#' A dataframe of theme options for things like colours and line widths
 #'
 #' This is an example of the dataframe used to specify the colour themes and
 #' plot options (like line thickness).
@@ -631,18 +638,20 @@ NULL
 #' \describe{
 #'  \itemize{
 #'  \item `gray_shading_colour` Hex code for the colour used to fill the violin
-#'  plots
-#'  \item `line_col`
+#'  plots.
+#'  \item `line_col` Hex code for the colour used for the line indicating
+#'  periods when a hormone was applied.
 #'  \item `rectangle_shading_colour` Hex code for the colour used to shade the
-#'  rectangles
+#'  rectangles.
 #'  \item `plot_font_family`
 #'  \item `plot_light_font_family`
 #'  \item `significance_stars_font`
 #'  \item `male_shape` Numeric value representing the point shape used for data
-#'  values where `Sex == Male`
+#'  values where `Sex == Male`.
 #'  \item `female_shape` Numeric value representing the point shape used for
-#'  data values where `Sex == Female`
-#'  \item `mean_point_colour`
+#'  data values where `Sex == Female`.
+#'  \item `mean_point_colour` Hex code for the colour used to fill the violin
+#'  plots
 #'  \item `baseline_group_colour`
 #'  \item `post_hormone_group_colour`
 #'  \item `connecting_line_width`
@@ -655,8 +664,6 @@ NULL
 #'  \item `scale_bar_shift_y`
 #'  \item `scale_bar_shift_x`
 #'  \item `y_axis_limit`
-#'  \item `PPR_y_min`
-#'  \item `PPR_y_max`
 #'  "Control", "HNMPA").
 #'  \item `line_col` A character value with the same treatment names as in
 #'  `treatment` except you would replace underscores with spaces and add line

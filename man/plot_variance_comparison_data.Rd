@@ -68,8 +68,11 @@ they will all go in subfolders below Figures/ in your project directory.}
 look like.}
 }
 \value{
-A ggplot object. If \code{save_plot_png == "yes"}, it will also generate a
-.png file exported to \code{Figures/Evoked-currents/Variance-plots}. The plot will be named in the form of "Variance-comparison-category-\code{plot_category}-\code{plot_treatment}-\code{variance_measure}.png". An example filename is "Variance-comparison-category-2-Control-cv.png"
+A ggplot object. If \code{save_plot_png == "yes"}, it will also generate
+a .png file exported to \code{Figures/Evoked-currents/Variance-plots}. The plot
+will be named in the form of
+"Variance-comparison-category-\code{plot_category}-\code{plot_treatment}-\code{variance_measure}.png".
+An example filename is "Variance-comparison-category-2-Control-cv.png".
 }
 \description{
 \code{plot_variance_comparison_data()} creates a connected  plot with time as a

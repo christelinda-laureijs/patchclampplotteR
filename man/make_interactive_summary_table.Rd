@@ -17,7 +17,8 @@ make_interactive_summary_table(
 )
 }
 \arguments{
-\item{cell_characteristics_dataframe}{A dataframe containing the cell characteristics, generated from \code{\link[=import_cell_characteristics_df]{import_cell_characteristics_df()}}.}
+\item{cell_characteristics_dataframe}{A dataframe containing the cell
+characteristics, generated from \code{\link[=import_cell_characteristics_df]{import_cell_characteristics_df()}}.}
 
 \item{pruned_eEPSC_dataframe}{A dataframe containing pruned evoked current
 data, generated from \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}, where \code{current_type == "eEPSC"}.}
@@ -57,7 +58,7 @@ a customized reactable table yourself.}
 A reactable HTML widget that can be viewed in RStudio or exported in
 RMarkdown HTML documents. If \code{save_output_as_RDS == "yes"}, the raw
 dataframe used to create the reactable is also exported as an .rds file
-into \verb{Data/Output-Data-from-R/}
+into \verb{Data/Output-Data-from-R/}.
 }
 \description{
 This function pulls information from multiple dataframes to display
@@ -67,8 +68,8 @@ spontaneous current data) in an interactive table. The table is made with
 }
 \details{
 The table contains sparklines of the evoked current and spontaneous current
-amplitudes over time, which allows you to have a quick overview of the
-responses of a cell, and d
+amplitudes over time, which allows you to visually compare the overall
+response of a group of cells.
 
 The sparklines are colour-coded by treatment, allowing you to quickly
 identify trends in response to a hormone/protocol for all cells belonging to

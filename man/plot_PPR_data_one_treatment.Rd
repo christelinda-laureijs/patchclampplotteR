@@ -65,8 +65,6 @@ paired-pulse ratio (PPR) on the y-axis. There are also lines connecting the
 \details{
 The function will perform a paired wilcox test and add brackets with
 significance stars through \code{ggsignif::geom_signif()}.
-
-You may customize the baseline and post-modification label to any value if "Baseline" and "Post-hormone" do not work. For example, you may want to use the hormone name instead of "Post-hormone"
 }
 \examples{
 plot_PPR_data_one_treatment(

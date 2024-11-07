@@ -3,7 +3,7 @@
 \docType{data}
 \name{sample_raw_sEPSC_df}
 \alias{sample_raw_sEPSC_df}
-\title{Sample raw spontaneous current (sEPSC) data}
+\title{epresentative data from a series of spontaneous (sEPSC) currents}
 \format{
 An .rda file containing 5680 objects of 20 variables.
 \describe{

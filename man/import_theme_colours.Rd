@@ -2,15 +2,21 @@
 % Please edit documentation in R/Import-data.R
 \name{import_theme_colours}
 \alias{import_theme_colours}
-\title{Import theme}
+\title{Import colour theme}
 \usage{
 import_theme_colours(filename)
 }
 \arguments{
-\item{filename}{A filepath to a .csv file. Must contain two columns:
+\item{filename}{A filepath to a .csv file containing colours and theme parameters. Must contain two columns:
 
 \itemize{
-\item \code{option} The name of the parameter. Required parameters include \code{line_col}, \code{baseline_colour}, etc.
+\item \code{option} The name of the parameter. Required parameters include:
+\itemize{
+\item ``
+
+}
+
+\code{line_col}, \code{baseline_colour}, etc.
 \item \code{value} The value of the parameter
 }}
 }
@@ -18,7 +24,7 @@ import_theme_colours(filename)
 A dataframe with one column and row names.
 }
 \description{
-Import theme
+Import colour theme
 }
 \examples{
 

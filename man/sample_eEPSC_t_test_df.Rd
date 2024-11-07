@@ -3,7 +3,7 @@
 \docType{data}
 \name{sample_eEPSC_t_test_df}
 \alias{sample_eEPSC_t_test_df}
-\title{Sample eEPSC t-test results}
+\title{Paired t-test results comparing evoked current amplitudes relative to baseline}
 \format{
 An .rda file containing 16 objects of 10 variables
 \describe{
@@ -25,7 +25,7 @@ the paired t-test. Examples include "t5to10" and "t10to15".
 \item \code{p_string} The p-value expressed as a character value using
 \code{lazyWeave::pvalString()}, which rounds the values and expresses them
 according to typical published values (e.g. > 0.99, < 0.001 instead of
-exact values)
+exact values).
 \item \code{significance_stars} A character value containing asterisks indicating
 significance. \verb{p < 0.05 = *}, \verb{p < 0.01 = **}, and \verb{p < 0.001 = ***}.
 \item \code{asterisk_time} A numeric value indicating the time value where a

@@ -3,7 +3,7 @@
 \docType{data}
 \name{sample_cell_characteristics}
 \alias{sample_cell_characteristics}
-\title{Sample cell characteristics}
+\title{Information about sex, age, treatment, and animal ID}
 \format{
 A dataframe with 19 rows and 11 columns
 \describe{

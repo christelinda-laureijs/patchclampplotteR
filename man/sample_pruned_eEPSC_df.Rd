@@ -3,7 +3,7 @@
 \docType{data}
 \name{sample_pruned_eEPSC_df}
 \alias{sample_pruned_eEPSC_df}
-\title{Sample pruned eEPSC dataframe}
+\title{Evoked current data pruned to a summary point per minute}
 \format{
 An list of 3 dataframes: \code{individual_cells}, \code{for_table} and
 \code{all_cells}.
@@ -67,8 +67,8 @@ current (P1) during a specific interval across all cells.
 This is an example of the dataframe of excitatory current amplitudes produced
 using \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}. This dataset is a list with three dataframes
 containing the pruned data. It can be used for further statistical analyses
-or for plotting. \code{\link[=plot_raw_current_data]{plot_raw_current_data()}} and \code{\link[=plot_summary_current_data]{plot_summary_current_data()}} in particular
-depend heavily on this type of dataset.
+or for plotting. \code{\link[=plot_raw_current_data]{plot_raw_current_data()}} and \code{\link[=plot_summary_current_data]{plot_summary_current_data()}}
+in particular depend heavily on this type of dataset.
 }
 \details{
 \itemize{

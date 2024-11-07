@@ -71,8 +71,8 @@ saved as a .png using ggsave. The filepath depends on the current type, but
 they will all go in subfolders below Figures/ in your project directory.}
 }
 \value{
-A ggplot object. If \code{save_plot_png == "yes"}, it will also generate a
-.png file in \code{Figures/Evoked-currents/Output-summary-plots} or
+A ggplot object. If \code{save_plot_png == "yes"}, it will also generate
+a .png file in \code{Figures/Evoked-currents/Output-summary-plots} or
 \code{Figures/Spontaneous-currents/Output-summary-plots}. The .png filename will
 contain the \code{parameter}.
 }

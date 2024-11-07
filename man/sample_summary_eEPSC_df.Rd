@@ -3,7 +3,7 @@
 \docType{data}
 \name{sample_summary_eEPSC_df}
 \alias{sample_summary_eEPSC_df}
-\title{Sample summary eEPSC data}
+\title{Evoked current data summarized into 5-minute intervals}
 \format{
 An .rda file containing 95 objects of 20 variables.
 \describe{

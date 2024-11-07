@@ -3,7 +3,7 @@
 \docType{data}
 \name{sample_treatment_names_and_colours}
 \alias{sample_treatment_names_and_colours}
-\title{Sample treatment colour theme}
+\title{A dataframe of treatments and their assigned colours for consistency across plots}
 \format{
 An .rda file containing 4 objects of 4 variables
 \describe{

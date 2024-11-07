@@ -1,4 +1,4 @@
-#' Get path to external file
+#' Get path to external data for package examples
 #'
 #' Access sample files in `inst/extdata`
 #' directory.
@@ -114,57 +114,20 @@ import_ABF_file <-
       invisible()
   }
 
-
-# sample_cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
-# usethis::use_data(sample_cell_characteristics)
-
-# sample_treatment_names_and_colours <- data.frame(
-#   treatment = c(
-#     "Control",
-#     "HNMPA",
-#     "PPP",
-#     "PPP_and_HNMPA"
-#   ),
-#   display_names = c(
-#     "Control",
-#     "HNMPA",
-#     "PPP",
-#     "PPP\n&\nHNMPA"
-#   ),
-#   colours = c(
-#     "#6600cc",
-#     "#e86c00",
-#     "#0093fb",
-#     "#411900"
-#   ),
-#   very_pale_colours = c(
-#     "#d6b8f5",
-#     "#ffc38f",
-#     "#8fd0ff",
-#     "#bf9b84"
-#   )
-# )
-#
-
-# usethis::use_data(sample_treatment_names_and_colours)
-
-# sample_summary_eEPSC_df <- make_summary_EPSC_data()
-# usethis::use_data(sample_summary_eEPSC_df)
-
-# write.csv(sample_treatment_names_and_colours, "inst/extdata/sample_treatment_names_and_colours.csv", row.names = FALSE)
-# sample_cell_characteristics <- read.csv("C:/Users/cslau/OneDrive/Documents/sample-cell-characteristics.csv")
-# write.csv(sample_cell_characteristics, "inst/extdata/sample_cell_characteristics.csv", row.names = FALSE)
-#
-# sample_eEPSC_data <- read.csv("C:/Users/cslau/OneDrive/Desktop/Masters-Work/crosby-lab-code/Data/Sample-eEPSC-data.csv")
-# write.csv(sample_eEPSC_data, "inst/extdata/sample_eEPSC_data.csv", row.names = FALSE)
-
-
-#' Import theme
+#' Import colour theme
 #'
-#' @param filename A filepath to a .csv file. Must contain two columns:
+#' @param filename A filepath to a .csv file containing colours and theme parameters. Must contain two columns:
 #'
 #' \itemize{
-#' \item `option` The name of the parameter. Required parameters include `line_col`, `baseline_colour`, etc.
+#' \item `option` The name of the parameter. Required parameters include:
+#' \itemize{
+#'  \item ``
+#'
+#'
+#' }
+#'
+#'
+#' `line_col`, `baseline_colour`, etc.
 #' \item `value` The value of the parameter
 #' }
 #'
@@ -180,36 +143,3 @@ import_theme_colours <- function(filename) {
   theme_options <- utils::read.csv(here::here(filename)) %>%
     tibble::column_to_rownames(var = "option")
 }
-
-
-
-# Make reduced sEPSC dataframe for package
-# sample_raw_sEPSC_df <- import_ext_data("sample_sEPSC_data.csv")
-#
-# sample_raw_sEPSC_df <- make_normalized_EPSC_data(
-#   filename = import_ext_data("sample_sEPSC_data.csv"),
-#   current_type = "sEPSC",
-#   min_time_value = 0,
-#   max_time_value = 25,
-#   interval_length = 5,
-#   baseline_length = 5,
-#   negative_transform_currents = "yes"
-# )
-#
-#
-#
-# usethis::use_data(sample_raw_sEPSC_df, overwrite=TRUE, compression = "xz")
-
-
-
-
-# Use This code below
-# sample_theme_options <- import_theme_colours("C:/Users/cslau/OneDrive/Desktop/Masters-Work/crosby-lab-code/Templates/Theme-options.csv")
-# usethis::use_data(sample_theme_options, overwrite = TRUE)
-
-
-# ggplot2::ggplot(cars, ggplot2::aes(x = dist, y = speed)) +
-#    ggplot2::geom_point(col = sample_theme_options["line_col", "value"]) +
-#   ggplot2::theme(axis.title = ggplot2::element_text(family = sample_theme_options["plot_light_font_family","value"]))
-
-# TODO Document theme options dataset --------

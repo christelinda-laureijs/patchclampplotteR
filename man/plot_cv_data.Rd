@@ -39,7 +39,8 @@ A ggplot object. If \code{save_plot_png == "yes"} it will also generate a
 project directory. The treatment will be included with the filename.
 }
 \description{
-\code{plot_cv_data()} enables you to save a plot of the coefficient of variation in evoked current amplitudes over time.
+\code{plot_cv_data()} enables you to save a plot of the coefficient of variation
+in evoked current amplitudes over time.
 }
 \examples{
 plot_cv_data(
