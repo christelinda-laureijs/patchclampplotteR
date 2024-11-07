@@ -3,6 +3,9 @@ template:
   bootstrap: 5
   includes:
     in_header: |
+
+      <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?">
+
       <!-- Google tag (gtag.js) -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-M92L6F0ZB2"></script>
       <script>
@@ -12,6 +15,7 @@ template:
 
         gtag('config', 'G-M92L6F0ZB2');
       </script>
+
 navbar:
   structure:
     left:  [home, reference, news]
