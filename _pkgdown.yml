@@ -35,6 +35,7 @@ reference:
 - title: Plot data
   desc: >
     Functions to plot the data.
+  contents:
   - plot_raw_current_data
   - plot_summary_current_data
   - plot_PPR_data_one_treatment
@@ -46,6 +47,7 @@ reference:
 - title: Sample datasets
   desc: >
     Sample datasets for vignettes and examples.
+  contents:
   - sample_cell_characteristics
   - sample_abf_file
   - sample_theme_options
@@ -54,6 +56,7 @@ reference:
 - subtitle: Evoked current (eEPSC) data
   desc: >
     Sample datasets from recordings measuring evoked current amplitude over time. The paired-pulse ratio (PPR) data are only available for evoked current recordings because the PPR is determined from evoked current amplitudes, not spontaneous currents.
+  contents:
   - sample_raw_eEPSC_df
   - sample_pruned_eEPSC_df
   - sample_summary_eEPSC_df
@@ -64,6 +67,7 @@ reference:
 - subtitle: Spontaneous current (sEPSC) data
   desc: >
     Sample datasets from recordings measuring spontaneous current amplitude over time. To reduce package size, only the raw and pruned spontaneous current data are included.
+  contents:
   - sample_raw_sEPSC_df
   - sample_pruned_sEPSC_df
 
