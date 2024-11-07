@@ -94,11 +94,23 @@ import_cell_characteristics_df <- function(filename) {
 #'
 #' `import_ABF_file()` is a wrapper around `abftools::abf2_load()` and
 #' `abftools::MeltAbf()`. It converts the array from `abf2_load()` into a
-#' dataframe, and it also converts time to minutes
+#' dataframe, and it also converts time to minutes.
+#'
+#' The file progresses from .abf to an array and then to a dataframe that can be
+#' easily manipulated in R.
 #'
 #' @param file_name Filepath to an .abf file (e.g. "Data/23711004.abf")
 #'
-#' @returns A dataframe
+#' @returns A dataframe with 5 columns:
+#'
+#' \itemize{
+#'  \item `time` Time value from Clampfit which is in milliseconds x 10. For example, 5 seconds = 50000 in this column.
+#'  \item `episode` Character value (e.g. "epi1", "epi2") which corresponds
+#'  directly to "sweep" in Clampfit.
+#'  \item `current` Current in pA.
+#'  \item `voltage` Voltage in mV.
+#'  \item `time_sec` Time in seconds.
+#' }
 #'
 #' @export
 #'
