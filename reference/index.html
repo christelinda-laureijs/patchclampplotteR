@@ -37,9 +37,9 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="import-data">Import data<a class="anchor" aria-label="anchor" href="#import-data"></a></h2>
 
-
+      <div class="section-desc"><p>Functions that import raw data (typically as a comma-separated file (.csv) or Axon Binary Format (.abf) file).</p></div>
 
 
     </div><div class="section level2">
@@ -61,29 +61,28 @@
         <dd>Import cell characteristics</dd>
       </dl><dl><dt>
 
-          <code><a href="import_ext_data.html">import_ext_data()</a></code>
-
-        </dt>
-        <dd>Get path to external file</dd>
-      </dl><dl><dt>
-
           <code><a href="import_theme_colours.html">import_theme_colours()</a></code>
 
         </dt>
         <dd>Import theme</dd>
       </dl><dl><dt>
 
-          <code><a href="make_PPR_data.html">make_PPR_data()</a></code>
+          <code><a href="import_ext_data.html">import_ext_data()</a></code>
 
         </dt>
-        <dd>Make paired-pulse ratio (PPR) dataframe for before vs. after comparisons</dd>
-      </dl><dl><dt>
+        <dd>Get path to external file</dd>
+      </dl></div><div class="section level2">
+      <h2 id="modify-data">Modify data<a class="anchor" aria-label="anchor" href="#modify-data"></a></h2>
 
-          <code><a href="make_interactive_summary_table.html">make_interactive_summary_table()</a></code>
+      <div class="section-desc"><p>Functions that normalize, prune, and summarize the data.</p></div>
 
-        </dt>
-        <dd>Make interactive overview table of all recordings</dd>
-      </dl><dl><dt>
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
 
           <code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>
 
@@ -103,34 +102,63 @@
         <dd>Summarize current data per 5-min for statistical tests</dd>
       </dl><dl><dt>
 
+          <code><a href="make_PPR_data.html">make_PPR_data()</a></code>
+
+        </dt>
+        <dd>Make paired-pulse ratio (PPR) dataframe for before vs. after comparisons</dd>
+      </dl><dl><dt>
+
           <code><a href="make_variance_data.html">make_variance_data()</a></code>
 
         </dt>
         <dd>Make variance analysis dataframe</dd>
       </dl><dl><dt>
 
-          <code><a href="patchclampplotteR_theme.html">patchclampplotteR_theme()</a></code>
+          <code><a href="make_interactive_summary_table.html">make_interactive_summary_table()</a></code>
 
         </dt>
-        <dd>Add a customized ggplot2 theme</dd>
+        <dd>Make interactive overview table of all recordings</dd>
       </dl><dl><dt>
 
           <code><a href="perform_t_tests_for_summary_plot.html">perform_t_tests_for_summary_plot()</a></code>
 
         </dt>
         <dd>Perform t-tests for EPSC summary plots</dd>
-      </dl><dl><dt>
+      </dl></div><div class="section level2">
+      <h2 id="plot-data">Plot data<a class="anchor" aria-label="anchor" href="#plot-data"></a></h2>
 
-          <code><a href="plot_PPR_data_multiple_treatments.html">plot_PPR_data_multiple_treatments()</a></code>
+      <div class="section-desc"><p>Functions to plot the data.</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="plot_raw_current_data.html">plot_raw_current_data()</a></code>
 
         </dt>
-        <dd>Make a PPR plot for multiple treatments</dd>
+        <dd>Make raw current plots</dd>
+      </dl><dl><dt>
+
+          <code><a href="plot_summary_current_data.html">plot_summary_current_data()</a></code>
+
+        </dt>
+        <dd>Make a summary plot for a specific treatment</dd>
       </dl><dl><dt>
 
           <code><a href="plot_PPR_data_one_treatment.html">plot_PPR_data_one_treatment()</a></code>
 
         </dt>
         <dd>Make a PPR plot for a single treatment</dd>
+      </dl><dl><dt>
+
+          <code><a href="plot_PPR_data_multiple_treatments.html">plot_PPR_data_multiple_treatments()</a></code>
+
+        </dt>
+        <dd>Make a PPR plot for multiple treatments</dd>
       </dl><dl><dt>
 
           <code><a href="plot_baseline_data.html">plot_baseline_data()</a></code>
@@ -145,10 +173,10 @@
         <dd>Make a plot of coefficient of variation over time</dd>
       </dl><dl><dt>
 
-          <code><a href="plot_raw_current_data.html">plot_raw_current_data()</a></code>
+          <code><a href="plot_variance_comparison_data.html">plot_variance_comparison_data()</a></code>
 
         </dt>
-        <dd>Make raw current plots</dd>
+        <dd>Plot variance comparison for a treatment</dd>
       </dl><dl><dt>
 
           <code><a href="plot_spontaneous_current_trace.html">plot_spontaneous_current_trace()</a></code>
@@ -157,29 +185,22 @@
         <dd>Plot a representative spontaneous current trace</dd>
       </dl><dl><dt>
 
-          <code><a href="plot_summary_current_data.html">plot_summary_current_data()</a></code>
+          <code><a href="patchclampplotteR_theme.html">patchclampplotteR_theme()</a></code>
 
         </dt>
-        <dd>Make a summary plot for a specific treatment</dd>
-      </dl><dl><dt>
+        <dd>Add a customized ggplot2 theme</dd>
+      </dl></div><div class="section level2">
+      <h2 id="sample-datasets">Sample datasets<a class="anchor" aria-label="anchor" href="#sample-datasets"></a></h2>
 
-          <code><a href="plot_variance_comparison_data.html">plot_variance_comparison_data()</a></code>
+      <div class="section-desc"><p>Sample datasets for vignettes and examples.</p></div>
 
-        </dt>
-        <dd>Plot variance comparison for a treatment</dd>
-      </dl><dl><dt>
 
-          <code><a href="sample_PPR_df.html">sample_PPR_df</a></code>
+    </div><div class="section level2">
 
-        </dt>
-        <dd>Sample paired-pulse ratio (PPR) dataframe</dd>
-      </dl><dl><dt>
 
-          <code><a href="sample_abf_file.html">sample_abf_file</a></code>
 
-        </dt>
-        <dd>Sample ABF file</dd>
-      </dl><dl><dt>
+
+      <dl><dt>
 
           <code><a href="sample_cell_characteristics.html">sample_cell_characteristics</a></code>
 
@@ -187,46 +208,10 @@
         <dd>Sample cell characteristics</dd>
       </dl><dl><dt>
 
-          <code><a href="sample_eEPSC_t_test_df.html">sample_eEPSC_t_test_df</a></code>
+          <code><a href="sample_abf_file.html">sample_abf_file</a></code>
 
         </dt>
-        <dd>Sample eEPSC t-test results</dd>
-      </dl><dl><dt>
-
-          <code><a href="sample_eEPSC_variance_df.html">sample_eEPSC_variance_df</a></code>
-
-        </dt>
-        <dd>Sample evoked currents variance dataframe</dd>
-      </dl><dl><dt>
-
-          <code><a href="sample_pruned_eEPSC_df.html">sample_pruned_eEPSC_df</a></code>
-
-        </dt>
-        <dd>Sample pruned eEPSC dataframe</dd>
-      </dl><dl><dt>
-
-          <code><a href="sample_pruned_sEPSC_df.html">sample_pruned_sEPSC_df</a></code>
-
-        </dt>
-        <dd>Sample pruned sEPSC dataframe</dd>
-      </dl><dl><dt>
-
-          <code><a href="sample_raw_eEPSC_df.html">sample_raw_eEPSC_df</a></code>
-
-        </dt>
-        <dd>Sample raw evoked current (eEPSC) data</dd>
-      </dl><dl><dt>
-
-          <code><a href="sample_raw_sEPSC_df.html">sample_raw_sEPSC_df</a></code>
-
-        </dt>
-        <dd>Sample raw spontaneous current (sEPSC) data</dd>
-      </dl><dl><dt>
-
-          <code><a href="sample_summary_eEPSC_df.html">sample_summary_eEPSC_df</a></code>
-
-        </dt>
-        <dd>Sample summary eEPSC data</dd>
+        <dd>Sample ABF file</dd>
       </dl><dl><dt>
 
           <code><a href="sample_theme_options.html">sample_theme_options</a></code>
@@ -239,8 +224,79 @@
 
         </dt>
         <dd>Sample treatment colour theme</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="evoked-current-eepsc-data">Evoked current (eEPSC) data<a class="anchor" aria-label="anchor" href="#evoked-current-eepsc-data"></a></h3>
+      <div class="section-desc"><p>Sample datasets from recordings measuring evoked current amplitude over time. The paired-pulse ratio (PPR) data are only available for evoked current recordings because the PPR is determined from evoked current amplitudes, not spontaneous currents.</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="sample_raw_eEPSC_df.html">sample_raw_eEPSC_df</a></code>
+
+        </dt>
+        <dd>Sample raw evoked current (eEPSC) data</dd>
+      </dl><dl><dt>
+
+          <code><a href="sample_pruned_eEPSC_df.html">sample_pruned_eEPSC_df</a></code>
+
+        </dt>
+        <dd>Sample pruned eEPSC dataframe</dd>
+      </dl><dl><dt>
+
+          <code><a href="sample_summary_eEPSC_df.html">sample_summary_eEPSC_df</a></code>
+
+        </dt>
+        <dd>Sample summary eEPSC data</dd>
+      </dl><dl><dt>
+
+          <code><a href="sample_eEPSC_variance_df.html">sample_eEPSC_variance_df</a></code>
+
+        </dt>
+        <dd>Sample evoked currents variance dataframe</dd>
+      </dl><dl><dt>
+
+          <code><a href="sample_PPR_df.html">sample_PPR_df</a></code>
+
+        </dt>
+        <dd>Sample paired-pulse ratio (PPR) dataframe</dd>
+      </dl><dl><dt>
+
+          <code><a href="sample_eEPSC_t_test_df.html">sample_eEPSC_t_test_df</a></code>
+
+        </dt>
+        <dd>Sample eEPSC t-test results</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="spontaneous-current-sepsc-data">Spontaneous current (sEPSC) data<a class="anchor" aria-label="anchor" href="#spontaneous-current-sepsc-data"></a></h3>
+      <div class="section-desc"><p>Sample datasets from recordings measuring spontaneous current amplitude over time. To reduce package size, only the raw and pruned spontaneous current data are included.</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="sample_raw_sEPSC_df.html">sample_raw_sEPSC_df</a></code>
+
+        </dt>
+        <dd>Sample raw spontaneous current (sEPSC) data</dd>
+      </dl><dl><dt>
+
+          <code><a href="sample_pruned_sEPSC_df.html">sample_pruned_sEPSC_df</a></code>
+
+        </dt>
+        <dd>Sample pruned sEPSC dataframe</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
