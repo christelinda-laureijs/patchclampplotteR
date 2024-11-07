@@ -12,7 +12,9 @@ template:
 
         gtag('config', 'G-M92L6F0ZB2');
       </script>
+      <link rel="icon" type="image/x-icon" href="favicon.ico">
       <link rel="icon" type="image/x-icon" href="/favicon.ico">
+      <link rel="icon" type="image/x-icon" href="./favicon.ico">
 
 
 navbar:
