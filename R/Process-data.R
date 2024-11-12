@@ -887,7 +887,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         mean_raw_amplitude = mean(.data$mean_raw_amplitude, na.rm = TRUE),
         sd_transformed_amplitude = stats::sd(.data$mean_amplitude, na.rm = TRUE),
         n = dplyr::n(),
-        se_transformed_amplitude = .data$sd_all_amplitude / sqrt(.data$n),
+        se_transformed_amplitude = .data$sd_transformed_amplitude / sqrt(.data$n),
         mean_transformed_frequency = mean(.data$frequency_transformed, na.rm = TRUE),
         sd_transformed_frequency = stats::sd(.data$frequency_transformed, na.rm = TRUE),
         se_transformed_frequency = .data$sd_transformed_frequency / sqrt(.data$n),
