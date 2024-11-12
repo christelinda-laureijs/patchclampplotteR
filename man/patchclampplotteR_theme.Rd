@@ -12,3 +12,10 @@ A ggplot theme
 \description{
 Add a customized ggplot2 theme
 }
+\examples{
+
+ggplot2::ggplot(cars, ggplot2::aes(x = speed, y = dist)) +
+ggplot2::geom_point() +
+patchclampplotteR_theme()
+
+}

@@ -10,12 +10,25 @@ import_ABF_file(file_name)
 \item{file_name}{Filepath to an .abf file (e.g. "Data/23711004.abf")}
 }
 \value{
-A dataframe
+A dataframe with 5 columns:
+
+\itemize{
+\item \code{time} Time value from Clampfit which is in milliseconds x 10. For example, 5 seconds = 50000 in this column.
+\item \code{episode} Character value (e.g. "epi1", "epi2") which corresponds
+directly to "sweep" in Clampfit.
+\item \code{current} Current in pA.
+\item \code{voltage} Voltage in mV.
+\item \code{time_sec} Time in seconds.
+}
 }
 \description{
 \code{import_ABF_file()} is a wrapper around \code{abftools::abf2_load()} and
 \code{abftools::MeltAbf()}. It converts the array from \code{abf2_load()} into a
-dataframe, and it also converts time to minutes
+dataframe, and it also converts time to minutes.
+}
+\details{
+The file progresses from .abf to an array and then to a dataframe that can be
+easily manipulated in R.
 }
 \examples{
 import_ABF_file(import_ext_data("sample_abf.abf"))

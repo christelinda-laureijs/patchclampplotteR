@@ -227,9 +227,12 @@ recording's baseline. Generated automatically in
 
 \section{Required spontaneous currents columns}{
 
+
 If the data are spontaneous currents (current_type == "sEPSC"), the data must
-contain the basic columns mentioned in \strong{Required basic columns} plus these
-columns:
+contain the basic columns mentioned in \strong{Required basic columns} plus the
+columns listed below. For more detail, have a look at \link{sample_raw_sEPSC_df}
+to see an example of what the incoming raw dataset in the \code{data} argument
+should look like.
 
 \itemize{
 \item \code{interval} A character value indicating the interval that the data
@@ -318,6 +321,15 @@ current in pA.
 make_pruned_EPSC_data(
   data = sample_raw_eEPSC_df,
   current_type = "eEPSC",
+  min_time_value = 0,
+  max_time_value = 25,
+  baseline_length = 5,
+  interval_length = 1
+)
+
+make_pruned_EPSC_data(
+  data = sample_raw_sEPSC_df,
+  current_type = "sEPSC",
   min_time_value = 0,
   max_time_value = 25,
   baseline_length = 5,
