@@ -167,12 +167,26 @@ original dataset describing the cell's properties.</p></li>
 <span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"sEPSC"</span>,</span></span>
 <span class="r-in"><span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in dplyr::summarize(., mean_transformed_amplitude = mean(.data$mean_amplitude,     na.rm = TRUE), mean_raw_amplitude = mean(.data$mean_raw_amplitude,     na.rm = TRUE), sd_transformed_amplitude = stats::sd(.data$mean_amplitude,     na.rm = TRUE), n = dplyr::n(), se_transformed_amplitude = .data$sd_all_amplitude/sqrt(.data$n),     mean_transformed_frequency = mean(.data$frequency_transformed,         na.rm = TRUE), sd_transformed_frequency = stats::sd(.data$frequency_transformed,         na.rm = TRUE), se_transformed_frequency = .data$sd_transformed_frequency/sqrt(.data$n),     mean_raw_frequency = mean(.data$frequency, na.rm = TRUE),     time = dplyr::last(.data$time), interval = unique(.data$interval),     category = unique(.data$category), synapses = dplyr::last(.data$synapses)):</span> <span style="color: #00BBBB;">ℹ</span> In argument: `se_transformed_amplitude =</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>   .data$sd_all_amplitude/sqrt(.data$n)`.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> In group 1: `category = 2`, `letter = AZ`, `sex = Female`, `treatment =</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>   Control`, `interval = t0to5`.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">Caused by error in `.data$sd_all_amplitude`:</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Column `sd_all_amplitude` not found in `.data`.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 70 × 16</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   category, letter, sex, treatment [14]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex    treatment interval mean_transformed_amplitude</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2        AZ     Female Control   t0to5                         100. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2        AZ     Female Control   t5to10                         96.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2        AZ     Female Control   t10to15                        94.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2        AZ     Female Control   t15to20                        94.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2        AZ     Female Control   t20to25                        86.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2        BN     Male   Control   t0to5                         100. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2        BN     Male   Control   t5to10                        113. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2        BN     Male   Control   t10to15                       112. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        BN     Male   Control   t15to20                        92.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        BN     Male   Control   t20to25                        87.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 60 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 more variables: mean_raw_amplitude &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   sd_transformed_amplitude &lt;dbl&gt;, n &lt;int&gt;, se_transformed_amplitude &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   mean_transformed_frequency &lt;dbl&gt;, sd_transformed_frequency &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   se_transformed_frequency &lt;dbl&gt;, mean_raw_frequency &lt;dbl&gt;, time &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   synapses &lt;fct&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
