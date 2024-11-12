@@ -78,6 +78,8 @@ reference:
   contents:
   - sample_raw_sEPSC_df
   - sample_pruned_sEPSC_df
+  - sample_summary_sEPSC_df
+  - sample_sEPSC_t_test_df
 
 
 

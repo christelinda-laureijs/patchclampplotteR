@@ -339,7 +339,6 @@ NULL
 
 # t-test eEPSC -----
 
-
 #' Paired t-test results comparing evoked current amplitudes relative to baseline
 #'
 #' This is an example of the dataframe of t-test results produced using
@@ -358,14 +357,14 @@ NULL
 #'  \item `.y.` A character value describing the parameter compared with the
 #'  t-test. In this case, this uses the mean normalized amplitude of the first
 #'  evoked current ("mean_P1_transformed") which has been generated using
-#'  [make_pruned_EPSC_data()].
+#'  [make_summary_EPSC_data()].
 #'  \item `group1` A character value describing the first group used in the
 #'  paired t-test. This is the baseline interval, "t0to5".
 #'  \item `group2` A character value describing the second group used in
 #'  the paired t-test. Examples include "t5to10" and "t10to15".
 #'  \item `n1` The number of paired values used in the comparison.
 #'  \item `statistic` The test statistic.
-#'  \item `df` The degrees of freedom
+#'  \item `df` The degrees of freedom.
 #'  \item `p_string` The p-value expressed as a character value using
 #'  `lazyWeave::pvalString()`, which rounds the values and expresses them
 #'  according to typical published values (e.g. > 0.99, < 0.001 instead of
@@ -380,6 +379,51 @@ NULL
 #' }
 #' @keywords data
 NULL
+
+# t-test sEPSC -----
+
+#' Paired t-test results comparing spontaneous current amplitudes relative to
+#' baseline amplitudes
+#'
+#' This is an example of the dataframe of t-test results produced using
+#' [perform_t_tests_for_summary_plot()] where `current_type == "sEPSC"`. The
+#' dataframe can be used for further statistical analyses, and it also has
+#' specialized columns to add significance stars to the plot produced with
+#' [plot_summary_current_data()].
+#'
+#' @name sample_sEPSC_t_test_df
+#' @docType data
+#' @format An .rda file containing 16 objects of 10 variables
+#' \describe{
+#'  \itemize{
+#'  \item `treatment` A character value specifying the treatment applied (e.g.
+#'  "Control", "HNMPA") such as the antagonists or agonists, or any protocol
+#'  applied to the animals (e.g. "Fasting").
+#'  \item `.y.` A character value describing the parameter compared with the
+#'  t-test. In this case, this uses the mean normalized amplitude of spontaneous current ("mean_transformed amplitude") which has been generated using
+#'  [make_summary_EPSC_data()].
+#'  \item `group1` A character value describing the first group used in the
+#'  paired t-test. This is the baseline interval, "t0to5".
+#'  \item `group2` A character value describing the second group used in
+#'  the paired t-test. Examples include "t5to10" and "t10to15".
+#'  \item `n1` The number of paired values used in the comparison.
+#'  \item `statistic` The test statistic.
+#'  \item `df` The degrees of freedom.
+#'  \item `p_string` The p-value expressed as a character value using
+#'  `lazyWeave::pvalString()`, which rounds the values and expresses them
+#'  according to typical published values (e.g. > 0.99, < 0.001 instead of
+#'  exact values).
+#'  \item `significance_stars` A character value containing asterisks indicating
+#'  significance. `p < 0.05 = *`, `p < 0.01 = **`, and `p < 0.001 = ***`.
+#'  \item `asterisk_time` A numeric value indicating the time value where a
+#'  significance star will be added. This is the midpoint of each interval. For
+#'  example, the `asterisk_time` for an interval from `5` to `10` minutes will
+#'  be `7.5` minutes.
+#' }
+#' }
+#' @keywords data
+NULL
+
 
 # Pruned eEPSC -----
 
