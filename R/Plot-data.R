@@ -4,6 +4,11 @@
 #' @export
 #'
 #' @examples
+#'
+#' ggplot2::ggplot(cars, ggplot2::aes(x = speed, y = dist)) +
+#' ggplot2::geom_point() +
+#' patchclampplotteR_theme()
+#'
 patchclampplotteR_theme <- function() {
   ggplot2::theme_classic() %+replace%
     ggplot2::theme(
