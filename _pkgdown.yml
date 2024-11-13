@@ -50,6 +50,7 @@ reference:
   - plot_baseline_data
   - plot_cv_data
   - plot_variance_comparison_data
+  - plot_spontaneous_current_parameter_comparison
   - plot_spontaneous_current_trace
   - patchclampplotteR_theme
 - title: Sample datasets
