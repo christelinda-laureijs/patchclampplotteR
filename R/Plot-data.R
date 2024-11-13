@@ -1801,7 +1801,168 @@ plot_PPR_data_multiple_treatments <- function(data,
 }
 
 
+#' Visually compare spontaneous current parameters
+#'
+#' [plot_spontaneous_current_parameter_comparison()] is a useful function to see
+#' how spontaneous current amplitude or frequency change after adding a hormone.
+#' This function produces sina plots (with raw datapoints on top) for the raw
+#' amplitude (or raw frequency) for two time intervals: the baseline interval,
+#' and a user-specified interval after a hormone or other modification has been
+#' applied.
+#'
+#' @param data Summary data for spontaneous currents generated using [make_summary_EPSC_data()] where `current_type == "sEPSC"`.
+#' @param parameter A character value ("raw_amplitude" or "raw_frequency") only.
+#'   Normalized amplitude and frequency are not available because all baseline
+#'   values are 100.
+#'
+#' @returns A ggplot object
+#' @export
+#'
+#' @examples
+#' plot_spontaneous_current_parameter_comparison(
+#'  data = sample_summary_sEPSC_df,
+#'  plot_category = 2,
+#'  plot_treatment = "Control",
+#'  parameter = "raw_amplitude",
+#'  large_axis_text = "no",
+#'  hormone_added = "Insulin",
+#'  baseline_interval = "t0to5",
+#'  post_hormone_interval = "t20to25",
+#'  treatment_colour_theme = sample_treatment_names_and_colours,
+#'  theme_options = sample_theme_options,
+#'  save_plot_png = "no"
+#' )
+#'
+plot_spontaneous_current_parameter_comparison <-
+  function(data,
+           plot_category,
+           plot_treatment,
+           parameter,
+           baseline_interval,
+           post_hormone_interval,
+           large_axis_text = "no",
+           hormone_added,
+           treatment_colour_theme,
+           theme_options,
+           save_plot_png
+           ) {
+    if (is.null(baseline_interval) ||
+        !is.character(baseline_interval)) {
+      stop("'baseline_interval' must be a character (e.g. \"t0to5\" or \"t0to3\")")
+    }
 
+    if (is.null(post_hormone_interval) ||
+        !is.character(post_hormone_interval)) {
+      stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
+    }
+
+    allowed_parameters_list <- "\"raw_amplitude\", or \"raw_frequency\""
+
+    if (!parameter %in% c("raw_amplitude", "raw_frequency")) {
+      stop(
+        "parameter must be ",
+        allowed_parameters_list,
+        " because transformed data are all 100 during the baseline."
+      )
+    }
+
+    plot_colour <- treatment_colour_theme %>%
+      dplyr::filter(.data$treatment == plot_treatment) %>%
+      dplyr::pull(.data$colours)
+
+    sEPSC_comparison_plot_data <- data %>%
+      dplyr::filter(.data$category == plot_category &
+                      .data$treatment == plot_treatment) %>%
+      dplyr::filter(.data$interval == baseline_interval |
+                      .data$interval == post_hormone_interval)
+
+    if (parameter == "raw_amplitude") {
+      y_var <- "mean_raw_amplitude"
+      y_title <- "sEPSC Amplitude (pA)"
+
+    }
+
+    if (parameter == "raw_frequency") {
+      y_var <- "mean_raw_frequency"
+      y_title <- "sEPSC Frequency (Hz)"
+
+    }
+
+    sEPSC_comparison_plot <- sEPSC_comparison_plot_data %>%
+      ggplot2::ggplot(ggplot2::aes(x = .data$interval, y = .data[[y_var]])) +
+      ggplot2::labs(x = NULL, y = y_title) +
+      ggplot2::scale_x_discrete(labels = c("Baseline", hormone_added)) +
+      ggplot2::geom_violin(
+        fill = theme_options["gray_shading_colour", "value"],
+        color = NA,
+        scale = "width",
+        width = 0.2
+      ) +
+      ggforce::geom_sina(
+        bw = 12,
+        alpha = 0.8,
+        maxwidth = 0.3,
+        size = 2,
+        color = plot_colour
+      ) +
+      ggsignif::geom_signif(
+        comparisons = list(c(
+          baseline_interval, post_hormone_interval
+        )),
+        test = "wilcox.test",
+        test.args = list(paired = TRUE),
+        map_signif_level = c(
+          "***" = 0.001,
+          "**" = 0.01,
+          "*" = 0.05,
+          "ns" = 2
+        ),
+        vjust = -0.3,
+        textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
+        size = 0.4
+      ) +
+      ggplot2::stat_summary(
+        fun.data = ggplot2::mean_se,
+        geom = "pointrange",
+        color = theme_options["mean_point_colour","value"],
+        size = as.numeric(theme_options["mean_point_size","value"]) + 0.2,
+        alpha = 0.8
+      ) +
+      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2))) +
+      patchclampplotteR_theme()
+
+    if (large_axis_text == "yes") {
+      sEPSC_comparison_plot <- sEPSC_comparison_plot +
+        ggplot2::theme(
+          axis.text.x = ggplot2::element_text(size = 24, margin = ggplot2::margin(t = 10)),
+          axis.title.y = ggplot2::element_text(size = 28, face = "plain")
+        )
+    }
+
+    if (save_plot_png == "yes") {
+      ggplot2::ggsave(
+        plot = sEPSC_comparison_plot,
+        path = here::here(
+          "Figures/Spontaneous-currents/Baseline-vs-post-hormone-comparisons"
+        ),
+        file = paste0(
+          "Baseline-vs-",
+          hormone_added,
+          "-",
+          parameter,
+          "-",
+          plot_treatment,
+          ".png"
+        ),
+        width = 7,
+        height = 5,
+        units = "in",
+        dpi = 300
+      )
+    }
+
+    sEPSC_comparison_plot
+  }
 
 
 

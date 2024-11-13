@@ -170,4 +170,7 @@ add_new_cells() to add new recording data to your existing raw
 csv. It will merge raw data (a .csv with 4 columns: \code{letter}, \code{ID}, \code{P1},
 and \code{P2}) and a \code{cell-characteristics.csv} file (with columns for factors
 like \code{animal}, \code{age}, \code{sex}, \code{synapses}).
+
+\code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}} and \code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}} for
+functions that further process the data.
 }

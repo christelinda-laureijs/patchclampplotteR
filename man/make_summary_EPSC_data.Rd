@@ -99,3 +99,7 @@ make_summary_EPSC_data(
 
 
 }
+\seealso{
+\code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}} for an example of a function that
+further processes the data.
+}

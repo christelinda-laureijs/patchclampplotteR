@@ -142,6 +142,8 @@
 #'   csv. It will merge raw data (a .csv with 4 columns: `letter`, `ID`, `P1`,
 #'   and `P2`) and a `cell-characteristics.csv` file (with columns for factors
 #'   like `animal`, `age`, `sex`, `synapses`).
+#' @seealso [make_pruned_EPSC_data()] and [make_summary_EPSC_data()] for
+#'   functions that further process the data.
 #'
 #' @export
 
@@ -813,6 +815,9 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #' }
 #'
 #' @export
+#'
+#' @seealso [make_summary_EPSC_data()] for an example of a function that
+#' further processes the data.
 #' @examples
 #'
 #' make_summary_EPSC_data(
