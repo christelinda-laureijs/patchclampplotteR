@@ -14,7 +14,8 @@ plot_spontaneous_current_parameter_comparison(
   large_axis_text = "no",
   hormone_added,
   treatment_colour_theme,
-  theme_options
+  theme_options,
+  save_plot_png
 )
 }
 \arguments{
@@ -37,7 +38,7 @@ applied.
 }
 \examples{
 plot_spontaneous_current_parameter_comparison(
- data = summary_sEPSC_df,
+ data = sample_summary_sEPSC_df,
  plot_category = 2,
  plot_treatment = "Control",
  parameter = "raw_amplitude",
@@ -46,7 +47,8 @@ plot_spontaneous_current_parameter_comparison(
  baseline_interval = "t0to5",
  post_hormone_interval = "t20to25",
  treatment_colour_theme = sample_treatment_names_and_colours,
- theme_options = sample_theme_options
+ theme_options = sample_theme_options,
+ save_plot_png = "no"
 )
 
 }

@@ -7,9 +7,9 @@
 import_cell_characteristics_df(filename)
 }
 \arguments{
-\item{filename}{A filepath to a .csv file, written as a character. The
-function uses \code{here::here()} to locate the filepath. See the details below
-for information on required columns.}
+\item{filename}{A filepath to a .csv file containing information on cell
+characteristics. The function uses \code{here::here()} to locate the filepath.
+See the details below for information on required columns.}
 }
 \value{
 A dataframe

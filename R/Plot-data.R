@@ -7,6 +7,7 @@
 #'
 #' ggplot2::ggplot(cars, ggplot2::aes(x = speed, y = dist)) +
 #' ggplot2::geom_point() +
+#' ggplot2::labs(x = "Speed (mph)", y = "Stopping Distance (ft)") +
 #' patchclampplotteR_theme()
 #'
 patchclampplotteR_theme <- function() {

@@ -28,6 +28,7 @@ reference:
   - import_cell_characteristics_df
   - import_theme_colours
   - import_ext_data
+  - add_new_cells
 - title: Modify data
   desc: >
     Functions that normalize, prune, and summarize the data.

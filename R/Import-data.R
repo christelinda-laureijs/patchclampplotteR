@@ -25,9 +25,9 @@ import_ext_data <- function(file = NULL) {
 #' with raw data into a summary table and used in downstream statistical
 #' analyses.
 #'
-#' @param filename A filepath to a .csv file, written as a character. The
-#'   function uses `here::here()` to locate the filepath. See the details below
-#'   for information on required columns.
+#' @param filename A filepath to a .csv file containing information on cell
+#'   characteristics. The function uses `here::here()` to locate the filepath.
+#'   See the details below for information on required columns.
 #'
 #' @returns A dataframe
 #'
@@ -154,4 +154,288 @@ import_ABF_file <-
 import_theme_colours <- function(filename) {
   theme_options <- utils::read.csv(here::here(filename)) %>%
     tibble::column_to_rownames(var = "option")
+}
+
+
+#' Add new data
+#'
+#'
+#' @inheritParams make_normalized_EPSC_data
+#' @param new_raw_data_csv A filepath to a csv containing the new raw data. If
+#'   the data are evoked current data (`current_type == "eEPSC"`) then this must
+#'   contain 4 columns: `Letter`, `ID`, `P1` and `P2`. If the data are
+#'   spontaneous current data, the columns must be `Letter`, `ID`,
+#'   `Recording_num`, `Trace`, `Peak_amplitude` and `Time_of_peak`. Please see
+#'   the section below on required columns for more details.
+#' @param cell_characteristics_csv A filepath to a csv containing information
+#'   about the cells. Please see [import_cell_characteristics_df()] for a
+#'   description of what columns should be included.
+#' @param old_raw_data_csv A filepath to a csv containing the current raw data.
+#'   Since this function appends the new data to the old data, this must be of
+#'   the same current_type as the new data (e.g. the columns must be the same).
+#' @param overwrite A character value ("yes" or "no") stating if the function
+#'   should overwrite the old csv file. If "no", you must specify a filename in
+#'   `new_file_name`.
+#' @param new_file_name A filename for the csv containing the new data appended
+#'   to the old data. Must be a character representing a filepath to a csv file.
+#'   Examples include "Data/20241118-Raw-eEPSC-data.csv".
+#'
+#' @return
+#'
+#' A dataframe consisting of the old raw data with information from the new
+#' cells appended to it.
+#' @export
+#'
+#' @examples
+#'
+#' add_new_cells(new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
+#' cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
+#' old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
+#' current_type = "eEPSC",
+#' overwrite = "no",
+#' new_file_name = "20241118-Raw-eEPSC-Data.csv")
+#'
+#'
+add_new_cells <- function(new_raw_data_csv,
+                          cell_characteristics_csv,
+                          old_raw_data_csv,
+                          current_type,
+                          overwrite = "yes",
+                          new_file_name) {
+  if (!overwrite %in% c("yes", "no")) {
+    stop("'overwrite' argument must be one of: 'yes' or 'no'")
+  }
+
+  # Obtain argument values as strings
+  # Required to check if the filenames and current_type match
+  # (e.g. User enters raw-sEPSC-data.csv for current_type = "sEPSC")
+
+  new_raw_data_name <- deparse(substitute(new_raw_data_csv))
+  cell_characteristics_csv_name <- deparse(substitute(cell_characteristics_csv))
+  old_raw_data_csv_name <- deparse(substitute(old_raw_data_csv))
+  current_type_name <- deparse(substitute(current_type))
+
+  list_of_argument_names <- c(
+    new_raw_data_name,
+    cell_characteristics_csv_name,
+    old_raw_data_csv_name,
+    current_type_name
+  )
+
+  if (is.null(new_file_name) ||
+      !is.character(new_file_name)) {
+    stop(
+      "'new_file_name' must be a character (e.g. \"Data/Raw-CSVs/eEPSC-data/20240912-raw-data.csv\")"
+    )
+  }
+
+  if (is.null(cell_characteristics_csv) ||
+      !is.character(cell_characteristics_csv)) {
+    stop(
+      "'cell_characteristics_csv' must be a character (e.g. \"Data/Plaintext-Cell-Characteristics.csv\")"
+    )
+  }
+
+  if (!is.null(new_raw_data_name) &
+      !is.character(new_raw_data_name)) {
+    stop("'new_raw_data_name' must be a character (e.g. \"Data/Raw-eEPSC-data.csv\")")
+  }
+
+  if (is.null(current_type) ||
+      length(current_type) != 1L ||
+      !current_type %in% c("eEPSC", "sEPSC")) {
+    stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+  }
+
+  # Required to see if new cells have associated data for synapses, treatment, sex, age, etc.
+  cell_characteristics <-
+    utils::read.csv(here::here(cell_characteristics_csv)) %>%
+    dplyr::rename_with(tolower) %>%
+    dplyr::rename(X = .data$x, Y = .data$y)
+
+  new_raw_data <- utils::read.csv(here::here(new_raw_data_csv))
+
+  new_raw_data <- new_raw_data %>%
+    dplyr::rename_with(tolower) %>%
+    dplyr::mutate(id = factor(.data$id))
+
+  if (current_type == "eEPSC") {
+    if (any(grepl("sEPSC", list_of_argument_names))) {
+      stop(
+        "current_type = \"",
+        current_type,
+        "\" but some filenames have ",
+        "\"sEPSC\".",
+        "\n Are you sure that you selected the correct current type?"
+      )
+    }
+    new_raw_data <- new_raw_data %>%
+      dplyr::rename_with(tolower) %>%
+      dplyr::rename(ID = .data$id,
+                    P1 = .data$p1,
+                    P2 = .data$p2) %>%
+      dplyr::group_by(.data$letter) %>%
+      dplyr::mutate(time = (dplyr::row_number() - 1) / 12)
+  }
+
+  if (current_type == "sEPSC") {
+    if (any(grepl("eEPSC", list_of_argument_names))) {
+      stop(
+        "current_type = \"",
+        current_type,
+        "\" but some filenames have ",
+        "\"eEPSC\".",
+        "\n Are you sure that you selected the correct current type?"
+      )
+    }
+
+    new_raw_data <- new_raw_data %>%
+      dplyr::rename_with(tolower) %>%
+      dplyr::rename(ID = .data$id) %>%
+      dplyr::group_by(.data$letter) %>%
+      dplyr::mutate(amplitude = (-1) * .data$amplitude,
+                    time = ((.data$recording_num - 1) * 300 + (.data$trace - 1) * 5 + (.data$time_of_peak /
+                                                                                         1000)
+                    ) / 60)
+  }
+
+  warning("Renamed dataframe columns to lowercase")
+
+  new_letters <- unique(new_raw_data$letter)
+  new_letters_spaces <- paste0(new_letters, " ")
+
+  if (all(new_letters %in% cell_characteristics$letter)) {
+    message(
+      "Letter check passed: All letters are present in both \"",
+      cell_characteristics_csv,
+      "\" \nand \"",
+      new_raw_data_csv,
+      "\".",
+      "\n \nThe matching cells are:",
+      "\n",
+      new_letters_spaces
+    )
+
+  } else {
+    stop(
+      "Missing letters detected in \"",
+      cell_characteristics_csv,
+      "\". \nDid you add cell characteristics for ALL the new cells in \"",
+      new_raw_data_csv,
+      "\"?"
+    )
+  }
+
+  new_raw_data_complete <-
+    merge(new_raw_data, cell_characteristics, by = "letter")
+
+  # Import old Raw-Data sheet
+  old_raw_data <- utils::read.csv(here::here(old_raw_data_csv), header = T)
+
+  old_raw_data <- old_raw_data %>%
+    dplyr::rename_with(tolower) %>%
+    dplyr::mutate(id = factor(.data$id))
+
+  if (current_type == "eEPSC") {
+    old_raw_data <- old_raw_data %>%
+      dplyr::rename_with(tolower) %>%
+      dplyr::rename(
+        ID = .data$id,
+        P1 = .data$p1,
+        P2 = .data$p2,
+        X = .data$x,
+        Y = .data$y
+      )
+  }
+
+  if (current_type == "sEPSC") {
+    old_raw_data <- old_raw_data %>%
+      dplyr::rename_with(tolower) %>%
+      dplyr::rename(ID = .data$id,
+                    X = .data$x,
+                    Y = .data$y)
+  }
+
+  if (any(grepl("cells", colnames(old_raw_data)))) {
+    old_raw_data <- old_raw_data %>%
+      dplyr::rename(cell = .data$cells)
+
+    warning("Renamed column 'cells' to 'cell'")
+  }
+
+  letters_in_old_raw_data <- unique(old_raw_data$letter)
+  letters_in_new_raw_data <- unique(new_raw_data_complete$letter)
+  letters_in_new_raw_data_spaces <- paste0(letters_in_new_raw_data, " ")
+
+  # Check for accidental letter duplication (e.g. running same code twice)
+  if (any(letters_in_new_raw_data %in% letters_in_old_raw_data)) {
+    overlapping_letters <- intersect(letters_in_old_raw_data, letters_in_new_raw_data)
+    overlapping_letters_spaces <- paste0(overlapping_letters, " ")
+
+    stop(
+      "\n!! Overlapping letter(s) detected!!    --->  ",
+      overlapping_letters_spaces,
+      "\nThese cells in \"",
+      new_raw_data_csv,
+      "\" already exist in ",
+      "\"",
+      old_raw_data_csv,
+      "\"",
+      "\n \nDuplicate letters will produce plotting errors and distorted statistics.",
+      "\nDid you accidentally run this code twice?"
+    )
+
+  } else {
+    message(
+      "\n \nLetter check passed: All letters in \"",
+      new_raw_data_csv,
+      "\" are new relative to ",
+      "\"",
+      old_raw_data_csv,
+      "\"",
+      "\n \nAdding the new following new cells:",
+      "\n",
+      letters_in_new_raw_data_spaces
+    )
+
+    file.rename(from = here::here(old_raw_data_csv),
+                to = here::here(paste0(
+                  stringr::str_sub(old_raw_data_csv, 1, -5), "-old.csv"
+                )))
+
+    full_raw_data <- dplyr::bind_rows(old_raw_data, new_raw_data_complete)
+
+    if (overwrite == "yes") {
+      if (!is.null(new_file_name)) {
+        warning(
+          "`overwrite` is \"yes\", but you provided a filename in `new_file_name`. The new filename will be used."
+        )
+
+        utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
+      }
+
+      utils::write.csv(full_raw_data,
+                       here::here(old_raw_data_csv),
+                       row.names = F)
+    }
+
+    if (overwrite == "no") {
+      if (is.null(new_file_name)) {
+        stop(
+          "`overwrite` is \"no\", but `new_file_name` is missing. Did you forget to define a `new_file_name`?"
+        )
+      }
+
+      utils::write.csv(full_raw_data,
+                       here::here(new_file_name),
+                       row.names = F)
+
+    }
+
+    # file.remove(here::here(paste0(
+    #   stringr::str_sub(old_raw_data_csv, 1, -5), "-old.csv"
+    # )))
+
+    return(full_raw_data)
+  }
 }
