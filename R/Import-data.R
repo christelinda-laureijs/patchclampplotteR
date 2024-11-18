@@ -398,13 +398,8 @@ add_new_cells <- function(new_raw_data_csv,
       letters_in_new_raw_data_spaces
     )
 
-    file.rename(from = here::here(old_raw_data_csv),
-                to = here::here(paste0(
-                  stringr::str_sub(old_raw_data_csv, 1, -5), "-old.csv"
-                )))
-
     full_raw_data <- dplyr::bind_rows(old_raw_data, new_raw_data_complete)
-
+# TODO Check this value here, since overwrite does not seem to recognize a new filename =====
     if (overwrite == "yes") {
       if (!is.null(new_file_name)) {
         warning(
@@ -412,11 +407,11 @@ add_new_cells <- function(new_raw_data_csv,
         )
 
         utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
-      }
-
+      } else {
       utils::write.csv(full_raw_data,
                        here::here(old_raw_data_csv),
                        row.names = F)
+      }
     }
 
     if (overwrite == "no") {
@@ -431,10 +426,6 @@ add_new_cells <- function(new_raw_data_csv,
                        row.names = F)
 
     }
-
-    # file.remove(here::here(paste0(
-    #   stringr::str_sub(old_raw_data_csv, 1, -5), "-old.csv"
-    # )))
 
     return(full_raw_data)
   }
