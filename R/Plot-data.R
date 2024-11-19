@@ -1815,6 +1815,9 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' @param parameter A character value ("raw_amplitude" or "raw_frequency") only.
 #'   Normalized amplitude and frequency are not available because all baseline
 #'   values are 100.
+#' @inheritParams plot_variance_comparison_data
+#' @inheritParams plot_baseline_data
+#' @inheritParams plot_raw_current_data
 #'
 #' @returns A ggplot object
 #' @export
@@ -1850,6 +1853,10 @@ plot_spontaneous_current_parameter_comparison <-
     if (is.null(baseline_interval) ||
         !is.character(baseline_interval)) {
       stop("'baseline_interval' must be a character (e.g. \"t0to5\" or \"t0to3\")")
+    }
+
+    if (!save_plot_png %in% c("yes", "no")) {
+      stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
     }
 
     if (is.null(post_hormone_interval) ||

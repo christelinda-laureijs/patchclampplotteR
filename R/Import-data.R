@@ -173,9 +173,6 @@ import_theme_colours <- function(filename) {
 #' @param old_raw_data_csv A filepath to a csv containing the current raw data.
 #'   Since this function appends the new data to the old data, this must be of
 #'   the same current_type as the new data (e.g. the columns must be the same).
-#' @param overwrite A character value ("yes" or "no") stating if the function
-#'   should overwrite the old csv file. If "no", you must specify a filename in
-#'   `new_file_name`.
 #' @param new_file_name A filename for the csv containing the new data appended
 #'   to the old data. Must be a character representing a filepath to a csv file.
 #'   Examples include "Data/20241118-Raw-eEPSC-data.csv".
@@ -188,23 +185,18 @@ import_theme_colours <- function(filename) {
 #'
 #' @examples
 #'
-#' add_new_cells(new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
+#' \dontrun{add_new_cells(new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
 #' cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
 #' old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
 #' current_type = "eEPSC",
-#' overwrite = "no",
-#' new_file_name = "20241118-Raw-eEPSC-Data.csv")
+#' new_file_name = "20241118-Raw-eEPSC-Data.csv")}
 #'
 #'
 add_new_cells <- function(new_raw_data_csv,
                           cell_characteristics_csv,
                           old_raw_data_csv,
                           current_type,
-                          overwrite = "yes",
                           new_file_name) {
-  if (!overwrite %in% c("yes", "no")) {
-    stop("'overwrite' argument must be one of: 'yes' or 'no'")
-  }
 
   # Obtain argument values as strings
   # Required to check if the filenames and current_type match
@@ -398,33 +390,9 @@ add_new_cells <- function(new_raw_data_csv,
     )
 
     full_raw_data <- dplyr::bind_rows(old_raw_data, new_raw_data_complete)
-# TODO Check this value here, since overwrite does not seem to recognize a new filename =====
-    if (overwrite == "yes") {
-      if (!is.null(new_file_name)) {
-        warning(
-          "`overwrite` is \"yes\", but you provided a filename in `new_file_name`. The new filename will be used."
-        )
 
-        utils::write.csv(full_raw_data, here::here("No-filename-defined.csv"), row.names = F)
-      } else {
-      utils::write.csv(full_raw_data,
-                       here::here("Overwritten-data.csv"),
-                       row.names = F)
-      }
-    }
 
-    if (overwrite == "no") {
-      if (is.null(new_file_name)) {
-        stop(
-          "`overwrite` is \"no\", but `new_file_name` is missing. Did you forget to define a `new_file_name`?"
-        )
-      }
-
-      utils::write.csv(full_raw_data,
-                       here::here(new_file_name),
-                       row.names = F)
-
-    }
+    utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
 
     return(full_raw_data)
   }

@@ -21,9 +21,49 @@ plot_spontaneous_current_parameter_comparison(
 \arguments{
 \item{data}{Summary data for spontaneous currents generated using \code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}} where \code{current_type == "sEPSC"}.}
 
+\item{plot_category}{A numeric value specifying the category, which can be
+used to differentiate different protocol types. In the sample dataset for
+this package, \code{plot_category == 2} represents experiments where insulin was
+applied continuously after a 5-minute baseline period.}
+
+\item{plot_treatment}{A character value specifying the treatment you would
+like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
+were present on the brain slice, or the animals were fasted, etc.}
+
 \item{parameter}{A character value ("raw_amplitude" or "raw_frequency") only.
 Normalized amplitude and frequency are not available because all baseline
 values are 100.}
+
+\item{baseline_interval}{A character value indicating the name of the
+interval used as the baseline. Defaults to "t0to5", but can be changed.
+Make sure that this matches the baseline interval that you set in
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.}
+
+\item{post_hormone_interval}{A character value specifying the interval used
+for the data points after a hormone or protocol was applied. This must
+match the \code{post_hormone_interval} used in \code{\link[=make_variance_data]{make_variance_data()}}.}
+
+\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
+layer will be applied which increases the axis text.}
+
+\item{hormone_added}{A character value that will be used as the label over
+the line annotating the period when a hormone was applied. Examples include
+"500 nM Insulin", "CCK + Leptin", and "Insulin". If you applied a
+high-frequency stimulation (HFS) protocol instead, write "HFS", and an
+annotation arrow will be added instead.}
+
+\item{treatment_colour_theme}{A dataframe containing treatment names and
+their associated colours as hex values. See
+\link{sample_treatment_names_and_colours} for an example of what this dataframe
+should look like.}
+
+\item{theme_options}{A dataframe containing theme options. See
+\link{sample_theme_options} for an example of what this dataframe should
+look like.}
+
+\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
+saved as a .png using ggsave. The filepath depends on the current type, but
+they will all go in subfolders below Figures/ in your project directory.}
 }
 \value{
 A ggplot object

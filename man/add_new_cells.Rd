@@ -9,7 +9,6 @@ add_new_cells(
   cell_characteristics_csv,
   old_raw_data_csv,
   current_type,
-  overwrite = "yes",
   new_file_name
 )
 }
@@ -32,10 +31,6 @@ the same current_type as the new data (e.g. the columns must be the same).}
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
 
-\item{overwrite}{A character value ("yes" or "no") stating if the function
-should overwrite the old csv file. If "no", you must specify a filename in
-\code{new_file_name}.}
-
 \item{new_file_name}{A filename for the csv containing the new data appended
 to the old data. Must be a character representing a filepath to a csv file.
 Examples include "Data/20241118-Raw-eEPSC-data.csv".}
@@ -49,12 +44,11 @@ Add new data
 }
 \examples{
 
-add_new_cells(new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
+\dontrun{add_new_cells(new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
 cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
 old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
 current_type = "eEPSC",
-overwrite = "no",
-new_file_name = "20241118-Raw-eEPSC-Data.csv")
+new_file_name = "20241118-Raw-eEPSC-Data.csv")}
 
 
 }
