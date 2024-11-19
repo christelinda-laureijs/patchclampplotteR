@@ -833,7 +833,6 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #'   save_output_as_RDS = "no"
 #' )
 #'
-#'
 make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
                                    current_type = "eEPSC",
                                    save_output_as_RDS = "no") {

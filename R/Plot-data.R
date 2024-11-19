@@ -6,9 +6,9 @@
 #' @examples
 #'
 #' ggplot2::ggplot(cars, ggplot2::aes(x = speed, y = dist)) +
-#' ggplot2::geom_point() +
-#' ggplot2::labs(x = "Speed (mph)", y = "Stopping Distance (ft)") +
-#' patchclampplotteR_theme()
+#'   ggplot2::geom_point() +
+#'   ggplot2::labs(x = "Speed (mph)", y = "Stopping Distance (ft)") +
+#'   patchclampplotteR_theme()
 #'
 patchclampplotteR_theme <- function() {
   ggplot2::theme_classic() %+replace%
@@ -1824,17 +1824,17 @@ plot_PPR_data_multiple_treatments <- function(data,
 #'
 #' @examples
 #' plot_spontaneous_current_parameter_comparison(
-#'  data = sample_summary_sEPSC_df,
-#'  plot_category = 2,
-#'  plot_treatment = "Control",
-#'  parameter = "raw_amplitude",
-#'  large_axis_text = "no",
-#'  hormone_added = "Insulin",
-#'  baseline_interval = "t0to5",
-#'  post_hormone_interval = "t20to25",
-#'  treatment_colour_theme = sample_treatment_names_and_colours,
-#'  theme_options = sample_theme_options,
-#'  save_plot_png = "no"
+#'   data = sample_summary_sEPSC_df,
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   parameter = "raw_amplitude",
+#'   large_axis_text = "no",
+#'   hormone_added = "Insulin",
+#'   baseline_interval = "t0to5",
+#'   post_hormone_interval = "t20to25",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   theme_options = sample_theme_options,
+#'   save_plot_png = "no"
 #' )
 #'
 plot_spontaneous_current_parameter_comparison <-
@@ -1848,10 +1848,9 @@ plot_spontaneous_current_parameter_comparison <-
            hormone_added,
            treatment_colour_theme,
            theme_options,
-           save_plot_png
-           ) {
+           save_plot_png) {
     if (is.null(baseline_interval) ||
-        !is.character(baseline_interval)) {
+      !is.character(baseline_interval)) {
       stop("'baseline_interval' must be a character (e.g. \"t0to5\" or \"t0to3\")")
     }
 
@@ -1860,7 +1859,7 @@ plot_spontaneous_current_parameter_comparison <-
     }
 
     if (is.null(post_hormone_interval) ||
-        !is.character(post_hormone_interval)) {
+      !is.character(post_hormone_interval)) {
       stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
     }
 
@@ -1880,20 +1879,18 @@ plot_spontaneous_current_parameter_comparison <-
 
     sEPSC_comparison_plot_data <- data %>%
       dplyr::filter(.data$category == plot_category &
-                      .data$treatment == plot_treatment) %>%
+        .data$treatment == plot_treatment) %>%
       dplyr::filter(.data$interval == baseline_interval |
-                      .data$interval == post_hormone_interval)
+        .data$interval == post_hormone_interval)
 
     if (parameter == "raw_amplitude") {
       y_var <- "mean_raw_amplitude"
       y_title <- "sEPSC Amplitude (pA)"
-
     }
 
     if (parameter == "raw_frequency") {
       y_var <- "mean_raw_frequency"
       y_title <- "sEPSC Frequency (Hz)"
-
     }
 
     sEPSC_comparison_plot <- sEPSC_comparison_plot_data %>%
@@ -1932,8 +1929,8 @@ plot_spontaneous_current_parameter_comparison <-
       ggplot2::stat_summary(
         fun.data = ggplot2::mean_se,
         geom = "pointrange",
-        color = theme_options["mean_point_colour","value"],
-        size = as.numeric(theme_options["mean_point_size","value"]) + 0.2,
+        color = theme_options["mean_point_colour", "value"],
+        size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
         alpha = 0.8
       ) +
       ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2))) +

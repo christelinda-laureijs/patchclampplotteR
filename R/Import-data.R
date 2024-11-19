@@ -184,20 +184,21 @@ import_theme_colours <- function(filename) {
 #' @export
 #'
 #' @examples
-#'
-#' \dontrun{add_new_cells(new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
-#' cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
-#' old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
-#' current_type = "eEPSC",
-#' new_file_name = "20241118-Raw-eEPSC-Data.csv")}
-#'
+#' \dontrun{
+#' add_new_cells(
+#'   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
+#'   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
+#'   old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
+#'   current_type = "eEPSC",
+#'   new_file_name = "20241118-Raw-eEPSC-Data.csv"
+#' )
+#' }
 #'
 add_new_cells <- function(new_raw_data_csv,
                           cell_characteristics_csv,
                           old_raw_data_csv,
                           current_type,
                           new_file_name) {
-
   # Obtain argument values as strings
   # Required to check if the filenames and current_type match
   # (e.g. User enters raw-sEPSC-data.csv for current_type = "sEPSC")
@@ -221,20 +222,20 @@ add_new_cells <- function(new_raw_data_csv,
   }
 
   if (is.null(cell_characteristics_csv) ||
-      !is.character(cell_characteristics_csv)) {
+    !is.character(cell_characteristics_csv)) {
     stop(
       "'cell_characteristics_csv' must be a character (e.g. \"Data/Plaintext-Cell-Characteristics.csv\")"
     )
   }
 
   if (!is.null(new_raw_data_name) &
-      !is.character(new_raw_data_name)) {
+    !is.character(new_raw_data_name)) {
     stop("'new_raw_data_name' must be a character (e.g. \"Data/Raw-eEPSC-data.csv\")")
   }
 
   if (is.null(current_type) ||
-      length(current_type) != 1L ||
-      !current_type %in% c("eEPSC", "sEPSC")) {
+    length(current_type) != 1L ||
+    !current_type %in% c("eEPSC", "sEPSC")) {
     stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
   }
 
@@ -262,9 +263,11 @@ add_new_cells <- function(new_raw_data_csv,
     }
     new_raw_data <- new_raw_data %>%
       dplyr::rename_with(tolower) %>%
-      dplyr::rename(ID = .data$id,
-                    P1 = .data$p1,
-                    P2 = .data$p2) %>%
+      dplyr::rename(
+        ID = .data$id,
+        P1 = .data$p1,
+        P2 = .data$p2
+      ) %>%
       dplyr::group_by(.data$letter) %>%
       dplyr::mutate(time = (dplyr::row_number() - 1) / 12)
   }
@@ -284,10 +287,12 @@ add_new_cells <- function(new_raw_data_csv,
       dplyr::rename_with(tolower) %>%
       dplyr::rename(ID = .data$id) %>%
       dplyr::group_by(.data$letter) %>%
-      dplyr::mutate(amplitude = (-1) * .data$amplitude,
-                    time = ((.data$recording_num - 1) * 300 + (.data$trace - 1) * 5 + (.data$time_of_peak /
-                                                                                         1000)
-                    ) / 60)
+      dplyr::mutate(
+        amplitude = (-1) * .data$amplitude,
+        time = ((.data$recording_num - 1) * 300 + (.data$trace - 1) * 5 + (.data$time_of_peak /
+          1000)
+        ) / 60
+      )
   }
 
   warning("Renamed dataframe columns to lowercase")
@@ -306,7 +311,6 @@ add_new_cells <- function(new_raw_data_csv,
       "\n",
       new_letters_spaces
     )
-
   } else {
     stop(
       "Missing letters detected in \"",
@@ -342,9 +346,11 @@ add_new_cells <- function(new_raw_data_csv,
   if (current_type == "sEPSC") {
     old_raw_data <- old_raw_data %>%
       dplyr::rename_with(tolower) %>%
-      dplyr::rename(ID = .data$id,
-                    X = .data$x,
-                    Y = .data$y)
+      dplyr::rename(
+        ID = .data$id,
+        X = .data$x,
+        Y = .data$y
+      )
   }
 
   if (any(grepl("cells", colnames(old_raw_data)))) {
@@ -375,7 +381,6 @@ add_new_cells <- function(new_raw_data_csv,
       "\n \nDuplicate letters will produce plotting errors and distorted statistics.",
       "\nDid you accidentally run this code twice?"
     )
-
   } else {
     message(
       "\n \nLetter check passed: All letters in \"",
