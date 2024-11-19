@@ -222,8 +222,7 @@ add_new_cells <- function(new_raw_data_csv,
     current_type_name
   )
 
-  if (is.null(new_file_name) ||
-      !is.character(new_file_name)) {
+  if (!is.character(new_file_name)) {
     stop(
       "'new_file_name' must be a character (e.g. \"Data/Raw-CSVs/eEPSC-data/20240912-raw-data.csv\")"
     )
@@ -406,10 +405,10 @@ add_new_cells <- function(new_raw_data_csv,
           "`overwrite` is \"yes\", but you provided a filename in `new_file_name`. The new filename will be used."
         )
 
-        utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
+        utils::write.csv(full_raw_data, here::here("No-filename-defined.csv"), row.names = F)
       } else {
       utils::write.csv(full_raw_data,
-                       here::here(old_raw_data_csv),
+                       here::here("Overwritten-data.csv"),
                        row.names = F)
       }
     }
