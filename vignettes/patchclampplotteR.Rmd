@@ -46,3 +46,9 @@ import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"
 
 
 
+```{r}
+library(reactable)
+
+reactable(iris)
+```
+
