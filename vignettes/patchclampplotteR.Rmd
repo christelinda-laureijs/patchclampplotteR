@@ -1,0 +1,47 @@
+---
+title: "patchclampplotteR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{patchclampplotteR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# How to use patchclampplotteR
+
+This package is designed to help you import, analyze, and plot your patch clamp
+data efficiently. This vignette will walk you through a complete example of
+using `patchclampplotteR` to go from raw data to publication-quality plots!
+
+```{r setup}
+library(patchclampplotteR)
+```
+
+## About the data
+
+This dataset consists of whole-cell patch clamp recordings of neurons within the
+dorsomedial hypothalamus (DMH), a brain region critical for appetite regulation,
+stress responses, thermoregulation, and other processes. I recorded evoked
+excitatory post-synaptic currents for five minutes under baseline conditions,
+then added 500 nM insulin to the perfusion solution, and I continued recording
+for 25 minutes. For more detail, please see the article "About the Data"
+
+## Import Data
+
+My goal is to determine if insulin affects evoked current amplitude in DMH neurons.
+
+First, I must import a csv file containing information about factors such as the animal's age and sex, the cell ID number, and other details.
+
+```{r}
+import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
+```
+
+
+
