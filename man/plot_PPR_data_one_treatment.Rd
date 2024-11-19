@@ -7,10 +7,10 @@
 plot_PPR_data_one_treatment(
   data,
   plot_treatment = "Control",
-  plot_category,
-  large_axis_text = "no",
+  plot_category = 2,
   baseline_label = "Baseline",
-  post_modification_label = "Post-hormone",
+  post_hormone_label = "Post-hormone",
+  large_axis_text = "no",
   treatment_colour_theme,
   theme_options,
   save_plot_png = "no"
@@ -28,15 +28,15 @@ used to differentiate different protocol types. In the sample dataset for
 this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
-\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
-layer will be applied which increases the size of the axis text.}
-
 \item{baseline_label}{A character value for the x-axis label applied to the
 pre-hormone state. Defaults to "Baseline".}
 
-\item{post_modification_label}{A character value for x-axis label applied to
+\item{post_hormone_label}{A character value for x-axis label applied to
 the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
 will likely change this to the hormone or protocol name.}
+
+\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
+layer will be applied which increases the size of the axis text.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See
@@ -71,9 +71,9 @@ plot_PPR_data_one_treatment(
   data = sample_PPR_df,
   plot_treatment = "Control",
   plot_category = 2,
-  large_axis_text = "no",
   baseline_label = "Baseline",
-  post_modification_label = "Insulin",
+  post_hormone_label = "Insulin",
+  large_axis_text = "no",
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options,
   save_plot_png = "no"

@@ -10,10 +10,10 @@ make_PPR_data(
   list_of_treatments = NULL,
   PPR_min = 0,
   PPR_max = 5,
-  baseline_interval,
-  post_hormone_interval,
-  save_output_as_RDS = "no",
-  treatment_colour_theme
+  baseline_interval = "t0to5",
+  post_hormone_interval = "t20to25",
+  treatment_colour_theme,
+  save_output_as_RDS = "no"
 )
 }
 \arguments{
@@ -42,13 +42,13 @@ Make sure that this matches the baseline interval that you set in
 \item{post_hormone_interval}{A character value specifying the interval used
 for the data points after a hormone or protocol was applied.}
 
-\item{save_output_as_RDS}{A character ("yes" or "no") describing if the
-resulting object should be saved as an RDS file in the raw data folder.}
-
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
+
+\item{save_output_as_RDS}{A character ("yes" or "no") describing if the
+resulting object should be saved as an RDS file in the raw data folder.}
 }
 \value{
 A dataframe containing all of the columns from

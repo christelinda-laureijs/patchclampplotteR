@@ -8,15 +8,15 @@ plot_variance_comparison_data(
   data,
   plot_category,
   plot_treatment,
-  large_axis_text = "no",
-  variance_measure,
-  baseline_interval,
-  post_hormone_interval,
+  variance_measure = "cv",
+  baseline_interval = "t0to5",
   baseline_label = "Baseline",
-  post_modification_label,
+  post_hormone_interval = "t20to25",
+  post_hormone_label = "Insulin",
+  large_axis_text = "no",
   treatment_colour_theme,
-  save_plot_png = "no",
-  theme_options
+  theme_options,
+  save_plot_png = "no"
 )
 }
 \arguments{
@@ -31,9 +31,6 @@ applied continuously after a 5-minute baseline period.}
 like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
 
-\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
-layer will be applied which increases the axis text.}
-
 \item{variance_measure}{A character value ("cv" or "VMR"). The variance
 measures can be either the inverse coefficient of variation squared
 (\code{variance_measure == "cv"}) or variance-to-mean ratio (\code{variance_measure == "VMR"}).}
@@ -43,29 +40,32 @@ interval used as the baseline. Defaults to "t0to5", but can be changed.
 Make sure that this matches the baseline interval that you set in
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.}
 
+\item{baseline_label}{A character value for the x-axis label applied to the
+pre-hormone state. Defaults to "Baseline".}
+
 \item{post_hormone_interval}{A character value specifying the interval used
 for the data points after a hormone or protocol was applied. This must
 match the \code{post_hormone_interval} used in \code{\link[=make_variance_data]{make_variance_data()}}.}
 
-\item{baseline_label}{A character value for the x-axis label applied to the
-pre-hormone state. Defaults to "Baseline".}
-
-\item{post_modification_label}{A character value for x-axis label applied to
+\item{post_hormone_label}{A character value for x-axis label applied to
 the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
 will likely change this to the hormone or protocol name.}
+
+\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
+layer will be applied which increases the axis text.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
-\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
-saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.}
-
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should
 look like.}
+
+\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
+saved as a .png using ggsave. The filepath depends on the current type, but
+they will all go in subfolders below Figures/ in your project directory.}
 }
 \value{
 A ggplot object. If \code{save_plot_png == "yes"}, it will also generate
@@ -93,11 +93,11 @@ plot_variance_comparison_data(
   data = sample_eEPSC_variance_df,
   plot_category = 2,
   plot_treatment = "Control",
-  large_axis_text = "no",
   variance_measure = "cv",
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",
-  post_modification_label = "Insulin",
+  post_hormone_label = "Insulin",
+  large_axis_text = "no",
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options
 )

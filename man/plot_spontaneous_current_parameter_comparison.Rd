@@ -6,13 +6,13 @@
 \usage{
 plot_spontaneous_current_parameter_comparison(
   data,
-  plot_category,
-  plot_treatment,
-  parameter,
-  baseline_interval,
-  post_hormone_interval,
+  plot_category = 2,
+  plot_treatment = "Control",
+  parameter = "raw_amplitude",
+  hormone_added = "Insulin",
+  baseline_interval = "t0to5",
+  post_hormone_interval = "t20to25",
   large_axis_text = "no",
-  hormone_added,
   treatment_colour_theme,
   theme_options,
   save_plot_png
@@ -34,6 +34,12 @@ were present on the brain slice, or the animals were fasted, etc.}
 Normalized amplitude and frequency are not available because all baseline
 values are 100.}
 
+\item{hormone_added}{A character value that will be used as the label over
+the line annotating the period when a hormone was applied. Examples include
+"500 nM Insulin", "CCK + Leptin", and "Insulin". If you applied a
+high-frequency stimulation (HFS) protocol instead, write "HFS", and an
+annotation arrow will be added instead.}
+
 \item{baseline_interval}{A character value indicating the name of the
 interval used as the baseline. Defaults to "t0to5", but can be changed.
 Make sure that this matches the baseline interval that you set in
@@ -45,12 +51,6 @@ match the \code{post_hormone_interval} used in \code{\link[=make_variance_data]{
 
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the axis text.}
-
-\item{hormone_added}{A character value that will be used as the label over
-the line annotating the period when a hormone was applied. Examples include
-"500 nM Insulin", "CCK + Leptin", and "Insulin". If you applied a
-high-frequency stimulation (HFS) protocol instead, write "HFS", and an
-annotation arrow will be added instead.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See
@@ -78,17 +78,17 @@ applied.
 }
 \examples{
 plot_spontaneous_current_parameter_comparison(
- data = sample_summary_sEPSC_df,
- plot_category = 2,
- plot_treatment = "Control",
- parameter = "raw_amplitude",
- large_axis_text = "no",
- hormone_added = "Insulin",
- baseline_interval = "t0to5",
- post_hormone_interval = "t20to25",
- treatment_colour_theme = sample_treatment_names_and_colours,
- theme_options = sample_theme_options,
- save_plot_png = "no"
+  data = sample_summary_sEPSC_df,
+  plot_category = 2,
+  plot_treatment = "Control",
+  parameter = "raw_amplitude",
+  hormone_added = "Insulin",
+  baseline_interval = "t0to5",
+  post_hormone_interval = "t20to25",
+  large_axis_text = "no",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options,
+  save_plot_png = "no"
 )
 
 }

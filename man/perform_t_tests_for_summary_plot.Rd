@@ -9,11 +9,11 @@ perform_t_tests_for_summary_plot(
   test_category,
   include_all_treatments = "yes",
   list_of_treatments = NULL,
+  current_type = "eEPSC",
+  parameter = "amplitude",
+  baseline_interval = "t0to5",
+  interval_length = 5,
   treatment_colour_theme,
-  baseline_interval,
-  interval_length,
-  parameter,
-  current_type,
   save_output_as_RDS = "no"
 )
 }
@@ -33,10 +33,15 @@ list of treatments in \code{list_of_treatments}.}
 treatments that will be in the plot. Defaults to NULL, since
 include_all_treatments is "yes" by default.}
 
-\item{treatment_colour_theme}{A dataframe containing treatment names and
-their associated colours as hex values. See
-\link{sample_treatment_names_and_colours} for an example of what this dataframe
-should look like.}
+\item{current_type}{A character describing the current type. Allowed values
+are "eEPSC" or "sEPSC".}
+
+\item{parameter}{A character value specifying the parameter to be plotted on
+the y-axis. For evoked currents (\code{current_type = "eEPSC"}), the available
+parameter is "amplitude", which contains amplitudes normalized relative to
+the baseline. For spontaneous currents (\code{current_type = "sEPSC"}), the
+available parameters are "amplitude" (normalized currents),
+"raw_amplitude", "frequency" (normalized frequency) or "raw_frequency".}
 
 \item{baseline_interval}{A character value indicating the name of the
 interval used as the baseline. Defaults to "t0to5", but can be changed.
@@ -48,15 +53,10 @@ divide the dataset into broad ranges for statistical analysis. Important!
 \code{max_recording_length} must be evenly divisible by \code{interval_length}.
 Defaults to 5.}
 
-\item{parameter}{A character value specifying the parameter to be plotted on
-the y-axis. For evoked currents (\code{current_type = "eEPSC"}), the available
-parameter is "amplitude", which contains amplitudes normalized relative to
-the baseline. For spontaneous currents (\code{current_type = "sEPSC"}), the
-available parameters are "amplitude" (normalized currents),
-"raw_amplitude", "frequency" (normalized frequency) or "raw_frequency".}
-
-\item{current_type}{A character describing the current type. Allowed values
-are "eEPSC" or "sEPSC".}
+\item{treatment_colour_theme}{A dataframe containing treatment names and
+their associated colours as hex values. See
+\link{sample_treatment_names_and_colours} for an example of what this dataframe
+should look like.}
 
 \item{save_output_as_RDS}{A character ("yes" or "no") describing if the
 resulting object should be saved as an RDS file in the raw data folder.}
@@ -78,12 +78,12 @@ perform_t_tests_for_summary_plot(
   data = sample_summary_eEPSC_df,
   test_category = 2,
   include_all_treatments = "yes",
-  treatment_colour_theme = sample_treatment_names_and_colours,
+  list_of_treatments = NULL,
+  current_type = "eEPSC",
   parameter = "amplitude",
   baseline_interval = "t0to5",
   interval_length = 5,
-  list_of_treatments = NULL,
-  current_type = "eEPSC",
+  treatment_colour_theme = sample_treatment_names_and_colours,
   save_output_as_RDS = "no"
 )
 }

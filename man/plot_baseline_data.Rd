@@ -6,16 +6,16 @@
 \usage{
 plot_baseline_data(
   data,
-  treatment_colour_theme,
-  theme_options,
+  current_type = "eEPSC",
+  parameter = "raw_amplitude",
   include_all_treatments = "yes",
   list_of_treatments = NULL,
   baseline_interval = "t0to5",
   filename_suffix = "",
-  current_type = "eEPSC",
-  parameter = "raw_amplitude",
   large_axis_text = "no",
   plot_width = 8,
+  treatment_colour_theme,
+  theme_options,
   save_plot_png = "no"
 )
 }
@@ -23,14 +23,15 @@ plot_baseline_data(
 \item{data}{A dataframe containing the summary data generated from
 \code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}}.}
 
-\item{treatment_colour_theme}{A dataframe containing treatment names and
-their associated colours as hex values. See
-\link{sample_treatment_names_and_colours} for an example of what this dataframe
-should look like.}
+\item{current_type}{A character describing the current type. Allowed values
+are "eEPSC" or "sEPSC".}
 
-\item{theme_options}{A dataframe containing theme options. See
-\link{sample_theme_options} for an example of what this dataframe should
-look like.}
+\item{parameter}{A character describing the parameter used on the y-axis. If
+current_type == "eEPSC", the allowed parameter is "raw_amplitude". If
+\code{current_type == "sEPSC"}, the allowed parameters are "raw_amplitude" or
+"raw_frequency". Note: It does not make sense to use normalized/baseline
+transformed amplitudes, since these will all be 100, and the graph will be
+a flat line.}
 
 \item{include_all_treatments}{A character ("yes" or "no") specifying if the
 plot will include data from all treatments. If "no", you must specify a
@@ -49,22 +50,21 @@ Make sure that this matches the baseline interval that you set in
 filename of the .png file created with this plot. Could be useful if you
 have specified a custom list of treatments.}
 
-\item{current_type}{A character describing the current type. Allowed values
-are "eEPSC" or "sEPSC".}
-
-\item{parameter}{A character describing the parameter used on the y-axis. If
-current_type == "eEPSC", the allowed parameter is "raw_amplitude". If
-\code{current_type == "sEPSC"}, the allowed parameters are "raw_amplitude" or
-"raw_frequency". Note: It does not make sense to use normalized/baseline
-transformed amplitudes, since these will all be 100, and the graph will be
-a flat line.}
-
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the axis text.}
 
 \item{plot_width}{A numeric value specifying the width of the plot. Defaults
 to 8, but you will need to adjust this depending on how many treatments you
 have.}
+
+\item{treatment_colour_theme}{A dataframe containing treatment names and
+their associated colours as hex values. See
+\link{sample_treatment_names_and_colours} for an example of what this dataframe
+should look like.}
+
+\item{theme_options}{A dataframe containing theme options. See
+\link{sample_theme_options} for an example of what this dataframe should
+look like.}
 
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
@@ -87,15 +87,15 @@ the baseline period can be plotted.
 \examples{
 plot_baseline_data(
   data = sample_summary_eEPSC_df,
-  treatment_colour_theme = sample_treatment_names_and_colours,
-  theme_options = sample_theme_options,
-  include_all_treatments = "yes",
-  list_of_treatments = NULL,
   current_type = "eEPSC",
   parameter = "raw_amplitude",
+  include_all_treatments = "yes",
+  list_of_treatments = NULL,
   baseline_interval = "t0to5",
   large_axis_text = "no",
   plot_width = 8,
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options,
   save_plot_png = "no"
 )
 }

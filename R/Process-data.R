@@ -950,23 +950,23 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #'   data = sample_summary_eEPSC_df,
 #'   test_category = 2,
 #'   include_all_treatments = "yes",
-#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   list_of_treatments = NULL,
+#'   current_type = "eEPSC",
 #'   parameter = "amplitude",
 #'   baseline_interval = "t0to5",
 #'   interval_length = 5,
-#'   list_of_treatments = NULL,
-#'   current_type = "eEPSC",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   save_output_as_RDS = "no"
 #' )
 perform_t_tests_for_summary_plot <- function(data,
                                              test_category,
                                              include_all_treatments = "yes",
                                              list_of_treatments = NULL,
+                                             current_type = "eEPSC",
+                                             parameter = "amplitude",
+                                             baseline_interval = "t0to5",
+                                             interval_length = 5,
                                              treatment_colour_theme,
-                                             baseline_interval,
-                                             interval_length,
-                                             parameter,
-                                             current_type,
                                              save_output_as_RDS = "no") {
   if (is.null(current_type) ||
     length(current_type) != 1L ||
@@ -1215,8 +1215,8 @@ make_variance_data <- function(data,
                                df_category,
                                include_all_treatments = "yes",
                                list_of_treatments = NULL,
-                               baseline_interval,
-                               post_hormone_interval,
+                               baseline_interval = "t0to5",
+                               post_hormone_interval = "t20to25",
                                treatment_colour_theme,
                                save_output_as_RDS = "no") {
   if (!save_output_as_RDS %in% c("yes", "no")) {
@@ -1353,10 +1353,10 @@ make_PPR_data <- function(data,
                           list_of_treatments = NULL,
                           PPR_min = 0,
                           PPR_max = 5,
-                          baseline_interval,
-                          post_hormone_interval,
-                          save_output_as_RDS = "no",
-                          treatment_colour_theme) {
+                          baseline_interval = "t0to5",
+                          post_hormone_interval = "t20to25",
+                          treatment_colour_theme,
+                          save_output_as_RDS = "no") {
   if (!save_output_as_RDS %in% c("yes", "no")) {
     stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
   }

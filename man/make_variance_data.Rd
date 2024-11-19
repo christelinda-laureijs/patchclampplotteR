@@ -9,8 +9,8 @@ make_variance_data(
   df_category,
   include_all_treatments = "yes",
   list_of_treatments = NULL,
-  baseline_interval,
-  post_hormone_interval,
+  baseline_interval = "t0to5",
+  post_hormone_interval = "t20to25",
   treatment_colour_theme,
   save_output_as_RDS = "no"
 )

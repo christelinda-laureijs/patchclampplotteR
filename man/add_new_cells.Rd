@@ -43,12 +43,14 @@ cells appended to it.
 Add new data
 }
 \examples{
-
-\dontrun{add_new_cells(new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
-cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
-old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
-current_type = "eEPSC",
-new_file_name = "20241118-Raw-eEPSC-Data.csv")}
-
+\dontrun{
+add_new_cells(
+  new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
+  cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
+  old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
+  current_type = "eEPSC",
+  new_file_name = "20241118-Raw-eEPSC-Data.csv"
+)
+}
 
 }

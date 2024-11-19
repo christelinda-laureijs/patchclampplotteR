@@ -5,17 +5,17 @@
 \title{Make a summary plot for a specific treatment}
 \usage{
 plot_summary_current_data(
-  plot_category,
-  plot_treatment,
   data,
-  current_type,
-  parameter,
-  hormone_added,
-  hormone_or_HFS_start_time,
+  plot_category = 2,
+  plot_treatment = "Control",
+  current_type = "eEPSC",
+  parameter = "amplitude",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
   include_representative_trace = "no",
   representative_trace_filename,
-  t_test_df,
   signif_stars = "no",
+  t_test_df,
   large_axis_text = "no",
   shade_intervals = "no",
   theme_options,
@@ -24,6 +24,9 @@ plot_summary_current_data(
 )
 }
 \arguments{
+\item{data}{A dataframe containing pruned summary data for all cells. This is
+the third element of the list generated from \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}.}
+
 \item{plot_category}{A numeric value specifying the category, which can be
 used to differentiate different protocol types. In the sample dataset for
 this package, \code{plot_category == 2} represents experiments where insulin was
@@ -32,9 +35,6 @@ applied continuously after a 5-minute baseline period.}
 \item{plot_treatment}{A character value specifying the treatment you would
 like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
-
-\item{data}{A dataframe containing pruned summary data for all cells. This is
-the third element of the list generated from \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}.}
 
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
@@ -65,15 +65,15 @@ specify the file-name in \code{representative_trace_filename}.}
 filename of the representative trace. This should be the name of a .png
 file stored within the subfolder \verb{Figures/Representative-Traces/}.}
 
-\item{t_test_df}{A dataframe of t-test results, which has been generated
-using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. Important note! The t-test
-dataframe must be filtered to match the same conditions in the \code{data}
-argument, or the significance stars will be misleading.}
-
 \item{signif_stars}{A character ("yes" or "no") describing if significance
 stars should be included as an overlay in the plot. If "yes", you must
 specify a dataframe containing the results of a t-test, which is generated
 using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}.}
+
+\item{t_test_df}{A dataframe of t-test results, which has been generated
+using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. Important note! The t-test
+dataframe must be filtered to match the same conditions in the \code{data}
+argument, or the significance stars will be misleading.}
 
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the size of the axis text.}
@@ -119,18 +119,18 @@ presented as mean +/- the standard error.
 \examples{
 
 plot_summary_current_data(
+  data = sample_pruned_eEPSC_df$all_cells,
   plot_category = 2,
   plot_treatment = "Control",
-  data = sample_pruned_eEPSC_df$all_cells,
   current_type = "eEPSC",
   parameter = "amplitude",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
   include_representative_trace = "no",
   signif_stars = "yes",
   t_test_df = sample_eEPSC_t_test_df,
-  hormone_added = "Insulin",
   large_axis_text = "no",
   shade_intervals = "no",
-  hormone_or_HFS_start_time = 5,
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options
 )

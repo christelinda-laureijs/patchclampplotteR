@@ -6,17 +6,17 @@
 \usage{
 plot_raw_current_data(
   data,
-  plot_treatment,
-  plot_category,
-  current_type,
-  parameter,
-  pruned,
-  hormone_added,
-  hormone_or_HFS_start_time,
+  plot_treatment = "Control",
+  plot_category = 2,
+  current_type = "eEPSC",
+  parameter = "P1",
+  pruned = "no",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
   hormone_end_time = NULL,
-  save_plot_png = "no",
   theme_options,
-  treatment_colour_theme
+  treatment_colour_theme,
+  save_plot_png = "no"
 )
 }
 \arguments{
@@ -58,10 +58,6 @@ the annotation line start point.}
 \item{hormone_end_time}{A numeric value indicating the time (in minutes) when
 a hormone stopped being applied, such as for a washout experiment.}
 
-\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
-saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.}
-
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should
 look like.}
@@ -70,6 +66,10 @@ look like.}
 their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
+
+\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
+saved as a .png using ggsave. The filepath depends on the current type, but
+they will all go in subfolders below Figures/ in your project directory.}
 }
 \value{
 A list of ggplot objects, where each list element is a scatterplot of
@@ -103,7 +103,8 @@ plot_raw_current_data(
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
   theme_options = sample_theme_options,
-  treatment_colour_theme = sample_treatment_names_and_colours
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_plot_png = "no"
 )
 
 }

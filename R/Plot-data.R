@@ -98,28 +98,28 @@ patchclampplotteR_theme <- function() {
 #' @examples
 #' plot_baseline_data(
 #'   data = sample_summary_eEPSC_df,
-#'   treatment_colour_theme = sample_treatment_names_and_colours,
-#'   theme_options = sample_theme_options,
-#'   include_all_treatments = "yes",
-#'   list_of_treatments = NULL,
 #'   current_type = "eEPSC",
 #'   parameter = "raw_amplitude",
+#'   include_all_treatments = "yes",
+#'   list_of_treatments = NULL,
 #'   baseline_interval = "t0to5",
 #'   large_axis_text = "no",
 #'   plot_width = 8,
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   theme_options = sample_theme_options,
 #'   save_plot_png = "no"
 #' )
 plot_baseline_data <- function(data,
-                               treatment_colour_theme,
-                               theme_options,
+                               current_type = "eEPSC",
+                               parameter = "raw_amplitude",
                                include_all_treatments = "yes",
                                list_of_treatments = NULL,
                                baseline_interval = "t0to5",
                                filename_suffix = "",
-                               current_type = "eEPSC",
-                               parameter = "raw_amplitude",
                                large_axis_text = "no",
                                plot_width = 8,
+                               treatment_colour_theme,
+                               theme_options,
                                save_plot_png = "no") {
   if (is.null(current_type) ||
     length(current_type) != 1L ||
@@ -376,22 +376,23 @@ plot_baseline_data <- function(data,
 #'   hormone_added = "Insulin",
 #'   hormone_or_HFS_start_time = 5,
 #'   theme_options = sample_theme_options,
-#'   treatment_colour_theme = sample_treatment_names_and_colours
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   save_plot_png = "no"
 #' )
 #'
 plot_raw_current_data <-
   function(data,
-           plot_treatment,
-           plot_category,
-           current_type,
-           parameter,
-           pruned,
-           hormone_added,
-           hormone_or_HFS_start_time,
+           plot_treatment = "Control",
+           plot_category = 2,
+           current_type = "eEPSC",
+           parameter = "P1",
+           pruned = "no",
+           hormone_added = "Insulin",
+           hormone_or_HFS_start_time = 5,
            hormone_end_time = NULL,
-           save_plot_png = "no",
            theme_options,
-           treatment_colour_theme) {
+           treatment_colour_theme,
+           save_plot_png = "no") {
     list_of_plots <- list()
 
     if (is.null(current_type) ||
@@ -728,32 +729,32 @@ plot_raw_current_data <-
 #' @examples
 #'
 #' plot_summary_current_data(
+#'   data = sample_pruned_eEPSC_df$all_cells,
 #'   plot_category = 2,
 #'   plot_treatment = "Control",
-#'   data = sample_pruned_eEPSC_df$all_cells,
 #'   current_type = "eEPSC",
 #'   parameter = "amplitude",
+#'   hormone_added = "Insulin",
+#'   hormone_or_HFS_start_time = 5,
 #'   include_representative_trace = "no",
 #'   signif_stars = "yes",
 #'   t_test_df = sample_eEPSC_t_test_df,
-#'   hormone_added = "Insulin",
 #'   large_axis_text = "no",
 #'   shade_intervals = "no",
-#'   hormone_or_HFS_start_time = 5,
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   theme_options = sample_theme_options
 #' )
-plot_summary_current_data <- function(plot_category,
-                                      plot_treatment,
-                                      data,
-                                      current_type,
-                                      parameter,
-                                      hormone_added,
-                                      hormone_or_HFS_start_time,
+plot_summary_current_data <- function(data,
+                                      plot_category = 2,
+                                      plot_treatment = "Control",
+                                      current_type = "eEPSC",
+                                      parameter = "amplitude",
+                                      hormone_added = "Insulin",
+                                      hormone_or_HFS_start_time = 5,
                                       include_representative_trace = "no",
                                       representative_trace_filename,
-                                      t_test_df,
                                       signif_stars = "no",
+                                      t_test_df,
                                       large_axis_text = "no",
                                       shade_intervals = "no",
                                       theme_options,
@@ -1198,7 +1199,7 @@ plot_summary_current_data <- function(plot_category,
 #'   match the `post_hormone_interval` used in [make_variance_data()].
 #' @param baseline_label A character value for the x-axis label applied to the
 #'   pre-hormone state. Defaults to "Baseline".
-#' @param post_modification_label A character value for x-axis label applied to
+#' @param post_hormone_label A character value for x-axis label applied to
 #'   the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
 #'   will likely change this to the hormone or protocol name.
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -1214,11 +1215,11 @@ plot_summary_current_data <- function(plot_category,
 #'   data = sample_eEPSC_variance_df,
 #'   plot_category = 2,
 #'   plot_treatment = "Control",
-#'   large_axis_text = "no",
 #'   variance_measure = "cv",
 #'   baseline_interval = "t0to5",
 #'   post_hormone_interval = "t20to25",
-#'   post_modification_label = "Insulin",
+#'   post_hormone_label = "Insulin",
+#'   large_axis_text = "no",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   theme_options = sample_theme_options
 #' )
@@ -1226,15 +1227,15 @@ plot_summary_current_data <- function(plot_category,
 plot_variance_comparison_data <- function(data,
                                           plot_category,
                                           plot_treatment,
-                                          large_axis_text = "no",
-                                          variance_measure,
-                                          baseline_interval,
-                                          post_hormone_interval,
+                                          variance_measure = "cv",
+                                          baseline_interval = "t0to5",
                                           baseline_label = "Baseline",
-                                          post_modification_label,
+                                          post_hormone_interval = "t20to25",
+                                          post_hormone_label = "Insulin",
+                                          large_axis_text = "no",
                                           treatment_colour_theme,
-                                          save_plot_png = "no",
-                                          theme_options) {
+                                          theme_options,
+                                          save_plot_png = "no") {
   if (is.null(post_hormone_interval) ||
     !is.character(post_hormone_interval)) {
     stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
@@ -1317,7 +1318,7 @@ plot_variance_comparison_data <- function(data,
     ggplot2::geom_point(color = theme_options["connecting_line_colour", "value"], size = 1.8) +
     ggplot2::geom_line(color = theme_options["connecting_line_colour", "value"], linewidth = 0.4) +
     ggplot2::labs(x = NULL) +
-    ggplot2::scale_x_discrete(labels = c(baseline_label, post_modification_label)) +
+    ggplot2::scale_x_discrete(labels = c(baseline_label, post_hormone_label)) +
     patchclampplotteR_theme() +
     ggplot2::theme(axis.title.y = ggtext::element_markdown())
 
@@ -1502,9 +1503,9 @@ plot_cv_data <- function(data,
 #'   data = sample_PPR_df,
 #'   plot_treatment = "Control",
 #'   plot_category = 2,
-#'   large_axis_text = "no",
 #'   baseline_label = "Baseline",
-#'   post_modification_label = "Insulin",
+#'   post_hormone_label = "Insulin",
+#'   large_axis_text = "no",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   theme_options = sample_theme_options,
 #'   save_plot_png = "no"
@@ -1514,10 +1515,10 @@ plot_cv_data <- function(data,
 
 plot_PPR_data_one_treatment <- function(data,
                                         plot_treatment = "Control",
-                                        plot_category,
-                                        large_axis_text = "no",
+                                        plot_category = 2,
                                         baseline_label = "Baseline",
-                                        post_modification_label = "Post-hormone",
+                                        post_hormone_label = "Post-hormone",
+                                        large_axis_text = "no",
                                         treatment_colour_theme,
                                         theme_options,
                                         save_plot_png = "no") {
@@ -1541,7 +1542,7 @@ plot_PPR_data_one_treatment <- function(data,
       state = dplyr::case_match(
         .data$state,
         "Baseline" ~ baseline_label,
-        "Post-modification" ~ post_modification_label
+        "Post-modification" ~ post_hormone_label
       )
     ) %>%
     dplyr::group_by(.data$treatment, .data$state, .data$letter, .data$sex) %>%
@@ -1580,7 +1581,7 @@ plot_PPR_data_one_treatment <- function(data,
     ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
     ggsignif::geom_signif(
       comparisons = list(c(
-        baseline_label, post_modification_label
+        baseline_label, post_hormone_label
       )),
       test = "t.test",
       test.args = list(paired = TRUE),
@@ -1651,7 +1652,7 @@ plot_PPR_data_one_treatment <- function(data,
 #'   include_all_treatments = "yes",
 #'   plot_category = 2,
 #'   baseline_label = "B",
-#'   post_modification_label = "I",
+#'   post_hormone_label = "I",
 #'   theme_options = sample_theme_options,
 #'   treatment_colour_theme = sample_treatment_names_and_colours
 #' )
@@ -1661,9 +1662,9 @@ plot_PPR_data_one_treatment <- function(data,
 plot_PPR_data_multiple_treatments <- function(data,
                                               include_all_treatments = "yes",
                                               list_of_treatments = NULL,
-                                              plot_category,
-                                              baseline_label,
-                                              post_modification_label,
+                                              plot_category = 2,
+                                              baseline_label = "B",
+                                              post_hormone_label = "A",
                                               treatment_colour_theme,
                                               theme_options,
                                               filename_suffix = "",
@@ -1719,7 +1720,7 @@ plot_PPR_data_multiple_treatments <- function(data,
       state = dplyr::case_match(
         .data$state,
         "Baseline" ~ baseline_label,
-        "Post-modification" ~ post_modification_label
+        "Post-modification" ~ post_hormone_label
       ),
       treatment = stringr::str_replace_all(
         .data$treatment,
@@ -1744,7 +1745,7 @@ plot_PPR_data_multiple_treatments <- function(data,
     ) +
     ggsignif::geom_signif(
       comparisons = list(c(
-        baseline_label, post_modification_label
+        baseline_label, post_hormone_label
       )),
       test = "t.test",
       test.args = list(paired = TRUE),
@@ -1828,10 +1829,10 @@ plot_PPR_data_multiple_treatments <- function(data,
 #'   plot_category = 2,
 #'   plot_treatment = "Control",
 #'   parameter = "raw_amplitude",
-#'   large_axis_text = "no",
 #'   hormone_added = "Insulin",
 #'   baseline_interval = "t0to5",
 #'   post_hormone_interval = "t20to25",
+#'   large_axis_text = "no",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   theme_options = sample_theme_options,
 #'   save_plot_png = "no"
@@ -1839,13 +1840,13 @@ plot_PPR_data_multiple_treatments <- function(data,
 #'
 plot_spontaneous_current_parameter_comparison <-
   function(data,
-           plot_category,
-           plot_treatment,
-           parameter,
-           baseline_interval,
-           post_hormone_interval,
+           plot_category = 2,
+           plot_treatment = "Control",
+           parameter = "raw_amplitude",
+           hormone_added = "Insulin",
+           baseline_interval = "t0to5",
+           post_hormone_interval = "t20to25",
            large_axis_text = "no",
-           hormone_added,
            treatment_colour_theme,
            theme_options,
            save_plot_png) {

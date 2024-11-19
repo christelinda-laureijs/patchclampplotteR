@@ -8,9 +8,9 @@ plot_PPR_data_multiple_treatments(
   data,
   include_all_treatments = "yes",
   list_of_treatments = NULL,
-  plot_category,
-  baseline_label,
-  post_modification_label,
+  plot_category = 2,
+  baseline_label = "B",
+  post_hormone_label = "A",
   treatment_colour_theme,
   theme_options,
   filename_suffix = "",
@@ -36,7 +36,7 @@ applied continuously after a 5-minute baseline period.}
 \item{baseline_label}{A character value for the x-axis label applied to the
 pre-hormone state. Defaults to "Baseline".}
 
-\item{post_modification_label}{A character value for x-axis label applied to
+\item{post_hormone_label}{A character value for x-axis label applied to
 the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
 will likely change this to the hormone or protocol name.}
 
@@ -76,7 +76,7 @@ plot_PPR_data_multiple_treatments(
   include_all_treatments = "yes",
   plot_category = 2,
   baseline_label = "B",
-  post_modification_label = "I",
+  post_hormone_label = "I",
   theme_options = sample_theme_options,
   treatment_colour_theme = sample_treatment_names_and_colours
 )

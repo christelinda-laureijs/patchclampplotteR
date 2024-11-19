@@ -97,7 +97,6 @@ make_summary_EPSC_data(
   save_output_as_RDS = "no"
 )
 
-
 }
 \seealso{
 \code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}} for an example of a function that
