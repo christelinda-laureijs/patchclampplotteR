@@ -242,7 +242,7 @@ plot_baseline_data <- function(data,
         shape = .data$sex
       )
     ) +
-    ggplot2::labs(x = NULL, y = y_title) +
+    ggplot2::labs(x = NULL, y = y_title, shape = "Sex") +
     ggforce::geom_sina(
       bw = 12,
       alpha = 0.8,
@@ -1266,7 +1266,7 @@ plot_variance_comparison_data <- function(data,
           group = .data$letter
         )
       ) +
-      ggplot2::labs(y = "1/CV<sup>2</sup>") +
+      ggplot2::labs(y = "1/CV^2^") +
       ggsignif::geom_signif(
         comparisons = list(c(
           baseline_interval, post_hormone_interval
@@ -1576,7 +1576,7 @@ plot_PPR_data_one_treatment <- function(data,
     ggplot2::coord_cartesian(ylim = c(0, 3)) +
     patchclampplotteR_theme() +
     ggplot2::theme(axis.text.x = ggplot2::element_text(margin = ggplot2::margin(b = 5, t = 5))) +
-    ggplot2::labs(x = NULL, y = "Paired pulse ratio", shape = NULL) +
+    ggplot2::labs(x = NULL, y = "Paired pulse ratio", shape = "Sex") +
     ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
     ggsignif::geom_signif(
       comparisons = list(c(
