@@ -12,6 +12,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+library(reactable)
+library(dplyr)
 ```
 
 # How to use patchclampplotteR
@@ -40,15 +43,12 @@ My goal is to determine if insulin affects evoked current amplitude in DMH neuro
 First, I must import a csv file containing information about factors such as the
 animal's age and sex, the cell ID number, and other details.
 
-```{r}
-import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
-```
-
-
+> Note: Since this vignette uses a dataset included within an R package, the following code requires the function `import_ext_data()` to properly locate the csv file. For anyone using the package, you can likely just write the filename directly within `import_cell_characteristics_df()`.
 
 ```{r}
-library(reactable)
+cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
 
-reactable(iris)
+reactable(cell_characteristics, defaultPageSize = 5)
 ```
+
 
