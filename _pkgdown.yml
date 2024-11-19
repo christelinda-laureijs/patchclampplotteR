@@ -16,10 +16,6 @@ template:
       <link rel="icon" type="image/x-icon" href="../favicon.ico">
 
 
-navbar:
-  structure:
-    left:  [home, articles, reference, news]
-
 reference:
 - title: Import data
   desc: >
