@@ -18,7 +18,8 @@ template:
 
 navbar:
   structure:
-    left:  [home, reference, news]
+    left:  [home, articles, reference, news]
+
 reference:
 - title: Import data
   desc: >
