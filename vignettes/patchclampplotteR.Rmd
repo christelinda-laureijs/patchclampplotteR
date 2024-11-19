@@ -37,7 +37,8 @@ for 25 minutes. For more detail, please see the article "About the Data"
 
 My goal is to determine if insulin affects evoked current amplitude in DMH neurons.
 
-First, I must import a csv file containing information about factors such as the animal's age and sex, the cell ID number, and other details.
+First, I must import a csv file containing information about factors such as the
+animal's age and sex, the cell ID number, and other details.
 
 ```{r}
 import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
