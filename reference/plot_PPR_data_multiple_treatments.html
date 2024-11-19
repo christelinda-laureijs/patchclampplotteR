@@ -63,9 +63,9 @@ than one treatment.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span>
 <span>  list_of_treatments <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">plot_category</span>,</span>
-<span>  <span class="va">baseline_label</span>,</span>
-<span>  <span class="va">post_modification_label</span>,</span>
+<span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  baseline_label <span class="op">=</span> <span class="st">"B"</span>,</span>
+<span>  post_hormone_label <span class="op">=</span> <span class="st">"A"</span>,</span>
 <span>  <span class="va">treatment_colour_theme</span>,</span>
 <span>  <span class="va">theme_options</span>,</span>
 <span>  filename_suffix <span class="op">=</span> <span class="st">""</span>,</span>
@@ -105,7 +105,7 @@ applied continuously after a 5-minute baseline period.</p></dd>
 pre-hormone state. Defaults to "Baseline".</p></dd>
 
 
-<dt id="arg-post-modification-label">post_modification_label<a class="anchor" aria-label="anchor" href="#arg-post-modification-label"></a></dt>
+<dt id="arg-post-hormone-label">post_hormone_label<a class="anchor" aria-label="anchor" href="#arg-post-hormone-label"></a></dt>
 <dd><p>A character value for x-axis label applied to
 the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
 will likely change this to the hormone or protocol name.</p></dd>
@@ -154,7 +154,7 @@ to the project directory.</p>
 <span class="r-in"><span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span></span>
 <span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>  baseline_label <span class="op">=</span> <span class="st">"B"</span>,</span></span>
-<span class="r-in"><span>  post_modification_label <span class="op">=</span> <span class="st">"I"</span>,</span></span>
+<span class="r-in"><span>  post_hormone_label <span class="op">=</span> <span class="st">"I"</span>,</span></span>
 <span class="r-in"><span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span></span>
 <span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>

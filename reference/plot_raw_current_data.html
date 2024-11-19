@@ -67,17 +67,17 @@ applied.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_raw_current_data</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
-<span>  <span class="va">plot_treatment</span>,</span>
-<span>  <span class="va">plot_category</span>,</span>
-<span>  <span class="va">current_type</span>,</span>
-<span>  <span class="va">parameter</span>,</span>
-<span>  <span class="va">pruned</span>,</span>
-<span>  <span class="va">hormone_added</span>,</span>
-<span>  <span class="va">hormone_or_HFS_start_time</span>,</span>
+<span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
+<span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
+<span>  parameter <span class="op">=</span> <span class="st">"P1"</span>,</span>
+<span>  pruned <span class="op">=</span> <span class="st">"no"</span>,</span>
+<span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
+<span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  hormone_end_time <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  <span class="va">theme_options</span>,</span>
-<span>  <span class="va">treatment_colour_theme</span></span>
+<span>  <span class="va">treatment_colour_theme</span>,</span>
+<span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -141,12 +141,6 @@ the annotation line start point.</p></dd>
 a hormone stopped being applied, such as for a washout experiment.</p></dd>
 
 
-<dt id="arg-save-plot-png">save_plot_png<a class="anchor" aria-label="anchor" href="#arg-save-plot-png"></a></dt>
-<dd><p>A character ("yes" or "no"). If "yes", the plot will be
-saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.</p></dd>
-
-
 <dt id="arg-theme-options">theme_options<a class="anchor" aria-label="anchor" href="#arg-theme-options"></a></dt>
 <dd><p>A dataframe containing theme options. See
 <a href="sample_theme_options.html">sample_theme_options</a> for an example of what this dataframe should
@@ -158,6 +152,12 @@ look like.</p></dd>
 their associated colours as hex values. See
 <a href="sample_treatment_names_and_colours.html">sample_treatment_names_and_colours</a> for an example of what this dataframe
 should look like.</p></dd>
+
+
+<dt id="arg-save-plot-png">save_plot_png<a class="anchor" aria-label="anchor" href="#arg-save-plot-png"></a></dt>
+<dd><p>A character ("yes" or "no"). If "yes", the plot will be
+saved as a .png using ggsave. The filepath depends on the current type, but
+they will all go in subfolders below Figures/ in your project directory.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -185,7 +185,8 @@ Example filenames include "A.png", and "A_pruned.png".</p>
 <span class="r-in"><span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span></span>
 <span class="r-in"><span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span></span>
-<span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span></span></span>
+<span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span></span>
+<span class="r-in"><span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $AO</span>
 <span class="r-plt img"><img src="plot_raw_current_data-1.png" alt="" width="700" height="433"></span>

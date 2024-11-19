@@ -67,11 +67,11 @@ be used to apply significance stars to the plot in
 <span>  <span class="va">test_category</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span>
 <span>  list_of_treatments <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
+<span>  parameter <span class="op">=</span> <span class="st">"amplitude"</span>,</span>
+<span>  baseline_interval <span class="op">=</span> <span class="st">"t0to5"</span>,</span>
+<span>  interval_length <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  <span class="va">treatment_colour_theme</span>,</span>
-<span>  <span class="va">baseline_interval</span>,</span>
-<span>  <span class="va">interval_length</span>,</span>
-<span>  <span class="va">parameter</span>,</span>
-<span>  <span class="va">current_type</span>,</span>
 <span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -103,11 +103,18 @@ treatments that will be in the plot. Defaults to NULL, since
 include_all_treatments is "yes" by default.</p></dd>
 
 
-<dt id="arg-treatment-colour-theme">treatment_colour_theme<a class="anchor" aria-label="anchor" href="#arg-treatment-colour-theme"></a></dt>
-<dd><p>A dataframe containing treatment names and
-their associated colours as hex values. See
-<a href="sample_treatment_names_and_colours.html">sample_treatment_names_and_colours</a> for an example of what this dataframe
-should look like.</p></dd>
+<dt id="arg-current-type">current_type<a class="anchor" aria-label="anchor" href="#arg-current-type"></a></dt>
+<dd><p>A character describing the current type. Allowed values
+are "eEPSC" or "sEPSC".</p></dd>
+
+
+<dt id="arg-parameter">parameter<a class="anchor" aria-label="anchor" href="#arg-parameter"></a></dt>
+<dd><p>A character value specifying the parameter to be plotted on
+the y-axis. For evoked currents (<code>current_type = "eEPSC"</code>), the available
+parameter is "amplitude", which contains amplitudes normalized relative to
+the baseline. For spontaneous currents (<code>current_type = "sEPSC"</code>), the
+available parameters are "amplitude" (normalized currents),
+"raw_amplitude", "frequency" (normalized frequency) or "raw_frequency".</p></dd>
 
 
 <dt id="arg-baseline-interval">baseline_interval<a class="anchor" aria-label="anchor" href="#arg-baseline-interval"></a></dt>
@@ -124,18 +131,11 @@ divide the dataset into broad ranges for statistical analysis. Important!
 Defaults to 5.</p></dd>
 
 
-<dt id="arg-parameter">parameter<a class="anchor" aria-label="anchor" href="#arg-parameter"></a></dt>
-<dd><p>A character value specifying the parameter to be plotted on
-the y-axis. For evoked currents (<code>current_type = "eEPSC"</code>), the available
-parameter is "amplitude", which contains amplitudes normalized relative to
-the baseline. For spontaneous currents (<code>current_type = "sEPSC"</code>), the
-available parameters are "amplitude" (normalized currents),
-"raw_amplitude", "frequency" (normalized frequency) or "raw_frequency".</p></dd>
-
-
-<dt id="arg-current-type">current_type<a class="anchor" aria-label="anchor" href="#arg-current-type"></a></dt>
-<dd><p>A character describing the current type. Allowed values
-are "eEPSC" or "sEPSC".</p></dd>
+<dt id="arg-treatment-colour-theme">treatment_colour_theme<a class="anchor" aria-label="anchor" href="#arg-treatment-colour-theme"></a></dt>
+<dd><p>A dataframe containing treatment names and
+their associated colours as hex values. See
+<a href="sample_treatment_names_and_colours.html">sample_treatment_names_and_colours</a> for an example of what this dataframe
+should look like.</p></dd>
 
 
 <dt id="arg-save-output-as-rds">save_output_as_RDS<a class="anchor" aria-label="anchor" href="#arg-save-output-as-rds"></a></dt>
@@ -159,12 +159,12 @@ current amplitudes were created.</p></div>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_summary_eEPSC_df</span>,</span></span>
 <span class="r-in"><span>  test_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span></span>
-<span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span></span>
+<span class="r-in"><span>  list_of_treatments <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span></span>
 <span class="r-in"><span>  parameter <span class="op">=</span> <span class="st">"amplitude"</span>,</span></span>
 <span class="r-in"><span>  baseline_interval <span class="op">=</span> <span class="st">"t0to5"</span>,</span></span>
 <span class="r-in"><span>  interval_length <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>  list_of_treatments <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
-<span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span></span>
+<span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span></span>
 <span class="r-in"><span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        treatment                 .y. group1  group2 n1 statistic df p_string</span>

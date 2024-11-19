@@ -65,10 +65,10 @@ related to the probability of neurotransmitter release <a href="https://doi.org/
 <span>  list_of_treatments <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  PPR_min <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  PPR_max <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  <span class="va">baseline_interval</span>,</span>
-<span>  <span class="va">post_hormone_interval</span>,</span>
-<span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span>,</span>
-<span>  <span class="va">treatment_colour_theme</span></span>
+<span>  baseline_interval <span class="op">=</span> <span class="st">"t0to5"</span>,</span>
+<span>  post_hormone_interval <span class="op">=</span> <span class="st">"t20to25"</span>,</span>
+<span>  <span class="va">treatment_colour_theme</span>,</span>
+<span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -115,16 +115,16 @@ Make sure that this matches the baseline interval that you set in
 for the data points after a hormone or protocol was applied.</p></dd>
 
 
-<dt id="arg-save-output-as-rds">save_output_as_RDS<a class="anchor" aria-label="anchor" href="#arg-save-output-as-rds"></a></dt>
-<dd><p>A character ("yes" or "no") describing if the
-resulting object should be saved as an RDS file in the raw data folder.</p></dd>
-
-
 <dt id="arg-treatment-colour-theme">treatment_colour_theme<a class="anchor" aria-label="anchor" href="#arg-treatment-colour-theme"></a></dt>
 <dd><p>A dataframe containing treatment names and
 their associated colours as hex values. See
 <a href="sample_treatment_names_and_colours.html">sample_treatment_names_and_colours</a> for an example of what this dataframe
 should look like.</p></dd>
+
+
+<dt id="arg-save-output-as-rds">save_output_as_RDS<a class="anchor" aria-label="anchor" href="#arg-save-output-as-rds"></a></dt>
+<dd><p>A character ("yes" or "no") describing if the
+resulting object should be saved as an RDS file in the raw data folder.</p></dd>
 
 </dl></div>
     <div class="section level2">
