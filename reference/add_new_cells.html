@@ -49,7 +49,6 @@
 <span>  <span class="va">cell_characteristics_csv</span>,</span>
 <span>  <span class="va">old_raw_data_csv</span>,</span>
 <span>  <span class="va">current_type</span>,</span>
-<span>  overwrite <span class="op">=</span> <span class="st">"yes"</span>,</span>
 <span>  <span class="va">new_file_name</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -84,12 +83,6 @@ the same current_type as the new data (e.g. the columns must be the same).</p></
 are "eEPSC" or "sEPSC".</p></dd>
 
 
-<dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
-<dd><p>A character value ("yes" or "no") stating if the function
-should overwrite the old csv file. If "no", you must specify a filename in
-<code>new_file_name</code>.</p></dd>
-
-
 <dt id="arg-new-file-name">new_file_name<a class="anchor" aria-label="anchor" href="#arg-new-file-name"></a></dt>
 <dd><p>A filename for the csv containing the new data appended
 to the old data. Must be a character representing a filepath to a csv file.
@@ -105,24 +98,11 @@ cells appended to it.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">add_new_cells</span><span class="op">(</span>new_raw_data_csv <span class="op">=</span> <span class="fu"><a href="import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"sample_new_eEPSC_data.csv"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fu">add_new_cells</span><span class="op">(</span>new_raw_data_csv <span class="op">=</span> <span class="fu"><a href="import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"sample_new_eEPSC_data.csv"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>cell_characteristics_csv <span class="op">=</span> <span class="fu"><a href="import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"sample_cell_characteristics.csv"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>old_raw_data_csv <span class="op">=</span> <span class="fu"><a href="import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"sample_eEPSC_data.csv"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span></span>
-<span class="r-in"><span>overwrite <span class="op">=</span> <span class="st">"no"</span>,</span></span>
-<span class="r-in"><span>new_file_name <span class="op">=</span> <span class="st">"20241118-Raw-eEPSC-Data.csv"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Renamed dataframe columns to lowercase</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Letter check passed: All letters are present in both "/home/runner/work/_temp/Library/patchclampplotteR/extdata/sample_cell_characteristics.csv" </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> and "/home/runner/work/_temp/Library/patchclampplotteR/extdata/sample_new_eEPSC_data.csv".</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The matching cells are:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> AV </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in add_new_cells(new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),     cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),     old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),     current_type = "eEPSC", overwrite = "no", new_file_name = "20241118-Raw-eEPSC-Data.csv"):</span> </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> !! Overlapping letter(s) detected!!    ---&gt;  AV </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> These cells in "/home/runner/work/_temp/Library/patchclampplotteR/extdata/sample_new_eEPSC_data.csv" already exist in "/home/runner/work/_temp/Library/patchclampplotteR/extdata/sample_eEPSC_data.csv"</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>  </span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> Duplicate letters will produce plotting errors and distorted statistics.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> Did you accidentally run this code twice?</span>
+<span class="r-in"><span>new_file_name <span class="op">=</span> <span class="st">"20241118-Raw-eEPSC-Data.csv"</span><span class="op">)</span> <span class="co"># \dontrun{}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
