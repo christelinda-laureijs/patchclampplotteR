@@ -9,6 +9,7 @@ add_new_cells(
   cell_characteristics_csv,
   old_raw_data_csv,
   current_type,
+  write_new_csv = "yes",
   new_file_name
 )
 }
@@ -22,14 +23,22 @@ the section below on required columns for more details.}
 
 \item{cell_characteristics_csv}{A filepath to a csv containing information
 about the cells. Please see \code{\link[=import_cell_characteristics_df]{import_cell_characteristics_df()}} for a
-description of what columns should be included.}
+description of what columns should be included. Don't forget to update this
+to include the cell characteristics for the new letters in
+\code{new_raw_data_csv}!}
 
 \item{old_raw_data_csv}{A filepath to a csv containing the current raw data.
 Since this function appends the new data to the old data, this must be of
-the same current_type as the new data (e.g. the columns must be the same).}
+the same current_type as the new data (e.g. the columns must be the same).
+If this is the first time you are running this function, start with a blank
+.csv file containing just the column titles in the first row.}
 
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
+
+\item{write_new_csv}{A character ("yes" or "no") describing if the new data
+should be written to a csv file. Defaults to "yes". Please specify
+a filename for the new csv file in \code{new_file_name}.}
 
 \item{new_file_name}{A filename for the csv containing the new data appended
 to the old data. Must be a character representing a filepath to a csv file.
@@ -40,7 +49,11 @@ A dataframe consisting of the old raw data with information from the new
 cells appended to it.
 }
 \description{
-Add new data
+This function enables you to append new raw recording data onto an existing
+datasheet. It makes it easy and convenient to merge the cell parameters (age,
+sex, etc.) with new data and add it to your current raw data. This function
+also formats the dataset so it is immediately ready for use in functions like
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.
 }
 \examples{
 \dontrun{
@@ -49,8 +62,14 @@ add_new_cells(
   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
   old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
   current_type = "eEPSC",
+  write_new_csv = "no",
   new_file_name = "20241118-Raw-eEPSC-Data.csv"
 )
 }
 
+}
+\seealso{
+\code{\link[=import_cell_characteristics_df]{import_cell_characteristics_df()}} for a list of required columns in the \code{cell_characteristics_csv}.
+
+\code{\link[=make_normalized_df]{make_normalized_df()}} for the next step in the analysis process.
 }

@@ -159,6 +159,11 @@ import_theme_colours <- function(filename) {
 
 #' Add new data
 #'
+#' This function enables you to append new raw recording data onto an existing
+#' datasheet. It makes it easy and convenient to merge the cell parameters (age,
+#' sex, etc.) with new data and add it to your current raw data. This function
+#' also formats the dataset so it is immediately ready for use in functions like
+#' [make_normalized_EPSC_data()].
 #'
 #' @inheritParams make_normalized_EPSC_data
 #' @param new_raw_data_csv A filepath to a csv containing the new raw data. If
@@ -169,10 +174,17 @@ import_theme_colours <- function(filename) {
 #'   the section below on required columns for more details.
 #' @param cell_characteristics_csv A filepath to a csv containing information
 #'   about the cells. Please see [import_cell_characteristics_df()] for a
-#'   description of what columns should be included.
+#'   description of what columns should be included. Don't forget to update this
+#'   to include the cell characteristics for the new letters in
+#'   `new_raw_data_csv`!
 #' @param old_raw_data_csv A filepath to a csv containing the current raw data.
 #'   Since this function appends the new data to the old data, this must be of
 #'   the same current_type as the new data (e.g. the columns must be the same).
+#'   If this is the first time you are running this function, start with a blank
+#'   .csv file containing just the column titles in the first row.
+#' @param write_new_csv A character ("yes" or "no") describing if the new data
+#'   should be written to a csv file. Defaults to "yes". Please specify
+#'   a filename for the new csv file in `new_file_name`.
 #' @param new_file_name A filename for the csv containing the new data appended
 #'   to the old data. Must be a character representing a filepath to a csv file.
 #'   Examples include "Data/20241118-Raw-eEPSC-data.csv".
@@ -183,6 +195,12 @@ import_theme_colours <- function(filename) {
 #' cells appended to it.
 #' @export
 #'
+#'
+#' @seealso [import_cell_characteristics_df()] for a list of required columns in the `cell_characteristics_csv`.
+#'
+#' @seealso [make_normalized_df()] for the next step in the analysis process.
+#'
+#'
 #' @examples
 #' \dontrun{
 #' add_new_cells(
@@ -190,6 +208,7 @@ import_theme_colours <- function(filename) {
 #'   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
 #'   old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
 #'   current_type = "eEPSC",
+#'   write_new_csv = "no",
 #'   new_file_name = "20241118-Raw-eEPSC-Data.csv"
 #' )
 #' }
@@ -198,6 +217,7 @@ add_new_cells <- function(new_raw_data_csv,
                           cell_characteristics_csv,
                           old_raw_data_csv,
                           current_type,
+                          write_new_csv = "yes",
                           new_file_name) {
   # Obtain argument values as strings
   # Required to check if the filenames and current_type match
@@ -226,6 +246,10 @@ add_new_cells <- function(new_raw_data_csv,
     stop(
       "'cell_characteristics_csv' must be a character (e.g. \"Data/Plaintext-Cell-Characteristics.csv\")"
     )
+  }
+
+  if (!write_new_csv %in% c("yes", "no")) {
+    stop("'write_new_csv' argument must be one of: 'yes' or 'no'")
   }
 
   if (!is.null(new_raw_data_name) &
@@ -396,8 +420,9 @@ add_new_cells <- function(new_raw_data_csv,
 
     full_raw_data <- dplyr::bind_rows(old_raw_data, new_raw_data_complete)
 
-
+    if (write_new_csv == "yes") {
     utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
+    }
 
     return(full_raw_data)
   }
