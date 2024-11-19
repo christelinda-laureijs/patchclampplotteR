@@ -19,11 +19,21 @@ library(dplyr)
 
 # How to use patchclampplotteR
 
-This package is designed to help you import, analyze, and plot your patch clamp
+`patchclampplotteR` will help you analyze and plot your patch clamp
 data efficiently. This vignette will walk you through a complete example of
 using `patchclampplotteR` to go from raw data to publication-quality plots!
 
-```{r setup}
+You can install the development version of patchclampplotteR from
+[GitHub](https://github.com/) with:
+
+```{r install-package-demo, warning=FALSE, message=FALSE}
+# Run this once to install
+pak::pak("christelinda-laureijs/patchclampplotteR")
+```
+
+And then load the package each time you want to use it:
+
+```{r load-library}
 library(patchclampplotteR)
 ```
 
@@ -34,16 +44,20 @@ dorsomedial hypothalamus (DMH), a brain region critical for appetite regulation,
 stress responses, thermoregulation, and other processes. I recorded evoked
 excitatory post-synaptic currents for five minutes under baseline conditions,
 then added 500 nM insulin to the perfusion solution, and I continued recording
-for 25 minutes. For more detail, please see the article "About the Data"
+for 25 minutes.
 
-## Import Data
+## Import raw .csv files
 
-My goal is to determine if insulin affects evoked current amplitude in DMH neurons.
+My goal is to determine if insulin affects evoked current amplitude in DMH
+neurons. First, I must import a `.csv` file containing information about factors
+such as the animal's age and sex, the cell ID number, and other details. Please
+see the **Required columns** section of the documentation for
+`import_cell_characteristics_df()` for explanations of required columns and what
+they include.
 
-First, I must import a csv file containing information about factors such as the
-animal's age and sex, the cell ID number, and other details.
-
-> Note: Since this vignette uses a dataset included within an R package, the following code requires the function `import_ext_data()` to properly locate the csv file. For anyone using the package, you can likely just write the filename directly within `import_cell_characteristics_df()`.
+> Note: Since this vignette is included within an R package, the following code requires the function `import_ext_data()` to properly locate the `.csv` file in the package folder. This won't be required when you are using the package within your own project folder.
+>
+> You can just write the path to the filename directly within `import_cell_characteristics_df()`. For example, you should write `import_cell_characteristics_df("Data/cell_info.csv")` to use `cell_info.csv` located within the `Data/` folder.
 
 ```{r}
 cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
@@ -51,4 +65,45 @@ cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_c
 reactable(cell_characteristics, defaultPageSize = 5)
 ```
 
+Next, I will import the raw evoked current data that has been copied over from Clampfit. This is a `.csv` file containing four columns: `Letter`, `ID`, `P1` and `P2`:
+
+* `letter`: A unique identifier for a single recording, which allows you to link evoked current data, spontaneous current data, action potential, data, and information on cell characteristics.
+
+* `ID`: The name of the .abf filename used to obtain the data, which is useful for verifying the recordings and cross-referencing to your lab book.
+
+* `P1`: The amplitude of the first evoked current (pA).
+
+* `P2`: The amplitude of the second evoked current (pA).
+
+> Don't worry too much about capitalizing the column names or not. `add_new_cells()` will automatically convert all column names to lowercase for consistency across functions. Capitalized letters will be retained for columns like `ID`, `X`, `Y`, `P1`, and `P2`.
+
+```{r}
+sample_eEPSC_data <- read.csv(import_ext_data("sample_eEPSC_data.csv"))
+
+sample_eEPSC_data %>% reactable(defaultPageSize = 5)
+```
+
+## Add new cells
+
+The next step is to merge the raw evoked current data with the cell characteristics data. `add_new_cells()` will merge these two datasets, using `letter` as the common column. This function requires three `.csv` files:
+
+* The new raw data
+* The cell characteristics
+* An existing `.csv` with raw data that has been previously imported. As your project goes on, you will eventually be appending new data onto your existing datasheet, but for now, we will start with a blank `.csv` file containing just the required column names:
+
+```{r}
+blank_csv <- read.csv(import_ext_data("empty_raw_eEPSC_datasheet.csv"))
+
+reactable(blank_csv)
+```
+
+```{r}
+raw_eEPSC_data <- add_new_cells(
+  new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
+  cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
+  old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
+  current_type = "eEPSC",
+  new_file_name = "20241118-Raw-eEPSC-Data.csv"
+)
+```
 
