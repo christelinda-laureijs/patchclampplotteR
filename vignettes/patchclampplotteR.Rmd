@@ -21,7 +21,7 @@ vignette: >
 
 `patchclampplotteR` will help you analyze and plot your patch clamp data
 efficiently. This vignette will walk you through the complete process of
-transforming raw data into publication-quality plots!!
+transforming raw data into publication-quality plots!
 
 ## Install and load package
 
