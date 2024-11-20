@@ -29,7 +29,7 @@ You can install the development version of patchclampplotteR from
 [GitHub](https://github.com/). Only do this once per computer, or if there's a major update.
 
 ```{r install-package-demo, warning=FALSE, message=FALSE}
-pak::pak("christelinda-laureijs/patchclampplotteR")
+#pak::pak("christelinda-laureijs/patchclampplotteR")
 ```
 
 And then load the package each time you want to use it:
