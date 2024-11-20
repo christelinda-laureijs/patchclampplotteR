@@ -8,13 +8,13 @@ vignette: >
 ---
 
 ```{r knit-options-libraries, include = FALSE}
-# knitr::opts_chunk$set(
-#   collapse = TRUE,
-#   comment = "#>"
-# )
-# 
-# library(reactable)
-# library(dplyr)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+library(reactable)
+library(dplyr)
 ```
 
 # How to use patchclampplotteR
@@ -28,14 +28,14 @@ transforming raw data into publication-quality plots!
 You can install the development version of patchclampplotteR from
 [GitHub](https://github.com/). Only do this once per computer, or if there's a major update.
 
-```{r install-package-demo, warning=FALSE, message=FALSE}
-#pak::pak("christelinda-laureijs/patchclampplotteR")
+```{r install-package-demo, eval=F, warning=FALSE, message=FALSE}
+pak::pak("christelinda-laureijs/patchclampplotteR")
 ```
 
 And then load the package each time you want to use it:
 
 ```{r load-library}
-# library(patchclampplotteR)
+library(patchclampplotteR)
 ```
 
 ## About the data
@@ -68,9 +68,9 @@ write `import_cell_characteristics_df("Data/cell_info.csv")` to use
 `cell_info.csv` located within the `Data/` folder.
 
 ```{r import-cell-characteristics}
-# cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
-# 
-# reactable(cell_characteristics, defaultPageSize = 5)
+cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
+
+reactable(cell_characteristics, defaultPageSize = 5)
 ```
 
 Next, I will import the raw evoked current data that has been copied over from
@@ -91,9 +91,9 @@ consistency across functions. Capitalized letters will be retained for columns
 like `ID`, `X`, `Y`, `P1`, and `P2`.
 
 ```{r sample-eEPSC-data}
-# sample_eEPSC_data <- read.csv(import_ext_data("sample_new_eEPSC_data.csv"))
-# 
-# sample_eEPSC_data %>% reactable(defaultPageSize = 5)
+sample_eEPSC_data <- read.csv(import_ext_data("sample_new_eEPSC_data.csv"))
+
+sample_eEPSC_data %>% reactable(defaultPageSize = 5)
 ```
 
 ## Add new cells
@@ -110,22 +110,23 @@ datasheet, but if you are starting completely fresh, use a blank `.csv` file
 containing just the required column names.
 
 ```{r blank-sheet-example}
-# blank_csv <- read.csv(import_ext_data("empty_raw_eEPSC_datasheet.csv"))
-# 
-# reactable(blank_csv)
+blank_csv <- read.csv(import_ext_data("empty_raw_eEPSC_datasheet.csv"))
+
+reactable(blank_csv)
 ```
 
 Here is an example of what a full dataset can look like. In the following
 example, I've just added new data for one cell (`letter = AV`).
 
 ```{r add-new-cells}
-# raw_eEPSC_data <- add_new_cells(
-#   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
-#   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
-#   old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
-#   current_type = "eEPSC",
-#   new_file_name = "20241118-Raw-eEPSC-Data.csv"
-# )
+raw_eEPSC_data <- add_new_cells(
+  new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
+  cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
+  old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
+  current_type = "eEPSC",
+  write_new_csv = "no",
+  new_file_name = "20241118-Raw-eEPSC-Data.csv"
+)
 ```
 
 **Output messages**

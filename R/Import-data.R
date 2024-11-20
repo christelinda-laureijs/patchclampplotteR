@@ -198,7 +198,7 @@ import_theme_colours <- function(filename) {
 #'
 #' @seealso [import_cell_characteristics_df()] for a list of required columns in the `cell_characteristics_csv`.
 #'
-#' @seealso [make_normalized_df()] for the next step in the analysis process.
+#' @seealso [make_normalized_EPSC_data()] for the next step in the analysis process.
 #'
 #'
 #' @examples

@@ -71,5 +71,5 @@ add_new_cells(
 \seealso{
 \code{\link[=import_cell_characteristics_df]{import_cell_characteristics_df()}} for a list of required columns in the \code{cell_characteristics_csv}.
 
-\code{\link[=make_normalized_df]{make_normalized_df()}} for the next step in the analysis process.
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}} for the next step in the analysis process.
 }
