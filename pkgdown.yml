@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   patchclampplotteR: patchclampplotteR.html
-last_built: 2024-11-20T03:41Z
+last_built: 2024-11-20T03:52Z
 urls:
   reference: https://christelinda-laureijs.github.io/patchclampplotteR/reference
   article: https://christelinda-laureijs.github.io/patchclampplotteR/articles
