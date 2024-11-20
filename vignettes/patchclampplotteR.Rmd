@@ -70,7 +70,7 @@ write `import_cell_characteristics_df("Data/cell_info.csv")` to use
 ```{r import-cell-characteristics}
 cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
 
-reactable(cell_characteristics, defaultPageSize = 5)
+reactable(cell_characteristics)
 ```
 
 Next, I will import the raw evoked current data that has been copied over from
@@ -93,7 +93,7 @@ like `ID`, `X`, `Y`, `P1`, and `P2`.
 ```{r sample-eEPSC-data}
 sample_eEPSC_data <- read.csv(import_ext_data("sample_new_eEPSC_data.csv"))
 
-sample_eEPSC_data %>% reactable(defaultPageSize = 5)
+reactable(sample_eEPSC_data)
 ```
 
 ## Add new cells
@@ -148,6 +148,13 @@ The final message prints a list of the letters that have been added to the
 dataset. In this case, this is `AV`. It is a good way to confirm that you've
 added the letters you were planning to add.
 
+You can also ask R to produce a list of all of the unique letters in the dataset. This won't catch duplicates, but it can help you identify if a letter is completely missing from the dataset. See, `AV` is now included.
+
+```{r view-unique-letters}
+unique(raw_eEPSC_data$letter)
+```
+
+
 ## Analyze data
 
 ### Step 1: Normalize currents
@@ -178,9 +185,16 @@ raw_eEPSC_df <- make_normalized_EPSC_data(
   baseline_length = 5,
   negative_transform_currents = "yes"
 )
+```
 
+This is the sample raw evoked current dataset included in the package. To reduce
+the vignette size, I am printing just the first 20 rows. The full dataset
+contains > 5680 rows!)
 
-reactable(raw_eEPSC_df, defaultPageSize = 5)
+```{r view-sample-raw-data}
+# To reduce the vignette size, I am printing just the first 20 rows. The 
+head(raw_eEPSC_df, n = 20) %>% 
+  reactable()
 ```
 
 `make_normalized_EPSC_data()` will retain the cell characteristics and `P1` and
@@ -191,43 +205,282 @@ If you set `negative_transform` to "yes", `P1` and `P2` will be multiplied by
 values in Clampfit. Since the data are evoked current data (`current_type =
 "eEPSC"`), some new columns are added. They are:
 
-* PPR: The paired-pulse ratio, which is the amplitude of the second evoked current divided by the first evoked current (`PPR = P2/P1`).
+* `PPR`: The paired-pulse ratio, which is the amplitude of the second evoked current divided by the first evoked current (`PPR = P2/P1`).
 
-* interval: The interval that the data belongs to. I set the `interval_length` to 5, which means the data will be divided into 5-minute intervals. The intervals will have names like "t0to5", "t5to10", and so on up until the maximum interval.
+* `interval`: The interval that the data belongs to. I set the `interval_length` to 5, which means the data will be divided into 5-minute intervals. The intervals will have names like "t0to5", "t5to10", and so on up until the maximum interval.
 
-* baseline_range: You probably won't interact with this much, but this is just a column stating "TRUE" if the time is within the baseline period, or "FALSE" if the time is outside of this range. This is required for the normalization function to identify which values are outside of the baseline (and should be transformed).
+* `baseline_range`: You probably won't interact with this much, but this is just a column stating "TRUE" if the time is within the baseline period, or "FALSE" if the time is outside of this range. This is required for the normalization function to identify which values are outside of the baseline (and should be transformed).
 
-* baseline_mean: This is one number that represents the average evoked current amplitude during the baseline period. This value is different for each recording.
+* `baseline_mean`: This is one number that represents the average evoked current amplitude during the baseline period. This value is different for each recording.
 
-* P1_transformed: The first evoked current amplitude, normalized relative to the mean baseline amplitude. For example, if the mean baseline amplitude is **80 pA**and a `P1` value is **40 pA**, `P1_transformed` will be **50%**.
+* `P1_transformed`: The first evoked current amplitude, normalized relative to the mean baseline amplitude. For example, if the mean baseline amplitude is **80 pA**and a `P1` value is **40 pA**, `P1_transformed` will be **50%**.
 
-* P2_transformed: The second evoked current amplitude, normalized relative to the mean baseline amplitude of the first evoked current.
+* `P2_transformed`: The second evoked current amplitude, normalized relative to the mean baseline amplitude of the first evoked current.
 
 #### Plot raw data
 
 Let's see what the raw values look like over time!
 
+`plot_raw_current_data()` will generate a scatterplot of evoked current
+amplitude (pA) over time (min) for all cells within the treatment and category
+that you specify. Behind the scenes, this really runs a loop over each letter,
+generating a ggplot object for each recording.
 
+Please see the documentation for `plot_raw_current_data()` to learn about the
+arguments in more detail.
 
+```{r make-raw-plots}
+raw_eEPSC_control_plots <- plot_raw_current_data(
+  data = raw_eEPSC_df,
+  plot_treatment = "Control",
+  plot_category = 2,
+  current_type = "eEPSC",
+  parameter = "P1",
+  pruned = "no",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+  theme_options = sample_theme_options,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
+```
 
+`plot_raw_current_data()` will return a list of ggplot objects. If you want to
+observe just one specific plot, you can select it by letter.
 
+```{r view-one-raw-plot, fig.cap = "Insulin decreased evoked current amplitudes in this cell!"}
+raw_eEPSC_control_plots$L
+```
 
 ### Step 2: Prune data
 
+It is often useful to summarize the data per minute. If you are familiar with
+GraphPad Prism's "prune rows" function, `make_pruned_EPSC_data()` will perform
+the same function.
+
+> In this vignette, I'll use the example of pruning data per minute because this
+is what is typically used in the Crosby lab. You can change this value by
+changing the `interval_length` to something other than `1`.
+
+```{r prune-data}
+pruned_eEPSC_df <- make_pruned_EPSC_data(
+  data = raw_eEPSC_df,
+  current_type = "eEPSC",
+  min_time_value = 0,
+  max_time_value = 25,
+  baseline_length = 5,
+  interval_length = 1
+)
+```
+
+This function will return a list of three dataframes. To access each list, type the object name, followed by a dollar sign. For example, write `pruned_eEPSC_df$individual_cells` to access the first dataframe in the list.
+
+The three dataframes are:
+
+*`$individual_cells`: This dataframe has the same structure as the raw evoked current data, except the data have been pruned per minute. New columns include `mean_P1` and `sd_P1`, and there are some other columns for variance analysis (please see the documentation for `make_pruned_EPSC_data()` for more details).
+
+*`$for_table`: This dataframe has only two columns: `letter` and `P1_transformed` where the pruned `P1` values have been collapsed into a list. This is used to create a sparkline in `make_interactive_summary_table()`.
+
+*`$all_cells`: This dataframe contains data that have been grouped by treatment and sex. In this dataframe, the data have been summarized and collapsed into one datapoint per minute for all cells per minute for a specific sex. This is useful for creating summary plots for publication (e.g. `plot_summary_current_data()`) and for future statistical testing to compare groups.
+
+#### Plot pruned data
+
+You can use the same `plot_raw_current_data()` to plot the pruned data. You will
+need to make changes to the following arguments:
+
+* `data`: Refer to the third element of the list produced from `make_pruned_EPSC_data()`. This is `$individual_cells`.
+* `parameter`: Change this to "mean_P1".
+* `pruned`: Change this to "yes"
+
+```{r plot-pruned-current-data}
+raw_eEPSC_control_plots_pruned <- plot_raw_current_data(
+  data = sample_pruned_eEPSC_df$individual_cells,
+  plot_treatment = "Control",
+  plot_category = 2,
+  current_type = "eEPSC",
+  parameter = "mean_P1",
+  pruned = "yes",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+  theme_options = sample_theme_options,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
+```
+
+```{r plot-pruned-cell-L, fig.cap = "See how this is the same as the raw data plot, except for it is pruned per minute?"}
+raw_eEPSC_control_plots_pruned$L
+```
+
+The pruned data from all cells within a specific treatment and sex (`$all_cells`) will enable you to make a summary plot using `plot_summary_current_data()`.
+
+> Notice how `data` is now `sample_pruned_eEPSC_df$all_cells`, and `parameter` is "amplitude". There are lots of customization opportunities here, including adding a representative trace as a .png overlay, which you can read about in the documentation for this function.
+
+```{r plot-summary-data}
+plot_summary_current_data(
+  plot_category = 2,
+  plot_treatment = "Control",
+  data = sample_pruned_eEPSC_df$all_cells,
+  current_type = "eEPSC",
+  parameter = "amplitude",
+  include_representative_trace = "no",
+  signif_stars = "yes",
+  t_test_df = sample_eEPSC_t_test_df,
+  hormone_added = "Insulin",
+  large_axis_text = "no",
+  shade_intervals = "no",
+  hormone_or_HFS_start_time = 5,
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
+)
+```
 
 
 ### Step 3: Summarize data
 
+The next step is to group the data by treatment by sex and obtain summary data.
+This dataset groups the data into intervals and generates summary statistics
+(like mean and standard error) for each point. The interval length was already
+specified during the `make_normalized_EPSC_data()` function from earlier.
 
+```{r make-summary-data}
+summary_eEPSC_df <- make_summary_EPSC_data(
+  data = sample_raw_eEPSC_df,
+  current_type = "eEPSC",
+  save_output_as_RDS = "no"
+)
 
+reactable(summary_eEPSC_df)
+```
 
 
 ## Other analyses
 
 ### Paired-pulse ratio
 
+#### Create PPR dataset
+
+The function `make_PPR_data()` is actually just a filtering function that will limit the raw evoked current data to two specific intervals. These represent the "before" (`baseline_interval`) and "after" (`post_hormone_interval`) states. You can also choose to limit the PPR values to a certain range to exclude outliers.
+
+```{r make-ppr-data}
+PPR_df <- make_PPR_data(
+  data = raw_eEPSC_df,
+  include_all_treatments = "yes",
+  list_of_treatments = NULL,
+  PPR_min = 0,
+  PPR_max = 5,
+  baseline_interval = "t0to5",
+  post_hormone_interval = "t20to25",
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
+
+head(PPR_df, n = 10) %>% 
+  reactable()
+
+```
+
+
+#### Plot PPR data
+
+For a specific treatment:
+
+```{r plot-one-ppr-treatment}
+plot_PPR_data_one_treatment(
+  data = PPR_df,
+  plot_treatment = "Control",
+  plot_category = 2,
+  baseline_label = "Baseline",
+  post_hormone_label = "Insulin",
+  large_axis_text = "no",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options,
+  save_plot_png = "no"
+)
+```
+
+For multiple treatments:
+
+```{r plot-multiple-ppr-treatments}
+plot_PPR_data_multiple_treatments(
+  data = PPR_df,
+  include_all_treatments = "yes",
+  plot_category = 2,
+  baseline_label = "B",
+  post_hormone_label = "I",
+  theme_options = sample_theme_options,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
+```
 
 ### Variance analysis
 
+#### Create variance dataset
+
+```{r make-variance-dataset}
+variance_df <- make_variance_data(
+  data = summary_eEPSC_df,
+  df_category = 2,
+  include_all_treatments = "yes",
+  list_of_treatments = NULL,
+  baseline_interval = "t0to5",
+  post_hormone_interval = "t20to25",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_output_as_RDS = "no"
+)
+
+reactable(variance_df)
+```
+
+
+#### Plot variance comparisons
+
+You can create plots comparing the inverse coefficient of variation squared, and the variance-to-mean ratio.
+
+```{r}
+cv_comparison_control_plot <- plot_variance_comparison_data(
+  data = variance_df,
+  plot_category = 2,
+  plot_treatment = "Control",
+  variance_measure = "cv",
+  baseline_interval = "t0to5",
+  post_hormone_interval = "t20to25",
+  post_hormone_label = "Insulin",
+  large_axis_text = "no",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
+)
+
+vmr_comparison_control_plot <- plot_variance_comparison_data(
+  data = variance_df,
+  plot_category = 2,
+  plot_treatment = "Control",
+  variance_measure = "VMR",
+  baseline_interval = "t0to5",
+  post_hormone_interval = "t20to25",
+  post_hormone_label = "Insulin",
+  large_axis_text = "no",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
+)
+
+cv_comparison_control_plot
+vmr_comparison_control_plot
+```
 
 ### Baseline comparisons
+
+
+```{r}
+plot_baseline_data(
+  data = summary_eEPSC_df,
+  current_type = "eEPSC",
+  parameter = "raw_amplitude",
+  include_all_treatments = "yes",
+  list_of_treatments = NULL,
+  baseline_interval = "t0to5",
+  large_axis_text = "no",
+  plot_width = 8,
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options,
+  save_plot_png = "no"
+)
+```
+
