@@ -112,10 +112,10 @@ are "eEPSC" or "sEPSC".</p></dd>
 <dt id="arg-parameter">parameter<a class="anchor" aria-label="anchor" href="#arg-parameter"></a></dt>
 <dd><p>A character value specifying the parameter to be plotted on
 the y-axis. For evoked currents (<code>current_type = "eEPSC"</code>), the available
-parameters are "P1", "mean_P1" and "PPR". <em>Note</em>: If you select "mean_P1",
-you must set the <code>pruned</code> argument to "yes". For spontaneous currents
-(<code>current_type = "sEPSC"</code>), the available parameters are "amplitude" or
-"frequency".</p></dd>
+parameters are "P1", "P1_transformed", "mean_P1" and "PPR". <em>Note</em>: If you
+select "mean_P1", you must set the <code>pruned</code> argument to "yes". For
+spontaneous currents (<code>current_type = "sEPSC"</code>), the available parameters
+are "amplitude" or "frequency".</p></dd>
 
 
 <dt id="arg-pruned">pruned<a class="anchor" aria-label="anchor" href="#arg-pruned"></a></dt>
@@ -163,14 +163,16 @@ they will all go in subfolders below Figures/ in your project directory.</p></dd
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list of ggplot objects, where each list element is a scatterplot of
-one recording. If <code>save_plot_png == "yes"</code>, it will also generate a .png
+    <p>A list of ggplot objects, where each list element is a scatterplot
+of one recording. If <code>save_plot_png == "yes"</code>, it will also generate a .png
 file from each ggplot element in the list. The figures will be exported to
 <code>Figures/Evoked-currents/Output-individual-plots</code> or
 <code>Figures/Spontaneous-currents/Output-individual-plots</code>, depending on the
 <code>current_type</code>. The .png filename will contain the <code>letter</code>. If the data
-are pruned, the filename will also include <code>_pruned</code> in the filename.
-Example filenames include "A.png", and "A_pruned.png".</p>
+are pruned, the filename will also include <code>_pruned</code> in the filename. If
+the data are normalized (<code>parameter == "P1_transformed</code>), the title will
+include <code>_normalized</code> in the filename. Example filenames include "A.png",
+"A_normalized", and "A_pruned.png".</p>
     </div>
 
     <div class="section level2">
