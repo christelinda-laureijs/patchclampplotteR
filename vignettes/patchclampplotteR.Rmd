@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r knit-options-libraries, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -19,15 +19,16 @@ library(dplyr)
 
 # How to use patchclampplotteR
 
-`patchclampplotteR` will help you analyze and plot your patch clamp
-data efficiently. This vignette will walk you through a complete example of
-using `patchclampplotteR` to go from raw data to publication-quality plots!
+`patchclampplotteR` will help you analyze and plot your patch clamp data
+efficiently. This vignette will walk you through the complete process of
+transforming raw data into publication-quality plots!
+
+## Install and load package
 
 You can install the development version of patchclampplotteR from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/). Only do this once per computer, or if there's a major update.
 
 ```{r install-package-demo, warning=FALSE, message=FALSE}
-# Run this once to install
 pak::pak("christelinda-laureijs/patchclampplotteR")
 ```
 
@@ -41,31 +42,40 @@ library(patchclampplotteR)
 
 This dataset consists of whole-cell patch clamp recordings of neurons within the
 dorsomedial hypothalamus (DMH), a brain region critical for appetite regulation,
-stress responses, thermoregulation, and other processes. I recorded evoked
-excitatory post-synaptic currents for five minutes under baseline conditions,
-then added 500 nM insulin to the perfusion solution, and I continued recording
-for 25 minutes.
+stress responses and other processes. I recorded evoked excitatory post-synaptic
+currents for five minutes under baseline conditions, then added 500 nM insulin
+to the perfusion solution, and I continued recording for 25 minutes.
+
+> My goal is to determine if insulin affects evoked current amplitude in DMH
+neurons.
 
 ## Import raw .csv files
 
-My goal is to determine if insulin affects evoked current amplitude in DMH
-neurons. First, I must import a `.csv` file containing information about factors
-such as the animal's age and sex, the cell ID number, and other details. Please
-see the **Required columns** section of the documentation for
-`import_cell_characteristics_df()` for explanations of required columns and what
-they include.
+First, I must import a `.csv` file containing information about factors such as
+the animal's age and sex, the cell ID number, and other details. Please see the
+**Required columns** section of the documentation for
+`import_cell_characteristics_df()` for explanations of the required columns and
+what they include.
 
-> Note: Since this vignette is included within an R package, the following code requires the function `import_ext_data()` to properly locate the `.csv` file in the package folder. This won't be required when you are using the package within your own project folder.
+> Note: Since this vignette is included within an R package, the following code
+requires the function `import_ext_data()` to properly locate the `.csv` file in
+the package folder. This won't be required when you are using the package within
+your own project folder.
 >
-> You can just write the path to the filename directly within `import_cell_characteristics_df()`. For example, you should write `import_cell_characteristics_df("Data/cell_info.csv")` to use `cell_info.csv` located within the `Data/` folder.
+> You can just write the path to the filename
+directly within `import_cell_characteristics_df()`. For example, you should
+write `import_cell_characteristics_df("Data/cell_info.csv")` to use
+`cell_info.csv` located within the `Data/` folder.
 
-```{r}
+```{r import-cell-characteristics}
 cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
 
 reactable(cell_characteristics, defaultPageSize = 5)
 ```
 
-Next, I will import the raw evoked current data that has been copied over from Clampfit. This is a `.csv` file containing four columns: `Letter`, `ID`, `P1` and `P2`:
+Next, I will import the raw evoked current data that has been copied over from
+Clampfit. This is a `.csv` file containing four columns: `Letter`, `ID`, `P1`
+and `P2`:
 
 * `letter`: A unique identifier for a single recording, which allows you to link evoked current data, spontaneous current data, action potential, data, and information on cell characteristics.
 
@@ -75,29 +85,40 @@ Next, I will import the raw evoked current data that has been copied over from C
 
 * `P2`: The amplitude of the second evoked current (pA).
 
-> Don't worry too much about capitalizing the column names or not. `add_new_cells()` will automatically convert all column names to lowercase for consistency across functions. Capitalized letters will be retained for columns like `ID`, `X`, `Y`, `P1`, and `P2`.
+> Don't worry too much about capitalizing the column names or not.
+`add_new_cells()` will automatically convert all column names to lowercase for
+consistency across functions. Capitalized letters will be retained for columns
+like `ID`, `X`, `Y`, `P1`, and `P2`.
 
-```{r}
-sample_eEPSC_data <- read.csv(import_ext_data("sample_eEPSC_data.csv"))
+```{r sample-eEPSC-data}
+sample_eEPSC_data <- read.csv(import_ext_data("sample_new_eEPSC_data.csv"))
 
 sample_eEPSC_data %>% reactable(defaultPageSize = 5)
 ```
 
 ## Add new cells
 
-The next step is to merge the raw evoked current data with the cell characteristics data. `add_new_cells()` will merge these two datasets, using `letter` as the common column. This function requires three `.csv` files:
+The next step is to merge the raw evoked current data with the cell
+characteristics data. `add_new_cells()` will merge these two datasets, using
+`letter` as the common column. This function requires three `.csv` files:
 
 * The new raw data
 * The cell characteristics
-* An existing `.csv` with raw data that has been previously imported. As your project goes on, you will eventually be appending new data onto your existing datasheet, but for now, we will start with a blank `.csv` file containing just the required column names:
+* An existing `.csv` with raw data that has been previously imported. As your
+project goes on, you will eventually be appending new data onto your existing
+datasheet, but if you are starting completely fresh, use a blank `.csv` file
+containing just the required column names.
 
-```{r}
+```{r blank-sheet-example}
 blank_csv <- read.csv(import_ext_data("empty_raw_eEPSC_datasheet.csv"))
 
 reactable(blank_csv)
 ```
 
-```{r}
+Here is an example of what a full dataset can look like. In the following
+example, I've just added new data for one cell (`letter = AV`).
+
+```{r add-new-cells}
 raw_eEPSC_data <- add_new_cells(
   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
@@ -107,3 +128,105 @@ raw_eEPSC_data <- add_new_cells(
 )
 ```
 
+**Output messages**
+
+`add_new_cells()` pruduces several warnings and messages. One warning lets you
+know you know that the column names have been renamed to lowercase. This is to
+avoid case-sensitive issues from appearing in later functions.
+
+The first message generated with `add_new_cells()` indicate that the
+`sample_cell_characteristics.csv` and `sample_new_eEPSC_data.csv` have the same
+cells. This is useful to catch if you forget to add the cell characteristics for
+the new data.
+
+The second message indicates that all letters in the new data are new relative
+to the existing dataset. This ensures that you don't accidentally paste in the
+same data twice, resulting in duplicated data.
+
+The final message prints a list of the letters that have been added to the
+dataset. In this case, this is `AV`. It is a good way to confirm that you've
+added the letters you were planning to add.
+
+## Analyze data
+
+### Step 1: Normalize currents
+
+The first step is to normalize the current amplitudes within each recording
+relative to the average current amplitude during the baseline period. This makes
+it easier to compare across cells that have a wide range of starting amplitudes,
+since all baseline values will be converted to (roughly) 100%.
+
+> Note how I set the minimum and maximum time values. This will limit the data
+to values between 0 min and 25 minutes.
+>
+> I set the `interval_length` to 5 because I wanted to divide my data into
+5-minute intervals for later statistical analyses.
+>
+> The baseline period (`baseline_length`) lasted 5 minutes.
+> Clampfit recorded the current amplitude as negative values, so I set
+`negative_transform_currents` to "yes" which will flip the current amplitudes to
+positive values.
+
+```{r normalize-data}
+raw_eEPSC_df <- make_normalized_EPSC_data(
+  filename = import_ext_data("sample_eEPSC_data.csv"),
+  current_type = "eEPSC",
+  min_time_value = 0,
+  max_time_value = 25,
+  interval_length = 5,
+  baseline_length = 5,
+  negative_transform_currents = "yes"
+)
+
+
+reactable(raw_eEPSC_df, defaultPageSize = 5)
+```
+
+`make_normalized_EPSC_data()` will retain the cell characteristics and `P1` and
+`P2` values from before. However, you will notice some changes.
+
+If you set `negative_transform` to "yes", `P1` and `P2` will be multiplied by
+`-1`. This is to "flip" current amplitude data that was recorded as negative
+values in Clampfit. Since the data are evoked current data (`current_type =
+"eEPSC"`), some new columns are added. They are:
+
+* PPR: The paired-pulse ratio, which is the amplitude of the second evoked current divided by the first evoked current (`PPR = P2/P1`).
+
+* interval: The interval that the data belongs to. I set the `interval_length` to 5, which means the data will be divided into 5-minute intervals. The intervals will have names like "t0to5", "t5to10", and so on up until the maximum interval.
+
+* baseline_range: You probably won't interact with this much, but this is just a column stating "TRUE" if the time is within the baseline period, or "FALSE" if the time is outside of this range. This is required for the normalization function to identify which values are outside of the baseline (and should be transformed).
+
+* baseline_mean: This is one number that represents the average evoked current amplitude during the baseline period. This value is different for each recording.
+
+* P1_transformed: The first evoked current amplitude, normalized relative to the mean baseline amplitude. For example, if the mean baseline amplitude is **80 pA**and a `P1` value is **40 pA**, `P1_transformed` will be **50%**.
+
+* P2_transformed: The second evoked current amplitude, normalized relative to the mean baseline amplitude of the first evoked current.
+
+#### Plot raw data
+
+Let's see what the raw values look like over time!
+
+
+
+
+
+
+### Step 2: Prune data
+
+
+
+### Step 3: Summarize data
+
+
+
+
+
+## Other analyses
+
+### Paired-pulse ratio
+
+
+### Variance analysis
+
+
+### Baseline comparisons

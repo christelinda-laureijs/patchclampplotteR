@@ -326,10 +326,10 @@ plot_baseline_data <- function(data,
 #'   are "eEPSC" or "sEPSC".
 #' @param parameter A character value specifying the parameter to be plotted on
 #'   the y-axis. For evoked currents (`current_type = "eEPSC"`), the available
-#'   parameters are "P1", "mean_P1" and "PPR". *Note*: If you select "mean_P1",
-#'   you must set the `pruned` argument to "yes". For spontaneous currents
-#'   (`current_type = "sEPSC"`), the available parameters are "amplitude" or
-#'   "frequency".
+#'   parameters are "P1", "P1_transformed", "mean_P1" and "PPR". *Note*: If you
+#'   select "mean_P1", you must set the `pruned` argument to "yes". For
+#'   spontaneous currents (`current_type = "sEPSC"`), the available parameters
+#'   are "amplitude" or "frequency".
 #' @param pruned A character value ("yes" or "no") specifying if the data are
 #'   pruned. This is only used for evoked current data where `parameter =
 #'   "mean_P1`. The plot will then present the data as means with error bars.
@@ -354,14 +354,16 @@ plot_baseline_data <- function(data,
 #'   [sample_treatment_names_and_colours] for an example of what this dataframe
 #'   should look like.
 #'
-#' @returns A list of ggplot objects, where each list element is a scatterplot of
-#'   one recording. If `save_plot_png == "yes"`, it will also generate a .png
+#' @returns A list of ggplot objects, where each list element is a scatterplot
+#'   of one recording. If `save_plot_png == "yes"`, it will also generate a .png
 #'   file from each ggplot element in the list. The figures will be exported to
 #'   `Figures/Evoked-currents/Output-individual-plots` or
 #'   `Figures/Spontaneous-currents/Output-individual-plots`, depending on the
 #'   `current_type`. The .png filename will contain the `letter`. If the data
-#'   are pruned, the filename will also include `_pruned` in the filename.
-#'   Example filenames include "A.png", and "A_pruned.png".
+#'   are pruned, the filename will also include `_pruned` in the filename. If
+#'   the data are normalized (`parameter == "P1_transformed`), the title will
+#'   include `_normalized` in the filename. Example filenames include "A.png",
+#'   "A_normalized", and "A_pruned.png".
 #' @export
 #'
 #' @examples
@@ -447,9 +449,9 @@ plot_raw_current_data <-
       # The plots should go to specific folders depending on current type
       filepath <- "Figures/Evoked-currents/Output-individual-plots"
 
-      allowed_parameters_list <- "\"P1\", \"mean_P1\", or \"PPR\""
+      allowed_parameters_list <- "\"P1\", \"P1_transformed\", \"mean_P1\", or \"PPR\""
 
-      if (!parameter %in% c("P1", "mean_P1", "PPR")) {
+      if (!parameter %in% c("P1", "P1_transformed", "mean_P1", "PPR")) {
         stop(
           "parameter must be ",
           allowed_parameters_list,
@@ -465,6 +467,17 @@ plot_raw_current_data <-
         if (pruned == "yes") {
           stop(
             "pruned = \"yes\"), but parameter = \"P1\". ",
+            "\nDid you mean \"mean_P1\"?. "
+          )
+        }
+      }
+
+      if (parameter == "P1_transformed") {
+        y_title <- "eEPSC Amplitude (% Baseline)"
+
+        if (pruned == "yes") {
+          stop(
+            "pruned = \"yes\"), but parameter = \"P1_transformed\". ",
             "\nDid you mean \"mean_P1\"?. "
           )
         }
@@ -516,6 +529,12 @@ plot_raw_current_data <-
 
     if (pruned == "yes") {
       annotation <- "_pruned"
+    } else {
+      annotation <- ""
+    }
+
+    if (parameter == "P1_transformed") {
+      annotation <- "_normalized"
     } else {
       annotation <- ""
     }

@@ -326,6 +326,8 @@ add_new_cells <- function(new_raw_data_csv,
 
   if (all(new_letters %in% cell_characteristics$letter)) {
     message(
+      "\n",
+      "\n",
       "Letter check passed: All letters are present in both \"",
       cell_characteristics_csv,
       "\" \nand \"",
@@ -337,6 +339,8 @@ add_new_cells <- function(new_raw_data_csv,
     )
   } else {
     stop(
+      "\n",
+      "\n",
       "Missing letters detected in \"",
       cell_characteristics_csv,
       "\". \nDid you add cell characteristics for ALL the new cells in \"",
@@ -394,6 +398,7 @@ add_new_cells <- function(new_raw_data_csv,
     overlapping_letters_spaces <- paste0(overlapping_letters, " ")
 
     stop(
+      "\n",
       "\n!! Overlapping letter(s) detected!!    --->  ",
       overlapping_letters_spaces,
       "\nThese cells in \"",
@@ -407,7 +412,7 @@ add_new_cells <- function(new_raw_data_csv,
     )
   } else {
     message(
-      "\n \nLetter check passed: All letters in \"",
+      "\n \Duplication check passed: All letters in \"",
       new_raw_data_csv,
       "\" are new relative to ",
       "\"",
