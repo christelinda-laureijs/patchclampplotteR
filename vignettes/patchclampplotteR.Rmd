@@ -155,7 +155,7 @@ unique(raw_eEPSC_data$letter)
 ```
 
 
-## Analyze data
+## Analyze current amplitude
 
 ### Step 1: Normalize currents
 
@@ -213,7 +213,7 @@ values in Clampfit. Since the data are evoked current data (`current_type =
 
 * `baseline_mean`: This is one number that represents the average evoked current amplitude during the baseline period. This value is different for each recording.
 
-* `P1_transformed`: The first evoked current amplitude, normalized relative to the mean baseline amplitude. For example, if the mean baseline amplitude is **80 pA**and a `P1` value is **40 pA**, `P1_transformed` will be **50%**.
+* `P1_transformed`: The first evoked current amplitude, normalized relative to the mean baseline amplitude. For example, if the mean baseline amplitude is **80 pA** and a `P1` value is **40 pA**, `P1_transformed` will be **50%**.
 
 * `P2_transformed`: The second evoked current amplitude, normalized relative to the mean baseline amplitude of the first evoked current.
 
@@ -245,11 +245,13 @@ raw_eEPSC_control_plots <- plot_raw_current_data(
 ```
 
 `plot_raw_current_data()` will return a list of ggplot objects. If you want to
-observe just one specific plot, you can select it by letter.
+observe just one specific plot, you can select it by letter.  
 
-```{r view-one-raw-plot, fig.cap = "Insulin decreased evoked current amplitudes in this cell!"}
+```{r view-one-raw-plot}
 raw_eEPSC_control_plots$L
 ```
+
+
 
 ### Step 2: Prune data
 
@@ -276,11 +278,11 @@ This function will return a list of three dataframes. To access each list, type 
 
 The three dataframes are:
 
-*`$individual_cells`: This dataframe has the same structure as the raw evoked current data, except the data have been pruned per minute. New columns include `mean_P1` and `sd_P1`, and there are some other columns for variance analysis (please see the documentation for `make_pruned_EPSC_data()` for more details).
+* `$individual_cells`: This dataframe has the same structure as the raw evoked current data, except the data have been pruned per minute. New columns include `mean_P1` and `sd_P1`, and there are some other columns for variance analysis (please see the documentation for `make_pruned_EPSC_data()` for more details).
 
-*`$for_table`: This dataframe has only two columns: `letter` and `P1_transformed` where the pruned `P1` values have been collapsed into a list. This is used to create a sparkline in `make_interactive_summary_table()`.
+* `$for_table`: This dataframe has only two columns: `letter` and `P1_transformed` where the pruned `P1` values have been collapsed into a list. This is used to create a sparkline in `make_interactive_summary_table()`.
 
-*`$all_cells`: This dataframe contains data that have been grouped by treatment and sex. In this dataframe, the data have been summarized and collapsed into one datapoint per minute for all cells per minute for a specific sex. This is useful for creating summary plots for publication (e.g. `plot_summary_current_data()`) and for future statistical testing to compare groups.
+* `$all_cells`: This dataframe contains data that have been grouped by treatment and sex. In this dataframe, the data have been summarized and collapsed into one datapoint per minute for all cells per minute for a specific sex. This is useful for creating summary plots for publication (e.g. `plot_summary_current_data()`) and for future statistical testing to compare groups.
 
 #### Plot pruned data
 
@@ -348,15 +350,14 @@ summary_eEPSC_df <- make_summary_EPSC_data(
   save_output_as_RDS = "no"
 )
 
-reactable(summary_eEPSC_df)
+head(summary_eEPSC_df, n = 30) %>% 
+  reactable()
 ```
 
 
-## Other analyses
+## Analyze the paired-pulse ratio
 
-### Paired-pulse ratio
-
-#### Create PPR dataset
+### Create PPR dataset
 
 The function `make_PPR_data()` is actually just a filtering function that will limit the raw evoked current data to two specific intervals. These represent the "before" (`baseline_interval`) and "after" (`post_hormone_interval`) states. You can also choose to limit the PPR values to a certain range to exclude outliers.
 
@@ -378,7 +379,7 @@ head(PPR_df, n = 10) %>%
 ```
 
 
-#### Plot PPR data
+### Plot PPR data
 
 For a specific treatment:
 
@@ -410,9 +411,9 @@ plot_PPR_data_multiple_treatments(
 )
 ```
 
-### Variance analysis
+## Variance analysis
 
-#### Create variance dataset
+### Create variance dataset
 
 ```{r make-variance-dataset}
 variance_df <- make_variance_data(
@@ -429,8 +430,7 @@ variance_df <- make_variance_data(
 reactable(variance_df)
 ```
 
-
-#### Plot variance comparisons
+### Plot variance comparisons
 
 You can create plots comparing the inverse coefficient of variation squared, and the variance-to-mean ratio.
 
@@ -465,8 +465,7 @@ cv_comparison_control_plot
 vmr_comparison_control_plot
 ```
 
-### Baseline comparisons
-
+## Compare baseline parameters
 
 ```{r}
 plot_baseline_data(
