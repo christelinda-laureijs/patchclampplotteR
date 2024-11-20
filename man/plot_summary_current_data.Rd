@@ -41,10 +41,10 @@ are "eEPSC" or "sEPSC".}
 
 \item{parameter}{A character value specifying the parameter to be plotted on
 the y-axis. For evoked currents (\code{current_type = "eEPSC"}), the available
-parameters are "P1", "mean_P1" and "PPR". \emph{Note}: If you select "mean_P1",
-you must set the \code{pruned} argument to "yes". For spontaneous currents
-(\code{current_type = "sEPSC"}), the available parameters are "amplitude" or
-"frequency".}
+parameters are "P1", "P1_transformed", "mean_P1" and "PPR". \emph{Note}: If you
+select "mean_P1", you must set the \code{pruned} argument to "yes". For
+spontaneous currents (\code{current_type = "sEPSC"}), the available parameters
+are "amplitude" or "frequency".}
 
 \item{hormone_added}{A character value that will be used as the label over
 the line annotating the period when a hormone was applied. Examples include

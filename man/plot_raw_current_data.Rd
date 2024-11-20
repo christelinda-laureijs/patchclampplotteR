@@ -37,10 +37,10 @@ are "eEPSC" or "sEPSC".}
 
 \item{parameter}{A character value specifying the parameter to be plotted on
 the y-axis. For evoked currents (\code{current_type = "eEPSC"}), the available
-parameters are "P1", "mean_P1" and "PPR". \emph{Note}: If you select "mean_P1",
-you must set the \code{pruned} argument to "yes". For spontaneous currents
-(\code{current_type = "sEPSC"}), the available parameters are "amplitude" or
-"frequency".}
+parameters are "P1", "P1_transformed", "mean_P1" and "PPR". \emph{Note}: If you
+select "mean_P1", you must set the \code{pruned} argument to "yes". For
+spontaneous currents (\code{current_type = "sEPSC"}), the available parameters
+are "amplitude" or "frequency".}
 
 \item{pruned}{A character value ("yes" or "no") specifying if the data are
 pruned. This is only used for evoked current data where \verb{parameter = "mean_P1}. The plot will then present the data as means with error bars.}
@@ -72,14 +72,16 @@ saved as a .png using ggsave. The filepath depends on the current type, but
 they will all go in subfolders below Figures/ in your project directory.}
 }
 \value{
-A list of ggplot objects, where each list element is a scatterplot of
-one recording. If \code{save_plot_png == "yes"}, it will also generate a .png
+A list of ggplot objects, where each list element is a scatterplot
+of one recording. If \code{save_plot_png == "yes"}, it will also generate a .png
 file from each ggplot element in the list. The figures will be exported to
 \code{Figures/Evoked-currents/Output-individual-plots} or
 \code{Figures/Spontaneous-currents/Output-individual-plots}, depending on the
 \code{current_type}. The .png filename will contain the \code{letter}. If the data
-are pruned, the filename will also include \verb{_pruned} in the filename.
-Example filenames include "A.png", and "A_pruned.png".
+are pruned, the filename will also include \verb{_pruned} in the filename. If
+the data are normalized (\verb{parameter == "P1_transformed}), the title will
+include \verb{_normalized} in the filename. Example filenames include "A.png",
+"A_normalized", and "A_pruned.png".
 }
 \description{
 This function enables you to create a scatterplot of raw evoked (or

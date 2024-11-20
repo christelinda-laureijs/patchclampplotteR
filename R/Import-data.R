@@ -412,7 +412,7 @@ add_new_cells <- function(new_raw_data_csv,
     )
   } else {
     message(
-      "\n \Duplication check passed: All letters in \"",
+      "\n \nDuplication check passed: All letters in \"",
       new_raw_data_csv,
       "\" are new relative to ",
       "\"",
