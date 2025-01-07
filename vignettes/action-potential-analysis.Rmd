@@ -1,0 +1,42 @@
+---
+title: "action-potential-analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{action-potential-analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Action Potential Analysis
+
+> Note: This package does not yet contain functions to analyze and plot action potential data. However, I am including this vignette here to assist with raw data analysis in Clampfit.
+
+This vignette will demonstrate how to analyze action potential properties using a raw .abf file. You will identify the first current injection that resulted in action potentials and then select the first action potential within this sweep for further analyses.
+
+```{r header-image, fig.align = 'center', fig.alt = "A banner with pictures of some of the plots that can be created with the patchclampplotteR package.", echo=F}
+knitr::include_graphics("man/figures/AP-first-trace.png")
+```
+
+> You will identify the threshold using the first derivative method. This means that the threshold corresponds to the membrane potential where the action potential velocity is 10 mV/ms or greater (Farries et al., 2010).
+
+
+1. Open the .abf file containing the current clamp step protocol.
+2. Press the “Enter” key to show just one sweep at a time. It will begin at the sweep corresponding to the lowest current injection. Use greater than symbol (>; on some computers you don’t even need to press the shift key) to cycle up through the sweeps.
+3. Move up to sweeps corresponding to higher current injections until you identify the first sweep that contains an action potential. This will be named `t_x`, since it may be *t_5* in one recording, or *t_6* in another, etc. 
+4. Position cursors 1 and 2 around the first action potential in `t_x`. Cursor 1 should be before the threshold (aim for the area before the slope of the curve increases steeply). Cursor 2 should be in the after-hyperpolarization region.
+
+> It is important that cursor 2 touches the curve at a value that is lower than the voltage value for cursor 1. If cursor 1 is lower, then Clampfit may identify the location at cursor 1 as the after-hyperpolarization region.
+
+5. Click on the arithmetic button (it is the button with basic math symbols), then Add Traces. Write "1" and click OK. This will add a new empty trace.
+
+
+References
+
+Farries, M. A., Kita, H., & Wilson, C. J. (2010). Dynamic Spike Threshold and Zero Membrane Slope Conductance Shape the Response of Subthalamic Neurons to Cortical Input. Journal of Neuroscience, 30(39), 13180–13191. https://doi.org/10.1523/JNEUROSCI.1909-10.2010

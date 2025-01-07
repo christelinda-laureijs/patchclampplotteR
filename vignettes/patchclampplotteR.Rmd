@@ -51,6 +51,8 @@ neurons.
 
 ## Import raw .csv files
 
+### Cell Characteristics
+
 First, I must import a `.csv` file containing information about factors such as
 the animal's age and sex, the cell ID number, and other details. Please see the
 **Required columns** section of the documentation for
@@ -72,6 +74,8 @@ cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_c
 
 reactable(cell_characteristics)
 ```
+
+### Raw evoked current data
 
 Next, I will import the raw evoked current data that has been copied over from
 Clampfit. This is a `.csv` file containing four columns: `Letter`, `ID`, `P1`
