@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   action-potential-analysis: action-potential-analysis.html
   patchclampplotteR: patchclampplotteR.html
-last_built: 2025-01-07T17:29Z
+last_built: 2025-01-07T19:29Z
 urls:
   reference: https://christelinda-laureijs.github.io/patchclampplotteR/reference
   article: https://christelinda-laureijs.github.io/patchclampplotteR/articles

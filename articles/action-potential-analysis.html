@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>action-potential-analysis • patchclampplotteR</title>
+<title>Action Potential Analysis • patchclampplotteR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,12 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="action-potential-analysis">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Action Potential Analysis">
+<meta name="description" content="Learn how to obtain action potential properties from a raw .abf file in Clampfit.
+">
+<meta property="og:description" content="Learn how to obtain action potential properties from a raw .abf file in Clampfit.
+">
+<meta property="og:image" content="https://christelinda-laureijs.github.io/patchclampplotteR/logo.png">
 <!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-M92L6F0ZB2"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -48,7 +53,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/action-potential-analysis.html">action-potential-analysis</a></li>
+<li><a class="dropdown-item" href="../articles/action-potential-analysis.html">Action Potential Analysis</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -67,10 +72,11 @@
 
 
 
-
-<div class="row">
+<script src="action-potential-analysis_files/core-js-2.5.3/shim.min.js"></script><script src="action-potential-analysis_files/react-18.2.0/react.min.js"></script><script src="action-potential-analysis_files/react-18.2.0/react-dom.min.js"></script><script src="action-potential-analysis_files/reactwidget-2.0.0/react-tools.js"></script><link href="action-potential-analysis_files/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="action-potential-analysis_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="action-potential-analysis_files/reactable-0.4.4/reactable.css" rel="stylesheet">
+<script src="action-potential-analysis_files/reactable-binding-0.4.4/reactable.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>action-potential-analysis</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Action Potential Analysis</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/christelinda-laureijs/patchclampplotteR/blob/main/vignettes/action-potential-analysis.Rmd" class="external-link"><code>vignettes/action-potential-analysis.Rmd</code></a></small>
@@ -85,19 +91,81 @@
 <blockquote>
 <p>Note: This package does not yet contain functions to analyze and plot
 action potential data. However, I am including this vignette here to
-assist with raw data analysis in Clampfit.</p>
+show you how to perform raw data analysis in Clampfit. The resulting
+data will be ready to use in future package versions.</p>
 </blockquote>
 <p>This vignette will demonstrate how to analyze action potential
 properties using a raw .abf file. You will identify the first current
 injection that resulted in action potentials and then select the first
 action potential within this sweep for further analyses.</p>
-<p><img src="figures%2FAP-first-trace.png" alt="A banner with pictures of some of the plots that can be created with the patchclampplotteR package." width="1039" style="display: block; margin: auto;"></p>
+<p><img src="figures%2FAP-first-trace.png" alt="An image of a current clamp steps recording with the first action potential outlined with a box." width="1039" style="display: block; margin: auto;"></p>
 <blockquote>
 <p>You will identify the threshold using the first derivative method.
 This means that the threshold corresponds to the membrane potential
 where the action potential velocity is 10 mV/ms or greater (Farries et
 al., 2010).</p>
 </blockquote>
+<div class="section level3">
+<h3 id="action-potential-properties">Action Potential Properties<a class="anchor" aria-label="anchor" href="#action-potential-properties"></a>
+</h3>
+<p>Before you begin, you should set up a .csv file with the following
+columns:</p>
+<ul>
+<li>
+<code>Letter</code> The unique letter identifier of a single cell.
+You can use this to link data from different recordings taken from the
+same cell.</li>
+<li>
+<code>State</code> Must be <code>Baseline</code> or
+<code>Post</code>, indicating a current clamp protocol taken after a
+hormone has been added or some other modification has taken place.</li>
+<li>
+<code>Time_of_Threshold</code> A numerical value (in ms) used to
+determine properties like the latency to fire.</li>
+<li>
+<code>t_x</code> The membrane potential at the moment that an action
+potential is initiated, also known as the threshold.</li>
+<li>
+<code>t_11</code> The derivative of the trace you are analyzing.
+Must be 10 or greater to properly identify the threshold.</li>
+<li>
+<code>ID</code> A character value indicating the recording
+number.</li>
+<li>
+<code>First_sweep_with_APs</code> A handy column containing the
+sweep number where action potentials first appeared (going from the
+lowest current injection to the highest, identify this sweep
+visually).</li>
+<li>
+<code>Trace_start</code> This is an automatic value calculated by
+Clampfit, and it corresponds to the sweep number. It is not used in any
+analyses, but it will automatically come with the analysis.</li>
+<li>
+<code>Peak_amplitude</code> The membrane potential (in mV) during
+maximum depolarization.</li>
+<li>
+<code>Time_to_Peak</code>The time of the peak amplitude. A function
+in patchclampplotteR (to come in the near future!) will subtract
+<code>Time_of_Threshold</code> from <code>Time_to_Peak</code> to get the
+time of peak relative to the threshold.</li>
+<li>
+<code>Antipeak_amplitude</code> The afterhyperpolarization amplitude
+(in mV)</li>
+<li>
+<code>Time_of_antipeak</code> The time of the
+after-hyperpolarization. As mentioned in the description of
+<code>Time_to_Peak</code> above, this will later be converted to time of
+antipeak relative to the <code>Time_of_Threshold</code>.</li>
+<li>
+<code>Half-width</code> The width of the action potential when the
+membrane potential is half of the <code>Peak_amplitude</code>.</li>
+</ul>
+<p><img src="figures%2FAP-properties.png" alt="An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire." width="1056" style="display: block; margin: auto;"></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="clampfit-analysis">Clampfit Analysis<a class="anchor" aria-label="anchor" href="#clampfit-analysis"></a>
+</h2>
 <ol style="list-style-type: decimal">
 <li>Open the .abf file containing the current clamp step protocol.</li>
 <li>Press the “Enter” key to show just one sweep at a time. It will
@@ -119,18 +187,43 @@ lower than the voltage value for cursor 1. If cursor 1 is lower, then
 Clampfit may identify the location at cursor 1 as the
 after-hyperpolarization region.</p>
 </blockquote>
+<p><img src="figures%2FAP-cursors.png" alt="A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than cursor 2." width="156" style="display: block; margin: auto;"></p>
 <ol start="5" style="list-style-type: decimal">
-<li>Click on the arithmetic button (it is the button with basic math
+<li><p>Click on the arithmetic button (it is the button with basic math
 symbols), then Add Traces. Write “1” and click OK. This will add a new
-empty trace.</li>
+empty trace, called <code>t_11</code>.</p></li>
+<li><p><code>t_11</code> should be the derivative of <code>t_x</code>.
+In the <code>Expression</code> box, write <code>t11=diff(t6)</code>
+(replace <code>t6</code> with your value for <code>t_x</code>).</p></li>
 </ol>
-<p>References</p>
+<p><img src="figures%2FAP-expression-box.png" alt="A screenshot of the Arithmetic box of Clampfit showing the formula t11=diff(t6) inserted into the expression field." width="406" style="display: block; margin: auto;"></p>
+<ol start="7" style="list-style-type: decimal">
+<li><p>Click on <code>Edit</code> -&gt; <code>Transfer Traces</code> and
+set the <code>Region to transfer</code> as <code>Cursors 1..2</code>. In
+the <code>Trace Selection</code> category, choose only
+<code>Vm_primary ()</code> as the signal. Select <code>t_x</code> and
+<code>t_11</code> for the traces, then click OK.</p></li>
+<li><p>The <code>Results</code> page will display three columns:
+<code>Time (ms)</code>, <code>Trace #6 (or #5, #4, etc.)</code>, and
+<code>Trace #11</code>. In this example, the middle column is
+<code>Trace #6</code>, but this name will vary depending on the data.
+<code>Trace #6</code> is the membrane potential in mV, and
+<code>Trace #11</code> is the derivative of
+<code>Trace #6</code>.</p></li>
+<li><p>Scroll down the <code>Trace #11</code> column (the derivative
+column) until you see the first value that is greater than or equal to
+10 mV/ms. Copy the value of all three columns.</p></li>
+<li><p>Your .csv file should now look like this:</p></li>
+</ol>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["A"],"State":["Baseline"],"Time_of_Threshold":[239.6001],"t_x":[-29.63256836],"t_11":[67.13457489],"ID":["23714007.abf"],"First_sweep_with_APs":[6]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_Threshold","name":"Time_of_Threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t_11","name":"t_11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"First_sweep_with_APs","name":"First_sweep_with_APs","type":"numeric"}],"dataKey":"e60e6e41f950475dd5569efaa426f080"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>References</p>
 <p>Farries, M. A., Kita, H., &amp; Wilson, C. J. (2010). Dynamic Spike
 Threshold and Zero Membrane Slope Conductance Shape the Response of
 Subthalamic Neurons to Cortical Input. Journal of Neuroscience, 30(39),
 13180–13191. <a href="https://doi.org/10.1523/JNEUROSCI.1909-10.2010" class="external-link uri">https://doi.org/10.1523/JNEUROSCI.1909-10.2010</a></p>
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
