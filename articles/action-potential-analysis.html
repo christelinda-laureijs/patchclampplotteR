@@ -129,8 +129,9 @@ potential is initiated, also known as the threshold.</li>
 <code>t_11</code> The derivative of the trace you are analyzing.
 Must be 10 or greater to properly identify the threshold.</li>
 <li>
-<code>ID</code> A character value indicating the recording
-number.</li>
+<code>ID</code> A character value indicating the recording number.
+This corresponds to the <code>File Name</code> column that is
+automatically generated in the Results sheet in Clampfit.</li>
 <li>
 <code>First_sweep_with_APs</code> A handy column containing the
 sweep number where action potentials first appeared (going from the
@@ -144,18 +145,17 @@ analyses, but it will automatically come with the analysis.</li>
 <code>Peak_amplitude</code> The membrane potential (in mV) during
 maximum depolarization.</li>
 <li>
-<code>Time_to_Peak</code>The time of the peak amplitude. A function
-in patchclampplotteR (to come in the near future!) will subtract
-<code>Time_of_Threshold</code> from <code>Time_to_Peak</code> to get the
-time of peak relative to the threshold.</li>
+<code>Time_to_Peak</code>The time of the peak amplitude, which
+should be relative to the <code>Time_of_Threshold</code> if you have
+repositioned Cursor 1 to the <code>Time_of_Threshold</code>.</li>
 <li>
 <code>Antipeak_amplitude</code> The afterhyperpolarization amplitude
 (in mV)</li>
 <li>
 <code>Time_of_antipeak</code> The time of the
-after-hyperpolarization. As mentioned in the description of
-<code>Time_to_Peak</code> above, this will later be converted to time of
-antipeak relative to the <code>Time_of_Threshold</code>.</li>
+after-hyperpolarization, which should be relative to the
+<code>Time_of_Threshold</code> if you have repositioned Cursor 1 to the
+<code>Time_of_Threshold</code>.</li>
 <li>
 <code>Half-width</code> The width of the action potential when the
 membrane potential is half of the <code>Peak_amplitude</code>.</li>
@@ -164,8 +164,11 @@ membrane potential is half of the <code>Peak_amplitude</code>.</li>
 </div>
 </div>
 <div class="section level2">
-<h2 id="clampfit-analysis">Clampfit Analysis<a class="anchor" aria-label="anchor" href="#clampfit-analysis"></a>
+<h2 id="clampfit-tutorial">Clampfit Tutorial<a class="anchor" aria-label="anchor" href="#clampfit-tutorial"></a>
 </h2>
+<div class="section level3">
+<h3 id="get-derivative">Get derivative<a class="anchor" aria-label="anchor" href="#get-derivative"></a>
+</h3>
 <ol style="list-style-type: decimal">
 <li>Open the .abf file containing the current clamp step protocol.</li>
 <li>Press the “Enter” key to show just one sweep at a time. It will
@@ -174,8 +177,8 @@ greater than symbol (&gt;; on some computers you don’t even need to
 press the shift key) to cycle up through the sweeps.</li>
 <li>Move up to sweeps corresponding to higher current injections until
 you identify the first sweep that contains an action potential. This
-will be named <code>t_x</code>, since it may be <em>t_5</em> in one
-recording, or <em>t_6</em> in another, etc.</li>
+will be named <code>t_x</code>, since it may be <code>t_5</code> in one
+recording, or <code>t_6</code> in another, etc.</li>
 <li>Position cursors 1 and 2 around the first action potential in
 <code>t_x</code>. Cursor 1 should be before the threshold (aim for the
 area before the slope of the curve increases steeply). Cursor 2 should
@@ -197,6 +200,10 @@ In the <code>Expression</code> box, write <code>t11=diff(t6)</code>
 (replace <code>t6</code> with your value for <code>t_x</code>).</p></li>
 </ol>
 <p><img src="figures%2FAP-expression-box.png" alt="A screenshot of the Arithmetic box of Clampfit showing the formula t11=diff(t6) inserted into the expression field." width="406" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
+<h3 id="find-threshold">Find threshold<a class="anchor" aria-label="anchor" href="#find-threshold"></a>
+</h3>
 <ol start="7" style="list-style-type: decimal">
 <li><p>Click on <code>Edit</code> -&gt; <code>Transfer Traces</code> and
 set the <code>Region to transfer</code> as <code>Cursors 1..2</code>. In
@@ -210,17 +217,75 @@ the <code>Trace Selection</code> category, choose only
 <code>Trace #6</code> is the membrane potential in mV, and
 <code>Trace #11</code> is the derivative of
 <code>Trace #6</code>.</p></li>
+</ol>
+<blockquote>
+<p>Warning: The Results page of the transferred traces does not clear
+between files. If you are doing several analyses in one session, ensure
+that you are looking at the correct columns with the traces
+corresponding to the active recording.</p>
+</blockquote>
+<ol start="9" style="list-style-type: decimal">
 <li><p>Scroll down the <code>Trace #11</code> column (the derivative
 column) until you see the first value that is greater than or equal to
 10 mV/ms. Copy the value of all three columns.</p></li>
 <li><p>Your .csv file should now look like this:</p></li>
 </ol>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["A"],"State":["Baseline"],"Time_of_Threshold":[239.6001],"t_x":[-29.63256836],"t_11":[67.13457489],"ID":["23714007.abf"],"First_sweep_with_APs":[6]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_Threshold","name":"Time_of_Threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t_11","name":"t_11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"First_sweep_with_APs","name":"First_sweep_with_APs","type":"numeric"}],"dataKey":"e60e6e41f950475dd5569efaa426f080"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>References</p>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["A"],"State":["Baseline"],"Time_of_Threshold":[239.6001],"t_x":[-29.63256836],"t_11":[67.13457489]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_Threshold","name":"Time_of_Threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t_11","name":"t_11","type":"numeric"}],"dataKey":"d25a689a56bbea6f4eb4396862ee1dcb"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="section level3">
+<h3 id="measure-ap-properties">Measure AP properties<a class="anchor" aria-label="anchor" href="#measure-ap-properties"></a>
+</h3>
+<ol start="11" style="list-style-type: decimal">
+<li>Double-click on Cursor 1 and change its Time value to match the
+<code>Time_of_Threshold</code>.</li>
+</ol>
+<blockquote>
+<p>Warning! If you do not reposition Cursor 1 to be at the time of
+threshold, the values for <code>Time_of_Peak</code> and
+<code>Time_of_Antipeak</code> will be incorrect!</p>
+</blockquote>
+<ol start="12" style="list-style-type: decimal">
+<li><p>Click on the Statistics button (a small icon with a summation
+symbol 211 on top of it) or press <code>Alt+s</code>.</p></li>
+<li><p>Set the following settings:</p></li>
+</ol>
+<ul>
+<li>Trace Selection: Choose <code>Vm_primary ()</code> and
+<code>t_x</code> (in this case, <code>t6</code>)</li>
+<li>Peak Polarity: Vm_primary, Positive-going</li>
+<li>Baseline Region: Fixed at [paste in the threshold value]</li>
+<li>Search Region 1: Range: Cursors 1..2</li>
+<li>Destination Option: Replace results in sheet (prevents you from
+accidentally copying old data</li>
+<li>Column Order: Measurement, region, Signal</li>
+<li>Measurements: Peak_amplitude, Time of peak, Antipeak amplitude, Time
+of antipeak, Half-width</li>
+</ul>
+<p><img src="figures%2FAP-statistics-box.png" alt="A screenshot of the Statistics box of Clampfit showing the correct options to select." width="327" style="display: block; margin: auto;"></p>
+<ol start="14" style="list-style-type: decimal">
+<li><p>Select all data except for the filepath option (unless you think
+you will need it later) and paste it into the .csv file. You’ll notice
+that the .csv column names are different than the column names in the
+<code>Results</code> sheet. I changed these column names to make them
+easier to use in R code.</p></li>
+<li><p>Your .csv file should now look like this.</p></li>
+</ol>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["A"],"State":["Baseline"],"Time_of_Threshold":[239.6001],"t_x":[-29.63256836],"t_11":[67.13457489],"ID":["23714007.abf"],"First_sweep_with_APs":[6],"Trace_start":[5021],"Peak_amplitude":[77.667],"Time_to_Peak":[0.5],"Antipeak_amplitude":[-17.3034],"Time_of_antipeak":[3],"Half_width":[0.79088]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_Threshold","name":"Time_of_Threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t_11","name":"t_11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"First_sweep_with_APs","name":"First_sweep_with_APs","type":"numeric"},{"id":"Trace_start","name":"Trace_start","type":"numeric"},{"id":"Peak_amplitude","name":"Peak_amplitude","type":"numeric"},{"id":"Time_to_Peak","name":"Time_to_Peak","type":"numeric"},{"id":"Antipeak_amplitude","name":"Antipeak_amplitude","type":"numeric"},{"id":"Time_of_antipeak","name":"Time_of_antipeak","type":"numeric"},{"id":"Half_width","name":"Half_width","type":"numeric"}],"dataKey":"4c0c6abda2353e0d447d9a16d11f40f7"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="section level3">
+<h3 id="count-aps">Count APs<a class="anchor" aria-label="anchor" href="#count-aps"></a>
+</h3>
+<ol start="16" style="list-style-type: decimal">
+<li>The next step is to count action potentials per sweep</li>
+</ol>
+<p>References</p>
 <p>Farries, M. A., Kita, H., &amp; Wilson, C. J. (2010). Dynamic Spike
 Threshold and Zero Membrane Slope Conductance Shape the Response of
 Subthalamic Neurons to Cortical Input. Journal of Neuroscience, 30(39),
 13180–13191. <a href="https://doi.org/10.1523/JNEUROSCI.1909-10.2010" class="external-link uri">https://doi.org/10.1523/JNEUROSCI.1909-10.2010</a></p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
