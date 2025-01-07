@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 This vignette will demonstrate how to analyze action potential properties using a raw .abf file. You will identify the first current injection that resulted in action potentials and then select the first action potential within this sweep for further analyses.
 
 ```{r header-image, fig.align = 'center', fig.alt = "A banner with pictures of some of the plots that can be created with the patchclampplotteR package.", echo=F}
-knitr::include_graphics("man/figures/AP-first-trace.png")
+knitr::include_graphics("figures/AP-first-trace.png")
 ```
 
 > You will identify the threshold using the first derivative method. This means that the threshold corresponds to the membrane potential where the action potential velocity is 10 mV/ms or greater (Farries et al., 2010).
