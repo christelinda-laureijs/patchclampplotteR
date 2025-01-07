@@ -272,15 +272,52 @@ easier to use in R code.</p></li>
 <li><p>Your .csv file should now look like this.</p></li>
 </ol>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["A"],"State":["Baseline"],"Time_of_Threshold":[239.6001],"t_x":[-29.63256836],"t_11":[67.13457489],"ID":["23714007.abf"],"First_sweep_with_APs":[6],"Trace_start":[5021],"Peak_amplitude":[77.667],"Time_to_Peak":[0.5],"Antipeak_amplitude":[-17.3034],"Time_of_antipeak":[3],"Half_width":[0.79088]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_Threshold","name":"Time_of_Threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t_11","name":"t_11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"First_sweep_with_APs","name":"First_sweep_with_APs","type":"numeric"},{"id":"Trace_start","name":"Trace_start","type":"numeric"},{"id":"Peak_amplitude","name":"Peak_amplitude","type":"numeric"},{"id":"Time_to_Peak","name":"Time_to_Peak","type":"numeric"},{"id":"Antipeak_amplitude","name":"Antipeak_amplitude","type":"numeric"},{"id":"Time_of_antipeak","name":"Time_of_antipeak","type":"numeric"},{"id":"Half_width","name":"Half_width","type":"numeric"}],"dataKey":"4c0c6abda2353e0d447d9a16d11f40f7"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["A"],"State":["Baseline"],"Time_of_Threshold":[239.6001],"t_x":[-29.63256836],"t_11":[67.13457489],"ID":["23714007.abf"],"First_sweep_with_APs":[6],"Trace_start":[5021],"Peak_amplitude":[77.667],"Time_to_Peak":[0.5],"Antipeak_amplitude":[-17.3034],"Time_of_antipeak":[3],"Half_width":[0.79088]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_Threshold","name":"Time_of_Threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t_11","name":"t_11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"First_sweep_with_APs","name":"First_sweep_with_APs","type":"numeric"},{"id":"Trace_start","name":"Trace_start","type":"numeric"},{"id":"Peak_amplitude","name":"Peak_amplitude","type":"numeric"},{"id":"Time_to_Peak","name":"Time_to_Peak","type":"numeric"},{"id":"Antipeak_amplitude","name":"Antipeak_amplitude","type":"numeric"},{"id":"Time_of_antipeak","name":"Time_of_antipeak","type":"numeric"},{"id":"Half_width","name":"Half_width","type":"numeric"}],"dataKey":"4c0c6abda2353e0d447d9a16d11f40f7"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><ol start="16" style="list-style-type: decimal">
+<li>Repeat this process for the current clamp step protocol taken after
+a hormone or treatment.</li>
+</ol>
+<blockquote>
+<p>If there are no action potentials in the later recording, insert the
+values for the columns <code>Letter</code> and <code>State</code> and
+leave all the others blank.</p>
+</blockquote>
+<p>Here is an example of what a datasheet can look like:</p>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-36aa3d2a04d42bbc2145" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-36aa3d2a04d42bbc2145">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BO","BO","BP","BP","BT","BT"],"State":["Baseline","Insulin","Baseline","","Baseline","Insulin"],"Time_of_Threshold":[329.6000061,358.6000061,468.2999878,"NA",407.1000061,518.2999878],"t_x":[-29.63256836,-35.49194336,-33.81347656,"NA",-28.35083008,-33.26416016],"t_11":[67.13457489,26.24351501,10.68050003,"NA",28.9899292,17.69371605],"ID":["23714007.abf","23714015.abf","23714026.abf","","23719005.abf","23719018.abf"],"First_sweep_with_APs":[6,7,5,"NA",8,8],"Trace_start":[5021,6021,4021,"NA",7021,7021],"Peak_amplitude":[77.66723633,84.35058594,70.19042969,"NA",77.66723633,70.09887695],"Time_to_Peak":[330.1000061,359.1000061,468.8999939,"NA",407.6000061,518.9000244],"Antipeak_amplitude":[-17.3034668,-16.47949219,-15.625,"NA",-7.110595703,-25.390625],"Time_of_antipeak":[332.6000061,361.5,471.2000122,"NA",410.5,521.9000244],"Half_width":[0.790894449,0.770035207,0.88511616,"NA",0.958466589,0.775762439]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_Threshold","name":"Time_of_Threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t_11","name":"t_11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"First_sweep_with_APs","name":"First_sweep_with_APs","type":"numeric"},{"id":"Trace_start","name":"Trace_start","type":"numeric"},{"id":"Peak_amplitude","name":"Peak_amplitude","type":"numeric"},{"id":"Time_to_Peak","name":"Time_to_Peak","type":"numeric"},{"id":"Antipeak_amplitude","name":"Antipeak_amplitude","type":"numeric"},{"id":"Time_of_antipeak","name":"Time_of_antipeak","type":"numeric"},{"id":"Half_width","name":"Half_width","type":"numeric"}],"dataKey":"34add01107e2284287f46a3f155ccfbd"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
 <h3 id="count-aps">Count APs<a class="anchor" aria-label="anchor" href="#count-aps"></a>
 </h3>
+<p>The next step is to count the number of action potentials in each
+sweep. This will allow you to later make a plot of action potential
+frequency vs. current injection and see how a treatment affect action
+potential frequency.</p>
+<p>For this, you will need a separate .csv file with four columns:</p>
+<ul>
+<li>
+<code>Letter</code> The unique letter identifier of a single
+cell.</li>
+<li>
+<code>State</code> A character value (“Baseline” or “Insulin” in
+this example)</li>
+<li>
+<code>Sweep</code> A number from 1 to 10</li>
+<li>
+<code>No_of_Aps</code> a numerical value indicating the number of
+action potentials</li>
+</ul>
 <ol start="16" style="list-style-type: decimal">
-<li>The next step is to count action potentials per sweep</li>
+<li><p>Press the <code>Enter</code> key and use <code>,</code> and
+<code>.</code> (or <code>&lt;</code> and <code>&gt;</code>) to cycle
+through the sweeps. Count the number of action potentials in each
+sweep.</p></li>
+<li><p>Here is an example of what one recording could look
+like:</p></li>
 </ol>
-<p>References</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">reactable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"sample-ap-count-data.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="reactable html-widget html-fill-item" id="htmlwidget-febe03efa1a2d8d52a86" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-febe03efa1a2d8d52a86">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO"],"State":["Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin"],"Sweep":[1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],"No_of_Aps":[0,0,0,0,0,9,5,7,7,6,0,0,0,0,0,0,3,4,4,4]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Sweep","name":"Sweep","type":"numeric"},{"id":"No_of_Aps","name":"No_of_Aps","type":"numeric"}],"dataKey":"a71589e263521b73a879a20dfecd17cd"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>References</p>
 <p>Farries, M. A., Kita, H., &amp; Wilson, C. J. (2010). Dynamic Spike
 Threshold and Zero Membrane Slope Conductance Shape the Response of
 Subthalamic Neurons to Cortical Input. Journal of Neuroscience, 30(39),
