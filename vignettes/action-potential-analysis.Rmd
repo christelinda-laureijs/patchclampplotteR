@@ -145,9 +145,38 @@ sample_ap_data_2 <- data.frame(
 reactable(sample_ap_data_2)
 ```
 
+16. Repeat this process for the current clamp step protocol taken after a hormone or treatment.
+
+> If there are no action potentials in the later recording, insert the values for the columns `Letter` and `State` and leave all the others blank.
+
+
+Here is an example of what a datasheet can look like:
+
+```{r example-full-ap-table, echo=FALSE}
+reactable(read.csv("sample-ap-data.csv"))
+```
+
+
+
 ## Count APs
 
-16. The next step is to count action potentials per sweep
+The next step is to count the number of action potentials in each sweep. This will allow you to later make a plot of action potential frequency vs. current injection and see how a treatment affect action potential frequency.
+
+For this, you will need a separate .csv file with four columns:
+
+* `Letter` The unique letter identifier of a single cell.
+* `State` A character value ("Baseline" or "Insulin" in this example)
+* `Sweep` A number from 1 to 10
+* `No_of_Aps` a numerical value indicating the number of action potentials
+
+16. Press the `Enter` key and use `,` and `.` (or `<` and `>`) to cycle through the sweeps. Count the number of action potentials in each sweep.
+
+18. Here is an example of what one recording could look like:
+
+
+```{r}
+reactable(read.csv("sample-ap-count-data.csv"))
+```
 
 
 References
