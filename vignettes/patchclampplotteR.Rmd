@@ -1,6 +1,8 @@
 ---
 title: "patchclampplotteR"
 output: rmarkdown::html_vignette
+description: >
+  See examples of using the patchclampplotteR package and get a quick overview of how the functions work. 
 vignette: >
   %\VignetteIndexEntry{patchclampplotteR}
   %\VignetteEngine{knitr::rmarkdown}

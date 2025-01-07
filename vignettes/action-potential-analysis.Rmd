@@ -1,6 +1,8 @@
 ---
-title: "action-potential-analysis"
+title: "Action Potential Analysis"
 output: rmarkdown::html_vignette
+description: >
+  Learn how to obtain action potential properties from a raw .abf file in Clampfit.
 vignette: >
   %\VignetteIndexEntry{action-potential-analysis}
   %\VignetteEngine{knitr::rmarkdown}
@@ -12,20 +14,46 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
+library(dplyr)
+library(reactable)
 ```
 
 # Action Potential Analysis
 
-> Note: This package does not yet contain functions to analyze and plot action potential data. However, I am including this vignette here to assist with raw data analysis in Clampfit.
+> Note: This package does not yet contain functions to analyze and plot action potential data. However, I am including this vignette here to show you how to perform raw data analysis in Clampfit. The resulting data will be ready to use in future package versions.
 
 This vignette will demonstrate how to analyze action potential properties using a raw .abf file. You will identify the first current injection that resulted in action potentials and then select the first action potential within this sweep for further analyses.
 
-```{r header-image, fig.align = 'center', fig.alt = "A banner with pictures of some of the plots that can be created with the patchclampplotteR package.", echo=F}
+```{r header-image, fig.align = 'center', fig.alt = "An image of a current clamp steps recording with the first action potential outlined with a box.", echo=F}
 knitr::include_graphics("figures/AP-first-trace.png")
 ```
 
 > You will identify the threshold using the first derivative method. This means that the threshold corresponds to the membrane potential where the action potential velocity is 10 mV/ms or greater (Farries et al., 2010).
 
+## Action Potential Properties
+
+Before you begin, you should set up a .csv file with the following columns:
+
+* `Letter` The unique letter identifier of a single cell. You can use this to link data from different recordings taken from the same cell.
+* `State` Must be `Baseline` or `Post`, indicating a current clamp protocol taken after a hormone has been added or some other modification has taken place.
+* `Time_of_Threshold` A numerical value (in ms) used to determine properties like the latency to fire.
+* `t_x` The membrane potential at the moment that an action potential is initiated, also known as the threshold.
+* `t_11` The derivative of the trace you are analyzing. Must be 10 or greater to properly identify the threshold.
+* `ID` A character value indicating the recording number.
+* `First_sweep_with_APs` A handy column containing the sweep number where action potentials first appeared (going from the lowest current injection to the highest, identify this sweep visually).
+* `Trace_start` This is an automatic value calculated by Clampfit, and it corresponds to the sweep number. It is not used in any analyses, but it will automatically come with the analysis.
+* `Peak_amplitude` The membrane potential (in mV) during maximum depolarization.
+* `Time_to_Peak`The time of the peak amplitude. A function in patchclampplotteR (to come in the near future!) will subtract `Time_of_Threshold` from `Time_to_Peak` to get the time of peak relative to the threshold.
+* `Antipeak_amplitude` The afterhyperpolarization amplitude (in mV)
+* `Time_of_antipeak` The time of the after-hyperpolarization. As mentioned in the description of `Time_to_Peak` above, this will later be converted to time of antipeak relative to the `Time_of_Threshold`.
+* `Half-width` The width of the action potential when the membrane potential is half of the `Peak_amplitude`.
+
+```{r ap-properties-image, fig.align = 'center', fig.alt = "An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire.", echo=F}
+knitr::include_graphics("figures/AP-properties.png")
+```
+
+# Clampfit Analysis
 
 1. Open the .abf file containing the current clamp step protocol.
 2. Press the “Enter” key to show just one sweep at a time. It will begin at the sweep corresponding to the lowest current injection. Use greater than symbol (>; on some computers you don’t even need to press the shift key) to cycle up through the sweeps.
@@ -34,7 +62,40 @@ knitr::include_graphics("figures/AP-first-trace.png")
 
 > It is important that cursor 2 touches the curve at a value that is lower than the voltage value for cursor 1. If cursor 1 is lower, then Clampfit may identify the location at cursor 1 as the after-hyperpolarization region.
 
-5. Click on the arithmetic button (it is the button with basic math symbols), then Add Traces. Write "1" and click OK. This will add a new empty trace.
+```{r cursor-image, fig.align = 'center', fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than cursor 2.", echo=F}
+knitr::include_graphics("figures/AP-cursors.png")
+```
+
+5. Click on the arithmetic button (it is the button with basic math symbols), then Add Traces. Write "1" and click OK. This will add a new empty trace, called `t_11`.
+
+6. `t_11` should be the derivative of `t_x`. In the `Expression` box, write `t11=diff(t6)` (replace `t6` with your value for `t_x`). 
+
+```{r expression-image, fig.align = 'center', fig.alt = "A screenshot of the Arithmetic box of Clampfit showing the formula t11=diff(t6) inserted into the expression field.", echo=F}
+knitr::include_graphics("figures/AP-expression-box.png")
+```
+
+7. Click on `Edit` -> `Transfer Traces` and set the `Region to transfer` as `Cursors 1..2`. In the `Trace Selection` category, choose only `Vm_primary ()` as the signal. Select `t_x` and `t_11` for the traces, then click OK.
+
+8. The `Results` page will display three columns: `Time (ms)`, `Trace #6 (or #5, #4, etc.)`, and `Trace #11`. In this example, the middle column is `Trace #6`, but this name will vary depending on the data. `Trace #6` is the membrane potential in mV, and `Trace #11` is the derivative of `Trace #6`.
+
+9. Scroll down the `Trace #11` column (the derivative column) until you see the first value that is greater than or equal to 10 mV/ms. Copy the value of all three columns.
+
+10. Your .csv file should now look like this:
+
+```{r echo=FALSE}
+sample_ap_data <- data.frame(
+  Letter = c("A"),
+  State	= c("Baseline"),
+  Time_of_Threshold = c(239.6001),
+  t_x = c(-29.63256836),
+  t_11 = c(67.13457489),
+  ID = c("23714007.abf"),
+  First_sweep_with_APs = c(6)
+)
+
+reactable(sample_ap_data)
+```
+
 
 
 References
