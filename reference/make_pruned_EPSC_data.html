@@ -69,6 +69,7 @@ summary values for every n rows.</p>
 <span>  max_time_value <span class="op">=</span> <span class="fl">25</span>,</span>
 <span>  baseline_length <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  interval_length <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  decimal_places <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -110,6 +111,12 @@ high frequency stimulation. Defaults to 5.</p></dd>
 <dd><p>Length of each interval (in minutes). Used to divide
 the dataset into broad ranges for statistical analysis. Defaults to 1 for
 one summary point per minute.</p></dd>
+
+
+<dt id="arg-decimal-places">decimal_places<a class="anchor" aria-label="anchor" href="#arg-decimal-places"></a></dt>
+<dd><p>A numeric value indicating the number of decimal places
+the data should be rounded to. Used to reduce file size and prevent an
+incorrect representation of the number of significant digits.</p></dd>
 
 
 <dt id="arg-save-output-as-rds">save_output_as_RDS<a class="anchor" aria-label="anchor" href="#arg-save-output-as-rds"></a></dt>
@@ -365,22 +372,23 @@ normalization works.</p></div>
 <span class="r-in"><span>  min_time_value <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>  max_time_value <span class="op">=</span> <span class="fl">25</span>,</span></span>
 <span class="r-in"><span>  baseline_length <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>  interval_length <span class="op">=</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span>  interval_length <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  decimal_places <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $individual_cells</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 473 × 14</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex   treatment interval_pruned mean_P1 sd_P1     n    se</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2        AO     Male  Control   t0to1             36.4  13.8     13 3.83 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2        AO     Male  Control   t1to2             38.1  21.4     12 6.18 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2        AO     Male  Control   t2to3             39.4  22.2     12 6.41 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2        AO     Male  Control   t3to4             39.2  18.5     12 5.34 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2        AO     Male  Control   t4to5             30.8  19.7     12 5.69 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2        AO     Male  Control   t5to6             21.3  15.7     12 4.52 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2        AO     Male  Control   t6to7             13.6  17.4     12 5.01 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2        AO     Male  Control   t7to8             14.4  16.5     12 4.77 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        AO     Male  Control   t8to9              5.68  2.00    12 0.579</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        AO     Male  Control   t9to10             7.45  5.84    12 1.69 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2        AO     Male  Control   t0to1             36.4  13.8     13  3.83</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2        AO     Male  Control   t1to2             38.1  21.4     12  6.18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2        AO     Male  Control   t2to3             39.4  22.2     12  6.41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2        AO     Male  Control   t3to4             39.2  18.5     12  5.34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2        AO     Male  Control   t4to5             30.8  19.7     12  5.69</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2        AO     Male  Control   t5to6             21.3  15.6     12  4.52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2        AO     Male  Control   t6to7             13.6  17.4     12  5.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2        AO     Male  Control   t7to8             14.4  16.5     12  4.77</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        AO     Male  Control   t8to9              5.68  2       12  0.58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        AO     Male  Control   t9to10             7.45  5.84    12  1.69</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 463 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5 more variables: cv &lt;dbl&gt;, cv_inverse_square &lt;dbl&gt;, time &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   baseline_mean &lt;dbl&gt;, synapses &lt;fct&gt;</span></span>
@@ -420,11 +428,11 @@ normalization works.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2        t0to1           Male   Control                  95.9           11.2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2        t0to1           Male   HNMPA                   123.            21.5 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2        t0to1           Male   PPP                     110.            13.6 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2        t0to1           Male   PPP_and_HN…             116.             4.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2        t0to1           Male   PPP_and_HN…             116.             4.9 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        t1to2           Female Control                 104.            <span style="color: #BB0000;">NA</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        t1to2           Female HNMPA                    96.0            1.74</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 188 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: n &lt;int&gt;, se_P1_all_cells &lt;dbl&gt;, cv_P1_all_cells &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: n &lt;dbl&gt;, se_P1_all_cells &lt;dbl&gt;, cv_P1_all_cells &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   time &lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
@@ -434,7 +442,8 @@ normalization works.</p></div>
 <span class="r-in"><span>  min_time_value <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>  max_time_value <span class="op">=</span> <span class="fl">25</span>,</span></span>
 <span class="r-in"><span>  baseline_length <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>  interval_length <span class="op">=</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span>  interval_length <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  decimal_places <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $individual_cells</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 195 × 17</span></span>
@@ -452,7 +461,7 @@ normalization works.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        AZ     Female Control   t7to8                     97.6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        AZ     Female Control   t8to9                     94.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 185 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: mean_raw_amplitude &lt;dbl&gt;, sd_amplitude &lt;dbl&gt;, n &lt;int&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: mean_raw_amplitude &lt;dbl&gt;, sd_amplitude &lt;dbl&gt;, n &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   frequency &lt;dbl&gt;, se &lt;dbl&gt;, interval &lt;fct&gt;, synapses &lt;fct&gt;, time &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   baseline_range &lt;lgl&gt;, baseline_mean_frequency &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   frequency_transformed &lt;dbl&gt;</span></span>
@@ -485,7 +494,7 @@ normalization works.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        t1to2           Male   HNMPA                      101. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 157 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 14 more variables: mean_all_raw_amplitude &lt;dbl&gt;, sd_all_amplitude &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   n &lt;int&gt;, se_amplitude &lt;dbl&gt;, sd_all_raw_amplitude &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   n &lt;dbl&gt;, se_amplitude &lt;dbl&gt;, sd_all_raw_amplitude &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   se_raw_amplitude &lt;dbl&gt;, mean_all_frequency &lt;dbl&gt;, sd_all_frequency &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   se_frequency &lt;dbl&gt;, mean_all_raw_frequency &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   sd_all_raw_frequency &lt;dbl&gt;, se_raw_frequency &lt;dbl&gt;, time &lt;dbl&gt;,</span></span>
