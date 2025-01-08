@@ -71,7 +71,8 @@ previously specified in <code><a href="make_normalized_EPSC_data.html">make_norm
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make_summary_EPSC_data</span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="fu">patchclampplotteR</span><span class="fu">::</span><span class="va"><a href="sample_raw_eEPSC_df.html">sample_raw_eEPSC_df</a></span>,</span>
 <span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
-<span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span></span>
+<span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span>,</span>
+<span>  decimal_places <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -95,6 +96,12 @@ are "eEPSC" or "sEPSC".</p></dd>
 <dt id="arg-save-output-as-rds">save_output_as_RDS<a class="anchor" aria-label="anchor" href="#arg-save-output-as-rds"></a></dt>
 <dd><p>A character ("yes" or "no") describing if the
 resulting object should be saved as an RDS file in the raw data folder.</p></dd>
+
+
+<dt id="arg-decimal-places">decimal_places<a class="anchor" aria-label="anchor" href="#arg-decimal-places"></a></dt>
+<dd><p>A numeric value indicating the number of decimal places
+the data should be rounded to. Used to reduce file size and prevent an
+incorrect representation of the number of significant digits.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -153,7 +160,8 @@ further processes the data.</p></div>
 <span class="r-in"><span><span class="fu">make_summary_EPSC_data</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_raw_eEPSC_df</span>,</span></span>
 <span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span></span>
-<span class="r-in"><span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span></span></span>
+<span class="r-in"><span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span>,</span></span>
+<span class="r-in"><span>  decimal_places <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 95 × 20</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex    treatment interval mean_P1_transformed mean_P1_raw</span>
@@ -163,20 +171,21 @@ further processes the data.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2        AO     Male   Control   t10to15                 17.7        6.49</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2        AO     Male   Control   t15to20                 18.6        6.85</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2        AO     Male   Control   t20to25                 21.3        7.82</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2        AZ     Female Control   t0to5                  100.        44.3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2        AZ     Female Control   t0to5                  100         44.3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2        AZ     Female Control   t5to10                  74.1       32.8 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2        AZ     Female Control   t10to15                 53.7       23.8 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        AZ     Female Control   t15to20                 56.0       24.8 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        AZ     Female Control   t20to25                 50.7       22.4 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 85 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: n &lt;int&gt;, sd &lt;dbl&gt;, cv &lt;dbl&gt;, se &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: n &lt;dbl&gt;, sd &lt;dbl&gt;, cv &lt;dbl&gt;, se &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   cv_inverse_square &lt;dbl&gt;, variance &lt;dbl&gt;, VMR &lt;dbl&gt;, age &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   animal &lt;dbl&gt;, X &lt;dbl&gt;, Y &lt;dbl&gt;, time &lt;dbl&gt;, synapses &lt;fct&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">make_summary_EPSC_data</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_pruned_sEPSC_df</span><span class="op">$</span><span class="va">individual_cells</span>,</span></span>
 <span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"sEPSC"</span>,</span></span>
-<span class="r-in"><span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span></span></span>
+<span class="r-in"><span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span>,</span></span>
+<span class="r-in"><span>  decimal_places <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 70 × 16</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   category, letter, sex, treatment [14]</span></span>
@@ -194,7 +203,7 @@ further processes the data.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        BN     Male   Control   t20to25                        87.6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 60 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 more variables: mean_raw_amplitude &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   sd_transformed_amplitude &lt;dbl&gt;, n &lt;int&gt;, se_transformed_amplitude &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   sd_transformed_amplitude &lt;dbl&gt;, n &lt;dbl&gt;, se_transformed_amplitude &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   mean_transformed_frequency &lt;dbl&gt;, sd_transformed_frequency &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   se_transformed_frequency &lt;dbl&gt;, mean_raw_frequency &lt;dbl&gt;, time &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   synapses &lt;fct&gt;</span></span>
