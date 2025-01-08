@@ -21,13 +21,15 @@ knitr::opts_chunk$set(
 
 Before using `patchclampplotteR`, you will need to prepare your raw recording data from Clampfit. This vignette will show you how to move your evoked post-synaptic current data from raw .abf recordings to a .csv file.
 
-This demonstration uses a protocol with two stimuli resulting in two evoked currents per sweep.
+This demonstration uses a protocol with two stimuli resulting in two evoked currents per sweep. The paired-pulse ratio (PPR) is the ratio of the second evoked current amplitude to the first.
+
+```{r evoked-currents-schematic, fig.align = 'center', fig.alt = "A sketch showing a horizontal line with two downward-pointing peaks separated by a short distance. These are the two evoked currents.", fig.cap = "This schematic shows the first and second evoked currents. The ratio between them is the paired-pulse ratio (PPR)", echo=F}
+knitr::include_graphics("figures/Evoked-currents-schematic.png")
+```
 
 ## Combine recordings
 
-> The data from our lab is not a continuous 30-minute recording. We pause the recording every 5 minutes to obtain parameters like access resistance and capacitance from the membrane test before resuming recording. If your data is already a continuous file, you can skip steps 1-2. step.
-
-## Combine recordings
+> The data from our lab is not a continuous 30-minute recording. We pause the recording every 5 minutes to obtain parameters like access resistance and capacitance from the membrane test before resuming recording. If your data is already a continuous file, you can skip steps 1-2.
 
 1. Open the first .abf file in your recording series, and use the `Next File` button to quickly open all files in the series.
 
@@ -70,9 +72,11 @@ knitr::include_graphics("figures/Viewer-buttons.png")
 knitr::include_graphics("figures/Evoked-currents-cursors.png")
 ```
 
-> Warning! Ensure that the cursors fully enclose the evoked currents and that they do not include the stimulus artifacts. 
+> Warning! Ensure that the cursors fully enclose the evoked currents and that they do NOT include the stimulus artifacts. 
 
 9. Click on `View` -> `Window Defaults` and `Save selected Analysis Windows settings as default`. This will save you time when running through many analyses since it will restore your cursor pairs to the same position with new files!
+
+## Get current amplitudes
 
 10. Click on the Statistics button (a small icon with a summation symbol on top
 of it) or press `Alt+s`.
@@ -90,7 +94,7 @@ of it) or press `Alt+s`.
 
 > Warning! Ensure that you have selected all traces that you want to include in the recording! You can verify if this is the correct number by checking the total number of sweeps in the bottom-right corner.
 
-> Ensure that all the settings are correct, especially if you have done other analyses in Clampfit recently.
+> Ensure that all the settings are correct, especially if you have done other analyses in Clampfit recently. For example, the polarity may be set to `Positive-going`, and you may have incorrect search regions specified if you were recently [analyzing action potential data](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
 
 > The Measurements options change for each search region, so make sure that both search regions only have `Peak_amplitude` checked!
 
@@ -122,3 +126,7 @@ If you have these two files, you are ready to begin using `patchclampplotteR`! S
 *There are some traces with significant amounts of noise*
 
 You can exclude individual traces (for example ones with lots of noise or a very unstable baseline) in the Trace Selection box of Step 11. Select the traces you want to exclude, then `Invert` your selection.
+
+*What do I do if there are two peaks?*
+
+

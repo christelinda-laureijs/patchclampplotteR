@@ -39,7 +39,7 @@ knitr::include_graphics("figures/AP-first-trace.png")
 that the threshold corresponds to the membrane potential where the action
 potential velocity is 10 mV/ms or greater (Farries et al., 2010).
 
-## Action Potential Properties
+## Set up data sheet
 
 Before you begin, you should set up a .csv file with the following columns:
 * `Letter` The unique letter identifier of a single cell. You can use this to link data from different recordings taken from the same cell.
@@ -60,11 +60,9 @@ Before you begin, you should set up a .csv file with the following columns:
 knitr::include_graphics("figures/AP-properties.png")
 ```
 
-# Clampfit Tutorial
-
 ## Get derivative
 
-1. Open the .abf file containing the current clamp step protocol.
+1. Open the .abf file containing the current clamp step protocol in Clampfit.
 2. Press the “Enter” key to show just one sweep at a time. It will begin at the sweep corresponding to the lowest current injection. Use greater than symbol (>; on some computers you don’t even need to press the shift key) to cycle up through the sweeps.
 3. Move up to sweeps corresponding to higher current injections until you identify the first sweep that contains an action potential. I will call this `t_x`, since it may be `t5` in one recording, or `t6` in another, etc. 
 4. Position cursors 1 and 2 around the first action potential in `t_x`. Cursor 1 should be before the threshold (aim for the area before the slope of the curve increases steeply). Cursor 2 should be in the after-hyperpolarization region.
@@ -115,7 +113,7 @@ sample_ap_data <- data.frame(
 reactable(sample_ap_data)
 ```
 
-## Measure AP properties
+## Measure action potential properties
 
 11. Double-click on Cursor 1 and change its Time value to match the
 `Time_of_Threshold`.
@@ -188,7 +186,7 @@ reactable(sample_full_ap_table)
 
 
 
-## Count APs
+## Count action potentials
 
 The next step is to count the number of action potentials in each sweep. This
 will allow you to later make a plot of action potential frequency vs. current
@@ -215,7 +213,13 @@ Do not discard this cell; this is important and meaningful data! Fill in only th
 
 *What do I do if there are action potentials outside of the time when a current injection was applied?*
 
+```{r aps-outside, fig.align = 'center', fig.alt = "A screenshot of a recording in Clampfit showing action potentials present outside of the range where a current injection was applied.", echo=F}
+knitr::include_graphics("figures/APs-outside-sweep.png")
+```
+
 This can happen with very excitable cells. Only count the action potentials that occured within the injection period.
+
+
 
 *Should I count an action potential that looks very wavy?*
 
