@@ -132,7 +132,7 @@ of it) or press `Alt+s`.
 
 13. Set the following settings:
 * Trace Selection: Choose `Vm_primary ()` and `t_x` (in this case, `t6`)
-* Peak Polarity: `Vm_primary`, `Positive`-going
+* Peak Polarity: `Vm_primary`, `Positive-going`
 * Baseline Region: Fixed at `[paste in the threshold value (column t_x in your sheet) here]`
 * Search Region 1: Range: `Cursors 1..2`
 * Destination Option: `Replace results in sheet` (prevents you from accidentally copying old data
@@ -207,7 +207,7 @@ the sweeps. Count the number of action potentials in each sweep.
 reactable(read.csv("sample-ap-count-data.csv"))
 ```
 
-## AP Analysis FAQ
+## FAQ about action potential analysis
 
 *What do I do if there are no action potentials following treatment?*
 
