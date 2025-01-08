@@ -158,7 +158,7 @@ The final message prints a list of the letters that have been added to the
 dataset. In this case, this is `AV`. It is a good way to confirm that you've
 added the letters you were planning to add.
 
-You can also ask R to produce a list of all of the unique letters in the dataset. This won't catch duplicates, but it can help you identify if a letter is completely missing from the dataset. See, `AV` is now included.
+You can also ask R to produce a list of all of the unique letters in the dataset. This won't catch duplicates, but it can help you identify if a letter is completely missing from the dataset. See, `AV` is now included!
 
 ```{r view-unique-letters}
 unique(raw_eEPSC_data$letter)

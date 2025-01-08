@@ -23,7 +23,7 @@ Before using `patchclampplotteR`, you will need to prepare your raw recording da
 
 This demonstration uses a protocol with two stimuli resulting in two evoked currents per sweep. The paired-pulse ratio (PPR) is the ratio of the second evoked current amplitude to the first.
 
-```{r evoked-currents-schematic, fig.align = 'center', fig.alt = "A sketch showing a horizontal line with two downward-pointing peaks separated by a short distance. These are the two evoked currents.", fig.cap = "This schematic shows the first and second evoked currents. The ratio between them is the paired-pulse ratio (PPR)", echo=F}
+```{r evoked-currents-schematic, fig.align = 'center', fig.alt = "A sketch showing a horizontal line with two downward-pointing peaks separated by a short distance. These are the two evoked currents.", fig.cap = "This drawing shows the first and second evoked currents. The ratio between them is the paired-pulse ratio (PPR)", echo=F}
 knitr::include_graphics("figures/Evoked-currents-schematic.png")
 ```
 
@@ -119,7 +119,8 @@ You are finished with the analysis in Clampfit!
 * A .csv file with the evoked current amplitudes (`P1` and `P2`)
 * A .csv file containing information on the cell characteristics
 
-If you have these two files, you are ready to begin using `patchclampplotteR`! See the [Getting Started vignette](https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html)
+If you have these two files, you are ready to begin using `patchclampplotteR`! See the [Getting Started vignette](https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html) to learn how to combine this data and use it with `patchclampplotteR`.
+
 
 ## FAQ about evoked current analysis
 
@@ -128,5 +129,17 @@ If you have these two files, you are ready to begin using `patchclampplotteR`! S
 You can exclude individual traces (for example ones with lots of noise or a very unstable baseline) in the Trace Selection box of Step 11. Select the traces you want to exclude, then `Invert` your selection.
 
 *What do I do if there are two peaks?*
+
+*I have some new recordings. Do I add them to my existing .csv files, or make new files?*
+
+You should save a new .csv file for each new batch of raw data (these are the .csv files with `Letter`, `ID`, `P1` and `P2`). You may find it efficient to wait until you have a week of recordings, then analyze these recordings all at once in Clampfit. These data will be in a .csv file named something like "20240708-eEPSC-data.csv".
+
+However, when writing a paper or thesis, you will use just one master csv file which contains the evoked current data for all recordings in the entire project. To append new data to this master csv, use the `add_new_cells()` function. Please see the Getting Started vignette for more details.
+
+
+
+
+
+
 
 

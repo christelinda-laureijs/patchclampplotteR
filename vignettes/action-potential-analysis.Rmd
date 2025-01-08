@@ -222,7 +222,7 @@ This can happen with very excitable cells. Only count the action potentials that
 *Should I count an action potential that looks very wavy?*
 
 ```{r aps-wavy, fig.align = 'center', fig.alt = "A screenshot of a recording in Clampfit showing wavy action potentials. Valid action potentials are indicated with check marks", echo=F}
-knitr::include_graphics("figures/APs-outside-sweep.png")
+knitr::include_graphics("figures/Wavy-APs-check.png")
 ```
 
 Only include the action potential if it clearly crosses the threshold, comes to a sharp peak, and has an after-hyperpolarization period.
