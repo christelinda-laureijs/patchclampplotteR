@@ -11,6 +11,7 @@ make_normalized_EPSC_data(
   max_time_value = 25,
   baseline_length = 5,
   interval_length = 5,
+  decimal_places = 2,
   negative_transform_currents = "yes",
   save_output_as_RDS = "no"
 )
@@ -40,6 +41,10 @@ high frequency stimulation. Defaults to 5.}
 divide the dataset into broad ranges for statistical analysis. Important!
 \code{max_recording_length} must be evenly divisible by \code{interval_length}.
 Defaults to 5.}
+
+\item{decimal_places}{A numeric value indicating the number of decimal places
+the data should be rounded to. Used to reduce file size and prevent an
+incorrect representation of the number of significant digits.}
 
 \item{negative_transform_currents}{A character ("yes" or "no") describing if
 \code{P1} and \code{P2} should be negative transformed. If "yes", the values will be
@@ -161,6 +166,7 @@ make_normalized_EPSC_data(
   max_time_value = 25,
   interval_length = 5,
   baseline_length = 5,
+  decimal_places = 2,
   negative_transform_currents = "yes"
 )
 

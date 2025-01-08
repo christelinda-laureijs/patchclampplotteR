@@ -26,6 +26,9 @@
 #'   divide the dataset into broad ranges for statistical analysis. Important!
 #'   `max_recording_length` must be evenly divisible by `interval_length`.
 #'   Defaults to 5.
+#' @param decimal_places A numeric value indicating the number of decimal places
+#'   the data should be rounded to. Used to reduce file size and prevent an
+#'   incorrect representation of the number of significant digits.
 #' @param negative_transform_currents A character ("yes" or "no") describing if
 #'   `P1` and `P2` should be negative transformed. If "yes", the values will be
 #'   multiplied by (-1). This only applies when `current_type == "eEPSC"` - It
@@ -135,6 +138,7 @@
 #'   max_time_value = 25,
 #'   interval_length = 5,
 #'   baseline_length = 5,
+#'   decimal_places = 2,
 #'   negative_transform_currents = "yes"
 #' )
 #'
@@ -153,6 +157,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
                                       max_time_value = 25,
                                       baseline_length = 5,
                                       interval_length = 5,
+                                      decimal_places = 2,
                                       negative_transform_currents = "yes",
                                       save_output_as_RDS = "no") {
   list_of_argument_names <- c(filename, current_type)
@@ -204,6 +209,11 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
       interval_length
     )
   }
+
+  if (!is.numeric(decimal_places)) {
+    stop("'decimal_places' must be a numeric value")
+  }
+
 
   raw_df <- utils::read.csv(here::here(filename), header = TRUE) %>%
     dplyr::rename_with(tolower)
@@ -288,7 +298,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
         baseline_mean = sum(.data$P1 * .data$baseline_range) / sum(.data$baseline_range),
         P1_transformed = (.data$P1 / .data$baseline_mean) * 100,
         P2_transformed = (.data$P2 / .data$baseline_mean) * 100
-      )
+      ) %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
   }
 
   if (current_type == "sEPSC") {
@@ -297,7 +308,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
         baseline_range = (.data$time <= baseline_length),
         baseline_mean = sum(.data$amplitude * .data$baseline_range) / sum(.data$baseline_range),
         amplitude_transformed = (.data$amplitude / .data$baseline_mean) * 100
-      )
+      ) %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
   }
 
   return(raw_df)
@@ -543,7 +555,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'   min_time_value = 0,
 #'   max_time_value = 25,
 #'   baseline_length = 5,
-#'   interval_length = 1
+#'   interval_length = 1,
+#'   decimal_places = 2
 #' )
 #'
 #' make_pruned_EPSC_data(
@@ -552,7 +565,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'   min_time_value = 0,
 #'   max_time_value = 25,
 #'   baseline_length = 5,
-#'   interval_length = 1
+#'   interval_length = 1,
+#'   decimal_places = 2
 #' )
 make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
                                   current_type = "eEPSC",
@@ -560,6 +574,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
                                   max_time_value = 25,
                                   baseline_length = 5,
                                   interval_length = 1,
+                                  decimal_places = 2,
                                   save_output_as_RDS = "no") {
   time_sequence <- seq(from = min_time_value, to = max_time_value, by = interval_length)
   time_labels <- utils::head(paste0("t", time_sequence, "to", time_sequence + interval_length), -1)
@@ -572,6 +587,10 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 
   if (!save_output_as_RDS %in% c("yes", "no")) {
     stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!is.numeric(decimal_places)) {
+    stop("'decimal_places' must be a numeric value")
   }
 
   # Prune within individual cells
@@ -607,7 +626,8 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         time = dplyr::last(.data$time),
         baseline_mean = unique(.data$baseline_mean),
         synapses = unique(.data$synapses)
-      )
+      ) %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
 
     pruned_df_for_table <- pruned_df_individual_cells %>%
       dplyr::group_by(.data$letter) %>%
@@ -637,7 +657,8 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         baseline_range = (.data$time <= baseline_length),
         baseline_mean_frequency = sum(.data$frequency * .data$baseline_range) / sum(.data$baseline_range),
         frequency_transformed = (.data$frequency / .data$baseline_mean_frequency) * 100
-      )
+      ) %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
 
     pruned_df_for_table <- pruned_df_individual_cells %>%
       dplyr::group_by(.data$letter) %>%
@@ -696,7 +717,8 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         cv_P1_all_cells = .data$sd_P1_all_cells / .data$mean_P1_all_cells * 100,
         time = dplyr::last(.data$time),
         category = unique(.data$category),
-      )
+      ) %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
   }
 
   if (current_type == "sEPSC") {
@@ -725,7 +747,8 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         time = dplyr::last(.data$time),
         interval = unique(.data$interval),
         category = unique(.data$category)
-      )
+      ) %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
   }
 
   if (save_output_as_RDS == "yes") {

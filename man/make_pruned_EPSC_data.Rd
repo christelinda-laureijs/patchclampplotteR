@@ -11,6 +11,7 @@ make_pruned_EPSC_data(
   max_time_value = 25,
   baseline_length = 5,
   interval_length = 1,
+  decimal_places = 2,
   save_output_as_RDS = "no"
 )
 }
@@ -37,6 +38,10 @@ high frequency stimulation. Defaults to 5.}
 \item{interval_length}{Length of each interval (in minutes). Used to divide
 the dataset into broad ranges for statistical analysis. Defaults to 1 for
 one summary point per minute.}
+
+\item{decimal_places}{A numeric value indicating the number of decimal places
+the data should be rounded to. Used to reduce file size and prevent an
+incorrect representation of the number of significant digits.}
 
 \item{save_output_as_RDS}{A character ("yes" or "no") describing if the
 resulting object should be saved as an RDS file in the raw data folder.}
@@ -324,7 +329,8 @@ make_pruned_EPSC_data(
   min_time_value = 0,
   max_time_value = 25,
   baseline_length = 5,
-  interval_length = 1
+  interval_length = 1,
+  decimal_places = 2
 )
 
 make_pruned_EPSC_data(
@@ -333,7 +339,8 @@ make_pruned_EPSC_data(
   min_time_value = 0,
   max_time_value = 25,
   baseline_length = 5,
-  interval_length = 1
+  interval_length = 1,
+  decimal_places = 2
 )
 }
 \seealso{
