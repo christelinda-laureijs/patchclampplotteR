@@ -205,7 +205,7 @@ the sweeps. Count the number of action potentials in each sweep.
 reactable(read.csv("sample-ap-count-data.csv"))
 ```
 
-## FAQ about action potential analysis
+## FAQ
 
 *What do I do if there are no action potentials following treatment?*
 

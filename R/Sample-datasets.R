@@ -156,7 +156,7 @@ NULL
 # Raw sEPSC -----
 
 
-#' epresentative data from a series of spontaneous (sEPSC) currents
+#' Representative data from a series of spontaneous (sEPSC) currents
 #'
 #' This is an example of the raw spontaneous current data produced using
 #' [make_normalized_EPSC_data()]. It is useful for demonstrating functions that
