@@ -36,6 +36,7 @@ analyses."><meta property="og:image" content="https://christelinda-laureijs.gith
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/action-potential-analysis.html">Action Potential Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/evoked-current-analysis.html">Evoked Current Analysis</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -135,27 +136,27 @@ with cell characteristics and raw data as sparklines.</p></div>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">import_cell_characteristics_df</span><span class="op">(</span><span class="fu"><a href="import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"sample_cell_characteristics.csv"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    letter    cell    sex         X        Y age animal  synapses     treatment</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      BN  25.1.2   Male 152.92125 337.1888  29   25.0 Glutamate       Control</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      AZ  21.1.1 Female 352.61800 331.7375  32   21.0 Glutamate       Control</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      AO  17.1.1   Male        NA       NA  39   17.0 Glutamate       Control</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      BO  27.2.1   Male        NA       NA  32   27.0 Glutamate         HNMPA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      BT  30.2.1   Male 387.19250 586.9837  37   30.0 Glutamate         HNMPA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      CG  35.1.3 Female 164.18000 366.5200  36   35.0 Glutamate         HNMPA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       L 8.5.2.1   Male        NA       NA  38    8.5 Glutamate       Control</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      CZ  41.2.2   Male 296.51000 492.9000  28   41.0 Glutamate         HNMPA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      FT  72.2.1 Female 153.33000 337.1800  39   72.0 Glutamate         HNMPA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     FX  74.1.2 Female 234.69000 495.5000  28   74.0 Glutamate           PPP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11     GF  77.3.1 Female 217.23000 323.5500  36   77.0 Glutamate           PPP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12     GI  81.1.1 Female 235.96000 284.2300  28   81.0 Glutamate           PPP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13     GK  84.1.1   Male 248.74000 574.4400  35   84.0 Glutamate           PPP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14     GR  90.3.1   Male 313.50000 415.9700  34   90.0 Glutamate           PPP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15     GX  97.2.3   Male        NA       NA  33   97.0 Glutamate PPP_and_HNMPA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16     HB 100.1.1   Male 133.20000 590.2500  39  100.0 Glutamate PPP_and_HNMPA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17     HC 100.2.2   Male 172.54000 576.2600  39  100.0 Glutamate PPP_and_HNMPA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18     HG 103.2.1 Female        NA       NA  34  103.0 Glutamate PPP_and_HNMPA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19     HN 109.1.1   Male 288.97000 400.1800  38  109.0 Glutamate PPP_and_HNMPA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20     AV  20.3.1 Female  55.09656 248.8031  31   20.0 Glutamate       Control</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    letter    cell    sex      X      Y age animal  synapses     treatment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      BN  25.1.2   Male 152.92 337.19  29   25.0 Glutamate       Control</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      AZ  21.1.1 Female 352.62 331.74  32   21.0 Glutamate       Control</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      AO  17.1.1   Male     NA     NA  39   17.0 Glutamate       Control</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      BO  27.2.1   Male     NA     NA  32   27.0 Glutamate         HNMPA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      BT  30.2.1   Male 387.19 586.98  37   30.0 Glutamate         HNMPA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      CG  35.1.3 Female 164.18 366.52  36   35.0 Glutamate         HNMPA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       L 8.5.2.1   Male     NA     NA  38    8.5 Glutamate       Control</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      CZ  41.2.2   Male 296.51 492.90  28   41.0 Glutamate         HNMPA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      FT  72.2.1 Female 153.33 337.18  39   72.0 Glutamate         HNMPA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     FX  74.1.2 Female 234.69 495.50  28   74.0 Glutamate           PPP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11     GF  77.3.1 Female 217.23 323.55  36   77.0 Glutamate           PPP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     GI  81.1.1 Female 235.96 284.23  28   81.0 Glutamate           PPP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13     GK  84.1.1   Male 248.74 574.44  35   84.0 Glutamate           PPP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     GR  90.3.1   Male 313.50 415.97  34   90.0 Glutamate           PPP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15     GX  97.2.3   Male     NA     NA  33   97.0 Glutamate PPP_and_HNMPA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16     HB 100.1.1   Male 133.20 590.25  39  100.0 Glutamate PPP_and_HNMPA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17     HC 100.2.2   Male 172.54 576.26  39  100.0 Glutamate PPP_and_HNMPA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18     HG 103.2.1 Female     NA     NA  34  103.0 Glutamate PPP_and_HNMPA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19     HN 109.1.1   Male 288.97 400.18  38  109.0 Glutamate PPP_and_HNMPA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20     AV  20.3.1 Female  55.10 248.80  31   20.0 Glutamate       Control</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    category                                              R_a</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1         2                     1.6, 1.7, 1.7, 1.8, 1.8, 2.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2         2           2.5, 2.6, 2.6, 2.9, 2.6, 2.6, 2.6, 2.7</span>
