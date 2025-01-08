@@ -120,7 +120,7 @@ reactable(sample_ap_data)
 11. Double-click on Cursor 1 and change its Time value to match the
 `Time_of_Threshold`.
 
-```{r cursor-image-revised, fig.align = 'center', fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold.", fig.cap = "Note how Cursor 1 is shifted to the right. It is located a the x-value where the membrane potential crosses the threshold." echo=F}
+```{r cursor-image-revised, fig.align = 'center', fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold.", fig.cap = "Note how Cursor 1 is shifted to the right. It is located at the x-value where the membrane potential crosses the threshold.", echo=F}
 knitr::include_graphics("figures/AP-cursors-new.png")
 ```
 
@@ -207,6 +207,19 @@ the sweeps. Count the number of action potentials in each sweep.
 reactable(read.csv("sample-ap-count-data.csv"))
 ```
 
+## AP Analysis FAQ
+
+*What do I do if there are no action potentials following treatment?*
+
+Do not discard this cell; this is important and meaningful data! Fill in only the letter and state, and leave all other columns blank. R will fill this with NA values, since there are no action potential properties to measure. However, for your AP count data, please just indicate `0` for all current injections.
+
+*What do I do if there are action potentials outside of the time when a current injection was applied?*
+
+This can happen with very excitable cells. Only count the action potentials that occured within the injection period.
+
+*Should I count an action potential that looks very wavy?*
+
+Only include the action potential if it clearly crosses the threshold and it has an after-hyperpolarization period.
 
 References
 
