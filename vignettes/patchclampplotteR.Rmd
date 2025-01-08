@@ -51,6 +51,10 @@ to the perfusion solution, and I continued recording for 25 minutes.
 > My goal is to determine if insulin affects evoked current amplitude in DMH
 neurons.
 
+## Analyze data in Clampfit
+
+Please see the vignettes in the Articles page to learn about how to analyze data in Clampfit. These vignettes include: [Evoked Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html) and [Action Potential Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
+
 ## Import raw .csv files
 
 ### Cell Characteristics
@@ -80,7 +84,7 @@ reactable(cell_characteristics)
 ### Raw evoked current data
 
 Next, I will import the raw evoked current data that has been copied over from
-Clampfit. This is a `.csv` file containing four columns: `Letter`, `ID`, `P1`
+Clampfit (again, please see the [Evoked Current Analysis vignette](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html) for more details. This is a `.csv` file containing four columns: `Letter`, `ID`, `P1`
 and `P2`:
 
 * `letter`: A unique identifier for a single recording, which allows you to link evoked current data, spontaneous current data, action potential, data, and information on cell characteristics.

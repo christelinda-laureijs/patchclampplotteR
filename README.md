@@ -106,3 +106,17 @@ And then load the package with `library()`:
 ``` r
 library(patchclampplotteR)
 ```
+
+## Analysis
+
+To learn about how to convert raw .abf data in Clampfit to .csv files
+for this package, please see the vignettes [Evoked Current
+Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html)
+and [Action Potential
+Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
+
+## Using patchclampplotteR
+
+Please see the [Getting
+Started](https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html)
+page for a walk-through of the major functions of this package.

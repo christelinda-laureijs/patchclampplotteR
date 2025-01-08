@@ -4,7 +4,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r setup-readme-chunk, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -43,7 +43,7 @@ knitr::include_graphics("man/figures/README-plot-sampler.png")
 * Compare variance parameters to help determine presynaptic mechanisms.
 * And more!
 
-```{r include=FALSE}
+```{r load-library-initial, include=FALSE}
 library(patchclampplotteR)
 ```
 
@@ -110,13 +110,21 @@ plot_spontaneous_current_trace(
 You can install the development version of patchclampplotteR from
 [GitHub](https://github.com/) with:
 
-```{r install-package-demo, warning=FALSE, message=FALSE}
+```{r install-package-demo, warning=FALSE, message=FALSE, eval=FALSE}
 # install.packages("pak")
 pak::pak("christelinda-laureijs/patchclampplotteR")
 ```
 
 And then load the package with `library()`:
 
-```{r load-library}
+```{r load-library, eval=FALSE}
 library(patchclampplotteR)
 ```
+
+## Analysis
+
+To learn about how to convert raw .abf data in Clampfit to .csv files for this package, please see the vignettes [Evoked Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html) and [Action Potential Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
+
+## Using patchclampplotteR
+
+Please see the [Getting Started](https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html) page for a walk-through of the major functions of this package.
