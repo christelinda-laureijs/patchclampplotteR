@@ -5,7 +5,7 @@ description: >
   Learn how to analyze raw evoked current data in Clampfit and prepare it
   for use with the package patchclampplotteR.
 vignette: >
-  %\VignetteIndexEntry{evoked-current-analysis}
+  %\VignetteIndexEntry{Evoked Current Analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
