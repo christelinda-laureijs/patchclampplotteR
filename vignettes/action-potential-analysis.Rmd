@@ -4,22 +4,22 @@ output: rmarkdown::html_vignette
 description: >
   Learn how to obtain action potential properties from a raw .abf file in Clampfit.
 vignette: >
-  %\VignetteIndexEntry{action-potential-analysis}
+  %\VignetteIndexEntry{Action Potential Analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+  fig.align = "center",
+  out.extra='',
+  out.width="75%",
+  echo = FALSE
 )
 
 library(dplyr)
 library(reactable)
 ```
-
-# Action Potential Analysis
 
 > Note: This package does not yet contain functions to analyze and plot action
 potential data. However, I am including this vignette here to show you how to
@@ -31,7 +31,7 @@ a raw .abf file. You will identify the first current injection that resulted in
 action potentials and then select the first action potential within this sweep
 for further analyses.
 
-```{r header-image, fig.align = 'center', fig.alt = "An image of a current clamp steps recording with the first action potential outlined with a box.", echo=F}
+```{r header-image, fig.alt = "An image of a current clamp steps recording with the first action potential outlined with a box."}
 knitr::include_graphics("figures/AP-first-trace.png")
 ```
 
@@ -56,7 +56,7 @@ Before you begin, you should set up a .csv file with the following columns:
 * `Time_of_antipeak` The time of the after-hyperpolarization, which should be relative to the `Time_of_Threshold`.
 * `Half-width` The width of the action potential when the membrane potential is half of the `Peak_amplitude`.
 
-```{r ap-properties-image, fig.align = 'center', fig.alt = "An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire.", echo=F}
+```{r ap-properties-image, fig.alt = "An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire."}
 knitr::include_graphics("figures/AP-properties.png")
 ```
 
@@ -72,7 +72,7 @@ the voltage value for cursor 1. If cursor 1 is lower, then Clampfit may identify
 the location at cursor 1 as the after-hyperpolarization region if you forget to
 move the cursor to the threshold (see step 11).
 
-```{r cursor-image, fig.align = 'center', fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than cursor 2.", echo=F}
+```{r cursor-image, fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than cursor 2."}
 knitr::include_graphics("figures/AP-cursors.png")
 ```
 
@@ -80,7 +80,7 @@ knitr::include_graphics("figures/AP-cursors.png")
 
 6. `t11` should be the derivative of `t_x`. In the `Expression` box, write `t11=diff(t6)` (replace `t6` with your value for `t_x`). 
 
-```{r expression-image, fig.align = 'center', fig.alt = "A screenshot of the Arithmetic box of Clampfit showing the formula t11=diff(t6) inserted into the expression field.", echo=F}
+```{r expression-image, fig.alt = "A screenshot of the Arithmetic box of Clampfit showing the formula t11=diff(t6) inserted into the expression field."}
 knitr::include_graphics("figures/AP-expression-box.png")
 ```
 
@@ -101,7 +101,7 @@ three columns.
 
 10. Your .csv file should now look like this:
 
-```{r echo=FALSE}
+```{r sample-ap-table-one}
 sample_ap_data <- data.frame(
   Letter = c("BN"),
   State	= c("Baseline"),
@@ -118,7 +118,7 @@ reactable(sample_ap_data)
 11. Double-click on Cursor 1 and change its Time value to match the
 `Time_of_Threshold`.
 
-```{r cursor-image-revised, fig.align = 'center', fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold.", fig.cap = "Note how Cursor 1 is shifted to the right. It is located at the x-value where the membrane potential crosses the threshold.", echo=F}
+```{r cursor-image-revised, fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold.", fig.cap = "Note how Cursor 1 is shifted to the right. It is located at the x-value where the membrane potential crosses the threshold."}
 knitr::include_graphics("figures/AP-cursors-new.png")
 ```
 
@@ -137,7 +137,7 @@ of it) or press `Alt+s`.
 * Column Order: `Measurement, region, Signal`
 * Measurements: `Peak_amplitude`, `Time of peak`, `Antipeak amplitude`, `Time of antipeak`, `Half-width`
 
-```{r statistics-box, fig.align = 'center', fig.alt = "A screenshot of the Statistics box of Clampfit showing the correct options to select.", echo=F}
+```{r statistics-box, fig.alt = "A screenshot of the Statistics box of Clampfit showing the correct options to select."}
 knitr::include_graphics("figures/AP-statistics-box.png")
 ```
 
@@ -148,7 +148,7 @@ changed these column names to make them easier to use in R code.
 
 15. Your .csv file should now look like this.
 
-```{r finalized-ap-table, echo=FALSE}
+```{r finalized-ap-table}
 sample_ap_data_2 <- data.frame(
   Letter = c("BN"),
   State	= c("Baseline"),
@@ -177,7 +177,7 @@ for the columns `Letter` and `State` and leave all the others blank.
 
 Here is an example of what a datasheet can look like:
 
-```{r example-full-ap-table, echo=FALSE}
+```{r example-full-ap-table}
 sample_full_ap_table <- read.csv("sample-ap-data.csv") %>% 
   mutate(across(where(is.numeric), round, 2))
 
@@ -201,7 +201,7 @@ the sweeps. Count the number of action potentials in each sweep.
 18. Here is an example of what one recording could look like:
 
 
-```{r}
+```{r display-sample-count-data}
 reactable(read.csv("sample-ap-count-data.csv"))
 ```
 
@@ -213,7 +213,7 @@ Do not discard this cell; this is important and meaningful data! Fill in only th
 
 *What do I do if there are action potentials outside of the time when a current injection was applied?*
 
-```{r aps-outside, fig.align = 'center', fig.alt = "A screenshot of a recording in Clampfit showing action potentials present outside of the range where a current injection was applied.", echo=F}
+```{r aps-outside, fig.alt = "A screenshot of a recording in Clampfit showing action potentials present outside of the range where a current injection was applied."}
 knitr::include_graphics("figures/APs-outside-sweep.png")
 ```
 
@@ -221,7 +221,7 @@ This can happen with very excitable cells. Only count the action potentials that
 
 *Should I count an action potential that looks very wavy?*
 
-```{r aps-wavy, fig.align = 'center', fig.alt = "A screenshot of a recording in Clampfit showing wavy action potentials. Valid action potentials are indicated with check marks", echo=F}
+```{r aps-wavy, fig.alt = "A screenshot of a recording in Clampfit showing wavy action potentials. Valid action potentials are indicated with check marks"}
 knitr::include_graphics("figures/Wavy-APs-check.png")
 ```
 
