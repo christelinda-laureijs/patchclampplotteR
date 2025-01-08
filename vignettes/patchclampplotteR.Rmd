@@ -53,7 +53,7 @@ neurons.
 
 ## Analyze data in Clampfit
 
-Please see the vignettes in the Articles page to learn about how to analyze data in Clampfit. These include `vignette("Evoked Current Analysis")` and [Action Potential Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
+Please see the vignettes in the Articles page to learn about how to analyze data in Clampfit. These include `vignette("evoked-current-analysis")` and [Action Potential Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
 
 ## Import raw .csv files
 
