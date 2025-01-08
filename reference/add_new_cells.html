@@ -68,7 +68,8 @@ also formats the dataset so it is immediately ready for use in functions like
 <span>  <span class="va">old_raw_data_csv</span>,</span>
 <span>  <span class="va">current_type</span>,</span>
 <span>  write_new_csv <span class="op">=</span> <span class="st">"yes"</span>,</span>
-<span>  <span class="va">new_file_name</span></span>
+<span>  <span class="va">new_file_name</span>,</span>
+<span>  decimal_places <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -117,6 +118,10 @@ a filename for the new csv file in <code>new_file_name</code>.</p></dd>
 to the old data. Must be a character representing a filepath to a csv file.
 Examples include "Data/20241118-Raw-eEPSC-data.csv".</p></dd>
 
+
+<dt id="arg-decimal-places">decimal_places<a class="anchor" aria-label="anchor" href="#arg-decimal-places"></a></dt>
+<dd><p>A numeric value indicating the number of decimal places the data should be rounded to. Used to reduce file size and prevent an incorrect representation of the number of significant digits.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -138,7 +143,8 @@ cells appended to it.</p>
 <span class="r-in"><span>  old_raw_data_csv <span class="op">=</span> <span class="fu"><a href="import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"sample_eEPSC_data.csv"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span></span>
 <span class="r-in"><span>  write_new_csv <span class="op">=</span> <span class="st">"no"</span>,</span></span>
-<span class="r-in"><span>  new_file_name <span class="op">=</span> <span class="st">"20241118-Raw-eEPSC-Data.csv"</span></span></span>
+<span class="r-in"><span>  new_file_name <span class="op">=</span> <span class="st">"20241118-Raw-eEPSC-Data.csv"</span>,</span></span>
+<span class="r-in"><span>  decimal_places <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
