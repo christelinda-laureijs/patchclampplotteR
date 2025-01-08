@@ -93,7 +93,14 @@ your raw recording data from Clampfit. This vignette will show you how
 to move your evoked post-synaptic current data from raw .abf recordings
 to a .csv file.</p>
 <p>This demonstration uses a protocol with two stimuli resulting in two
-evoked currents per sweep.</p>
+evoked currents per sweep. The paired-pulse ratio (PPR) is the ratio of
+the second evoked current amplitude to the first.</p>
+<div class="figure" style="text-align: center">
+<img src="figures%2FEvoked-currents-schematic.png" alt="A sketch showing a horizontal line with two downward-pointing peaks separated by a short distance. These are the two evoked currents." width="960"><p class="caption">
+This schematic shows the first and second evoked currents. The ratio
+between them is the paired-pulse ratio (PPR)
+</p>
+</div>
 <div class="section level3">
 <h3 id="combine-recordings">Combine recordings<a class="anchor" aria-label="anchor" href="#combine-recordings"></a>
 </h3>
@@ -102,12 +109,8 @@ evoked currents per sweep.</p>
 pause the recording every 5 minutes to obtain parameters like access
 resistance and capacitance from the membrane test before resuming
 recording. If your data is already a continuous file, you can skip steps
-1-2. step.</p>
+1-2.</p>
 </blockquote>
-</div>
-<div class="section level3">
-<h3 id="combine-recordings-1">Combine recordings<a class="anchor" aria-label="anchor" href="#combine-recordings-1"></a>
-</h3>
 <ol style="list-style-type: decimal">
 <li><p>Open the first .abf file in your recording series, and use the
 <code>Next File</code> button to quickly open all files in the
@@ -182,13 +185,19 @@ and 6 should surround the second evoked current.</p></li>
 <p><img src="figures%2FEvoked-currents-cursors.png" alt="A screenshot of the correct cursor alignment in Clampfit." width="551" style="display: block; margin: auto;"></p>
 <blockquote>
 <p>Warning! Ensure that the cursors fully enclose the evoked currents
-and that they do not include the stimulus artifacts.</p>
+and that they do NOT include the stimulus artifacts.</p>
 </blockquote>
 <ol start="9" style="list-style-type: decimal">
-<li><p>Click on <code>View</code> -&gt; <code>Window Defaults</code> and
+<li>Click on <code>View</code> -&gt; <code>Window Defaults</code> and
 <code>Save selected Analysis Windows settings as default</code>. This
 will save you time when running through many analyses since it will
-restore your cursor pairs to the same position with new files!</p></li>
+restore your cursor pairs to the same position with new files!</li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="get-current-amplitudes">Get current amplitudes<a class="anchor" aria-label="anchor" href="#get-current-amplitudes"></a>
+</h3>
+<ol start="10" style="list-style-type: decimal">
 <li><p>Click on the Statistics button (a small icon with a summation
 symbol on top of it) or press <code>Alt+s</code>.</p></li>
 <li><p>Set the following settings:</p></li>
@@ -222,7 +231,10 @@ by checking the total number of sweeps in the bottom-right corner.</p>
 </blockquote>
 <blockquote>
 <p>Ensure that all the settings are correct, especially if you have done
-other analyses in Clampfit recently.</p>
+other analyses in Clampfit recently. For example, the polarity may be
+set to <code>Positive-going</code>, and you may have incorrect search
+regions specified if you were recently <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html">analyzing
+action potential data</a>.</p>
 </blockquote>
 <blockquote>
 <p>The Measurements options change for each search region, so make sure
@@ -273,6 +285,7 @@ Started vignette</a></p>
 noise or a very unstable baseline) in the Trace Selection box of Step
 11. Select the traces you want to exclude, then <code>Invert</code> your
 selection.</p>
+<p><em>What do I do if there are two peaks?</em></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

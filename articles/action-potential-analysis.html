@@ -108,7 +108,7 @@ where the action potential velocity is 10 mV/ms or greater (Farries et
 al., 2010).</p>
 </blockquote>
 <div class="section level3">
-<h3 id="action-potential-properties">Action Potential Properties<a class="anchor" aria-label="anchor" href="#action-potential-properties"></a>
+<h3 id="set-up-data-sheet">Set up data sheet<a class="anchor" aria-label="anchor" href="#set-up-data-sheet"></a>
 </h3>
 <p>Before you begin, you should set up a .csv file with the following
 columns: * <code>Letter</code> The unique letter identifier of a single
@@ -142,15 +142,12 @@ the action potential when the membrane potential is half of the
 <code>Peak_amplitude</code>.</p>
 <p><img src="figures%2FAP-properties.png" alt="An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire." width="1056" style="display: block; margin: auto;"></p>
 </div>
-</div>
-<div class="section level2">
-<h2 id="clampfit-tutorial">Clampfit Tutorial<a class="anchor" aria-label="anchor" href="#clampfit-tutorial"></a>
-</h2>
 <div class="section level3">
 <h3 id="get-derivative">Get derivative<a class="anchor" aria-label="anchor" href="#get-derivative"></a>
 </h3>
 <ol style="list-style-type: decimal">
-<li>Open the .abf file containing the current clamp step protocol.</li>
+<li>Open the .abf file containing the current clamp step protocol in
+Clampfit.</li>
 <li>Press the “Enter” key to show just one sweep at a time. It will
 begin at the sweep corresponding to the lowest current injection. Use
 greater than symbol (&gt;; on some computers you don’t even need to
@@ -215,7 +212,7 @@ column) until you see the first value that is greater than or equal to
 <script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BN"],"State":["Baseline"],"Time_of_Threshold":[373.5],"t_x":[-32.1],"t11":[10.38]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_Threshold","name":"Time_of_Threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t11","name":"t11","type":"numeric"}],"dataKey":"3858fd2aa4ee1edbae91c3a3e981b8bf"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
-<h3 id="measure-ap-properties">Measure AP properties<a class="anchor" aria-label="anchor" href="#measure-ap-properties"></a>
+<h3 id="measure-action-potential-properties">Measure action potential properties<a class="anchor" aria-label="anchor" href="#measure-action-potential-properties"></a>
 </h3>
 <ol start="11" style="list-style-type: decimal">
 <li>Double-click on Cursor 1 and change its Time value to match the
@@ -292,7 +289,7 @@ leave all the others blank.</p>
 <script type="application/json" data-for="htmlwidget-36aa3d2a04d42bbc2145">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BO","BO","BP","BP","BT","BT"],"State":["Baseline","Insulin","Baseline","","Baseline","Insulin"],"Time_of_Threshold":[329.6,358.6,468.3,"NA",407.1,518.3],"t_x":[-29.63,-35.49,-33.81,"NA",-28.35,-33.26],"t_11":[67.13,26.24,10.68,"NA",28.99,17.69],"ID":["23714007.abf","23714015.abf","23714026.abf","","23719005.abf","23719018.abf"],"First_sweep_with_APs":[6,7,5,"NA",8,8],"Trace_start":[5021,6021,4021,"NA",7021,7021],"Peak_amplitude":[77.67,84.35,70.19,"NA",77.67,70.1],"Time_to_Peak":[330.1,359.1,468.9,"NA",407.6,518.9],"Antipeak_amplitude":[-17.3,-16.48,-15.62,"NA",-7.11,-25.39],"Time_of_antipeak":[332.6,361.5,471.2,"NA",410.5,521.9],"Half_width":[0.79,0.77,0.89,"NA",0.96,0.78]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_Threshold","name":"Time_of_Threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t_11","name":"t_11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"First_sweep_with_APs","name":"First_sweep_with_APs","type":"numeric"},{"id":"Trace_start","name":"Trace_start","type":"numeric"},{"id":"Peak_amplitude","name":"Peak_amplitude","type":"numeric"},{"id":"Time_to_Peak","name":"Time_to_Peak","type":"numeric"},{"id":"Antipeak_amplitude","name":"Antipeak_amplitude","type":"numeric"},{"id":"Time_of_antipeak","name":"Time_of_antipeak","type":"numeric"},{"id":"Half_width","name":"Half_width","type":"numeric"}],"dataKey":"175585cb4d957283a3bdf216c8249d45"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
-<h3 id="count-aps">Count APs<a class="anchor" aria-label="anchor" href="#count-aps"></a>
+<h3 id="count-action-potentials">Count action potentials<a class="anchor" aria-label="anchor" href="#count-action-potentials"></a>
 </h3>
 <p>The next step is to count the number of action potentials in each
 sweep. This will allow you to later make a plot of action potential
@@ -323,6 +320,7 @@ to measure. However, for your AP count data, please just indicate
 <code>0</code> for all current injections.</p>
 <p><em>What do I do if there are action potentials outside of the time
 when a current injection was applied?</em></p>
+<p><img src="figures%2FAPs-outside-sweep.png" alt="A screenshot of a recording in Clampfit showing action potentials present outside of the range where a current injection was applied." width="2272" style="display: block; margin: auto;"></p>
 <p>This can happen with very excitable cells. Only count the action
 potentials that occured within the injection period.</p>
 <p><em>Should I count an action potential that looks very wavy?</em></p>
