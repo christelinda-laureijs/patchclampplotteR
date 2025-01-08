@@ -21,20 +21,27 @@ library(reactable)
 
 # Action Potential Analysis
 
-> Note: This package does not yet contain functions to analyze and plot action potential data. However, I am including this vignette here to show you how to perform raw data analysis in Clampfit. The resulting data will be ready to use in future versions of *patchclampplotteR.*
+> Note: This package does not yet contain functions to analyze and plot action
+potential data. However, I am including this vignette here to show you how to
+perform raw data analysis in Clampfit. The resulting data will be ready to use
+in future versions of *patchclampplotteR.*
 
-This vignette will demonstrate how to analyze action potential properties using a raw .abf file. You will identify the first current injection that resulted in action potentials and then select the first action potential within this sweep for further analyses.
+This vignette will demonstrate how to analyze action potential properties using
+a raw .abf file. You will identify the first current injection that resulted in
+action potentials and then select the first action potential within this sweep
+for further analyses.
 
 ```{r header-image, fig.align = 'center', fig.alt = "An image of a current clamp steps recording with the first action potential outlined with a box.", echo=F}
 knitr::include_graphics("figures/AP-first-trace.png")
 ```
 
-> You will identify the threshold using the first derivative method. This means that the threshold corresponds to the membrane potential where the action potential velocity is 10 mV/ms or greater (Farries et al., 2010).
+> You will identify the threshold using the first derivative method. This means
+that the threshold corresponds to the membrane potential where the action
+potential velocity is 10 mV/ms or greater (Farries et al., 2010).
 
 ## Action Potential Properties
 
 Before you begin, you should set up a .csv file with the following columns:
-
 * `Letter` The unique letter identifier of a single cell. You can use this to link data from different recordings taken from the same cell.
 * `State` A character value. In this example, the values are `Baseline` and `Insulin`, indicating a current clamp protocol taken after the cell had been exposed to 500 nM insulin for 25 minutes.
 * `Time_of_Threshold` A numerical value (in ms) used to determine properties like the latency to fire.
@@ -62,7 +69,10 @@ knitr::include_graphics("figures/AP-properties.png")
 3. Move up to sweeps corresponding to higher current injections until you identify the first sweep that contains an action potential. I will call this `t_x`, since it may be `t5` in one recording, or `t6` in another, etc. 
 4. Position cursors 1 and 2 around the first action potential in `t_x`. Cursor 1 should be before the threshold (aim for the area before the slope of the curve increases steeply). Cursor 2 should be in the after-hyperpolarization region.
 
-> It is important that cursor 2 touches the curve at a value that is lower than the voltage value for cursor 1. If cursor 1 is lower, then Clampfit may identify the location at cursor 1 as the after-hyperpolarization region if you forget to move the cursor to the threshold (see step 11).
+> It is important that cursor 2 touches the curve at a value that is lower than
+the voltage value for cursor 1. If cursor 1 is lower, then Clampfit may identify
+the location at cursor 1 as the after-hyperpolarization region if you forget to
+move the cursor to the threshold (see step 11).
 
 ```{r cursor-image, fig.align = 'center', fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than cursor 2.", echo=F}
 knitr::include_graphics("figures/AP-cursors.png")
@@ -82,9 +92,14 @@ knitr::include_graphics("figures/AP-expression-box.png")
 
 8. The `Results` page will display three columns: `Time (ms)`, `Trace #6 (or #5, #7, etc.)`, and `Trace #11`. In this example, the middle column is `Trace #6`, but this name will vary depending on the data. `Trace #6` is the membrane potential in mV, and `Trace #11` is the derivative of `Trace #6`.
 
-> Warning: The Results page of the transferred traces does not clear between files. If you are doing several analyses in one session, ensure that you are looking at the correct columns with the traces corresponding to the active recording.
+> Warning: The Results page of the transferred traces does not clear between
+files. If you are doing several analyses in one session, ensure that you are
+looking at the correct columns with the traces corresponding to the active
+recording.
 
-9. Scroll down the `Trace #11` column (the derivative column) until you see the first value that is greater than or equal to 10 mV/ms. Copy the value of all three columns.
+9. Scroll down the `Trace #11` column (the derivative column) until you see the
+first value that is greater than or equal to 10 mV/ms. Copy the value of all
+three columns.
 
 10. Your .csv file should now look like this:
 
@@ -102,15 +117,18 @@ reactable(sample_ap_data)
 
 ## Measure AP properties
 
-11. Double-click on Cursor 1 and change its Time value to match the `Time_of_Threshold`.
+11. Double-click on Cursor 1 and change its Time value to match the
+`Time_of_Threshold`.
 
 ```{r cursor-image-revised, fig.align = 'center', fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold.", fig.cap = "Note how Cursor 1 is shifted to the right. It is located a the x-value where the membrane potential crosses the threshold." echo=F}
 knitr::include_graphics("figures/AP-cursors-new.png")
 ```
 
-> Warning! If you do not reposition Cursor 1 to be at the time of threshold, the values for `Time_of_Peak` and `Time_of_Antipeak` will be incorrect!
+> Warning! If you do not reposition Cursor 1 to be at the time of threshold, the
+values for `Time_of_Peak` and `Time_of_Antipeak` will be incorrect!
 
-12. Click on the Statistics button (a small icon with a summation symbol on top of it) or press `Alt+s`.
+12. Click on the Statistics button (a small icon with a summation symbol on top
+of it) or press `Alt+s`.
 
 13. Set the following settings:
 * Trace Selection: Choose `Vm_primary ()` and `t_x` (in this case, `t6`)
@@ -125,7 +143,10 @@ knitr::include_graphics("figures/AP-cursors-new.png")
 knitr::include_graphics("figures/AP-statistics-box.png")
 ```
 
-14. Select all data except for the filepath option (unless you think you will need it later) and paste it into the .csv file. You'll notice that the .csv column names are different than the column names in the `Results` sheet. I changed these column names to make them easier to use in R code.
+14. Select all data except for the filepath option (unless you think you will
+need it later) and paste it into the .csv file. You'll notice that the .csv
+column names are different than the column names in the `Results` sheet. I
+changed these column names to make them easier to use in R code.
 
 15. Your .csv file should now look like this.
 
@@ -149,9 +170,11 @@ sample_ap_data_2 <- data.frame(
 reactable(sample_ap_data_2)
 ```
 
-16. Repeat this process for the current clamp step protocol taken after a hormone or treatment.
+16. Repeat this process for the current clamp step protocol taken after a
+hormone or treatment.
 
-> If there are no action potentials in the later recording, insert the values for the columns `Letter` and `State` and leave all the others blank.
+> If there are no action potentials in the later recording, insert the values
+for the columns `Letter` and `State` and leave all the others blank.
 
 
 Here is an example of what a datasheet can look like:
@@ -167,17 +190,16 @@ reactable(sample_full_ap_table)
 
 ## Count APs
 
-The next step is to count the number of action potentials in each sweep. This will allow you to later make a plot of action potential frequency vs. current injection and see how a treatment affect action potential frequency.
-
+The next step is to count the number of action potentials in each sweep. This
+will allow you to later make a plot of action potential frequency vs. current
+injection and see how a treatment affect action potential frequency.
 For this, you will need a separate .csv file with four columns:
-
 * `Letter` The unique letter identifier of a single cell.
 * `State` A character value ("Baseline" or "Insulin" in this example)
 * `Sweep` A number from 1 to 10
 * `No_of_Aps` a numerical value indicating the number of action potentials
-
-16. Press the `Enter` key and use `,` and `.` (or `<` and `>`) to cycle through the sweeps. Count the number of action potentials in each sweep.
-
+16. Press the `Enter` key and use `,` and `.` (or `<` and `>`) to cycle through
+the sweeps. Count the number of action potentials in each sweep.
 18. Here is an example of what one recording could look like:
 
 
@@ -188,4 +210,7 @@ reactable(read.csv("sample-ap-count-data.csv"))
 
 References
 
-Farries, M. A., Kita, H., & Wilson, C. J. (2010). Dynamic Spike Threshold and Zero Membrane Slope Conductance Shape the Response of Subthalamic Neurons to Cortical Input. Journal of Neuroscience, 30(39), 13180–13191. https://doi.org/10.1523/JNEUROSCI.1909-10.2010
+Farries, M. A., Kita, H., & Wilson, C. J. (2010). Dynamic Spike Threshold and
+Zero Membrane Slope Conductance Shape the Response of Subthalamic Neurons to
+Cortical Input. Journal of Neuroscience, 30(39), 13180–13191.
+https://doi.org/10.1523/JNEUROSCI.1909-10.2010
