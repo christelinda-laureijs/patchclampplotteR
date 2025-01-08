@@ -120,24 +120,55 @@ continuous recording with no gaps.</p></li>
 <p><img src="figures%2FConcatenate-files.png" alt="A screenshot of the Concatenate files dialog box in Clampfit showing that all files are selected." width="348" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
-<h3 id="view-data">View data<a class="anchor" aria-label="anchor" href="#view-data"></a>
+<h3 id="create-data-sheet">Create data sheet<a class="anchor" aria-label="anchor" href="#create-data-sheet"></a>
 </h3>
 <ol start="3" style="list-style-type: decimal">
+<li>Create a .csv file with four columns: <code>Letter</code>,
+<code>ID</code>, <code>P1</code>, <code>P2</code>.</li>
+</ol>
+<ul>
+<li>
+<code>Letter</code> The unique letter identifier of a single
+cell.</li>
+<li>
+<code>ID</code> A character value indicating the recording number.
+This corresponds to the <code>File Name</code> column that is
+automatically generated in the Results sheet in Clampfit. See below for
+a warning about what you should put here.</li>
+<li>
+<code>P1</code> The amplitude of the first evoked current.</li>
+<li>
+<code>P2</code> The amplitude of the second evoked current.</li>
+</ul>
+<blockquote>
+<p>I would strongly recommend using the filename of the first file in
+the series (but write down the concatenated filename in your lab book as
+well). This is because Clampfit will auto-generate the concatenated file
+names (<code>Concatenate001.abf</code>, <code>Concatenate002.abf</code>,
+etc.). If you update your pClamp software, Clampfit will begin naming
+files again at <code>Concatenate000.abf</code>, and you could lose track
+of which file is which.</p>
+</blockquote>
+</div>
+<div class="section level3">
+<h3 id="view-data">View data<a class="anchor" aria-label="anchor" href="#view-data"></a>
+</h3>
+<ol start="4" style="list-style-type: decimal">
 <li><p>Click on the <code>Show Aquistion Signals</code> button and then
 <code>Previous Signal</code> (blue arrow in the figure below) to view
 the sweeps showing changes in current (<code>Im_primary ()</code>). The
 traces should all be stacked on top of each other, but if they are not,
 click on <code>View</code> -&gt; <code>Data Display</code> -&gt;
 <code>Sweeps</code>.</p></li>
-<li><p>You can also click on the Auto Scale All Y Axes button (orange
-arrow) to help you see the data faster.</p></li>
+<li><p>You can also click on the <code>Auto Scale All Y Axes</code>
+button (orange arrow) to help you see the data faster.</p></li>
 </ol>
 <p><img src="figures%2FViewer-buttons.png" alt="A screenshot of the Show Signals buttons and other viewering buttons available in the upper toolbar in Clampfit." width="132" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="set-up-cursors">Set up cursors<a class="anchor" aria-label="anchor" href="#set-up-cursors"></a>
 </h3>
-<ol start="5" style="list-style-type: decimal">
+<ol start="6" style="list-style-type: decimal">
 <li><p>You will only need to set this up once per computer. Double-click
 anywhere in a blank region on the graph to open the
 <code>Analysis Window Properties</code> box.</p></li>
@@ -149,9 +180,99 @@ Cursors 3 and 4 should surround the first evoked current, and Cursors 5
 and 6 should surround the second evoked current.</p></li>
 </ol>
 <p><img src="figures%2FEvoked-currents-cursors.png" alt="A screenshot of the correct cursor alignment in Clampfit." width="551" style="display: block; margin: auto;"></p>
-<p>Please see the <strong>Required columns</strong> section of the
+<blockquote>
+<p>Warning! Ensure that the cursors fully enclose the evoked currents
+and that they do not include the stimulus artifacts.</p>
+</blockquote>
+<ol start="9" style="list-style-type: decimal">
+<li><p>Click on <code>View</code> -&gt; <code>Window Defaults</code> and
+<code>Save selected Analysis Windows settings as default</code>. This
+will save you time when running through many analyses since it will
+restore your cursor pairs to the same position with new files!</p></li>
+<li><p>Click on the Statistics button (a small icon with a summation
+symbol on top of it) or press <code>Alt+s</code>.</p></li>
+<li><p>Set the following settings:</p></li>
+</ol>
+<ul>
+<li>Trace Selection: Choose <code>Im_primary ()</code> and
+<code>Select All</code> traces. If you want to exclude specific traces,
+click on these traces, then select <code>Invert</code> to choose all
+traces <em>except</em> the ones you excluded.</li>
+<li>Peak Polarity: <code>Im_primary</code>,
+<code>Negative-going</code>
+</li>
+<li>Baseline Region: Mean level <code>Cursors 1..2</code>
+</li>
+<li>Search Region 1: Range: <code>Cursors 3..4</code>
+</li>
+<li>Search Region 2 (toggle up and check to enable a second search
+region): Range: <code>Cursors 5..6</code>
+</li>
+<li>Destination Option: <code>Replace results in sheet</code> (prevents
+you from accidentally copying old data</li>
+<li>Column Order: <code>Measurement, region, Signal</code>
+</li>
+<li>Measurements: <code>Peak_amplitude</code>
+</li>
+</ul>
+<blockquote>
+<p>Warning! Ensure that you have selected all traces that you want to
+include in the recording! You can verify if this is the correct number
+by checking the total number of sweeps in the bottom-right corner.</p>
+</blockquote>
+<blockquote>
+<p>Ensure that all the settings are correct, especially if you have done
+other analyses in Clampfit recently.</p>
+</blockquote>
+<blockquote>
+<p>The Measurements options change for each search region, so make sure
+that both search regions only have <code>Peak_amplitude</code>
+checked!</p>
+</blockquote>
+<p><img src="figures%2FEvoked-currents-statistics-box.png" alt="A screenshot of the correct statistics options selected in Clampfit." width="308" style="display: block; margin: auto;"></p>
+<ol start="12" style="list-style-type: decimal">
+<li><p>Click OK and view the <code>Results</code> sheet. Copy the R1S1
+and R2S1 columns, which correspond to the first and second evoked
+currents, respectively.</p></li>
+<li><p>Paste these values into the <code>P1</code> and <code>P2</code>
+columns.</p></li>
+<li><p>Fill in the <code>Letter</code> and <code>ID</code> columns. In
+Excel, you can just fill the first values, then double-click the cell in
+the bottom right corner to automatically fill the entire
+column.</p></li>
+</ol>
+<p>You are finished with the analysis in Clampfit!</p>
+</div>
+<div class="section level3">
+<h3 id="cell-characteristics">Cell Characteristics<a class="anchor" aria-label="anchor" href="#cell-characteristics"></a>
+</h3>
+<ol start="15" style="list-style-type: decimal">
+<li><p>Create a new .csv file. This will eventually become a large
+spreadsheet with information on all recordings in your entire dataset.
+As you add new recordings, update this cell characteristics sheet.
+Please see the <strong>Required columns</strong> section of the
 documentation for <code><a href="../reference/import_cell_characteristics_df.html">import_cell_characteristics_df()</a></code> for
-explanations of the required columns and what they include.</p>
+explanations of the required columns and what they include.</p></li>
+<li><p>After you have completed these steps for several recordings, you
+should have two .csv files:</p></li>
+</ol>
+<ul>
+<li>A .csv file with the evoked current amplitudes (<code>P1</code> and
+<code>P2</code>)</li>
+<li>A .csv file containing information on the cell characteristics</li>
+</ul>
+<p>If you have these two files, you are ready to begin using
+<code>patchclampplotteR</code>! See the <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html">Getting
+Started vignette</a></p>
+</div>
+<div class="section level3">
+<h3 id="faq-about-evoked-current-analysis">FAQ about evoked current analysis<a class="anchor" aria-label="anchor" href="#faq-about-evoked-current-analysis"></a>
+</h3>
+<p><em>There are some traces with significant amounts of noise</em></p>
+<p>You can exclude individual traces (for example ones with lots of
+noise or a very unstable baseline) in the Trace Selection box of Step
+11. Select the traces you want to exclude, then <code>Invert</code> your
+selection.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
