@@ -765,22 +765,3 @@ NULL
 #' @keywords data
 NULL
 
-
-library(dplyr)
-sample_raw_sEPSC_df_2 <- raw_spont_data %>% filter(!letter %in% c("BN", "FT", "GI", "HG", "CZ")) %>%
-  mutate(across(where(is.numeric), round, 2))
-
-z <- sample_raw_eEPSC_df
-x <- sample_PPR_df
-w <- sample_pruned_eEPSC_df
-
-sample_eEPSC_variance_df <- sample_eEPSC_variance_df %>%
-  mutate(across(where(is.numeric), round, 2))
-
-sample_pruned_eEPSC_df <- w %>%
-  mutate(across(where(is.numeric), round, 2))
-
-sample_PPR_df <- x %>%
-  mutate(across(where(is.numeric), round, 2))
-sample_raw_eEPSC_df <- z %>%
-  mutate(across(where(is.numeric), round, 2))

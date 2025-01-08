@@ -10,7 +10,8 @@ add_new_cells(
   old_raw_data_csv,
   current_type,
   write_new_csv = "yes",
-  new_file_name
+  new_file_name,
+  decimal_places = 2
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ a filename for the new csv file in \code{new_file_name}.}
 \item{new_file_name}{A filename for the csv containing the new data appended
 to the old data. Must be a character representing a filepath to a csv file.
 Examples include "Data/20241118-Raw-eEPSC-data.csv".}
+
+\item{decimal_places}{A numeric value indicating the number of decimal places the data should be rounded to. Used to reduce file size and prevent an incorrect representation of the number of significant digits.}
 }
 \value{
 A dataframe consisting of the old raw data with information from the new
@@ -63,7 +66,8 @@ add_new_cells(
   old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
   current_type = "eEPSC",
   write_new_csv = "no",
-  new_file_name = "20241118-Raw-eEPSC-Data.csv"
+  new_file_name = "20241118-Raw-eEPSC-Data.csv",
+  decimal_places = 2
 )
 }
 

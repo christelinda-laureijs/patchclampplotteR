@@ -188,6 +188,7 @@ import_theme_colours <- function(filename) {
 #' @param new_file_name A filename for the csv containing the new data appended
 #'   to the old data. Must be a character representing a filepath to a csv file.
 #'   Examples include "Data/20241118-Raw-eEPSC-data.csv".
+#' @param decimal_places A numeric value indicating the number of decimal places the data should be rounded to. Used to reduce file size and prevent an incorrect representation of the number of significant digits.
 #'
 #' @return
 #'
@@ -209,7 +210,8 @@ import_theme_colours <- function(filename) {
 #'   old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
 #'   current_type = "eEPSC",
 #'   write_new_csv = "no",
-#'   new_file_name = "20241118-Raw-eEPSC-Data.csv"
+#'   new_file_name = "20241118-Raw-eEPSC-Data.csv",
+#'   decimal_places = 2
 #' )
 #' }
 #'
@@ -218,7 +220,8 @@ add_new_cells <- function(new_raw_data_csv,
                           old_raw_data_csv,
                           current_type,
                           write_new_csv = "yes",
-                          new_file_name) {
+                          new_file_name,
+                          decimal_places = 2) {
   # Obtain argument values as strings
   # Required to check if the filenames and current_type match
   # (e.g. User enters raw-sEPSC-data.csv for current_type = "sEPSC")
@@ -246,6 +249,10 @@ add_new_cells <- function(new_raw_data_csv,
     stop(
       "'cell_characteristics_csv' must be a character (e.g. \"Data/Plaintext-Cell-Characteristics.csv\")"
     )
+  }
+
+  if (!is.numeric(decimal_places)) {
+    stop("'decimal_places' must be a numeric value")
   }
 
   if (!write_new_csv %in% c("yes", "no")) {
@@ -423,7 +430,8 @@ add_new_cells <- function(new_raw_data_csv,
       letters_in_new_raw_data_spaces
     )
 
-    full_raw_data <- dplyr::bind_rows(old_raw_data, new_raw_data_complete)
+    full_raw_data <- dplyr::bind_rows(old_raw_data, new_raw_data_complete) %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
 
     if (write_new_csv == "yes") {
     utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
