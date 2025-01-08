@@ -124,7 +124,7 @@ If you have these two files, you are ready to begin using `patchclampplotteR`! S
 
 ## FAQ
 
-*There are some traces with significant amounts of noise*
+*There are some traces with significant amounts of noise.*
 
 You can exclude individual traces (for example ones with lots of noise or a very unstable baseline) in the Trace Selection box of Step 11. Select the traces you want to exclude, then `Invert` your selection.
 
@@ -138,6 +138,6 @@ If you see two peaks instead of one expected evoked current, this could be an ex
 
 *I have some new recordings. Do I add them to my existing .csv files, or make new files?*
 
-You should save a new .csv file for each new batch of raw data (these are the .csv files with `Letter`, `ID`, `P1` and `P2`). You may find it efficient to wait until you have a week of recordings, then analyze these recordings all at once in Clampfit. These data will be in a .csv file named something like "20240708-eEPSC-data.csv".
+You should save a new .csv file for each new batch of raw data (these are the .csv files with `Letter`, `ID`, `P1` and `P2`). You may find it efficient to wait until you have a week of recordings, then analyze these recordings all at once in Clampfit. These data will be in a .csv file named something like `20240708-eEPSC-data.csv`.
 
 However, when writing a paper or thesis, you will use just one master csv file which contains the evoked current data for all recordings in the entire project. To append new data to this master csv, use the `add_new_cells()` function. Please see `vignette("patchclampplotteR")` for more details.

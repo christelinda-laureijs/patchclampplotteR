@@ -846,19 +846,22 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #' make_summary_EPSC_data(
 #'   data = sample_raw_eEPSC_df,
 #'   current_type = "eEPSC",
-#'   save_output_as_RDS = "no"
+#'   save_output_as_RDS = "no",
+#'   decimal_places = 2
 #' )
 #'
 #' @examples
 #' make_summary_EPSC_data(
 #'   data = sample_pruned_sEPSC_df$individual_cells,
 #'   current_type = "sEPSC",
-#'   save_output_as_RDS = "no"
+#'   save_output_as_RDS = "no",
+#'   decimal_places = 2
 #' )
 #'
 make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
                                    current_type = "eEPSC",
-                                   save_output_as_RDS = "no") {
+                                   save_output_as_RDS = "no",
+                                   decimal_places = 2) {
   if (is.null(current_type) ||
     length(current_type) != 1L ||
     !current_type %in% c("eEPSC", "sEPSC")) {
@@ -868,6 +871,11 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
   if (!save_output_as_RDS %in% c("yes", "no")) {
     stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
   }
+
+  if (!is.numeric(decimal_places)) {
+    stop("'decimal_places' must be a numeric value")
+  }
+
 
   if (current_type == "eEPSC") {
     summary_df <- data %>%
@@ -896,7 +904,8 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         time = dplyr::last(.data$time),
         synapses = unique(.data$synapses)
       ) %>%
-      dplyr::ungroup()
+      dplyr::ungroup() %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
   }
 
 
@@ -923,7 +932,8 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         interval = unique(.data$interval),
         category = unique(.data$category),
         synapses = dplyr::last(.data$synapses)
-      )
+      ) %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
   }
 
   if (save_output_as_RDS == "yes") {

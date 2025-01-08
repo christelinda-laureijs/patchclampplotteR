@@ -7,7 +7,8 @@
 make_summary_EPSC_data(
   data = patchclampplotteR::sample_raw_eEPSC_df,
   current_type = "eEPSC",
-  save_output_as_RDS = "no"
+  save_output_as_RDS = "no",
+  decimal_places = 2
 )
 }
 \arguments{
@@ -22,6 +23,10 @@ are "eEPSC" or "sEPSC".}
 
 \item{save_output_as_RDS}{A character ("yes" or "no") describing if the
 resulting object should be saved as an RDS file in the raw data folder.}
+
+\item{decimal_places}{A numeric value indicating the number of decimal places
+the data should be rounded to. Used to reduce file size and prevent an
+incorrect representation of the number of significant digits.}
 }
 \value{
 A dataframe with summary data such as the mean current amplitude,
@@ -88,13 +93,15 @@ previously specified in \code{\link[=make_normalized_EPSC_data]{make_normalized_
 make_summary_EPSC_data(
   data = sample_raw_eEPSC_df,
   current_type = "eEPSC",
-  save_output_as_RDS = "no"
+  save_output_as_RDS = "no",
+  decimal_places = 2
 )
 
 make_summary_EPSC_data(
   data = sample_pruned_sEPSC_df$individual_cells,
   current_type = "sEPSC",
-  save_output_as_RDS = "no"
+  save_output_as_RDS = "no",
+  decimal_places = 2
 )
 
 }
