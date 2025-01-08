@@ -86,9 +86,6 @@
 
     
     
-<div class="section level2">
-<h2 id="action-potential-analysis">Action Potential Analysis<a class="anchor" aria-label="anchor" href="#action-potential-analysis"></a>
-</h2>
 <blockquote>
 <p>Note: This package does not yet contain functions to analyze and plot
 action potential data. However, I am including this vignette here to
@@ -100,16 +97,16 @@ data will be ready to use in future versions of
 properties using a raw .abf file. You will identify the first current
 injection that resulted in action potentials and then select the first
 action potential within this sweep for further analyses.</p>
-<p><img src="figures%2FAP-first-trace.png" alt="An image of a current clamp steps recording with the first action potential outlined with a box." width="1039" style="display: block; margin: auto;"></p>
+<p><img src="figures%2FAP-first-trace.png" alt="An image of a current clamp steps recording with the first action potential outlined with a box." width="75%" style="display: block; margin: auto;"></p>
 <blockquote>
 <p>You will identify the threshold using the first derivative method.
 This means that the threshold corresponds to the membrane potential
 where the action potential velocity is 10 mV/ms or greater (Farries et
 al., 2010).</p>
 </blockquote>
-<div class="section level3">
-<h3 id="set-up-data-sheet">Set up data sheet<a class="anchor" aria-label="anchor" href="#set-up-data-sheet"></a>
-</h3>
+<div class="section level2">
+<h2 id="set-up-data-sheet">Set up data sheet<a class="anchor" aria-label="anchor" href="#set-up-data-sheet"></a>
+</h2>
 <p>Before you begin, you should set up a .csv file with the following
 columns: * <code>Letter</code> The unique letter identifier of a single
 cell. You can use this to link data from different recordings taken from
@@ -140,11 +137,11 @@ The time of the after-hyperpolarization, which should be relative to the
 <code>Time_of_Threshold</code>. * <code>Half-width</code> The width of
 the action potential when the membrane potential is half of the
 <code>Peak_amplitude</code>.</p>
-<p><img src="figures%2FAP-properties.png" alt="An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire." width="1056" style="display: block; margin: auto;"></p>
+<p><img src="figures%2FAP-properties.png" alt="An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire." width="75%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level3">
-<h3 id="get-derivative">Get derivative<a class="anchor" aria-label="anchor" href="#get-derivative"></a>
-</h3>
+<div class="section level2">
+<h2 id="get-derivative">Get derivative<a class="anchor" aria-label="anchor" href="#get-derivative"></a>
+</h2>
 <ol style="list-style-type: decimal">
 <li>Open the .abf file containing the current clamp step protocol in
 Clampfit.</li>
@@ -168,7 +165,7 @@ Clampfit may identify the location at cursor 1 as the
 after-hyperpolarization region if you forget to move the cursor to the
 threshold (see step 11).</p>
 </blockquote>
-<p><img src="figures%2FAP-cursors.png" alt="A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than cursor 2." width="212" style="display: block; margin: auto;"></p>
+<p><img src="figures%2FAP-cursors.png" alt="A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than cursor 2." width="75%" style="display: block; margin: auto;"></p>
 <ol start="5" style="list-style-type: decimal">
 <li><p>Click on the arithmetic button (it is the button with basic math
 symbols), then Add Traces. Write “1” and click OK. This will add a new
@@ -177,11 +174,11 @@ empty trace, called <code>t11</code>.</p></li>
 the <code>Expression</code> box, write <code>t11=diff(t6)</code>
 (replace <code>t6</code> with your value for <code>t_x</code>).</p></li>
 </ol>
-<p><img src="figures%2FAP-expression-box.png" alt="A screenshot of the Arithmetic box of Clampfit showing the formula t11=diff(t6) inserted into the expression field." width="406" style="display: block; margin: auto;"></p>
+<p><img src="figures%2FAP-expression-box.png" alt="A screenshot of the Arithmetic box of Clampfit showing the formula t11=diff(t6) inserted into the expression field." width="75%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level3">
-<h3 id="find-threshold">Find threshold<a class="anchor" aria-label="anchor" href="#find-threshold"></a>
-</h3>
+<div class="section level2">
+<h2 id="find-threshold">Find threshold<a class="anchor" aria-label="anchor" href="#find-threshold"></a>
+</h2>
 <ol start="7" style="list-style-type: decimal">
 <li><p>Click on <code>Edit</code> -&gt; <code>Transfer Traces</code> and
 set the <code>Region to transfer</code> as <code>Cursors 1..2</code>. In
@@ -211,15 +208,15 @@ column) until you see the first value that is greater than or equal to
 <div class="reactable html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BN"],"State":["Baseline"],"Time_of_Threshold":[373.5],"t_x":[-32.1],"t11":[10.38]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_Threshold","name":"Time_of_Threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t11","name":"t11","type":"numeric"}],"dataKey":"3858fd2aa4ee1edbae91c3a3e981b8bf"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
-<div class="section level3">
-<h3 id="measure-action-potential-properties">Measure action potential properties<a class="anchor" aria-label="anchor" href="#measure-action-potential-properties"></a>
-</h3>
+<div class="section level2">
+<h2 id="measure-action-potential-properties">Measure action potential properties<a class="anchor" aria-label="anchor" href="#measure-action-potential-properties"></a>
+</h2>
 <ol start="11" style="list-style-type: decimal">
 <li>Double-click on Cursor 1 and change its Time value to match the
 <code>Time_of_Threshold</code>.</li>
 </ol>
 <div class="figure" style="text-align: center">
-<img src="figures%2FAP-cursors-new.png" alt="A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold." width="218"><p class="caption">
+<img src="figures%2FAP-cursors-new.png" alt="A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold." width="75%"><p class="caption">
 Note how Cursor 1 is shifted to the right. It is located at the x-value
 where the membrane potential crosses the threshold.
 </p>
@@ -254,7 +251,7 @@ you from accidentally copying old data</li>
 <code>Time of antipeak</code>, <code>Half-width</code>
 </li>
 </ul>
-<p><img src="figures%2FAP-statistics-box.png" alt="A screenshot of the Statistics box of Clampfit showing the correct options to select." width="327" style="display: block; margin: auto;"></p>
+<p><img src="figures%2FAP-statistics-box.png" alt="A screenshot of the Statistics box of Clampfit showing the correct options to select." width="75%" style="display: block; margin: auto;"></p>
 <ol start="14" style="list-style-type: decimal">
 <li><p>Select all data except for the filepath option (unless you think
 you will need it later) and paste it into the .csv file. You’ll notice
@@ -274,23 +271,23 @@ values for the columns <code>Letter</code> and <code>State</code> and
 leave all the others blank.</p>
 </blockquote>
 <p>Here is an example of what a datasheet can look like:</p>
-<pre><code><span><span class="co">#&gt; Warning: There was 1 warning in `mutate()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> In argument: `across(where(is.numeric), round, 2)`.</span></span>
-<span><span class="co">#&gt; Caused by warning:</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The `...` argument of `across()` is deprecated as of dplyr 1.1.0.</span></span>
-<span><span class="co">#&gt; Supply arguments directly to `.fns` through an anonymous function instead.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   # Previously</span></span>
-<span><span class="co">#&gt;   across(a:b, mean, na.rm = TRUE)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   # Now</span></span>
-<span><span class="co">#&gt;   across(a:b, \(x) mean(x, na.rm = TRUE))</span></span></code></pre>
+<pre><code><span><span class="co">## Warning: There was 1 warning in `mutate()`.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> In argument: `across(where(is.numeric), round, 2)`.</span></span>
+<span><span class="co">## Caused by warning:</span></span>
+<span><span class="co">## <span style="color: #BBBB00;">!</span> The `...` argument of `across()` is deprecated as of dplyr 1.1.0.</span></span>
+<span><span class="co">## Supply arguments directly to `.fns` through an anonymous function instead.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   # Previously</span></span>
+<span><span class="co">##   across(a:b, mean, na.rm = TRUE)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">##   # Now</span></span>
+<span><span class="co">##   across(a:b, \(x) mean(x, na.rm = TRUE))</span></span></code></pre>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-36aa3d2a04d42bbc2145" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-36aa3d2a04d42bbc2145">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BO","BO","BP","BP","BT","BT"],"State":["Baseline","Insulin","Baseline","","Baseline","Insulin"],"Time_of_Threshold":[329.6,358.6,468.3,"NA",407.1,518.3],"t_x":[-29.63,-35.49,-33.81,"NA",-28.35,-33.26],"t_11":[67.13,26.24,10.68,"NA",28.99,17.69],"ID":["23714007.abf","23714015.abf","23714026.abf","","23719005.abf","23719018.abf"],"First_sweep_with_APs":[6,7,5,"NA",8,8],"Trace_start":[5021,6021,4021,"NA",7021,7021],"Peak_amplitude":[77.67,84.35,70.19,"NA",77.67,70.1],"Time_to_Peak":[330.1,359.1,468.9,"NA",407.6,518.9],"Antipeak_amplitude":[-17.3,-16.48,-15.62,"NA",-7.11,-25.39],"Time_of_antipeak":[332.6,361.5,471.2,"NA",410.5,521.9],"Half_width":[0.79,0.77,0.89,"NA",0.96,0.78]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_Threshold","name":"Time_of_Threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t_11","name":"t_11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"First_sweep_with_APs","name":"First_sweep_with_APs","type":"numeric"},{"id":"Trace_start","name":"Trace_start","type":"numeric"},{"id":"Peak_amplitude","name":"Peak_amplitude","type":"numeric"},{"id":"Time_to_Peak","name":"Time_to_Peak","type":"numeric"},{"id":"Antipeak_amplitude","name":"Antipeak_amplitude","type":"numeric"},{"id":"Time_of_antipeak","name":"Time_of_antipeak","type":"numeric"},{"id":"Half_width","name":"Half_width","type":"numeric"}],"dataKey":"175585cb4d957283a3bdf216c8249d45"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
-<div class="section level3">
-<h3 id="count-action-potentials">Count action potentials<a class="anchor" aria-label="anchor" href="#count-action-potentials"></a>
-</h3>
+<div class="section level2">
+<h2 id="count-action-potentials">Count action potentials<a class="anchor" aria-label="anchor" href="#count-action-potentials"></a>
+</h2>
 <p>The next step is to count the number of action potentials in each
 sweep. This will allow you to later make a plot of action potential
 frequency vs. current injection and see how a treatment affect action
@@ -303,14 +300,12 @@ potentials 16. Press the <code>Enter</code> key and use <code>,</code>
 and <code>.</code> (or <code>&lt;</code> and <code>&gt;</code>) to cycle
 through the sweeps. Count the number of action potentials in each sweep.
 18. Here is an example of what one recording could look like:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">reactable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"sample-ap-count-data.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-febe03efa1a2d8d52a86" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-febe03efa1a2d8d52a86">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO"],"State":["Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin"],"Sweep":[1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],"No_of_Aps":[0,0,0,0,0,9,5,7,7,6,0,0,0,0,0,0,3,4,4,4]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Sweep","name":"Sweep","type":"numeric"},{"id":"No_of_Aps","name":"No_of_Aps","type":"numeric"}],"dataKey":"a71589e263521b73a879a20dfecd17cd"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
-<div class="section level3">
-<h3 id="faq-about-action-potential-analysis">FAQ about action potential analysis<a class="anchor" aria-label="anchor" href="#faq-about-action-potential-analysis"></a>
-</h3>
+<div class="section level2">
+<h2 id="faq-about-action-potential-analysis">FAQ about action potential analysis<a class="anchor" aria-label="anchor" href="#faq-about-action-potential-analysis"></a>
+</h2>
 <p><em>What do I do if there are no action potentials following
 treatment?</em></p>
 <p>Do not discard this cell; this is important and meaningful data! Fill
@@ -320,11 +315,11 @@ to measure. However, for your AP count data, please just indicate
 <code>0</code> for all current injections.</p>
 <p><em>What do I do if there are action potentials outside of the time
 when a current injection was applied?</em></p>
-<p><img src="figures%2FAPs-outside-sweep.png" alt="A screenshot of a recording in Clampfit showing action potentials present outside of the range where a current injection was applied." width="2272" style="display: block; margin: auto;"></p>
+<p><img src="figures%2FAPs-outside-sweep.png" alt="A screenshot of a recording in Clampfit showing action potentials present outside of the range where a current injection was applied." width="75%" style="display: block; margin: auto;"></p>
 <p>This can happen with very excitable cells. Only count the action
 potentials that occurred within the injection period.</p>
 <p><em>Should I count an action potential that looks very wavy?</em></p>
-<p><img src="figures%2FWavy-APs-check.png" alt="A screenshot of a recording in Clampfit showing wavy action potentials. Valid action potentials are indicated with check marks" width="511" style="display: block; margin: auto;"></p>
+<p><img src="figures%2FWavy-APs-check.png" alt="A screenshot of a recording in Clampfit showing wavy action potentials. Valid action potentials are indicated with check marks" width="75%" style="display: block; margin: auto;"></p>
 <p>Only include the action potential if it clearly crosses the
 threshold, comes to a sharp peak, and has an after-hyperpolarization
 period.</p>
@@ -333,7 +328,6 @@ period.</p>
 Threshold and Zero Membrane Slope Conductance Shape the Response of
 Subthalamic Neurons to Cortical Input. Journal of Neuroscience, 30(39),
 13180–13191. <a href="https://doi.org/10.1523/JNEUROSCI.1909-10.2010" class="external-link uri">https://doi.org/10.1523/JNEUROSCI.1909-10.2010</a></p>
-</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
