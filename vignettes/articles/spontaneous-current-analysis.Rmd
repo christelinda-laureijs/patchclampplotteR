@@ -16,7 +16,7 @@ library(reactable)
 The goal of spontaneous current analysis is to identify and analyze currents while avoiding spikes from stimulus artifacts and noise. This article will show you how to analyze spontaneous currents in raw .abf recordings using Event Detection in Clampfit. The data will then be ready for further analyses with `patchclampplotteR`.
 
 ```{r noise-figure, fig.alt = "An image of a current clamp steps recording with annotations. Large spikes are true currents and small spikes are noise."}
-knitr::include_graphics("figures/noise-vs-currents-diagram.png")
+knitr::include_graphics("figures/Noise-vs-currents-labelled-diagram.png")
 ```
 
 
@@ -95,9 +95,9 @@ of it) or press `Alt+s`.
 
 11. In cell B2, type the formula `=STDEV.S(A:A)` to get the standard deviation.
 
-12. In cell B3 type `=B2*5`. This value is the threshold value (write it down in your lab book).
+12. In cell B3 type `=B2*5`. This value is the five times the standard deviation of the mean noise amplitude, and it will be the threshold value for this recording (write this in your lab book near your notes on this recording).
 
-13. You may want to keep this Excel sheet for later use (just replace the data in the A column each time).
+13. You may want to save this Excel sheet for later use (just replace the data in the A column each time).
 
 ## Set Event Detection parameters
 
@@ -107,17 +107,19 @@ of it) or press `Alt+s`.
 
 16. If there are large artifacts, enable the `Reject cursor` and drag it to a level below the artifacts. Any event with an amplitude larger than this reject zone will be excluded.
 
+> If you need to remove an entire trace, click on it and press the `Delete` key. This will hide the trace Later, you will select visible traces for the analysis.
+
 17. If you are having issues with noise detection, feel free to experiment with the other settings such as the pre- and post-trigger lengths and noise rejection.
 
-18. Set the search region to `Full Trace`. Click the `Select` button and ensure that all visible traces are selected.
+18. Set the search region to `Full Trace`. Click the `Select` button and ensure that the option `All Visible Traces` is selected.
 
-```{r search-box, fig.alt = "A screenshot of the Event Detection Search Box in Clampfit."}
+```{r search-box, fig.alt = "A screenshot of the Event Detection Search Box in Clampfit.", fig.cap="You can double-check that you have selected the correct number of sweeps (here it should be t1..360) by checking the total sweep number in the bottom right corner (Sweep 360 of 360)."}
 knitr::include_graphics("figures/Threshold-search-box.png")
 ```
 19. Click OK to close the dialog box. If you ever need it again, click on the `Search Parameters` button on the bottom left side of the toolbar.
 
 ```{r search-parameter-buttons, out.width="25%", fig.alt = "A screenshot of the Search Parameters button available in the lower toolbar in Clampfit."}
-knitr::include_graphics("figures/search-parameters-button.png")
+knitr::include_graphics("figures/Search-parameter-button.png")
 ```
 
 ## Begin Event Detection
