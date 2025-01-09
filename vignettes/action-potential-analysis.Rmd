@@ -41,21 +41,20 @@ potential velocity is 10 mV/ms or greater (Farries et al., 2010).
 
 ## Set up data sheet
 
-Before you begin, you should set up a .csv file with the following columns:
-
+Before you begin, you should set up a .csv file with the following columns: 
 
 * `Letter` The unique letter identifier of a single cell. You can use this to link data from different recordings taken from the same cell.
 * `State` A character value. In this example, the values are `Baseline` and `Insulin`, indicating a current clamp protocol taken after the cell had been exposed to 500 nM insulin for 25 minutes.
-* `Time_of_Threshold` A numerical value (in ms) used to determine properties like the latency to fire.
+* `Time_of_threshold` A numerical value (in ms) used to determine properties like the latency to fire.
 * `t_x` The membrane potential at the moment that an action potential is initiated, also known as the threshold.
 * `t11` The derivative of the trace you are analyzing. Must be 10 mV/ms or greater to properly identify the threshold.
 * `ID` A character value indicating the recording number. This corresponds to the `File Name` column that is automatically generated in the Results sheet in Clampfit.
 * `First_sweep_with_APs` A number representing the earliest sweep number where action potentials first appeared.
 * `Trace_start` This is an automatic value calculated by Clampfit, and it corresponds to the sweep number. It is not used in any analyses, but it will automatically be included in the Results sheet in Clampfit.
 * `Peak_amplitude` The membrane potential (in mV) during maximum depolarization.
-* `Time_to_Peak`The time of the peak amplitude, which should also be relative to the `Time_of_Threshold` if you have repositioned Cursor 1 to the `Time_of_Threshold`.
+* `Time_to_peak`The time of the peak amplitude, which should also be relative to the `Time_of_threshold` if you have repositioned Cursor 1 to the `Time_of_threshold`.
 * `Antipeak_amplitude` The afterhyperpolarization amplitude (in mV)
-* `Time_of_antipeak` The time of the after-hyperpolarization, which should be relative to the `Time_of_Threshold`.
+* `Time_of_antipeak` The time of the after-hyperpolarization, which should be relative to the `Time_of_threshold`.
 * `Half-width` The width of the action potential when the membrane potential is half of the `Peak_amplitude`.
 
 ```{r ap-properties-image, fig.alt = "An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire."}
@@ -107,7 +106,7 @@ three columns.
 sample_ap_data <- data.frame(
   Letter = c("BN"),
   State	= c("Baseline"),
-  Time_of_Threshold = c(373.50),
+  Time_of_threshold = c(373.50),
   t_x = c(-32.10),
   t11 = c(10.38)
 )
@@ -118,14 +117,14 @@ reactable(sample_ap_data)
 ## Measure action potential properties
 
 11. Double-click on Cursor 1 and change its Time value to match the
-`Time_of_Threshold`.
+`Time_of_threshold`.
 
 ```{r cursor-image-revised, fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold.", fig.cap = "Note how Cursor 1 is shifted to the right. It is located at the x-value where the membrane potential crosses the threshold."}
 knitr::include_graphics("figures/AP-cursors-new.png")
 ```
 
 > Warning! If you do not reposition Cursor 1 to be at the time of threshold, the
-values for `Time_of_Peak` and `Time_of_Antipeak` will be incorrect!
+values for `Time_of_peak` and `Time_of_Antipeak` will be incorrect!
 
 12. Click on the Statistics button (a small icon with a summation symbol on top
 of it) or press `Alt+s`.
@@ -155,14 +154,14 @@ changed these column names to make them easier to use in R code.
 sample_ap_data_2 <- data.frame(
   Letter = c("BN"),
   State	= c("Baseline"),
-  Time_of_Threshold = c(373.50),
+  Time_of_threshold = c(373.50),
   t_x = c(-32.10),
   t11 = c(10.38),
   ID = c("23711003.abf"),
   First_sweep_with_APs = c(6),
   Trace_start = c(5021),
   Peak_amplitude = c(72.54),
-  Time_to_Peak = c(0.7),
+  Time_to_peak = c(0.7),
   Antipeak_amplitude = c(-17.73),
   Time_of_antipeak = c(4.4),
   Half_width = c(1.09)
@@ -199,10 +198,12 @@ For this, you will need a separate .csv file with four columns:
 * `Letter` The unique letter identifier of a single cell.
 * `State` A character value ("Baseline" or "Insulin" in this example)
 * `Sweep` A number from 1 to 10
-* `No_of_Aps` a numerical value indicating the number of action potentials
+* `No_of_APs` a numerical value indicating the number of action potentials
 
-16. Press the `Enter` key and use `,` and `.` (or `<` and `>`) to cycle through
+17. Press the `Enter` key and use `,` and `.` (or `<` and `>`) to cycle through
 the sweeps. Count the number of action potentials in each sweep.
+
+
 18. Here is an example of what one recording could look like:
 
 
@@ -214,7 +215,10 @@ reactable(read.csv("sample-ap-count-data.csv"))
 
 *What do I do if there are no action potentials following treatment?*
 
-Do not discard this cell; this is important and meaningful data! Fill in only the letter and state, and leave all other columns blank. R will fill this with NA values, since there are no action potential properties to measure. However, for your AP count data, please just indicate `0` for all current injections.
+Do not discard this cell; this is important and meaningful data! Fill in only
+the letter and state, and leave all other columns blank. R will fill this with
+NA values, since there are no action potential properties to measure. However,
+for your AP count data, please just indicate `0` for all current injections.
 
 *What do I do if there are action potentials outside of the time when a current injection was applied?*
 
@@ -222,7 +226,8 @@ Do not discard this cell; this is important and meaningful data! Fill in only th
 knitr::include_graphics("figures/APs-outside-sweep.png")
 ```
 
-This can happen with very excitable cells. Only count the action potentials that occurred within the injection period.
+This can happen with very excitable cells. Only count the action potentials that
+occurred within the injection period.
 
 *Should I count an action potential that looks very wavy?*
 
@@ -230,7 +235,8 @@ This can happen with very excitable cells. Only count the action potentials that
 knitr::include_graphics("figures/Wavy-APs-check.png")
 ```
 
-Only include the action potential if it clearly crosses the threshold, comes to a sharp peak, and has an after-hyperpolarization period.
+Only include the action potential if it clearly crosses the threshold, comes to
+a sharp peak, and has an after-hyperpolarization period.
 
 References
 
