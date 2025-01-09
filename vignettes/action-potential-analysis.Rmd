@@ -31,7 +31,7 @@ a raw .abf file. You will identify the first current injection that resulted in
 action potentials and then select the first action potential within this sweep
 for further analyses.
 
-```{r header-image, fig.alt = "An image of a current clamp steps recording with the first action potential outlined with a box.", fig.cap = "You will analyze the properties of the first action potential on the first sweep with action potentials."}
+```{r header-image, fig.alt = "An image of a current clamp steps recording with the first action potential outlined with a box.", fig.cap = "The box outlines the first action potential on the first sweep with action potentials."}
 knitr::include_graphics("figures/AP-first-trace.png")
 ```
 
@@ -50,11 +50,11 @@ Before you begin, you should set up a .csv file with the following columns:
 * `t11` The derivative of the trace you are analyzing. Must be 10 mV/ms or greater to properly identify the threshold.
 * `ID` A character value indicating the recording number. This corresponds to the `File Name` column that is automatically generated in the Results sheet in Clampfit.
 * `First_sweep_with_APs` A number representing the earliest sweep number where action potentials first appeared.
-* `Trace_start` This is an automatic value calculated by Clampfit, and it corresponds to the sweep number. It is not used in any analyses, but it will automatically be included in the Results sheet in Clampfit.
+* `Trace_start` This is an automatic value calculated by Clampfit, and it corresponds to the sweep number. It is not used in any analyses, but it will automatically be included in the Results sheet in Clampfit. It's faster to just copy all the data rather than try to exclude this value.
 * `Peak_amplitude` The membrane potential (in mV) during maximum depolarization.
-* `Time_to_peak`The time of the peak amplitude, which should also be relative to the `Time_of_threshold` if you have repositioned Cursor 1 to the `Time_of_threshold`.
+* `Time_to_peak`The time of the peak amplitude (in ms), which should also be relative to the `Time_of_threshold` if you have repositioned Cursor 1 to the `Time_of_threshold`.
 * `Antipeak_amplitude` The afterhyperpolarization amplitude (in mV)
-* `Time_of_antipeak` The time of the after-hyperpolarization, which should be relative to the `Time_of_threshold`.
+* `Time_of_antipeak` The time of the after-hyperpolarization (in ms), which should be relative to the `Time_of_threshold`.
 * `Half-width` The width of the action potential when the membrane potential is half of the `Peak_amplitude`.
 
 ```{r ap-properties-image, fig.alt = "An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire."}
@@ -63,7 +63,7 @@ knitr::include_graphics("figures/AP-properties.png")
 
 ## Get derivative
 
-1. Open the .abf file containing the current clamp step protocol in Clampfit.
+1. Open the .abf file containing the current clamp step protocol in Clampfit. Ensure that the x-axis shows time in milliseconds. If it shows seconds, double-click the x-axis, and change the `Elapsed Time` from `Automatic` to `Milliseconds`.
 2. Press the “Enter” key to show just one sweep at a time. It will begin at the sweep corresponding to the lowest current injection. Use greater than symbol (>; on some computers you don’t even need to press the shift key) to cycle up through the sweeps.
 3. Move up to sweeps corresponding to higher current injections until you identify the first sweep that contains an action potential. I will call this `t_x`, since it may be `t5` in one recording, or `t6` in another, etc. 
 4. Position Cursors 1 and 2 around the first action potential in `t_x`. Cursor 1 should be before the threshold (aim for the area before the slope of the curve increases steeply). Cursor 2 should be in the after-hyperpolarization region.
@@ -89,9 +89,9 @@ knitr::include_graphics("figures/AP-expression-box.png")
 
 7. Click on `Edit` -> `Transfer Traces` and set the `Region to transfer` as `Cursors 1..2`. In the `Trace Selection` category, choose only `Vm_primary ()` as the signal. Select `t_x` and `t11` for the traces, then click OK.
 
-8. The `Results` page will display three columns: `Time (ms)`, `Trace #6 (or #5, #7, etc.)`, and `Trace #11`. In this example, the middle column is `Trace #6`, but this name will vary depending on the data. `Trace #6` is the membrane potential in mV, and `Trace #11` is the derivative of `Trace #6`.
+8. The `Results` page will display three columns: `Time (ms)`, `Trace #6 (or #5, #7, etc.)`, and `Trace #11`. `Trace #x` is the membrane potential in mV, and `Trace #11` is the derivative of `Trace #x`.
 
-> Warning: The Results page of the transferred traces does not clear between
+> Warning: The Results page of the transferred traces does not delete data between
 files. If you are doing several analyses in one session, ensure that you are
 looking at the correct columns corresponding to the active
 recording.
@@ -116,15 +116,15 @@ reactable(sample_ap_data)
 
 ## Measure action potential properties
 
-11. Double-click on Cursor 1 and change its Time value to match the
+11. Double-click on Cursor 1 and change its x-position value (`Time`) to match the
 `Time_of_threshold`.
 
-```{r cursor-image-revised, fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold.", fig.cap = "Note how Cursor 1 is shifted to the right. It is located at the x-value where the membrane potential crosses the threshold."}
+```{r cursor-image-revised, fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold.", fig.cap = "Note how Cursor 1 is shifted to the right relative to the earlier cursor image. It is now located at the x-value where the membrane potential crosses the threshold."}
 knitr::include_graphics("figures/AP-cursors-new.png")
 ```
 
 > Warning! If you do not reposition Cursor 1 to be at the time of threshold, the
-values for `Time_of_peak` and `Time_of_Antipeak` will be incorrect!
+values for `Time_of_peak` and `Time_of_antipeak` will be incorrect!
 
 12. Click on the Statistics button (a small icon with a summation symbol on top
 of it) or press `Alt+s`.
@@ -167,7 +167,7 @@ sample_ap_data_2 <- data.frame(
   Half_width = c(1.09)
 )
 
-reactable(sample_ap_data_2)
+reactable(sample_ap_data_2, wrap=FALSE)
 ```
 
 16. Repeat this process for the current clamp step protocol taken after a
