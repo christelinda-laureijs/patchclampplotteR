@@ -13,8 +13,20 @@ knitr::opts_chunk$set(
 library(reactable)
 ```
 
-This article will show you how to analyze spontaneous currents in raw .abf recordings using Event Detection in Clampfit. The data will then be ready for further analyses with `patchclampplotteR`. Many steps at the beginning are the same as the ones in the [Evoked current analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html) article, but new processes will begin starting in step 5.
+The goal of spontaneous current analysis is to identify and analyze currents while avoiding spikes from stimulus artifacts and noise. This article will show you how to analyze spontaneous currents in raw .abf recordings using Event Detection in Clampfit. The data will then be ready for further analyses with `patchclampplotteR`.
 
+```{r noise-figure, fig.alt = "An image of a current clamp steps recording with annotations. Large spikes are true currents and small spikes are noise."}
+knitr::include_graphics("figures/noise-vs-currents-diagram.png")
+```
+
+
+There are many advanced approaches to noise exclusion in electrophysiological recordings (see [Wang et al., 2023](https://doi.org/10.1073/pnas.2315804121); [Kudoh & Taguchi, 2002](https://doi.org/10.1016/S0956-5663(02)00053-2); and [Pernía-Andrade et al., 2012](https://doi.org/10.1016/j.bpj.2012.08.039) for some methods). I am using a simple threshold method, where any spikes below the threshold are not counted as synaptic events.
+
+```{r noise-threshold-figure, fig.alt = "An image of a current clamp steps recording with annotations. After adding a threshold, only currents are identified."}
+knitr::include_graphics("figures/threshold-figure.png")
+```
+
+In this method, the threshold is five times the standard deviation of the noise amplitudes during a flat baseline region. This is comparable to the root mean square noise (RMS) used in MiniAnalysis.
 
 ## Combine recordings
 
@@ -52,9 +64,79 @@ knitr::include_graphics("figures/Viewer-buttons.png")
 
 > I would strongly recommend using the filename of the first file in the series (but write down the concatenated filename in your lab book as well). This is because Clampfit will auto-generate the concatenated file names (`Concatenate001.abf`, `Concatenate002.abf`, etc.). If you update your pClamp software, Clampfit will begin naming files again at `Concatenate000.abf`, and you could lose track of which file is which.
 
-## Identify baseline
+## Identify threshold
 
-6. Zoom into a region of the recording with few spontaneous currents and minimal noise.
+> To reduce the risk of identifying noise as spontaneous currents, we must set a detection threshold.
+
+6. Zoom into a region of the recording with few spontaneous currents and minimal noise. Place Cursors 1 and 2 around this region.
+
+```{r baseline, fig.alt = "A screenshot of a recording in Clampfit with cursors surrounding a relatively flat region of the recording.", fig.cap = "Cursors 1 and 2 are surrounding a good baseline region."}
+knitr::include_graphics("figures/Spont-currents-baseline.png")
+```
 
 > You may need to view a smaller number of traces if there are too many to find a clear region. Use `View` -> `Select sweeps` and select a smaller range.
+
+7. Click on the Statistics button (a small icon with a summation symbol on top
+of it) or press `Alt+s`.
+
+8. Set the following settings to measure noise amplitude in the baseline:
+
+* Trace Selection: Choose `Im_primary ()` and `All Visible Traces`.
+* Peak Polarity: `Im_primary`, `Negative-going`
+* Baseline Region: Mean level `Cursors 1..2`
+* Search Region 1: Range: `Cursors 1..2`
+* Destination Option: `Replace results in sheet` (prevents you from accidentally copying old data)
+* Column Order: `Measurement, Region, Signal`
+* Measurements: `Peak_amplitude`
+
+9. On the results page, copy the values in the `R1S1 Peak` column. Paste these into the A column of a blank Excel sheet.
+
+10. In cell B1, type the formula `=AVERAGE(A:A)`. This will produce the mean noise amplitude.
+
+11. In cell B2, type the formula `=STDEV.S(A:A)` to get the standard deviation.
+
+12. In cell B3 type `=B2*5`. This value is the threshold value (write it down in your lab book).
+
+13. You may want to keep this Excel sheet for later use (just replace the data in the A column each time).
+
+## Set Event Detection parameters
+
+14. Click on `Event Detection` -> `Threshold search`. The recording will look faded, and some new horizontal cursors will appear. Set the Event Polarity to `Negative-going`.
+
+15. In the `Threshold Search` box, set the Baseline to 0 and Trigger (pA) to the threshold value that you found in step 12.
+
+16. If there are large artifacts, enable the `Reject cursor` and drag it to a level below the artifacts. Any event with an amplitude larger than this reject zone will be excluded.
+
+17. If you are having issues with noise detection, feel free to experiment with the other settings such as the pre- and post-trigger lengths and noise rejection.
+
+18. Set the search region to `Full Trace`. Click the `Select` button and ensure that all visible traces are selected.
+
+```{r search-box, fig.alt = "A screenshot of the Event Detection Search Box in Clampfit."}
+knitr::include_graphics("figures/Threshold-search-box.png")
+```
+19. Click OK to close the dialog box. If you ever need it again, click on the `Search Parameters` button on the bottom left side of the toolbar.
+
+```{r search-parameter-buttons, out.width="25%", fig.alt = "A screenshot of the Search Parameters button available in the lower toolbar in Clampfit."}
+knitr::include_graphics("figures/search-parameters-button.png")
+```
+
+## Begin Event Detection
+
+20. Click on the `Full Scale X Axis` button to view the entire trace.
+
+```{r full-scale, out.width="25%", fig.alt = "A screenshot of the Full Scale X Axis button available in the lower toolbar in Clampfit."}
+knitr::include_graphics("figures/Full-scale-x-axis.png")
+```
+
+> Warning! If you do not check "Full Scale X axis", Clampfit will continuously scroll through the recording and it will take much longer to run.
+
+> Be sure to uncheck "Automatically open Event Viewer window"! If you do not do this, Clampfit will continuously refresh this window each time a new event is detected, leading to crashing and lagging software.
+
+21. Click on the Nonstop button
+
+```{r nonstop, out.width="25%", fig.alt = "A screenshot of the Nonstop button available in the lower toolbar in Clampfit."}
+knitr::include_graphics("figures/Nonstop-button.png")
+```
+
+
 
