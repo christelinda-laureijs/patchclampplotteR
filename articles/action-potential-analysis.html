@@ -97,7 +97,12 @@ data will be ready to use in future versions of
 properties using a raw .abf file. You will identify the first current
 injection that resulted in action potentials and then select the first
 action potential within this sweep for further analyses.</p>
-<p><img src="figures%2FAP-first-trace.png" alt="An image of a current clamp steps recording with the first action potential outlined with a box." width="75%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="figures%2FAP-first-trace.png" alt="An image of a current clamp steps recording with the first action potential outlined with a box." width="75%"><p class="caption">
+You will analyze the properties of the first action potential on the
+first sweep with action potentials.
+</p>
+</div>
 <blockquote>
 <p>You will identify the threshold using the first derivative method.
 This means that the threshold corresponds to the membrane potential
@@ -108,35 +113,56 @@ al., 2010).</p>
 <h2 id="set-up-data-sheet">Set up data sheet<a class="anchor" aria-label="anchor" href="#set-up-data-sheet"></a>
 </h2>
 <p>Before you begin, you should set up a .csv file with the following
-columns: * <code>Letter</code> The unique letter identifier of a single
-cell. You can use this to link data from different recordings taken from
-the same cell. * <code>State</code> A character value. In this example,
-the values are <code>Baseline</code> and <code>Insulin</code>,
-indicating a current clamp protocol taken after the cell had been
-exposed to 500 nM insulin for 25 minutes. *
+columns:</p>
+<ul>
+<li>
+<code>Letter</code> The unique letter identifier of a single cell.
+You can use this to link data from different recordings taken from the
+same cell.</li>
+<li>
+<code>State</code> A character value. In this example, the values
+are <code>Baseline</code> and <code>Insulin</code>, indicating a current
+clamp protocol taken after the cell had been exposed to 500 nM insulin
+for 25 minutes.</li>
+<li>
 <code>Time_of_Threshold</code> A numerical value (in ms) used to
-determine properties like the latency to fire. * <code>t_x</code> The
-membrane potential at the moment that an action potential is initiated,
-also known as the threshold. * <code>t11</code> The derivative of the
-trace you are analyzing. Must be 10 mV/ms or greater to properly
-identify the threshold. * <code>ID</code> A character value indicating
-the recording number. This corresponds to the <code>File Name</code>
-column that is automatically generated in the Results sheet in Clampfit.
-* <code>First_sweep_with_APs</code> A number representing the earliest
-sweep number where action potentials first appeared. *
+determine properties like the latency to fire.</li>
+<li>
+<code>t_x</code> The membrane potential at the moment that an action
+potential is initiated, also known as the threshold.</li>
+<li>
+<code>t11</code> The derivative of the trace you are analyzing. Must
+be 10 mV/ms or greater to properly identify the threshold.</li>
+<li>
+<code>ID</code> A character value indicating the recording number.
+This corresponds to the <code>File Name</code> column that is
+automatically generated in the Results sheet in Clampfit.</li>
+<li>
+<code>First_sweep_with_APs</code> A number representing the earliest
+sweep number where action potentials first appeared.</li>
+<li>
 <code>Trace_start</code> This is an automatic value calculated by
 Clampfit, and it corresponds to the sweep number. It is not used in any
 analyses, but it will automatically be included in the Results sheet in
-Clampfit. * <code>Peak_amplitude</code> The membrane potential (in mV)
-during maximum depolarization. * <code>Time_to_Peak</code>The time of
-the peak amplitude, which should also be relative to the
-<code>Time_of_Threshold</code> if you have repositioned Cursor 1 to the
-<code>Time_of_Threshold</code>. * <code>Antipeak_amplitude</code> The
-afterhyperpolarization amplitude (in mV) * <code>Time_of_antipeak</code>
-The time of the after-hyperpolarization, which should be relative to the
-<code>Time_of_Threshold</code>. * <code>Half-width</code> The width of
-the action potential when the membrane potential is half of the
-<code>Peak_amplitude</code>.</p>
+Clampfit.</li>
+<li>
+<code>Peak_amplitude</code> The membrane potential (in mV) during
+maximum depolarization.</li>
+<li>
+<code>Time_to_Peak</code>The time of the peak amplitude, which
+should also be relative to the <code>Time_of_Threshold</code> if you
+have repositioned Cursor 1 to the <code>Time_of_Threshold</code>.</li>
+<li>
+<code>Antipeak_amplitude</code> The afterhyperpolarization amplitude
+(in mV)</li>
+<li>
+<code>Time_of_antipeak</code> The time of the
+after-hyperpolarization, which should be relative to the
+<code>Time_of_Threshold</code>.</li>
+<li>
+<code>Half-width</code> The width of the action potential when the
+membrane potential is half of the <code>Peak_amplitude</code>.</li>
+</ul>
 <p><img src="figures%2FAP-properties.png" alt="An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
@@ -196,8 +222,8 @@ the <code>Trace Selection</code> category, choose only
 <blockquote>
 <p>Warning: The Results page of the transferred traces does not clear
 between files. If you are doing several analyses in one session, ensure
-that you are looking at the correct columns with the traces
-corresponding to the active recording.</p>
+that you are looking at the correct columns corresponding to the active
+recording.</p>
 </blockquote>
 <ol start="9" style="list-style-type: decimal">
 <li><p>Scroll down the <code>Trace #11</code> column (the derivative
@@ -292,14 +318,27 @@ leave all the others blank.</p>
 sweep. This will allow you to later make a plot of action potential
 frequency vs. current injection and see how a treatment affect action
 potential frequency. For this, you will need a separate .csv file with
-four columns: * <code>Letter</code> The unique letter identifier of a
-single cell. * <code>State</code> A character value (“Baseline” or
-“Insulin” in this example) * <code>Sweep</code> A number from 1 to 10 *
-<code>No_of_Aps</code> a numerical value indicating the number of action
-potentials 16. Press the <code>Enter</code> key and use <code>,</code>
-and <code>.</code> (or <code>&lt;</code> and <code>&gt;</code>) to cycle
-through the sweeps. Count the number of action potentials in each sweep.
-18. Here is an example of what one recording could look like:</p>
+four columns:</p>
+<ul>
+<li>
+<code>Letter</code> The unique letter identifier of a single
+cell.</li>
+<li>
+<code>State</code> A character value (“Baseline” or “Insulin” in
+this example)</li>
+<li>
+<code>Sweep</code> A number from 1 to 10</li>
+<li>
+<code>No_of_Aps</code> a numerical value indicating the number of
+action potentials</li>
+</ul>
+<ol start="16" style="list-style-type: decimal">
+<li>Press the <code>Enter</code> key and use <code>,</code> and
+<code>.</code> (or <code>&lt;</code> and <code>&gt;</code>) to cycle
+through the sweeps. Count the number of action potentials in each
+sweep.</li>
+<li>Here is an example of what one recording could look like:</li>
+</ol>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-febe03efa1a2d8d52a86" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-febe03efa1a2d8d52a86">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO"],"State":["Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin"],"Sweep":[1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],"No_of_Aps":[0,0,0,0,0,9,5,7,7,6,0,0,0,0,0,0,3,4,4,4]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Sweep","name":"Sweep","type":"numeric"},{"id":"No_of_Aps","name":"No_of_Aps","type":"numeric"}],"dataKey":"a71589e263521b73a879a20dfecd17cd"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
