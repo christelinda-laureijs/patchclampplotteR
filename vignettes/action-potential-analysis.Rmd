@@ -66,14 +66,14 @@ knitr::include_graphics("figures/AP-properties.png")
 1. Open the .abf file containing the current clamp step protocol in Clampfit.
 2. Press the “Enter” key to show just one sweep at a time. It will begin at the sweep corresponding to the lowest current injection. Use greater than symbol (>; on some computers you don’t even need to press the shift key) to cycle up through the sweeps.
 3. Move up to sweeps corresponding to higher current injections until you identify the first sweep that contains an action potential. I will call this `t_x`, since it may be `t5` in one recording, or `t6` in another, etc. 
-4. Position cursors 1 and 2 around the first action potential in `t_x`. Cursor 1 should be before the threshold (aim for the area before the slope of the curve increases steeply). Cursor 2 should be in the after-hyperpolarization region.
+4. Position Cursors 1 and 2 around the first action potential in `t_x`. Cursor 1 should be before the threshold (aim for the area before the slope of the curve increases steeply). Cursor 2 should be in the after-hyperpolarization region.
 
-> It is important that cursor 2 touches the curve at a value that is lower than
-the voltage value for cursor 1. If cursor 1 is lower, then Clampfit may identify
-the location at cursor 1 as the after-hyperpolarization region if you forget to
+> It is important that Cursor 2 touches the curve at a value that is lower than
+the voltage value for Cursor 1. If Cursor 1 is lower, then Clampfit may identify
+the location at Cursor 1 as the after-hyperpolarization region if you forget to
 move the cursor to the threshold (see step 11).
 
-```{r cursor-image, fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than cursor 2."}
+```{r cursor-image, fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than Cursor 2."}
 knitr::include_graphics("figures/AP-cursors.png")
 ```
 
