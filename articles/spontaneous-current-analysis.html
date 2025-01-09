@@ -86,7 +86,7 @@ currents while avoiding spikes from stimulus artifacts and noise. This
 article will show you how to analyze spontaneous currents in raw .abf
 recordings using Event Detection in Clampfit. The data will then be
 ready for further analyses with <code>patchclampplotteR</code>.</p>
-<p><img src="figures%2Fnoise-vs-currents-diagram.png" alt="An image of a current clamp steps recording with annotations. Large spikes are true currents and small spikes are noise." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures%2FNoise-vs-currents-labelled-diagram.png" alt="An image of a current clamp steps recording with annotations. Large spikes are true currents and small spikes are noise." width="75%" style="display: block; margin: auto;"></p>
 <p>There are many advanced approaches to noise exclusion in
 electrophysiological recordings (see <a href="https://doi.org/10.1073/pnas.2315804121" class="external-link">Wang et al., 2023</a>; <a href="https://doi.org/10.1016/S0956-5663(02)00053-2" class="external-link">Kudoh &amp;
 Taguchi, 2002</a>; and <a href="https://doi.org/10.1016/j.bpj.2012.08.039" class="external-link">Pernía-Andrade et al.,
@@ -219,9 +219,11 @@ Excel sheet.</p></li>
 will produce the mean noise amplitude.</p></li>
 <li><p>In cell B2, type the formula <code>=STDEV.S(A:A)</code> to get
 the standard deviation.</p></li>
-<li><p>In cell B3 type <code>=B2*5</code>. This value is the threshold
-value (write it down in your lab book).</p></li>
-<li><p>You may want to keep this Excel sheet for later use (just replace
+<li><p>In cell B3 type <code>=B2*5</code>. This value is the five times
+the standard deviation of the mean noise amplitude, and it will be the
+threshold value for this recording (write this in your lab book near
+your notes on this recording).</p></li>
+<li><p>You may want to save this Excel sheet for later use (just replace
 the data in the A column each time).</p></li>
 </ol>
 </div>
@@ -240,41 +242,94 @@ and Trigger (pA) to the threshold value that you found in step
 <code>Reject cursor</code> and drag it to a level below the artifacts.
 Any event with an amplitude larger than this reject zone will be
 excluded.</p></li>
+</ol>
+<blockquote>
+<p>If you need to remove an entire trace, click on it and press the
+<code>Delete</code> key. This will hide the trace Later, you will select
+visible traces for the analysis.</p>
+</blockquote>
+<ol start="17" style="list-style-type: decimal">
 <li><p>If you are having issues with noise detection, feel free to
 experiment with the other settings such as the pre- and post-trigger
 lengths and noise rejection.</p></li>
 <li><p>Set the search region to <code>Full Trace</code>. Click the
-<code>Select</code> button and ensure that all visible traces are
-selected.</p></li>
+<code>Select</code> button and ensure that the option
+<code>All Visible Traces</code> is selected.</p></li>
 </ol>
-<p><img src="figures%2FThreshold-search-box.png" alt="A screenshot of the Event Detection Search Box in Clampfit." width="75%" style="display: block; margin: auto;">
-19. Click OK to close the dialog box. If you ever need it again, click
+<div class="figure" style="text-align: center">
+<img src="figures%2FThreshold-search-box.png" alt="A screenshot of the Event Detection Search Box in Clampfit." width="75%"><p class="caption">
+You can double-check that you have selected the correct number of sweeps
+(here it should be t1..360) by checking the total sweep number in the
+bottom right corner (Sweep 360 of 360).
+</p>
+</div>
+<ol start="19" style="list-style-type: decimal">
+<li>Click OK to close the dialog box. If you ever need it again, click
 on the <code>Search Parameters</code> button on the bottom left side of
-the toolbar.</p>
-<p><img src="figures%2Fsearch-parameters-button.png" alt="A screenshot of the Search Parameters button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+the toolbar.</li>
+</ol>
+<p><img src="figures%2FSearch-parameter-button.png" alt="A screenshot of the Search Parameters button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
-<h2 id="begin-event-detection">Begin Event Detection<a class="anchor" aria-label="anchor" href="#begin-event-detection"></a>
+<h2 id="identify-currents">Identify currents<a class="anchor" aria-label="anchor" href="#identify-currents"></a>
 </h2>
 <ol start="20" style="list-style-type: decimal">
 <li>Click on the <code>Full Scale X Axis</code> button to view the
 entire trace.</li>
 </ol>
-<p><img src="figures%2FFull-scale-x-axis.png" alt="A screenshot of the Full Scale X Axis button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+<p><img src="figures%2FFull-scale-x-axis.png" alt="A screenshot of the Full Scale X Axis button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;">
+&gt; If you do not check “Full Scale X axis”, Clampfit will continuously
+scroll through the recording and it will take much longer to run.</p>
+<ol start="21" style="list-style-type: decimal">
+<li>The Event viewer window should pop up, but if not, click on the
+Event Viewer button. On the lower-right side, click the
+<code>Options</code> button, and then do the following:</li>
+</ol>
+<ul>
+<li>Uncheck
+<code>Open Event Viewer automatically when starting event detection</code>
+</li>
+<li>Uncheck <code>Continuous autoscale</code>
+</li>
+<li>Close the Event Viewer window</li>
+</ul>
+<p><img src="figures%2FEvent-viewer-button.png" alt="A screenshot of the Event Viewer button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 <blockquote>
-<p>Warning! If you do not check “Full Scale X axis”, Clampfit will
-continuously scroll through the recording and it will take much longer
-to run.</p>
-</blockquote>
-<blockquote>
-<p>Be sure to uncheck “Automatically open Event Viewer window”! If you
-do not do this, Clampfit will continuously refresh this window each time
-a new event is detected, leading to crashing and lagging software.</p>
+<p>If you do not complete this step, Clampfit will try to refresh and
+resize this window each time a current is detected. It will likely
+freeze and crash the software.</p>
 </blockquote>
 <ol start="21" style="list-style-type: decimal">
-<li>Click on the Nonstop button</li>
+<li>Click on the Nonstop button to initiate Event Detection. Clampfit
+will draw a blue dot on each event. This may take a few minutes for
+large files.</li>
 </ol>
 <p><img src="figures%2FNonstop-button.png" alt="A screenshot of the Nonstop button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+<ol start="22" style="list-style-type: decimal">
+<li>When the Event Detection has stopped, the nonstop button will become
+greyed out there will be a small notification sound. This is what the
+recording will look like after.</li>
+</ol>
+<p><img src="figures%2FEvent-detection-finished.png" alt="A screenshot of the recording after Event Detection is complete. Currents are highlighted in blue." width="25%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level2">
+<h2 id="exclude-evoked-currents">Exclude evoked currents<a class="anchor" aria-label="anchor" href="#exclude-evoked-currents"></a>
+</h2>
+<ol start="23" style="list-style-type: decimal">
+<li><p>Since this analysis focuses on spontaneous currents only, you
+will need to exclude any stimulus artifacts and evoked currents that
+were included in the event detection. Clampfit does not have an easy way
+to select multiple currents at once. However, one work-around is to
+create a plot of current amplitude over time and select points to
+delete.</p></li>
+<li><p>Click on the <code>Define Graphs</code> button</p></li>
+</ol>
+<p>25</p>
+<p>_##. Click on the Results sheet (<code>Window</code> -&gt;
+<code>Results1</code>) and <code>Save As</code>. I would suggest
+creating a consistent naming convention, such as
+<code>Letter</code>-events, as in <code>AA-events.sta</code>,
+<code>AB-events.sta</code>, etc.</p>
 </div>
 <div class="section level2">
 <h2 id="faq">FAQ<a class="anchor" aria-label="anchor" href="#faq"></a>
