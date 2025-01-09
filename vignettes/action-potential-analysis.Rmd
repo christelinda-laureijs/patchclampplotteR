@@ -31,7 +31,7 @@ a raw .abf file. You will identify the first current injection that resulted in
 action potentials and then select the first action potential within this sweep
 for further analyses.
 
-```{r header-image, fig.alt = "An image of a current clamp steps recording with the first action potential outlined with a box."}
+```{r header-image, fig.alt = "An image of a current clamp steps recording with the first action potential outlined with a box.", fig.cap = "You will analyze the properties of the first action potential on the first sweep with action potentials."}
 knitr::include_graphics("figures/AP-first-trace.png")
 ```
 
@@ -42,6 +42,8 @@ potential velocity is 10 mV/ms or greater (Farries et al., 2010).
 ## Set up data sheet
 
 Before you begin, you should set up a .csv file with the following columns:
+
+
 * `Letter` The unique letter identifier of a single cell. You can use this to link data from different recordings taken from the same cell.
 * `State` A character value. In this example, the values are `Baseline` and `Insulin`, indicating a current clamp protocol taken after the cell had been exposed to 500 nM insulin for 25 minutes.
 * `Time_of_Threshold` A numerical value (in ms) used to determine properties like the latency to fire.
@@ -92,7 +94,7 @@ knitr::include_graphics("figures/AP-expression-box.png")
 
 > Warning: The Results page of the transferred traces does not clear between
 files. If you are doing several analyses in one session, ensure that you are
-looking at the correct columns with the traces corresponding to the active
+looking at the correct columns corresponding to the active
 recording.
 
 9. Scroll down the `Trace #11` column (the derivative column) until you see the
@@ -129,6 +131,7 @@ values for `Time_of_Peak` and `Time_of_Antipeak` will be incorrect!
 of it) or press `Alt+s`.
 
 13. Set the following settings:
+
 * Trace Selection: Choose `Vm_primary ()` and `t_x` (in this case, `t6`)
 * Peak Polarity: `Vm_primary`, `Positive-going`
 * Baseline Region: Fixed at `[paste in the threshold value (column t_x in your sheet) here]`
@@ -192,10 +195,12 @@ The next step is to count the number of action potentials in each sweep. This
 will allow you to later make a plot of action potential frequency vs. current
 injection and see how a treatment affect action potential frequency.
 For this, you will need a separate .csv file with four columns:
+
 * `Letter` The unique letter identifier of a single cell.
 * `State` A character value ("Baseline" or "Insulin" in this example)
 * `Sweep` A number from 1 to 10
 * `No_of_Aps` a numerical value indicating the number of action potentials
+
 16. Press the `Enter` key and use `,` and `.` (or `<` and `>`) to cycle through
 the sweeps. Count the number of action potentials in each sweep.
 18. Here is an example of what one recording could look like:
