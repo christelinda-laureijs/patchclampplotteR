@@ -81,12 +81,21 @@
 
     
     
-<p>This article will show you how to analyze spontaneous currents in raw
-.abf recordings using Event Detection in Clampfit. The data will then be
-ready for further analyses with <code>patchclampplotteR</code>. Many
-steps at the beginning are the same as the ones in the <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html">Evoked
-current analysis</a> article, but new processes will begin starting in
-step 5.</p>
+<p>The goal of spontaneous current analysis is to identify and analyze
+currents while avoiding spikes from stimulus artifacts and noise. This
+article will show you how to analyze spontaneous currents in raw .abf
+recordings using Event Detection in Clampfit. The data will then be
+ready for further analyses with <code>patchclampplotteR</code>.</p>
+<p><img src="figures%2Fnoise-vs-currents-diagram.png" alt="An image of a current clamp steps recording with annotations. Large spikes are true currents and small spikes are noise." width="75%" style="display: block; margin: auto;"></p>
+<p>There are many advanced approaches to noise exclusion in
+electrophysiological recordings (see <a href="https://doi.org/10.1073/pnas.2315804121" class="external-link">Wang et al., 2023</a>; <a href="https://doi.org/10.1016/S0956-5663(02)00053-2" class="external-link">Kudoh &amp;
+Taguchi, 2002</a>; and <a href="https://doi.org/10.1016/j.bpj.2012.08.039" class="external-link">Pernía-Andrade et al.,
+2012</a> for some methods). I am using a simple threshold method, where
+any spikes below the threshold are not counted as synaptic events.</p>
+<p><img src="figures%2FThreshold-figure.png" alt="An image of a current clamp steps recording with annotations. After adding a threshold, only currents are identified." width="75%" style="display: block; margin: auto;"></p>
+<p>In this method, the threshold is five times the standard deviation of
+the noise amplitudes during a flat baseline region. This is comparable
+to the root mean square noise (RMS) used in MiniAnalysis.</p>
 <div class="section level2">
 <h2 id="combine-recordings">Combine recordings<a class="anchor" aria-label="anchor" href="#combine-recordings"></a>
 </h2>
@@ -159,17 +168,113 @@ of which file is which.</p>
 </blockquote>
 </div>
 <div class="section level2">
-<h2 id="identify-baseline">Identify baseline<a class="anchor" aria-label="anchor" href="#identify-baseline"></a>
+<h2 id="identify-threshold">Identify threshold<a class="anchor" aria-label="anchor" href="#identify-threshold"></a>
 </h2>
+<blockquote>
+<p>To reduce the risk of identifying noise as spontaneous currents, we
+must set a detection threshold.</p>
+</blockquote>
 <ol start="6" style="list-style-type: decimal">
 <li>Zoom into a region of the recording with few spontaneous currents
-and minimal noise.</li>
+and minimal noise. Place Cursors 1 and 2 around this region.</li>
 </ol>
+<div class="figure" style="text-align: center">
+<img src="figures%2FSpont-currents-baseline.png" alt="A screenshot of a recording in Clampfit with cursors surrounding a relatively flat region of the recording." width="75%"><p class="caption">
+Cursors 1 and 2 are surrounding a good baseline region.
+</p>
+</div>
 <blockquote>
 <p>You may need to view a smaller number of traces if there are too many
 to find a clear region. Use <code>View</code> -&gt;
 <code>Select sweeps</code> and select a smaller range.</p>
 </blockquote>
+<ol start="7" style="list-style-type: decimal">
+<li><p>Click on the Statistics button (a small icon with a summation
+symbol on top of it) or press <code>Alt+s</code>.</p></li>
+<li><p>Set the following settings to measure noise amplitude in the
+baseline:</p></li>
+</ol>
+<ul>
+<li>Trace Selection: Choose <code>Im_primary ()</code> and
+<code>All Visible Traces</code>.</li>
+<li>Peak Polarity: <code>Im_primary</code>,
+<code>Negative-going</code>
+</li>
+<li>Baseline Region: Mean level <code>Cursors 1..2</code>
+</li>
+<li>Search Region 1: Range: <code>Cursors 1..2</code>
+</li>
+<li>Destination Option: <code>Replace results in sheet</code> (prevents
+you from accidentally copying old data)</li>
+<li>Column Order: <code>Measurement, Region, Signal</code>
+</li>
+<li>Measurements: <code>Peak_amplitude</code>
+</li>
+</ul>
+<ol start="9" style="list-style-type: decimal">
+<li><p>On the results page, copy the values in the
+<code>R1S1 Peak</code> column. Paste these into the A column of a blank
+Excel sheet.</p></li>
+<li><p>In cell B1, type the formula <code>=AVERAGE(A:A)</code>. This
+will produce the mean noise amplitude.</p></li>
+<li><p>In cell B2, type the formula <code>=STDEV.S(A:A)</code> to get
+the standard deviation.</p></li>
+<li><p>In cell B3 type <code>=B2*5</code>. This value is the threshold
+value (write it down in your lab book).</p></li>
+<li><p>You may want to keep this Excel sheet for later use (just replace
+the data in the A column each time).</p></li>
+</ol>
+</div>
+<div class="section level2">
+<h2 id="set-event-detection-parameters">Set Event Detection parameters<a class="anchor" aria-label="anchor" href="#set-event-detection-parameters"></a>
+</h2>
+<ol start="14" style="list-style-type: decimal">
+<li><p>Click on <code>Event Detection</code> -&gt;
+<code>Threshold search</code>. The recording will look faded, and some
+new horizontal cursors will appear. Set the Event Polarity to
+<code>Negative-going</code>.</p></li>
+<li><p>In the <code>Threshold Search</code> box, set the Baseline to 0
+and Trigger (pA) to the threshold value that you found in step
+12.</p></li>
+<li><p>If there are large artifacts, enable the
+<code>Reject cursor</code> and drag it to a level below the artifacts.
+Any event with an amplitude larger than this reject zone will be
+excluded.</p></li>
+<li><p>If you are having issues with noise detection, feel free to
+experiment with the other settings such as the pre- and post-trigger
+lengths and noise rejection.</p></li>
+<li><p>Set the search region to <code>Full Trace</code>. Click the
+<code>Select</code> button and ensure that all visible traces are
+selected.</p></li>
+</ol>
+<p><img src="figures%2FThreshold-search-box.png" alt="A screenshot of the Event Detection Search Box in Clampfit." width="75%" style="display: block; margin: auto;">
+19. Click OK to close the dialog box. If you ever need it again, click
+on the <code>Search Parameters</code> button on the bottom left side of
+the toolbar.</p>
+<p><img src="figures%2Fsearch-parameters-button.png" alt="A screenshot of the Search Parameters button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level2">
+<h2 id="begin-event-detection">Begin Event Detection<a class="anchor" aria-label="anchor" href="#begin-event-detection"></a>
+</h2>
+<ol start="20" style="list-style-type: decimal">
+<li>Click on the <code>Full Scale X Axis</code> button to view the
+entire trace.</li>
+</ol>
+<p><img src="figures%2FFull-scale-x-axis.png" alt="A screenshot of the Full Scale X Axis button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+<blockquote>
+<p>Warning! If you do not check “Full Scale X axis”, Clampfit will
+continuously scroll through the recording and it will take much longer
+to run.</p>
+</blockquote>
+<blockquote>
+<p>Be sure to uncheck “Automatically open Event Viewer window”! If you
+do not do this, Clampfit will continuously refresh this window each time
+a new event is detected, leading to crashing and lagging software.</p>
+</blockquote>
+<ol start="21" style="list-style-type: decimal">
+<li>Click on the Nonstop button</li>
+</ol>
+<p><img src="figures%2FNonstop-button.png" alt="A screenshot of the Nonstop button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
