@@ -154,7 +154,7 @@ knitr::include_graphics("figures/Nonstop-button.png")
 22. When the Event Detection has stopped, the nonstop button will become greyed out there will be a small notification sound. This is what the recording will look like after.
 
 
-```{r finished, out.width="25%", fig.alt = "A screenshot of the recording after Event Detection is complete. Currents are highlighted in blue."}
+```{r finished, fig.alt = "A screenshot of the recording after Event Detection is complete. Currents are highlighted in blue."}
 knitr::include_graphics("figures/Event-detection-finished.png")
 ```
 
