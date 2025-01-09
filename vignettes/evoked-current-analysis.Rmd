@@ -109,7 +109,7 @@ knitr::include_graphics("figures/Evoked-currents-statistics-box.png")
 14. Fill in the `Letter` and `ID` columns. In Excel, you can just fill the first values, then double-click the cell in the bottom right corner to automatically fill the entire column. The final dataset should look something like the following table.
 
 ```{r view-sample-evoked-data}
-sample_eEPSC_data <- read.csv(system.file("extdata", "sample_new_eEPSC_data.csv", package = "patchclampplotteR"))
+sample_eEPSC_data <- read.csv("sample_new_eEPSC_data.csv")
 
 reactable(sample_eEPSC_data)
 ```
