@@ -17,6 +17,8 @@ knitr::opts_chunk$set(
   out.width="75%",
   echo = FALSE
 )
+
+library(reactable)
 ```
 
 Before using `patchclampplotteR`, you will need to prepare your raw recording data from Clampfit. This vignette will show you how to move your evoked post-synaptic current data from raw .abf recordings to a .csv file.
