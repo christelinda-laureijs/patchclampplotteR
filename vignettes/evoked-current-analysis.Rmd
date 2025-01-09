@@ -10,7 +10,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r evoked-setup, include = FALSE}
 knitr::opts_chunk$set(
   fig.align = "center",
   out.extra='',
@@ -106,7 +106,13 @@ knitr::include_graphics("figures/Evoked-currents-statistics-box.png")
 
 13. Paste these values into the `P1` and `P2` columns.
 
-14. Fill in the `Letter` and `ID` columns. In Excel, you can just fill the first values, then double-click the cell in the bottom right corner to automatically fill the entire column.
+14. Fill in the `Letter` and `ID` columns. In Excel, you can just fill the first values, then double-click the cell in the bottom right corner to automatically fill the entire column. The final dataset should look something like the following table.
+
+```{r view-sample-evoked-data}
+sample_eEPSC_data <- read.csv(system.file("extdata", "sample_new_eEPSC_data.csv", package = "patchclampplotteR"))
+
+reactable(sample_eEPSC_data)
+```
 
 You are finished with the analysis in Clampfit!
 

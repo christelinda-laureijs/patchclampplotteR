@@ -167,7 +167,7 @@ sample_ap_data_2 <- data.frame(
   Half_width = c(1.09)
 )
 
-reactable(sample_ap_data_2, wrap=FALSE)
+reactable(sample_ap_data_2)
 ```
 
 16. Repeat this process for the current clamp step protocol taken after a
@@ -185,8 +185,6 @@ sample_full_ap_table <- read.csv("sample-ap-data.csv") %>%
 
 reactable(sample_full_ap_table)
 ```
-
-
 
 ## Count action potentials
 
