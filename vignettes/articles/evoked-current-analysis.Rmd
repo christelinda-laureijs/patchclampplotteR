@@ -16,9 +16,9 @@ knitr::opts_chunk$set(
 library(reactable)
 ```
 
-Before using `patchclampplotteR`, you will need to prepare your raw recording data from Clampfit. This vignette will show you how to move your evoked post-synaptic current data from raw .abf recordings to a .csv file.
+Before using `patchclampplotteR`, you will need to prepare your raw recording data from Clampfit. This article will show you how to move your evoked post-synaptic current data from raw .abf recordings to a .csv file.
 
-This demonstration uses a protocol with two stimuli resulting in two evoked currents per sweep. The paired-pulse ratio (PPR) is the ratio of the second evoked current amplitude to the first.
+This recording uses a protocol with two stimuli resulting in two evoked currents per sweep. The paired-pulse ratio (PPR) is the ratio of the second evoked current amplitude to the first.
 
 ```{r evoked-currents-schematic, fig.alt = "A sketch showing a horizontal line with two downward-pointing peaks separated by a short distance. These are the two evoked currents.", fig.cap = "This drawing shows the first and second evoked currents. The ratio between them is the paired-pulse ratio (PPR)"}
 knitr::include_graphics("figures/Evoked-currents-schematic.png")
@@ -47,7 +47,7 @@ knitr::include_graphics("figures/Concatenate-files.png")
 
 > I would strongly recommend using the filename of the first file in the series (but write down the concatenated filename in your lab book as well). This is because Clampfit will auto-generate the concatenated file names (`Concatenate001.abf`, `Concatenate002.abf`, etc.). If you update your pClamp software, Clampfit will begin naming files again at `Concatenate000.abf`, and you could lose track of which file is which.
 
-## View data
+## View recording
 
 4. Click on the `Show Aquistion Signals` button and then `Previous Signal` (blue arrow in the figure below) to view the sweeps showing changes in current (`Im_primary ()`). The traces should all be stacked on top of each other, but if they are not, click on `View` -> `Data Display` -> `Sweeps`.
 
