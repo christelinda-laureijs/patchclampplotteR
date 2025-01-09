@@ -138,5 +138,13 @@ knitr::include_graphics("figures/Full-scale-x-axis.png")
 knitr::include_graphics("figures/Nonstop-button.png")
 ```
 
+## FAQ
 
+*There are some noisy traces or traces with strange artifacts.*
+
+You can exclude individual traces (for example ones with lots of noise or a very unstable baseline) in the Trace Selection box of Step 11. Select the traces you want to exclude, then `Invert` your selection.
+
+```{r messy-sweep, fig.alt = "A screenshot of a recording with a very noisy sweep highlighted in red.", fig.cap="It will be difficult to accurately identify true currents in this sweep."}
+knitr::include_graphics("figures/Messy-sweep.png")
+```
 

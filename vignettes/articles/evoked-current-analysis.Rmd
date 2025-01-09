@@ -127,9 +127,14 @@ If you have these two files, you are ready to begin using `patchclampplotteR`! S
 
 ## FAQ
 
-*There are some traces with significant amounts of noise.*
+*There are some noisy traces or traces with strange artifacts.*
 
 You can exclude individual traces (for example ones with lots of noise or a very unstable baseline) in the Trace Selection box of Step 11. Select the traces you want to exclude, then `Invert` your selection.
+
+```{r messy-sweep, fig.alt = "A screenshot of a recording with a very noisy sweep highlighted in red."}
+knitr::include_graphics("figures/Messy-sweep-2.png")
+```
+
 
 *What does it mean when there are two currents close together?*
 
