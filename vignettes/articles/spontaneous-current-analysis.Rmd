@@ -23,7 +23,7 @@ knitr::include_graphics("figures/noise-vs-currents-diagram.png")
 There are many advanced approaches to noise exclusion in electrophysiological recordings (see [Wang et al., 2023](https://doi.org/10.1073/pnas.2315804121); [Kudoh & Taguchi, 2002](https://doi.org/10.1016/S0956-5663(02)00053-2); and [Pernía-Andrade et al., 2012](https://doi.org/10.1016/j.bpj.2012.08.039) for some methods). I am using a simple threshold method, where any spikes below the threshold are not counted as synaptic events.
 
 ```{r noise-threshold-figure, fig.alt = "An image of a current clamp steps recording with annotations. After adding a threshold, only currents are identified."}
-knitr::include_graphics("figures/threshold-figure.png")
+knitr::include_graphics("figures/Threshold-figure.png")
 ```
 
 In this method, the threshold is five times the standard deviation of the noise amplitudes during a flat baseline region. This is comparable to the root mean square noise (RMS) used in MiniAnalysis.
