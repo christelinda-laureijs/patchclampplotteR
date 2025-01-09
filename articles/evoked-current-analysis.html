@@ -54,6 +54,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/action-potential-analysis.html">Action Potential Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/evoked-current-analysis-clampfit-Rmd.html">Evoked Current Analysis</a></li>
     <li><a class="dropdown-item" href="../articles/evoked-current-analysis.html">Evoked Current Analysis</a></li>
   </ul>
 </li>
@@ -212,12 +213,13 @@ traces <em>except</em> the ones you excluded.</li>
 </li>
 <li>Search Region 1: Range: <code>Cursors 3..4</code>
 </li>
-<li>Search Region 2 (toggle up and check to enable a second search
-region): Range: <code>Cursors 5..6</code>
+<li>Search Region 2 (click the up arrow next to the number and click the
+checkbox to enable a second search region): Range:
+<code>Cursors 5..6</code>
 </li>
 <li>Destination Option: <code>Replace results in sheet</code> (prevents
-you from accidentally copying old data</li>
-<li>Column Order: <code>Measurement, region, Signal</code>
+you from accidentally copying old data)</li>
+<li>Column Order: <code>Measurement, Region, Signal</code>
 </li>
 <li>Measurements: <code>Peak_amplitude</code>
 </li>
@@ -225,7 +227,9 @@ you from accidentally copying old data</li>
 <blockquote>
 <p>Warning! Ensure that you have selected all traces that you want to
 include in the recording! You can verify if this is the correct number
-by checking the total number of sweeps in the bottom-right corner.</p>
+by checking the total number of sweeps in the bottom-right corner. For
+example, if you have 360 sweeps and you want to include all sweeps, the
+trace selection should show <code>t1..360</code>.</p>
 </blockquote>
 <blockquote>
 <p>Ensure that all the settings are correct, especially if you have done
