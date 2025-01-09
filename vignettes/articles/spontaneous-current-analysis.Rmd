@@ -116,29 +116,58 @@ of it) or press `Alt+s`.
 ```{r search-box, fig.alt = "A screenshot of the Event Detection Search Box in Clampfit.", fig.cap="You can double-check that you have selected the correct number of sweeps (here it should be t1..360) by checking the total sweep number in the bottom right corner (Sweep 360 of 360)."}
 knitr::include_graphics("figures/Threshold-search-box.png")
 ```
+
 19. Click OK to close the dialog box. If you ever need it again, click on the `Search Parameters` button on the bottom left side of the toolbar.
 
 ```{r search-parameter-buttons, out.width="25%", fig.alt = "A screenshot of the Search Parameters button available in the lower toolbar in Clampfit."}
 knitr::include_graphics("figures/Search-parameter-button.png")
 ```
 
-## Begin Event Detection
+## Identify currents
 
 20. Click on the `Full Scale X Axis` button to view the entire trace.
 
 ```{r full-scale, out.width="25%", fig.alt = "A screenshot of the Full Scale X Axis button available in the lower toolbar in Clampfit."}
 knitr::include_graphics("figures/Full-scale-x-axis.png")
 ```
+> If you do not check "Full Scale X axis", Clampfit will continuously scroll through the recording and it will take much longer to run.
 
-> Warning! If you do not check "Full Scale X axis", Clampfit will continuously scroll through the recording and it will take much longer to run.
 
-> Be sure to uncheck "Automatically open Event Viewer window"! If you do not do this, Clampfit will continuously refresh this window each time a new event is detected, leading to crashing and lagging software.
+21. The Event viewer window should pop up, but if not, click on the Event Viewer button. On the lower-right side, click the `Options` button, and then do the following: 
 
-21. Click on the Nonstop button
+* Uncheck `Open Event Viewer automatically when starting event detection`
+* Uncheck `Continuous autoscale`
+* Close the Event Viewer window
+
+```{r event-viewer, out.width="25%", fig.alt = "A screenshot of the Event Viewer button available in the lower toolbar in Clampfit."}
+knitr::include_graphics("figures/Event-viewer-button.png")
+```
+
+> If you do not complete this step, Clampfit will try to refresh and resize this window each time a current is detected. It will likely freeze and crash the software.
+
+21. Click on the Nonstop button to initiate Event Detection. Clampfit will draw a blue dot on each event. This may take a few minutes for large files.
 
 ```{r nonstop, out.width="25%", fig.alt = "A screenshot of the Nonstop button available in the lower toolbar in Clampfit."}
 knitr::include_graphics("figures/Nonstop-button.png")
 ```
+
+22. When the Event Detection has stopped, the nonstop button will become greyed out there will be a small notification sound. This is what the recording will look like after.
+
+
+```{r finished, out.width="25%", fig.alt = "A screenshot of the recording after Event Detection is complete. Currents are highlighted in blue."}
+knitr::include_graphics("figures/Event-detection-finished.png")
+```
+
+## Exclude evoked currents
+
+23. Since this analysis focuses on spontaneous currents only, you will need to exclude any stimulus artifacts and evoked currents that were included in the event detection. Clampfit does not have an easy way to select multiple currents at once. However, one work-around is to create a plot of current amplitude over time and select points to delete.
+
+24. Click on the `Define Graphs` button 
+
+25
+
+
+_##. Click on the Results sheet (`Window` -> `Results1`) and `Save As`. I would suggest creating a consistent naming convention, such as `Letter`-events, as in `AA-events.sta`, `AB-events.sta`, etc.
 
 ## FAQ
 
