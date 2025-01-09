@@ -1,0 +1,12 @@
+---
+title: "Evoked Current Analysis"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# This is how you can analyze data in Clampfit

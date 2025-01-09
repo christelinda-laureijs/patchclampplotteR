@@ -89,12 +89,12 @@ of it) or press `Alt+s`.
 * Peak Polarity: `Im_primary`, `Negative-going`
 * Baseline Region: Mean level `Cursors 1..2`
 * Search Region 1: Range: `Cursors 3..4`
-* Search Region 2 (toggle up and check to enable a second search region): Range: `Cursors 5..6`
-* Destination Option: `Replace results in sheet` (prevents you from accidentally copying old data
-* Column Order: `Measurement, region, Signal`
+* Search Region 2 (click the up arrow next to the number and click the checkbox to enable a second search region): Range: `Cursors 5..6`
+* Destination Option: `Replace results in sheet` (prevents you from accidentally copying old data)
+* Column Order: `Measurement, Region, Signal`
 * Measurements: `Peak_amplitude`
 
-> Warning! Ensure that you have selected all traces that you want to include in the recording! You can verify if this is the correct number by checking the total number of sweeps in the bottom-right corner.
+> Warning! Ensure that you have selected all traces that you want to include in the recording! You can verify if this is the correct number by checking the total number of sweeps in the bottom-right corner. For example, if you have 360 sweeps and you want to include all sweeps, the trace selection should show `t1..360`.
 
 > Ensure that all the settings are correct, especially if you have done other analyses in Clampfit recently. For example, the polarity may be set to `Positive-going`, and you may have incorrect search regions specified if you were recently [analyzing action potential data](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
 
