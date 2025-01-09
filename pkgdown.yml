@@ -5,7 +5,8 @@ articles:
   articles/action-potential-analysis: action-potential-analysis.html
   articles/evoked-current-analysis: evoked-current-analysis.html
   patchclampplotteR: patchclampplotteR.html
-last_built: 2025-01-09T04:09Z
+  articles/spontaneous-current-analysis: spontaneous-current-analysis.html
+last_built: 2025-01-09T04:43Z
 urls:
   reference: https://christelinda-laureijs.github.io/patchclampplotteR/reference
   article: https://christelinda-laureijs.github.io/patchclampplotteR/articles
