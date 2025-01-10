@@ -100,11 +100,11 @@ to the root mean square noise (RMS) used in MiniAnalysis.</p>
 <h2 id="combine-recordings">Combine recordings<a class="anchor" aria-label="anchor" href="#combine-recordings"></a>
 </h2>
 <blockquote>
-<p>The data from our lab is not a continuous 30-minute recording. We
-pause the recording every 5 minutes to obtain parameters like access
-resistance and capacitance from the membrane test before resuming
-recording. If your data is already a continuous file, you can skip steps
-1-2.</p>
+<p><em>Note</em> The data from our lab is not a continuous 30-minute
+recording. We pause the recording every 5 minutes to obtain parameters
+like access resistance and capacitance from the membrane test before
+resuming recording. If your data is already a continuous file, you can
+skip steps 1-2.</p>
 </blockquote>
 <blockquote>
 <p>You may already have a concatenated file from your <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html">Evoked
@@ -158,13 +158,14 @@ a warning about what you should put here.</li>
 <li><code>Time_of_peak</code></li>
 </ul>
 <blockquote>
-<p>I would strongly recommend using the filename of the first file in
-the series (but write down the concatenated filename in your lab book as
-well). This is because Clampfit will auto-generate the concatenated file
-names (<code>Concatenate001.abf</code>, <code>Concatenate002.abf</code>,
-etc.). If you update your pClamp software, Clampfit will begin naming
-files again at <code>Concatenate000.abf</code>, and you could lose track
-of which file is which.</p>
+<p><em>Note</em> I would strongly recommend using the filename of the
+first file in the series (but write down the concatenated filename in
+your lab book as well). This is because Clampfit will auto-generate the
+concatenated file names (<code>Concatenate001.abf</code>,
+<code>Concatenate002.abf</code>, etc.). If you update your pClamp
+software, Clampfit will begin naming files again at
+<code>Concatenate000.abf</code>, and you could lose track of which file
+is which.</p>
 </blockquote>
 </div>
 <div class="section level2">
@@ -212,7 +213,8 @@ you from accidentally copying old data)</li>
 </li>
 </ul>
 <ol start="9" style="list-style-type: decimal">
-<li><p>On the results page, copy the values in the
+<li><p>Click on the Results sheet (<code>Window</code> -&gt;
+<code>Results1</code>). On the results page, copy the values in the
 <code>R1S1 Peak</code> column. Paste these into the A column of a blank
 Excel sheet.</p></li>
 <li><p>In cell B1, type the formula <code>=AVERAGE(A:A)</code>. This
@@ -244,9 +246,9 @@ Any event with an amplitude larger than this reject zone will be
 excluded.</p></li>
 </ol>
 <blockquote>
-<p>If you need to remove an entire trace, click on it and press the
-<code>Delete</code> key. This will hide the trace Later, you will select
-visible traces for the analysis.</p>
+<p><em>Note</em> If you need to remove an entire trace, click on it and
+press the <code>Delete</code> key. This will hide the trace Later, you
+will select visible traces for the analysis.</p>
 </blockquote>
 <ol start="17" style="list-style-type: decimal">
 <li><p>If you are having issues with noise detection, feel free to
@@ -278,8 +280,9 @@ the toolbar.</li>
 entire trace.</li>
 </ol>
 <p><img src="figures%2FFull-scale-x-axis.png" alt="A screenshot of the Full Scale X Axis button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;">
-&gt; If you do not check “Full Scale X axis”, Clampfit will continuously
-scroll through the recording and it will take much longer to run.</p>
+&gt; <em>Warning!</em> If you do not check “Full Scale X axis”, Clampfit
+will continuously scroll through the recording and it will take much
+longer to run.</p>
 <ol start="21" style="list-style-type: decimal">
 <li>The Event viewer window should pop up, but if not, click on the
 Event Viewer button. On the lower-right side, click the
@@ -295,9 +298,10 @@ Event Viewer button. On the lower-right side, click the
 </ul>
 <p><img src="figures%2FEvent-viewer-button.png" alt="A screenshot of the Event Viewer button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 <blockquote>
-<p>If you do not complete this step, Clampfit will try to refresh and
-resize this window each time a current is detected. It will likely
-freeze and crash the software.</p>
+<p><em>Warning!</em> If you do not close the Event Viewer (and perform
+the other items in Step 21), Clampfit will try to refresh and resize
+this window each time a current is detected. It will likely freeze and
+crash the software.</p>
 </blockquote>
 <ol start="21" style="list-style-type: decimal">
 <li>Click on the Nonstop button to initiate Event Detection. Clampfit
@@ -310,21 +314,33 @@ large files.</li>
 greyed out there will be a small notification sound. This is what the
 recording will look like after.</li>
 </ol>
-<p><img src="figures%2FEvent-detection-finished.png" alt="A screenshot of the recording after Event Detection is complete. Currents are highlighted in blue." width="75%" style="display: block; margin: auto;"></p>
+<div class="figure" style="text-align: center">
+<img src="figures%2FEvent-detection-finished.png" alt="A screenshot of the recording after Event Detection is complete. Currents are highlighted in blue." width="75%"><p class="caption">
+In this screenshot, events are highlighted in blue with a sketch of the
+event placed above. There are so many spontaneous currents, that the
+sketches have turned into a solid blue bar!
+</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="exclude-evoked-currents">Exclude evoked currents<a class="anchor" aria-label="anchor" href="#exclude-evoked-currents"></a>
 </h2>
+<p>Since this analysis focuses on spontaneous currents only, you will
+need to exclude any stimulus artifacts and evoked currents that were
+included in the event detection. Clampfit does not have an easy way to
+select multiple currents at once. However, one work-around is to create
+a plot of current amplitude over time and select points to delete.</p>
+<p><img src="figures%2FLabelled-currents-diagram.png" alt="A screenshot of a recording with evoked currents highlighted in blue, and spontaneous currents highlighted in green." width="75%" style="display: block; margin: auto;"></p>
 <ol start="23" style="list-style-type: decimal">
-<li><p>Since this analysis focuses on spontaneous currents only, you
-will need to exclude any stimulus artifacts and evoked currents that
-were included in the event detection. Clampfit does not have an easy way
-to select multiple currents at once. However, one work-around is to
-create a plot of current amplitude over time and select points to
-delete.</p></li>
-<li><p>Click on the <code>Define Graphs</code> button</p></li>
+<li>Click on the <code>Define Graphs</code> button and choose the
+<code>Scatterplot</code> option.</li>
 </ol>
-<p>25</p>
+<p><img src="figures%2FDefine-graphs-button.png" alt="A screenshot of the Define Graphs button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+<ol start="24" style="list-style-type: decimal">
+<li><p>Set the x-axis to <code>Time of Peak</code> and the y-axis to
+<code>Peak amplitude</code>.</p></li>
+<li><p>25</p></li>
+</ol>
 <p>_##. Click on the Results sheet (<code>Window</code> -&gt;
 <code>Results1</code>) and <code>Save As</code>. I would suggest
 creating a consistent naming convention, such as

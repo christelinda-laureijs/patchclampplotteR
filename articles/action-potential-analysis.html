@@ -86,10 +86,10 @@
     
     
 <blockquote>
-<p>Note: This package does not yet contain functions to analyze and plot
-action potential data. However, I am including this vignette here to
-show you how to perform raw data analysis in Clampfit. The resulting
-data will be ready to use in future versions of
+<p><em>Note</em>: This package does not yet contain functions to analyze
+and plot action potential data. However, I am including this vignette
+here to show you how to perform raw data analysis in Clampfit. The
+resulting data will be ready to use in future versions of
 <em>patchclampplotteR.</em></p>
 </blockquote>
 <p>This vignette will demonstrate how to analyze action potential
@@ -170,28 +170,28 @@ membrane potential is half of the <code>Peak_amplitude</code>.</li>
 <h2 id="get-derivative">Get derivative<a class="anchor" aria-label="anchor" href="#get-derivative"></a>
 </h2>
 <ol style="list-style-type: decimal">
-<li>Open the .abf file containing the current clamp step protocol in
+<li><p>Open the .abf file containing the current clamp step protocol in
 Clampfit. Ensure that the x-axis shows time in milliseconds. If it shows
 seconds, double-click the x-axis, and change the
 <code>Elapsed Time</code> from <code>Automatic</code> to
-<code>Milliseconds</code>.</li>
-<li>Press the “Enter” key to show just one sweep at a time. It will
+<code>Milliseconds</code>.</p></li>
+<li><p>Press the “Enter” key to show just one sweep at a time. It will
 begin at the sweep corresponding to the lowest current injection. Use
-greater than symbol (&gt;; on some computers you don’t even need to
-press the shift key) to cycle up through the sweeps.</li>
-<li>Move up to sweeps corresponding to higher current injections until
-you identify the first sweep that contains an action potential. I will
-call this <code>t_x</code>, since it may be <code>t5</code> in one
-recording, or <code>t6</code> in another, etc.</li>
-<li>Position Cursors 1 and 2 around the first action potential in
+greater than symbol (<code>&gt;</code>) to cycle up through the
+sweeps.</p></li>
+<li><p>Move up to sweeps corresponding to higher current injections
+until you identify the first sweep that contains an action potential. I
+will call this <code>t_x</code>, since it may be <code>t5</code> in one
+recording, or <code>t6</code> in another, etc.</p></li>
+<li><p>Position Cursors 1 and 2 around the first action potential in
 <code>t_x</code>. Cursor 1 should be before the threshold (aim for the
 area before the slope of the curve increases steeply). Cursor 2 should
-be in the after-hyperpolarization region.</li>
+be in the after-hyperpolarization region.</p></li>
 </ol>
 <blockquote>
-<p>It is important that Cursor 2 touches the curve at a value that is
-lower than the voltage value for Cursor 1. If Cursor 1 is lower, then
-Clampfit may identify the location at Cursor 1 as the
+<p><em>Warning!</em> It is important that Cursor 2 touches the curve at
+a value that is lower than the voltage value for Cursor 1. If Cursor 1
+is lower, then Clampfit may identify the location at Cursor 1 as the
 after-hyperpolarization region if you forget to move the cursor to the
 threshold (see step 11).</p>
 </blockquote>
@@ -215,23 +215,38 @@ set the <code>Region to transfer</code> as <code>Cursors 1..2</code>. In
 the <code>Trace Selection</code> category, choose only
 <code>Vm_primary ()</code> as the signal. Select <code>t_x</code> and
 <code>t11</code> for the traces, then click OK.</p></li>
-<li><p>The <code>Results</code> page will display three columns:
-<code>Time (ms)</code>, <code>Trace #6 (or #5, #7, etc.)</code>, and
-<code>Trace #11</code>. <code>Trace #x</code> is the membrane potential
-in mV, and <code>Trace #11</code> is the derivative of
+<li><p>Click on the Results sheet (<code>Window</code> -&gt;
+<code>Results1</code>). The <code>Results</code> page will display three
+columns: <code>Time (ms)</code>,
+<code>Trace #6 (or #5, #7, etc.)</code>, and <code>Trace #11</code>.
+<code>Trace #x</code> is the membrane potential in mV, and
+<code>Trace #11</code> is the derivative of
 <code>Trace #x</code>.</p></li>
 </ol>
 <blockquote>
-<p>Warning: The Results page of the transferred traces does not delete
-data between files. If you are doing several analyses in one session,
-ensure that you are looking at the correct columns corresponding to the
-active recording.</p>
+<p><em>Warning!</em> The Results page of the transferred traces does not
+delete data between files. If you are doing several analyses in one
+session, ensure that you are looking at the correct columns
+corresponding to the active recording.</p>
 </blockquote>
 <ol start="9" style="list-style-type: decimal">
-<li><p>Scroll down the <code>Trace #11</code> column (the derivative
-column) until you see the first value that is greater than or equal to
-10 mV/ms. Copy the value of all three columns.</p></li>
-<li><p>Your .csv file should now look like this:</p></li>
+<li>Scroll down the <code>Trace #11</code> column (the derivative
+column) until you see a series of positive values with increasing
+magnitude (e.g. &gt; 100 or more). This is where the derivative is
+increasing. Select the first value within this series that is greater
+than or equal to 10 mV/ms. Copy the value of all three columns in this
+row.</li>
+</ol>
+<blockquote>
+<p><em>Note</em> There may be isolated peaks within the derivative that
+are greater than 10 mV/ms. Only select this value if it is part of a
+series of increasingly larger positive values, followed by a series of
+negative values.</p>
+</blockquote>
+<ol start="10" style="list-style-type: decimal">
+<li>If the scaling is correct, the threshold (<code>t_x</code>) should
+be around -30 mV for a healthy cell. Your .csv file should now look like
+this:</li>
 </ol>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BN"],"State":["Baseline"],"Time_of_threshold":[373.5],"t_x":[-32.1],"t11":[10.38]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_threshold","name":"Time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t11","name":"t11","type":"numeric"}],"dataKey":"1dcf654e34ff050f5eda4cd1b4efc98d"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
@@ -251,8 +266,8 @@ crosses the threshold.
 </p>
 </div>
 <blockquote>
-<p>Warning! If you do not reposition Cursor 1 to be at the time of
-threshold, the values for <code>Time_of_peak</code> and
+<p><em>Warning!</em> If you do not reposition Cursor 1 to be at the time
+of threshold, the values for <code>Time_of_peak</code> and
 <code>Time_of_antipeak</code> will be incorrect!</p>
 </blockquote>
 <ol start="12" style="list-style-type: decimal">
@@ -262,7 +277,8 @@ symbol on top of it) or press <code>Alt+s</code>.</p></li>
 </ol>
 <ul>
 <li>Trace Selection: Choose <code>Vm_primary ()</code> and
-<code>t_x</code> (in this case, <code>t6</code>)</li>
+<code>t_x</code> (in this case, <code>t6</code>) ONLY. Do NOT include
+<code>t11</code>.</li>
 <li>Peak Polarity: <code>Vm_primary</code>,
 <code>Positive-going</code>
 </li>
@@ -280,13 +296,15 @@ you from accidentally copying old data</li>
 <code>Time of antipeak</code>, <code>Half-width</code>
 </li>
 </ul>
+<p>Click OK and then <code>Window</code> -&gt; <code>Results1</code> to
+see the Results page.</p>
 <p><img src="figures%2FAP-statistics-box.png" alt="A screenshot of the Statistics box of Clampfit showing the correct options to select." width="75%" style="display: block; margin: auto;"></p>
 <ol start="14" style="list-style-type: decimal">
-<li><p>Select all data except for the filepath option (unless you think
-you will need it later) and paste it into the .csv file. You’ll notice
-that the .csv column names are different than the column names in the
-<code>Results</code> sheet. I changed these column names to make them
-easier to use in R code.</p></li>
+<li><p>Select all data except for the <code>File Path</code> column
+(unless you think you will need it later) and paste it into the .csv
+file. You’ll notice that the .csv column names are different than the
+column names in the <code>Results</code> sheet. I changed these column
+names to make them easier to use in R code.</p></li>
 <li><p>Your .csv file should now look like this.</p></li>
 </ol>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:auto;height:auto;"></div>
@@ -295,9 +313,9 @@ easier to use in R code.</p></li>
 a hormone or treatment.</li>
 </ol>
 <blockquote>
-<p>If there are no action potentials in the later recording, insert the
-values for the columns <code>Letter</code> and <code>State</code> and
-leave all the others blank.</p>
+<p><em>Note</em> If there are no action potentials in the later
+recording, insert the values for the columns <code>Letter</code> and
+<code>State</code> and leave all the others blank.</p>
 </blockquote>
 <p>Here is an example of what a datasheet can look like:</p>
 <pre><code><span><span class="co">## Warning: There was 1 warning in `mutate()`.</span></span>
@@ -336,10 +354,9 @@ this example)</li>
 action potentials</li>
 </ul>
 <ol start="17" style="list-style-type: decimal">
-<li><p>Press the <code>Enter</code> key and use <code>,</code> and
-<code>.</code> (or <code>&lt;</code> and <code>&gt;</code>) to cycle
-through the sweeps. Count the number of action potentials in each
-sweep.</p></li>
+<li><p>Press the <code>Enter</code> key and use <code>&lt;</code> and
+<code>&gt;</code> to cycle through the sweeps. Count the number of
+action potentials in each sweep.</p></li>
 <li><p>Here is an example of what one recording could look
 like:</p></li>
 </ol>

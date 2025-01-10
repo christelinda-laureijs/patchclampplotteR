@@ -102,11 +102,11 @@ between them is the paired-pulse ratio (PPR)
 <h2 id="combine-recordings">Combine recordings<a class="anchor" aria-label="anchor" href="#combine-recordings"></a>
 </h2>
 <blockquote>
-<p>The data from our lab is not a continuous 30-minute recording. We
-pause the recording every 5 minutes to obtain parameters like access
-resistance and capacitance from the membrane test before resuming
-recording. If your data is already a continuous file, you can skip steps
-1-2.</p>
+<p><em>Note</em> The data from our lab is not a continuous 30-minute
+recording. We pause the recording every 5 minutes to obtain parameters
+like access resistance and capacitance from the membrane test before
+resuming recording. If your data is already a continuous file, you can
+skip steps 1-2.</p>
 </blockquote>
 <ol style="list-style-type: decimal">
 <li><p>Open the first .abf file in your recording series, and use the
@@ -141,13 +141,14 @@ a warning about what you should put here.</li>
 <code>P2</code> The amplitude of the second evoked current.</li>
 </ul>
 <blockquote>
-<p>I would strongly recommend using the filename of the first file in
-the series (but write down the concatenated filename in your lab book as
-well). This is because Clampfit will auto-generate the concatenated file
-names (<code>Concatenate001.abf</code>, <code>Concatenate002.abf</code>,
-etc.). If you update your pClamp software, Clampfit will begin naming
-files again at <code>Concatenate000.abf</code>, and you could lose track
-of which file is which.</p>
+<p><em>Note</em> I would strongly recommend using the filename of the
+first file in the series (but write down the concatenated filename in
+your lab book as well). This is because Clampfit will auto-generate the
+concatenated file names (<code>Concatenate001.abf</code>,
+<code>Concatenate002.abf</code>, etc.). If you update your pClamp
+software, Clampfit will begin naming files again at
+<code>Concatenate000.abf</code>, and you could lose track of which file
+is which.</p>
 </blockquote>
 </div>
 <div class="section level2">
@@ -181,8 +182,8 @@ and 6 should surround the second evoked current.</p></li>
 </ol>
 <p><img src="figures%2FEvoked-currents-cursors.png" alt="A screenshot of the correct cursor alignment in Clampfit." width="75%" style="display: block; margin: auto;"></p>
 <blockquote>
-<p>Warning! Ensure that the cursors fully enclose the evoked currents
-and that they do NOT include the stimulus artifacts.</p>
+<p><em>Warning!</em> Ensure that the cursors fully enclose the evoked
+currents and that they do NOT include the stimulus artifacts.</p>
 </blockquote>
 <ol start="9" style="list-style-type: decimal">
 <li>Click on <code>View</code> -&gt; <code>Window Defaults</code> and
@@ -223,29 +224,30 @@ you from accidentally copying old data)</li>
 </li>
 </ul>
 <blockquote>
-<p>Warning! Ensure that you have selected all traces that you want to
-include in the recording! You can verify if this is the correct number
-by checking the total number of sweeps in the bottom-right corner. For
-example, if you have 360 sweeps and you want to include all sweeps, the
-trace selection should show <code>t1..360</code>.</p>
+<p><em>Warning!</em> Ensure that you have selected all traces that you
+want to include in the recording! You can verify if this is the correct
+number by checking the total number of sweeps in the bottom-right
+corner. For example, if you have 360 sweeps and you want to include all
+sweeps, the trace selection should show <code>t1..360</code>.</p>
 </blockquote>
 <blockquote>
-<p>Ensure that all the settings are correct, especially if you have done
-other analyses in Clampfit recently. For example, the polarity may be
-set to <code>Positive-going</code>, and you may have incorrect search
-regions specified if you were recently <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html">analyzing
+<p><em>Warning!</em> Check that all the settings are correct, especially
+if you have done other analyses in Clampfit recently. For example, the
+polarity may be set to <code>Positive-going</code>, and you may have
+incorrect search regions specified if you were recently <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html">analyzing
 action potential data</a>.</p>
 </blockquote>
 <blockquote>
-<p>The Measurements options change for each search region, so make sure
-that both search regions only have <code>Peak_amplitude</code>
-checked!</p>
+<p><em>Warning!</em> The Measurements options change for each search
+region, so make sure that both search regions ONLY have
+<code>Peak_amplitude</code> checked!</p>
 </blockquote>
 <p><img src="figures%2FEvoked-currents-statistics-box.png" alt="A screenshot of the correct statistics options selected in Clampfit." width="75%" style="display: block; margin: auto;"></p>
 <ol start="12" style="list-style-type: decimal">
-<li><p>Click OK and view the <code>Results</code> sheet. Copy the R1S1
-and R2S1 columns, which correspond to the first and second evoked
-currents, respectively.</p></li>
+<li><p>Click OK and view the <code>Results</code> sheet
+(<code>Window</code> -&gt; <code>Results1</code>). Copy the R1S1 and
+R2S1 columns, which correspond to the first and second evoked currents,
+respectively.</p></li>
 <li><p>Paste these values into the <code>P1</code> and <code>P2</code>
 columns.</p></li>
 <li><p>Fill in the <code>Letter</code> and <code>ID</code> columns. In
