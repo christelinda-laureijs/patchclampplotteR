@@ -89,7 +89,7 @@ of it) or press `Alt+s`.
 * Column Order: `Measurement, Region, Signal`
 * Measurements: `Peak_amplitude`
 
-9. On the results page, copy the values in the `R1S1 Peak` column. Paste these into the A column of a blank Excel sheet.
+9. Click on the Results sheet (`Window` -> `Results1`). On the results page, copy the values in the `R1S1 Peak` column. Paste these into the A column of a blank Excel sheet.
 
 10. In cell B1, type the formula `=AVERAGE(A:A)`. This will produce the mean noise amplitude.
 
@@ -154,16 +154,28 @@ knitr::include_graphics("figures/Nonstop-button.png")
 22. When the Event Detection has stopped, the nonstop button will become greyed out there will be a small notification sound. This is what the recording will look like after.
 
 
-```{r finished, fig.alt = "A screenshot of the recording after Event Detection is complete. Currents are highlighted in blue."}
+```{r finished, fig.alt = "A screenshot of the recording after Event Detection is complete. Currents are highlighted in blue.", fig.cap = "In this screenshot, events are highlighted in blue with a sketch of the event placed above. There are so many spontaneous currents, that the sketches have turned into a solid blue bar!"}
 knitr::include_graphics("figures/Event-detection-finished.png")
 ```
 
 ## Exclude evoked currents
 
-23. Since this analysis focuses on spontaneous currents only, you will need to exclude any stimulus artifacts and evoked currents that were included in the event detection. Clampfit does not have an easy way to select multiple currents at once. However, one work-around is to create a plot of current amplitude over time and select points to delete.
+Since this analysis focuses on spontaneous currents only, you will need to exclude any stimulus artifacts and evoked currents that were included in the event detection. Clampfit does not have an easy way to select multiple currents at once. However, one work-around is to create a plot of current amplitude over time and select points to delete.
 
-24. Click on the `Define Graphs` button 
+```{r labelled-currents-figure, fig.alt = "A screenshot of a recording with evoked currents highlighted in blue, and spontaneous currents highlighted in green."}
+knitr::include_graphics("figures/Labelled-currents-diagram.png")
+```
 
+
+23. Click on the `Define Graphs` button and choose the `Scatterplot` option.
+
+```{r define-graphs-button, out.width="25%", fig.alt = "A screenshot of the Define Graphs button available in the lower toolbar in Clampfit."}
+knitr::include_graphics("figures/Define-graphs-button.png")
+```
+
+24. Set the x-axis to `Time of Peak` and the y-axis to `Peak amplitude`.
+
+25. 
 25
 
 

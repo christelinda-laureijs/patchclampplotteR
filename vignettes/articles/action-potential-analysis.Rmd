@@ -84,7 +84,7 @@ knitr::include_graphics("figures/AP-expression-box.png")
 
 7. Click on `Edit` -> `Transfer Traces` and set the `Region to transfer` as `Cursors 1..2`. In the `Trace Selection` category, choose only `Vm_primary ()` as the signal. Select `t_x` and `t11` for the traces, then click OK.
 
-8. The `Results` page will display three columns: `Time (ms)`, `Trace #6 (or #5, #7, etc.)`, and `Trace #11`. `Trace #x` is the membrane potential in mV, and `Trace #11` is the derivative of `Trace #x`.
+8. Click on the Results sheet (`Window` -> `Results1`). The `Results` page will display three columns: `Time (ms)`, `Trace #6 (or #5, #7, etc.)`, and `Trace #11`. `Trace #x` is the membrane potential in mV, and `Trace #11` is the derivative of `Trace #x`.
 
 > Warning: The Results page of the transferred traces does not delete data between
 files. If you are doing several analyses in one session, ensure that you are
