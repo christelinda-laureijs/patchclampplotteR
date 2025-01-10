@@ -30,7 +30,7 @@ In this method, the threshold is five times the standard deviation of the noise 
 
 ## Combine recordings
 
-> The data from our lab is not a continuous 30-minute recording. We pause the recording every 5 minutes to obtain parameters like access resistance and capacitance from the membrane test before resuming recording. If your data is already a continuous file, you can skip steps 1-2.
+> *Note* The data from our lab is not a continuous 30-minute recording. We pause the recording every 5 minutes to obtain parameters like access resistance and capacitance from the membrane test before resuming recording. If your data is already a continuous file, you can skip steps 1-2.
 
 > You may already have a concatenated file from your [Evoked current analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html). This also means you can skip steps 1-2.
 
@@ -62,7 +62,7 @@ knitr::include_graphics("figures/Viewer-buttons.png")
 * `Peak_amplitude` 
 * `Time_of_peak`
 
-> I would strongly recommend using the filename of the first file in the series (but write down the concatenated filename in your lab book as well). This is because Clampfit will auto-generate the concatenated file names (`Concatenate001.abf`, `Concatenate002.abf`, etc.). If you update your pClamp software, Clampfit will begin naming files again at `Concatenate000.abf`, and you could lose track of which file is which.
+> *Note* I would strongly recommend using the filename of the first file in the series (but write down the concatenated filename in your lab book as well). This is because Clampfit will auto-generate the concatenated file names (`Concatenate001.abf`, `Concatenate002.abf`, etc.). If you update your pClamp software, Clampfit will begin naming files again at `Concatenate000.abf`, and you could lose track of which file is which.
 
 ## Identify threshold
 
@@ -107,7 +107,7 @@ of it) or press `Alt+s`.
 
 16. If there are large artifacts, enable the `Reject cursor` and drag it to a level below the artifacts. Any event with an amplitude larger than this reject zone will be excluded.
 
-> If you need to remove an entire trace, click on it and press the `Delete` key. This will hide the trace Later, you will select visible traces for the analysis.
+> *Note* If you need to remove an entire trace, click on it and press the `Delete` key. This will hide the trace Later, you will select visible traces for the analysis.
 
 17. If you are having issues with noise detection, feel free to experiment with the other settings such as the pre- and post-trigger lengths and noise rejection.
 
@@ -130,7 +130,7 @@ knitr::include_graphics("figures/Search-parameter-button.png")
 ```{r full-scale, out.width="25%", fig.alt = "A screenshot of the Full Scale X Axis button available in the lower toolbar in Clampfit."}
 knitr::include_graphics("figures/Full-scale-x-axis.png")
 ```
-> If you do not check "Full Scale X axis", Clampfit will continuously scroll through the recording and it will take much longer to run.
+> *Warning!* If you do not check "Full Scale X axis", Clampfit will continuously scroll through the recording and it will take much longer to run.
 
 
 21. The Event viewer window should pop up, but if not, click on the Event Viewer button. On the lower-right side, click the `Options` button, and then do the following: 
@@ -143,7 +143,7 @@ knitr::include_graphics("figures/Full-scale-x-axis.png")
 knitr::include_graphics("figures/Event-viewer-button.png")
 ```
 
-> If you do not complete this step, Clampfit will try to refresh and resize this window each time a current is detected. It will likely freeze and crash the software.
+> *Warning!* If you do not close the Event Viewer (and perform the other items in Step 21), Clampfit will try to refresh and resize this window each time a current is detected. It will likely freeze and crash the software.
 
 21. Click on the Nonstop button to initiate Event Detection. Clampfit will draw a blue dot on each event. This may take a few minutes for large files.
 

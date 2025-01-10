@@ -16,7 +16,7 @@ library(dplyr)
 library(reactable)
 ```
 
-> Note: This package does not yet contain functions to analyze and plot action
+> *Note*: This package does not yet contain functions to analyze and plot action
 potential data. However, I am including this vignette here to show you how to
 perform raw data analysis in Clampfit. The resulting data will be ready to use
 in future versions of *patchclampplotteR.*
@@ -59,11 +59,14 @@ knitr::include_graphics("figures/AP-properties.png")
 ## Get derivative
 
 1. Open the .abf file containing the current clamp step protocol in Clampfit. Ensure that the x-axis shows time in milliseconds. If it shows seconds, double-click the x-axis, and change the `Elapsed Time` from `Automatic` to `Milliseconds`.
-2. Press the “Enter” key to show just one sweep at a time. It will begin at the sweep corresponding to the lowest current injection. Use greater than symbol (>; on some computers you don’t even need to press the shift key) to cycle up through the sweeps.
+
+2. Press the “Enter” key to show just one sweep at a time. It will begin at the sweep corresponding to the lowest current injection. Use greater than symbol (`>`) to cycle up through the sweeps.
+
 3. Move up to sweeps corresponding to higher current injections until you identify the first sweep that contains an action potential. I will call this `t_x`, since it may be `t5` in one recording, or `t6` in another, etc. 
+
 4. Position Cursors 1 and 2 around the first action potential in `t_x`. Cursor 1 should be before the threshold (aim for the area before the slope of the curve increases steeply). Cursor 2 should be in the after-hyperpolarization region.
 
-> It is important that Cursor 2 touches the curve at a value that is lower than
+> *Warning!* It is important that Cursor 2 touches the curve at a value that is lower than
 the voltage value for Cursor 1. If Cursor 1 is lower, then Clampfit may identify
 the location at Cursor 1 as the after-hyperpolarization region if you forget to
 move the cursor to the threshold (see step 11).
@@ -86,16 +89,16 @@ knitr::include_graphics("figures/AP-expression-box.png")
 
 8. Click on the Results sheet (`Window` -> `Results1`). The `Results` page will display three columns: `Time (ms)`, `Trace #6 (or #5, #7, etc.)`, and `Trace #11`. `Trace #x` is the membrane potential in mV, and `Trace #11` is the derivative of `Trace #x`.
 
-> Warning: The Results page of the transferred traces does not delete data between
+> *Warning!* The Results page of the transferred traces does not delete data between
 files. If you are doing several analyses in one session, ensure that you are
 looking at the correct columns corresponding to the active
 recording.
 
-9. Scroll down the `Trace #11` column (the derivative column) until you see the
-first value that is greater than or equal to 10 mV/ms. Copy the value of all
-three columns.
+9. Scroll down the `Trace #11` column (the derivative column) until you see a series of positive values with increasing magnitude (e.g. > 100 or more). This is where the derivative is increasing. Select the first value within this series that is greater than or equal to 10 mV/ms. Copy the value of all three columns in this row.
 
-10. Your .csv file should now look like this:
+> *Note* There may be isolated peaks within the derivative that are greater than 10 mV/ms. Only select this value if it is part of a series of increasingly larger positive values, followed by a series of negative values.
+
+10. If the scaling is correct, the threshold (`t_x`) should be around -30 mV for a healthy cell. Your .csv file should now look like this:
 
 ```{r sample-ap-table-one}
 sample_ap_data <- data.frame(
@@ -118,7 +121,7 @@ reactable(sample_ap_data)
 knitr::include_graphics("figures/AP-cursors-new.png")
 ```
 
-> Warning! If you do not reposition Cursor 1 to be at the time of threshold, the
+> *Warning!* If you do not reposition Cursor 1 to be at the time of threshold, the
 values for `Time_of_peak` and `Time_of_antipeak` will be incorrect!
 
 12. Click on the Statistics button (a small icon with a summation symbol on top
@@ -126,7 +129,7 @@ of it) or press `Alt+s`.
 
 13. Set the following settings:
 
-* Trace Selection: Choose `Vm_primary ()` and `t_x` (in this case, `t6`)
+* Trace Selection: Choose `Vm_primary ()` and `t_x` (in this case, `t6`) ONLY. Do NOT include `t11`.
 * Peak Polarity: `Vm_primary`, `Positive-going`
 * Baseline Region: Fixed at `[paste in the threshold value (column t_x in your sheet) here]`
 * Search Region 1: Range: `Cursors 1..2`
@@ -134,11 +137,14 @@ of it) or press `Alt+s`.
 * Column Order: `Measurement, region, Signal`
 * Measurements: `Peak_amplitude`, `Time of peak`, `Antipeak amplitude`, `Time of antipeak`, `Half-width`
 
+Click OK and then `Window` -> `Results1` to see the Results page.
+
+
 ```{r statistics-box, fig.alt = "A screenshot of the Statistics box of Clampfit showing the correct options to select."}
 knitr::include_graphics("figures/AP-statistics-box.png")
 ```
 
-14. Select all data except for the filepath option (unless you think you will
+14. Select all data except for the `File Path` column (unless you think you will
 need it later) and paste it into the .csv file. You'll notice that the .csv
 column names are different than the column names in the `Results` sheet. I
 changed these column names to make them easier to use in R code.
@@ -168,7 +174,7 @@ reactable(sample_ap_data_2)
 16. Repeat this process for the current clamp step protocol taken after a
 hormone or treatment.
 
-> If there are no action potentials in the later recording, insert the values
+> *Note* If there are no action potentials in the later recording, insert the values
 for the columns `Letter` and `State` and leave all the others blank.
 
 
@@ -193,7 +199,7 @@ For this, you will need a separate .csv file with four columns:
 * `Sweep` A number from 1 to 10
 * `No_of_APs` a numerical value indicating the number of action potentials
 
-17. Press the `Enter` key and use `,` and `.` (or `<` and `>`) to cycle through
+17. Press the `Enter` key and use `<` and `>` to cycle through
 the sweeps. Count the number of action potentials in each sweep.
 
 

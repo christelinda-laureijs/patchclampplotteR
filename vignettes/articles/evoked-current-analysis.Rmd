@@ -26,7 +26,7 @@ knitr::include_graphics("figures/Evoked-currents-schematic.png")
 
 ## Combine recordings
 
-> The data from our lab is not a continuous 30-minute recording. We pause the recording every 5 minutes to obtain parameters like access resistance and capacitance from the membrane test before resuming recording. If your data is already a continuous file, you can skip steps 1-2.
+> *Note* The data from our lab is not a continuous 30-minute recording. We pause the recording every 5 minutes to obtain parameters like access resistance and capacitance from the membrane test before resuming recording. If your data is already a continuous file, you can skip steps 1-2.
 
 1. Open the first .abf file in your recording series, and use the `Next File` button to quickly open all files in the series.
 
@@ -45,7 +45,7 @@ knitr::include_graphics("figures/Concatenate-files.png")
 * `P1` The amplitude of the first evoked current.
 * `P2` The amplitude of the second evoked current.
 
-> I would strongly recommend using the filename of the first file in the series (but write down the concatenated filename in your lab book as well). This is because Clampfit will auto-generate the concatenated file names (`Concatenate001.abf`, `Concatenate002.abf`, etc.). If you update your pClamp software, Clampfit will begin naming files again at `Concatenate000.abf`, and you could lose track of which file is which.
+> *Note* I would strongly recommend using the filename of the first file in the series (but write down the concatenated filename in your lab book as well). This is because Clampfit will auto-generate the concatenated file names (`Concatenate001.abf`, `Concatenate002.abf`, etc.). If you update your pClamp software, Clampfit will begin naming files again at `Concatenate000.abf`, and you could lose track of which file is which.
 
 ## View recording
 
@@ -69,7 +69,7 @@ knitr::include_graphics("figures/Viewer-buttons.png")
 knitr::include_graphics("figures/Evoked-currents-cursors.png")
 ```
 
-> Warning! Ensure that the cursors fully enclose the evoked currents and that they do NOT include the stimulus artifacts. 
+> *Warning!* Ensure that the cursors fully enclose the evoked currents and that they do NOT include the stimulus artifacts. 
 
 9. Click on `View` -> `Window Defaults` and `Save selected Analysis Windows settings as default`. This will save you time when running through many analyses since it will restore your cursor pairs to the same position with new files!
 
@@ -89,11 +89,11 @@ of it) or press `Alt+s`.
 * Column Order: `Measurement, Region, Signal`
 * Measurements: `Peak_amplitude`
 
-> Warning! Ensure that you have selected all traces that you want to include in the recording! You can verify if this is the correct number by checking the total number of sweeps in the bottom-right corner. For example, if you have 360 sweeps and you want to include all sweeps, the trace selection should show `t1..360`.
+> *Warning!* Ensure that you have selected all traces that you want to include in the recording! You can verify if this is the correct number by checking the total number of sweeps in the bottom-right corner. For example, if you have 360 sweeps and you want to include all sweeps, the trace selection should show `t1..360`.
 
-> Ensure that all the settings are correct, especially if you have done other analyses in Clampfit recently. For example, the polarity may be set to `Positive-going`, and you may have incorrect search regions specified if you were recently [analyzing action potential data](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
+> *Warning!* Check that all the settings are correct, especially if you have done other analyses in Clampfit recently. For example, the polarity may be set to `Positive-going`, and you may have incorrect search regions specified if you were recently [analyzing action potential data](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
 
-> The Measurements options change for each search region, so make sure that both search regions only have `Peak_amplitude` checked!
+> *Warning!* The Measurements options change for each search region, so make sure that both search regions ONLY have `Peak_amplitude` checked!
 
 ```{r evoked-currents-statistics, fig.alt = "A screenshot of the correct statistics options selected in Clampfit."}
 knitr::include_graphics("figures/Evoked-currents-statistics-box.png")
