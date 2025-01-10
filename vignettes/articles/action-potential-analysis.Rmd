@@ -66,6 +66,10 @@ knitr::include_graphics("figures/AP-properties.png")
 
 4. Position Cursors 1 and 2 around the first action potential in `t_x`. Cursor 1 should be before the threshold (aim for the area before the slope of the curve increases steeply). Cursor 2 should be in the after-hyperpolarization region.
 
+```{r cursor-placement, fig.cap = "The ideal placement of Cursor 1 should be in the middle of the curve. Left: Cursor 1 is placed where the curve is very steep, and it is likely that you will miss the threshold. Middle: Cursor 1 is very low, so Clampfit may identify this as the after-hyperpolarization. Right: This is the ideal spot, where the cursor is early enough to capture the threshold in the search region.", fig.alt = "A screenshot of an action potential with a green dot indicating the position of cursor 1. Cursor 1 should be at the middle portion of the curve, not the beginning of the curve (too early) or near the peak (too late)."}
+knitr::include_graphics("figures/AP-cursor-1-placement.png")
+```
+
 > *Warning!* It is important that Cursor 2 touches the curve at a value that is lower than
 the voltage value for Cursor 1. If Cursor 1 is lower, then Clampfit may identify
 the location at Cursor 1 as the after-hyperpolarization region if you forget to
@@ -171,14 +175,13 @@ sample_ap_data_2 <- data.frame(
 reactable(sample_ap_data_2)
 ```
 
-16. Repeat this process for the current clamp step protocol taken after a
-hormone or treatment.
+16. While you still have this file open, you may want to count action potentials (see the section on [counting action potentials](#count) below).
+
+17. A completed dataset should look something like the spreadsheet below.
 
 > *Note* If there are no action potentials in the later recording, insert the values
 for the columns `Letter` and `State` and leave all the others blank.
 
-
-Here is an example of what a datasheet can look like:
 
 ```{r example-full-ap-table}
 sample_full_ap_table <- read.csv("sample-ap-data.csv") %>% 
@@ -187,7 +190,7 @@ sample_full_ap_table <- read.csv("sample-ap-data.csv") %>%
 reactable(sample_full_ap_table)
 ```
 
-## Count action potentials
+## Count action potentials {#count}
 
 The next step is to count the number of action potentials in each sweep. This
 will allow you to later make a plot of action potential frequency vs. current
