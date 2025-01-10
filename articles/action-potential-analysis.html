@@ -188,6 +188,16 @@ recording, or <code>t6</code> in another, etc.</p></li>
 area before the slope of the curve increases steeply). Cursor 2 should
 be in the after-hyperpolarization region.</p></li>
 </ol>
+<div class="figure" style="text-align: center">
+<img src="figures%2FAP-cursor-1-placement.png" alt="A screenshot of an action potential with a green dot indicating the position of cursor 1. Cursor 1 should be at the middle portion of the curve, not the beginning of the curve (too early) or near the peak (too late)." width="75%"><p class="caption">
+The ideal placement of Cursor 1 should be in the middle of the curve.
+Left: Cursor 1 is placed where the curve is very steep, and it is likely
+that you will miss the threshold. Middle: Cursor 1 is very low, so
+Clampfit may identify this as the after-hyperpolarization. Right: This
+is the ideal spot, where the cursor is early enough to capture the
+threshold in the search region.
+</p>
+</div>
 <blockquote>
 <p><em>Warning!</em> It is important that Cursor 2 touches the curve at
 a value that is lower than the voltage value for Cursor 1. If Cursor 1
@@ -309,15 +319,17 @@ names to make them easier to use in R code.</p></li>
 </ol>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BN"],"State":["Baseline"],"Time_of_threshold":[373.5],"t_x":[-32.1],"t11":[10.38],"ID":["23711003.abf"],"First_sweep_with_APs":[6],"Trace_start":[5021],"Peak_amplitude":[72.54],"Time_to_peak":[0.7],"Antipeak_amplitude":[-17.73],"Time_of_antipeak":[4.4],"Half_width":[1.09]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_threshold","name":"Time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t11","name":"t11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"First_sweep_with_APs","name":"First_sweep_with_APs","type":"numeric"},{"id":"Trace_start","name":"Trace_start","type":"numeric"},{"id":"Peak_amplitude","name":"Peak_amplitude","type":"numeric"},{"id":"Time_to_peak","name":"Time_to_peak","type":"numeric"},{"id":"Antipeak_amplitude","name":"Antipeak_amplitude","type":"numeric"},{"id":"Time_of_antipeak","name":"Time_of_antipeak","type":"numeric"},{"id":"Half_width","name":"Half_width","type":"numeric"}],"dataKey":"2eca7dfc381c7dd443094f3009815054"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><ol start="16" style="list-style-type: decimal">
-<li>Repeat this process for the current clamp step protocol taken after
-a hormone or treatment.</li>
+<li><p>While you still have this file open, you may want to count action
+potentials (see the section on <a href="#count">counting action
+potentials</a> below).</p></li>
+<li><p>A completed dataset should look something like the spreadsheet
+below.</p></li>
 </ol>
 <blockquote>
 <p><em>Note</em> If there are no action potentials in the later
 recording, insert the values for the columns <code>Letter</code> and
 <code>State</code> and leave all the others blank.</p>
 </blockquote>
-<p>Here is an example of what a datasheet can look like:</p>
 <pre><code><span><span class="co">## Warning: There was 1 warning in `mutate()`.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> In argument: `across(where(is.numeric), round, 2)`.</span></span>
 <span><span class="co">## Caused by warning:</span></span>
@@ -333,7 +345,7 @@ recording, insert the values for the columns <code>Letter</code> and
 <script type="application/json" data-for="htmlwidget-36aa3d2a04d42bbc2145">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BO","BO","BP","BP","BT","BT"],"State":["Baseline","Insulin","Baseline","","Baseline","Insulin"],"Time_of_threshold":[329.6,358.6,468.3,"NA",407.1,518.3],"t_x":[-29.63,-35.49,-33.81,"NA",-28.35,-33.26],"t_11":[67.13,26.24,10.68,"NA",28.99,17.69],"ID":["23714007.abf","23714015.abf","23714026.abf","","23719005.abf","23719018.abf"],"First_sweep_with_APs":[6,7,5,"NA",8,8],"Trace_start":[5021,6021,4021,"NA",7021,7021],"Peak_amplitude":[77.67,84.35,70.19,"NA",77.67,70.1],"Time_to_peak":[330.1,359.1,468.9,"NA",407.6,518.9],"Antipeak_amplitude":[-17.3,-16.48,-15.62,"NA",-7.11,-25.39],"Time_of_antipeak":[332.6,361.5,471.2,"NA",410.5,521.9],"Half_width":[0.79,0.77,0.89,"NA",0.96,0.78]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_threshold","name":"Time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t_11","name":"t_11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"First_sweep_with_APs","name":"First_sweep_with_APs","type":"numeric"},{"id":"Trace_start","name":"Trace_start","type":"numeric"},{"id":"Peak_amplitude","name":"Peak_amplitude","type":"numeric"},{"id":"Time_to_peak","name":"Time_to_peak","type":"numeric"},{"id":"Antipeak_amplitude","name":"Antipeak_amplitude","type":"numeric"},{"id":"Time_of_antipeak","name":"Time_of_antipeak","type":"numeric"},{"id":"Half_width","name":"Half_width","type":"numeric"}],"dataKey":"1028657125a466c674dae4702bcc8fce"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level2">
-<h2 id="count-action-potentials">Count action potentials<a class="anchor" aria-label="anchor" href="#count-action-potentials"></a>
+<h2 id="count">Count action potentials<a class="anchor" aria-label="anchor" href="#count"></a>
 </h2>
 <p>The next step is to count the number of action potentials in each
 sweep. This will allow you to later make a plot of action potential
