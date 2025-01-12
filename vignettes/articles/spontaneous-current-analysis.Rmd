@@ -151,7 +151,7 @@ knitr::include_graphics("figures/Event-viewer-button.png")
 knitr::include_graphics("figures/Nonstop-button.png")
 ```
 
-22. When the Event Detection has stopped, the nonstop button will become greyed out there will be a small notification sound. This is what the recording will look like after.
+22. When the Event Detection has stopped, the nonstop button will become greyed out there will be a small notification sound. This is what the recording will look like after all events have been detected.
 
 
 ```{r finished, fig.alt = "A screenshot of the recording after Event Detection is complete. Currents are highlighted in blue.", fig.cap = "In this screenshot, events are highlighted in blue with a sketch of the event placed above. There are so many spontaneous currents, that the sketches have turned into a solid blue bar!"}
@@ -175,11 +175,9 @@ knitr::include_graphics("figures/Define-graphs-button.png")
 
 24. Set the x-axis to `Time of Peak` and the y-axis to `Peak amplitude`.
 
-25. 
-25
+> I am currently working on this section. The rest of this article is a work in progress
 
-
-_##. Click on the Results sheet (`Window` -> `Results1`) and `Save As`. I would suggest creating a consistent naming convention, such as `Letter`-events, as in `AA-events.sta`, `AB-events.sta`, etc.
+25. Click on the Results sheet (`Window` -> `Results1`) and `Save As`. I would suggest creating a consistent naming convention, such as `Letter`-events, as in `AA-events.sta`, `AB-events.sta`, etc.
 
 ## FAQ
 
