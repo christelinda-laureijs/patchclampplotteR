@@ -36,7 +36,9 @@ potential velocity is 10 mV/ms or greater (Farries et al., 2010).
 
 ## Set up data sheet
 
-Before you begin, you should set up a .csv file with the following columns. Note that most are in lowercase. 
+Before you begin, you should set up a .csv file. I would suggest using a consistent naming scheme that includes the date. I use the `YYYYMMDD-title.csv` format, such as `20250113-AP-analysis.csv`. This makes it easy to identify when I last analyzed my data, and the files sort easily.
+
+In your .csv file, fill row 1 with the following column titles. Notice that all (except for `ID` are in lowercase. 
 
 * `letter` The unique letter identifier of a single cell. You can use this to link data from different recordings taken from the same cell.
 * `state` A character value. In this example, the values are `Baseline` and `Insulin`, indicating a current clamp protocol taken after the cell had been exposed to 500 nM insulin for 25 minutes.
@@ -146,7 +148,7 @@ of it) or press `Alt+s`.
 * Baseline Region: Fixed at `[paste in the threshold value (column t_x in your sheet) here]`
 * Search Region 1: Range: `Cursors 1..2`
 * Destination Option: `Replace results in sheet` (prevents you from accidentally copying old data
-* Column Order: `Measurement, region, Signal`
+* Column Order: `Measurement, Region, Signal`
 * Measurements: `peak_amplitude`, `time of peak`, `antipeak amplitude`, `time of antipeak`, `half-width`
 
 Click OK and then `Window` -> `Results1` to see the Results page.
@@ -204,7 +206,7 @@ The next step is to count the number of action potentials in each sweep. This
 will allow you to later make a plot of action potential frequency vs. current
 injection and see how a treatment affect action potential frequency.
 
-18. Create a separate .csv file with four columns:
+18. Create a separate .csv file (for example `20250113-AP-count-data.csv`). This file should have four columns:
 
 * `letter` The unique letter identifier of a single cell.
 * `state` A character value ("Baseline" or "Insulin" in this example)
@@ -221,11 +223,11 @@ knitr::include_graphics("figures/Excel-plus.png")
 
 18c. Click and hold down the mouse key and drag the selection down to `C11` to generate a sequence from 1 to 10.
 
-18d. The entire range from `C2` to `C11` should be selected. Move your mouse to the bottom right corner of the cell until you see the `+` symbol again. Hold down the `Ctrl` key and drag this selection down. This will generate the sequence from 1-10 repeatedly.
+18d. The entire range from `C2` to `C11` should be selected. Move your mouse to the bottom right corner of the cell until you see the `+` symbol again. Hold down the `Ctrl` key and drag this selection down. This will generate the sequence from 1-10 repeatedly (e.g. 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3...)
 
 18e. You can then copy and paste this range repeatedly to fill your column.
 
-19. Open a current clamp steps recording in Clampfit (you may be coming directly from step 16 when you [measured action potential properties](#measure).)
+19. Open a current clamp steps recording in Clampfit (you may be coming directly from step 16 when you [measured action potential properties](#measure)).
 
 20. Press the `Enter` key to view one sweep at a time, and use `<` and `>` to cycle through
 the sweeps. Count the number of action potentials in each sweep, and record them in the `no_of_APs` column.
