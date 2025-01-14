@@ -283,7 +283,7 @@ this:</li>
 <script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"letter":["BN"],"state":["Baseline"],"time_of_threshold":[373.5],"t_x":[-32.1],"t11":[10.38]},"columns":[{"id":"letter","name":"letter","type":"character"},{"id":"state","name":"state","type":"character"},{"id":"time_of_threshold","name":"time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t11","name":"t11","type":"numeric"}],"dataKey":"751cef46bb0483f9558bac326d7bb488"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level2">
-<h2 id="measure-action-potential-properties">Measure action potential properties<a class="anchor" aria-label="anchor" href="#measure-action-potential-properties"></a>
+<h2 id="measure">Measure action potential properties<a class="anchor" aria-label="anchor" href="#measure"></a>
 </h2>
 <ol start="11" style="list-style-type: decimal">
 <li>Double-click on Cursor 1 and change its x-position value
@@ -371,8 +371,10 @@ recording, insert the values for the columns <code>letter</code> and
 <p>The next step is to count the number of action potentials in each
 sweep. This will allow you to later make a plot of action potential
 frequency vs. current injection and see how a treatment affect action
-potential frequency. For this, you will need a separate .csv file with
-four columns:</p>
+potential frequency.</p>
+<ol start="18" style="list-style-type: decimal">
+<li>Create a separate .csv file with four columns:</li>
+</ol>
 <ul>
 <li>
 <code>letter</code> The unique letter identifier of a single
@@ -381,17 +383,43 @@ cell.</li>
 <code>state</code> A character value (“Baseline” or “Insulin” in
 this example)</li>
 <li>
-<code>sweep</code> A number from 1 to 10</li>
+<code>sweep</code> A number from 1 to 10 (see step 18a to generate
+this)</li>
 <li>
 <code>no_of_APs</code> a numerical value indicating the number of
 action potentials</li>
 </ul>
-<ol start="17" style="list-style-type: decimal">
-<li><p>Press the <code>Enter</code> key and use <code>&lt;</code> and
-<code>&gt;</code> to cycle through the sweeps. Count the number of
-action potentials in each sweep.</p></li>
-<li><p>Here is an example of what one recording could look
-like:</p></li>
+<p>18a. To generate a repeated sequence from 1-10 quickly, type the
+number 1 in cell <code>C2</code>. Then, type the number 2 in cell
+<code>C3</code>.</p>
+<p>18b. Select <code>C2</code> and <code>C3</code> together, then hover
+your mouse over the bottom right corner of the group until you see a
+small black plus symbol.</p>
+<p><img src="figures%2FExcel-plus.png" alt="A screenshot of Excel with two cells selected. A plus symbol is present on the bottom right corner of the selection." width="25%" style="display: block; margin: auto;"></p>
+<p>18c. Click and hold down the mouse key and drag the selection down to
+<code>C11</code> to generate a sequence from 1 to 10.</p>
+<p>18d. The entire range from <code>C2</code> to <code>C11</code> should
+be selected. Move your mouse to the bottom right corner of the cell
+until you see the <code>+</code> symbol again. Hold down the
+<code>Ctrl</code> key and drag this selection down. This will generate
+the sequence from 1-10 repeatedly.</p>
+<p>18e. You can then copy and paste this range repeatedly to fill your
+column.</p>
+<ol start="19" style="list-style-type: decimal">
+<li><p>Open a current clamp steps recording in Clampfit (you may be
+coming directly from step 16 when you <a href="#measure">measured action
+potential properties</a>.)</p></li>
+<li><p>Press the <code>Enter</code> key to view one sweep at a time, and
+use <code>&lt;</code> and <code>&gt;</code> to cycle through the sweeps.
+Count the number of action potentials in each sweep, and record them in
+the <code>no_of_APs</code> column.</p></li>
+</ol>
+<blockquote>
+<p>Yes, this step may seem super simple, but that’s because it is - look
+at each sweep and count the number of action potentials present!</p>
+</blockquote>
+<ol start="21" style="list-style-type: decimal">
+<li>Here is an example of what one recording could look like:</li>
 </ol>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-febe03efa1a2d8d52a86" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-febe03efa1a2d8d52a86">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"letter":["BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO"],"state":["Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin"],"sweep":[1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],"no_of_APs":[0,0,0,0,0,9,5,7,7,6,0,0,0,0,0,0,3,4,4,4]},"columns":[{"id":"letter","name":"letter","type":"character"},{"id":"state","name":"state","type":"character"},{"id":"sweep","name":"sweep","type":"numeric"},{"id":"no_of_APs","name":"no_of_APs","type":"numeric"}],"dataKey":"5a1bf41e5204ed470a676f4cc7bf0232"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
