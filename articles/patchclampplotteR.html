@@ -575,6 +575,14 @@ limit the PPR values to a certain range to exclude outliers.</p>
 <div class="section level3">
 <h3 id="variance-analysis">Variance analysis<a class="anchor" aria-label="anchor" href="#variance-analysis"></a>
 </h3>
+<p>We can use variance measures like the coefficient of variation and
+the variance-to-mean ratio (VMR) to help determine if a mechanism is
+presynaptic or post-synaptic (see <a href="https://doi.org/10.1016/j.jneumeth.2019.108526" class="external-link">van Huijstee &amp;
+Kessels, 2020</a> for more details). This package contains functions
+such as <code><a href="../reference/make_variance_data.html">make_variance_data()</a></code> and
+<code><a href="../reference/plot_variance_comparison_data.html">plot_variance_comparison_data()</a></code> to allow you to perform
+variance analysis quickly from summary evoked current data (e.g. data
+generated from <code><a href="../reference/make_summary_EPSC_data.html">make_summary_EPSC_data()</a></code>).</p>
 <div class="section level4">
 <h4 id="create-variance-dataset">Create variance dataset<a class="anchor" aria-label="anchor" href="#create-variance-dataset"></a>
 </h4>
