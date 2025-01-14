@@ -124,7 +124,7 @@ sample_ap_data <- data.frame(
 reactable(sample_ap_data)
 ```
 
-## Measure action potential properties
+## Measure action potential properties {#measure}
 
 11. Double-click on Cursor 1 and change its x-position value (`time`) to match the
 `time_of_threshold`.
@@ -203,18 +203,36 @@ reactable(sample_full_ap_table)
 The next step is to count the number of action potentials in each sweep. This
 will allow you to later make a plot of action potential frequency vs. current
 injection and see how a treatment affect action potential frequency.
-For this, you will need a separate .csv file with four columns:
+
+18. Create a separate .csv file with four columns:
 
 * `letter` The unique letter identifier of a single cell.
 * `state` A character value ("Baseline" or "Insulin" in this example)
-* `sweep` A number from 1 to 10
+* `sweep` A number from 1 to 10 (see step 18a to generate this)
 * `no_of_APs` a numerical value indicating the number of action potentials
 
-17. Press the `Enter` key and use `<` and `>` to cycle through
-the sweeps. Count the number of action potentials in each sweep.
+18a. To generate a repeated sequence from 1-10 quickly, type the number 1 in cell `C2`. Then, type the number 2 in cell `C3`.
 
+18b. Select `C2` and `C3` together, then hover your mouse over the bottom right corner of the group until you see a small black plus symbol.
 
-18. Here is an example of what one recording could look like:
+```{r excel-plus, out.width="25%", fig.alt = "A screenshot of Excel with two cells selected. A plus symbol is present on the bottom right corner of the selection."}
+knitr::include_graphics("figures/Excel-plus.png")
+```
+
+18c. Click and hold down the mouse key and drag the selection down to `C11` to generate a sequence from 1 to 10.
+
+18d. The entire range from `C2` to `C11` should be selected. Move your mouse to the bottom right corner of the cell until you see the `+` symbol again. Hold down the `Ctrl` key and drag this selection down. This will generate the sequence from 1-10 repeatedly.
+
+18e. You can then copy and paste this range repeatedly to fill your column.
+
+19. Open a current clamp steps recording in Clampfit (you may be coming directly from step 16 when you [measured action potential properties](#measure).)
+
+20. Press the `Enter` key to view one sweep at a time, and use `<` and `>` to cycle through
+the sweeps. Count the number of action potentials in each sweep, and record them in the `no_of_APs` column.
+
+> Yes, this step may seem super simple, but that's because it is - look at each sweep and count the number of action potentials present!
+
+21. Here is an example of what one recording could look like:
 
 
 ```{r display-sample-count-data}
