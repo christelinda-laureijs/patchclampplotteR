@@ -423,6 +423,8 @@ plot_PPR_data_multiple_treatments(
 
 ## Variance analysis
 
+We can use variance measures like the coefficient of variation and the variance-to-mean ratio (VMR) to help determine if a mechanism is presynaptic or post-synaptic (see [van Huijstee & Kessels, 2020](https://doi.org/10.1016/j.jneumeth.2019.108526) for more details). This package contains functions such as `make_variance_data()` and `plot_variance_comparison_data()` to allow you to perform variance analysis quickly from summary evoked current data (e.g. data generated from `make_summary_EPSC_data()`).
+
 ### Create variance dataset
 
 ```{r make-variance-dataset}
@@ -474,6 +476,7 @@ vmr_comparison_control_plot <- plot_variance_comparison_data(
 cv_comparison_control_plot
 vmr_comparison_control_plot
 ```
+
 
 ## Compare baseline parameters
 
