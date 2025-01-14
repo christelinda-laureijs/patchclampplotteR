@@ -36,21 +36,21 @@ potential velocity is 10 mV/ms or greater (Farries et al., 2010).
 
 ## Set up data sheet
 
-Before you begin, you should set up a .csv file with the following columns: 
+Before you begin, you should set up a .csv file with the following columns. Note that most are in lowercase. 
 
-* `Letter` The unique letter identifier of a single cell. You can use this to link data from different recordings taken from the same cell.
-* `State` A character value. In this example, the values are `Baseline` and `Insulin`, indicating a current clamp protocol taken after the cell had been exposed to 500 nM insulin for 25 minutes.
-* `Time_of_threshold` A numerical value (in ms) used to determine properties like the latency to fire.
+* `letter` The unique letter identifier of a single cell. You can use this to link data from different recordings taken from the same cell.
+* `state` A character value. In this example, the values are `Baseline` and `Insulin`, indicating a current clamp protocol taken after the cell had been exposed to 500 nM insulin for 25 minutes.
+* `time_of_threshold` A numerical value (in ms) used to determine properties like the latency to fire.
 * `t_x` The membrane potential at the moment that an action potential is initiated, also known as the threshold.
 * `t11` The derivative of the trace you are analyzing. Must be 10 mV/ms or greater to properly identify the threshold.
 * `ID` A character value indicating the recording number. This corresponds to the `File Name` column that is automatically generated in the Results sheet in Clampfit.
-* `First_sweep_with_APs` A number representing the earliest sweep number where action potentials first appeared.
-* `Trace_start` This is an automatic value calculated by Clampfit, and it corresponds to the sweep number. It is not used in any analyses, but it will automatically be included in the Results sheet in Clampfit. It's faster to just copy all the data rather than try to exclude this value.
-* `Peak_amplitude` The membrane potential (in mV) during maximum depolarization.
-* `Time_to_peak`The time of the peak amplitude (in ms), which should also be relative to the `Time_of_threshold` if you have repositioned Cursor 1 to the `Time_of_threshold`.
-* `Antipeak_amplitude` The afterhyperpolarization amplitude (in mV)
-* `Time_of_antipeak` The time of the after-hyperpolarization (in ms), which should be relative to the `Time_of_threshold`.
-* `Half-width` The width of the action potential when the membrane potential is half of the `Peak_amplitude`.
+* `first_sweep_with_APs` A number representing the earliest sweep number where action potentials first appeared.
+* `trace_start` This is an automatic value calculated by Clampfit, and it corresponds to the sweep number. It is not used in any analyses, but it will automatically be included in the Results sheet in Clampfit. It's faster to just copy all the data rather than try to exclude this value.
+* `peak_amplitude` The membrane potential (in mV) during maximum depolarization.
+* `time_to_peak` The time of the peak amplitude (in ms), which should also be relative to the `time_of_threshold` if you have repositioned Cursor 1 to the `time_of_threshold`.
+* `antipeak_amplitude` The afterhyperpolarization amplitude (in mV)
+* `time_of_antipeak` The time of the after-hyperpolarization (in ms), which should be relative to the `time_of_threshold`.
+* `half-width` The width of the action potential when the membrane potential is half of the `peak_amplitude`.
 
 ```{r ap-properties-image, fig.alt = "An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire."}
 knitr::include_graphics("figures/AP-properties.png")
@@ -59,6 +59,14 @@ knitr::include_graphics("figures/AP-properties.png")
 ## Get derivative
 
 1. Open the .abf file containing the current clamp step protocol in Clampfit. Ensure that the x-axis shows time in milliseconds. If it shows seconds, double-click the x-axis, and change the `Elapsed Time` from `Automatic` to `Milliseconds`.
+
+> *Warning!* The y-axis values should generally be around -70 mV during the flat regions outside of the current injection. Sometimes the scaling factor in Clampfit is distorted (for unknown reasons) and the y-axis may be in the thousands range. If this happens, follow step 1b).
+
+1b. If the y-axis scale is off (see the warning box above), double-click on the y-axis to open the `Modify Signal Parameters` box. Change the `V/pA` ratio to 0.01, and click "OK". This will re-scale the y-axis to the correct units relative to the current injections. Double-check that the x-axis is in milliseconds!
+
+```{r fix-y-axis, fig.cap = "Sometimes the V/pA ratio is altered, so you may need to change it to 0.01.", fig.alt = "A screenshot of a dialog box in Clampfit with an option to change the V/pA ratio to 0.01."}
+knitr::include_graphics("figures/Fix-y-scale.png")
+```
 
 2. Press the “Enter” key to show just one sweep at a time. It will begin at the sweep corresponding to the lowest current injection. Use greater than symbol (`>`) to cycle up through the sweeps.
 
@@ -106,9 +114,9 @@ recording.
 
 ```{r sample-ap-table-one}
 sample_ap_data <- data.frame(
-  Letter = c("BN"),
-  State	= c("Baseline"),
-  Time_of_threshold = c(373.50),
+  letter = c("BN"),
+  state	= c("Baseline"),
+  time_of_threshold = c(373.50),
   t_x = c(-32.10),
   t11 = c(10.38)
 )
@@ -118,15 +126,15 @@ reactable(sample_ap_data)
 
 ## Measure action potential properties
 
-11. Double-click on Cursor 1 and change its x-position value (`Time`) to match the
-`Time_of_threshold`.
+11. Double-click on Cursor 1 and change its x-position value (`time`) to match the
+`time_of_threshold`.
 
 ```{r cursor-image-revised, fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold.", fig.cap = "Note how Cursor 1 is shifted to the right relative to the earlier cursor image. It is now located at the x-value where the membrane potential crosses the threshold."}
 knitr::include_graphics("figures/AP-cursors-new.png")
 ```
 
 > *Warning!* If you do not reposition Cursor 1 to be at the time of threshold, the
-values for `Time_of_peak` and `Time_of_antipeak` will be incorrect!
+values for `time_of_peak` and `time_of_antipeak` will be incorrect!
 
 12. Click on the Statistics button (a small icon with a summation symbol on top
 of it) or press `Alt+s`.
@@ -139,7 +147,7 @@ of it) or press `Alt+s`.
 * Search Region 1: Range: `Cursors 1..2`
 * Destination Option: `Replace results in sheet` (prevents you from accidentally copying old data
 * Column Order: `Measurement, region, Signal`
-* Measurements: `Peak_amplitude`, `Time of peak`, `Antipeak amplitude`, `Time of antipeak`, `Half-width`
+* Measurements: `peak_amplitude`, `time of peak`, `antipeak amplitude`, `time of antipeak`, `half-width`
 
 Click OK and then `Window` -> `Results1` to see the Results page.
 
@@ -157,19 +165,19 @@ changed these column names to make them easier to use in R code.
 
 ```{r finalized-ap-table}
 sample_ap_data_2 <- data.frame(
-  Letter = c("BN"),
-  State	= c("Baseline"),
-  Time_of_threshold = c(373.50),
+  letter = c("BN"),
+  state	= c("Baseline"),
+  time_of_threshold = c(373.50),
   t_x = c(-32.10),
   t11 = c(10.38),
   ID = c("23711003.abf"),
-  First_sweep_with_APs = c(6),
-  Trace_start = c(5021),
-  Peak_amplitude = c(72.54),
-  Time_to_peak = c(0.7),
-  Antipeak_amplitude = c(-17.73),
-  Time_of_antipeak = c(4.4),
-  Half_width = c(1.09)
+  first_sweep_with_APs = c(6),
+  trace_start = c(5021),
+  peak_amplitude = c(72.54),
+  time_to_peak = c(0.7),
+  antipeak_amplitude = c(-17.73),
+  time_of_antipeak = c(4.4),
+  half_width = c(1.09)
 )
 
 reactable(sample_ap_data_2)
@@ -180,7 +188,7 @@ reactable(sample_ap_data_2)
 17. A completed dataset should look something like the spreadsheet below.
 
 > *Note* If there are no action potentials in the later recording, insert the values
-for the columns `Letter` and `State` and leave all the others blank.
+for the columns `letter` and `state` and leave all the others blank.
 
 
 ```{r example-full-ap-table}
@@ -197,10 +205,10 @@ will allow you to later make a plot of action potential frequency vs. current
 injection and see how a treatment affect action potential frequency.
 For this, you will need a separate .csv file with four columns:
 
-* `Letter` The unique letter identifier of a single cell.
-* `State` A character value ("Baseline" or "Insulin" in this example)
-* `Sweep` A number from 1 to 10
-* `No_of_APs` a numerical value indicating the number of action potentials
+* `letter` The unique letter identifier of a single cell.
+* `state` A character value ("Baseline" or "Insulin" in this example)
+* `sweep` A number from 1 to 10
+* `no_of_APs` a numerical value indicating the number of action potentials
 
 17. Press the `Enter` key and use `<` and `>` to cycle through
 the sweeps. Count the number of action potentials in each sweep.
