@@ -111,8 +111,13 @@ al., 2010).</p>
 <div class="section level2">
 <h2 id="set-up-data-sheet">Set up data sheet<a class="anchor" aria-label="anchor" href="#set-up-data-sheet"></a>
 </h2>
-<p>Before you begin, you should set up a .csv file with the following
-columns. Note that most are in lowercase.</p>
+<p>Before you begin, you should set up a .csv file. I would suggest
+using a consistent naming scheme that includes the date. I use the
+<code>YYYYMMDD-title.csv</code> format, such as
+<code>20250113-AP-analysis.csv</code>. This makes it easy to identify
+when I last analyzed my data, and the files sort easily.</p>
+<p>In your .csv file, fill row 1 with the following column titles.
+Notice that all (except for <code>ID</code> are in lowercase.</p>
 <ul>
 <li>
 <code>letter</code> The unique letter identifier of a single cell.
@@ -320,7 +325,7 @@ symbol on top of it) or press <code>Alt+s</code>.</p></li>
 </li>
 <li>Destination Option: <code>Replace results in sheet</code> (prevents
 you from accidentally copying old data</li>
-<li>Column Order: <code>Measurement, region, Signal</code>
+<li>Column Order: <code>Measurement, Region, Signal</code>
 </li>
 <li>Measurements: <code>peak_amplitude</code>,
 <code>time of peak</code>, <code>antipeak amplitude</code>,
@@ -373,7 +378,9 @@ sweep. This will allow you to later make a plot of action potential
 frequency vs. current injection and see how a treatment affect action
 potential frequency.</p>
 <ol start="18" style="list-style-type: decimal">
-<li>Create a separate .csv file with four columns:</li>
+<li>Create a separate .csv file (for example
+<code>20250113-AP-count-data.csv</code>). This file should have four
+columns:</li>
 </ol>
 <ul>
 <li>
@@ -402,13 +409,14 @@ small black plus symbol.</p>
 be selected. Move your mouse to the bottom right corner of the cell
 until you see the <code>+</code> symbol again. Hold down the
 <code>Ctrl</code> key and drag this selection down. This will generate
-the sequence from 1-10 repeatedly.</p>
+the sequence from 1-10 repeatedly (e.g. 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+1, 2, 3…)</p>
 <p>18e. You can then copy and paste this range repeatedly to fill your
 column.</p>
 <ol start="19" style="list-style-type: decimal">
 <li><p>Open a current clamp steps recording in Clampfit (you may be
 coming directly from step 16 when you <a href="#measure">measured action
-potential properties</a>.)</p></li>
+potential properties</a>).</p></li>
 <li><p>Press the <code>Enter</code> key to view one sweep at a time, and
 use <code>&lt;</code> and <code>&gt;</code> to cycle through the sweeps.
 Count the number of action potentials in each sweep, and record them in
