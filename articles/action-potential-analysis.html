@@ -112,19 +112,19 @@ al., 2010).</p>
 <h2 id="set-up-data-sheet">Set up data sheet<a class="anchor" aria-label="anchor" href="#set-up-data-sheet"></a>
 </h2>
 <p>Before you begin, you should set up a .csv file with the following
-columns:</p>
+columns. Note that most are in lowercase.</p>
 <ul>
 <li>
-<code>Letter</code> The unique letter identifier of a single cell.
+<code>letter</code> The unique letter identifier of a single cell.
 You can use this to link data from different recordings taken from the
 same cell.</li>
 <li>
-<code>State</code> A character value. In this example, the values
+<code>state</code> A character value. In this example, the values
 are <code>Baseline</code> and <code>Insulin</code>, indicating a current
 clamp protocol taken after the cell had been exposed to 500 nM insulin
 for 25 minutes.</li>
 <li>
-<code>Time_of_threshold</code> A numerical value (in ms) used to
+<code>time_of_threshold</code> A numerical value (in ms) used to
 determine properties like the latency to fire.</li>
 <li>
 <code>t_x</code> The membrane potential at the moment that an action
@@ -137,32 +137,32 @@ be 10 mV/ms or greater to properly identify the threshold.</li>
 This corresponds to the <code>File Name</code> column that is
 automatically generated in the Results sheet in Clampfit.</li>
 <li>
-<code>First_sweep_with_APs</code> A number representing the earliest
+<code>first_sweep_with_APs</code> A number representing the earliest
 sweep number where action potentials first appeared.</li>
 <li>
-<code>Trace_start</code> This is an automatic value calculated by
+<code>trace_start</code> This is an automatic value calculated by
 Clampfit, and it corresponds to the sweep number. It is not used in any
 analyses, but it will automatically be included in the Results sheet in
 Clampfit. It’s faster to just copy all the data rather than try to
 exclude this value.</li>
 <li>
-<code>Peak_amplitude</code> The membrane potential (in mV) during
+<code>peak_amplitude</code> The membrane potential (in mV) during
 maximum depolarization.</li>
 <li>
-<code>Time_to_peak</code>The time of the peak amplitude (in ms),
-which should also be relative to the <code>Time_of_threshold</code> if
+<code>time_to_peak</code> The time of the peak amplitude (in ms),
+which should also be relative to the <code>time_of_threshold</code> if
 you have repositioned Cursor 1 to the
-<code>Time_of_threshold</code>.</li>
+<code>time_of_threshold</code>.</li>
 <li>
-<code>Antipeak_amplitude</code> The afterhyperpolarization amplitude
+<code>antipeak_amplitude</code> The afterhyperpolarization amplitude
 (in mV)</li>
 <li>
-<code>Time_of_antipeak</code> The time of the
+<code>time_of_antipeak</code> The time of the
 after-hyperpolarization (in ms), which should be relative to the
-<code>Time_of_threshold</code>.</li>
+<code>time_of_threshold</code>.</li>
 <li>
-<code>Half-width</code> The width of the action potential when the
-membrane potential is half of the <code>Peak_amplitude</code>.</li>
+<code>half-width</code> The width of the action potential when the
+membrane potential is half of the <code>peak_amplitude</code>.</li>
 </ul>
 <p><img src="figures%2FAP-properties.png" alt="An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire." width="75%" style="display: block; margin: auto;"></p>
 </div>
@@ -170,11 +170,32 @@ membrane potential is half of the <code>Peak_amplitude</code>.</li>
 <h2 id="get-derivative">Get derivative<a class="anchor" aria-label="anchor" href="#get-derivative"></a>
 </h2>
 <ol style="list-style-type: decimal">
-<li><p>Open the .abf file containing the current clamp step protocol in
+<li>Open the .abf file containing the current clamp step protocol in
 Clampfit. Ensure that the x-axis shows time in milliseconds. If it shows
 seconds, double-click the x-axis, and change the
 <code>Elapsed Time</code> from <code>Automatic</code> to
-<code>Milliseconds</code>.</p></li>
+<code>Milliseconds</code>.</li>
+</ol>
+<blockquote>
+<p><em>Warning!</em> The y-axis values should generally be around -70 mV
+during the flat regions outside of the current injection. Sometimes the
+scaling factor in Clampfit is distorted (for unknown reasons) and the
+y-axis may be in the thousands range. If this happens, follow step
+1b).</p>
+</blockquote>
+<p>1b. If the y-axis scale is off (see the warning box above),
+double-click on the y-axis to open the
+<code>Modify Signal Parameters</code> box. Change the <code>V/pA</code>
+ratio to 0.01, and click “OK”. This will re-scale the y-axis to the
+correct units relative to the current injections. Double-check that the
+x-axis is in milliseconds!</p>
+<div class="figure" style="text-align: center">
+<img src="figures%2FFix-y-scale.png" alt="A screenshot of a dialog box in Clampfit with an option to change the V/pA ratio to 0.01." width="75%"><p class="caption">
+Sometimes the V/pA ratio is altered, so you may need to change it to
+0.01.
+</p>
+</div>
+<ol start="2" style="list-style-type: decimal">
 <li><p>Press the “Enter” key to show just one sweep at a time. It will
 begin at the sweep corresponding to the lowest current injection. Use
 greater than symbol (<code>&gt;</code>) to cycle up through the
@@ -259,14 +280,14 @@ be around -30 mV for a healthy cell. Your .csv file should now look like
 this:</li>
 </ol>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BN"],"State":["Baseline"],"Time_of_threshold":[373.5],"t_x":[-32.1],"t11":[10.38]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_threshold","name":"Time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t11","name":"t11","type":"numeric"}],"dataKey":"1dcf654e34ff050f5eda4cd1b4efc98d"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"letter":["BN"],"state":["Baseline"],"time_of_threshold":[373.5],"t_x":[-32.1],"t11":[10.38]},"columns":[{"id":"letter","name":"letter","type":"character"},{"id":"state","name":"state","type":"character"},{"id":"time_of_threshold","name":"time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t11","name":"t11","type":"numeric"}],"dataKey":"751cef46bb0483f9558bac326d7bb488"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level2">
 <h2 id="measure-action-potential-properties">Measure action potential properties<a class="anchor" aria-label="anchor" href="#measure-action-potential-properties"></a>
 </h2>
 <ol start="11" style="list-style-type: decimal">
 <li>Double-click on Cursor 1 and change its x-position value
-(<code>Time</code>) to match the <code>Time_of_threshold</code>.</li>
+(<code>time</code>) to match the <code>time_of_threshold</code>.</li>
 </ol>
 <div class="figure" style="text-align: center">
 <img src="figures%2FAP-cursors-new.png" alt="A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold." width="75%"><p class="caption">
@@ -277,8 +298,8 @@ crosses the threshold.
 </div>
 <blockquote>
 <p><em>Warning!</em> If you do not reposition Cursor 1 to be at the time
-of threshold, the values for <code>Time_of_peak</code> and
-<code>Time_of_antipeak</code> will be incorrect!</p>
+of threshold, the values for <code>time_of_peak</code> and
+<code>time_of_antipeak</code> will be incorrect!</p>
 </blockquote>
 <ol start="12" style="list-style-type: decimal">
 <li><p>Click on the Statistics button (a small icon with a summation
@@ -301,9 +322,9 @@ symbol on top of it) or press <code>Alt+s</code>.</p></li>
 you from accidentally copying old data</li>
 <li>Column Order: <code>Measurement, region, Signal</code>
 </li>
-<li>Measurements: <code>Peak_amplitude</code>,
-<code>Time of peak</code>, <code>Antipeak amplitude</code>,
-<code>Time of antipeak</code>, <code>Half-width</code>
+<li>Measurements: <code>peak_amplitude</code>,
+<code>time of peak</code>, <code>antipeak amplitude</code>,
+<code>time of antipeak</code>, <code>half-width</code>
 </li>
 </ul>
 <p>Click OK and then <code>Window</code> -&gt; <code>Results1</code> to
@@ -318,7 +339,7 @@ names to make them easier to use in R code.</p></li>
 <li><p>Your .csv file should now look like this.</p></li>
 </ol>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BN"],"State":["Baseline"],"Time_of_threshold":[373.5],"t_x":[-32.1],"t11":[10.38],"ID":["23711003.abf"],"First_sweep_with_APs":[6],"Trace_start":[5021],"Peak_amplitude":[72.54],"Time_to_peak":[0.7],"Antipeak_amplitude":[-17.73],"Time_of_antipeak":[4.4],"Half_width":[1.09]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_threshold","name":"Time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t11","name":"t11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"First_sweep_with_APs","name":"First_sweep_with_APs","type":"numeric"},{"id":"Trace_start","name":"Trace_start","type":"numeric"},{"id":"Peak_amplitude","name":"Peak_amplitude","type":"numeric"},{"id":"Time_to_peak","name":"Time_to_peak","type":"numeric"},{"id":"Antipeak_amplitude","name":"Antipeak_amplitude","type":"numeric"},{"id":"Time_of_antipeak","name":"Time_of_antipeak","type":"numeric"},{"id":"Half_width","name":"Half_width","type":"numeric"}],"dataKey":"2eca7dfc381c7dd443094f3009815054"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><ol start="16" style="list-style-type: decimal">
+<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"letter":["BN"],"state":["Baseline"],"time_of_threshold":[373.5],"t_x":[-32.1],"t11":[10.38],"ID":["23711003.abf"],"first_sweep_with_APs":[6],"trace_start":[5021],"peak_amplitude":[72.54],"time_to_peak":[0.7],"antipeak_amplitude":[-17.73],"time_of_antipeak":[4.4],"half_width":[1.09]},"columns":[{"id":"letter","name":"letter","type":"character"},{"id":"state","name":"state","type":"character"},{"id":"time_of_threshold","name":"time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t11","name":"t11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"first_sweep_with_APs","name":"first_sweep_with_APs","type":"numeric"},{"id":"trace_start","name":"trace_start","type":"numeric"},{"id":"peak_amplitude","name":"peak_amplitude","type":"numeric"},{"id":"time_to_peak","name":"time_to_peak","type":"numeric"},{"id":"antipeak_amplitude","name":"antipeak_amplitude","type":"numeric"},{"id":"time_of_antipeak","name":"time_of_antipeak","type":"numeric"},{"id":"half_width","name":"half_width","type":"numeric"}],"dataKey":"12e9d60e1759c119e1cbdd973e7944a8"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><ol start="16" style="list-style-type: decimal">
 <li><p>While you still have this file open, you may want to count action
 potentials (see the section on <a href="#count">counting action
 potentials</a> below).</p></li>
@@ -327,8 +348,8 @@ below.</p></li>
 </ol>
 <blockquote>
 <p><em>Note</em> If there are no action potentials in the later
-recording, insert the values for the columns <code>Letter</code> and
-<code>State</code> and leave all the others blank.</p>
+recording, insert the values for the columns <code>letter</code> and
+<code>state</code> and leave all the others blank.</p>
 </blockquote>
 <pre><code><span><span class="co">## Warning: There was 1 warning in `mutate()`.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> In argument: `across(where(is.numeric), round, 2)`.</span></span>
@@ -342,7 +363,7 @@ recording, insert the values for the columns <code>Letter</code> and
 <span><span class="co">##   # Now</span></span>
 <span><span class="co">##   across(a:b, \(x) mean(x, na.rm = TRUE))</span></span></code></pre>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-36aa3d2a04d42bbc2145" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-36aa3d2a04d42bbc2145">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BO","BO","BP","BP","BT","BT"],"State":["Baseline","Insulin","Baseline","","Baseline","Insulin"],"Time_of_threshold":[329.6,358.6,468.3,"NA",407.1,518.3],"t_x":[-29.63,-35.49,-33.81,"NA",-28.35,-33.26],"t_11":[67.13,26.24,10.68,"NA",28.99,17.69],"ID":["23714007.abf","23714015.abf","23714026.abf","","23719005.abf","23719018.abf"],"First_sweep_with_APs":[6,7,5,"NA",8,8],"Trace_start":[5021,6021,4021,"NA",7021,7021],"Peak_amplitude":[77.67,84.35,70.19,"NA",77.67,70.1],"Time_to_peak":[330.1,359.1,468.9,"NA",407.6,518.9],"Antipeak_amplitude":[-17.3,-16.48,-15.62,"NA",-7.11,-25.39],"Time_of_antipeak":[332.6,361.5,471.2,"NA",410.5,521.9],"Half_width":[0.79,0.77,0.89,"NA",0.96,0.78]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Time_of_threshold","name":"Time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t_11","name":"t_11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"First_sweep_with_APs","name":"First_sweep_with_APs","type":"numeric"},{"id":"Trace_start","name":"Trace_start","type":"numeric"},{"id":"Peak_amplitude","name":"Peak_amplitude","type":"numeric"},{"id":"Time_to_peak","name":"Time_to_peak","type":"numeric"},{"id":"Antipeak_amplitude","name":"Antipeak_amplitude","type":"numeric"},{"id":"Time_of_antipeak","name":"Time_of_antipeak","type":"numeric"},{"id":"Half_width","name":"Half_width","type":"numeric"}],"dataKey":"1028657125a466c674dae4702bcc8fce"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-36aa3d2a04d42bbc2145">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"letter":["BO","BO","BP","BP","BT","BT"],"state":["Baseline","Insulin","Baseline","","Baseline","Insulin"],"time_of_threshold":[329.6,358.6,468.3,"NA",407.1,518.3],"t_x":[-29.63,-35.49,-33.81,"NA",-28.35,-33.26],"t_11":[67.13,26.24,10.68,"NA",28.99,17.69],"ID":["23714007.abf","23714015.abf","23714026.abf","","23719005.abf","23719018.abf"],"first_sweep_with_APs":[6,7,5,"NA",8,8],"trace_start":[5021,6021,4021,"NA",7021,7021],"peak_amplitude":[77.67,84.35,70.19,"NA",77.67,70.1],"time_to_peak":[330.1,359.1,468.9,"NA",407.6,518.9],"antipeak_amplitude":[-17.3,-16.48,-15.62,"NA",-7.11,-25.39],"time_of_antipeak":[332.6,361.5,471.2,"NA",410.5,521.9],"half_width":[0.79,0.77,0.89,"NA",0.96,0.78]},"columns":[{"id":"letter","name":"letter","type":"character"},{"id":"state","name":"state","type":"character"},{"id":"time_of_threshold","name":"time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t_11","name":"t_11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"first_sweep_with_APs","name":"first_sweep_with_APs","type":"numeric"},{"id":"trace_start","name":"trace_start","type":"numeric"},{"id":"peak_amplitude","name":"peak_amplitude","type":"numeric"},{"id":"time_to_peak","name":"time_to_peak","type":"numeric"},{"id":"antipeak_amplitude","name":"antipeak_amplitude","type":"numeric"},{"id":"time_of_antipeak","name":"time_of_antipeak","type":"numeric"},{"id":"half_width","name":"half_width","type":"numeric"}],"dataKey":"80cf50123c415855429aaee09267eb37"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level2">
 <h2 id="count">Count action potentials<a class="anchor" aria-label="anchor" href="#count"></a>
@@ -354,15 +375,15 @@ potential frequency. For this, you will need a separate .csv file with
 four columns:</p>
 <ul>
 <li>
-<code>Letter</code> The unique letter identifier of a single
+<code>letter</code> The unique letter identifier of a single
 cell.</li>
 <li>
-<code>State</code> A character value (“Baseline” or “Insulin” in
+<code>state</code> A character value (“Baseline” or “Insulin” in
 this example)</li>
 <li>
-<code>Sweep</code> A number from 1 to 10</li>
+<code>sweep</code> A number from 1 to 10</li>
 <li>
-<code>No_of_APs</code> a numerical value indicating the number of
+<code>no_of_APs</code> a numerical value indicating the number of
 action potentials</li>
 </ul>
 <ol start="17" style="list-style-type: decimal">
@@ -373,7 +394,7 @@ action potentials in each sweep.</p></li>
 like:</p></li>
 </ol>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-febe03efa1a2d8d52a86" style="width:auto;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-febe03efa1a2d8d52a86">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"Letter":["BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO"],"State":["Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin"],"Sweep":[1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],"No_of_APs":[0,0,0,0,0,9,5,7,7,6,0,0,0,0,0,0,3,4,4,4]},"columns":[{"id":"Letter","name":"Letter","type":"character"},{"id":"State","name":"State","type":"character"},{"id":"Sweep","name":"Sweep","type":"numeric"},{"id":"No_of_APs","name":"No_of_APs","type":"numeric"}],"dataKey":"ad9a8ae0ce359df09a434eaa0ec24fff"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-febe03efa1a2d8d52a86">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"letter":["BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO","BO"],"state":["Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin","Insulin"],"sweep":[1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10],"no_of_APs":[0,0,0,0,0,9,5,7,7,6,0,0,0,0,0,0,3,4,4,4]},"columns":[{"id":"letter","name":"letter","type":"character"},{"id":"state","name":"state","type":"character"},{"id":"sweep","name":"sweep","type":"numeric"},{"id":"no_of_APs","name":"no_of_APs","type":"numeric"}],"dataKey":"5a1bf41e5204ed470a676f4cc7bf0232"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level2">
 <h2 id="faq">FAQ<a class="anchor" aria-label="anchor" href="#faq"></a>
