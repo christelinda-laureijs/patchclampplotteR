@@ -93,8 +93,8 @@ articles:
 - title: Customise your site
   navbar: ~
   contents:
-  - evoked-current-analysis
-  - action-potential-analysis
-  - spontaneous-current-analysis
+  - articles/evoked-current-analysis
+  - articles/action-potential-analysis
+  - articles/spontaneous-current-analysis
 
 
