@@ -149,3 +149,15 @@ If you see two peaks instead of one expected evoked current, this could be an ex
 You should save a new .csv file for each new batch of raw data (these are the .csv files with `Letter`, `ID`, `P1` and `P2`). You may find it efficient to wait until you have a week of recordings, then analyze these recordings all at once in Clampfit. These data will be in a .csv file named something like `20240708-eEPSC-data.csv`.
 
 However, when writing a paper or thesis, you will use just one master csv file which contains the evoked current data for all recordings in the entire project. To append new data to this master csv, use the `add_new_cells()` function. Please see `vignette("patchclampplotteR")` for more details.
+
+
+*I am seeing twice as many data columns than I expected (e.g. `R1S1`, `R1S2`, `R2S1` and `R2S2`)*
+
+The `R` stands for `Region` and the `S` stands for `Signal`. If you see more than one `S` (for example, `R1S1` and `R1S2`) this indicates that you have selected both signals (Im_primary AND Vm_primary). In the `Statistics` dialog box (`Alt + s`) click on `Trace Selection` and ensure that only one signal is selected. Sometimes this is accidentally switched to `All visible signals` which is incorrect.
+
+If you see multiple `R` columns, it may indicate that you have extra search regions enabled. If you only want one search region, double-check that Search Region 2 isn't accidentally checked. Click the up arrow next to the number box and ensure that the box next to Search Region 2 is unchecked.
+
+*I want to analyze both evoked currents at the same time, but I am only seeing one data column (`R1S1`).*
+This is the opposite of the issue above. This time, you do not have enough Search Regions enabled. In the `Statistics` dialog box (`Alt + s`) click the up arrow next to the number box and ensure that Search Region 2 is enabled.
+
+
