@@ -311,6 +311,28 @@ csv file which contains the evoked current data for all recordings in
 the entire project. To append new data to this master csv, use the
 <code><a href="../reference/add_new_cells.html">add_new_cells()</a></code> function. Please see
 <code><a href="../articles/patchclampplotteR.html">vignette("patchclampplotteR")</a></code> for more details.</p>
+<p><em>I am seeing twice as many data columns than I expected
+(e.g. <code>R1S1</code>, <code>R1S2</code>, <code>R2S1</code> and
+<code>R2S2</code>)</em></p>
+<p>The <code>R</code> stands for <code>Region</code> and the
+<code>S</code> stands for <code>Signal</code>. If you see more than one
+<code>S</code> (for example, <code>R1S1</code> and <code>R1S2</code>)
+this indicates that you have selected both signals (Im_primary AND
+Vm_primary). In the <code>Statistics</code> dialog box
+(<code>Alt + s</code>) click on <code>Trace Selection</code> and ensure
+that only one signal is selected. Sometimes this is accidentally
+switched to <code>All visible signals</code> which is incorrect.</p>
+<p>If you see multiple <code>R</code> columns, it may indicate that you
+have extra search regions enabled. If you only want one search region,
+double-check that Search Region 2 isn’t accidentally checked. Click the
+up arrow next to the number box and ensure that the box next to Search
+Region 2 is unchecked.</p>
+<p><em>I want to analyze both evoked currents at the same time, but I am
+only seeing one data column (<code>R1S1</code>).</em> This is the
+opposite of the issue above. This time, you do not have enough Search
+Regions enabled. In the <code>Statistics</code> dialog box
+(<code>Alt + s</code>) click the up arrow next to the number box and
+ensure that Search Region 2 is enabled.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
