@@ -89,6 +89,12 @@ reference:
   - sample_sEPSC_t_test_df
 
 
-
+articles:
+- title: Customise your site
+  navbar: ~
+  contents:
+  - evoked-current-analysis
+  - action-potential-analysis
+  - spontaneous-current-analysis
 
 
