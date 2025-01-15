@@ -169,7 +169,7 @@ import_theme_colours <- function(filename) {
 #' @param new_raw_data_csv A filepath to a csv containing the new raw data. If
 #'   the data are evoked current data (`current_type == "eEPSC"`) then this must
 #'   contain 4 columns: `letter`, `ID`, `P1` and `P2`. If the data are
-#'   spontaneous current data, the columns must be `Letter`, `ID`,
+#'   spontaneous current data, the columns must be `letter`, `ID`,
 #'   `recording_num`, `trace`, `peak_amplitude` and `time_of_peak`. Please see
 #'   the section below on required columns for more details.
 #' @param cell_characteristics_csv A filepath to a csv containing information
