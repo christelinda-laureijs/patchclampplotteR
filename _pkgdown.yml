@@ -1,4 +1,12 @@
 url: https://christelinda-laureijs.github.io/patchclampplotteR/
+
+home:
+  title: Plot and analyze patch clamp electrophysiology data in R
+
+authors:
+  Christelinda Laureijs
+    href: https://christelindalaureijs.com/
+
 template:
   bootstrap: 5
   includes:
