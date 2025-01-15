@@ -90,7 +90,7 @@ reference:
 
 
 articles:
-- title: Customise your site
+- title: Learn how to analyze your data with Clampfit and patchclampplotteR
   navbar: ~
   contents:
   - articles/evoked-current-analysis

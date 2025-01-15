@@ -1,5 +1,7 @@
 ---
 title: "Spontaneous Current Analysis"
+description: >
+  Learn how to analyze spontaneous current data using Event Detection in Clampfit,    and then prepare the data for use with the package patchclampplotteR.
 ---
 
 ```{r spontaneous-setup, include = FALSE}
