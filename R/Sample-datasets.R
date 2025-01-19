@@ -177,7 +177,7 @@ NULL
 #'  into one, but it needs to remain here to prevent breaking previous projects.
 #'  It should be set to 1.
 #'  \item `trace` A numeric value representing the trace (automatically
-#'  generated in Clampfit) where the current occured.
+#'  generated in Clampfit) where the current occurred.
 #'  \item `time_of_peak` A numeric value representing the time of the peak in
 #'  milliseconds relative to trace number. This is automatically calculated in
 #'  Clampfit.
@@ -623,7 +623,7 @@ NULL
 
 #' Variance-to-mean ratio and coefficient of variation of evoked current amplitudes
 #'
-#' This is an example of the dataframe generated from evoked current summmary
+#' This is an example of the dataframe generated from evoked current summary
 #' data processed using the function [make_variance_data()]. It contains new
 #' columns for the mean variance-to-mean ratio (VMR) and mean inverse
 #' coefficient of variation squared for two time intervals. They are the

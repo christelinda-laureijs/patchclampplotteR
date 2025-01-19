@@ -22,7 +22,7 @@ detailed description of these columns, please see \link{sample_summary_eEPSC_df}
 }
 }
 \description{
-This is an example of the dataframe generated from evoked current summmary
+This is an example of the dataframe generated from evoked current summary
 data processed using the function \code{\link[=make_variance_data]{make_variance_data()}}. It contains new
 columns for the mean variance-to-mean ratio (VMR) and mean inverse
 coefficient of variation squared for two time intervals. They are the

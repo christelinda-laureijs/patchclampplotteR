@@ -118,7 +118,7 @@
 #'  into one, but it needs to remain here to prevent breaking previous projects.
 #'  It should be set to 1.
 #'  \item `trace` A numeric value representing the trace (automatically
-#'  generated in Clampfit) where the current occured.
+#'  generated in Clampfit) where the current occurred.
 #'  \item `time_of_peak` A numeric value representing the time of the peak in
 #'  milliseconds relative to trace number. This is automatically calculated in
 #'  Clampfit.

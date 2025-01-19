@@ -48,3 +48,4 @@ Remotes:
     Crystal-YWu/abftools,
     timelyportfolio/dataui
 VignetteBuilder: knitr
+Language: en-CA

@@ -141,7 +141,7 @@ raw_eEPSC_data <- add_new_cells(
 
 **Output messages**
 
-`add_new_cells()` pruduces several warnings and messages. One warning lets you
+`add_new_cells()` produces several warnings and messages. One warning lets you
 know you know that the column names have been renamed to lowercase. This is to
 avoid case-sensitive issues from appearing in later functions.
 
