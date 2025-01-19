@@ -192,10 +192,9 @@ reactable(sample_ap_data_2)
 > *Note* If there are no action potentials in the later recording, insert the values
 for the columns `letter` and `state` and leave all the others blank.
 
-
 ```{r example-full-ap-table}
 sample_full_ap_table <- read.csv("sample-ap-data.csv") %>% 
-  mutate(across(where(is.numeric), round, 2))
+  mutate(across(where(is.numeric), \(x) round(x, 2)))
 
 reactable(sample_full_ap_table)
 ```

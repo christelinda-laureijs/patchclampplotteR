@@ -28,7 +28,7 @@ There are many advanced approaches to noise exclusion in electrophysiological re
 knitr::include_graphics("figures/Threshold-figure.png")
 ```
 
-In this method, the threshold is five times the standard deviation of the noise amplitudes during a flat baseline region. This is comparable to the root mean square noise (RMS) used in MiniAnalysis.
+In this method, the threshold is five times the standard deviation (SD) of the noise amplitudes during a flat baseline region. This is comparable to the root mean square noise (RMS) used in MiniAnalysis.
 
 ## Combine recordings
 

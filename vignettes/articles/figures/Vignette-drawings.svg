@@ -25,9 +25,9 @@
      inkscape:deskcolor="#ffffff"
      inkscape:document-units="mm"
      showborder="true"
-     inkscape:zoom="3.2651515"
-     inkscape:cx="259.40603"
-     inkscape:cy="4319.0951"
+     inkscape:zoom="2.3088108"
+     inkscape:cx="692.34778"
+     inkscape:cy="843.72441"
      inkscape:window-width="1920"
      inkscape:window-height="1111"
      inkscape:window-x="-9"
@@ -412,7 +412,7 @@
            id="tspan68"
            style="fill:#813d9c;fill-opacity:1;stroke:none;stroke-width:0.0372762"
            x="4.8236842"
-           y="12.867935">5 x noise SD</tspan></text><path
+           y="12.867935">5 x noise standard deviation</tspan></text><path
          style="fill:#813d9c;fill-opacity:1;stroke:#813d9c;stroke-width:0.0113673;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker69);marker-end:url(#marker69);paint-order:markers fill stroke"
          d="m 4.7858971,12.590035 v 0.410173"
          id="path68" /></g><image
@@ -422,8 +422,8 @@
        style="image-rendering:optimizeSpeed"
        xlink:href="../../../man/figures/logo.png"
        id="image1-9"
-       x="4.7623839"
-       y="13.329569" /><g
+       x="13.280478"
+       y="18.202208" /><g
        id="g35"
        transform="translate(-6.6357306,-0.10208816)"
        inkscape:export-filename="Labelled-currents-diagram.png"
