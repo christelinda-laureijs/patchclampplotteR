@@ -285,7 +285,7 @@ add_new_cells <- function(new_raw_data_csv,
   }
 
   if (is.null(cell_characteristics_csv) ||
-    !is.character(cell_characteristics_csv)) {
+      !is.character(cell_characteristics_csv)) {
     stop(
       "'cell_characteristics_csv' must be a character (e.g. \"Data/Plaintext-Cell-Characteristics.csv\")"
     )
@@ -300,13 +300,13 @@ add_new_cells <- function(new_raw_data_csv,
   }
 
   if (!is.null(new_raw_data_name) &
-    !is.character(new_raw_data_name)) {
+      !is.character(new_raw_data_name)) {
     stop("'new_raw_data_name' must be a character (e.g. \"Data/Raw-eEPSC-data.csv\")")
   }
 
   if (is.null(current_type) ||
-    length(current_type) != 1L ||
-    !current_type %in% c("eEPSC", "sEPSC")) {
+      length(current_type) != 1L ||
+      !current_type %in% c("eEPSC", "sEPSC")) {
     stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
   }
 
@@ -316,9 +316,7 @@ add_new_cells <- function(new_raw_data_csv,
     dplyr::rename_with(tolower) %>%
     dplyr::rename(X = .data$x, Y = .data$y)
 
-  new_raw_data <- utils::read.csv(here::here(new_raw_data_csv))
-
-  new_raw_data <- new_raw_data %>%
+  new_raw_data <- utils::read.csv(here::here(new_raw_data_csv)) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::mutate(id = factor(.data$id))
 
@@ -334,11 +332,9 @@ add_new_cells <- function(new_raw_data_csv,
     }
     new_raw_data <- new_raw_data %>%
       dplyr::rename_with(tolower) %>%
-      dplyr::rename(
-        ID = .data$id,
-        P1 = .data$p1,
-        P2 = .data$p2
-      ) %>%
+      dplyr::rename(ID = .data$id,
+                    P1 = .data$p1,
+                    P2 = .data$p2) %>%
       dplyr::group_by(.data$letter) %>%
       dplyr::mutate(time = (dplyr::row_number() - 1) / 12)
   }
@@ -358,12 +354,10 @@ add_new_cells <- function(new_raw_data_csv,
       dplyr::rename_with(tolower) %>%
       dplyr::rename(ID = .data$id) %>%
       dplyr::group_by(.data$letter) %>%
-      dplyr::mutate(
-        amplitude = (-1) * .data$amplitude,
-        time = ((.data$recording_num - 1) * 300 + (.data$trace - 1) * 5 + (.data$time_of_peak /
-          1000)
-        ) / 60
-      )
+      dplyr::mutate(amplitude = (-1) * .data$amplitude,
+                    time = ((.data$recording_num - 1) * 300 + (.data$trace - 1) * 5 + (.data$time_of_peak /
+                                                                                         1000)
+                    ) / 60)
   }
 
   warning("Renamed dataframe columns to lowercase")
@@ -400,12 +394,9 @@ add_new_cells <- function(new_raw_data_csv,
     merge(new_raw_data, cell_characteristics, by = "letter")
 
   # Import old Raw-Data sheet
-  old_raw_data <- utils::read.csv(here::here(old_raw_data_csv), header = T)
-
-  old_raw_data <- old_raw_data %>%
+  old_raw_data <- utils::read.csv(here::here(old_raw_data_csv), header = T) %>%
     dplyr::rename_with(tolower) %>%
-    dplyr::mutate(id = factor(.data$id),
-                  letter = factor(.data$letter))
+    dplyr::mutate(id = factor(.data$id), letter = factor(.data$letter))
 
   if (current_type == "eEPSC") {
     old_raw_data <- old_raw_data %>%
@@ -422,11 +413,9 @@ add_new_cells <- function(new_raw_data_csv,
   if (current_type == "sEPSC") {
     old_raw_data <- old_raw_data %>%
       dplyr::rename_with(tolower) %>%
-      dplyr::rename(
-        ID = .data$id,
-        X = .data$x,
-        Y = .data$y
-      )
+      dplyr::rename(ID = .data$id,
+                    X = .data$x,
+                    Y = .data$y)
   }
 
   if (any(grepl("cells", colnames(old_raw_data)))) {
@@ -472,10 +461,10 @@ add_new_cells <- function(new_raw_data_csv,
     )
 
     full_raw_data <- dplyr::bind_rows(old_raw_data, new_raw_data_complete) %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
 
     if (write_new_csv == "yes") {
-    utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
+      utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
     }
 
     return(full_raw_data)

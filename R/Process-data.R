@@ -299,7 +299,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
         P1_transformed = (.data$P1 / .data$baseline_mean) * 100,
         P2_transformed = (.data$P2 / .data$baseline_mean) * 100
       ) %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
   }
 
   if (current_type == "sEPSC") {
@@ -309,7 +309,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
         baseline_mean = sum(.data$amplitude * .data$baseline_range) / sum(.data$baseline_range),
         amplitude_transformed = (.data$amplitude / .data$baseline_mean) * 100
       ) %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
   }
 
   return(raw_df)
@@ -627,7 +627,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         baseline_mean = unique(.data$baseline_mean),
         synapses = unique(.data$synapses)
       ) %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
 
     pruned_df_for_table <- pruned_df_individual_cells %>%
       dplyr::group_by(.data$letter) %>%
@@ -658,7 +658,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         baseline_mean_frequency = sum(.data$frequency * .data$baseline_range) / sum(.data$baseline_range),
         frequency_transformed = (.data$frequency / .data$baseline_mean_frequency) * 100
       ) %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
 
     pruned_df_for_table <- pruned_df_individual_cells %>%
       dplyr::group_by(.data$letter) %>%
@@ -718,7 +718,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         time = dplyr::last(.data$time),
         category = unique(.data$category),
       ) %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
   }
 
   if (current_type == "sEPSC") {
@@ -748,7 +748,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         interval = unique(.data$interval),
         category = unique(.data$category)
       ) %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
   }
 
   if (save_output_as_RDS == "yes") {
@@ -905,7 +905,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         synapses = unique(.data$synapses)
       ) %>%
       dplyr::ungroup() %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
   }
 
 
@@ -933,7 +933,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         category = unique(.data$category),
         synapses = dplyr::last(.data$synapses)
       ) %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), round, decimal_places))
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
   }
 
   if (save_output_as_RDS == "yes") {
