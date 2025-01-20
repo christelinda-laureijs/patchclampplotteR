@@ -202,7 +202,6 @@ the vignette size, I am printing just the first 20 rows. The full dataset
 contains > 5680 rows!)
 
 ```{r view-sample-raw-data}
-# To reduce the vignette size, I am printing just the first 20 rows. The 
 head(raw_eEPSC_df, n = 20) %>% 
   reactable()
 ```
