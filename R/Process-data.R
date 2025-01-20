@@ -247,8 +247,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
         .data$treatment,
         .data$sex,
         .data$synapses
-      ),
-      as.factor
+      ), \(x) as.factor(x)
     )) %>%
     dplyr::filter(.data$time <= max_time_value)
 
