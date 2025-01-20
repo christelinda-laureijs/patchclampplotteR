@@ -84,7 +84,7 @@ reactable(cell_characteristics)
 ### Raw evoked current data
 
 Next, I will import the raw evoked current data that has been copied over from
-Clampfit (again, please see the [Evoked Current Analysis vignette](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html) for more details. This is a `.csv` file containing four columns: `Letter`, `ID`, `P1`
+Clampfit (again, please see the [Evoked Current Analysis vignette](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html) for more details. This is a `.csv` file containing four columns: `letter`, `ID`, `P1`
 and `P2`:
 
 * `letter`: A unique identifier for a single recording, which allows you to link evoked current data, spontaneous current data, action potential, data, and information on cell characteristics.

@@ -404,7 +404,8 @@ add_new_cells <- function(new_raw_data_csv,
 
   old_raw_data <- old_raw_data %>%
     dplyr::rename_with(tolower) %>%
-    dplyr::mutate(id = factor(.data$id))
+    dplyr::mutate(id = factor(.data$id),
+                  letter = factor(.data$letter))
 
   if (current_type == "eEPSC") {
     old_raw_data <- old_raw_data %>%

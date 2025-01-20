@@ -228,8 +228,7 @@ knitr::include_graphics("figures/Excel-plus.png")
 
 19. Open a current clamp steps recording in Clampfit (you may be coming directly from step 16 when you [measured action potential properties](#measure)).
 
-20. Press the `Enter` key to view one sweep at a time, and use `<` and `>` to cycle through
-the sweeps. Count the number of action potentials in each sweep, and record them in the `no_of_APs` column.
+20. Press the `Enter` key to view one sweep at a time, and use `<` and `>` to cycle through the sweeps. Count the number of action potentials in each sweep, and record them in the `no_of_APs` column.
 
 > Yes, this step may seem super simple, but that's because it is - look at each sweep and count the number of action potentials present!
 
@@ -273,3 +272,4 @@ Farries, M. A., Kita, H., & Wilson, C. J. (2010). Dynamic Spike Threshold and
 Zero Membrane Slope Conductance Shape the Response of Subthalamic Neurons to
 Cortical Input. Journal of Neuroscience, 30(39), 13180–13191.
 https://doi.org/10.1523/JNEUROSCI.1909-10.2010
+
