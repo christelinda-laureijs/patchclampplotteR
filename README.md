@@ -45,8 +45,6 @@ raw_eEPSC_control_plots <- plot_raw_current_data(
 )
 
 raw_eEPSC_control_plots$AO
-#> Warning: Removed 301 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
 ```
 
 <img src="man/figures/README-example-raw-eEPSC-plot-1.png" width="100%" />
