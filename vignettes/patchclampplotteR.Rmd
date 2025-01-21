@@ -119,27 +119,39 @@ project goes on, you will eventually be appending new data onto your existing
 datasheet, but if you are starting completely fresh, use a blank `.csv` file
 containing just the required column names.
 
+> **WARNING!!** If you are starting with a blank `.csv` file containing only the column names, you MUST type a character value in the letter column (typically, cell A2 if you are using Excel). This is so that R will recognize the letter column as a character value. Use a character that won't be confused with a true `letter` value in the dataset (e.g. "blank").
+
+```{r}
+# import_ext_data("empty_eEPSC_sheet.csv")
+```
+
+
 ```{r blank-sheet-example}
-blank_csv <- read.csv(import_ext_data("empty_raw_eEPSC_datasheet.csv"))
-
-reactable(blank_csv)
+# blank_csv <- read.csv(import_ext_data("empty_eEPSC_sheet.csv"))
+# 
+# reactable(blank_csv)
 ```
 
-Here is an example of what a full dataset can look like. In the following
-example, I've just added new data for one cell (`letter = AV`).
-
-```{r add-new-cells}
-raw_eEPSC_data <- add_new_cells(
-  new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
-  cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
-  old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
-  current_type = "eEPSC",
-  write_new_csv = "no",
-  new_file_name = "20241118-Raw-eEPSC-Data.csv"
-)
+```{r}
+# read.csv(here::here("inst/extdata/empty_raw_eEPSC_datasheet.csv"))
 ```
 
-**Output messages**
+
+Use the `add_new_cells()` function, and carefully read the warning messages.
+
+```{r}
+# first_time_df <- add_new_cells(
+#   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
+#   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
+#   old_raw_data_csv = import_ext_data("empty_raw_eEPSC_datasheet.csv"),
+#   current_type = "eEPSC",
+#   write_new_csv = "no",
+#   new_file_name = "",
+#   decimal_places = 2
+# )
+```
+
+### Check output messages
 
 `add_new_cells()` produces several warnings and messages. One warning lets you
 know you know that the column names have been renamed to lowercase. This is to
@@ -161,8 +173,74 @@ added the letters you were planning to add.
 You can also ask R to produce a list of all of the unique letters in the dataset. This won't catch duplicates, but it can help you identify if a letter is completely missing from the dataset. See, `AV` is now included!
 
 ```{r view-unique-letters}
-unique(raw_eEPSC_data$letter)
+# unique(raw_eEPSC_data$letter)
 ```
+
+
+Here is a quick example of what a blank data sheet looks like after you have added raw data for the first time:
+
+```{r first-time-df}
+# reactable(first_time_df)
+```
+
+Use the following code to remove the blank first line.
+
+> NOTE: Only do this ONCE at the start of a new project, when you are adding data to a blank `.csv` file. After you have a datasheet established, you won't need to do this.
+
+```{r}
+# Remove first "blank" row
+# first_time_df <- tail(first_time_df, -1)
+# 
+# # Renumber rows starting from 1
+# rownames(first_time_df) <- 1:nrow(first_time_df)
+# 
+# # Write the resulting, cleaned dataframe to a csv
+# utils::write.csv(first_time_df, here::here("Insert-filename-here.csv"), row.names = F)
+```
+
+This is an example of what the full few rows look like now:
+
+```{r}
+# head(first_time_df, n = 5) %>% 
+#   reactable()
+```
+
+As you collect more data, change the value of `old_raw_data_csv` from the empty sheet to your existing raw data sheet. This function will automatically append new data onto your existing sheet and save it to a new `.csv` file (defined by `new_file_name`). I am saving it to the `Data/` subfolder.
+
+```{r add-new-cells}
+raw_eEPSC_data <- add_new_cells(
+  new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
+  cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
+  old_raw_data_csv = import_ext_data("empty_raw_eEPSC_datasheet.csv"),
+  current_type = "eEPSC",
+  write_new_csv = "no",
+  new_file_name = "Data/20241118-Raw-eEPSC-Data.csv",
+  decimal_places = 2
+)
+```
+
+
+## Explore your data
+
+You can use `dplyr` functions to quickly explore your data. Here are just some examples of what you can do.
+
+### Count number of cells per sex and treatment
+
+Run this line of code on the raw data. Here, I filtered the data to category 2 only (experiments where I added insulin) and grouped by treatment. I then counted the number of cells per sex.
+
+```{r}
+raw_eEPSC_data %>% 
+  filter(category == 2) %>% 
+  filter(time == 0) %>% 
+  group_by(treatment) %>% 
+  count(sex) %>% 
+  arrange(treatment, sex)
+
+
+```
+
+
+
 
 
 ## Analyze current amplitude
@@ -303,7 +381,7 @@ need to make changes to the following arguments:
 * `pruned`: Change this to "yes"
 
 ```{r plot-pruned-current-data}
-raw_eEPSC_control_plots_pruned <- plot_raw_current_data(
+pruned_eEPSC_control_plots <- plot_raw_current_data(
   data = sample_pruned_eEPSC_df$individual_cells,
   plot_treatment = "Control",
   plot_category = 2,
@@ -318,7 +396,7 @@ raw_eEPSC_control_plots_pruned <- plot_raw_current_data(
 ```
 
 ```{r plot-pruned-cell-L, fig.cap = "See how this is the same as the raw data plot, except for it is pruned per minute?"}
-raw_eEPSC_control_plots_pruned$L
+pruned_eEPSC_control_plots$L
 ```
 
 The pruned data from all cells within a specific treatment and sex (`$all_cells`) will enable you to make a summary plot using `plot_summary_current_data()`.

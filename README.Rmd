@@ -68,10 +68,12 @@ raw_eEPSC_control_plots <- plot_raw_current_data(
 
 raw_eEPSC_control_plots$AO
 ```
+
+
 Plot evoked current amplitudes summarized by sex:  
 
 
-```{r example-summary-eEPSC-plot}
+```{r example-summary-eEPSC-plot, warning=F}
 plot_summary_current_data(
   plot_category = 2,
   plot_treatment = "Control",

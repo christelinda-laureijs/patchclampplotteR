@@ -48,6 +48,7 @@ raw_eEPSC_control_plots$AO
 ```
 
 <img src="man/figures/README-example-raw-eEPSC-plot-1.png" width="100%" />
+
 Plot evoked current amplitudes summarized by sex:
 
 ``` r
@@ -67,8 +68,6 @@ plot_summary_current_data(
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options
 )
-#> Warning: Removed 25 rows containing missing values or values outside the scale range
-#> (`geom_segment()`).
 ```
 
 <img src="man/figures/README-example-summary-eEPSC-plot-1.png" width="100%" />
