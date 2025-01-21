@@ -121,34 +121,25 @@ containing just the required column names.
 
 > **WARNING!!** If you are starting with a blank `.csv` file containing only the column names, you MUST type a character value in the letter column (typically, cell A2 if you are using Excel). This is so that R will recognize the letter column as a character value. Use a character that won't be confused with a true `letter` value in the dataset (e.g. "blank").
 
-```{r}
-# import_ext_data("empty_eEPSC_sheet.csv")
-```
-
 
 ```{r blank-sheet-example}
-# blank_csv <- read.csv(import_ext_data("empty_eEPSC_sheet.csv"))
-# 
-# reactable(blank_csv)
+blank_csv <- read.csv(import_ext_data("empty_eEPSC_sheet.csv"))
+ 
+reactable(blank_csv)
 ```
-
-```{r}
-# read.csv(here::here("inst/extdata/empty_raw_eEPSC_datasheet.csv"))
-```
-
 
 Use the `add_new_cells()` function, and carefully read the warning messages.
 
 ```{r}
-# first_time_df <- add_new_cells(
-#   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
-#   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
-#   old_raw_data_csv = import_ext_data("empty_raw_eEPSC_datasheet.csv"),
-#   current_type = "eEPSC",
-#   write_new_csv = "no",
-#   new_file_name = "",
-#   decimal_places = 2
-# )
+first_time_df <- add_new_cells(
+  new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
+  cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
+  old_raw_data_csv = import_ext_data("empty_eEPSC_sheet.csv"),
+  current_type = "eEPSC",
+  write_new_csv = "no",
+  new_file_name = "",
+  decimal_places = 2
+)
 ```
 
 ### Check output messages
@@ -172,42 +163,44 @@ added the letters you were planning to add.
 
 You can also ask R to produce a list of all of the unique letters in the dataset. This won't catch duplicates, but it can help you identify if a letter is completely missing from the dataset. See, `AV` is now included!
 
+However, you can also see that the placeholder "blank" is still present.
+
 ```{r view-unique-letters}
-# unique(raw_eEPSC_data$letter)
+unique(first_time_df$letter)
 ```
-
-
-Here is a quick example of what a blank data sheet looks like after you have added raw data for the first time:
-
-```{r first-time-df}
-# reactable(first_time_df)
-```
-
 Use the following code to remove the blank first line.
 
 > NOTE: Only do this ONCE at the start of a new project, when you are adding data to a blank `.csv` file. After you have a datasheet established, you won't need to do this.
 
 ```{r}
 # Remove first "blank" row
-# first_time_df <- tail(first_time_df, -1)
-# 
-# # Renumber rows starting from 1
-# rownames(first_time_df) <- 1:nrow(first_time_df)
-# 
-# # Write the resulting, cleaned dataframe to a csv
-# utils::write.csv(first_time_df, here::here("Insert-filename-here.csv"), row.names = F)
+first_time_df <- tail(first_time_df, -1)
+
+# Re-number rows starting from 1
+rownames(first_time_df) <- 1:nrow(first_time_df)
+
+# Double-check that only true letters are present
+unique(first_time_df$letter)
+```
+
+Write the resulting, cleaned dataframe to a `.csv` file in your `Data/` folder.
+
+```{r write-cleaned-csv, eval=F}
+utils::write.csv(first_time_df,
+                 here::here("Data/Insert-filename-here.csv"),
+                 row.names = F)
 ```
 
 This is an example of what the full few rows look like now:
 
 ```{r}
-# head(first_time_df, n = 5) %>% 
-#   reactable()
+head(first_time_df, n = 8) %>%
+  reactable()
 ```
 
 As you collect more data, change the value of `old_raw_data_csv` from the empty sheet to your existing raw data sheet. This function will automatically append new data onto your existing sheet and save it to a new `.csv` file (defined by `new_file_name`). I am saving it to the `Data/` subfolder.
 
-```{r add-new-cells}
+```{r add-new-cells, eval=F, echo=T}
 raw_eEPSC_data <- add_new_cells(
   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
@@ -222,28 +215,66 @@ raw_eEPSC_data <- add_new_cells(
 
 ## Explore your data
 
-You can use `dplyr` functions to quickly explore your data. Here are just some examples of what you can do.
+Let's look at an example of a full dataset. This is the sample raw evoked current dataset included in the package. To reduce
+the vignette size, I am printing just the first 20 rows. The full dataset
+contains > 5680 rows!)
 
-### Count number of cells per sex and treatment
+```{r view-sample-raw-data}
+raw_eEPSC_df <- sample_raw_eEPSC_df
 
-Run this line of code on the raw data. Here, I filtered the data to category 2 only (experiments where I added insulin) and grouped by treatment. I then counted the number of cells per sex.
-
-```{r}
-raw_eEPSC_data %>% 
-  filter(category == 2) %>% 
-  filter(time == 0) %>% 
-  group_by(treatment) %>% 
-  count(sex) %>% 
-  arrange(treatment, sex)
-
-
+head(raw_eEPSC_df, n = 20) %>% 
+  reactable()
 ```
 
 
+You can use `dplyr` functions to quickly explore your data. Here's just one example of a quick and useful analysis:
+
+### Count number of cells per sex and treatment
+
+*Quick Tip*: Want to know how many experiments you still need to do? Run this line of code on the raw data. Here, I filtered the data to category 2 only (experiments where I added insulin) and grouped by treatment. I then counted the number of cells per sex.
+
+```{r}
+raw_eEPSC_df %>%
+  filter(category == 2) %>%
+  filter(time == 0) %>%
+  group_by(treatment) %>%
+  count(sex) %>%
+  arrange(treatment, sex)
+```
 
 
+## Define your colour theme
+
+In this package, you only need to specify your treatment groups and colours once. You can later refer to this dataframe in `treatment_colour_theme` arguments for all of your plotting functions. The package is loaded with a sample dataframe to help you get started:
+
+```{r}
+reactable(sample_treatment_names_and_colours)
+```
+
+`colours` and `very_pale_colours` are specified as hex codes or named R colours. The only difference between `treatment` and `display_names` is that the `display_names` are re-written to look attractive in plots and tables.
+
+First, check out how many treatment groups you have using `unique(raw_eEPSC_df$treatment)`.
+
+```{r}
+unique(raw_eEPSC_df$treatment)
+```
+Next, modify this code to set up your own dataframe with your treatment names and colours.
+
+```{r}
+theme_colours <- data.frame(
+  treatment = c("Control", "HNMPA", "PPP", "PPP_and_HNMPA"),
+  display_names = c("Control", "HNMPA", "PPP", "PPPandHNMPA"),
+  colours = c("#440154", "#2D708E", "#55C667", "#DCE319"),
+  very_pale_colours = c("#6A5897C", "#5B91B8", "lightgreen", "yellow")
+)
+```
+
+
+Every time a plot contains the argument `treatment_colour_theme`, refer to your custom dataframe.
 
 ## Analyze current amplitude
+
+After you have finished a brief exploration of your data, it is time to analyze it!
 
 ### Step 1: Normalize currents
 
@@ -275,14 +306,7 @@ raw_eEPSC_df <- make_normalized_EPSC_data(
 )
 ```
 
-This is the sample raw evoked current dataset included in the package. To reduce
-the vignette size, I am printing just the first 20 rows. The full dataset
-contains > 5680 rows!)
 
-```{r view-sample-raw-data}
-head(raw_eEPSC_df, n = 20) %>% 
-  reactable()
-```
 
 `make_normalized_EPSC_data()` will retain the cell characteristics and `P1` and
 `P2` values from before. However, you will notice some changes.
@@ -401,7 +425,7 @@ pruned_eEPSC_control_plots$L
 
 The pruned data from all cells within a specific treatment and sex (`$all_cells`) will enable you to make a summary plot using `plot_summary_current_data()`.
 
-> Notice how `data` is now `sample_pruned_eEPSC_df$all_cells`, and `parameter` is "amplitude". There are lots of customization opportunities here, including adding a representative trace as a .png overlay, which you can read about in the documentation for this function.
+> Notice how `data` is now `sample_pruned_eEPSC_df$all_cells`, and `parameter` is "amplitude". There are lots of customization opportunities when plotting summary data, including adding a representative trace as a .png overlay! You can read more about in the documentation for `plot_summary_current_data()`.
 
 ```{r plot-summary-data}
 plot_summary_current_data(
@@ -410,7 +434,8 @@ plot_summary_current_data(
   data = sample_pruned_eEPSC_df$all_cells,
   current_type = "eEPSC",
   parameter = "amplitude",
-  include_representative_trace = "no",
+  include_representative_trace = "yes",
+  representative_trace_filename = "test.png",
   signif_stars = "yes",
   t_test_df = sample_eEPSC_t_test_df,
   hormone_added = "Insulin",

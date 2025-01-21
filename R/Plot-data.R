@@ -1152,11 +1152,14 @@ plot_summary_current_data <- function(data,
         )
     } else {
       warning(
-        "The file here::here(Figures/Representative-Traces/Category-",
-        plot_category,
-        "-",
-        plot_treatment,
-        "-Trace.png) does not exist. Plotting without a representative trace."
+        "The file ",
+        representative_trace_filename,
+        " does not exist.
+        \nAre you sure that you specified the correct filename?
+        \nDid you forget to add .png to the end of your filename?
+        \nDid you forget to include the subfolder (if required) in the filename? (e.g. \"Data/file.png\" for something in the Data/ folder)
+        \n
+        Plotting without a representative trace."
       )
     }
   }
