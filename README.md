@@ -45,6 +45,8 @@ raw_eEPSC_control_plots <- plot_raw_current_data(
 )
 
 raw_eEPSC_control_plots$AO
+#> Warning: Removed 301 rows containing missing values or values outside the scale range
+#> (`geom_point()`).
 ```
 
 <img src="man/figures/README-example-raw-eEPSC-plot-1.png" width="100%" />
@@ -59,7 +61,7 @@ plot_summary_current_data(
   current_type = "eEPSC",
   parameter = "amplitude",
   include_representative_trace = "no",
-  #y_axis_limit = 175,
+  y_axis_limit = 175,
   signif_stars = "yes",
   t_test_df = sample_eEPSC_t_test_df,
   hormone_added = "Insulin",
