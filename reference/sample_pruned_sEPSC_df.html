@@ -68,86 +68,95 @@ dataset.</p>
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
     <p>An list of 3 dataframes: <code>individual_cells</code>, <code>for_table</code> and
-<code>all_cells</code>.</p><dl><code>individual_cells</code> is used to make pruned plots of individual
-recordings using <code><a href="plot_raw_current_data.html">plot_raw_current_data()</a></code>.
-<ul><li><p><code>letter, category, sex, treatment, etc.</code> Information about cell
+<code>all_cells</code>.</p><dl>
+
+individual_cells is used to make pruned plots of individual
+recordings using <a href="plot_raw_current_data.html">plot_raw_current_data()</a>.
+
+ <code>letter, category, sex, treatment, etc.</code> Information about cell
 characteristics, which has automatically been pulled from
 cell_characteristics_df in [add_new_cells(). For a definition of these
 columns, please see the
 <em>Required basic columns</em> section in the documentation for
-<code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>.</p></li>
-<li><p><code>interval_pruned</code> A character value describing the interval that was
+<code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>.
+ <code>interval_pruned</code> A character value describing the interval that was
 used for the pruning function. If the data are pruned per minute, this
-will be "t0to1", "t1to2", "t2to3", etc.</p></li>
-<li><p><code>mean_amplitude</code> The mean normalized amplitude (% Baseline sEPSC
-amplitude) of all spontaneous currents during a specific interval.</p></li>
-<li><p><code>mean_raw_amplitude</code> The mean raw amplitude (pA) of all spontaneous
-currents during a specific interval.</p></li>
-<li><p><code>sd_amplitude</code> The standard deviation of the normalized spontaneous
-current amplitudes.</p></li>
-<li><p><code>n</code> The number of data points used.</p></li>
-<li><p><code>frequency</code> The frequency of the spontaneous currents (Hz) within
-the interval.</p></li>
-<li><p><code>se</code> The standard error of the normalized spontaneous current
-amplitudes.</p></li>
-<li><p><code>baseline_range</code> A logical value required to normalize frequency
+will be "t0to1", "t1to2", "t2to3", etc.
+ <code>mean_amplitude</code> The mean normalized amplitude (% Baseline sEPSC
+amplitude) of all spontaneous currents during a specific interval.
+ <code>mean_raw_amplitude</code> The mean raw amplitude (pA) of all spontaneous
+currents during a specific interval.
+ <code>sd_amplitude</code> The standard deviation of the normalized spontaneous
+current amplitudes.
+ <code>n</code> The number of data points used.
+ <code>frequency</code> The frequency of the spontaneous currents (Hz) within
+the interval.
+ <code>se</code> The standard error of the normalized spontaneous current
+amplitudes.
+ <code>baseline_range</code> A logical value required to normalize frequency
 relative to the mean baseline frequency. It is set to TRUE when time is
 within the baseline period (e.g. <code>time &lt;= 5</code>) and FALSE at all other times.
-Generated automatically in <code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>.</p></li>
-<li><p><code>baseline_mean_frequency</code> The mean frequency of the spontaneous
-currents during the baseline period.</p></li>
-<li><p><code>frequency_transformed</code> The normalized spontaneous current frequency
-(% Baseline frequency).</p></li>
-<li><p><code>time</code> The upper time value of the interval (e.g. 2 minutes for
+Generated automatically in <code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>.
+ <code>baseline_mean_frequency</code> The mean frequency of the spontaneous
+currents during the baseline period.
+ <code>frequency_transformed</code> The normalized spontaneous current frequency
+(% Baseline frequency).
+ <code>time</code> The upper time value of the interval (e.g. 2 minutes for
 "t1to2") which is used on the x-axis of plots such as in
-<code><a href="plot_raw_current_data.html">plot_raw_current_data()</a></code>.</p></li>
-</ul><code>for_table</code> A dataframe containing two columns: letter and
-<code>spont_amplitude_transformed</code>. The current data is collapsed into a single
+<code><a href="plot_raw_current_data.html">plot_raw_current_data()</a></code>.
+
+
+for_table A dataframe containing two columns: letter and
+spont_amplitude_transformed. The current data is collapsed into a single
 row for each letter, with the current data for each letter stored as a list.
 This is required to create sparklines of current amplitude over time within
-the cell summary table. See <code><a href="make_interactive_summary_table.html">make_interactive_summary_table()</a></code>.
+the cell summary table. See <a href="make_interactive_summary_table.html">make_interactive_summary_table()</a>.
 
- <code>all_cells</code> A dataframe consisting of all data within a single
+all_cells A dataframe consisting of all data within a single
 treatment grouped and summarized per minute (or some other variable if you
-change <code>interval_length</code> to be something other than <code>1</code>). Columns like
-<code>category</code> and <code>sex</code> are retained from the raw data. New columns for
-spontaneous current data (<code>current_type == "sEPSC"</code>) are:
-<ul><li><p><code>interval_pruned</code> A character value describing the interval that was
+change interval_length to be something other than 1). Columns like
+category and sex are retained from the raw data. New columns for
+spontaneous current data (current_type == "sEPSC") are:
+
+
+ <code>interval_pruned</code> A character value describing the interval that was
 used for the pruning function. If the data are pruned per minute, this
-will be "t0to1", "t1to2", "t2to3", etc.</p></li>
-<li><p><code>mean_all_amplitude</code> The mean normalized amplitude (% Baseline
+will be "t0to1", "t1to2", "t2to3", etc.
+ <code>mean_all_amplitude</code> The mean normalized amplitude (% Baseline
 sEPSC amplitude) of the spontaneous current amplitudes during a specific
-interval across all cells.</p></li>
-<li><p><code>mean_all_raw_amplitude</code> The mean raw amplitude (in pA) of the
+interval across all cells.
+ <code>mean_all_raw_amplitude</code> The mean raw amplitude (in pA) of the
 spontaneous current amplitudes during a specific interval across all
-cells.</p></li>
-<li><p><code>sd_all_amplitude</code> The standard deviation of the normalized
-spontaneous current amplitudes across all cells.</p></li>
-<li><p><code>n</code> The number of data points used.</p></li>
-<li><p><code>se_all_amplitude</code> The standard error of the normalized spontaneous
-currents across all cells.</p></li>
-<li><p><code>sd_all_raw_amplitude</code> The standard deviation of the raw
-spontaneous current amplitudes across all cells.</p></li>
-<li><p><code>se_raw_amplitude</code> The standard error of the raw spontaneous
-currents across all cells.</p></li>
-<li><p><code>mean_all_frequency</code> The mean normalized frequency (% Baseline
+cells.
+ <code>sd_all_amplitude</code> The standard deviation of the normalized
+spontaneous current amplitudes across all cells.
+ <code>n</code> The number of data points used.
+ <code>se_all_amplitude</code> The standard error of the normalized spontaneous
+currents across all cells.
+ <code>sd_all_raw_amplitude</code> The standard deviation of the raw
+spontaneous current amplitudes across all cells.
+ <code>se_raw_amplitude</code> The standard error of the raw spontaneous
+currents across all cells.
+ <code>mean_all_frequency</code> The mean normalized frequency (% Baseline
 frequency) of all spontaneous current amplitudes across all cells during
-the interval.</p></li>
-<li><p><code>sd_all_frequency</code> The standard deviation of the normalized
+the interval.
+ <code>sd_all_frequency</code> The standard deviation of the normalized
 frequency of all spontaneous current amplitudes across all cells during
-the interval.</p></li>
-<li><p><code>se_frequency</code> The standard error of the normalized
+the interval.
+ <code>se_frequency</code> The standard error of the normalized
 frequency of all spontaneous current amplitudes across all cells during
-the interval.</p></li>
-<li><p><code>mean_all_raw_frequency</code> The mean raw frequency (Hz) of all
-spontaneous current amplitudes across all cells during the interval.</p></li>
-<li><p><code>sd_all_raw_frequency</code> The standard deviation of the raw
+the interval.
+ <code>mean_all_raw_frequency</code> The mean raw frequency (Hz) of all
+spontaneous current amplitudes across all cells during the interval.
+ <code>sd_all_raw_frequency</code> The standard deviation of the raw
 frequency of all spontaneous current amplitudes across all cells during
-the interval.</p></li>
-<li><p><code>se_raw_frequency</code> The standard error of the raw
+the interval.
+ <code>se_raw_frequency</code> The standard error of the raw
 frequency of all spontaneous current amplitudes across all cells during
-the interval.</p></li>
-</ul></dl></div>
+the interval.
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
 

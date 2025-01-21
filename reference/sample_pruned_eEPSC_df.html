@@ -65,53 +65,61 @@ in particular depend heavily on this type of dataset.</p>
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
     <p>An list of 3 dataframes: <code>individual_cells</code>, <code>for_table</code> and
-<code>all_cells</code>.</p><dl><code>individual_cells</code> is used to make pruned plots of individual
-recordings using <code><a href="plot_raw_current_data.html">plot_raw_current_data()</a></code>.
-<ul><li><p><code>interval_pruned</code> A character value describing the interval that was
+<code>all_cells</code>.</p><dl>
+individual_cells is used to make pruned plots of individual
+recordings using <a href="plot_raw_current_data.html">plot_raw_current_data()</a>.
+
+ <code>interval_pruned</code> A character value describing the interval that was
 used for the pruning function. If the data are pruned per minute, this
-will be "t0to1", "t1to2", "t2to3", etc.</p></li>
-<li><p><code>mean_P1</code> The mean amplitude (in pA) of the first evoked current
+will be "t0to1", "t1to2", "t2to3", etc.
+ <code>mean_P1</code> The mean amplitude (in pA) of the first evoked current
 (P1) during a specific interval. This is an average of all data points
 within each interval. For example, the <code>mean_P1</code> for the interval "t0to1"
 contains the average current amplitude of all data points within the first
-minute of the recording.</p></li>
-<li><p><code>sd_P1</code> The standard deviation of P1.</p></li>
-<li><p><code>n</code> The number of data points used.</p></li>
-<li><p><code>se</code> The standard error of P1.</p></li>
-<li><p><code>cv</code> The coefficient of variation of P1.</p></li>
-<li><p><code>cv_inverse_square</code> The inverse coefficient of variation, which is
+minute of the recording.
+ <code>sd_P1</code> The standard deviation of P1.
+ <code>n</code> The number of data points used.
+ <code>se</code> The standard error of P1.
+ <code>cv</code> The coefficient of variation of P1.
+ <code>cv_inverse_square</code> The inverse coefficient of variation, which is
 then squared. This is to enable variance analysis, as in
-<a href="https://doi.org/10.1016/j.jneumeth.2019.108526" class="external-link">Huijstee &amp; Kessels (2020)</a>.</p></li>
-<li><p><code>baseline_mean</code> The mean amplitude of the first evoked current
-during the baseline period.</p></li>
-<li><p><code>category, letter, sex, treatment, etc.</code> Columns which are
+<a href="https://doi.org/10.1016/j.jneumeth.2019.108526" class="external-link">Huijstee &amp; Kessels (2020)</a>.
+ <code>baseline_mean</code> The mean amplitude of the first evoked current
+during the baseline period.
+ <code>category, letter, sex, treatment, etc.</code> Columns which are
 from the raw data. For a definition of these columns, please see the
 <em>Required basic columns</em> section in the documentation for
-<code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>.</p></li>
-<li><p><code>time</code> The upper time value of the interval (e.g. 2 minutes for
+<code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>.
+ <code>time</code> The upper time value of the interval (e.g. 2 minutes for
 "t1to2") which is used on the x-axis of plots such as in
-<code><a href="plot_raw_current_data.html">plot_raw_current_data()</a></code>.</p></li>
-</ul><code>for_table</code> A dataframe containing two columns: letter and
-<code>P1_transformed</code>. The current data is collapsed into a single row for each
+<code><a href="plot_raw_current_data.html">plot_raw_current_data()</a></code>.
+
+
+for_table A dataframe containing two columns: letter and
+P1_transformed. The current data is collapsed into a single row for each
 letter, with the current data for each letter stored as a list. This is
 required to create sparklines of current amplitude over time within the cell
-summary table. See <code><a href="make_interactive_summary_table.html">make_interactive_summary_table()</a></code>.
+summary table. See <a href="make_interactive_summary_table.html">make_interactive_summary_table()</a>.
 
- <code>all_cells</code> A dataframe consisting of all data within a single
+all_cells A dataframe consisting of all data within a single
 treatment grouped and summarized per minute (or some other variable if you
-change <code>interval_length</code> to be something other than <code>1</code>). Columns like
-<code>category</code> and <code>sex</code> are retained from the raw data. New columns for evoked
-current data (<code>current_type == "eEPSC"</code>) are:
-<ul><li><p><code>interval_pruned</code> A character value describing the interval that was
+change interval_length to be something other than 1). Columns like
+category and sex are retained from the raw data. New columns for evoked
+current data (current_type == "eEPSC") are:
+
+
+ <code>interval_pruned</code> A character value describing the interval that was
 used for the pruning function. If the data are pruned per minute, this
-will be "t0to1", "t1to2", "t2to3", etc.</p></li>
-<li><p><code>mean_P1_all_cells</code> The mean amplitude (in pA) of the first evoked
-current (P1) during a specific interval across all cells.</p></li>
-<li><p><code>sd_P1_all_cells</code> The standard deviation of P1.</p></li>
-<li><p><code>n</code> The number of data points used.</p></li>
-<li><p><code>se_P1_all_cells</code> The standard error of P1.</p></li>
-<li><p><code>cv_P1_all_cells</code> The coefficient of variation of P1.</p></li>
-</ul></dl></div>
+will be "t0to1", "t1to2", "t2to3", etc.
+ <code>mean_P1_all_cells</code> The mean amplitude (in pA) of the first evoked
+current (P1) during a specific interval across all cells.
+ <code>sd_P1_all_cells</code> The standard deviation of P1.
+ <code>n</code> The number of data points used.
+ <code>se_P1_all_cells</code> The standard error of P1.
+ <code>cv_P1_all_cells</code> The coefficient of variation of P1.
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
 
