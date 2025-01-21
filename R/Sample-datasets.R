@@ -734,7 +734,7 @@ NULL
 #'  \item{`AP_trace_size`}{DO NOT USE; this will be moved to a function argument in future relases.}
 #'  \item{`scale_bar_shift_y`}{DO NOT USE; this will be moved to a function argument in future relases:}
 #'  \item{`scale_bar_shift_x`}{DO NOT USE; this will be moved to a function argument in future relases:}
-#'  \item{`y_axis_limit`}{DO NOT USE; this will be moved to a function argument in future relases:}
+#'  \item{`y_axis_limit`}{The maximum y-axis value to be used in }
 #'  \item{`line_col`}{A character value with the same treatment names as in
 #'  `treatment` except you would replace underscores with spaces and add line
 #'  breaks if needed. This is to create more attractive, human-readable axis

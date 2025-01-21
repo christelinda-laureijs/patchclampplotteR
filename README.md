@@ -59,6 +59,7 @@ plot_summary_current_data(
   current_type = "eEPSC",
   parameter = "amplitude",
   include_representative_trace = "no",
+  #y_axis_limit = 175,
   signif_stars = "yes",
   t_test_df = sample_eEPSC_t_test_df,
   hormone_added = "Insulin",

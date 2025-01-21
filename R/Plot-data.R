@@ -756,6 +756,7 @@ plot_raw_current_data <-
 #'   hormone_added = "Insulin",
 #'   hormone_or_HFS_start_time = 5,
 #'   include_representative_trace = "no",
+#'   y_axis_limit = 175,
 #'   signif_stars = "yes",
 #'   t_test_df = sample_eEPSC_t_test_df,
 #'   large_axis_text = "no",
@@ -772,6 +773,7 @@ plot_summary_current_data <- function(data,
                                       hormone_or_HFS_start_time = 5,
                                       include_representative_trace = "no",
                                       representative_trace_filename,
+                                      y_axis_limit,
                                       signif_stars = "no",
                                       t_test_df,
                                       large_axis_text = "no",
@@ -816,6 +818,14 @@ plot_summary_current_data <- function(data,
       )
     }
   }
+
+  if (is.null(y_axis_limit) ||
+      !is.numeric(y_axis_limit)) {
+    stop(
+      "\"y_axis_limit\" must be numeric, e.g. 175."
+    )
+  }
+
 
   if (signif_stars == "yes" & is.null(t_test_df)) {
     stop(
@@ -952,7 +962,7 @@ plot_summary_current_data <- function(data,
           xmin = 5,
           xmax = 10,
           ymin = -5,
-          ymax = as.numeric(theme_options["y_axis_limit", "value"])
+          ymax = y_axis_limit
         ),
         fill = theme_options["rectangle_shading_colour", "value"]
       ) +
@@ -961,7 +971,7 @@ plot_summary_current_data <- function(data,
           xmin = 15,
           xmax = 20,
           ymin = -5,
-          ymax = as.numeric(theme_options["y_axis_limit", "value"])
+          ymax = y_axis_limit
         ),
         fill = theme_options["rectangle_shading_colour", "value"]
       )
@@ -983,7 +993,7 @@ plot_summary_current_data <- function(data,
       })
     ) +
     ggplot2::geom_hline(yintercept = 100, linetype = "dashed") +
-    ggplot2::coord_cartesian(ylim = c(0, as.numeric(theme_options["y_axis_limit", "value"]))) +
+    ggplot2::coord_cartesian(ylim = c(0, y_axis_limit)) +
     ggplot2::labs(
       x = "Time (min)",
       y = y_title,
@@ -1047,7 +1057,7 @@ plot_summary_current_data <- function(data,
   }
 
   # Get limits of x- and y-axes
-  ymax <- as.numeric(theme_options["y_axis_limit", "value"]) - 25
+  ymax <- y_axis_limit - 25
   xmax <-
     ggplot2::layer_scales(treatment_plot)$x$get_limits()[2]
 
@@ -1118,7 +1128,7 @@ plot_summary_current_data <- function(data,
         data = t_test_df %>% dplyr::filter(.data$treatment == plot_treatment),
         ggplot2::aes(
           x = .data$asterisk_time,
-          y = as.numeric(theme_options["y_axis_limit", "value"]) - 50,
+          y = y_axis_limit - 50,
           label = .data$significance_stars
         ),
         inherit.aes = FALSE,
