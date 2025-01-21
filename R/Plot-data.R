@@ -711,6 +711,7 @@ plot_raw_current_data <-
 #' @param representative_trace_filename A character value describing the
 #'   filename of the representative trace. This should be the name of a .png
 #'   file stored within the subfolder `Figures/Representative-Traces/`.
+#' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
 #' @param signif_stars A character ("yes" or "no") describing if significance
 #'   stars should be included as an overlay in the plot. If "yes", you must
 #'   specify a dataframe containing the results of a t-test, which is generated

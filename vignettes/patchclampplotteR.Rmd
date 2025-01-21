@@ -212,7 +212,6 @@ raw_eEPSC_data <- add_new_cells(
 )
 ```
 
-
 ## Explore your data
 
 Let's look at an example of a full dataset. This is the sample raw evoked current dataset included in the package. To reduce
