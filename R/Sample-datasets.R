@@ -435,8 +435,7 @@ NULL
 #' @format An list of 3 dataframes: `individual_cells`, `for_table` and
 #'   `all_cells`.
 #' \describe{
-#'  \itemize{
-#'  \item `individual_cells` is used to make pruned plots of individual
+#'  `individual_cells` is used to make pruned plots of individual
 #'  recordings using [plot_raw_current_data()].
 #'  \itemize{
 #'    \item `interval_pruned` A character value describing the interval that was
@@ -465,17 +464,18 @@ NULL
 #'    [plot_raw_current_data()].
 #'  }
 #'
-#'  \item `for_table` A dataframe containing two columns: letter and
+#'  `for_table` A dataframe containing two columns: letter and
 #'  `P1_transformed`. The current data is collapsed into a single row for each
 #'  letter, with the current data for each letter stored as a list. This is
 #'  required to create sparklines of current amplitude over time within the cell
 #'  summary table. See [make_interactive_summary_table()].
 #'
-#'  \item `all_cells` A dataframe consisting of all data within a single
+#'  `all_cells` A dataframe consisting of all data within a single
 #'  treatment grouped and summarized per minute (or some other variable if you
 #'  change `interval_length` to be something other than `1`). Columns like
 #'  `category` and `sex` are retained from the raw data. New columns for evoked
 #'  current data (`current_type == "eEPSC"`) are:
+#'
 #'  \itemize{
 #'    \item `interval_pruned` A character value describing the interval that was
 #'    used for the pruning function. If the data are pruned per minute, this
@@ -487,7 +487,6 @@ NULL
 #'    \item `se_P1_all_cells` The standard error of P1.
 #'    \item `cv_P1_all_cells` The coefficient of variation of P1.
 #'  }
-#' }
 #' }
 #' @keywords data
 NULL
@@ -516,8 +515,8 @@ NULL
 #' @format An list of 3 dataframes: `individual_cells`, `for_table` and
 #'   `all_cells`.
 #' \describe{
-#'  \itemize{
-#'  \item `individual_cells` is used to make pruned plots of individual
+#'
+#'  `individual_cells` is used to make pruned plots of individual
 #'  recordings using [plot_raw_current_data()].
 #'  \itemize{
 #'    \item `letter, category, sex, treatment, etc.` Information about cell
@@ -553,17 +552,18 @@ NULL
 #'    [plot_raw_current_data()].
 #'  }
 #'
-#'  \item `for_table` A dataframe containing two columns: letter and
+#' `for_table` A dataframe containing two columns: letter and
 #'  `spont_amplitude_transformed`. The current data is collapsed into a single
 #'  row for each letter, with the current data for each letter stored as a list.
 #'  This is required to create sparklines of current amplitude over time within
 #'  the cell summary table. See [make_interactive_summary_table()].
 #'
-#'  \item `all_cells` A dataframe consisting of all data within a single
+#'  `all_cells` A dataframe consisting of all data within a single
 #'  treatment grouped and summarized per minute (or some other variable if you
 #'  change `interval_length` to be something other than `1`). Columns like
 #'  `category` and `sex` are retained from the raw data. New columns for
 #'  spontaneous current data (`current_type == "sEPSC"`) are:
+#'
 #'  \itemize{
 #'    \item `interval_pruned` A character value describing the interval that was
 #'    used for the pruning function. If the data are pruned per minute, this
@@ -601,7 +601,6 @@ NULL
 #'    frequency of all spontaneous current amplitudes across all cells during
 #'    the interval.
 #'  }
-#' }
 #' }
 #' @keywords data
 NULL

@@ -8,8 +8,8 @@
 An list of 3 dataframes: \code{individual_cells}, \code{for_table} and
 \code{all_cells}.
 \describe{
-\itemize{
-\item \code{individual_cells} is used to make pruned plots of individual
+
+\code{individual_cells} is used to make pruned plots of individual
 recordings using \code{\link[=plot_raw_current_data]{plot_raw_current_data()}}.
 \itemize{
 \item \verb{letter, category, sex, treatment, etc.} Information about cell
@@ -45,17 +45,18 @@ currents during the baseline period.
 \code{\link[=plot_raw_current_data]{plot_raw_current_data()}}.
 }
 
-\item \code{for_table} A dataframe containing two columns: letter and
+\code{for_table} A dataframe containing two columns: letter and
 \code{spont_amplitude_transformed}. The current data is collapsed into a single
 row for each letter, with the current data for each letter stored as a list.
 This is required to create sparklines of current amplitude over time within
 the cell summary table. See \code{\link[=make_interactive_summary_table]{make_interactive_summary_table()}}.
 
-\item \code{all_cells} A dataframe consisting of all data within a single
+\code{all_cells} A dataframe consisting of all data within a single
 treatment grouped and summarized per minute (or some other variable if you
 change \code{interval_length} to be something other than \code{1}). Columns like
 \code{category} and \code{sex} are retained from the raw data. New columns for
 spontaneous current data (\code{current_type == "sEPSC"}) are:
+
 \itemize{
 \item \code{interval_pruned} A character value describing the interval that was
 used for the pruning function. If the data are pruned per minute, this
@@ -92,7 +93,6 @@ the interval.
 \item \code{se_raw_frequency} The standard error of the raw
 frequency of all spontaneous current amplitudes across all cells during
 the interval.
-}
 }
 }
 }
