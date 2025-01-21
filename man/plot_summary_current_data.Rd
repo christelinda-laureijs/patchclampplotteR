@@ -14,6 +14,7 @@ plot_summary_current_data(
   hormone_or_HFS_start_time = 5,
   include_representative_trace = "no",
   representative_trace_filename,
+  y_axis_limit,
   signif_stars = "no",
   t_test_df,
   large_axis_text = "no",
@@ -64,6 +65,8 @@ specify the file-name in \code{representative_trace_filename}.}
 \item{representative_trace_filename}{A character value describing the
 filename of the representative trace. This should be the name of a .png
 file stored within the subfolder \verb{Figures/Representative-Traces/}.}
+
+\item{y_axis_limit}{A numeric value describing the maximum value on the y-axis.}
 
 \item{signif_stars}{A character ("yes" or "no") describing if significance
 stars should be included as an overlay in the plot. If "yes", you must
@@ -127,6 +130,7 @@ plot_summary_current_data(
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
   include_representative_trace = "no",
+  y_axis_limit = 175,
   signif_stars = "yes",
   t_test_df = sample_eEPSC_t_test_df,
   large_axis_text = "no",

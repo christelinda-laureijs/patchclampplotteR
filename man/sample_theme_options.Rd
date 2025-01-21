@@ -33,7 +33,7 @@ data values where \code{Sex == Female}.}
 \item{\code{AP_trace_size}}{DO NOT USE; this will be moved to a function argument in future relases.}
 \item{\code{scale_bar_shift_y}}{DO NOT USE; this will be moved to a function argument in future relases:}
 \item{\code{scale_bar_shift_x}}{DO NOT USE; this will be moved to a function argument in future relases:}
-\item{\code{y_axis_limit}}{DO NOT USE; this will be moved to a function argument in future relases:}
+\item{\code{y_axis_limit}}{The maximum y-axis value to be used in plots.}
 \item{\code{line_col}}{A character value with the same treatment names as in
 \code{treatment} except you would replace underscores with spaces and add line
 breaks if needed. This is to create more attractive, human-readable axis
