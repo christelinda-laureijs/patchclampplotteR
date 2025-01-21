@@ -6,41 +6,40 @@
 \title{A dataframe of theme options for things like colours and line widths}
 \format{
 An .rda file containing 23 objects of 2 variables
+
 \describe{
-\itemize{
-\item \code{gray_shading_colour} Hex code for the colour used to fill the violin
-plots.
-\item \code{line_col} Hex code for the colour used for the line indicating
-periods when a hormone was applied.
-\item \code{rectangle_shading_colour} Hex code for the colour used to shade the
-rectangles.
-\item \code{plot_font_family}
-\item \code{plot_light_font_family}
-\item \code{significance_stars_font}
-\item \code{male_shape} Numeric value representing the point shape used for data
-values where \code{Sex == Male}.
-\item \code{female_shape} Numeric value representing the point shape used for
-data values where \code{Sex == Female}.
-\item \code{mean_point_colour} Hex code for the colour used to fill the violin
-plots
-\item \code{baseline_group_colour}
-\item \code{post_hormone_group_colour}
-\item \code{connecting_line_width}
-\item \code{connecting_line_colour_aps}
-\item \code{connecting_line_width_PPR}
-\item \code{mean_point_size}
-\item \code{geom_sina_size}
-\item \code{geom_signif_text_size}
-\item \code{AP_trace_size}
-\item \code{scale_bar_shift_y}
-\item \code{scale_bar_shift_x}
-\item \code{y_axis_limit}
-"Control", "HNMPA").
-\item \code{line_col} A character value with the same treatment names as in
+\item{\code{gray_shading_colour}}{Hex code for the colour used to fill the violin
+plots.}
+\item{\code{line_col}}{Hex code for the colour used for the line indicating
+periods when a hormone was applied.}
+\item{\code{rectangle_shading_colour}}{Hex code for the colour used to shade the
+rectangles.}
+\item{\code{plot_font_family}}{A character value specifying the font. This currently does not work due to font incompatability issues, but I am troubleshooting it and this will hopefully be usable in future releases.}
+\item{\code{plot_light_font_family}}{DO NOT USE; see above}
+\item{\code{significance_stars_font}}{DO NOT USE; see above}
+\item{\code{male_shape}}{Numeric value representing the point shape used for data
+values where \code{Sex == Male}.}
+\item{\code{female_shape}}{Numeric value representing the point shape used for
+data values where \code{Sex == Female}.}
+\item{\code{mean_point_colour}}{Hex code for the colour used to fill the mean data point in plots like the PPR comparison plot.}
+\item{\code{baseline_group_colour}}{DO NOT USE; this will be moved to a function argument in future relases: The colour of the baseline data in action potential comparison plots.}
+\item{\code{post_hormone_group_colour}}{DO NOT USE; this will be moved to a function argument in future relases: The colour of the post-hormone or post-treatment data in action potential comparison plots.}
+\item{\code{connecting_line_width}}{The width of the connecting line in action potential comparison plots.}
+\item{\code{connecting_line_colour}}{The colour of the connecting line in action potential comparison plots.}
+\item{\code{connecting_line_width_PPR}}{The width of the connecting line in paired-pulse ratio comparison plots.}
+\item{\code{mean_point_size}}{The size of the mean data point in plots like the PPR comparison plot.}
+\item{\code{geom_sina_size}}{DO NOT USE; this will be moved to a function argument in future relases.}
+\item{\code{geom_signif_text_size}}{The size of the asterisk text in plots like the spontaneous current comparison plots.}
+\item{\code{AP_trace_size}}{DO NOT USE; this will be moved to a function argument in future relases.}
+\item{\code{scale_bar_shift_y}}{DO NOT USE; this will be moved to a function argument in future relases:}
+\item{\code{scale_bar_shift_x}}{DO NOT USE; this will be moved to a function argument in future relases:}
+\item{\code{y_axis_limit}}{DO NOT USE; this will be moved to a function argument in future relases:}
+\item{\code{line_col}}{A character value with the same treatment names as in
 \code{treatment} except you would replace underscores with spaces and add line
 breaks if needed. This is to create more attractive, human-readable axis
-labels and table values.
-}
+labels and table values.}
+\item{\code{PPR_y_min}}{DO NOT USE; this will be moved to a function argument in future relases.}
+\item{\code{PPR_y_max}}{DO NOT USE; this will be moved to a function argument in future relases:}
 }
 }
 \description{

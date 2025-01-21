@@ -7,19 +7,17 @@
 \format{
 An .rda file containing 4 objects of 4 variables
 \describe{
-\itemize{
-\item \code{treatment} A character value specifying the treatment applied (e.g.
+\item{\code{treatment}}{A character value specifying the treatment applied (e.g.
 "Control", "HNMPA") such as antagonists or agonists, or any protocol applied
-to the animals (e.g. "Fasting").
-\item \code{display_names} A character value with the same treatment names as in
+to the animals (e.g. "Fasting").}
+\item{\code{display_names}}{A character value with the same treatment names as in
 \code{treatment} except you would replace underscores with spaces and add line
 breaks if needed. This is to create more attractive, human-readable axis
-labels and table values.
-\item \code{colours} A character value with hex colour values.
-\item \code{very_pale_colours} A character value with hex colour values. These
+labels and table values.}
+\item{\code{colours}}{A character value with hex colour values.}
+\item{\code{very_pale_colours}}{A character value with hex colour values. These
 are all lighter than the colours in \code{colours} and they are used to create
-contrast in summary plots with both sexes.
-}
+contrast in summary plots with both sexes.}
 }
 }
 \description{

@@ -7,32 +7,30 @@
 \format{
 An .rda file containing 16 objects of 10 variables
 \describe{
-\itemize{
-\item \code{treatment} A character value specifying the treatment applied (e.g.
+\item{\code{treatment}}{A character value specifying the treatment applied (e.g.
 "Control", "HNMPA") such as the antagonists or agonists, or any protocol
-applied to the animals (e.g. "Fasting").
-\item \code{.y.} A character value describing the parameter compared with the
+applied to the animals (e.g. "Fasting").}
+\item{\code{.y.}}{A character value describing the parameter compared with the
 t-test. In this case, this uses the mean normalized amplitude of the first
 evoked current ("mean_P1_transformed") which has been generated using
-\code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}}.
-\item \code{group1} A character value describing the first group used in the
-paired t-test. This is the baseline interval, "t0to5".
-\item \code{group2} A character value describing the second group used in
-the paired t-test. Examples include "t5to10" and "t10to15".
-\item \code{n1} The number of paired values used in the comparison.
-\item \code{statistic} The test statistic.
-\item \code{df} The degrees of freedom.
-\item \code{p_string} The p-value expressed as a character value using
+\code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}}.}
+\item{\code{group1}}{A character value describing the first group used in the
+paired t-test. This is the baseline interval, "t0to5".}
+\item{\code{group2}}{A character value describing the second group used in
+the paired t-test. Examples include "t5to10" and "t10to15".}
+\item{\code{n1}}{The number of paired values used in the comparison.}
+\item{\code{statistic}}{The test statistic.}
+\item{\code{df}}{The degrees of freedom.}
+\item{\code{p_string}}{The p-value expressed as a character value using
 \code{lazyWeave::pvalString()}, which rounds the values and expresses them
 according to typical published values (e.g. > 0.99, < 0.001 instead of
-exact values).
-\item \code{significance_stars} A character value containing asterisks indicating
-significance. \verb{p < 0.05 = *}, \verb{p < 0.01 = **}, and \verb{p < 0.001 = ***}.
-\item \code{asterisk_time} A numeric value indicating the time value where a
+exact values).}
+\item{\code{significance_stars}}{A character value containing asterisks indicating
+significance. \verb{p < 0.05 = *}, \verb{p < 0.01 = **}, and \verb{p < 0.001 = ***}.}
+\item{\code{asterisk_time}}{A numeric value indicating the time value where a
 significance star will be added. This is the midpoint of each interval. For
 example, the \code{asterisk_time} for an interval from \code{5} to \code{10} minutes will
-be \code{7.5} minutes.
-}
+be \code{7.5} minutes.}
 }
 }
 \description{

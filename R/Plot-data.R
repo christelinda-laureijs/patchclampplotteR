@@ -75,7 +75,7 @@ patchclampplotteR_theme <- function() {
 #' @param current_type A character describing the current type. Allowed values
 #'   are "eEPSC" or "sEPSC".
 #' @param parameter A character describing the parameter used on the y-axis. If
-#'   current_type == "eEPSC", the allowed parameter is "raw_amplitude". If
+#'   `current_type == "eEPSC"`, the allowed parameter is "raw_amplitude". If
 #'   `current_type == "sEPSC"`, the allowed parameters are "raw_amplitude" or
 #'   "raw_frequency". Note: It does not make sense to use normalized/baseline
 #'   transformed amplitudes, since these will all be 100, and the graph will be

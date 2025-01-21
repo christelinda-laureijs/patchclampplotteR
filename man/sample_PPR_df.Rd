@@ -7,13 +7,11 @@
 \format{
 An .rda file containing 2206 objects of 21 variables.
 \describe{
-\itemize{
-\item \verb{letter, synapses, sex, etc.} All columns that were produced in
+\item{\verb{letter, synapses, sex, etc.}}{All columns that were produced in
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}. Please see \link{sample_raw_eEPSC_df} for detailed
-column descriptions.
-\item \code{state} A character ("baseline" or "post-modification") representing
-the timepoint that the data point belongs to.
-}
+column descriptions.}
+\item{\code{state}}{A character ("baseline" or "post-modification") representing
+the timepoint that the data point belongs to.}
 }
 }
 \description{

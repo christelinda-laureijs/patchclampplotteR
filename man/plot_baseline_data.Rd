@@ -27,7 +27,7 @@ plot_baseline_data(
 are "eEPSC" or "sEPSC".}
 
 \item{parameter}{A character describing the parameter used on the y-axis. If
-current_type == "eEPSC", the allowed parameter is "raw_amplitude". If
+\code{current_type == "eEPSC"}, the allowed parameter is "raw_amplitude". If
 \code{current_type == "sEPSC"}, the allowed parameters are "raw_amplitude" or
 "raw_frequency". Note: It does not make sense to use normalized/baseline
 transformed amplitudes, since these will all be 100, and the graph will be
