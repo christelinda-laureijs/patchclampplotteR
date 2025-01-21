@@ -58,48 +58,87 @@ build off of this dataset, such as <code><a href="plot_summary_current_data.html
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>An .rda file containing 95 objects of 20 variables.</p><dl><code>category</code> A factor representing the experiment type. Used to
-assign top-level groups for further analyses, with <code>treatment</code> as subgroups.
- <code>letter</code> A factor that is a unique identifier for a single
+    <p>An .rda file containing 95 objects of 20 variables.</p><dl><dt><code>category</code></dt>
+<dd><p>A factor representing the experiment type. Used to
+assign top-level groups for further analyses, with <code>treatment</code> as subgroups.</p></dd>
+
+<dt><code>letter</code></dt>
+<dd><p>A factor that is a unique identifier for a single
 recording. Used to link data sets for evoked or spontaneous currents and
-cell-characteristics.
- <code>sex</code> A factor with two levels (e.g. "Male" or "Female").
- <code>treatment</code> A factor based on the treatment applied (e.g. "Control",
+cell-characteristics.</p></dd>
+
+<dt><code>sex</code></dt>
+<dd><p>A factor with two levels (e.g. "Male" or "Female").</p></dd>
+
+<dt><code>treatment</code></dt>
+<dd><p>A factor based on the treatment applied (e.g. "Control",
 "HNMPA"). This represents the antagonists or agonists applied, or any
-protocol applied to the animals (e.g. "Fasting").
- <code>interval</code> A factor indicating the interval that the data
+protocol applied to the animals (e.g. "Fasting").</p></dd>
+
+<dt><code>interval</code></dt>
+<dd><p>A factor indicating the interval that the data
 point belongs to. For example, <code>interval</code> will be "t0to5" for any data
-points from 0 to 5 minutes. Example values: "t0to5", "t5to10", etc.
- <code>mean_P1_transformed</code> A numeric value representing the mean current
+points from 0 to 5 minutes. Example values: "t0to5", "t5to10", etc.</p></dd>
+
+<dt><code>mean_P1_transformed</code></dt>
+<dd><p>A numeric value representing the mean current
 amplitude (in pA normalized to the baseline amplitude) of the first evoked
 current. The values used to produce mean_P1_transformed come from all data
 points within each interval (the length of the interval was specified in
-<code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>).
- <code>mean_P1_raw</code> The same values as those in <code>mean_P1_transformed</code> except
+<code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>).</p></dd>
+
+<dt><code>mean_P1_raw</code></dt>
+<dd><p>The same values as those in <code>mean_P1_transformed</code> except
 these values contain raw values for current amplitude (e.g. the data were
-not baseline transformed).
- <code>n</code> The number of data points used to produce each value in
-<code>mean_P1_transformed</code> and <code>mean_P1_raw</code>
- <code>sd</code> The standard deviation of the mean current values.
- <code>cv</code> The coefficient of variation of the mean current values.
- <code>se</code> The standard error of the mean current values.
- <code>cv_inverse_square</code> The inverse coefficient of variation squared of
+not baseline transformed).</p></dd>
+
+<dt><code>n</code></dt>
+<dd><p>The number of data points used to produce each value in
+<code>mean_P1_transformed</code> and <code>mean_P1_raw</code></p></dd>
+
+<dt><code>sd</code></dt>
+<dd><p>The standard deviation of the mean current values.</p></dd>
+
+<dt><code>cv</code></dt>
+<dd><p>The coefficient of variation of the mean current values.</p></dd>
+
+<dt><code>se</code></dt>
+<dd><p>The standard error of the mean current values.</p></dd>
+
+<dt><code>cv_inverse_square</code></dt>
+<dd><p>The inverse coefficient of variation squared of
 the mean current values. Calculated by using (<code>1/cv^2</code>), where <code>cv</code> is the
-coefficient of variation. Useful for variance analysis.  <code>variance</code> The
-variance of the current values, calculated using <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">stats::var()</a></code>.
- <code>VMR</code> The variance-to-mean ratio, calculated using
-<code>variance/mean_P1_transformed</code>. Useful for variance analysis.
- <code>age</code> A numeric value representing the animal's age. Can be any value
+coefficient of variation. Useful for variance analysis.</p></dd>
+
+<dt><code>variance</code></dt>
+<dd><p>The variance of the current values, calculated using <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">stats::var()</a></code>.</p></dd>
+
+<dt><code>VMR</code></dt>
+<dd><p>The variance-to-mean ratio, calculated using
+<code>variance/mean_P1_transformed</code>. Useful for variance analysis.</p></dd>
+
+<dt><code>age</code></dt>
+<dd><p>A numeric value representing the animal's age. Can be any value
 as long as the time units are consistent throughout (e.g. don't mix up days
-and months when reporting animal ages).
- <code>animal</code> A numeric value representing the animal's ID or number.
- <code>X</code> A numeric value representing the x-value of the cell's location in
-µm. Leave this blank if you don't have this data.
- <code>Y</code> A numeric value representing the y-value of the cell's location in
-µm. Leave this blank if you don't have this data.
- <code>time</code> A numeric value that represents time in minutes. This column is
-autogenerated in <code><a href="add_new_cells.html">add_new_cells()</a></code>.
- <code>synapses</code> A character value (e.g. "Glutamate" or "GABA").
+and months when reporting animal ages).</p></dd>
+
+<dt><code>animal</code></dt>
+<dd><p>A numeric value representing the animal's ID or number.</p></dd>
+
+<dt><code>X</code></dt>
+<dd><p>A numeric value representing the x-value of the cell's location in
+µm. Leave this blank if you don't have this data.</p></dd>
+
+<dt><code>Y</code></dt>
+<dd><p>A numeric value representing the y-value of the cell's location in
+µm. Leave this blank if you don't have this data.</p></dd>
+
+<dt><code>time</code></dt>
+<dd><p>A numeric value that represents time in minutes. This column is
+autogenerated in <code><a href="add_new_cells.html">add_new_cells()</a></code>.</p></dd>
+
+<dt><code>synapses</code></dt>
+<dd><p>A character value (e.g. "Glutamate" or "GABA").</p></dd>
 
 
 </dl></div>

@@ -70,16 +70,23 @@ analyses and also to make the variance comparison plots.</p>
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>An .rda file containing 38 objects of 23 variables.</p><dl><code>state</code> A character value describing if a data point belongs to the
+    <p>An .rda file containing 38 objects of 23 variables.</p><dl><dt><code>state</code></dt>
+<dd><p>A character value describing if a data point belongs to the
 baseline interval ("Baseline") or an interval after a hormone or protocol has
 been applied ("Post-modification"). These intervals are selected from
-<code>baseline_interval</code> and <code>post_hormone_interval</code>.
- <code>mean_cv_inverse_square</code> The mean inverse coefficient of variation
-squared within a specific state.
- <code>mean_VMR</code> The mean variance-to-mean ratio within a specific state.
- <code>category, letter, sex, treatment, etc.</code> Other columns which are
+<code>baseline_interval</code> and <code>post_hormone_interval</code>.</p></dd>
+
+<dt><code>mean_cv_inverse_square</code></dt>
+<dd><p>The mean inverse coefficient of variation
+squared within a specific state.</p></dd>
+
+<dt><code>mean_VMR</code></dt>
+<dd><p>The mean variance-to-mean ratio within a specific state.</p></dd>
+
+<dt><code>category, letter, sex, treatment, etc.</code></dt>
+<dd><p>Other columns which are
 imported directly from the summary data without modifications. For a
-detailed description of these columns, please see <a href="sample_summary_eEPSC_df.html">sample_summary_eEPSC_df</a>.
+detailed description of these columns, please see <a href="sample_summary_eEPSC_df.html">sample_summary_eEPSC_df</a>.</p></dd>
 
 
 </dl></div>
