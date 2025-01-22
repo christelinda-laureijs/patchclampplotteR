@@ -2,9 +2,6 @@ option,value
 gray_shading_colour,#dcdcdc
 line_col,#333333
 rectangle_shading_colour,#f6f6f6
-plot_font_family,Arial
-plot_light_font_family,Arial
-significance_stars_font,plot_font_family
 male_shape,16
 female_shape,17
 mean_point_colour,#000000
