@@ -715,32 +715,22 @@ NULL
 #'  periods when a hormone was applied.}
 #'  \item{`rectangle_shading_colour`}{Hex code for the colour used to shade the
 #'  rectangles.}
-#'  \item{`plot_font_family`}{A character value specifying the font. This currently does not work due to font incompatability issues, but I am troubleshooting it and this will hopefully be usable in future releases.}
-#'  \item{`plot_light_font_family`}{DO NOT USE; see above}
-#'  \item{`significance_stars_font`}{DO NOT USE; see above}
 #'  \item{`male_shape`}{Numeric value representing the point shape used for data
 #'  values where `Sex == Male`.}
 #'  \item{`female_shape`}{Numeric value representing the point shape used for
 #'  data values where `Sex == Female`.}
 #'  \item{`mean_point_colour`}{Hex code for the colour used to fill the mean data point in plots like the PPR comparison plot.}
-#'  \item{`baseline_group_colour`}{DO NOT USE; this will be moved to a function argument in future relases: The colour of the baseline data in action potential comparison plots.}
-#'  \item{`post_hormone_group_colour`}{DO NOT USE; this will be moved to a function argument in future relases: The colour of the post-hormone or post-treatment data in action potential comparison plots.}
 #'  \item{`connecting_line_width`}{The width of the connecting line in action potential comparison plots.}
 #'  \item{`connecting_line_colour`}{The colour of the connecting line in action potential comparison plots.}
 #'  \item{`connecting_line_width_PPR`}{The width of the connecting line in paired-pulse ratio comparison plots.}
 #'  \item{`mean_point_size`}{The size of the mean data point in plots like the PPR comparison plot.}
-#'  \item{`geom_sina_size`}{DO NOT USE; this will be moved to a function argument in future relases.}
 #'  \item{`geom_signif_text_size`}{The size of the asterisk text in plots like the spontaneous current comparison plots.}
 #'  \item{`AP_trace_size`}{DO NOT USE; this will be moved to a function argument in future relases.}
-#'  \item{`scale_bar_shift_y`}{DO NOT USE; this will be moved to a function argument in future relases:}
-#'  \item{`scale_bar_shift_x`}{DO NOT USE; this will be moved to a function argument in future relases:}
 #'  \item{`y_axis_limit`}{The maximum y-axis value to be used in plots.}
 #'  \item{`line_col`}{A character value with the same treatment names as in
 #'  `treatment` except you would replace underscores with spaces and add line
 #'  breaks if needed. This is to create more attractive, human-readable axis
 #'  labels and table values.}
-#'  \item{`PPR_y_min`}{DO NOT USE; this will be moved to a function argument in future relases.}
-#'  \item{`PPR_y_max`}{DO NOT USE; this will be moved to a function argument in future relases:}
 #' }
 #' @keywords data
 NULL

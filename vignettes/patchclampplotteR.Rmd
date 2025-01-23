@@ -25,6 +25,19 @@ library(dplyr)
 efficiently. This vignette will walk you through the complete process of
 transforming raw data into publication-quality plots!
 
+## Set up R Project
+
+To use this package, set up a new folder on your computer. Give the folder a
+short, distinctive name with no spaces (use hyphens instead). I would strongly
+recommend adding subfolders with names like `Data`, `Figures`, and `Thesis`.
+This will help with organization and make it easier to expand to future
+projects, like writing your thesis in R.
+
+In RStudio, click on `File` -> `New project` -> `Existing Directory` and choose
+the folder you just created. Click on `Create Project` and R will refresh to a
+blank, new project. You're now ready to create a new R Markdown (.Rmd) file and
+start your analysis!
+
 ## Install and load package
 
 You can install the development version of patchclampplotteR from
@@ -42,7 +55,7 @@ library(patchclampplotteR)
 
 ## About the data
 
-This dataset consists of whole-cell patch clamp recordings of neurons within the
+This sample dataset consists of whole-cell patch clamp recordings of neurons within the
 dorsomedial hypothalamus (DMH), a brain region critical for appetite regulation,
 stress responses and other processes. I recorded evoked excitatory post-synaptic
 currents for five minutes under baseline conditions, then added 500 nM insulin
@@ -62,15 +75,15 @@ Please see the vignettes in the Articles page to learn about how to analyze data
 First, I must import a `.csv` file containing information about factors such as
 the animal's age and sex, the cell ID number, and other details. Please see the
 **Required columns** section of the documentation for
-`import_cell_characteristics_df()` for explanations of the required columns and
-what they include.
+`import_cell_characteristics_df()` for full explanations of the required columns and
+what you should include.
 
 > Note: Since this vignette is included within an R package, the following code
 requires the function `import_ext_data()` to properly locate the `.csv` file in
 the package folder. This won't be required when you are using the package within
 your own project folder.
 >
-> You can just write the path to the filename
+> Do NOT include `import_ext_data()` in your code, because it won't work. You can just write the path to the filename
 directly within `import_cell_characteristics_df()`. For example, you should
 write `import_cell_characteristics_df("Data/cell_info.csv")` to use
 `cell_info.csv` located within the `Data/` folder.
@@ -84,7 +97,7 @@ reactable(cell_characteristics)
 ### Raw evoked current data
 
 Next, I will import the raw evoked current data that has been copied over from
-Clampfit (again, please see the [Evoked Current Analysis vignette](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html) for more details. This is a `.csv` file containing four columns: `letter`, `ID`, `P1`
+Clampfit (again, please see the [Evoked Current Analysis vignette](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html) for details about how to analyze this data in Clampfit. This is a `.csv` file containing four columns: `letter`, `ID`, `P1`
 and `P2`:
 
 * `letter`: A unique identifier for a single recording, which allows you to link evoked current data, spontaneous current data, action potential, data, and information on cell characteristics.
@@ -95,7 +108,7 @@ and `P2`:
 
 * `P2`: The amplitude of the second evoked current (pA).
 
-> Don't worry too much about capitalizing the column names or not.
+> Try to match the capitalization of the column names to the examples listed here. If you do forget to make them lowercase, don't worry.
 `add_new_cells()` will automatically convert all column names to lowercase for
 consistency across functions. Capitalized letters will be retained for columns
 like `ID`, `X`, `Y`, `P1`, and `P2`.
