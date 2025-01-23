@@ -132,7 +132,7 @@ knitr::include_graphics("figures/Search-parameter-button.png")
 ```{r full-scale, out.width="25%", fig.alt = "A screenshot of the Full Scale X Axis button available in the lower toolbar in Clampfit."}
 knitr::include_graphics("figures/Full-scale-x-axis.png")
 ```
-> *Warning!* If you do not check "Full Scale X axis", Clampfit will continuously scroll through the recording and it will take much longer to run.
+> **Warning!** If you do not check "Full Scale X axis", Clampfit will continuously scroll through the recording and it will take much longer to run.
 
 
 21. The Event viewer window should pop up, but if not, click on the Event Viewer button. On the lower-right side, click the `Options` button, and then do the following: 
@@ -145,7 +145,7 @@ knitr::include_graphics("figures/Full-scale-x-axis.png")
 knitr::include_graphics("figures/Event-viewer-button.png")
 ```
 
-> *Warning!* If you do not close the Event Viewer (and perform the other items in Step 21), Clampfit will try to refresh and resize this window each time a current is detected. It will likely freeze and crash the software.
+> **Warning!** If you do not close the Event Viewer (and perform the other items in Step 21), Clampfit will try to refresh and resize this window each time a current is detected. It will likely freeze and crash the software.
 
 21. Click on the Nonstop button to initiate Event Detection. Clampfit will draw a blue dot on each event. This may take a few minutes for large files.
 

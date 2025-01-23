@@ -62,7 +62,7 @@ knitr::include_graphics("figures/AP-properties.png")
 
 1. Open the .abf file containing the current clamp step protocol in Clampfit. Ensure that the x-axis shows time in milliseconds. If it shows seconds, double-click the x-axis, and change the `Elapsed Time` from `Automatic` to `Milliseconds`.
 
-> *Warning!* The y-axis values should generally be around -70 mV during the flat regions outside of the current injection. Sometimes the scaling factor in Clampfit is distorted (for unknown reasons) and the y-axis may be in the thousands range. If this happens, follow step 1b).
+> **Warning!** The y-axis values should generally be around -70 mV during the flat regions outside of the current injection. Sometimes the scaling factor in Clampfit is distorted (for unknown reasons) and the y-axis may be in the thousands range. If this happens, follow step 1b).
 
 1b. If the y-axis scale is off (see the warning box above), double-click on the y-axis to open the `Modify Signal Parameters` box. Change the `V/pA` ratio to 0.01, and click "OK". This will re-scale the y-axis to the correct units relative to the current injections. Double-check that the x-axis is in milliseconds!
 
@@ -80,7 +80,7 @@ knitr::include_graphics("figures/Fix-y-scale.png")
 knitr::include_graphics("figures/AP-cursor-1-placement.png")
 ```
 
-> *Warning!* It is important that Cursor 2 touches the curve at a value that is lower than
+> **Warning!** It is important that Cursor 2 touches the curve at a value that is lower than
 the voltage value for Cursor 1. If Cursor 1 is lower, then Clampfit may identify
 the location at Cursor 1 as the after-hyperpolarization region if you forget to
 move the cursor to the threshold (see step 11).
@@ -103,7 +103,7 @@ knitr::include_graphics("figures/AP-expression-box.png")
 
 8. Click on the Results sheet (`Window` -> `Results1`). The `Results` page will display three columns: `Time (ms)`, `Trace #6 (or #5, #7, etc.)`, and `Trace #11`. `Trace #x` is the membrane potential in mV, and `Trace #11` is the derivative of `Trace #x`.
 
-> *Warning!* The Results page of the transferred traces does not delete data between
+> **Warning!** The Results page of the transferred traces does not delete data between
 files. If you are doing several analyses in one session, ensure that you are
 looking at the correct columns corresponding to the active
 recording.
@@ -135,7 +135,7 @@ reactable(sample_ap_data)
 knitr::include_graphics("figures/AP-cursors-new.png")
 ```
 
-> *Warning!* If you do not reposition Cursor 1 to be at the time of threshold, the
+> **Warning!** If you do not reposition Cursor 1 to be at the time of threshold, the
 values for `time_of_peak` and `time_of_antipeak` will be incorrect!
 
 12. Click on the Statistics button (a small icon with a summation symbol on top

@@ -37,8 +37,11 @@ folder. The subfolder will vary depending on the plot type. For example, all
 plots generated using `plot_PPR_data_one_treatment()` will be exported to
 "Figures/Evoked-currents/PPR" relative to your project directory. If you want
 further control over the export options, you can also use `ggsave()` to manually
-save a ggplot object.
-## How do I change the plot text sizes?
+save a ggplot object. 
+
+
+## How do I change the plot text sizes? 
+
 A quick fix for making the text bigger is the `large_axis_text` argument. Set
 `large_axis_text` to "yes" to add a ggplot theme layer which increases and
 adjusts the plot to be ideal for posters or presentations. If you want more
