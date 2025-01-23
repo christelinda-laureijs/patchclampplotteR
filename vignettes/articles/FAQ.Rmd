@@ -9,7 +9,6 @@ knitr::opts_chunk$set(
 )
 
 library(ggplot2)
-library(extrafont)
 library(patchclampplotteR)
 ```
 
@@ -69,14 +68,9 @@ fonts()
 ```
 
 If you already have the fonts installed in R, you just need to run
-`library(extrafont)` at the start of your document to have the fonts available to use. Here is a silly example:
+`library(extrafont)` at the start of your document to have the fonts available to use.
 
-```{r}
-cars_plot +
-  theme(text = element_text(family = "Jokerman"))
-```
-
-To apply this theme globally (i.e. all plots in your file), it will be much more efficient to modify and define a theme. See below!
+To apply these theme changes globally (i.e. all plots in your file), it will be much more efficient to modify and define a theme. See below!
 
 ## How to modify the ggplot theme
 
