@@ -95,6 +95,21 @@ patch clamp data efficiently. This vignette will walk you through the
 complete process of transforming raw data into publication-quality
 plots!</p>
 <div class="section level3">
+<h3 id="set-up-r-project">Set up R Project<a class="anchor" aria-label="anchor" href="#set-up-r-project"></a>
+</h3>
+<p>To use this package, set up a new folder on your computer. Give the
+folder a short, distinctive name with no spaces (use hyphens instead). I
+would strongly recommend adding subfolders with names like
+<code>Data</code>, <code>Figures</code>, and <code>Thesis</code>. This
+will help with organization and make it easier to expand to future
+projects, like writing your thesis in R.</p>
+<p>In RStudio, click on <code>File</code> -&gt; <code>New project</code>
+-&gt; <code>Existing Directory</code> and choose the folder you just
+created. Click on <code>Create Project</code> and R will refresh to a
+blank, new project. You’re now ready to create a new R Markdown (.Rmd)
+file and start your analysis!</p>
+</div>
+<div class="section level3">
 <h3 id="install-and-load-package">Install and load package<a class="anchor" aria-label="anchor" href="#install-and-load-package"></a>
 </h3>
 <p>You can install the development version of patchclampplotteR from <a href="https://github.com/christelinda-laureijs/patchclampplotteR" class="external-link">GitHub</a>.
@@ -108,12 +123,12 @@ Only do this once per computer, or if there’s a major update.</p>
 <div class="section level3">
 <h3 id="about-the-data">About the data<a class="anchor" aria-label="anchor" href="#about-the-data"></a>
 </h3>
-<p>This dataset consists of whole-cell patch clamp recordings of neurons
-within the dorsomedial hypothalamus (DMH), a brain region critical for
-appetite regulation, stress responses and other processes. I recorded
-evoked excitatory post-synaptic currents for five minutes under baseline
-conditions, then added 500 nM insulin to the perfusion solution, and I
-continued recording for 25 minutes.</p>
+<p>This sample dataset consists of whole-cell patch clamp recordings of
+neurons within the dorsomedial hypothalamus (DMH), a brain region
+critical for appetite regulation, stress responses and other processes.
+I recorded evoked excitatory post-synaptic currents for five minutes
+under baseline conditions, then added 500 nM insulin to the perfusion
+solution, and I continued recording for 25 minutes.</p>
 <blockquote>
 <p>My goal is to determine if insulin affects evoked current amplitude
 in DMH neurons.</p>
@@ -137,17 +152,20 @@ Potential Analysis</a>.</p>
 about factors such as the animal’s age and sex, the cell ID number, and
 other details. Please see the <strong>Required columns</strong> section
 of the documentation for <code><a href="../reference/import_cell_characteristics_df.html">import_cell_characteristics_df()</a></code>
-for explanations of the required columns and what they include.</p>
+for full explanations of the required columns and what you should
+include.</p>
 <blockquote>
 <p>Note: Since this vignette is included within an R package, the
 following code requires the function <code><a href="../reference/import_ext_data.html">import_ext_data()</a></code> to
 properly locate the <code>.csv</code> file in the package folder. This
 won’t be required when you are using the package within your own project
 folder.</p>
-<p>You can just write the path to the filename directly within
-<code><a href="../reference/import_cell_characteristics_df.html">import_cell_characteristics_df()</a></code>. For example, you should
-write <code>import_cell_characteristics_df("Data/cell_info.csv")</code>
-to use <code>cell_info.csv</code> located within the <code>Data/</code>
+<p>Do NOT include <code><a href="../reference/import_ext_data.html">import_ext_data()</a></code> in your code, because
+it won’t work. You can just write the path to the filename directly
+within <code><a href="../reference/import_cell_characteristics_df.html">import_cell_characteristics_df()</a></code>. For example, you
+should write
+<code>import_cell_characteristics_df("Data/cell_info.csv")</code> to use
+<code>cell_info.csv</code> located within the <code>Data/</code>
 folder.</p>
 </blockquote>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -162,9 +180,10 @@ folder.</p>
 </h4>
 <p>Next, I will import the raw evoked current data that has been copied
 over from Clampfit (again, please see the <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html">Evoked
-Current Analysis vignette</a> for more details. This is a
-<code>.csv</code> file containing four columns: <code>letter</code>,
-<code>ID</code>, <code>P1</code> and <code>P2</code>:</p>
+Current Analysis vignette</a> for details about how to analyze this data
+in Clampfit. This is a <code>.csv</code> file containing four columns:
+<code>letter</code>, <code>ID</code>, <code>P1</code> and
+<code>P2</code>:</p>
 <ul>
 <li><p><code>letter</code>: A unique identifier for a single recording,
 which allows you to link evoked current data, spontaneous current data,
@@ -179,7 +198,8 @@ to your lab book.</p></li>
 (pA).</p></li>
 </ul>
 <blockquote>
-<p>Don’t worry too much about capitalizing the column names or not.
+<p>Try to match the capitalization of the column names to the examples
+listed here. If you do forget to make them lowercase, don’t worry.
 <code><a href="../reference/add_new_cells.html">add_new_cells()</a></code> will automatically convert all column names
 to lowercase for consistency across functions. Capitalized letters will
 be retained for columns like <code>ID</code>, <code>X</code>,
