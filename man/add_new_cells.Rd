@@ -8,10 +8,11 @@ add_new_cells(
   new_raw_data_csv,
   cell_characteristics_csv,
   old_raw_data_csv,
-  current_type,
+  data_type,
   write_new_csv = "yes",
   new_file_name,
-  decimal_places = 2
+  decimal_places = 2,
+  injection_start_time = 265.4
 )
 }
 \arguments{
@@ -34,8 +35,7 @@ the same current_type as the new data (e.g. the columns must be the same).
 If this is the first time you are running this function, start with a blank
 .csv file containing just the column titles in the first row.}
 
-\item{current_type}{A character describing the current type. Allowed values
-are "eEPSC" or "sEPSC".}
+\item{data_type}{A character ("eEPSC", "sEPSC" or "AP") describing the data type that is being imported.}
 
 \item{write_new_csv}{A character ("yes" or "no") describing if the new data
 should be written to a csv file. Defaults to "yes". Please specify
@@ -46,6 +46,8 @@ to the old data. Must be a character representing a filepath to a csv file.
 Examples include "Data/20241118-Raw-eEPSC-data.csv".}
 
 \item{decimal_places}{A numeric value indicating the number of decimal places the data should be rounded to. Used to reduce file size and prevent an incorrect representation of the number of significant digits.}
+
+\item{injection_start_time}{For action potential data only: A numeric value describing the start time (in ms) when current injection was applied. Used to calculate the latency to fire.}
 }
 \value{
 A dataframe consisting of the old raw data with information from the new
@@ -106,12 +108,13 @@ add_new_cells(
   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
   old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
-  current_type = "eEPSC",
+  data_type = "eEPSC",
   write_new_csv = "no",
   new_file_name = "20241118-Raw-eEPSC-Data.csv",
   decimal_places = 2
 )
 }
+
 
 }
 \seealso{

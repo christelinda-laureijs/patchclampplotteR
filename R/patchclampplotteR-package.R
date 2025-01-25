@@ -12,5 +12,6 @@
 #' @importFrom reactable reactable
 #' @importFrom reactablefmtr react_sparkline
 #' @importFrom rstatix pairwise_t_test
+#' @importFrom utils menu
 ## usethis namespace: end
 NULL

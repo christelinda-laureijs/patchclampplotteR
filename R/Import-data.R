@@ -165,7 +165,6 @@ import_theme_colours <- function(filename) {
 #' also formats the dataset so it is immediately ready for use in functions like
 #' [make_normalized_EPSC_data()].
 #'
-#' @inheritParams make_normalized_EPSC_data
 #' @param new_raw_data_csv A filepath to a csv containing the new raw data. If
 #'   the data are evoked current data (`current_type == "eEPSC"`) then this must
 #'   contain 4 columns: `letter`, `ID`, `P1` and `P2`. If the data are
@@ -182,12 +181,14 @@ import_theme_colours <- function(filename) {
 #'   the same current_type as the new data (e.g. the columns must be the same).
 #'   If this is the first time you are running this function, start with a blank
 #'   .csv file containing just the column titles in the first row.
+#' @param data_type A character ("eEPSC", "sEPSC" or "AP") describing the data type that is being imported.
 #' @param write_new_csv A character ("yes" or "no") describing if the new data
 #'   should be written to a csv file. Defaults to "yes". Please specify
 #'   a filename for the new csv file in `new_file_name`.
 #' @param new_file_name A filename for the csv containing the new data appended
 #'   to the old data. Must be a character representing a filepath to a csv file.
 #'   Examples include "Data/20241118-Raw-eEPSC-data.csv".
+#' @param injection_start_time For action potential data only: A numeric value describing the start time (in ms) when current injection was applied. Used to calculate the latency to fire.
 #' @param decimal_places A numeric value indicating the number of decimal places the data should be rounded to. Used to reduce file size and prevent an incorrect representation of the number of significant digits.
 #'
 #' @return
@@ -248,34 +249,36 @@ import_theme_colours <- function(filename) {
 #'   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
 #'   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
 #'   old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
-#'   current_type = "eEPSC",
+#'   data_type = "eEPSC",
 #'   write_new_csv = "no",
 #'   new_file_name = "20241118-Raw-eEPSC-Data.csv",
 #'   decimal_places = 2
 #' )
 #' }
 #'
+#'
 add_new_cells <- function(new_raw_data_csv,
                           cell_characteristics_csv,
                           old_raw_data_csv,
-                          current_type,
+                          data_type,
                           write_new_csv = "yes",
                           new_file_name,
-                          decimal_places = 2) {
+                          decimal_places = 2,
+                          injection_start_time = 265.4) {
   # Obtain argument values as strings
-  # Required to check if the filenames and current_type match
-  # (e.g. User enters raw-sEPSC-data.csv for current_type = "sEPSC")
+  # Required to check if the filenames and data_type match
+  # (e.g. User enters raw-sEPSC-data.csv for data_type = "sEPSC")
 
   new_raw_data_name <- deparse(substitute(new_raw_data_csv))
   cell_characteristics_csv_name <- deparse(substitute(cell_characteristics_csv))
   old_raw_data_csv_name <- deparse(substitute(old_raw_data_csv))
-  current_type_name <- deparse(substitute(current_type))
+  data_type_name <- deparse(substitute(data_type))
 
   list_of_argument_names <- c(
     new_raw_data_name,
     cell_characteristics_csv_name,
     old_raw_data_csv_name,
-    current_type_name
+    data_type_name
   )
 
   if (!is.character(new_file_name)) {
@@ -304,10 +307,10 @@ add_new_cells <- function(new_raw_data_csv,
     stop("'new_raw_data_name' must be a character (e.g. \"Data/Raw-eEPSC-data.csv\")")
   }
 
-  if (is.null(current_type) ||
-      length(current_type) != 1L ||
-      !current_type %in% c("eEPSC", "sEPSC")) {
-    stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+  if (is.null(data_type) ||
+      length(data_type) != 1L ||
+      !data_type %in% c("eEPSC", "sEPSC", "AP")) {
+    stop("'data_type' argument must be one of: 'eEPSC', 'sEPSC' or 'AP'")
   }
 
   # Required to see if new cells have associated data for synapses, treatment, sex, age, etc.
@@ -318,46 +321,150 @@ add_new_cells <- function(new_raw_data_csv,
 
   new_raw_data <- utils::read.csv(here::here(new_raw_data_csv)) %>%
     dplyr::rename_with(tolower) %>%
-    dplyr::mutate(id = factor(.data$id))
+    dplyr::mutate(id = factor(.data$id)) %>%
+    dplyr::rename(ID = .data$id)
 
-  if (current_type == "eEPSC") {
+  if (data_type == "eEPSC") {
     if (any(grepl("sEPSC", list_of_argument_names))) {
-      stop(
-        "current_type = \"",
-        current_type,
-        "\" but some filenames have ",
-        "\"sEPSC\".",
-        "\n Are you sure that you selected the correct current type?"
-      )
+      if (utils::menu(
+        c("Yes", "No"),
+        title = paste0(
+          "data_type = \"",
+          data_type,
+          "\" but some filenames contain other keywords like ",
+          "\"sEPSC\".",
+          "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
+        )
+      ) != 1) {
+        stop(
+          "Please double-check that you have selected csv files belonging to the same data type."
+        )
+      } else {
+        "Okay, moving forward"
+      }
     }
+
+    if (any(grepl("AP", list_of_argument_names))) {
+      if (menu(
+        c("Yes", "No"),
+        title = paste0(
+          "data_type = \"",
+          data_type,
+          "\" but some filenames contain other keywords like ",
+          "\"AP\".",
+          "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
+        )
+      ) != 1) {
+        stop(
+          "Please double-check that you have selected csv files belonging to the same data type."
+        )
+      } else {
+        "Okay, moving forward"
+      }
+    }
+
     new_raw_data <- new_raw_data %>%
-      dplyr::rename_with(tolower) %>%
-      dplyr::rename(ID = .data$id,
-                    P1 = .data$p1,
-                    P2 = .data$p2) %>%
+      dplyr::rename(P1 = .data$p1, P2 = .data$p2) %>%
       dplyr::group_by(.data$letter) %>%
       dplyr::mutate(time = (dplyr::row_number() - 1) / 12)
   }
 
-  if (current_type == "sEPSC") {
+  if (data_type == "sEPSC") {
     if (any(grepl("eEPSC", list_of_argument_names))) {
-      stop(
-        "current_type = \"",
-        current_type,
-        "\" but some filenames have ",
-        "\"eEPSC\".",
-        "\n Are you sure that you selected the correct current type?"
-      )
+      if (menu(
+        c("Yes", "No"),
+        title = paste0(
+          "data_type = \"",
+          data_type,
+          "\" but some filenames contain other keywords like ",
+          "\"eEPSC\".",
+          "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
+        )
+      ) != 1) {
+        stop(
+          "Please double-check that you have selected csv files belonging to the same data type."
+        )
+      } else {
+        "Okay, moving forward"
+      }
+    }
+
+    if (any(grepl("AP", list_of_argument_names))) {
+      if (menu(
+        c("Yes", "No"),
+        title = paste0(
+          "data_type = \"",
+          data_type,
+          "\" but some filenames contain other keywords like ",
+          "\"AP\".",
+          "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
+        )
+      ) != 1) {
+        stop(
+          "Please double-check that you have selected csv files belonging to the same data type."
+        )
+      } else {
+        "Okay, moving forward"
+      }
     }
 
     new_raw_data <- new_raw_data %>%
-      dplyr::rename_with(tolower) %>%
-      dplyr::rename(ID = .data$id) %>%
       dplyr::group_by(.data$letter) %>%
       dplyr::mutate(amplitude = (-1) * .data$amplitude,
                     time = ((.data$recording_num - 1) * 300 + (.data$trace - 1) * 5 + (.data$time_of_peak /
                                                                                          1000)
                     ) / 60)
+  }
+
+
+  if (data_type == "AP") {
+    if (any(grepl("eEPSC", list_of_argument_names))) {
+      if (menu(
+        c("Yes", "No"),
+        title = paste0(
+          "data_type = \"",
+          data_type,
+          "\" but some filenames contain other keywords like ",
+          "\"eEPSC\".",
+          "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
+        )
+      ) != 1) {
+        stop(
+          "Please double-check that you have selected csv files belonging to the same data type."
+        )
+      } else {
+        "Okay, moving forward"
+      }
+    }
+
+    if (any(grepl("sEPSC", list_of_argument_names))) {
+      if (menu(
+        c("Yes", "No"),
+        title = paste0(
+          "data_type = \"",
+          data_type,
+          "\" but some filenames contain other keywords like ",
+          "\"sEPSC\".",
+          "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
+        )
+      ) != 1) {
+        stop(
+          "Please double-check that you have selected csv files belonging to the same data type."
+        )
+      } else {
+        "Okay, moving forward"
+      }
+    }
+
+    new_raw_data <- new_raw_data %>%
+      dplyr::rename(
+        first_sweep_with_APs = .data$first_sweep_with_aps,
+        threshold = .data$t_x
+      ) %>%
+      dplyr::mutate(
+        latency_to_fire = .data$time_to_peak - injection_start_time,
+        antipeak_time_relative_to_threshold = .data$time_of_antipeak - .data$time_of_threshold
+      )
   }
 
   warning("Renamed dataframe columns to lowercase")
@@ -396,13 +503,12 @@ add_new_cells <- function(new_raw_data_csv,
   # Import old Raw-Data sheet
   old_raw_data <- utils::read.csv(here::here(old_raw_data_csv), header = T) %>%
     dplyr::rename_with(tolower) %>%
-    dplyr::mutate(id = factor(.data$id), letter = factor(.data$letter))
+    dplyr::mutate(id = factor(.data$id), letter = factor(.data$letter)) %>%
+    dplyr::rename(ID = .data$id)
 
-  if (current_type == "eEPSC") {
+  if (data_type == "eEPSC") {
     old_raw_data <- old_raw_data %>%
-      dplyr::rename_with(tolower) %>%
       dplyr::rename(
-        ID = .data$id,
         P1 = .data$p1,
         P2 = .data$p2,
         X = .data$x,
@@ -410,12 +516,16 @@ add_new_cells <- function(new_raw_data_csv,
       )
   }
 
-  if (current_type == "sEPSC") {
+  if (data_type == "sEPSC") {
     old_raw_data <- old_raw_data %>%
-      dplyr::rename_with(tolower) %>%
-      dplyr::rename(ID = .data$id,
-                    X = .data$x,
-                    Y = .data$y)
+      dplyr::rename(X = .data$x, Y = .data$y)
+  }
+
+  if (data_type == "AP") {
+    old_raw_data <- old_raw_data %>%
+      dplyr::rename(
+        first_sweep_with_APs = .data$first_sweep_with_aps
+      )
   }
 
   if (any(grepl("cells", colnames(old_raw_data)))) {
