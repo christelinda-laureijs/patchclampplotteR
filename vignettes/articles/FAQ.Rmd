@@ -10,6 +10,7 @@ knitr::opts_chunk$set(
 
 library(ggplot2)
 library(patchclampplotteR)
+library(here)
 ```
 
 # Plotting FAQ
@@ -39,6 +40,18 @@ plots generated using `plot_PPR_data_one_treatment()` will be exported to
 further control over the export options, you can also use `ggsave()` to manually
 save a ggplot object. 
 
+```{r, eval=F}
+ggsave(
+  cars_plot,
+  path = here("Figures/Raw-plots"),
+  file = "cars-plot.png",
+  width = 7,
+  height = 5,
+  units = "in",
+  dpi = 300
+)
+```
+
 
 ## How do I change the plot text sizes? 
 
@@ -49,7 +62,7 @@ control over the font sizes,  you can also apply a new `theme()` layer and
 specify the text elements manually. For example:
 
 ```{r}
-cars_plot + 
+cars_plot +
   theme(text = element_text(size = 25, color = "darkmagenta"))
 ```
 
@@ -75,7 +88,7 @@ If you already have the fonts installed in R, you just need to run
 
 To apply these theme changes globally (i.e. all plots in your file), it will be much more efficient to modify and define a theme. See below!
 
-## How to modify the ggplot theme
+## How do I modify the ggplot theme?
 
 You might wonder things like, "How can I override the default theme that came with this package?" or "How can I make all my plots have the same theme/fonts, etc.?". You can fix this effficiently by defining a custom ggplot theme and making it the default theme for a document.
 
@@ -84,3 +97,22 @@ At the top of your Rmarkdown, choose a theme like `theme_classic()` or the `patc
 Once you are happy with your theme, define it as the default theme using `theme_set()`.
 
 Now, all of the plots in your document will have your specific theme, font families, etc. automatically applied. This will overwrite the default `patchclampplotteR_theme()` as well.
+
+# Package FAQ
+
+## What does this package replace?
+
+This package replaces manual plot creation and data analysis in GraphPad Prism and/or Excel. Previously, data analysis would have required transferring data between programs, which is time-consuming and potentially error-prone. This package can be combined with report writing in R to generate fully reproducible manuscripts.
+
+```{r, include=F}
+knitr::knit_exit()
+```
+
+
+# Package FAQ
+
+## Who's Ruby?
+
+Ruby is a rat, and she's also become an unofficial lab mascot for the Crosby lab! She loves helping out with data analysis, welcoming newcomers to the lab, and keeping lab members company. She found a way to sneak into some of the documentation for this package!
+
+

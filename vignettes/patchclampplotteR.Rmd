@@ -137,7 +137,7 @@ containing just the required column names.
 
 ```{r blank-sheet-example}
 blank_csv <- read.csv(import_ext_data("empty_eEPSC_sheet.csv"))
- 
+
 reactable(blank_csv)
 ```
 
@@ -200,8 +200,9 @@ Write the resulting, cleaned dataframe to a `.csv` file in your `Data/` folder.
 
 ```{r write-cleaned-csv, eval=F}
 utils::write.csv(first_time_df,
-                 here::here("Data/Insert-filename-here.csv"),
-                 row.names = F)
+  here::here("Data/Insert-filename-here.csv"),
+  row.names = F
+)
 ```
 
 This is an example of what the full few rows look like now:
@@ -234,7 +235,7 @@ contains > 5680 rows!)
 ```{r view-sample-raw-data}
 raw_eEPSC_df <- sample_raw_eEPSC_df
 
-head(raw_eEPSC_df, n = 20) %>% 
+head(raw_eEPSC_df, n = 20) %>%
   reactable()
 ```
 
@@ -475,7 +476,7 @@ summary_eEPSC_df <- make_summary_EPSC_data(
   save_output_as_RDS = "no"
 )
 
-head(summary_eEPSC_df, n = 30) %>% 
+head(summary_eEPSC_df, n = 30) %>%
   reactable()
 ```
 
@@ -498,9 +499,8 @@ PPR_df <- make_PPR_data(
   treatment_colour_theme = sample_treatment_names_and_colours
 )
 
-head(PPR_df, n = 10) %>% 
+head(PPR_df, n = 10) %>%
   reactable()
-
 ```
 
 

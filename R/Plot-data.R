@@ -821,7 +821,7 @@ plot_summary_current_data <- function(data,
   }
 
   if (is.null(y_axis_limit) ||
-      !is.numeric(y_axis_limit)) {
+    !is.numeric(y_axis_limit)) {
     stop(
       "\"y_axis_limit\" must be numeric, e.g. 175."
     )

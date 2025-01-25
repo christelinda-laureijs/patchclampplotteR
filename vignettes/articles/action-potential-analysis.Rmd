@@ -7,8 +7,8 @@ description: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   fig.align = "center",
-  out.extra='',
-  out.width="75%",
+  out.extra = "",
+  out.width = "75%",
   echo = FALSE
 )
 
@@ -117,7 +117,7 @@ recording.
 ```{r sample-ap-table-one}
 sample_ap_data <- data.frame(
   letter = c("BN"),
-  state	= c("Baseline"),
+  state = c("Baseline"),
   time_of_threshold = c(373.50),
   t_x = c(-32.10),
   t11 = c(10.38)
@@ -168,7 +168,7 @@ changed these column names to make them easier to use in R code.
 ```{r finalized-ap-table}
 sample_ap_data_2 <- data.frame(
   letter = c("BN"),
-  state	= c("Baseline"),
+  state = c("Baseline"),
   time_of_threshold = c(373.50),
   t_x = c(-32.10),
   t11 = c(10.38),
@@ -193,7 +193,7 @@ reactable(sample_ap_data_2)
 for the columns `letter` and `state` and leave all the others blank.
 
 ```{r example-full-ap-table}
-sample_full_ap_table <- read.csv("sample-ap-data.csv") %>% 
+sample_full_ap_table <- read.csv("sample-ap-data.csv") %>%
   mutate(across(where(is.numeric), \(x) round(x, 2)))
 
 reactable(sample_full_ap_table)

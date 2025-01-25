@@ -7,8 +7,8 @@ description: >
 ```{r spontaneous-setup, include = FALSE}
 knitr::opts_chunk$set(
   fig.align = "center",
-  out.extra='',
-  out.width="75%",
+  out.extra = "",
+  out.width = "75%",
   echo = FALSE
 )
 

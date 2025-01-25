@@ -256,7 +256,6 @@ import_theme_colours <- function(filename) {
 #' )
 #' }
 #'
-#'
 add_new_cells <- function(new_raw_data_csv,
                           cell_characteristics_csv,
                           old_raw_data_csv,
@@ -288,7 +287,7 @@ add_new_cells <- function(new_raw_data_csv,
   }
 
   if (is.null(cell_characteristics_csv) ||
-      !is.character(cell_characteristics_csv)) {
+    !is.character(cell_characteristics_csv)) {
     stop(
       "'cell_characteristics_csv' must be a character (e.g. \"Data/Plaintext-Cell-Characteristics.csv\")"
     )
@@ -303,13 +302,13 @@ add_new_cells <- function(new_raw_data_csv,
   }
 
   if (!is.null(new_raw_data_name) &
-      !is.character(new_raw_data_name)) {
+    !is.character(new_raw_data_name)) {
     stop("'new_raw_data_name' must be a character (e.g. \"Data/Raw-eEPSC-data.csv\")")
   }
 
   if (is.null(data_type) ||
-      length(data_type) != 1L ||
-      !data_type %in% c("eEPSC", "sEPSC", "AP")) {
+    length(data_type) != 1L ||
+    !data_type %in% c("eEPSC", "sEPSC", "AP")) {
     stop("'data_type' argument must be one of: 'eEPSC', 'sEPSC' or 'AP'")
   }
 
@@ -410,10 +409,12 @@ add_new_cells <- function(new_raw_data_csv,
 
     new_raw_data <- new_raw_data %>%
       dplyr::group_by(.data$letter) %>%
-      dplyr::mutate(amplitude = (-1) * .data$amplitude,
-                    time = ((.data$recording_num - 1) * 300 + (.data$trace - 1) * 5 + (.data$time_of_peak /
-                                                                                         1000)
-                    ) / 60)
+      dplyr::mutate(
+        amplitude = (-1) * .data$amplitude,
+        time = ((.data$recording_num - 1) * 300 + (.data$trace - 1) * 5 + (.data$time_of_peak /
+          1000)
+        ) / 60
+      )
   }
 
 
@@ -463,9 +464,14 @@ add_new_cells <- function(new_raw_data_csv,
       ) %>%
       dplyr::mutate(
         latency_to_fire = .data$time_to_peak - injection_start_time,
-        antipeak_time_relative_to_threshold = .data$time_of_antipeak - .data$time_of_threshold
+        antipeak_time_relative_to_threshold = .data$time_of_antipeak - .data$time_of_threshold,
+        peak_amplitude = dplyr::case_when(
+          is.na(.data$peak_amplitude) ~ 0,
+          T ~ .data$peak_amplitude
+        )
       )
   }
+
 
   warning("Renamed dataframe columns to lowercase")
 

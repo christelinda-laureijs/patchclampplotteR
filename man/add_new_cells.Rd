@@ -115,7 +115,6 @@ add_new_cells(
 )
 }
 
-
 }
 \seealso{
 \code{\link[=import_cell_characteristics_df]{import_cell_characteristics_df()}} for a list of required columns in the \code{cell_characteristics_csv}.
