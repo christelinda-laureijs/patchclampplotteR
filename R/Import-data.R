@@ -530,8 +530,11 @@ add_new_cells <- function(new_raw_data_csv,
   if (data_type == "AP") {
     old_raw_data <- old_raw_data %>%
       dplyr::rename(
-        first_sweep_with_APs = .data$first_sweep_with_aps
+        first_sweep_with_APs = .data$first_sweep_with_aps,
+        threshold = .data$t_x
       )
+
+    warning("Renamed column 't_x' to 'threshold'")
   }
 
   if (any(grepl("cells", colnames(old_raw_data)))) {
