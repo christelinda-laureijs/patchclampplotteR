@@ -13,6 +13,7 @@ library(patchclampplotteR)
 library(here)
 library(reactable)
 library(extrafont)
+font_import()
 ```
 
 # Plotting FAQ
@@ -86,7 +87,7 @@ fonts()
 ```
 
 If you already have the fonts installed in R, you just need to run
-`library(extrafont)` at the start of your document to have the fonts available to use.
+`library(extrafont)` at the start of your document to have the fonts available to use. Here is a silly example:
 
 ```{r}
 cars_plot +
@@ -102,9 +103,41 @@ You might wonder things like, "How can I override the default theme that came wi
 
 At the top of your RMarkdown file, choose a theme like `theme_classic()` or the `patchclampplotteR_theme()` that came with this package. Use this theme as a base, and add new theme elements to replace just the components you want to change (see [the documentation on theme modification in ggplot2](https://ggplot2.tidyverse.org/reference/theme.html). The new theme that you define will inherit all components of the base theme, but replace just the elements that you specified.
 
+```{r}
+my_new_theme <- patchclampplotteR_theme() %+replace%
+  theme(text = element_text(size = 25, color = "darkmagenta", family="Jokerman"))
+```
+
+```{r}
+cars_plot + my_new_theme
+```
+
+
 Once you are happy with your theme, define it as the default theme using `theme_set()`.
 
+```{r}
+theme_set(theme_gray())
+```
+
+
 Now, all of the plots in your document will have your specific theme, font families, etc. automatically applied. This will overwrite the default `patchclampplotteR_theme()` as well.
+
+```{r}
+plot_raw_current_data(
+  data = sample_raw_eEPSC_df,
+  plot_treatment = "Control",
+  plot_category = 2,
+  current_type = "eEPSC",
+  y_variable = "P1",
+  pruned = "no",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+  theme_options = sample_theme_options,
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_plot_png = "no"
+)
+```
+
 
 # Theme FAQ
 
