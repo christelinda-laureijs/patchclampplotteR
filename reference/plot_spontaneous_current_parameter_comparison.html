@@ -75,6 +75,7 @@ applied.</p>
 <span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
 <span>  baseline_interval <span class="op">=</span> <span class="st">"t0to5"</span>,</span>
 <span>  post_hormone_interval <span class="op">=</span> <span class="st">"t20to25"</span>,</span>
+<span>  test_type <span class="op">=</span> <span class="st">"wilcox.test"</span>,</span>
 <span>  large_axis_text <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  <span class="va">treatment_colour_theme</span>,</span>
 <span>  <span class="va">theme_options</span>,</span>
@@ -130,6 +131,12 @@ for the data points after a hormone or protocol was applied. This must
 match the <code>post_hormone_interval</code> used in <code><a href="make_variance_data.html">make_variance_data()</a></code>.</p></dd>
 
 
+<dt id="arg-test-type">test_type<a class="anchor" aria-label="anchor" href="#arg-test-type"></a></dt>
+<dd><p>A character (must be "wilcox.test", "t.test" or "none")
+describing the statistical model used to create a significance bracket
+comparing the pre- and post-hormone groups.</p></dd>
+
+
 <dt id="arg-large-axis-text">large_axis_text<a class="anchor" aria-label="anchor" href="#arg-large-axis-text"></a></dt>
 <dd><p>A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the axis text.</p></dd>
@@ -158,6 +165,12 @@ they will all go in subfolders below Figures/ in your project directory.</p></dd
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A ggplot object</p>
     </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>If you specify a <code>test_type</code>, the function will perform a paired t-test or
+paired wilcox test and add brackets with significance stars through
+<code><a href="https://const-ae.github.io/ggsignif/reference/stat_signif.html" class="external-link">ggsignif::geom_signif()</a></code>.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -169,6 +182,7 @@ they will all go in subfolders below Figures/ in your project directory.</p></dd
 <span class="r-in"><span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span></span>
 <span class="r-in"><span>  baseline_interval <span class="op">=</span> <span class="st">"t0to5"</span>,</span></span>
 <span class="r-in"><span>  post_hormone_interval <span class="op">=</span> <span class="st">"t20to25"</span>,</span></span>
+<span class="r-in"><span>  test_type <span class="op">=</span> <span class="st">"wilcox.test"</span>,</span></span>
 <span class="r-in"><span>  large_axis_text <span class="op">=</span> <span class="st">"no"</span>,</span></span>
 <span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span></span>
 <span class="r-in"><span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span></span>
