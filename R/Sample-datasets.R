@@ -695,7 +695,7 @@ NULL
 #'  \item{`peak_amplitude`}{The peak amplitude (in pA) of the action potential relative to threshold.}
 #'  \item{`time_to_peak`}{The time to peak amplitude (in ms) relative to the time of threshold.}
 #'  \item{`antipeak_amplitude`}{The after-hyperpolarization amplitude (in pA) relative to threshold.}
-#'  \item{`time_of_antipeak`}{The time of the after-hyperpolarzation (in ms).}
+#'  \item{`time_of_antipeak`}{The time of the after-hyperpolarization (in ms).}
 #'  \item{`half_width`}{The half-width, which is the width of the action potential and half of the peak amplitude.}
 #'  \item{`latency_to_fire`}{The latency to fire, which is calculated by subtracting the injection start time from the `time_to_peak.`}
 #'  \item{`antipeak_time_relative_to_threshold`}{The time of the afterhyperpolarization amplitude (in ms) relative to the time of the threshold.}
@@ -782,7 +782,7 @@ NULL
 #'  \item{`connecting_line_width_PPR`}{The width of the connecting line in paired-pulse ratio comparison plots.}
 #'  \item{`mean_point_size`}{The size of the mean data point in plots like the PPR comparison plot.}
 #'  \item{`geom_signif_text_size`}{The size of the asterisk text in plots like the spontaneous current comparison plots.}
-#'  \item{`AP_trace_size`}{DO NOT USE; this will be moved to a function argument in future relases.}
+#'  \item{`AP_trace_size`}{DO NOT USE; this will be moved to a function argument in future releases.}
 #'  \item{`y_axis_limit`}{The maximum y-axis value to be used in plots.}
 #'  \item{`line_col`}{A character value with the same treatment names as in
 #'  `treatment` except you would replace underscores with spaces and add line

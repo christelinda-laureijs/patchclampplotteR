@@ -235,7 +235,7 @@ import_theme_colours <- function(filename) {
 #'  into one, but it needs to remain here to prevent breaking previous projects.
 #'  It should be set to 1.
 #'  \item `trace` A numeric value representing the trace (automatically
-#'  generated in Clampfit) where the current occured.
+#'  generated in Clampfit) where the current occurred.
 #'  \item `time_of_peak` A numeric value representing the time of the peak in
 #'  milliseconds relative to trace number. This is automatically calculated in
 #'  Clampfit.
@@ -274,7 +274,7 @@ import_theme_colours <- function(filename) {
 #'  amplitude (in ms) relative to the time of threshold.
 #'  \item `antipeak_amplitude` The after-hyperpolarization amplitude (in pA) relative
 #'  to threshold.
-#'  \item `time_of_antipeak` The time of the after-hyperpolarzation (in ms).
+#'  \item `time_of_antipeak` The time of the after-hyperpolarization (in ms).
 #'  \item `half_width` The half-width, which is the width of the action potential and half of the peak amplitude.
 #' }
 #'

@@ -24,7 +24,7 @@ the timepoint that the data point belongs to.}
 \item{\code{peak_amplitude}}{The peak amplitude (in pA) of the action potential relative to threshold.}
 \item{\code{time_to_peak}}{The time to peak amplitude (in ms) relative to the time of threshold.}
 \item{\code{antipeak_amplitude}}{The after-hyperpolarization amplitude (in pA) relative to threshold.}
-\item{\code{time_of_antipeak}}{The time of the after-hyperpolarzation (in ms).}
+\item{\code{time_of_antipeak}}{The time of the after-hyperpolarization (in ms).}
 \item{\code{half_width}}{The half-width, which is the width of the action potential and half of the peak amplitude.}
 \item{\code{latency_to_fire}}{The latency to fire, which is calculated by subtracting the injection start time from the \code{time_to_peak.}}
 \item{\code{antipeak_time_relative_to_threshold}}{The time of the afterhyperpolarization amplitude (in ms) relative to the time of the threshold.}

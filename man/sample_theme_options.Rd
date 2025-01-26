@@ -24,7 +24,7 @@ data values where \code{Sex == Female}.}
 \item{\code{connecting_line_width_PPR}}{The width of the connecting line in paired-pulse ratio comparison plots.}
 \item{\code{mean_point_size}}{The size of the mean data point in plots like the PPR comparison plot.}
 \item{\code{geom_signif_text_size}}{The size of the asterisk text in plots like the spontaneous current comparison plots.}
-\item{\code{AP_trace_size}}{DO NOT USE; this will be moved to a function argument in future relases.}
+\item{\code{AP_trace_size}}{DO NOT USE; this will be moved to a function argument in future releases.}
 \item{\code{y_axis_limit}}{The maximum y-axis value to be used in plots.}
 \item{\code{line_col}}{A character value with the same treatment names as in
 \code{treatment} except you would replace underscores with spaces and add line

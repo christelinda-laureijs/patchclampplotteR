@@ -90,9 +90,9 @@ To apply these theme changes globally (i.e. all plots in your file), it will be 
 
 ## How do I modify the ggplot theme?
 
-You might wonder things like, "How can I override the default theme that came with this package?" or "How can I make all my plots have the same theme/fonts, etc.?". You can fix this effficiently by defining a custom ggplot theme and making it the default theme for a document.
+You might wonder things like, "How can I override the default theme that came with this package?" or "How can I make all my plots have the same theme/fonts, etc.?". You can fix this efficiently by defining a custom ggplot theme and making it the default theme for a document.
 
-At the top of your Rmarkdown, choose a theme like `theme_classic()` or the `patchclampplotteR_theme()` that came with this package. Use this theme as a base, and add new theme elements to replace just the components you want to change (see [the documentation on theme modification in ggplot2](https://ggplot2.tidyverse.org/reference/theme.html). The new theme that you define will inherit all components of the base theme, but replace just the elements that you specified.
+At the top of your RMarkdown file, choose a theme like `theme_classic()` or the `patchclampplotteR_theme()` that came with this package. Use this theme as a base, and add new theme elements to replace just the components you want to change (see [the documentation on theme modification in ggplot2](https://ggplot2.tidyverse.org/reference/theme.html). The new theme that you define will inherit all components of the base theme, but replace just the elements that you specified.
 
 Once you are happy with your theme, define it as the default theme using `theme_set()`.
 
