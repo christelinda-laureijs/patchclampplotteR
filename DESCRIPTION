@@ -21,6 +21,7 @@ Imports:
     abftools (>= 0.9.9),
     dataui (>= 0.0.1),
     dplyr,
+    extrafont,
     ggforce,
     ggplot2,
     ggsignif,

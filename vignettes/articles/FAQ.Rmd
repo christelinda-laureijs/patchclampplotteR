@@ -12,6 +12,7 @@ library(ggplot2)
 library(patchclampplotteR)
 library(here)
 library(reactable)
+library(extrafont)
 ```
 
 # Plotting FAQ
@@ -77,7 +78,7 @@ first time you do this. Use `fonts()` to see the list of fonts available to you 
 run, especially if you have a lot of fonts on your computer. Luckily, you only
 need to do this once per system, or after you install a new font.
 
-```{r, eval=F}
+```{r, eval=F, results=F}
 library(extrafont)
 font_import()
 
@@ -86,6 +87,12 @@ fonts()
 
 If you already have the fonts installed in R, you just need to run
 `library(extrafont)` at the start of your document to have the fonts available to use.
+
+```{r}
+cars_plot +
+  theme(text = element_text(size = 25, color = "darkmagenta", family="Jokerman"))
+```
+
 
 To apply these theme changes globally (i.e. all plots in your file), it will be much more efficient to modify and define a theme. See below!
 

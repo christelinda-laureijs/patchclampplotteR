@@ -4,6 +4,7 @@
 ## usethis namespace: start
 #' @importFrom abftools abf2_load
 #' @importFrom abftools MeltAbf
+#' @importFrom extrafont font_import
 #' @importFrom ggplot2 %+replace%
 #' @importFrom ggsignif geom_signif
 #' @importFrom ggtext element_markdown
