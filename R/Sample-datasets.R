@@ -678,7 +678,7 @@ NULL
 #'
 #' This is an example of what the data looks like after being imported with `add_new_cells()` with `data_type == "AP"`. You can see that the same columns from the cell characteristics file have been appended to new rows for peak_amplitude, after-hyperpolarization amplitude, latency to fire, and others.#'
 #'
-#' @name sample_ap_data
+#' @name sample_AP_data
 #' @docType data
 #' @format An .rda file containing 34 objects of 25 variables.
 #' \describe{
@@ -702,7 +702,7 @@ NULL
 #' }
 #' @keywords data
 #'
-#' @seealso [make_AP_plot()]
+#' @seealso [plot_AP_comparison()]
 NULL
 
 

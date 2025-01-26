@@ -53,6 +53,7 @@ reference:
   - plot_summary_current_data
   - plot_PPR_data_one_treatment
   - plot_PPR_data_multiple_treatments
+  - plot_AP_comparison
   - plot_baseline_data
   - plot_cv_data
   - plot_variance_comparison_data
@@ -87,6 +88,12 @@ reference:
   - sample_pruned_sEPSC_df
   - sample_summary_sEPSC_df
   - sample_sEPSC_t_test_df
+
+- subtitle: Action Potential (AP) data
+  desc: >
+    Sample datasets from recordings measuring action potentials in response to a current injection protocol.
+  contents:
+  - sample_AP_data
 
 
 articles:

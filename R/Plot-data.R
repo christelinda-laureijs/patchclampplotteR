@@ -1867,8 +1867,8 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' @export
 #'
 #' @examples
-#' make_AP_plot(
-#'   sample_ap_data,
+#' plot_AP_comparison(
+#'   sample_AP_data,
 #'   plot_treatment = "Control",
 #'   plot_category = 2,
 #'   y_variable = "peak_amplitude",
@@ -1880,7 +1880,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   save_plot_png = "no"
 #' )
-make_AP_plot <-
+plot_AP_comparison <-
   function(data,
            plot_treatment = "Control",
            plot_category = 2,
