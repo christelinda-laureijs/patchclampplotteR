@@ -194,7 +194,12 @@ import_theme_colours <- function(filename) {
 #' @return
 #'
 #' A dataframe consisting of the old raw data with information from the new
-#' cells appended to it.
+#' cells appended to it. If `data_type == "AP"` two new columns will also be
+#' added based on calculations from the existing columns. These are
+#' `latency_to_fire` (which is `time_to_peak` - `injection_start_time`) and
+#' `antipeak_time_relative_to_threshold` (which is `time_of_antipeak` -
+#' `time_of_threshold`).
+#'
 #' @export
 #'
 #'
@@ -204,7 +209,7 @@ import_theme_colours <- function(filename) {
 #'
 #' @section Required Columns:
 #'
-#' If the data are evoked currents (`current_type == "eEPSC"`), the data must
+#' If the data are evoked currents (`data_type == "eEPSC"`), the data must
 #' contain the following four columns:
 #'
 #' \itemize{
@@ -218,7 +223,7 @@ import_theme_colours <- function(filename) {
 #'  amplitude of the second evoked current in pA.
 #' }
 #'
-#' If the data are spontaneous currents (`current_type == "sEPSC"`), the data
+#' If the data are spontaneous currents (`data_type == "sEPSC"`), the data
 #' must contain the following columns:
 #' \itemize{
 #'  \item `letter` A character value that is a unique identifier for a single
@@ -242,6 +247,36 @@ import_theme_colours <- function(filename) {
 #'  current in pA.
 #' }
 #'
+#'  If the data are action potential parameters (`data_type == "AP"`), the data
+#'   must contain the following columns:
+#' \itemize{
+#'  \item `letter` A character value that is a unique identifier for a single
+#'  recording. Used to link data sets for evoked or spontaneous currents and
+#'  cell-characteristics.
+#'  \item `ID` A character value for the recording filename.
+#'  \item `state` A character ("Baseline" or "Insulin") representing
+#'  the timepoint that the data point belongs to.
+#'  \item `time_of_threshold` The time (in ms) when the membrane potential
+#'  reaches the threshold value.
+#'  \item `threshold` The threshold (in mV). Determined using the first
+#'  derivative method, where the threshold is the membrane potential which
+#'  results in a derivative of 10 mV/ms or greater (Farries et al., 2010).
+#'  \item `t_11` The value of the first derivative (action potential velocity in
+#'  mV/ms) at threshold.
+#'  \item `first_sweep_with_APs` The sweep number of the first sweep (going from
+#'  lowest to higher current injection values) that resulted in an action
+#'  potential.
+#'  \item `trace_start` An automated value in Clampfit that is not used in the
+#'  analysis.
+#'  \item `peak_amplitude` The peak amplitude (in pA) of the action
+#'  potential relative to threshold.
+#'  \item `time_to_peak` The time to peak
+#'  amplitude (in ms) relative to the time of threshold.
+#'  \item `antipeak_amplitude` The after-hyperpolarization amplitude (in pA) relative
+#'  to threshold.
+#'  \item `time_of_antipeak` The time of the after-hyperpolarzation (in ms).
+#'  \item `half_width` The half-width, which is the width of the action potential and half of the peak amplitude.
+#' }
 #'
 #' @examples
 #' \dontrun{

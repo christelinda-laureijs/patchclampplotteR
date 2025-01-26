@@ -68,16 +68,16 @@ Plot and compare action potential parameters before and after a treatment
 }
 \examples{
 make_AP_plot(
- sample_ap_data,
- plot_treatment = "Control",
-   plot_category = 2,
-   y_variable = "peak_amplitude",
-   y_axis_title = "Peak Amplitude (pA)",
-   theme_options = sample_theme_options,
-   baseline_label = "Baseline",
-   test_type = "wilcox.test",
-   post_hormone_label = "Insulin",
-   treatment_colour_theme = sample_treatment_names_and_colours,
-   save_plot_png = "no"
+  sample_ap_data,
+  plot_treatment = "Control",
+  plot_category = 2,
+  y_variable = "peak_amplitude",
+  y_axis_title = "Peak Amplitude (pA)",
+  theme_options = sample_theme_options,
+  baseline_label = "Baseline",
+  test_type = "wilcox.test",
+  post_hormone_label = "Insulin",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_plot_png = "no"
 )
 }
