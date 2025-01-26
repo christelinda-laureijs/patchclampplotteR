@@ -359,7 +359,7 @@ raw_eEPSC_control_plots <- plot_raw_current_data(
   plot_treatment = "Control",
   plot_category = 2,
   current_type = "eEPSC",
-  parameter = "P1",
+  y_variable = "P1",
   pruned = "no",
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
@@ -414,7 +414,7 @@ You can use the same `plot_raw_current_data()` to plot the pruned data. You will
 need to make changes to the following arguments:
 
 * `data`: Refer to the third element of the list produced from `make_pruned_EPSC_data()`. This is `$individual_cells`.
-* `parameter`: Change this to "mean_P1".
+* `y_variable`: Change this to "mean_P1".
 * `pruned`: Change this to "yes"
 
 ```{r plot-pruned-current-data}
@@ -423,7 +423,7 @@ pruned_eEPSC_control_plots <- plot_raw_current_data(
   plot_treatment = "Control",
   plot_category = 2,
   current_type = "eEPSC",
-  parameter = "mean_P1",
+  y_variable = "mean_P1",
   pruned = "yes",
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
@@ -438,7 +438,7 @@ pruned_eEPSC_control_plots$L
 
 The pruned data from all cells within a specific treatment and sex (`$all_cells`) will enable you to make a summary plot using `plot_summary_current_data()`.
 
-> Notice how `data` is now `sample_pruned_eEPSC_df$all_cells`, and `parameter` is "amplitude". There are lots of customization opportunities when plotting summary data, including adding a representative trace as a .png overlay! You can read more about in the documentation for `plot_summary_current_data()`.
+> Notice how `data` is now `sample_pruned_eEPSC_df$all_cells`, and `y_variable` is "amplitude". There are lots of customization opportunities when plotting summary data, including adding a representative trace as a .png overlay! You can read more about in the documentation for `plot_summary_current_data()`.
 
 ```{r plot-summary-data}
 plot_summary_current_data(
@@ -446,7 +446,7 @@ plot_summary_current_data(
   plot_treatment = "Control",
   data = sample_pruned_eEPSC_df$all_cells,
   current_type = "eEPSC",
-  parameter = "amplitude",
+  y_variable = "amplitude",
   include_representative_trace = "yes",
   representative_trace_filename = "test.png",
   y_axis_limit = 175,
@@ -515,6 +515,7 @@ plot_PPR_data_one_treatment(
   plot_category = 2,
   baseline_label = "Baseline",
   post_hormone_label = "Insulin",
+  test_type = "t.test",
   large_axis_text = "no",
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options,
@@ -531,6 +532,7 @@ plot_PPR_data_multiple_treatments(
   plot_category = 2,
   baseline_label = "B",
   post_hormone_label = "I",
+  test_type = "t.test",
   theme_options = sample_theme_options,
   treatment_colour_theme = sample_treatment_names_and_colours
 )
@@ -570,6 +572,7 @@ cv_comparison_control_plot <- plot_variance_comparison_data(
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",
   post_hormone_label = "Insulin",
+  test_type = "wilcox.test",
   large_axis_text = "no",
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options
@@ -599,7 +602,7 @@ vmr_comparison_control_plot
 plot_baseline_data(
   data = summary_eEPSC_df,
   current_type = "eEPSC",
-  parameter = "raw_amplitude",
+  y_variable = "raw_amplitude",
   include_all_treatments = "yes",
   list_of_treatments = NULL,
   baseline_interval = "t0to5",

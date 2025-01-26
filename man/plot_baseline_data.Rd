@@ -7,7 +7,7 @@
 plot_baseline_data(
   data,
   current_type = "eEPSC",
-  parameter = "raw_amplitude",
+  y_variable = "raw_amplitude",
   include_all_treatments = "yes",
   list_of_treatments = NULL,
   baseline_interval = "t0to5",
@@ -26,9 +26,9 @@ plot_baseline_data(
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
 
-\item{parameter}{A character describing the parameter used on the y-axis. If
-\code{current_type == "eEPSC"}, the allowed parameter is "raw_amplitude". If
-\code{current_type == "sEPSC"}, the allowed parameters are "raw_amplitude" or
+\item{y_variable}{A character describing the parameter used on the y-axis. If
+\code{current_type == "eEPSC"}, the allowed y_variable is "raw_amplitude". If
+\code{current_type == "sEPSC"}, the allowed y_variables are "raw_amplitude" or
 "raw_frequency". Note: It does not make sense to use normalized/baseline
 transformed amplitudes, since these will all be 100, and the graph will be
 a flat line.}
@@ -74,10 +74,10 @@ they will all go in subfolders below Figures/ in your project directory.}
 A ggplot object. If \code{save_plot_png == "yes"}, it will also generate
 a .png file in \code{Figures/Evoked-currents/Output-summary-plots} or
 \code{Figures/Spontaneous-currents/Output-summary-plots}. The .png filename will
-contain the \code{parameter}.
+contain the \code{y_variable}.
 }
 \description{
-This function creates a scatterplot of parameters such as raw amplitude
+This function creates a scatterplot of \code{y_variables} such as raw amplitude
 grouped according to treatment. The data are limited to values from the
 baseline period, allowing for a quick comparison of baseline parameters
 across treatments. For evoked currents, only raw amplitude is available for
@@ -88,7 +88,7 @@ the baseline period can be plotted.
 plot_baseline_data(
   data = sample_summary_eEPSC_df,
   current_type = "eEPSC",
-  parameter = "raw_amplitude",
+  y_variable = "raw_amplitude",
   include_all_treatments = "yes",
   list_of_treatments = NULL,
   baseline_interval = "t0to5",

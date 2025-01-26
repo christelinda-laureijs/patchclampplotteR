@@ -42,7 +42,7 @@ patchclampplotteR_theme <- function() {
 
 #' Make baseline comparison plot
 #'
-#' This function creates a scatterplot of parameters such as raw amplitude
+#' This function creates a scatterplot of `y_variables` such as raw amplitude
 #' grouped according to treatment. The data are limited to values from the
 #' baseline period, allowing for a quick comparison of baseline parameters
 #' across treatments. For evoked currents, only raw amplitude is available for
@@ -74,9 +74,9 @@ patchclampplotteR_theme <- function() {
 #'   have specified a custom list of treatments.
 #' @param current_type A character describing the current type. Allowed values
 #'   are "eEPSC" or "sEPSC".
-#' @param parameter A character describing the parameter used on the y-axis. If
-#'   `current_type == "eEPSC"`, the allowed parameter is "raw_amplitude". If
-#'   `current_type == "sEPSC"`, the allowed parameters are "raw_amplitude" or
+#' @param y_variable A character describing the parameter used on the y-axis. If
+#'   `current_type == "eEPSC"`, the allowed y_variable is "raw_amplitude". If
+#'   `current_type == "sEPSC"`, the allowed y_variables are "raw_amplitude" or
 #'   "raw_frequency". Note: It does not make sense to use normalized/baseline
 #'   transformed amplitudes, since these will all be 100, and the graph will be
 #'   a flat line.
@@ -92,14 +92,14 @@ patchclampplotteR_theme <- function() {
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
 #'   a .png file in `Figures/Evoked-currents/Output-summary-plots` or
 #'   `Figures/Spontaneous-currents/Output-summary-plots`. The .png filename will
-#'   contain the `parameter`.
+#'   contain the `y_variable`.
 #' @export
 #'
 #' @examples
 #' plot_baseline_data(
 #'   data = sample_summary_eEPSC_df,
 #'   current_type = "eEPSC",
-#'   parameter = "raw_amplitude",
+#'   y_variable = "raw_amplitude",
 #'   include_all_treatments = "yes",
 #'   list_of_treatments = NULL,
 #'   baseline_interval = "t0to5",
@@ -111,7 +111,7 @@ patchclampplotteR_theme <- function() {
 #' )
 plot_baseline_data <- function(data,
                                current_type = "eEPSC",
-                               parameter = "raw_amplitude",
+                               y_variable = "raw_amplitude",
                                include_all_treatments = "yes",
                                list_of_treatments = NULL,
                                baseline_interval = "t0to5",
@@ -180,36 +180,36 @@ plot_baseline_data <- function(data,
   if (current_type == "sEPSC") {
     filepath <- "Figures/Spontaneous-currents/Output-summary-plots"
 
-    allowed_parameters_list <- "\"raw_amplitude\", or \"raw_frequency\""
+    allowed_y_variables_list <- "\"raw_amplitude\", or \"raw_frequency\""
 
-    if (!parameter %in% c("raw_amplitude", "raw_frequency")) {
+    if (!y_variable %in% c("raw_amplitude", "raw_frequency")) {
       stop(
-        "parameter must be ",
-        allowed_parameters_list,
+        "y_variable must be ",
+        allowed_y_variables_list,
         " for current_type \"",
         current_type,
         "\" \nbecause transformed data are all 100 during the baseline."
       )
     }
 
-    if (parameter == "raw_amplitude") {
+    if (y_variable == "raw_amplitude") {
       y_var <- "mean_raw_amplitude"
       y_title <- "Baseline sEPSC Amplitude (pA)"
     }
 
-    if (parameter == "raw_frequency") {
+    if (y_variable == "raw_frequency") {
       y_var <- "mean_raw_frequency"
       y_title <- "Baseline sEPSC Frequency (Hz)"
     }
   }
 
   if (current_type == "eEPSC") {
-    allowed_parameters_list <- c("\"raw_amplitude\"")
+    allowed_y_variables_list <- c("\"raw_amplitude\"")
 
-    if (!parameter %in% c("raw_amplitude")) {
+    if (!y_variable %in% c("raw_amplitude")) {
       stop(
-        "parameter must be ",
-        allowed_parameters_list,
+        "y_variable must be ",
+        allowed_y_variables_list,
         " for current_type \"",
         current_type,
         "\"",
@@ -219,7 +219,7 @@ plot_baseline_data <- function(data,
 
     filepath <- "Figures/Evoked-currents/Output-summary-plots"
 
-    if (parameter == "raw_amplitude") {
+    if (y_variable == "raw_amplitude") {
       y_var <- "mean_P1_raw"
       y_title <- "Baseline eEPSC Amplitude (pA)"
     }
@@ -285,7 +285,7 @@ plot_baseline_data <- function(data,
       path = here::here(filepath),
       file = paste0(
         "Baseline-",
-        parameter,
+        y_variable,
         "-comparison",
         filename_suffix,
         ".png"
@@ -324,14 +324,14 @@ plot_baseline_data <- function(data,
 #'   applied continuously after a 5-minute baseline period.
 #' @param current_type A character describing the current type. Allowed values
 #'   are "eEPSC" or "sEPSC".
-#' @param parameter A character value specifying the parameter to be plotted on
+#' @param y_variable A character value specifying the variable to be plotted on
 #'   the y-axis. For evoked currents (`current_type = "eEPSC"`), the available
-#'   parameters are "P1", "P1_transformed", "mean_P1" and "PPR". *Note*: If you
+#'   y_variables are "P1", "P1_transformed", "mean_P1" and "PPR". *Note*: If you
 #'   select "mean_P1", you must set the `pruned` argument to "yes". For
-#'   spontaneous currents (`current_type = "sEPSC"`), the available parameters
+#'   spontaneous currents (`current_type = "sEPSC"`), the available y_variables
 #'   are "amplitude" or "frequency".
 #' @param pruned A character value ("yes" or "no") specifying if the data are
-#'   pruned. This is only used for evoked current data where `parameter =
+#'   pruned. This is only used for evoked current data where `y_variable =
 #'   "mean_P1`. The plot will then present the data as means with error bars.
 #' @param hormone_added A character value that will be used as the label over
 #'   the line annotating the period when a hormone was applied. Examples include
@@ -361,7 +361,7 @@ plot_baseline_data <- function(data,
 #'   `Figures/Spontaneous-currents/Output-individual-plots`, depending on the
 #'   `current_type`. The .png filename will contain the `letter`. If the data
 #'   are pruned, the filename will also include `_pruned` in the filename. If
-#'   the data are normalized (`parameter == "P1_transformed`), the title will
+#'   the data are normalized (`y_variable == "P1_transformed`), the title will
 #'   include `_normalized` in the filename. Example filenames include "A.png",
 #'   "A_normalized", and "A_pruned.png".
 #' @export
@@ -373,7 +373,7 @@ plot_baseline_data <- function(data,
 #'   plot_treatment = "Control",
 #'   plot_category = 2,
 #'   current_type = "eEPSC",
-#'   parameter = "P1",
+#'   y_variable = "P1",
 #'   pruned = "no",
 #'   hormone_added = "Insulin",
 #'   hormone_or_HFS_start_time = 5,
@@ -387,7 +387,7 @@ plot_raw_current_data <-
            plot_treatment = "Control",
            plot_category = 2,
            current_type = "eEPSC",
-           parameter = "P1",
+           y_variable = "P1",
            pruned = "no",
            hormone_added = "Insulin",
            hormone_or_HFS_start_time = 5,
@@ -449,54 +449,54 @@ plot_raw_current_data <-
       # The plots should go to specific folders depending on current type
       filepath <- "Figures/Evoked-currents/Output-individual-plots"
 
-      allowed_parameters_list <- "\"P1\", \"P1_transformed\", \"mean_P1\", or \"PPR\""
+      allowed_y_variables_list <- "\"P1\", \"P1_transformed\", \"mean_P1\", or \"PPR\""
 
-      if (!parameter %in% c("P1", "P1_transformed", "mean_P1", "PPR")) {
+      if (!y_variable %in% c("P1", "P1_transformed", "mean_P1", "PPR")) {
         stop(
-          "parameter must be ",
-          allowed_parameters_list,
+          "y_variable must be ",
+          allowed_y_variables_list,
           " for current_type \"",
           current_type,
-          "\". \nCheck parameter, current_type or data."
+          "\". \nCheck y_variable, current_type or data."
         )
       }
 
-      if (parameter == "P1") {
+      if (y_variable == "P1") {
         y_title <- "eEPSC Amplitude (pA)"
 
         if (pruned == "yes") {
           stop(
-            "pruned = \"yes\"), but parameter = \"P1\". ",
+            "pruned = \"yes\"), but y_variable = \"P1\". ",
             "\nDid you mean \"mean_P1\"?. "
           )
         }
       }
 
-      if (parameter == "P1_transformed") {
+      if (y_variable == "P1_transformed") {
         y_title <- "eEPSC Amplitude (% Baseline)"
 
         if (pruned == "yes") {
           stop(
-            "pruned = \"yes\"), but parameter = \"P1_transformed\". ",
+            "pruned = \"yes\"), but y_variable = \"P1_transformed\". ",
             "\nDid you mean \"mean_P1\"?. "
           )
         }
       }
 
-      if (parameter == "mean_P1") {
+      if (y_variable == "mean_P1") {
         y_title <- "eEPSC Amplitude (pA)"
 
 
         if (pruned == "no") {
           stop(
-            "parameter = \"mean_P1\", but pruned = \"no\". ",
+            "y_variable = \"mean_P1\", but pruned = \"no\". ",
             "Are you trying to create a pruned plot? \nIf so, change pruned to \"yes\" ",
             "and ensure that you have specified the correct dataframe in the data argument"
           )
         }
       }
 
-      if (parameter == "PPR") {
+      if (y_variable == "PPR") {
         y_title <- "Paired-pulse Ratio"
       }
     }
@@ -505,24 +505,24 @@ plot_raw_current_data <-
     if (current_type == "sEPSC") {
       filepath <- "Figures/Spontaneous-currents/Output-individual-plots"
 
-      allowed_parameters_list <- "\"amplitude\" or \"frequency\""
+      allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
 
-      if (!parameter %in% c("amplitude", "frequency")) {
+      if (!y_variable %in% c("amplitude", "frequency")) {
         stop(
-          "parameter must be ",
-          allowed_parameters_list,
+          "y_variable must be ",
+          allowed_y_variables_list,
           " for current_type \"",
           current_type,
-          "\". \nCheck parameter, current_type or data."
+          "\". \nCheck y_variable, current_type or data."
         )
       }
 
 
-      if (parameter == "amplitude") {
+      if (y_variable == "amplitude") {
         y_title <- "sEPSC Amplitude (pA)"
       }
 
-      if (parameter == "frequency") {
+      if (y_variable == "frequency") {
         y_title <- "sEPSC Frequency (Hz)"
       }
     }
@@ -533,7 +533,7 @@ plot_raw_current_data <-
       annotation <- ""
     }
 
-    if (parameter == "P1_transformed") {
+    if (y_variable == "P1_transformed") {
       annotation <- "_normalized"
     } else {
       annotation <- ""
@@ -546,7 +546,7 @@ plot_raw_current_data <-
       plot_df <- df %>% dplyr::filter(.data$letter == i)
       if (current_type == "sEPSC" &
         pruned == "yes" &
-        parameter == "amplitude") {
+        y_variable == "amplitude") {
         y_title <- "sEPSC Amplitude (pA)"
 
         list_of_plots[[i]] <- ggplot2::ggplot(
@@ -559,7 +559,7 @@ plot_raw_current_data <-
           )
         )
       } else {
-        list_of_plots[[i]] <- ggplot2::ggplot(plot_df, ggplot2::aes(x = .data$time, y = .data[[parameter]]))
+        list_of_plots[[i]] <- ggplot2::ggplot(plot_df, ggplot2::aes(x = .data$time, y = .data[[y_variable]]))
       }
 
       list_of_plots[[i]] <- list_of_plots[[i]] +
@@ -577,7 +577,7 @@ plot_raw_current_data <-
 
       if (current_type == "sEPSC" &
         pruned == "yes" &
-        parameter == "amplitude") {
+        y_variable == "amplitude") {
         list_of_plots[[i]] <- list_of_plots[[i]] +
           ggplot2::geom_pointrange(
             shape = if (unique(plot_df$sex) == "Male") {
@@ -733,7 +733,7 @@ plot_raw_current_data <-
 #'   The `text_size` will only be added on if you are using `large_axis_text`
 #'   ("LARGE" will be included in the filename). The `file_name_ending` will be
 #'   automatically added on for spontaneous current data to specify what
-#'   parameter is plotted (e.g. "raw_amplitude").
+#'   y_variable is plotted (e.g. "raw_amplitude").
 #'
 #'   An example filename is: "Summary-plot-Control-category-2.png" or
 #'   "Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
@@ -753,7 +753,7 @@ plot_raw_current_data <-
 #'   plot_category = 2,
 #'   plot_treatment = "Control",
 #'   current_type = "eEPSC",
-#'   parameter = "amplitude",
+#'   y_variable = "amplitude",
 #'   hormone_added = "Insulin",
 #'   hormone_or_HFS_start_time = 5,
 #'   include_representative_trace = "no",
@@ -769,7 +769,7 @@ plot_summary_current_data <- function(data,
                                       plot_category = 2,
                                       plot_treatment = "Control",
                                       current_type = "eEPSC",
-                                      parameter = "amplitude",
+                                      y_variable = "amplitude",
                                       hormone_added = "Insulin",
                                       hormone_or_HFS_start_time = 5,
                                       include_representative_trace = "no",
@@ -858,19 +858,19 @@ plot_summary_current_data <- function(data,
     dplyr::pull(.data$very_pale_colours)
 
   if (current_type == "eEPSC") {
-    allowed_parameters_list <- "\"amplitude\""
+    allowed_y_variables_list <- "\"amplitude\""
 
-    if (!parameter %in% c("amplitude")) {
+    if (!y_variable %in% c("amplitude")) {
       stop(
-        "parameter must be ",
-        allowed_parameters_list,
+        "y_variable must be ",
+        allowed_y_variables_list,
         " for current_type \"",
         current_type,
-        "\". \nCheck parameter, current_type or data."
+        "\". \nCheck y_variable, current_type or data."
       )
     }
 
-    if (parameter == "amplitude") {
+    if (y_variable == "amplitude") {
       y_var <- "mean_P1_all_cells"
       se_var <- "se_P1_all_cells"
       filepath <- "Figures/Evoked-currents/Output-summary-plots"
@@ -888,29 +888,29 @@ plot_summary_current_data <- function(data,
   if (current_type == "sEPSC") {
     filepath <- "Figures/Spontaneous-currents/Output-summary-plots"
 
-    allowed_parameters_list <- "\"amplitude\", \"raw_amplitude\",
+    allowed_y_variables_list <- "\"amplitude\", \"raw_amplitude\",
     \"raw_frequency\", or \"frequency\""
 
-    if (!parameter %in% c(
+    if (!y_variable %in% c(
       "amplitude",
       "raw_amplitude",
       "frequency",
       "raw_frequency"
     )) {
       stop(
-        "parameter must be ",
-        allowed_parameters_list,
+        "y_variable must be ",
+        allowed_y_variables_list,
         " for current_type \"",
         current_type,
-        "\". \nCheck parameter, current_type or data."
+        "\". \nCheck y_variable, current_type or data."
       )
     }
 
 
-    if (parameter == "amplitude") {
+    if (y_variable == "amplitude") {
       y_var <- "mean_all_amplitude"
       se_var <- "se_amplitude"
-      file_name_ending <- paste0("_", parameter)
+      file_name_ending <- paste0("_", y_variable)
 
       if (large_axis_text == "yes") {
         y_title <- "sEPSC Amplitude\n(% Baseline)"
@@ -919,18 +919,18 @@ plot_summary_current_data <- function(data,
       }
     }
 
-    if (parameter == "raw_amplitude") {
+    if (y_variable == "raw_amplitude") {
       y_var <- "mean_all_raw_amplitude"
       se_var <- "se_raw_amplitude"
-      file_name_ending <- paste0("_", parameter)
+      file_name_ending <- paste0("_", y_variable)
 
       y_title <- "sEPSC Amplitude (pA)"
     }
 
-    if (parameter == "frequency") {
+    if (y_variable == "frequency") {
       y_var <- "mean_all_frequency"
       se_var <- "se_frequency"
-      file_name_ending <- paste0("_", parameter)
+      file_name_ending <- paste0("_", y_variable)
 
       if (large_axis_text == "yes") {
         y_title <- "sEPSC Frequency\n(% Baseline)"
@@ -939,10 +939,10 @@ plot_summary_current_data <- function(data,
       }
     }
 
-    if (parameter == "raw_frequency") {
+    if (y_variable == "raw_frequency") {
       y_var <- "mean_all_raw_frequency"
       se_var <- "se_frequency"
-      file_name_ending <- paste0("_", parameter)
+      file_name_ending <- paste0("_", y_variable)
 
       y_title <- "sEPSC Frequency (Hz)"
     }
@@ -1290,10 +1290,10 @@ plot_variance_comparison_data <- function(data,
     dplyr::filter(.data$category == plot_category) %>%
     dplyr::filter(.data$treatment == plot_treatment)
 
-  allowed_parameters_list <- "\"cv\" or \"VMR\""
+  allowed_y_variables_list <- "\"cv\" or \"VMR\""
 
   if (!variance_measure %in% c("cv", "VMR")) {
-    stop("'variance_measure' must be one of ", allowed_parameters_list)
+    stop("'variance_measure' must be one of ", allowed_y_variables_list)
   }
 
   if (variance_measure == "cv") {
@@ -1866,7 +1866,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' `ggsignif::geom_signif()`.
 #'
 #' @param data Summary data for spontaneous currents generated using [make_summary_EPSC_data()] where `current_type == "sEPSC"`.
-#' @param parameter A character value ("raw_amplitude" or "raw_frequency") only.
+#' @param y_variable A character value ("raw_amplitude" or "raw_frequency") only.
 #'   Normalized amplitude and frequency are not available because all baseline
 #'   values are 100.
 #' @inheritParams plot_variance_comparison_data
@@ -1882,7 +1882,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #'   data = sample_summary_sEPSC_df,
 #'   plot_category = 2,
 #'   plot_treatment = "Control",
-#'   parameter = "raw_amplitude",
+#'   y_variable = "raw_amplitude",
 #'   hormone_added = "Insulin",
 #'   baseline_interval = "t0to5",
 #'   post_hormone_interval = "t20to25",
@@ -1897,7 +1897,7 @@ plot_spontaneous_current_parameter_comparison <-
   function(data,
            plot_category = 2,
            plot_treatment = "Control",
-           parameter = "raw_amplitude",
+           y_variable = "raw_amplitude",
            hormone_added = "Insulin",
            baseline_interval = "t0to5",
            post_hormone_interval = "t20to25",
@@ -1924,12 +1924,12 @@ plot_spontaneous_current_parameter_comparison <-
       stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
     }
 
-    allowed_parameters_list <- "\"raw_amplitude\", or \"raw_frequency\""
+    allowed_y_variables_list <- "\"raw_amplitude\", or \"raw_frequency\""
 
-    if (!parameter %in% c("raw_amplitude", "raw_frequency")) {
+    if (!y_variable %in% c("raw_amplitude", "raw_frequency")) {
       stop(
-        "parameter must be ",
-        allowed_parameters_list,
+        "y_variable must be ",
+        allowed_y_variables_list,
         " because transformed data are all 100 during the baseline."
       )
     }
@@ -1944,12 +1944,12 @@ plot_spontaneous_current_parameter_comparison <-
       dplyr::filter(.data$interval == baseline_interval |
         .data$interval == post_hormone_interval)
 
-    if (parameter == "raw_amplitude") {
+    if (y_variable == "raw_amplitude") {
       y_var <- "mean_raw_amplitude"
       y_title <- "sEPSC Amplitude (pA)"
     }
 
-    if (parameter == "raw_frequency") {
+    if (y_variable == "raw_frequency") {
       y_var <- "mean_raw_frequency"
       y_title <- "sEPSC Frequency (Hz)"
     }
@@ -2020,7 +2020,7 @@ plot_spontaneous_current_parameter_comparison <-
           "Baseline-vs-",
           hormone_added,
           "-",
-          parameter,
+          y_variable,
           "-",
           plot_treatment,
           ".png"

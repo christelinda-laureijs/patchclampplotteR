@@ -8,7 +8,7 @@ plot_spontaneous_current_parameter_comparison(
   data,
   plot_category = 2,
   plot_treatment = "Control",
-  parameter = "raw_amplitude",
+  y_variable = "raw_amplitude",
   hormone_added = "Insulin",
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",
@@ -31,7 +31,7 @@ applied continuously after a 5-minute baseline period.}
 like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
 
-\item{parameter}{A character value ("raw_amplitude" or "raw_frequency") only.
+\item{y_variable}{A character value ("raw_amplitude" or "raw_frequency") only.
 Normalized amplitude and frequency are not available because all baseline
 values are 100.}
 
@@ -91,7 +91,7 @@ plot_spontaneous_current_parameter_comparison(
   data = sample_summary_sEPSC_df,
   plot_category = 2,
   plot_treatment = "Control",
-  parameter = "raw_amplitude",
+  y_variable = "raw_amplitude",
   hormone_added = "Insulin",
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",

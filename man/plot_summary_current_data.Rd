@@ -9,7 +9,7 @@ plot_summary_current_data(
   plot_category = 2,
   plot_treatment = "Control",
   current_type = "eEPSC",
-  parameter = "amplitude",
+  y_variable = "amplitude",
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
   include_representative_trace = "no",
@@ -40,11 +40,11 @@ were present on the brain slice, or the animals were fasted, etc.}
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
 
-\item{parameter}{A character value specifying the parameter to be plotted on
+\item{y_variable}{A character value specifying the variable to be plotted on
 the y-axis. For evoked currents (\code{current_type = "eEPSC"}), the available
-parameters are "P1", "P1_transformed", "mean_P1" and "PPR". \emph{Note}: If you
+y_variables are "P1", "P1_transformed", "mean_P1" and "PPR". \emph{Note}: If you
 select "mean_P1", you must set the \code{pruned} argument to "yes". For
-spontaneous currents (\code{current_type = "sEPSC"}), the available parameters
+spontaneous currents (\code{current_type = "sEPSC"}), the available y_variables
 are "amplitude" or "frequency".}
 
 \item{hormone_added}{A character value that will be used as the label over
@@ -107,7 +107,7 @@ a .png file exported to \code{Figures/Evoked-currents/Output-summary-plots} or
 The \code{text_size} will only be added on if you are using \code{large_axis_text}
 ("LARGE" will be included in the filename). The \code{file_name_ending} will be
 automatically added on for spontaneous current data to specify what
-parameter is plotted (e.g. "raw_amplitude").
+y_variable is plotted (e.g. "raw_amplitude").
 
 An example filename is: "Summary-plot-Control-category-2.png" or
 "Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
@@ -126,7 +126,7 @@ plot_summary_current_data(
   plot_category = 2,
   plot_treatment = "Control",
   current_type = "eEPSC",
-  parameter = "amplitude",
+  y_variable = "amplitude",
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
   include_representative_trace = "no",

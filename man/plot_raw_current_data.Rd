@@ -9,7 +9,7 @@ plot_raw_current_data(
   plot_treatment = "Control",
   plot_category = 2,
   current_type = "eEPSC",
-  parameter = "P1",
+  y_variable = "P1",
   pruned = "no",
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
@@ -35,15 +35,15 @@ applied continuously after a 5-minute baseline period.}
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
 
-\item{parameter}{A character value specifying the parameter to be plotted on
+\item{y_variable}{A character value specifying the variable to be plotted on
 the y-axis. For evoked currents (\code{current_type = "eEPSC"}), the available
-parameters are "P1", "P1_transformed", "mean_P1" and "PPR". \emph{Note}: If you
+y_variables are "P1", "P1_transformed", "mean_P1" and "PPR". \emph{Note}: If you
 select "mean_P1", you must set the \code{pruned} argument to "yes". For
-spontaneous currents (\code{current_type = "sEPSC"}), the available parameters
+spontaneous currents (\code{current_type = "sEPSC"}), the available y_variables
 are "amplitude" or "frequency".}
 
 \item{pruned}{A character value ("yes" or "no") specifying if the data are
-pruned. This is only used for evoked current data where \verb{parameter = "mean_P1}. The plot will then present the data as means with error bars.}
+pruned. This is only used for evoked current data where \verb{y_variable = "mean_P1}. The plot will then present the data as means with error bars.}
 
 \item{hormone_added}{A character value that will be used as the label over
 the line annotating the period when a hormone was applied. Examples include
@@ -79,7 +79,7 @@ file from each ggplot element in the list. The figures will be exported to
 \code{Figures/Spontaneous-currents/Output-individual-plots}, depending on the
 \code{current_type}. The .png filename will contain the \code{letter}. If the data
 are pruned, the filename will also include \verb{_pruned} in the filename. If
-the data are normalized (\verb{parameter == "P1_transformed}), the title will
+the data are normalized (\verb{y_variable == "P1_transformed}), the title will
 include \verb{_normalized} in the filename. Example filenames include "A.png",
 "A_normalized", and "A_pruned.png".
 }
@@ -100,7 +100,7 @@ plot_raw_current_data(
   plot_treatment = "Control",
   plot_category = 2,
   current_type = "eEPSC",
-  parameter = "P1",
+  y_variable = "P1",
   pruned = "no",
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
