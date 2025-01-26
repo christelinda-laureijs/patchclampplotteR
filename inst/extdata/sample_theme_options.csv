@@ -5,9 +5,8 @@ rectangle_shading_colour,#f6f6f6
 male_shape,16
 female_shape,17
 mean_point_colour,#000000
-connecting_line_width,0.1
+connecting_line_width,0.2
 connecting_line_colour,#bfbfbf
-connecting_line_width_PPR,0.2
 mean_point_size,0.5
 geom_signif_text_size,8
 AP_trace_size,0.7

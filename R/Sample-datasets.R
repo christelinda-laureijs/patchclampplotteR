@@ -739,9 +739,27 @@ NULL
 # Theme options -----
 
 #' A dataframe of theme options for things like colours and line widths
+#' @description This is an example of the dataframe used to specify the colour themes and
+#' plot options (like line thickness). If you want to modify this file, see the section on **Defining your own theme options** below.
 #'
-#' This is an example of the dataframe used to specify the colour themes and
-#' plot options (like line thickness).
+#'
+#' @section Defining your own theme options:
+#'
+#' Step 1: Create a .csv file with two columns (`option` and `value`) modelled after this sample dataset. *Important*: Your .csv must have identical columns and rows as the sample data, or else some plots won't work!
+#'
+#' Step 2: Read in the .csv file in using `utils::read_csv()`. This will now be an object in your R environment.
+#'
+#' Step 3: **Important!!** You must convert the first column (`option`) into the `rownames`. This is a mandatory step to allow the theme_options to be indexed by row name in plotting functions.
+#'
+#' Step 4: Run the following code:
+#'
+#' `library(tibble)`
+#' `theme_options <- read.csv(here::here("Data/your_sample_theme_options.csv"))`
+#' `sample_theme_options <- theme_options %>% remove_rownames %>%        column_to_rownames(var="option")`
+#'
+#' Step 5: Check the resulting object. You should now have 11 objects of 1 variable, and the row names should be `gray_shading_colour`, `line_col`, etc.
+#'
+#' Step 6: Go to a plotting function like `plot_raw_current_data()` and replace `sample_theme_options` with your newly created object from Step 5.
 #'
 #' @name sample_theme_options
 #' @docType data

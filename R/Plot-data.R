@@ -1593,7 +1593,7 @@ plot_PPR_data_one_treatment <- function(data,
     ggplot2::geom_line(
       ggplot2::aes(group = .data$letter),
       color = plot_colour,
-      linewidth = as.numeric(theme_options["connecting_line_width_PPR", "value"]),
+      linewidth = as.numeric(theme_options["connecting_line_width", "value"]),
       alpha = 0.3
     ) +
     ggplot2::stat_summary(
@@ -1787,7 +1787,7 @@ plot_PPR_data_multiple_treatments <- function(data,
     ) +
     ggplot2::geom_line(
       ggplot2::aes(color = .data$treatment, group = .data$letter),
-      linewidth = as.numeric(theme_options["connecting_line_width_PPR", "value"]),
+      linewidth = as.numeric(theme_options["connecting_line_width", "value"]),
       alpha = 0.3
     ) +
     ggplot2::facet_wrap(
@@ -1910,7 +1910,7 @@ make_AP_plot <-
       ggplot2::ggplot(ggplot2::aes(x = .data$state, y = .data[[y_variable]])) +
       ggplot2::geom_line(
         ggplot2::aes(group = .data$letter),
-        linewidth = as.numeric(theme_options["connecting_line_width_PPR", "value"]),
+        linewidth = as.numeric(theme_options["connecting_line_width", "value"]),
         color = "#bfbfbf",
         alpha = 0.3
       ) +
