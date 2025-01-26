@@ -510,21 +510,16 @@ add_new_cells <- function(new_raw_data_csv,
   old_raw_data <- utils::read.csv(here::here(old_raw_data_csv), header = T) %>%
     dplyr::rename_with(tolower) %>%
     dplyr::mutate(id = factor(.data$id), letter = factor(.data$letter)) %>%
-    dplyr::rename(ID = .data$id)
+    dplyr::rename(ID = .data$id,
+                  X = .data$x,
+                  Y = .data$y)
 
   if (data_type == "eEPSC") {
     old_raw_data <- old_raw_data %>%
       dplyr::rename(
         P1 = .data$p1,
-        P2 = .data$p2,
-        X = .data$x,
-        Y = .data$y
+        P2 = .data$p2
       )
-  }
-
-  if (data_type == "sEPSC") {
-    old_raw_data <- old_raw_data %>%
-      dplyr::rename(X = .data$x, Y = .data$y)
   }
 
   if (data_type == "AP") {
