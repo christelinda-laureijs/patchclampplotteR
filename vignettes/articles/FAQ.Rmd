@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
 library(ggplot2)
 library(patchclampplotteR)
 library(here)
+library(reactable)
 ```
 
 # Plotting FAQ
@@ -98,7 +99,104 @@ Once you are happy with your theme, define it as the default theme using `theme_
 
 Now, all of the plots in your document will have your specific theme, font families, etc. automatically applied. This will overwrite the default `patchclampplotteR_theme()` as well.
 
-# Package FAQ
+# Theme FAQ
+
+## How do I insert my own colours and treatment names?
+
+You will define your treatment names and colours once at the start, then refer to it using the `treatment_colour_theme` in all plotting functions.
+
+This package comes pre-loaded with `sample_treatment_names_and_colours`:
+
+```{r}
+reactable(sample_treatment_names_and_colours)
+```
+
+First, check out how many treatment groups you have using unique(raw_eEPSC_df$treatment).
+
+```{r}
+unique(sample_raw_eEPSC_df$treatment)
+```
+
+Next, modify this code to set up your own dataframe with your own hormone names and colours.
+
+```{r}
+my_theme_colours <- data.frame(
+  treatment = c("Control", "HNMPA", "PPP", "PPP_and_HNMPA"),
+  display_names = c("Control", "HNMPA", "PPP", "PPP\n&\nHNMPA"),
+  colours = c("#f07e05", "#f50599", "#70008c", "#DCE319"),
+  very_pale_colours = c("#fabb78", "#fa98d5", "#ce90de", "yellow")
+)
+```
+
+Every time a plot contains the argument `treatment_colour_theme`, refer to your custom dataframe.
+
+```{r}
+plot_PPR_data_multiple_treatments(
+  data = sample_PPR_df,
+  include_all_treatments = "yes",
+  plot_category = 2,
+  baseline_label = "B",
+  post_hormone_label = "I",
+  test_type = "t.test",
+  theme_options = sample_theme_options,
+  treatment_colour_theme = my_theme_colours
+)
+```
+
+## How do I modify the theme_options?
+
+This dataset contains theme options that will affect all plots. These include values for line thickness and the point shapes for male vs. female data points:
+
+```{r}
+reactable(sample_theme_options)
+```
+
+If you want to change these values, please follow these steps.
+
+
+Step 1: Create a `.csv` file with two columns (`option` and `value`), modelled after this sample dataset.
+
+> **Important!**: Your .csv must have identical columns and rows as the sample data, or else the plots won't work!
+
+Step 2: Read in the `.csv` file in using `utils::read_csv()`. This will now be an object in your R environment.
+
+Step 3: **Important!!** You must convert the first column (`option`) into the `rownames`. This is a mandatory step to allow the theme_options to be indexed by row name in plotting functions.
+
+Step 4: Run the following code:
+
+```{r, eval=T}
+library(tibble)
+
+my_custom_theme_options <- read.csv("my_custom_theme_options.csv") %>% remove_rownames %>% column_to_rownames(var="option")
+```
+
+Step 5: Check the resulting object. You should now have 11 objects of 1 variable, and the row names should be `gray_shading_colour`, `line_col`, etc.
+
+Step 6: Go to a plotting function like `plot_raw_current_data()` and replace `sample_theme_options` with your newly created object from Step 5.
+
+I changed `line_col` to orange, and I also changed `male_shape` and `female_shape`. See, the graph looks different now!
+
+```{r}
+plot_summary_current_data(
+  data = sample_pruned_eEPSC_df$all_cells,
+  plot_category = 2,
+  plot_treatment = "Control",
+  current_type = "eEPSC",
+  y_variable = "amplitude",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+  include_representative_trace = "no",
+  y_axis_limit = 175,
+  signif_stars = "yes",
+  t_test_df = sample_eEPSC_t_test_df,
+  large_axis_text = "no",
+  shade_intervals = "no",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = my_custom_theme_options
+)
+```
+
+
 
 ## What does this package replace?
 

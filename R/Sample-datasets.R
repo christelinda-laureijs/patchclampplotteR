@@ -716,6 +716,17 @@ NULL
 #' treatment. It is used to create a consistent colour scheme across all plots
 #' produced with this package.
 #'
+#' @section Defining your own treatment names and colours:
+#'
+#' Use the data.frame() function to define an object, then refer to this named object in all `treatment_colour_theme` arguments. E.g.
+#'
+#' `my_theme_colours <- data.frame(`
+#' `treatment = c("Control", "HNMPA", "PPP", "PPP_and_HNMPA"),`
+#' `display_names = c("Control", "HNMPA", "PPP", "PPP\n&\nHNMPA"),`
+#' `colours = c("#f07e05", "#f50599", "#70008c", "#DCE319"),`
+#' `very_pale_colours = c("#fabb78", "#fa98d5", "#ce90de", "yellow")`
+#' `)`
+#'
 #' @name sample_treatment_names_and_colours
 #' @docType data
 #' @format An .rda file containing 4 objects of 4 variables
@@ -754,8 +765,7 @@ NULL
 #' Step 4: Run the following code:
 #'
 #' `library(tibble)`
-#' `theme_options <- read.csv(here::here("Data/your_sample_theme_options.csv"))`
-#' `sample_theme_options <- theme_options %>% remove_rownames %>%        column_to_rownames(var="option")`
+#' `my_sample_theme_options <- read.csv(here::here("Data/your_sample_theme_options.csv")) %>% remove_rownames %>% column_to_rownames(var="option")`
 #'
 #' Step 5: Check the resulting object. You should now have 11 objects of 1 variable, and the row names should be `gray_shading_colour`, `line_col`, etc.
 #'
@@ -784,10 +794,6 @@ NULL
 #'  \item{`geom_signif_text_size`}{The size of the asterisk text in plots like the spontaneous current comparison plots.}
 #'  \item{`AP_trace_size`}{DO NOT USE; this will be moved to a function argument in future releases.}
 #'  \item{`y_axis_limit`}{The maximum y-axis value to be used in plots.}
-#'  \item{`line_col`}{A character value with the same treatment names as in
-#'  `treatment` except you would replace underscores with spaces and add line
-#'  breaks if needed. This is to create more attractive, human-readable axis
-#'  labels and table values.}
 #' }
 #' @keywords data
 NULL

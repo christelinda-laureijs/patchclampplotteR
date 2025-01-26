@@ -1,0 +1,12 @@
+option,value
+gray_shading_colour,#dcdcdc
+line_col,#f07e05
+rectangle_shading_colour,#f6f6f6
+male_shape,18
+female_shape,20
+mean_point_colour,#000000
+connecting_line_width,0.2
+connecting_line_colour,#bfbfbf
+mean_point_size,0.5
+geom_signif_text_size,8
+AP_trace_size,0.7

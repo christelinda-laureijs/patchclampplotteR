@@ -26,10 +26,6 @@ data values where \code{Sex == Female}.}
 \item{\code{geom_signif_text_size}}{The size of the asterisk text in plots like the spontaneous current comparison plots.}
 \item{\code{AP_trace_size}}{DO NOT USE; this will be moved to a function argument in future releases.}
 \item{\code{y_axis_limit}}{The maximum y-axis value to be used in plots.}
-\item{\code{line_col}}{A character value with the same treatment names as in
-\code{treatment} except you would replace underscores with spaces and add line
-breaks if needed. This is to create more attractive, human-readable axis
-labels and table values.}
 }
 }
 \description{
@@ -48,8 +44,7 @@ Step 3: \strong{Important!!} You must convert the first column (\code{option}) i
 Step 4: Run the following code:
 
 \code{library(tibble)}
-\code{theme_options <- read.csv(here::here("Data/your_sample_theme_options.csv"))}
-\code{sample_theme_options <- theme_options \%>\% remove_rownames \%>\%        column_to_rownames(var="option")}
+\code{my_sample_theme_options <- read.csv(here::here("Data/your_sample_theme_options.csv")) \%>\% remove_rownames \%>\% column_to_rownames(var="option")}
 
 Step 5: Check the resulting object. You should now have 11 objects of 1 variable, and the row names should be \code{gray_shading_colour}, \code{line_col}, etc.
 

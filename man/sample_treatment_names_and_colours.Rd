@@ -25,4 +25,17 @@ This is an example of the dataframe used to specify a colour theme for each
 treatment. It is used to create a consistent colour scheme across all plots
 produced with this package.
 }
+\section{Defining your own treatment names and colours}{
+
+
+Use the data.frame() function to define an object, then refer to this named object in all \code{treatment_colour_theme} arguments. E.g.
+
+\verb{my_theme_colours <- data.frame(}
+\verb{treatment = c("Control", "HNMPA", "PPP", "PPP_and_HNMPA"),}
+\verb{display_names = c("Control", "HNMPA", "PPP", "PPP\\n&\\nHNMPA"),}
+\verb{colours = c("#f07e05", "#f50599", "#70008c", "#DCE319"),}
+\code{very_pale_colours = c("#fabb78", "#fa98d5", "#ce90de", "yellow")}
+\verb{)}
+}
+
 \keyword{data}
