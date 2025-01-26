@@ -71,7 +71,7 @@ applied.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
-<span>  parameter <span class="op">=</span> <span class="st">"raw_amplitude"</span>,</span>
+<span>  y_variable <span class="op">=</span> <span class="st">"raw_amplitude"</span>,</span>
 <span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
 <span>  baseline_interval <span class="op">=</span> <span class="st">"t0to5"</span>,</span>
 <span>  post_hormone_interval <span class="op">=</span> <span class="st">"t20to25"</span>,</span>
@@ -104,7 +104,7 @@ like to plot (e.g. "Control"). <code>plot_treatment</code> represents antagonist
 were present on the brain slice, or the animals were fasted, etc.</p></dd>
 
 
-<dt id="arg-parameter">parameter<a class="anchor" aria-label="anchor" href="#arg-parameter"></a></dt>
+<dt id="arg-y-variable">y_variable<a class="anchor" aria-label="anchor" href="#arg-y-variable"></a></dt>
 <dd><p>A character value ("raw_amplitude" or "raw_frequency") only.
 Normalized amplitude and frequency are not available because all baseline
 values are 100.</p></dd>
@@ -178,7 +178,7 @@ paired wilcox test and add brackets with significance stars through
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_summary_sEPSC_df</span>,</span></span>
 <span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span></span>
-<span class="r-in"><span>  parameter <span class="op">=</span> <span class="st">"raw_amplitude"</span>,</span></span>
+<span class="r-in"><span>  y_variable <span class="op">=</span> <span class="st">"raw_amplitude"</span>,</span></span>
 <span class="r-in"><span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span></span>
 <span class="r-in"><span>  baseline_interval <span class="op">=</span> <span class="st">"t0to5"</span>,</span></span>
 <span class="r-in"><span>  post_hormone_interval <span class="op">=</span> <span class="st">"t20to25"</span>,</span></span>

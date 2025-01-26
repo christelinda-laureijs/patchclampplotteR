@@ -66,7 +66,7 @@ presented as mean +/- the standard error.</p>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
 <span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
-<span>  parameter <span class="op">=</span> <span class="st">"amplitude"</span>,</span>
+<span>  y_variable <span class="op">=</span> <span class="st">"amplitude"</span>,</span>
 <span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
 <span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  include_representative_trace <span class="op">=</span> <span class="st">"no"</span>,</span>
@@ -109,12 +109,12 @@ were present on the brain slice, or the animals were fasted, etc.</p></dd>
 are "eEPSC" or "sEPSC".</p></dd>
 
 
-<dt id="arg-parameter">parameter<a class="anchor" aria-label="anchor" href="#arg-parameter"></a></dt>
-<dd><p>A character value specifying the parameter to be plotted on
+<dt id="arg-y-variable">y_variable<a class="anchor" aria-label="anchor" href="#arg-y-variable"></a></dt>
+<dd><p>A character value specifying the variable to be plotted on
 the y-axis. For evoked currents (<code>current_type = "eEPSC"</code>), the available
-parameters are "P1", "P1_transformed", "mean_P1" and "PPR". <em>Note</em>: If you
+y_variables are "P1", "P1_transformed", "mean_P1" and "PPR". <em>Note</em>: If you
 select "mean_P1", you must set the <code>pruned</code> argument to "yes". For
-spontaneous currents (<code>current_type = "sEPSC"</code>), the available parameters
+spontaneous currents (<code>current_type = "sEPSC"</code>), the available y_variables
 are "amplitude" or "frequency".</p></dd>
 
 
@@ -203,7 +203,7 @@ a .png file exported to <code>Figures/Evoked-currents/Output-summary-plots</code
 The <code>text_size</code> will only be added on if you are using <code>large_axis_text</code>
 ("LARGE" will be included in the filename). The <code>file_name_ending</code> will be
 automatically added on for spontaneous current data to specify what
-parameter is plotted (e.g. "raw_amplitude").</p>
+y_variable is plotted (e.g. "raw_amplitude").</p>
 <p>An example filename is: "Summary-plot-Control-category-2.png" or
 "Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
 currents.</p>
@@ -224,7 +224,7 @@ summary data used in this plot.</p></div>
 <span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span></span>
 <span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span></span>
-<span class="r-in"><span>  parameter <span class="op">=</span> <span class="st">"amplitude"</span>,</span></span>
+<span class="r-in"><span>  y_variable <span class="op">=</span> <span class="st">"amplitude"</span>,</span></span>
 <span class="r-in"><span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span></span>
 <span class="r-in"><span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>  include_representative_trace <span class="op">=</span> <span class="st">"no"</span>,</span></span>
