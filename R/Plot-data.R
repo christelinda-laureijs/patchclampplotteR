@@ -1852,6 +1852,125 @@ plot_PPR_data_multiple_treatments <- function(data,
 }
 
 
+#' Plot and compare action potential parameters before and after a treatment
+#'
+#'
+#' @inheritParams plot_PPR_data_one_treatment
+#' @param data The action potential data generated from `add_new_cells()` with `data_type == "AP"`.
+#' @param y_variable A character value naming the variable to be plotted on the y-axis. Must be a column present in `data`. Examples include `peak_amplitude`, `time_to_peak`, `antipeak_amplitude` and `half_width`.
+#' @param y_axis_title A character value used to define a "pretty" version of `y_variable`. This will become the y-axis label on the ggplot. Examples include "Peak Amplitude (pA)" or "Time to Peak (ms)".
+#'
+#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
+#'   a .png file in the folder `Figures/Action-potentials` relative to the
+#'   project directory. The treatment and y_variable will be included in the filename.
+#'
+#' @export
+#'
+#' @examples
+#' make_AP_plot(
+#'   sample_ap_data,
+#'   plot_treatment = "Control",
+#'   plot_category = 2,
+#'   y_variable = "peak_amplitude",
+#'   y_axis_title = "Peak Amplitude (pA)",
+#'   theme_options = sample_theme_options,
+#'   baseline_label = "Baseline",
+#'   test_type = "wilcox.test",
+#'   post_hormone_label = "Insulin",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   save_plot_png = "no"
+#' )
+make_AP_plot <-
+  function(data,
+           plot_treatment = "Control",
+           plot_category = 2,
+           baseline_label = "Baseline",
+           post_hormone_label = "Post-hormone",
+           y_variable,
+           y_axis_title,
+           test_type,
+           treatment_colour_theme,
+           theme_options,
+           save_plot_png = "no") {
+    if (!save_plot_png %in% c("yes", "no")) {
+      stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+    }
+
+    if (!test_type %in% c("wilcox.test", "t.test", "none")) {
+      stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
+    }
+
+    plot_colour <- treatment_colour_theme %>%
+      dplyr::filter(.data$treatment == plot_treatment) %>%
+      dplyr::pull(.data$colours)
+
+    ap_parameter_plot <- data %>%
+      dplyr::filter(.data$treatment == plot_treatment) %>%
+      dplyr::filter(.data$category == plot_category) %>%
+      ggplot2::ggplot(ggplot2::aes(x = .data$state, y = .data[[y_variable]])) +
+      ggplot2::geom_line(
+        ggplot2::aes(group = .data$letter),
+        linewidth = as.numeric(theme_options["connecting_line_width_PPR", "value"]),
+        color = "#bfbfbf",
+        alpha = 0.3
+      ) +
+      ggplot2::geom_point(
+        alpha = 0.8,
+        size = 4,
+        position = ggplot2::position_jitter(0.04),
+        color = plot_colour
+      ) +
+      ggplot2::stat_summary(
+        fun.data = ggplot2::mean_se,
+        geom = "pointrange",
+        color = theme_options["mean_point_colour", "value"],
+        size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
+        alpha = 1,
+        position = ggplot2::position_nudge(x = -0.02),
+        show.legend = FALSE
+      ) +
+      patchclampplotteR_theme() +
+      ggplot2::theme(legend.position = "none") +
+      ggplot2::labs(x = NULL, y = y_axis_title)
+
+
+    if (test_type != "none") {
+      ap_parameter_plot <- ap_parameter_plot + ggsignif::geom_signif(
+        comparisons = list(c(baseline_label, post_hormone_label)),
+        test = test_type,
+        test.args = list(paired = TRUE),
+        map_signif_level = c(
+          "***" = 0.001,
+          "**" = 0.01,
+          "*" = 0.05,
+          "ns" = 2
+        ),
+        vjust = -0.3,
+        textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
+        size = 0.4
+      ) +
+        ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
+    }
+
+
+    if (save_plot_png == "yes") {
+      ggplot2::ggsave(
+        plot = ap_parameter_plot,
+        path = here::here("Figures/Action-potentials/"),
+        file = paste0("AP-", y_variable, "-comparison-", plot_treatment, ".png"),
+        width = 7,
+        height = 5,
+        units = "in",
+        dpi = 300
+      )
+    }
+
+
+    return(ap_parameter_plot)
+  }
+
+
+
 #' Visually compare spontaneous current parameters
 #'
 #' [plot_spontaneous_current_parameter_comparison()] is a useful function to see
