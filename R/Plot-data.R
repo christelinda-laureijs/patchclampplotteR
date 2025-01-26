@@ -1613,24 +1613,24 @@ plot_PPR_data_one_treatment <- function(data,
     ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])))
 
   if (test_type != "none") {
-  PPR_one_plot <- PPR_one_plot +
-    ggsignif::geom_signif(
-      comparisons = list(c(
-        baseline_label, post_hormone_label
-      )),
-      test = test_type,
-      test.args = list(paired = TRUE),
-      map_signif_level = c(
-        "***" = 0.001,
-        "**" = 0.01,
-        "*" = 0.05,
-        "ns" = 2
-      ),
-      vjust = -0.3,
-      textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
-      size = 0.4,
-      y_position = 2.5
-    )
+    PPR_one_plot <- PPR_one_plot +
+      ggsignif::geom_signif(
+        comparisons = list(c(
+          baseline_label, post_hormone_label
+        )),
+        test = test_type,
+        test.args = list(paired = TRUE),
+        map_signif_level = c(
+          "***" = 0.001,
+          "**" = 0.01,
+          "*" = 0.05,
+          "ns" = 2
+        ),
+        vjust = -0.3,
+        textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
+        size = 0.4,
+        y_position = 2.5
+      )
   }
 
   if (large_axis_text == "yes") {
@@ -2219,13 +2219,14 @@ plot_spontaneous_current_trace <-
 #'
 #' @examples
 #'
+#' # Note, the number of treatments is limited to "Control" to reduce run-time
 #' make_interactive_summary_table(
 #'   cell_characteristics_dataframe = sample_cell_characteristics,
 #'   pruned_eEPSC_dataframe = sample_pruned_eEPSC_df,
 #'   pruned_sEPSC_dataframe = sample_pruned_sEPSC_df,
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   include_all_treatments = "no",
-#'   list_of_treatments = c("Control", "HNMPA"),
+#'   list_of_treatments = c("Control"),
 #'   include_all_categories = "yes",
 #'   list_of_categories = NULL,
 #'   save_output_as_RDS = "no"
