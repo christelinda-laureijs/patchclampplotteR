@@ -12,6 +12,7 @@ plot_spontaneous_current_parameter_comparison(
   hormone_added = "Insulin",
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",
+  test_type = "wilcox.test",
   large_axis_text = "no",
   treatment_colour_theme,
   theme_options,
@@ -49,6 +50,10 @@ Make sure that this matches the baseline interval that you set in
 for the data points after a hormone or protocol was applied. This must
 match the \code{post_hormone_interval} used in \code{\link[=make_variance_data]{make_variance_data()}}.}
 
+\item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
+describing the statistical model used to create a significance bracket
+comparing the pre- and post-hormone groups.}
+
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the axis text.}
 
@@ -76,6 +81,11 @@ amplitude (or raw frequency) for two time intervals: the baseline interval,
 and a user-specified interval after a hormone or other modification has been
 applied.
 }
+\details{
+If you specify a \code{test_type}, the function will perform a paired t-test or
+paired wilcox test and add brackets with significance stars through
+\code{ggsignif::geom_signif()}.
+}
 \examples{
 plot_spontaneous_current_parameter_comparison(
   data = sample_summary_sEPSC_df,
@@ -85,6 +95,7 @@ plot_spontaneous_current_parameter_comparison(
   hormone_added = "Insulin",
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",
+  test_type = "wilcox.test",
   large_axis_text = "no",
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options,

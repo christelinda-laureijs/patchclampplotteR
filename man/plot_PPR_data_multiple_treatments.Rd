@@ -11,6 +11,7 @@ plot_PPR_data_multiple_treatments(
   plot_category = 2,
   baseline_label = "B",
   post_hormone_label = "A",
+  test_type = "t.test",
   treatment_colour_theme,
   theme_options,
   filename_suffix = "",
@@ -39,6 +40,10 @@ pre-hormone state. Defaults to "Baseline".}
 \item{post_hormone_label}{A character value for x-axis label applied to
 the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
 will likely change this to the hormone or protocol name.}
+
+\item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
+describing the statistical model used to create a significance bracket
+comparing the pre- and post-hormone groups.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See
@@ -70,6 +75,11 @@ lines connecting the "before" data point to the "after" data point for each
 letter. It is the same as \code{\link[=plot_PPR_data_one_treatment]{plot_PPR_data_one_treatment()}} but for more
 than one treatment.
 }
+\details{
+If you specify a \code{test_type}, the function will perform a paired t-test or
+paired wilcox test and add brackets with significance stars through
+\code{ggsignif::geom_signif()}.
+}
 \examples{
 plot_PPR_data_multiple_treatments(
   data = sample_PPR_df,
@@ -77,6 +87,7 @@ plot_PPR_data_multiple_treatments(
   plot_category = 2,
   baseline_label = "B",
   post_hormone_label = "I",
+  test_type = "t.test",
   theme_options = sample_theme_options,
   treatment_colour_theme = sample_treatment_names_and_colours
 )

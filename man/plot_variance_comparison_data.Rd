@@ -13,6 +13,7 @@ plot_variance_comparison_data(
   baseline_label = "Baseline",
   post_hormone_interval = "t20to25",
   post_hormone_label = "Insulin",
+  test_type = "wilcox.test",
   large_axis_text = "no",
   treatment_colour_theme,
   theme_options,
@@ -51,6 +52,10 @@ match the \code{post_hormone_interval} used in \code{\link[=make_variance_data]{
 the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
 will likely change this to the hormone or protocol name.}
 
+\item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
+describing the statistical model used to create a significance bracket
+comparing the pre- and post-hormone groups.}
+
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the axis text.}
 
@@ -81,8 +86,9 @@ variance measure on the y-axis. There are also lines
 connecting the "before" data point to the "after" data point for each letter.
 }
 \details{
-The function will perform a paired wilcox test and add brackets with
-significance stars through \code{ggsignif::geom_signif()}.
+If you specify a \code{test_type}, the function will perform a paired t-test or
+paired wilcox test and add brackets with significance stars through
+\code{ggsignif::geom_signif()}.
 
 This allows you to visually determine if a change in synaptic plasticity is
 due to a pre- or post-synaptic mechanism. For more information, please see
@@ -97,6 +103,7 @@ plot_variance_comparison_data(
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",
   post_hormone_label = "Insulin",
+  test_type = "wilcox.test",
   large_axis_text = "no",
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options

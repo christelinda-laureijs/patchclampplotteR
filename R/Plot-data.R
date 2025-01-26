@@ -1212,8 +1212,9 @@ plot_summary_current_data <- function(data,
 #' variance measure on the y-axis. There are also lines
 #' connecting the "before" data point to the "after" data point for each letter.
 #'
-#' The function will perform a paired wilcox test and add brackets with
-#' significance stars through `ggsignif::geom_signif()`.
+#' If you specify a `test_type`, the function will perform a paired t-test or
+#' paired wilcox test and add brackets with significance stars through
+#' `ggsignif::geom_signif()`.
 #'
 #' This allows you to visually determine if a change in synaptic plasticity is
 #' due to a pre- or post-synaptic mechanism. For more information, please see
@@ -1221,6 +1222,7 @@ plot_summary_current_data <- function(data,
 #'
 #' @inheritParams plot_raw_current_data
 #' @inheritParams plot_baseline_data
+#' @inheritParams plot_PPR_data_one_treatment
 #'
 #' @param data A dataframe generated using [make_variance_data()].
 #' @param variance_measure A character value ("cv" or "VMR"). The variance
@@ -1252,6 +1254,7 @@ plot_summary_current_data <- function(data,
 #'   baseline_interval = "t0to5",
 #'   post_hormone_interval = "t20to25",
 #'   post_hormone_label = "Insulin",
+#'   test_type = "wilcox.test",
 #'   large_axis_text = "no",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   theme_options = sample_theme_options
@@ -1265,6 +1268,7 @@ plot_variance_comparison_data <- function(data,
                                           baseline_label = "Baseline",
                                           post_hormone_interval = "t20to25",
                                           post_hormone_label = "Insulin",
+                                          test_type = "wilcox.test",
                                           large_axis_text = "no",
                                           treatment_colour_theme,
                                           theme_options,
@@ -1274,6 +1278,9 @@ plot_variance_comparison_data <- function(data,
     stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
   }
 
+  if (!test_type %in% c("wilcox.test", "t.test", "none")) {
+    stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
+  }
 
   plot_colour <- treatment_colour_theme %>%
     dplyr::filter(.data$treatment == plot_treatment) %>%
@@ -1285,39 +1292,18 @@ plot_variance_comparison_data <- function(data,
 
   allowed_parameters_list <- "\"cv\" or \"VMR\""
 
-
   if (!variance_measure %in% c("cv", "VMR")) {
-    stop("parameter must be ", allowed_parameters_list)
+    stop("'variance_measure' must be one of ", allowed_parameters_list)
   }
-
 
   if (variance_measure == "cv") {
     variance_comparison_plot <- variance_comparison_data %>%
-      ggplot2::ggplot(
-        ggplot2::aes(
-          x = .data$interval,
-          y = .data$cv_inverse_square,
-          group = .data$letter
-        )
-      ) +
-      ggplot2::labs(y = "1/CV^2^") +
-      ggsignif::geom_signif(
-        comparisons = list(c(
-          baseline_interval, post_hormone_interval
-        )),
-        test = "wilcox.test",
-        test.args = list(paired = TRUE),
-        map_signif_level = c(
-          "***" = 0.001,
-          "**" = 0.01,
-          "*" = 0.05,
-          "ns" = 2
-        ),
-        vjust = -0.3,
-        textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
-        size = 0.4
-      ) +
-      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
+      ggplot2::ggplot(ggplot2::aes(
+        x = .data$interval,
+        y = .data$cv_inverse_square,
+        group = .data$letter
+      )) +
+      ggplot2::labs(y = "1/CV^2^")
   }
 
   if (variance_measure == "VMR") {
@@ -1327,12 +1313,16 @@ plot_variance_comparison_data <- function(data,
         y = .data$VMR,
         group = .data$letter
       )) +
-      ggplot2::labs(y = "VMR") +
+      ggplot2::labs(y = "VMR")
+  }
+
+  if (test_type != "none") {
+    variance_comparison_plot <- variance_comparison_plot +
       ggsignif::geom_signif(
         comparisons = list(c(
           baseline_interval, post_hormone_interval
         )),
-        test = "wilcox.test",
+        test = test_type,
         test.args = list(paired = TRUE),
         map_signif_level = c(
           "***" = 0.001,
@@ -1516,15 +1506,18 @@ plot_cv_data <- function(data,
 #' paired-pulse ratio (PPR) on the y-axis. There are also lines connecting the
 #' "before" data point to the "after" data point for each letter.
 #'
-#' The function will perform a paired wilcox test and add brackets with
-#' significance stars through `ggsignif::geom_signif()`.
+#' If you specify a `test_type`, the function will perform a paired t-test or
+#' paired wilcox test and add brackets with significance stars through
+#' `ggsignif::geom_signif()`.
 #'
 #' @inheritParams plot_raw_current_data
 #' @inheritParams plot_summary_current_data
 #' @inheritParams plot_variance_comparison_data
 #'
 #' @param data Paired pulse ratio data generated from [make_PPR_data()].
-#'
+#' @param test_type A character (must be "wilcox.test", "t.test" or "none")
+#'   describing the statistical model used to create a significance bracket
+#'   comparing the pre- and post-hormone groups.
 #' @export
 #'
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -1538,6 +1531,7 @@ plot_cv_data <- function(data,
 #'   plot_category = 2,
 #'   baseline_label = "Baseline",
 #'   post_hormone_label = "Insulin",
+#'   test_type = "t.test",
 #'   large_axis_text = "no",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   theme_options = sample_theme_options,
@@ -1551,6 +1545,7 @@ plot_PPR_data_one_treatment <- function(data,
                                         plot_category = 2,
                                         baseline_label = "Baseline",
                                         post_hormone_label = "Post-hormone",
+                                        test_type = "t.test",
                                         large_axis_text = "no",
                                         treatment_colour_theme,
                                         theme_options,
@@ -1561,6 +1556,10 @@ plot_PPR_data_one_treatment <- function(data,
 
   if (!save_plot_png %in% c("yes", "no")) {
     stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!test_type %in% c("wilcox.test", "t.test", "none")) {
+    stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
   }
 
   plot_colour <- treatment_colour_theme %>%
@@ -1611,12 +1610,15 @@ plot_PPR_data_one_treatment <- function(data,
     patchclampplotteR_theme() +
     ggplot2::theme(axis.text.x = ggplot2::element_text(margin = ggplot2::margin(b = 5, t = 5))) +
     ggplot2::labs(x = NULL, y = "Paired pulse ratio", shape = "Sex") +
-    ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+    ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])))
+
+  if (test_type != "none") {
+  PPR_one_plot <- PPR_one_plot +
     ggsignif::geom_signif(
       comparisons = list(c(
         baseline_label, post_hormone_label
       )),
-      test = "t.test",
+      test = test_type,
       test.args = list(paired = TRUE),
       map_signif_level = c(
         "***" = 0.001,
@@ -1629,6 +1631,7 @@ plot_PPR_data_one_treatment <- function(data,
       size = 0.4,
       y_position = 2.5
     )
+  }
 
   if (large_axis_text == "yes") {
     PPR_one_plot <- PPR_one_plot +
@@ -1667,9 +1670,14 @@ plot_PPR_data_one_treatment <- function(data,
 #' letter. It is the same as [plot_PPR_data_one_treatment()] but for more
 #' than one treatment.
 #'
+#' If you specify a `test_type`, the function will perform a paired t-test or
+#' paired wilcox test and add brackets with significance stars through
+#' `ggsignif::geom_signif()`.
+#'
 #' @inheritParams plot_baseline_data
 #' @inheritParams plot_variance_comparison_data
 #' @inheritParams plot_raw_current_data
+#' @inheritParams plot_PPR_data_one_treatment
 
 #' @param data Paired pulse ratio data generated from [make_PPR_data()].
 #'
@@ -1686,6 +1694,7 @@ plot_PPR_data_one_treatment <- function(data,
 #'   plot_category = 2,
 #'   baseline_label = "B",
 #'   post_hormone_label = "I",
+#'   test_type = "t.test",
 #'   theme_options = sample_theme_options,
 #'   treatment_colour_theme = sample_treatment_names_and_colours
 #' )
@@ -1698,6 +1707,7 @@ plot_PPR_data_multiple_treatments <- function(data,
                                               plot_category = 2,
                                               baseline_label = "B",
                                               post_hormone_label = "A",
+                                              test_type = "t.test",
                                               treatment_colour_theme,
                                               theme_options,
                                               filename_suffix = "",
@@ -1708,6 +1718,10 @@ plot_PPR_data_multiple_treatments <- function(data,
 
   if (!save_plot_png %in% c("yes", "no")) {
     stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!test_type %in% c("wilcox.test", "t.test", "none")) {
+    stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
   }
 
   if (include_all_treatments == "yes") {
@@ -1776,24 +1790,6 @@ plot_PPR_data_multiple_treatments <- function(data,
       linewidth = as.numeric(theme_options["connecting_line_width_PPR", "value"]),
       alpha = 0.3
     ) +
-    ggsignif::geom_signif(
-      comparisons = list(c(
-        baseline_label, post_hormone_label
-      )),
-      test = "t.test",
-      test.args = list(paired = TRUE),
-      map_signif_level = c(
-        "***" = 0.001,
-        "**" = 0.01,
-        "*" = 0.05,
-        "ns" = 2
-      ),
-      vjust = -0.3,
-      textsize = 4,
-      size = 0.3,
-      margin_top = 0.1,
-      extend_line = 0.03
-    ) +
     ggplot2::facet_wrap(
       ~ .data$treatment,
       ncol = length(treatment_info$treatment),
@@ -1817,8 +1813,28 @@ plot_PPR_data_multiple_treatments <- function(data,
       size = as.numeric(theme_options["mean_point_size", "value"]) + 0.25,
       alpha = 0.9
     ) +
-    ggplot2::labs(x = NULL, y = "Paired pulse ratio") +
-    ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
+    ggplot2::labs(x = NULL, y = "Paired pulse ratio")
+
+  if (test_type != "none") {
+    PPR_summary_plot <- PPR_summary_plot +
+      ggsignif::geom_signif(
+        comparisons = list(c(baseline_label, post_hormone_label)),
+        test = test_type,
+        test.args = list(paired = TRUE),
+        map_signif_level = c(
+          "***" = 0.001,
+          "**" = 0.01,
+          "*" = 0.05,
+          "ns" = 2
+        ),
+        vjust = -0.3,
+        textsize = 4,
+        size = 0.3,
+        margin_top = 0.1,
+        extend_line = 0.03
+      ) +
+      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
+  }
 
   if (save_plot_png == "yes") {
     ggplot2::ggsave(
@@ -1845,6 +1861,10 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' and a user-specified interval after a hormone or other modification has been
 #' applied.
 #'
+#' If you specify a `test_type`, the function will perform a paired t-test or
+#' paired wilcox test and add brackets with significance stars through
+#' `ggsignif::geom_signif()`.
+#'
 #' @param data Summary data for spontaneous currents generated using [make_summary_EPSC_data()] where `current_type == "sEPSC"`.
 #' @param parameter A character value ("raw_amplitude" or "raw_frequency") only.
 #'   Normalized amplitude and frequency are not available because all baseline
@@ -1852,6 +1872,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' @inheritParams plot_variance_comparison_data
 #' @inheritParams plot_baseline_data
 #' @inheritParams plot_raw_current_data
+#' @inheritParams plot_PPR_data_one_treatment
 #'
 #' @returns A ggplot object
 #' @export
@@ -1865,6 +1886,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #'   hormone_added = "Insulin",
 #'   baseline_interval = "t0to5",
 #'   post_hormone_interval = "t20to25",
+#'   test_type = "wilcox.test",
 #'   large_axis_text = "no",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   theme_options = sample_theme_options,
@@ -1879,6 +1901,7 @@ plot_spontaneous_current_parameter_comparison <-
            hormone_added = "Insulin",
            baseline_interval = "t0to5",
            post_hormone_interval = "t20to25",
+           test_type = "wilcox.test",
            large_axis_text = "no",
            treatment_colour_theme,
            theme_options,
@@ -1895,6 +1918,10 @@ plot_spontaneous_current_parameter_comparison <-
     if (is.null(post_hormone_interval) ||
       !is.character(post_hormone_interval)) {
       stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
+    }
+
+    if (!test_type %in% c("wilcox.test", "t.test", "none")) {
+      stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
     }
 
     allowed_parameters_list <- "\"raw_amplitude\", or \"raw_frequency\""
@@ -1944,22 +1971,6 @@ plot_spontaneous_current_parameter_comparison <-
         size = 2,
         color = plot_colour
       ) +
-      ggsignif::geom_signif(
-        comparisons = list(c(
-          baseline_interval, post_hormone_interval
-        )),
-        test = "wilcox.test",
-        test.args = list(paired = TRUE),
-        map_signif_level = c(
-          "***" = 0.001,
-          "**" = 0.01,
-          "*" = 0.05,
-          "ns" = 2
-        ),
-        vjust = -0.3,
-        textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
-        size = 0.4
-      ) +
       ggplot2::stat_summary(
         fun.data = ggplot2::mean_se,
         geom = "pointrange",
@@ -1967,8 +1978,29 @@ plot_spontaneous_current_parameter_comparison <-
         size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
         alpha = 0.8
       ) +
-      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2))) +
       patchclampplotteR_theme()
+
+
+    if (test_type != "none") {
+      sEPSC_comparison_plot <- sEPSC_comparison_plot +
+        ggsignif::geom_signif(
+          comparisons = list(c(
+            baseline_interval, post_hormone_interval
+          )),
+          test = test_type,
+          test.args = list(paired = TRUE),
+          map_signif_level = c(
+            "***" = 0.001,
+            "**" = 0.01,
+            "*" = 0.05,
+            "ns" = 2
+          ),
+          vjust = -0.3,
+          textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
+          size = 0.4
+        ) +
+        ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
+    }
 
     if (large_axis_text == "yes") {
       sEPSC_comparison_plot <- sEPSC_comparison_plot +

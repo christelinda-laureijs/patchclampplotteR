@@ -10,6 +10,7 @@ plot_PPR_data_one_treatment(
   plot_category = 2,
   baseline_label = "Baseline",
   post_hormone_label = "Post-hormone",
+  test_type = "t.test",
   large_axis_text = "no",
   treatment_colour_theme,
   theme_options,
@@ -34,6 +35,10 @@ pre-hormone state. Defaults to "Baseline".}
 \item{post_hormone_label}{A character value for x-axis label applied to
 the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
 will likely change this to the hormone or protocol name.}
+
+\item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
+describing the statistical model used to create a significance bracket
+comparing the pre- and post-hormone groups.}
 
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the size of the axis text.}
@@ -63,8 +68,9 @@ paired-pulse ratio (PPR) on the y-axis. There are also lines connecting the
 "before" data point to the "after" data point for each letter.
 }
 \details{
-The function will perform a paired wilcox test and add brackets with
-significance stars through \code{ggsignif::geom_signif()}.
+If you specify a \code{test_type}, the function will perform a paired t-test or
+paired wilcox test and add brackets with significance stars through
+\code{ggsignif::geom_signif()}.
 }
 \examples{
 plot_PPR_data_one_treatment(
@@ -73,6 +79,7 @@ plot_PPR_data_one_treatment(
   plot_category = 2,
   baseline_label = "Baseline",
   post_hormone_label = "Insulin",
+  test_type = "t.test",
   large_axis_text = "no",
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options,
