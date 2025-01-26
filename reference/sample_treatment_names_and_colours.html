@@ -80,8 +80,22 @@ contrast in summary plots with both sexes.</p></dd>
 
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="defining-your-own-treatment-names-and-colours">Defining your own treatment names and colours<a class="anchor" aria-label="anchor" href="#defining-your-own-treatment-names-and-colours"></a></h2>
 
-  </main></div>
+
+
+<p>Use the data.frame() function to define an object, then refer to this named object in all <code>treatment_colour_theme</code> arguments. E.g.</p>
+<p><code>my_theme_colours &lt;- data.frame(</code>
+<code>treatment = c("Control", "HNMPA", "PPP", "PPP_and_HNMPA"),</code>
+<code>display_names = c("Control", "HNMPA", "PPP", "PPP\n&amp;\nHNMPA"),</code>
+<code>colours = c("#f07e05", "#f50599", "#70008c", "#DCE319"),</code>
+<code>very_pale_colours = c("#fabb78", "#fa98d5", "#ce90de", "yellow")</code>
+<code>)</code></p>
+    </div>
+
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
