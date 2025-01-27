@@ -137,13 +137,15 @@ containing just the required column names.
 
 ```{r blank-sheet-example}
 blank_csv <- read.csv(import_ext_data("empty_eEPSC_sheet.csv"))
+```
 
+```{r reactable-blank-sheet, echo=F}
 reactable(blank_csv)
 ```
 
 Use the `add_new_cells()` function, and carefully read the warning messages.
 
-```{r}
+```{r add-new-cells-first-time}
 first_time_df <- add_new_cells(
   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
@@ -185,7 +187,7 @@ Use the following code to remove the blank first line.
 
 > NOTE: Only do this ONCE at the start of a new project, when you are adding data to a blank `.csv` file. After you have a datasheet established, you won't need to do this.
 
-```{r}
+```{r remove-first-blank-row}
 # Remove first "blank" row
 first_time_df <- tail(first_time_df, -1)
 
@@ -207,7 +209,7 @@ utils::write.csv(first_time_df,
 
 This is an example of what the full few rows look like now:
 
-```{r}
+```{r view-new-data-table, echo=F}
 head(first_time_df, n = 8) %>%
   reactable()
 ```
@@ -246,7 +248,7 @@ You can use `dplyr` functions to quickly explore your data. Here's just one exam
 
 *Quick Tip*: Want to know how many experiments you still need to do? Run this line of code on the raw data. Here, I filtered the data to category 2 only (experiments where I added insulin) and grouped by treatment. I then counted the number of cells per sex.
 
-```{r}
+```{r quick-group-stats}
 raw_eEPSC_df %>%
   filter(category == 2) %>%
   filter(time == 0) %>%
@@ -260,7 +262,7 @@ raw_eEPSC_df %>%
 
 In this package, you only need to specify your treatment groups and colours once. You can later refer to this dataframe in `treatment_colour_theme` arguments for all of your plotting functions. The package is loaded with a sample dataframe to help you get started:
 
-```{r}
+```{r see-built-in-colours, echo=F}
 reactable(sample_treatment_names_and_colours)
 ```
 
@@ -268,22 +270,21 @@ reactable(sample_treatment_names_and_colours)
 
 First, check out how many treatment groups you have using `unique(raw_eEPSC_df$treatment)`.
 
-```{r}
+```{r see-unique-treatments}
 unique(raw_eEPSC_df$treatment)
 ```
 Next, modify this code to set up your own dataframe with your treatment names and colours.
 
-```{r}
-theme_colours <- data.frame(
+```{r define-own-dataframe}
+my_theme_colours <- data.frame(
   treatment = c("Control", "HNMPA", "PPP", "PPP_and_HNMPA"),
-  display_names = c("Control", "HNMPA", "PPP", "PPPandHNMPA"),
-  colours = c("#440154", "#2D708E", "#55C667", "#DCE319"),
-  very_pale_colours = c("#6A5897C", "#5B91B8", "lightgreen", "yellow")
+  display_names = c("Control", "HNMPA", "PPP", "PPP\n&\nHNMPA"),
+  colours = c("#f07e05", "#f50599", "#70008c", "#DCE319"),
+  very_pale_colours = c("#fabb78", "#fa98d5", "#ce90de", "yellow")
 )
 ```
 
-
-Every time a plot contains the argument `treatment_colour_theme`, refer to your custom dataframe.
+Every time a plot contains the argument `treatment_colour_theme`, refer to your custom dataframe. To see an example, see the [Theme FAQ](https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.html#theme-faq)
 
 ## Analyze current amplitude
 
@@ -371,11 +372,9 @@ raw_eEPSC_control_plots <- plot_raw_current_data(
 `plot_raw_current_data()` will return a list of ggplot objects. If you want to
 observe just one specific plot, you can select it by letter.  
 
-```{r view-one-raw-plot}
+```{r view-one-raw-plot, fig.alt = "A plot of evoked current amplitude (in pA) over time in minutes showing a decrease in evoked current amplitude after adding insulin."}
 raw_eEPSC_control_plots$L
 ```
-
-
 
 ### Step 2: Prune data
 
@@ -432,7 +431,7 @@ pruned_eEPSC_control_plots <- plot_raw_current_data(
 )
 ```
 
-```{r plot-pruned-cell-L, fig.cap = "See how this is the same as the raw data plot, except for it is pruned per minute?"}
+```{r plot-pruned-cell-L, fig.cap = "See how this is the same as the raw data plot, except for it is pruned per minute?", fig.alt = "A plot of evoked current amplitude (in pA) over time in minutes showing a decrease in evoked current amplitude after adding insulin. This is the same plot as the raw plot from earlier, but there are fewer data points because this is the pruned dataset."}
 pruned_eEPSC_control_plots$L
 ```
 
@@ -440,7 +439,7 @@ The pruned data from all cells within a specific treatment and sex (`$all_cells`
 
 > Notice how `data` is now `sample_pruned_eEPSC_df$all_cells`, and `y_variable` is "amplitude". There are lots of customization opportunities when plotting summary data, including adding a representative trace as a .png overlay! You can read more about in the documentation for `plot_summary_current_data()`.
 
-```{r plot-summary-data}
+```{r plot-summary-data, fig.alt = "A scatterplot showing evoked current amplitude (% baseline) versus time in minutes, where 500 nM of insulin have been added from 5 minutes and onwards. Insulin significantly decreased current amplitude in both males and females."}
 plot_summary_current_data(
   plot_category = 2,
   plot_treatment = "Control",
@@ -508,7 +507,7 @@ head(PPR_df, n = 10) %>%
 
 For a specific treatment:
 
-```{r plot-one-ppr-treatment}
+```{r plot-one-ppr-treatment, fig.alt = "A scatterplot of paired-pulse ratio over time (baseline or post-insulin) showing no difference in the paired pulse ratio across these two times."}
 plot_PPR_data_one_treatment(
   data = PPR_df,
   plot_treatment = "Control",
@@ -525,7 +524,7 @@ plot_PPR_data_one_treatment(
 
 For multiple treatments:
 
-```{r plot-multiple-ppr-treatments}
+```{r plot-multiple-ppr-treatments, fig.alt="A grouped scatterplot showing paired-pulse ratio across state (baseline or post-insulin) for all four treatment groups. This plot demonstrates the plot_PPR_data_multiple_treatments function."}
 plot_PPR_data_multiple_treatments(
   data = PPR_df,
   include_all_treatments = "yes",
@@ -563,7 +562,7 @@ reactable(variance_df)
 
 You can create plots comparing the inverse coefficient of variation squared, and the variance-to-mean ratio.
 
-```{r}
+```{r variance-comparison-plots-cv-vmr-definition, fig.alt = "Figure 1. A scatterplot showing changes in the inverse coefficient of variation squared across time (baseline or post-insulin). Figure 2. A scatterplot showing changes in the variance-to-mean ratio across time."}
 cv_comparison_control_plot <- plot_variance_comparison_data(
   data = variance_df,
   plot_category = 2,
@@ -598,7 +597,7 @@ vmr_comparison_control_plot
 
 ## Compare baseline parameters
 
-```{r}
+```{r compare-baseline-parameters, fig.alt = "A grouped scatterplot showing the baseline evoked current amplitude across four treatment groups."}
 plot_baseline_data(
   data = summary_eEPSC_df,
   current_type = "eEPSC",

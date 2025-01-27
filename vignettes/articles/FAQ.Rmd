@@ -2,7 +2,7 @@
 title: "FAQ"
 ---
 
-```{r, include = FALSE}
+```{r faq-setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -20,7 +20,7 @@ This article contains answers to common questions about plots and customizing
 the ggplot output of functions like `plot_raw_current_data()`.
 This is the plot we will use throughout the FAQ:
 
-```{r}
+```{r cars-plot-initial, fig.alt="A scatterplot of stopping distance in feet versus speed in miles per hour. The graph is a plain scatterplot with no background or gridlines."}
 cars_plot <- ggplot(cars, aes(x = speed, y = dist)) +
   geom_point() +
   labs(x = "Speed (mph)", y = "Distance (ft)") +
@@ -41,7 +41,7 @@ plots generated using `plot_PPR_data_one_treatment()` will be exported to
 further control over the export options, you can also use `ggsave()` to manually
 save a ggplot object. 
 
-```{r, eval=F}
+```{r ggsave-example, eval=F}
 ggsave(
   cars_plot,
   path = here("Figures/Raw-plots"),
@@ -62,7 +62,7 @@ adjusts the plot to be ideal for posters or presentations. If you want more
 control over the font sizes,  you can also apply a new `theme()` layer and
 specify the text elements manually. For example:
 
-```{r}
+```{r magenta-text, fig.alt="A scatterplot of stopping distance in feet versus speed in miles per hour. The graph is a plain scatterplot with no background or gridlines, but the axis title text is now coloured magenta."}
 cars_plot +
   theme(text = element_text(size = 25, color = "darkmagenta"))
 ```
@@ -79,7 +79,7 @@ need to do this once per system, or after you install a new font.
 
 > If the `extrafont` package does not work, there are newer alternatives, such as the `showtext` package, which makes it particularly easy to add Google fonts and system fonts.
 
-```{r, eval=F, results=F}
+```{r extrafont, eval=F, results=F}
 library(extrafont)
 font_import()
 
@@ -89,9 +89,9 @@ fonts()
 If you already have the fonts installed in R, you just need to run
 `library(extrafont)` at the start of your document to have the fonts available to use.
 
-```{r eval=F}
+```{r extrafont-calibri-example, eval=F}
 cars_plot +
-  theme(text = element_text(size = 25, color = "darkmagenta", family="Calibri"))
+  theme(text = element_text(size = 25, color = "darkmagenta", family = "Calibri"))
 ```
 
 To apply these theme changes globally (i.e. all plots in your file), it will be much more efficient to modify and define a theme. See below!
@@ -104,22 +104,45 @@ Choose a theme like `theme_classic()` or the `patchclampplotteR_theme()` that ca
 
 > **Important!** You must assign this theme to a name, since the `ggplot_theme` argument requires a named object. In this example, I will creatively call it `my_new_theme`.
 
-```{r}
+```{r my-new-theme-definition}
 my_new_theme <- patchclampplotteR_theme() %+replace%
-  theme(text = element_text(size = 25, color = "#333333"),
-        axis.title = element_text(face = "plain", size = 14),
-        panel.grid.major = element_line(color = "#ebebeb"),
-        axis.text = element_text(face = "italic", size = 8, color = "#999999"),
-        axis.line = element_blank())
+  theme(
+    text = element_text(size = 25, color = "#333333"),
+    axis.title = element_text(face = "plain", size = 14),
+    panel.grid.major = element_line(color = "#ebebeb"),
+    axis.text = element_text(face = "italic", size = 8, color = "#999999"),
+    axis.line = element_blank()
+  )
 ```
 
-```{r}
+```{r cars-plot-new-theme, fig.alt="A scatterplot of stopping distance in feet versus speed in miles per hour. The graph has a new theme that makes it have gridlines in the background and no axis lines. The axis text is now a pale gray colour."}
 cars_plot + my_new_theme
 ```
 
-Now, insert this theme into the `ggplot_theme` argument. Here's an example of the new theme applied to one of the action potential plots:
+Now, insert this theme into the `ggplot_theme` argument. This is one of the sample action potential plots with the default theme applied:
 
-```{r}
+```{r plot-ap-comparison-old-theme, fig.alt="A scatterplot showing peak amplitude in pico amps versus experiment state (baseline or insulin) on the x-axis. The default patchclampplotteR theme has been applied, so it has a plain background and bold black axis lines."}
+plot_AP_comparison(
+  sample_AP_data,
+  plot_treatment = "Control",
+  plot_category = 2,
+  y_variable = "peak_amplitude",
+  y_axis_title = "Peak Amplitude (pA)",
+  theme_options = sample_theme_options,
+  baseline_label = "Baseline",
+  test_type = "wilcox.test",
+  post_hormone_label = "Insulin",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_plot_png = "no",
+  ggplot_theme = patchclampplotteR_theme()
+)
+```
+
+
+
+Here's what the same plot looks like with the new theme:
+
+```{r plot-ap-comparison-new-theme, fig.alt="A scatterplot showing peak amplitude in pico amps versus experiment state (baseline or insulin) on the x-axis. The new theme has been applied, so the graph has a pale grid in the background."}
 plot_AP_comparison(
   sample_AP_data,
   plot_treatment = "Control",
@@ -136,7 +159,6 @@ plot_AP_comparison(
 )
 ```
 
-
 # Theme FAQ
 
 ## How do I insert my own colours and treatment names?
@@ -145,19 +167,19 @@ You will define your treatment names and colours once at the start, then refer t
 
 This package comes pre-loaded with `sample_treatment_names_and_colours`:
 
-```{r}
+```{r reactable-sample-treatment-names-and-colours, echo=F}
 reactable(sample_treatment_names_and_colours)
 ```
 
-First, check out how many treatment groups you have using unique(raw_eEPSC_df$treatment).
+First, check out how many treatment groups you have using `unique(raw_eEPSC_df$treatment)`.
 
-```{r}
+```{r unique-treatments}
 unique(sample_raw_eEPSC_df$treatment)
 ```
 
 Next, modify this code to set up your own dataframe with your own hormone names and colours.
 
-```{r}
+```{r setting-own-theme-colours}
 my_theme_colours <- data.frame(
   treatment = c("Control", "HNMPA", "PPP", "PPP_and_HNMPA"),
   display_names = c("Control", "HNMPA", "PPP", "PPP\n&\nHNMPA"),
@@ -168,7 +190,7 @@ my_theme_colours <- data.frame(
 
 Every time a plot contains the argument `treatment_colour_theme`, refer to your custom dataframe.
 
-```{r}
+```{r ppr-plot-new-colours, fig.alt="A scatterplot of paired pulse ratio over time (baseline versus after adding insulin). The focus of this plot is to show the new colours that have been added from the previous step. Now the point colours are orange, pink, purple and yellow."}
 plot_PPR_data_multiple_treatments(
   data = sample_PPR_df,
   include_all_treatments = "yes",
@@ -185,7 +207,7 @@ plot_PPR_data_multiple_treatments(
 
 This dataset contains theme options that will affect all plots. These include values for line thickness and the point shapes for male vs. female data points:
 
-```{r}
+```{r reactable-sample-theme-options, echo=F}
 reactable(sample_theme_options)
 ```
 
@@ -202,10 +224,12 @@ Step 3: **Important!!** You must convert the first column (`option`) into the `r
 
 Step 4: Run the following code:
 
-```{r, eval=T}
+```{r set-up-sample-theme-options, eval=T}
 library(tibble)
 
-my_custom_theme_options <- read.csv("my_custom_theme_options.csv") %>% remove_rownames %>% column_to_rownames(var="option")
+my_custom_theme_options <- read.csv("my_custom_theme_options.csv") %>%
+  remove_rownames() %>%
+  column_to_rownames(var = "option")
 ```
 
 Step 5: Check the resulting object. You should now have 11 objects of 1 variable, and the row names should be `gray_shading_colour`, `line_col`, etc.
@@ -214,7 +238,7 @@ Step 6: Go to a plotting function like `plot_raw_current_data()` and replace `sa
 
 I changed `line_col` to orange, and I also changed `male_shape` and `female_shape`. See, the graph looks different now!
 
-```{r}
+```{r plot-summary-current-new-options, fig.alt="A scatterplot of current amplitude (% baseline) over time in minutes. This plot demonstrates that you can change the theme options and get a different-looking plot. For example, the horizontal line showing times when insulin was added is now orange, and the data points are diamonds and circles instead of triangles and circles."}
 plot_summary_current_data(
   data = sample_pruned_eEPSC_df$all_cells,
   plot_category = 2,
