@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
 
 library(dplyr)
 library(reactable)
+library(patchclampplotteR)
 ```
 
 > *Note*: This package does not yet contain functions to analyze and plot action
@@ -202,6 +203,22 @@ reactable(sample_full_ap_table)
 18. You are now ready to import your data into R! Use the `add_new_cells()` function with `data_type = "AP"`. You may find it helpful to read the [Get Started](https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html) guide if you are setting up your data for the first time.
 
 19. Use the `plot_AP_comparison()` function to see how parameters like `peak_amplitude` and `half-width` change after your treatment.
+
+```{r}
+plot_AP_comparison(
+  sample_AP_data,
+  plot_treatment = "Control",
+  plot_category = 2,
+  y_variable = "peak_amplitude",
+  y_axis_title = "Peak Amplitude (pA)",
+  theme_options = sample_theme_options,
+  baseline_label = "Baseline",
+  test_type = "wilcox.test",
+  post_hormone_label = "Insulin",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_plot_png = "no"
+)
+```
 
 
 ## Count action potentials {#count}
