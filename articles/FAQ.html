@@ -141,25 +141,29 @@ and specify the text elements manually. For example:</p>
 <p>This can be tricky and it will vary depending on your operating
 system. I would recommend using the <code>extrafont</code> package. You
 will need to run the code below the first time you do this. Use
-<code><a href="https://rdrr.io/pkg/extrafont/man/fonts.html" class="external-link">fonts()</a></code> to see the list of fonts available to you in R.</p>
+<code>fonts()</code> to see the list of fonts available to you in R.</p>
 <blockquote>
-<p><strong>Warning!</strong> <code><a href="https://rdrr.io/pkg/extrafont/man/font_import.html" class="external-link">font_import()</a></code> will take a long
-time to run, especially if you have a lot of fonts on your computer.
-Luckily, you only need to do this once per system, or after you install
-a new font.</p>
+<p><strong>Warning!</strong> font_import() will take a long time to run,
+especially if you have a lot of fonts on your computer. Luckily, you
+only need to do this once per system, or after you install a new
+font.</p>
+</blockquote>
+<blockquote>
+<p>If the <code>extrafont</code> package does not work, there are newer
+alternatives, such as the <code>showtext</code> package, which makes it
+particularly easy to add Google fonts and system fonts.</p>
 </blockquote>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/wch/extrafont" class="external-link">extrafont</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/extrafont/man/font_import.html" class="external-link">font_import</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">font_import</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/extrafont/man/fonts.html" class="external-link">fonts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">fonts</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>If you already have the fonts installed in R, you just need to run
 <code><a href="https://github.com/wch/extrafont" class="external-link">library(extrafont)</a></code> at the start of your document to have
-the fonts available to use. Here is a silly example:</p>
+the fonts available to use.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cars_plot</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span>text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">25</span>, color <span class="op">=</span> <span class="st">"darkmagenta"</span>, family<span class="op">=</span><span class="st">"Jokerman"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="FAQ_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<span>  <span class="fu">theme</span><span class="op">(</span>text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">25</span>, color <span class="op">=</span> <span class="st">"darkmagenta"</span>, family<span class="op">=</span><span class="st">"Calibri"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>To apply these theme changes globally (i.e. all plots in your file),
 it will be much more efficient to modify and define a theme. See
 below!</p>
@@ -170,53 +174,49 @@ below!</p>
 <p>You might wonder things like, “How can I override the default theme
 that came with this package?” or “How can I make all my plots have the
 same theme/fonts, etc.?”. You can fix this efficiently by defining a
-custom ggplot theme and making it the default theme for a document.</p>
-<p>At the top of your RMarkdown file, choose a theme like
-<code>theme_classic()</code> or the
+custom ggplot theme and adding this to the <code>ggplot_theme</code>
+argument in all plotting functions.</p>
+<p>Choose a theme like <code>theme_classic()</code> or the
 <code><a href="../reference/patchclampplotteR_theme.html">patchclampplotteR_theme()</a></code> that came with this package. Use
 this theme as a base, and add new theme elements to replace just the
 components you want to change (see <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">the
 documentation on theme modification in ggplot2</a>. The new theme that
 you define will inherit all components of the base theme, but replace
 just the elements that you specified.</p>
+<blockquote>
+<p><strong>Important!</strong> You must assign this theme to a name,
+since the <code>ggplot_theme</code> argument requires a named object. In
+this example, I will creatively call it <code>my_new_theme</code>.</p>
+</blockquote>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_new_theme</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/patchclampplotteR_theme.html">patchclampplotteR_theme</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%+replace%</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span>text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">25</span>, color <span class="op">=</span> <span class="st">"darkmagenta"</span>, family<span class="op">=</span><span class="st">"Jokerman"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">theme</span><span class="op">(</span>text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">25</span>, color <span class="op">=</span> <span class="st">"#333333"</span><span class="op">)</span>,</span>
+<span>        axis.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>face <span class="op">=</span> <span class="st">"plain"</span>, size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span>,</span>
+<span>        panel.grid.major <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#ebebeb"</span><span class="op">)</span>,</span>
+<span>        axis.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>face <span class="op">=</span> <span class="st">"italic"</span>, size <span class="op">=</span> <span class="fl">8</span>, color <span class="op">=</span> <span class="st">"#999999"</span><span class="op">)</span>,</span>
+<span>        axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cars_plot</span> <span class="op">+</span> <span class="va">my_new_theme</span></span></code></pre></div>
 <p><img src="FAQ_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
-<p>Once you are happy with your theme, define it as the default theme
-using <code>theme_set()</code>.</p>
+<p>Now, insert this theme into the <code>ggplot_theme</code> argument.
+Here’s an example of the new theme applied to one of the action
+potential plots:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">theme_set</span><span class="op">(</span><span class="fu">theme_gray</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Now, all of the plots in your document will have your specific theme,
-font families, etc. automatically applied. This will overwrite the
-default <code><a href="../reference/patchclampplotteR_theme.html">patchclampplotteR_theme()</a></code> as well.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_raw_current_data.html">plot_raw_current_data</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">sample_raw_eEPSC_df</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_comparison.html">plot_AP_comparison</a></span><span class="op">(</span></span>
+<span>  <span class="va">sample_AP_data</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
-<span>  y_variable <span class="op">=</span> <span class="st">"P1"</span>,</span>
-<span>  pruned <span class="op">=</span> <span class="st">"no"</span>,</span>
-<span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
-<span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  y_variable <span class="op">=</span> <span class="st">"peak_amplitude"</span>,</span>
+<span>  y_axis_title <span class="op">=</span> <span class="st">"Peak Amplitude (pA)"</span>,</span>
 <span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span>
+<span>  baseline_label <span class="op">=</span> <span class="st">"Baseline"</span>,</span>
+<span>  test_type <span class="op">=</span> <span class="st">"wilcox.test"</span>,</span>
+<span>  post_hormone_label <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
 <span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span>
-<span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; $AO</span></span></code></pre></div>
-<p><img src="FAQ_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $AZ</span></span></code></pre>
-<p><img src="FAQ_files/figure-html/unnamed-chunk-10-2.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $BN</span></span></code></pre>
-<p><img src="FAQ_files/figure-html/unnamed-chunk-10-3.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $L</span></span></code></pre>
-<p><img src="FAQ_files/figure-html/unnamed-chunk-10-4.png" width="700"></p>
+<span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span>,</span>
+<span>  ggplot_theme <span class="op">=</span> <span class="va">my_new_theme</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level2">
@@ -230,18 +230,18 @@ then refer to it using the <code>treatment_colour_theme</code> in all
 plotting functions.</p>
 <p>This package comes pre-loaded with
 <code>sample_treatment_names_and_colours</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">reactable</span><span class="op">(</span><span class="va">sample_treatment_names_and_colours</span><span class="op">)</span></span></code></pre></div>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"treatment":["Control","HNMPA","PPP","PPP_and_HNMPA"],"display_names":["Control","HNMPA","PPP","PPP\n&\nHNMPA"],"colours":["#6600cc","#e86c00","#0093fb","#411900"],"very_pale_colours":["#d6b8f5","#ffc38f","#8fd0ff","#bf9b84"]},"columns":[{"id":"treatment","name":"treatment","type":"character"},{"id":"display_names","name":"display_names","type":"character"},{"id":"colours","name":"colours","type":"character"},{"id":"very_pale_colours","name":"very_pale_colours","type":"character"}],"dataKey":"fc1dc40dc6b5ea7c56847c9d961e04ea"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>First, check out how many treatment groups you have using
 unique(raw_eEPSC_df$treatment).</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sample_raw_eEPSC_df</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] Control       HNMPA         PPP           PPP_and_HNMPA</span></span>
 <span><span class="co">#&gt; Levels: Control HNMPA PPP PPP_and_HNMPA</span></span></code></pre></div>
 <p>Next, modify this code to set up your own dataframe with your own
 hormone names and colours.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_theme_colours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  treatment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"HNMPA"</span>, <span class="st">"PPP"</span>, <span class="st">"PPP_and_HNMPA"</span><span class="op">)</span>,</span>
 <span>  display_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"HNMPA"</span>, <span class="st">"PPP"</span>, <span class="st">"PPP\n&amp;\nHNMPA"</span><span class="op">)</span>,</span>
@@ -250,7 +250,7 @@ hormone names and colours.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Every time a plot contains the argument
 <code>treatment_colour_theme</code>, refer to your custom dataframe.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_PPR_data_multiple_treatments.html">plot_PPR_data_multiple_treatments</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_PPR_df</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span>
@@ -261,7 +261,7 @@ hormone names and colours.</p>
 <span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span>
 <span>  treatment_colour_theme <span class="op">=</span> <span class="va">my_theme_colours</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="FAQ_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="how-do-i-modify-the-theme_options">How do I modify the theme_options?<a class="anchor" aria-label="anchor" href="#how-do-i-modify-the-theme_options"></a>
@@ -269,7 +269,7 @@ hormone names and colours.</p>
 <p>This dataset contains theme options that will affect all plots. These
 include values for line thickness and the point shapes for male
 vs. female data points:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">reactable</span><span class="op">(</span><span class="va">sample_theme_options</span><span class="op">)</span></span></code></pre></div>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["gray_shading_colour","line_col","rectangle_shading_colour","male_shape","female_shape","mean_point_colour","connecting_line_width","connecting_line_colour","mean_point_size","geom_signif_text_size","AP_trace_size"],"value":["#dcdcdc","#333333","#f6f6f6","16","17","#000000","0.2","#bfbfbf","0.5","8","0.7"]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"value","name":"value","type":"character"}],"dataKey":"44d5f8ba87156f5390278836ff08299f"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>If you want to change these values, please follow these steps.</p>
@@ -288,7 +288,7 @@ column (<code>option</code>) into the <code>rownames</code>. This is a
 mandatory step to allow the theme_options to be indexed by row name in
 plotting functions.</p>
 <p>Step 4: Run the following code:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">my_custom_theme_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"my_custom_theme_options.csv"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">remove_rownames</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">column_to_rownames</a></span><span class="op">(</span>var<span class="op">=</span><span class="st">"option"</span><span class="op">)</span></span></code></pre></div>
@@ -302,7 +302,7 @@ Step 5.</p>
 <p>I changed <code>line_col</code> to orange, and I also changed
 <code>male_shape</code> and <code>female_shape</code>. See, the graph
 looks different now!</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_summary_current_data.html">plot_summary_current_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">all_cells</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -322,7 +322,7 @@ looks different now!</p>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 25 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_segment()`).</span></span></code></pre></div>
-<p><img src="FAQ_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="what-does-this-package-replace">What does this package replace?<a class="anchor" aria-label="anchor" href="#what-does-this-package-replace"></a>
