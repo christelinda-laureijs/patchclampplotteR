@@ -14,7 +14,8 @@ plot_PPR_data_one_treatment(
   large_axis_text = "no",
   treatment_colour_theme,
   theme_options,
-  save_plot_png = "no"
+  save_plot_png = "no",
+  ggplot_theme = patchclampplotteR_theme()
 )
 }
 \arguments{
@@ -55,6 +56,8 @@ look like.}
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
 they will all go in subfolders below Figures/ in your project directory.}
+
+\item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }
 \value{
 A ggplot object. If \code{save_plot_png == "yes"}, it will also generate

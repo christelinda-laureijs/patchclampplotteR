@@ -13,7 +13,8 @@ make_interactive_summary_table(
   list_of_treatments = NULL,
   include_all_categories = "yes",
   list_of_categories = NULL,
-  save_output_as_RDS = "no"
+  save_output_as_RDS = "no",
+  ggplot_theme = patchclampplotteR_theme()
 )
 }
 \arguments{
@@ -53,6 +54,8 @@ Note: This is not the interactive table, but it is the raw dataframe that
 is later inserted into \code{reactable::reactable()}. This is useful if you want
 to build your own table using a different package, or you want to generate
 a customized reactable table yourself.}
+
+\item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }
 \value{
 A reactable HTML widget that can be viewed in RStudio or exported in

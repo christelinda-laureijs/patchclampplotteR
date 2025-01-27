@@ -17,7 +17,8 @@ plot_spontaneous_current_trace(
   plot_x_max = 5,
   plot_y_min = -100,
   plot_y_max = 35,
-  save_plot_pngs = "no"
+  save_plot_pngs = "no",
+  ggplot_theme = patchclampplotteR_theme()
 )
 }
 \arguments{
@@ -60,6 +61,8 @@ pA) of the scale bar.}
 
 \item{save_plot_pngs}{A character ("yes" or "no") defining if the plot should
 be saved as a PNG through \code{ggplot::ggsave()}.}
+
+\item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }
 \value{
 A ggplot object. If save_plot_PNGs is defined as "yes", it will also

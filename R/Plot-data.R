@@ -88,6 +88,7 @@ patchclampplotteR_theme <- function() {
 #' @param save_plot_png A character ("yes" or "no"). If "yes", the plot will be
 #'   saved as a .png using ggsave. The filepath depends on the current type, but
 #'   they will all go in subfolders below Figures/ in your project directory.
+#' @param ggplot_theme The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is `patchclampplotteR_theme()`, but other valid entries include `theme_bw()`, `theme_classic()` or the name of a custom ggplot theme stored as an object.
 #'
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
 #'   a .png file in `Figures/Evoked-currents/Output-summary-plots` or
@@ -120,7 +121,8 @@ plot_baseline_data <- function(data,
                                plot_width = 8,
                                treatment_colour_theme,
                                theme_options,
-                               save_plot_png = "no") {
+                               save_plot_png = "no",
+                               ggplot_theme = patchclampplotteR_theme()) {
   if (is.null(current_type) ||
     length(current_type) != 1L ||
     !current_type %in% c("eEPSC", "sEPSC")) {
@@ -269,7 +271,7 @@ plot_baseline_data <- function(data,
       color = "none",
       shape = ggplot2::guide_legend(reverse = TRUE)
     ) +
-    patchclampplotteR_theme()
+    ggplot_theme
 
   if (large_axis_text == "yes") {
     baseline_comparison_plot <- baseline_comparison_plot +
@@ -312,7 +314,7 @@ plot_baseline_data <- function(data,
 #' will display an arrow with the label "HFS" to indicate the time when HFS was
 #' applied.
 #'
-#'
+#' @inheritParams plot_baseline_data
 #' @param data A dataframe containing the raw evoked current data generated from
 #'   [make_normalized_EPSC_data()].
 #' @param plot_treatment A character value specifying the treatment you would
@@ -394,7 +396,8 @@ plot_raw_current_data <-
            hormone_end_time = NULL,
            theme_options,
            treatment_colour_theme,
-           save_plot_png = "no") {
+           save_plot_png = "no",
+           ggplot_theme = patchclampplotteR_theme()) {
     list_of_plots <- list()
 
     if (is.null(current_type) ||
@@ -573,7 +576,7 @@ plot_raw_current_data <-
           )
         ) +
         ggplot2::labs(x = "Time (min)", y = y_title) +
-        patchclampplotteR_theme()
+        ggplot_theme
 
       if (current_type == "sEPSC" &
         pruned == "yes" &
@@ -702,6 +705,7 @@ plot_raw_current_data <-
 #' presented as mean +/- the standard error.
 #'
 #' @inheritParams plot_raw_current_data
+#' @inheritParams plot_baseline_data
 #' @param data A dataframe containing pruned summary data for all cells. This is
 #'   the third element of the list generated from [make_pruned_EPSC_data()].
 #' @param include_representative_trace A character ("yes" or "no") describing if
@@ -781,7 +785,8 @@ plot_summary_current_data <- function(data,
                                       shade_intervals = "no",
                                       theme_options,
                                       treatment_colour_theme,
-                                      save_plot_png = "no") {
+                                      save_plot_png = "no",
+                                      ggplot_theme = patchclampplotteR_theme()) {
   if (is.null(current_type) ||
     length(current_type) != 1L ||
     !current_type %in% c("eEPSC", "sEPSC")) {
@@ -1001,7 +1006,7 @@ plot_summary_current_data <- function(data,
       shape = "Sex",
       color = "Sex"
     ) +
-    patchclampplotteR_theme()
+    ggplot_theme
 
   if (large_axis_text == "yes") {
     treatment_plot <- treatment_plot +
@@ -1272,7 +1277,8 @@ plot_variance_comparison_data <- function(data,
                                           large_axis_text = "no",
                                           treatment_colour_theme,
                                           theme_options,
-                                          save_plot_png = "no") {
+                                          save_plot_png = "no",
+                                          ggplot_theme = patchclampplotteR_theme()) {
   if (is.null(post_hormone_interval) ||
     !is.character(post_hormone_interval)) {
     stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
@@ -1342,7 +1348,7 @@ plot_variance_comparison_data <- function(data,
     ggplot2::geom_line(color = theme_options["connecting_line_colour", "value"], linewidth = 0.4) +
     ggplot2::labs(x = NULL) +
     ggplot2::scale_x_discrete(labels = c(baseline_label, post_hormone_label)) +
-    patchclampplotteR_theme() +
+    ggplot_theme +
     ggplot2::theme(axis.title.y = ggtext::element_markdown())
 
   if (variance_measure == "cv") {
@@ -1438,6 +1444,7 @@ plot_variance_comparison_data <- function(data,
 #' in evoked current amplitudes over time.
 #'
 #' @inheritParams plot_raw_current_data
+#' @inheritParams plot_baseline_data
 #' @param data A dataframe of the pruned current data for all cells. This is the
 #'   third dataframe in the list generated from [make_pruned_EPSC_data()].
 #'
@@ -1465,7 +1472,8 @@ plot_cv_data <- function(data,
                          plot_treatment = "Control",
                          treatment_colour_theme,
                          theme_options,
-                         save_plot_png = "no") {
+                         save_plot_png = "no",
+                         ggplot_theme = patchclampplotteR_theme()) {
   if (!save_plot_png %in% c("yes", "no")) {
     stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
   }
@@ -1480,7 +1488,7 @@ plot_cv_data <- function(data,
     ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data$cv_P1_all_cells)) +
     ggplot2::geom_point(color = plot_colour) +
     ggplot2::labs(x = "Time (min)", y = "CV") +
-    patchclampplotteR_theme()
+    ggplot_theme
 
   if (save_plot_png == "yes") {
     ggplot2::ggsave(
@@ -1513,7 +1521,7 @@ plot_cv_data <- function(data,
 #' @inheritParams plot_raw_current_data
 #' @inheritParams plot_summary_current_data
 #' @inheritParams plot_variance_comparison_data
-#'
+#' @inheritParams plot_baseline_data
 #' @param data Paired pulse ratio data generated from [make_PPR_data()].
 #' @param test_type A character (must be "wilcox.test", "t.test" or "none")
 #'   describing the statistical model used to create a significance bracket
@@ -1549,7 +1557,8 @@ plot_PPR_data_one_treatment <- function(data,
                                         large_axis_text = "no",
                                         treatment_colour_theme,
                                         theme_options,
-                                        save_plot_png = "no") {
+                                        save_plot_png = "no",
+                                        ggplot_theme = patchclampplotteR_theme()) {
   if (!large_axis_text %in% c("yes", "no")) {
     stop("'large_axis_text' argument must be one of: 'yes' or 'no'")
   }
@@ -1607,7 +1616,7 @@ plot_PPR_data_one_treatment <- function(data,
     ) +
     ggplot2::theme(legend.position = "right") +
     ggplot2::coord_cartesian(ylim = c(0, 3)) +
-    patchclampplotteR_theme() +
+    ggplot_theme +
     ggplot2::theme(axis.text.x = ggplot2::element_text(margin = ggplot2::margin(b = 5, t = 5))) +
     ggplot2::labs(x = NULL, y = "Paired pulse ratio", shape = "Sex") +
     ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])))
@@ -1711,7 +1720,8 @@ plot_PPR_data_multiple_treatments <- function(data,
                                               treatment_colour_theme,
                                               theme_options,
                                               filename_suffix = "",
-                                              save_plot_png = "no") {
+                                              save_plot_png = "no",
+                                              ggplot_theme = patchclampplotteR_theme()) {
   if (!include_all_treatments %in% c("yes", "no")) {
     stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
   }
@@ -1799,7 +1809,7 @@ plot_PPR_data_multiple_treatments <- function(data,
       breaks = treatment_info$display_names,
       values = treatment_info$colours
     ) +
-    patchclampplotteR_theme() +
+    ggplot_theme +
     ggplot2::theme(
       strip.text = ggplot2::element_text(size = 10),
       strip.placement = "outside",
@@ -1891,7 +1901,8 @@ plot_AP_comparison <-
            test_type,
            treatment_colour_theme,
            theme_options,
-           save_plot_png = "no") {
+           save_plot_png = "no",
+           ggplot_theme = patchclampplotteR_theme()) {
     if (!save_plot_png %in% c("yes", "no")) {
       stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
     }
@@ -1929,7 +1940,7 @@ plot_AP_comparison <-
         position = ggplot2::position_nudge(x = -0.02),
         show.legend = FALSE
       ) +
-      patchclampplotteR_theme() +
+      ggplot_theme +
       ggplot2::theme(legend.position = "none") +
       ggplot2::labs(x = NULL, y = y_axis_title)
 
@@ -1992,7 +2003,7 @@ plot_AP_comparison <-
 #' @inheritParams plot_baseline_data
 #' @inheritParams plot_raw_current_data
 #' @inheritParams plot_PPR_data_one_treatment
-#'
+#' @inheritParams plot_baseline_data
 #' @returns A ggplot object
 #' @export
 #'
@@ -2024,7 +2035,8 @@ plot_spontaneous_current_parameter_comparison <-
            large_axis_text = "no",
            treatment_colour_theme,
            theme_options,
-           save_plot_png) {
+           save_plot_png,
+           ggplot_theme = patchclampplotteR_theme()) {
     if (is.null(baseline_interval) ||
       !is.character(baseline_interval)) {
       stop("'baseline_interval' must be a character (e.g. \"t0to5\" or \"t0to3\")")
@@ -2097,7 +2109,7 @@ plot_spontaneous_current_parameter_comparison <-
         size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
         alpha = 0.8
       ) +
-      patchclampplotteR_theme()
+      ggplot_theme
 
 
     if (test_type != "none") {
@@ -2162,7 +2174,7 @@ plot_spontaneous_current_parameter_comparison <-
 #' over time for a specified sweep from an ABF file. It requires a dataframe
 #' generated from raw .abf data with [import_ABF_file()]. The function returns a
 #' ggplot object with an optional scale bar.
-#'
+#' @inheritParams plot_baseline_data
 #' @param file A dataframe containing at least these columns: `time`,
 #'   `episode`, `current`, `voltage`, `time_sec`. An easy way to obtain this is
 #'   by importing a raw .abf file through the [import_ABF_file()] function.
@@ -2223,7 +2235,8 @@ plot_spontaneous_current_trace <-
            plot_x_max = 5,
            plot_y_min = -100,
            plot_y_max = 35,
-           save_plot_pngs = "no") {
+           save_plot_pngs = "no",
+           ggplot_theme = patchclampplotteR_theme()) {
     if (!include_scale_bar %in% c("yes", "no")) {
       stop("'include_scale_bar' argument must be one of: 'yes' or 'no'")
     }
@@ -2359,7 +2372,8 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
                                            list_of_treatments = NULL,
                                            include_all_categories = "yes",
                                            list_of_categories = NULL,
-                                           save_output_as_RDS = "no") {
+                                           save_output_as_RDS = "no",
+                                           ggplot_theme = patchclampplotteR_theme()) {
   if (!save_output_as_RDS %in% c("yes", "no")) {
     stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
   }
