@@ -341,19 +341,91 @@ a plot of current amplitude over time and select points to delete.</p>
 </ol>
 <p><img src="figures%2FDefine-graphs-button.png" alt="A screenshot of the Define Graphs button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 <ol start="24" style="list-style-type: decimal">
-<li>Set the x-axis to <code>Time of Peak</code> and the y-axis to
-<code>Peak amplitude</code>.</li>
+<li><p>Set the x-axis to <code>Time of Peak</code> and the y-axis to
+<code>Peak amplitude</code>.</p></li>
+<li><p>You will see a plot that shows blue dots arranged in a rough
+shape that resembles the blue dots in the recording file in Step
+22.</p></li>
 </ol>
 <blockquote>
-<p>I am currently working on this section. The rest of this article is a
-work in progress</p>
+<p>Note, I have analysed a file with fewer sweeps to reduce run-time and
+strain on my computer while making this tutorial.</p>
 </blockquote>
-<ol start="25" style="list-style-type: decimal">
-<li>Click on the Results sheet (<code>Window</code> -&gt;
+<blockquote>
+<p>Note: The newer version of Clampfit (from pClamp 11) appears to be
+applying a rounding function to the graph, which creates parallel lines
+of dots. In reality, spontaneous currents are not perfectly aligned like
+this.</p>
+</blockquote>
+<ol start="26" style="list-style-type: decimal">
+<li>Click and hold down your cursor button and highlight the dots
+corresponding to the evoked currents and stim artifacts.</li>
+</ol>
+<div class="figure" style="text-align: center">
+<img src="figures%2FEvent-detection-graph-screenshot.png" alt="A screenshot of a plot of peak amplitude in pico amps over time to peak in milliseconds, with evoked currents highlighted in a bold blue outline." width="75%"><p class="caption">
+In this screenshot, notice how the stimulus artifacts are grouped
+together in one place. I have selected these points with my mouse.
+</p>
+</div>
+<ol start="27" style="list-style-type: decimal">
+<li><p>Go back to the recording file and check that the selected values
+correspond to the stim artifacts and evoked currents. You may need to
+repeat steps 26 and 27 a few times to make sure that you have selected
+all non-spontaneous current events.</p></li>
+<li><p>Click on the <code>Process Selection</code> button that looks
+like a yellow triangle overlapping a blue triangle.</p></li>
+</ol>
+<p><img src="figures%2FProcess-events-button.png" alt="A screenshot of the Process Selection button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;">
+29. A dialog box will pop up. In the <code>Process</code> selection,
+click on <code>Change state</code> and then <code>Reject</code>.</p>
+<ol start="30" style="list-style-type: decimal">
+<li>When you are confident that you have removed all of the stim
+artifacts and evoked currents, it is time to save the results sheet.
+Click on the Results sheet (<code>Window</code> -&gt;
 <code>Results1</code>) and <code>Save As</code>. I would suggest
 creating a consistent naming convention, such as
 <code>Letter</code>-events, as in <code>AA-events.sta</code>,
 <code>AB-events.sta</code>, etc.</li>
+</ol>
+</div>
+<div class="section level2">
+<h2 id="copy-required-columns">Copy required columns<a class="anchor" aria-label="anchor" href="#copy-required-columns"></a>
+</h2>
+<ol start="31" style="list-style-type: decimal">
+<li>Create a <code>.csv</code> file with five columns:</li>
+</ol>
+<ul>
+<li>
+<code>letter</code> A character value that is a unique identifier
+for a single recording. Used to link data sets for evoked or spontaneous
+currents and cell-characteristics.</li>
+<li>
+<code>ID</code> A character value for the recording filename.</li>
+<li>
+<code>recording_num</code> A numeric value representing the
+recording number. This was incorporated before we switched to
+concatenating all recordings into one, but it needs to remain here to
+prevent breaking previous projects. It should be set to 1.</li>
+<li>
+<code>trace</code> A numeric value representing the trace
+(automatically generated in Clampfit) where the current occurred.</li>
+<li>
+<code>amplitude</code> A numeric value representing the amplitude of
+the evoked current in pA.</li>
+<li>
+<code>time_of_peak</code> A numeric value representing the time of
+the peak in milliseconds relative to trace number. This is automatically
+calculated in Clampfit.</li>
+</ul>
+<ol start="32" style="list-style-type: decimal">
+<li><p>Paste in the values from your results sheet.</p></li>
+<li><p>Repeat for the number of recordings that you need to
+analyze.</p></li>
+<li><p>You are now ready to import your data into R! Use the
+<code><a href="../reference/add_new_cells.html">add_new_cells()</a></code> function with
+<code>data_type = "sEPSC"</code>. You may find it helpful to read the <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html">Get
+Started</a> guide if you are setting up your data for the first
+time.</p></li>
 </ol>
 </div>
 <div class="section level2">
