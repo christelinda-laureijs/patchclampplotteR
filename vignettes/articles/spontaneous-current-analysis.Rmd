@@ -177,9 +177,56 @@ knitr::include_graphics("figures/Define-graphs-button.png")
 
 24. Set the x-axis to `Time of Peak` and the y-axis to `Peak amplitude`.
 
-> I am currently working on this section. The rest of this article is a work in progress
+25. You will see a plot that shows blue dots arranged in a rough shape that resembles the blue dots in the recording file in Step 22.
 
-25. Click on the Results sheet (`Window` -> `Results1`) and `Save As`. I would suggest creating a consistent naming convention, such as `Letter`-events, as in `AA-events.sta`, `AB-events.sta`, etc.
+> Note, I have analysed a file with fewer sweeps to reduce run-time and strain on my computer while making this tutorial.
+
+> Note: The newer version of Clampfit (from pClamp 11) appears to be applying a rounding function to the graph, which creates parallel lines of dots. In reality, spontaneous currents are not perfectly aligned like this.
+
+26. Click and hold down your cursor button and highlight the dots corresponding to the evoked currents and stim artifacts.
+
+
+```{r time-to-peak-graph, fig.alt = "A screenshot of a plot of peak amplitude in pico amps over time to peak in milliseconds, with evoked currents highlighted in a bold blue outline.", fig.cap = "In this screenshot, notice how the stimulus artifacts are grouped together in one place. I have selected these points with my mouse."}
+knitr::include_graphics("figures/Event-detection-graph-screenshot.png")
+```
+
+
+27. Go back to the recording file and check that the selected values correspond to the stim artifacts and evoked currents. You may need to repeat steps 26 and 27 a few times to make sure that you have selected all non-spontaneous current events.
+
+28. Click on the `Process Selection` button that looks like a yellow triangle overlapping a blue triangle. 
+
+```{r process-selection-button, out.width="25%", fig.alt = "A screenshot of the Process Selection button available in the lower toolbar in Clampfit."}
+knitr::include_graphics("figures/Process-events-button.png")
+```
+29. A dialog box will pop up. In the `Process` selection, click on `Change state` and then `Reject`.
+
+30. When you are confident that you have removed all of the stim artifacts and evoked currents, it is time to save the results sheet. Click on the Results sheet (`Window` -> `Results1`) and `Save As`. I would suggest creating a consistent naming convention, such as `Letter`-events, as in `AA-events.sta`, `AB-events.sta`, etc.
+
+## Copy required columns
+
+31. Create a `.csv` file with five columns:
+
+* `letter` A character value that is a unique identifier for a single recording. Used to link data sets for evoked or spontaneous currents and
+cell-characteristics.
+* `ID` A character value for the recording filename.
+* `recording_num` A numeric value representing the recording number.
+This was incorporated before we switched to concatenating all recordings
+into one, but it needs to remain here to prevent breaking previous projects.
+It should be set to 1.
+* `trace` A numeric value representing the trace (automatically
+generated in Clampfit) where the current occurred.
+* `amplitude` A numeric value representing the amplitude of the evoked
+current in pA.
+* `time_of_peak` A numeric value representing the time of the peak in
+milliseconds relative to trace number. This is automatically calculated in
+Clampfit.
+
+32. Paste in the values from your results sheet.
+
+33. Repeat for the number of recordings that you need to analyze.
+
+34. You are now ready to import your data into R! Use the `add_new_cells()` function with `data_type = "sEPSC"`. You may find it helpful to read the [Get Started](https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html) guide if you are setting up your data for the first time.
+
 
 ## FAQ
 
