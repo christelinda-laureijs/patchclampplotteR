@@ -34,6 +34,7 @@ Imports:
     reactablefmtr,
     rlang,
     rstatix,
+    showtext,
     stringr,
     tibble,
     tidyr,
