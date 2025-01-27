@@ -47,7 +47,7 @@ raw_eEPSC_control_plots <- plot_raw_current_data(
 raw_eEPSC_control_plots$AO
 ```
 
-<img src="man/figures/README-example-raw-eEPSC-plot-1.png" width="100%" />
+<img src="man/figures/README-example-raw-eEPSC-plot-1.png" alt="A plot of evoked current amplitude (in pA) over time in minutes showing a decrease in evoked current amplitude after adding insulin." width="100%" />
 
 Plot evoked current amplitudes summarized by sex:
 
@@ -71,7 +71,7 @@ plot_summary_current_data(
 )
 ```
 
-<img src="man/figures/README-example-summary-eEPSC-plot-1.png" width="100%" />
+<img src="man/figures/README-example-summary-eEPSC-plot-1.png" alt="A scatterplot showing evoked current amplitude (% baseline) versus time in minutes, where 500 nM of insulin have been added from 5 minutes and onwards. Insulin significantly decreased current amplitude in both males and females." width="100%" />
 
 Plot a representative recording trace showing spontaneous currents from
 a raw Axon Binary File (.ABF):
@@ -89,7 +89,7 @@ plot_spontaneous_current_trace(
 )
 ```
 
-<img src="man/figures/README-example-spontaneous-current-trace-plot-1.png" width="100%" />
+<img src="man/figures/README-example-spontaneous-current-trace-plot-1.png" alt="A representative trace from a raw abf recording, showing a series of noisy, negative-going peaks. Each peak represents a spontaneous current" width="100%" />
 
 ## Installation
 

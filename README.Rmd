@@ -52,7 +52,7 @@ library(patchclampplotteR)
 
 Plot raw evoked currents for a specific cell:
 
-```{r example-raw-eEPSC-plot}
+```{r example-raw-eEPSC-plot, fig.alt = "A plot of evoked current amplitude (in pA) over time in minutes showing a decrease in evoked current amplitude after adding insulin."}
 raw_eEPSC_control_plots <- plot_raw_current_data(
   data = sample_raw_eEPSC_df,
   plot_treatment = "Control",
@@ -73,7 +73,7 @@ raw_eEPSC_control_plots$AO
 Plot evoked current amplitudes summarized by sex:  
 
 
-```{r example-summary-eEPSC-plot, warning=F}
+```{r example-summary-eEPSC-plot, warning=F, fig.alt = "A scatterplot showing evoked current amplitude (% baseline) versus time in minutes, where 500 nM of insulin have been added from 5 minutes and onwards. Insulin significantly decreased current amplitude in both males and females."}
 plot_summary_current_data(
   plot_category = 2,
   plot_treatment = "Control",
@@ -95,7 +95,7 @@ plot_summary_current_data(
 
 Plot a representative recording trace showing spontaneous currents from a raw Axon Binary File (.ABF):
 
-```{r example-spontaneous-current-trace-plot}
+```{r example-spontaneous-current-trace-plot, fig.alt = "A representative trace from a raw abf recording, showing a series of noisy, negative-going peaks. Each peak represents a spontaneous current"}
 plot_spontaneous_current_trace(
   file = sample_abf_file,
   plot_colour = "#6600cc",
