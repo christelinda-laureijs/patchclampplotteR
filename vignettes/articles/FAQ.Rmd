@@ -12,8 +12,16 @@ library(ggplot2)
 library(patchclampplotteR)
 library(here)
 library(reactable)
-library(extrafont)
-font_import()
+library(showtext)
+showtext_auto()
+showtext.opts(dpi = 300)
+
+# font_families()
+# font_paths()
+# font_files()
+font_add("jokerman", regular = "jokerman.TTF")
+# font_families()
+##font_import()
 ```
 
 # Plotting FAQ
@@ -22,13 +30,16 @@ This article contains answers to common questions about plots and customizing
 the ggplot output of functions like `plot_raw_current_data()`.
 This is the plot we will use throughout the FAQ:
 
-```{r}
+```{r, fig.showtext=T}
 cars_plot <- ggplot(cars, aes(x = speed, y = dist)) +
   geom_point() +
   labs(x = "Speed (mph)", y = "Distance (ft)") +
-  patchclampplotteR_theme()
+  patchclampplotteR_theme() +
+  theme(text = element_text(family = "jokerman"))
 
 cars_plot
+
+knitr::knit_exit()
 ```
 
 
@@ -89,7 +100,7 @@ fonts()
 If you already have the fonts installed in R, you just need to run
 `library(extrafont)` at the start of your document to have the fonts available to use. Here is a silly example:
 
-```{r}
+```{r fig.showtext=TRUE}
 cars_plot +
   theme(text = element_text(size = 25, color = "darkmagenta", family="Jokerman"))
 ```
