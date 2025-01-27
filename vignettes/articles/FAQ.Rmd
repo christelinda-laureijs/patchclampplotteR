@@ -12,16 +12,6 @@ library(ggplot2)
 library(patchclampplotteR)
 library(here)
 library(reactable)
-library(showtext)
-showtext_auto()
-showtext.opts(dpi = 300)
-
-# font_families()
-# font_paths()
-# font_files()
-font_add("jokerman", regular = "jokerman.TTF")
-# font_families()
-##font_import()
 ```
 
 # Plotting FAQ
@@ -30,16 +20,13 @@ This article contains answers to common questions about plots and customizing
 the ggplot output of functions like `plot_raw_current_data()`.
 This is the plot we will use throughout the FAQ:
 
-```{r, fig.showtext=T}
+```{r}
 cars_plot <- ggplot(cars, aes(x = speed, y = dist)) +
   geom_point() +
   labs(x = "Speed (mph)", y = "Distance (ft)") +
-  patchclampplotteR_theme() +
-  theme(text = element_text(family = "jokerman"))
+  patchclampplotteR_theme()
 
 cars_plot
-
-knitr::knit_exit()
 ```
 
 
@@ -86,9 +73,11 @@ This can be tricky and it will vary depending on your operating system. I would
 recommend using the `extrafont` package. You will need to run the code below the
 first time you do this. Use `fonts()` to see the list of fonts available to you in R.
 
-> **Warning!** `font_import()` will take a long time to
+> **Warning!** font_import() will take a long time to
 run, especially if you have a lot of fonts on your computer. Luckily, you only
 need to do this once per system, or after you install a new font.
+
+> If the `extrafont` package does not work, there are newer alternatives, such as the `showtext` package, which makes it particularly easy to add Google fonts and system fonts.
 
 ```{r, eval=F, results=F}
 library(extrafont)
@@ -98,54 +87,52 @@ fonts()
 ```
 
 If you already have the fonts installed in R, you just need to run
-`library(extrafont)` at the start of your document to have the fonts available to use. Here is a silly example:
+`library(extrafont)` at the start of your document to have the fonts available to use.
 
-```{r fig.showtext=TRUE}
+```{r eval=F}
 cars_plot +
-  theme(text = element_text(size = 25, color = "darkmagenta", family="Jokerman"))
+  theme(text = element_text(size = 25, color = "darkmagenta", family="Calibri"))
 ```
-
 
 To apply these theme changes globally (i.e. all plots in your file), it will be much more efficient to modify and define a theme. See below!
 
 ## How do I modify the ggplot theme?
 
-You might wonder things like, "How can I override the default theme that came with this package?" or "How can I make all my plots have the same theme/fonts, etc.?". You can fix this efficiently by defining a custom ggplot theme and making it the default theme for a document.
+You might wonder things like, "How can I override the default theme that came with this package?" or "How can I make all my plots have the same theme/fonts, etc.?". You can fix this efficiently by defining a custom ggplot theme and adding this to the `ggplot_theme` argument in all plotting functions.
 
-At the top of your RMarkdown file, choose a theme like `theme_classic()` or the `patchclampplotteR_theme()` that came with this package. Use this theme as a base, and add new theme elements to replace just the components you want to change (see [the documentation on theme modification in ggplot2](https://ggplot2.tidyverse.org/reference/theme.html). The new theme that you define will inherit all components of the base theme, but replace just the elements that you specified.
+Choose a theme like `theme_classic()` or the `patchclampplotteR_theme()` that came with this package. Use this theme as a base, and add new theme elements to replace just the components you want to change (see [the documentation on theme modification in ggplot2](https://ggplot2.tidyverse.org/reference/theme.html). The new theme that you define will inherit all components of the base theme, but replace just the elements that you specified.
+
+> **Important!** You must assign this theme to a name, since the `ggplot_theme` argument requires a named object. In this example, I will creatively call it `my_new_theme`.
 
 ```{r}
 my_new_theme <- patchclampplotteR_theme() %+replace%
-  theme(text = element_text(size = 25, color = "darkmagenta", family="Jokerman"))
+  theme(text = element_text(size = 25, color = "#333333"),
+        axis.title = element_text(face = "plain", size = 14),
+        panel.grid.major = element_line(color = "#ebebeb"),
+        axis.text = element_text(face = "italic", size = 8, color = "#999999"),
+        axis.line = element_blank())
 ```
 
 ```{r}
 cars_plot + my_new_theme
 ```
 
-
-Once you are happy with your theme, define it as the default theme using `theme_set()`.
-
-```{r}
-theme_set(theme_gray())
-```
-
-
-Now, all of the plots in your document will have your specific theme, font families, etc. automatically applied. This will overwrite the default `patchclampplotteR_theme()` as well.
+Now, insert this theme into the `ggplot_theme` argument. Here's an example of the new theme applied to one of the action potential plots:
 
 ```{r}
-plot_raw_current_data(
-  data = sample_raw_eEPSC_df,
+plot_AP_comparison(
+  sample_AP_data,
   plot_treatment = "Control",
   plot_category = 2,
-  current_type = "eEPSC",
-  y_variable = "P1",
-  pruned = "no",
-  hormone_added = "Insulin",
-  hormone_or_HFS_start_time = 5,
+  y_variable = "peak_amplitude",
+  y_axis_title = "Peak Amplitude (pA)",
   theme_options = sample_theme_options,
+  baseline_label = "Baseline",
+  test_type = "wilcox.test",
+  post_hormone_label = "Insulin",
   treatment_colour_theme = sample_treatment_names_and_colours,
-  save_plot_png = "no"
+  save_plot_png = "no",
+  ggplot_theme = my_new_theme
 )
 ```
 
