@@ -181,7 +181,7 @@ import_theme_colours <- function(filename) {
 #'   the same current_type as the new data (e.g. the columns must be the same).
 #'   If this is the first time you are running this function, start with a blank
 #'   .csv file containing just the column titles in the first row.
-#' @param data_type A character ("eEPSC", "sEPSC" or "AP") describing the data type that is being imported.
+#' @param data_type A character ("eEPSC", "sEPSC", "AP_parameter" or "AP_count") describing the data type that is being imported.
 #' @param write_new_csv A character ("yes" or "no") describing if the new data
 #'   should be written to a csv file. Defaults to "yes". Please specify
 #'   a filename for the new csv file in `new_file_name`.
@@ -194,11 +194,11 @@ import_theme_colours <- function(filename) {
 #' @return
 #'
 #' A dataframe consisting of the old raw data with information from the new
-#' cells appended to it. If `data_type == "AP"` two new columns will also be
+#' cells appended to it. If `data_type == "AP_parameter"` two new columns will also be
 #' added based on calculations from the existing columns. These are
 #' `latency_to_fire` (which is `time_to_peak` - `injection_start_time`) and
 #' `antipeak_time_relative_to_threshold` (which is `time_of_antipeak` -
-#' `time_of_threshold`).
+#' `time_of_threshold`). If `data_type == "AP_count"` two new columns will be added. These are `AP_frequency` (in Hz) and `current_injection` (in pA).
 #'
 #' @export
 #'
@@ -243,7 +243,7 @@ import_theme_colours <- function(filename) {
 #'  Clampfit.
 #' }
 #'
-#'  If the data are action potential parameters (`data_type == "AP"`), the data
+#'  If the data are action potential parameters (`data_type == "AP_parameter"`), the data
 #'   must contain the following columns:
 #' \itemize{
 #'  \item `letter` A character value that is a unique identifier for a single
@@ -339,8 +339,8 @@ add_new_cells <- function(new_raw_data_csv,
 
   if (is.null(data_type) ||
     length(data_type) != 1L ||
-    !data_type %in% c("eEPSC", "sEPSC", "AP")) {
-    stop("'data_type' argument must be one of: 'eEPSC', 'sEPSC' or 'AP'")
+    !data_type %in% c("eEPSC", "sEPSC", "AP_parameter", "AP_count")) {
+    stop("'data_type' argument must be one of: 'eEPSC', 'sEPSC', 'AP' or 'AP_count'.")
   }
 
   # Required to see if new cells have associated data for synapses, treatment, sex, age, etc.
@@ -350,38 +350,23 @@ add_new_cells <- function(new_raw_data_csv,
     dplyr::rename(X = .data$x, Y = .data$y)
 
   new_raw_data <- utils::read.csv(here::here(new_raw_data_csv)) %>%
-    dplyr::rename_with(tolower) %>%
-    dplyr::mutate(id = factor(.data$id)) %>%
-    dplyr::rename(ID = .data$id)
+    dplyr::rename_with(tolower)
+
+  if (data_type %in% c("eEPSC", "sEPSC", "AP_parameter")) {
+    new_raw_data <- new_raw_data %>%
+      dplyr::mutate(id = factor(.data$id)) %>%
+      dplyr::rename(ID = .data$id)
+  }
 
   if (data_type == "eEPSC") {
-    if (any(grepl("sEPSC", list_of_argument_names))) {
+    if (any(grepl("sEPSC|AP_parameter|AP_count", list_of_argument_names))) {
       if (utils::menu(
         c("Yes", "No"),
         title = paste0(
           "data_type = \"",
           data_type,
           "\" but some filenames contain other keywords like ",
-          "\"sEPSC\".",
-          "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
-        )
-      ) != 1) {
-        stop(
-          "Please double-check that you have selected csv files belonging to the same data type."
-        )
-      } else {
-        "Okay, moving forward"
-      }
-    }
-
-    if (any(grepl("AP", list_of_argument_names))) {
-      if (menu(
-        c("Yes", "No"),
-        title = paste0(
-          "data_type = \"",
-          data_type,
-          "\" but some filenames contain other keywords like ",
-          "\"AP\".",
+          "\"sEPSC\" or \"AP\".",
           "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
         )
       ) != 1) {
@@ -400,33 +385,14 @@ add_new_cells <- function(new_raw_data_csv,
   }
 
   if (data_type == "sEPSC") {
-    if (any(grepl("eEPSC", list_of_argument_names))) {
+    if (any(grepl("eEPSC|AP_parameter|AP_count", list_of_argument_names))) {
       if (menu(
         c("Yes", "No"),
         title = paste0(
           "data_type = \"",
           data_type,
           "\" but some filenames contain other keywords like ",
-          "\"eEPSC\".",
-          "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
-        )
-      ) != 1) {
-        stop(
-          "Please double-check that you have selected csv files belonging to the same data type."
-        )
-      } else {
-        "Okay, moving forward"
-      }
-    }
-
-    if (any(grepl("AP", list_of_argument_names))) {
-      if (menu(
-        c("Yes", "No"),
-        title = paste0(
-          "data_type = \"",
-          data_type,
-          "\" but some filenames contain other keywords like ",
-          "\"AP\".",
+          "\"eEPSC\" or \"AP_count\".",
           "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
         )
       ) != 1) {
@@ -449,34 +415,15 @@ add_new_cells <- function(new_raw_data_csv,
   }
 
 
-  if (data_type == "AP") {
-    if (any(grepl("eEPSC", list_of_argument_names))) {
+  if (data_type == "AP_parameter") {
+    if (any(grepl("eEPSC|sEPSC|AP_count", list_of_argument_names))) {
       if (menu(
         c("Yes", "No"),
         title = paste0(
           "data_type = \"",
           data_type,
           "\" but some filenames contain other keywords like ",
-          "\"eEPSC\".",
-          "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
-        )
-      ) != 1) {
-        stop(
-          "Please double-check that you have selected csv files belonging to the same data type."
-        )
-      } else {
-        "Okay, moving forward"
-      }
-    }
-
-    if (any(grepl("sEPSC", list_of_argument_names))) {
-      if (menu(
-        c("Yes", "No"),
-        title = paste0(
-          "data_type = \"",
-          data_type,
-          "\" but some filenames contain other keywords like ",
-          "\"sEPSC\".",
+          "\"eEPSC\" or \"AP_count\".",
           "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
         )
       ) != 1) {
@@ -499,6 +446,46 @@ add_new_cells <- function(new_raw_data_csv,
         peak_amplitude = dplyr::case_when(
           is.na(.data$peak_amplitude) ~ 0,
           T ~ .data$peak_amplitude
+        )
+      )
+  }
+
+  if (data_type == "AP_count") {
+    if (any(grepl("eEPSC|sEPSC|AP_parameter", list_of_argument_names))) {
+      if (menu(
+        c("Yes", "No"),
+        title = paste0(
+          "data_type = \"",
+          data_type,
+          "\" but some filenames contain other keywords like ",
+          "\"eEPSC\" or \"AP\".",
+          "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
+        )
+      ) != 1) {
+        stop(
+          "Please double-check that you have selected csv files belonging to the same data type."
+        )
+      } else {
+        "Okay, moving forward"
+      }
+    }
+
+    new_raw_data <- new_raw_data %>%
+      dplyr::rename(no_of_APs = .data$no_of_aps) %>%
+      mutate(
+        AP_frequency = no_of_APs / 0.5,
+        current_injection = case_when(
+          sweep == 1 ~ -50,
+          sweep == 2 ~ -40,
+          sweep == 3 ~ -30,
+          sweep == 4 ~ -20,
+          sweep == 5 ~ -10,
+          sweep == 6 ~ 0,
+          sweep == 7 ~ 10,
+          sweep == 8 ~ 20,
+          sweep == 9 ~ 30,
+          sweep == 10 ~ 40,
+          T ~ 50
         )
       )
   }
@@ -540,12 +527,17 @@ add_new_cells <- function(new_raw_data_csv,
   # Import old Raw-Data sheet
   old_raw_data <- utils::read.csv(here::here(old_raw_data_csv), header = T) %>%
     dplyr::rename_with(tolower) %>%
-    dplyr::mutate(id = factor(.data$id), letter = factor(.data$letter)) %>%
-    dplyr::rename(
-      ID = .data$id,
-      X = .data$x,
-      Y = .data$y
-    )
+    dplyr::mutate(letter = factor(.data$letter))
+
+  if (data_type %in% c("eEPSC", "sEPSC", "AP_parameter")) {
+    old_raw_data <- old_raw_data %>%
+      dplyr::mutate(id = factor(.data$id)) %>%
+      dplyr::rename(
+        ID = .data$id,
+        X = .data$x,
+        Y = .data$y
+      )
+  }
 
   if (data_type == "eEPSC") {
     old_raw_data <- old_raw_data %>%
@@ -555,7 +547,7 @@ add_new_cells <- function(new_raw_data_csv,
       )
   }
 
-  if (data_type == "AP") {
+  if (data_type == "AP_parameter") {
     old_raw_data <- old_raw_data %>%
       dplyr::rename(
         first_sweep_with_APs = .data$first_sweep_with_aps,
@@ -563,6 +555,11 @@ add_new_cells <- function(new_raw_data_csv,
       )
 
     warning("Renamed column 't_x' to 'threshold'")
+  }
+
+  if (data_type == "AP_count") {
+    old_raw_data <- old_raw_data %>%
+      dplyr::rename(no_of_APs = .data$no_of_aps)
   }
 
   if (any(grepl("cells", colnames(old_raw_data)))) {

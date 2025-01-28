@@ -200,7 +200,7 @@ sample_full_ap_table <- read.csv("sample-ap-data.csv") %>%
 reactable(sample_full_ap_table)
 ```
 
-18. You are now ready to import your data into R! Use the `add_new_cells()` function with `data_type = "AP"`. You may find it helpful to read the [Get Started](https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html) guide if you are setting up your data for the first time.
+18. You are now ready to import your data into R! Use the `add_new_cells()` function with `data_type = "AP_parameter"`. You may find it helpful to read the [Get Started](https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html) guide if you are setting up your data for the first time.
 
 19. Use the `plot_AP_comparison()` function to see how parameters like `peak_amplitude` and `half-width` change after your treatment.
 
