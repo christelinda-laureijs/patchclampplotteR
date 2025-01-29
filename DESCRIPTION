@@ -33,6 +33,7 @@ Imports:
     reactablefmtr,
     rlang,
     rstatix,
+    stats,
     stringr,
     tibble,
     tidyr,

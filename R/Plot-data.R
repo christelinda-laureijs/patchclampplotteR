@@ -1982,6 +1982,132 @@ plot_AP_comparison <-
 
 
 
+#' Plot action potential frequency curves for multiple treatments
+#'
+#' This function allows you to generate a plot of action potential frequency (y-axis) for each current injection (x-axis), coloured by treatment. The linetype indicates which state the data belong to (a recording taken during the baseline or after a hormone or treatment).
+#'
+#' @param data Action potential frequency data imported through `add_new_cells()` with `data_type == "AP_count"`
+#'
+#' @inheritParams plot_PPR_data_multiple_treatments
+#'
+#' @returns
+#'
+#' A ggplot object. If `save_plot_png == "yes"`, it will also generate
+#'   a .png file in the folder `Figures/Action-potentials` relative to the
+#'   project directory.
+#' @export
+#'
+#' @examples
+#'
+#' plot_AP_frequencies(data = sample_AP_count_data,
+#' include_all_treatments = "yes",
+#' plot_category = 2,
+#' treatment_colour_theme = sample_treatment_names_and_colours)
+#'
+plot_AP_frequencies <- function(data,
+                                include_all_treatments = "yes",
+                                list_of_treatments = NULL,
+                                plot_category = 2,
+                                treatment_colour_theme,
+                                filename_suffix = "",
+                                save_plot_png = "no",
+                                ggplot_theme = patchclampplotteR_theme()) {
+  if (!include_all_treatments %in% c("yes", "no")) {
+    stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!save_plot_png %in% c("yes", "no")) {
+    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (include_all_treatments == "yes") {
+    treatment_info <- treatment_colour_theme
+    plot_data <- data %>%
+      dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
+      droplevels()
+
+    if (!is.null(list_of_treatments)) {
+      warning(
+        "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
+      )
+    }
+  } else {
+    if (is.null(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is NULL.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    if (!is.character(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is not a character object.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments)
+    plot_data <- data %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments) %>%
+      droplevels()
+  }
+
+  AP_frequency_plot <- data %>%
+    dplyr::filter(.data$category == plot_category) %>%
+    dplyr::group_by(.data$treatment, .data$state, .data$current_injection) %>%
+    dplyr::summarize(
+      mean_AP_frequency = mean(.data$AP_frequency),
+      SE = stats::sd(.data$AP_frequency) / sqrt(dplyr::n()),
+    ) %>%
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x = .data$current_injection,
+        y = .data$mean_AP_frequency,
+        ymin = .data$mean_AP_frequency - .data$SE,
+        ymax = .data$mean_AP_frequency + .data$SE,
+        color = .data$treatment,
+        linetype = .data$state
+      )
+    ) +
+    ggplot2::stat_smooth(geom = "line", lineend = "round") +
+    ggplot2::geom_point(alpha = 0) +
+    ggplot2::scale_linetype_manual(values = c("solid", "dotted")) +
+    ggplot2::scale_color_manual(
+      breaks = treatment_info$treatment,
+      labels = treatment_info$display_names,
+      values = treatment_info$colours
+    ) +
+    ggplot2::labs(
+      x = "Current Injection (pA)",
+      y = "AP Frequency (Hz)",
+      color = NULL,
+      linetype = NULL
+    ) +
+    ggplot2::guides(color = ggplot2::guide_legend(override.aes = list(linetype = 0, alpha = 1))) +
+    ggplot_theme
+
+  if (save_plot_png == "yes") {
+    ggplot2::ggsave(
+      plot = AP_frequency_plot,
+      path = here::here("Figures/Action-potentials/"),
+      file = paste0("AP-frequency-", filename_suffix, ".png"),
+      width = 7,
+      height = 5,
+      units = "in",
+      dpi = 300
+    )
+  }
+
+  return(AP_frequency_plot)
+
+}
+
+
 #' Visually compare spontaneous current parameters
 #'
 #' [plot_spontaneous_current_parameter_comparison()] is a useful function to see

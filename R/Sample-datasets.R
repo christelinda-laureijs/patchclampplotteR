@@ -676,7 +676,7 @@ NULL
 #' the control period (state == "Baseline") or after insulin has been applied
 #' (state == "Insulin").
 #'
-#' This is an example of what the data looks like after being imported with `add_new_cells()` with `data_type == "AP"`. You can see that the same columns from the cell characteristics file have been appended to new rows for peak_amplitude, after-hyperpolarization amplitude, latency to fire, and others.#'
+#' This is an example of what the data looks like after being imported with `add_new_cells()` with `data_type = "AP"`. You can see that the same columns from the cell characteristics file have been appended to new rows for peak_amplitude, after-hyperpolarization amplitude, latency to fire, and others.
 #'
 #' @name sample_AP_data
 #' @docType data
@@ -705,7 +705,30 @@ NULL
 #' @seealso [plot_AP_comparison()]
 NULL
 
+# Sample AP count data ------
 
+#' Example of action potential count data for two time-points: during
+#' the control period (state == "Baseline") or after insulin has been applied
+#' (state == "Insulin"). These were obtained by counting the number of action potentials present within each sweep. The data were then merged with the `sample_cell_characteristics` data through `add_new_cells()` with `data_type = "AP_count"`.
+#'
+#' @name sample_AP_count_data
+#' @docType data
+#' @format An .rda file containing 340 objects of 16 variables.
+#' \describe{
+#'  \item{`letter, synapses, ID, sex, animal, treatment, etc.`}{All columns that were produced in
+#'  [add_new_cells()]. Please see [sample_cell_characteristics] for detailed
+#'  column descriptions.}
+#'  \item{`state`}{A character ("Baseline" or "Insulin") representing
+#'  the timepoint that the data point belongs to.}
+#'  \item{`sweep`}{The sweep.}
+#'  \item{`no_of_APs`}{The number of action potentials present in the sweep.}
+#'  \item{`AP_frequency}{The frequency of the action potentials (Hz) in a sweep. This column is generated in `add_new_cells()`.}
+#'  \item{`current_injection`}{The value of the current injection (in pA)  at a particular sweep.}
+#' }
+#' @keywords data
+#'
+#' @seealso [plot_AP_frequencies()]
+NULL
 
 # Treatment colour theme -----
 

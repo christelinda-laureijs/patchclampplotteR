@@ -189,6 +189,7 @@ import_theme_colours <- function(filename) {
 #'   to the old data. Must be a character representing a filepath to a csv file.
 #'   Examples include "Data/20241118-Raw-eEPSC-data.csv".
 #' @param injection_start_time For action potential data only: A numeric value describing the start time (in ms) when current injection was applied. Used to calculate the latency to fire.
+#' @param length_of_current_injection For action potential data only: A numeric value indicating the duration of the current injection (in s, default is 0.5 s).
 #' @param decimal_places A numeric value indicating the number of decimal places the data should be rounded to. Used to reduce file size and prevent an incorrect representation of the number of significant digits.
 #'
 #' @return
@@ -294,7 +295,8 @@ add_new_cells <- function(new_raw_data_csv,
                           write_new_csv = "yes",
                           new_file_name,
                           decimal_places = 2,
-                          injection_start_time = 265.4) {
+                          injection_start_time = 265.4,
+                          length_of_current_injection = 0.5) {
   # Obtain argument values as strings
   # Required to check if the filenames and data_type match
   # (e.g. User enters raw-sEPSC-data.csv for data_type = "sEPSC")
@@ -472,9 +474,9 @@ add_new_cells <- function(new_raw_data_csv,
 
     new_raw_data <- new_raw_data %>%
       dplyr::rename(no_of_APs = .data$no_of_aps) %>%
-      mutate(
-        AP_frequency = no_of_APs / 0.5,
-        current_injection = case_when(
+      dplyr::mutate(
+        AP_frequency = .data$no_of_APs / length_of_current_injection,
+        current_injection = dplyr::case_when(
           sweep == 1 ~ -50,
           sweep == 2 ~ -40,
           sweep == 3 ~ -30,

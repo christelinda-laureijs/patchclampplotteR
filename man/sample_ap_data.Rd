@@ -31,7 +31,7 @@ the timepoint that the data point belongs to.}
 }
 }
 \description{
-This is an example of what the data looks like after being imported with \code{add_new_cells()} with \code{data_type == "AP"}. You can see that the same columns from the cell characteristics file have been appended to new rows for peak_amplitude, after-hyperpolarization amplitude, latency to fire, and others.#'
+This is an example of what the data looks like after being imported with \code{add_new_cells()} with \code{data_type = "AP"}. You can see that the same columns from the cell characteristics file have been appended to new rows for peak_amplitude, after-hyperpolarization amplitude, latency to fire, and others.
 }
 \seealso{
 \code{\link[=plot_AP_comparison]{plot_AP_comparison()}}
