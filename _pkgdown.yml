@@ -54,6 +54,7 @@ reference:
   - plot_PPR_data_one_treatment
   - plot_PPR_data_multiple_treatments
   - plot_AP_comparison
+  - plot_AP_frequencies_multiple_treatments
   - plot_baseline_data
   - plot_cv_data
   - plot_variance_comparison_data
@@ -94,6 +95,7 @@ reference:
     Sample datasets from recordings measuring action potentials in response to a current injection protocol.
   contents:
   - sample_AP_data
+  - sample_AP_count_data
 
 
 articles:

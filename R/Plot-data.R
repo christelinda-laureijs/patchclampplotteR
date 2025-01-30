@@ -1999,12 +1999,12 @@ plot_AP_comparison <-
 #'
 #' @examples
 #'
-#' plot_AP_frequencies(data = sample_AP_count_data,
+#' plot_AP_frequencies_multiple_treatments(data = sample_AP_count_data,
 #' include_all_treatments = "yes",
 #' plot_category = 2,
 #' treatment_colour_theme = sample_treatment_names_and_colours)
 #'
-plot_AP_frequencies <- function(data,
+plot_AP_frequencies_multiple_treatments <- function(data,
                                 include_all_treatments = "yes",
                                 list_of_treatments = NULL,
                                 plot_category = 2,

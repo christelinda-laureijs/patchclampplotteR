@@ -727,7 +727,7 @@ NULL
 #' }
 #' @keywords data
 #'
-#' @seealso [plot_AP_frequencies()]
+#' @seealso [plot_AP_frequencies_multiple_treatments()]
 NULL
 
 # Treatment colour theme -----
