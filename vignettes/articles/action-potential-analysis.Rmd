@@ -357,6 +357,33 @@ column.
 reactable(read.csv("sample-ap-count-data.csv"))
 ```
 
+22. You are now ready to import the data into R! Use `add_new_cells()` with `data_type == "AP_count"`.
+
+23. Here is an example of the type of plots you can create!
+
+```{r}
+plot_AP_frequencies_single_treatment(
+  data = sample_AP_count_data,
+  plot_treatment = "Control",
+  plot_category = 2,
+  baseline_label = "Baseline",
+  hormone_added = "Insulin",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  large_axis_text = "no",
+  test_type = "wilcox.test",
+  theme_options = sample_theme_options,
+  save_plot_png = "no"
+)
+```
+
+```{r}
+plot_AP_frequencies_multiple_treatments(data = sample_AP_count_data,
+include_all_treatments = "yes",
+plot_category = 2,
+treatment_colour_theme = sample_treatment_names_and_colours)
+```
+
+
 ## FAQ
 
 *What do I do if there are no action potentials following treatment?*

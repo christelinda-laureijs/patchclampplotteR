@@ -2000,29 +2000,30 @@ plot_AP_comparison <-
 #' @export
 #'
 #' @examples
-#'plot_AP_frequencies_single_treatment(data = sample_AP_count_data,
-#'                                         plot_treatment = "Control",
-#'                                         plot_category = 2,
-#'                                         baseline_label = "Baseline",
-#'                                         hormone_added = "Insulin",
-#'                                         treatment_colour_theme = sample_treatment_names_and_colours,
-#'                                         large_axis_text = "no",
-#'                                         test_type = "wilcox.test",
-#'                                         theme_options = sample_theme_options,
-#'                                         save_plot_png = "no")
-#'
+#' plot_AP_frequencies_single_treatment(
+#'   data = sample_AP_count_data,
+#'   plot_treatment = "Control",
+#'   plot_category = 2,
+#'   baseline_label = "Baseline",
+#'   hormone_added = "Insulin",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   large_axis_text = "no",
+#'   test_type = "wilcox.test",
+#'   theme_options = sample_theme_options,
+#'   save_plot_png = "no"
+#' )
 #'
 plot_AP_frequencies_single_treatment <- function(data,
-                                                    plot_treatment,
-                                                    plot_category,
-                                                    large_axis_text = "no",
-                                                    baseline_label = "Baseline",
-                                                    hormone_added,
-                                                    test_type,
-                                                    save_plot_png = "no",
-                                                    treatment_colour_theme,
-                                                    theme_options,
-                                                    ggplot_theme = patchclampplotteR_theme()) {
+                                                 plot_treatment,
+                                                 plot_category,
+                                                 large_axis_text = "no",
+                                                 baseline_label = "Baseline",
+                                                 hormone_added,
+                                                 test_type,
+                                                 save_plot_png = "no",
+                                                 treatment_colour_theme,
+                                                 theme_options,
+                                                 ggplot_theme = patchclampplotteR_theme()) {
   if (!large_axis_text %in% c("yes", "no")) {
     stop("'large_axis_text' argument must be one of: 'yes' or 'no'")
   }
@@ -2060,29 +2061,31 @@ plot_AP_frequencies_single_treatment <- function(data,
     ) +
     ggplot2::geom_pointrange(size = 1, linewidth = 0.6) +
     ggplot2::labs(x = "Current Injection (pA)", y = "AP Frequency (Hz)", color = NULL) +
-    ggplot2::scale_color_manual(values = c("gray", plot_colour),
-                                labels = c(
-                                  paste0(
-                                    baseline_label,
-                                    ", n = ",
-                                    ap_plot_count_data %>%
-                                      dplyr::filter(.data$state == baseline_label) %>%
-                                      dplyr::pull(.data$n) %>%
-                                      dplyr::first()
-                                  ),
-                                  paste0(
-                                    hormone_added,
-                                    ", n = ",
-                                    ap_plot_count_data %>%
-                                      dplyr::filter(.data$state == hormone_added) %>%
-                                      dplyr::pull(.data$n) %>%
-                                      dplyr::first()
-                                  )
-                                ))
+    ggplot2::scale_color_manual(
+      values = c("gray", plot_colour),
+      labels = c(
+        paste0(
+          baseline_label,
+          ", n = ",
+          ap_plot_count_data %>%
+            dplyr::filter(.data$state == baseline_label) %>%
+            dplyr::pull(.data$n) %>%
+            dplyr::first()
+        ),
+        paste0(
+          hormone_added,
+          ", n = ",
+          ap_plot_count_data %>%
+            dplyr::filter(.data$state == hormone_added) %>%
+            dplyr::pull(.data$n) %>%
+            dplyr::first()
+        )
+      )
+    )
 
   if (test_type != "none") {
     # Maximum y-axis values required for correct positioning of significance stars over plot
-    max_mean_AP_frequencies <-  ap_plot_count_data %>%
+    max_mean_AP_frequencies <- ap_plot_count_data %>%
       dplyr::group_by(.data$current_injection) %>%
       dplyr::summarize(
         max_AP_frequency = max(.data$mean_AP_frequency),
@@ -2091,8 +2094,8 @@ plot_AP_frequencies_single_treatment <- function(data,
 
     # Group data for comparisons
     frequency_comparison_model <- data %>%
-      dplyr::filter(.data$category == 2) %>%
-      dplyr::filter(.data$treatment == "Control") %>%
+      dplyr::filter(.data$category == plot_category) %>%
+      dplyr::filter(.data$treatment == plot_treatment) %>%
       dplyr::group_by(.data$current_injection)
 
 
@@ -2137,7 +2140,6 @@ plot_AP_frequencies_single_treatment <- function(data,
         inherit.aes = F,
         size = 5
       )
-
   }
 
 
@@ -2177,7 +2179,6 @@ plot_AP_frequencies_single_treatment <- function(data,
       units = "in",
       dpi = 600
     )
-
   }
   return(single_treatment_AP_plot)
 }
@@ -2200,19 +2201,21 @@ plot_AP_frequencies_single_treatment <- function(data,
 #'
 #' @examples
 #'
-#' plot_AP_frequencies_multiple_treatments(data = sample_AP_count_data,
-#' include_all_treatments = "yes",
-#' plot_category = 2,
-#' treatment_colour_theme = sample_treatment_names_and_colours)
+#' plot_AP_frequencies_multiple_treatments(
+#'   data = sample_AP_count_data,
+#'   include_all_treatments = "yes",
+#'   plot_category = 2,
+#'   treatment_colour_theme = sample_treatment_names_and_colours
+#' )
 #'
 plot_AP_frequencies_multiple_treatments <- function(data,
-                                include_all_treatments = "yes",
-                                list_of_treatments = NULL,
-                                plot_category = 2,
-                                treatment_colour_theme,
-                                filename_suffix = "",
-                                save_plot_png = "no",
-                                ggplot_theme = patchclampplotteR_theme()) {
+                                                    include_all_treatments = "yes",
+                                                    list_of_treatments = NULL,
+                                                    plot_category = 2,
+                                                    treatment_colour_theme,
+                                                    filename_suffix = "",
+                                                    save_plot_png = "no",
+                                                    ggplot_theme = patchclampplotteR_theme()) {
   if (!include_all_treatments %in% c("yes", "no")) {
     stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
   }
@@ -2305,7 +2308,6 @@ plot_AP_frequencies_multiple_treatments <- function(data,
   }
 
   return(AP_frequency_plot)
-
 }
 
 
