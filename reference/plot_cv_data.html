@@ -58,6 +58,7 @@ in evoked current amplitudes over time.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_cv_data</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
+<span>  <span class="va">plot_category</span>,</span>
 <span>  <span class="va">treatment_colour_theme</span>,</span>
 <span>  <span class="va">theme_options</span>,</span>
 <span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span>,</span>
@@ -78,6 +79,13 @@ third dataframe in the list generated from <code><a href="make_pruned_EPSC_data.
 <dd><p>A character value specifying the treatment you would
 like to plot (e.g. "Control"). <code>plot_treatment</code> represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.</p></dd>
+
+
+<dt id="arg-plot-category">plot_category<a class="anchor" aria-label="anchor" href="#arg-plot-category"></a></dt>
+<dd><p>A numeric value specifying the category, which can be
+used to differentiate different protocol types. In the sample dataset for
+this package, <code>plot_category == 2</code> represents experiments where insulin was
+applied continuously after a 5-minute baseline period.</p></dd>
 
 
 <dt id="arg-treatment-colour-theme">treatment_colour_theme<a class="anchor" aria-label="anchor" href="#arg-treatment-colour-theme"></a></dt>
@@ -121,6 +129,7 @@ a mechanism is pre- or post-synaptic.</p></div>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">plot_cv_data</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">all_cells</span>,</span></span>
 <span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span></span>
+<span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span></span>
 <span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span></span>
 <span class="r-in"><span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span></span>
