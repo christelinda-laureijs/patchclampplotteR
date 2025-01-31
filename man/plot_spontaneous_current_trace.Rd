@@ -7,6 +7,9 @@
 plot_spontaneous_current_trace(
   file,
   plot_colour,
+  plot_category,
+  plot_treatment,
+  state,
   include_scale_bar = "yes",
   plot_episode = "epi1",
   scale_bar_x_start = 1.25,
@@ -17,7 +20,7 @@ plot_spontaneous_current_trace(
   plot_x_max = 5,
   plot_y_min = -100,
   plot_y_max = 35,
-  save_plot_pngs = "no",
+  save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
 }
@@ -27,6 +30,13 @@ plot_spontaneous_current_trace(
 by importing a raw .abf file through the \code{\link[=import_ABF_file]{import_ABF_file()}} function.}
 
 \item{plot_colour}{A character value naming the colour of the plot.}
+
+\item{plot_category}{A numeric value specifying the category, which can be
+used to differentiate different protocol types. In the sample dataset for
+this package, \code{plot_category == 2} represents experiments where insulin was
+applied continuously after a 5-minute baseline period.}
+
+\item{state}{A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The \code{state} will be included in the .png filename if \code{save_plot_png = "yes"}.}
 
 \item{include_scale_bar}{A character value that determines if a scale bar
 will be added to the plot. Allowed values are "yes" and "no".}
@@ -59,16 +69,17 @@ pA) of the scale bar.}
 \item{plot_y_max}{A numeric value describing the maximum value on the y-axis
 (in pA).}
 
-\item{save_plot_pngs}{A character ("yes" or "no") defining if the plot should
-be saved as a PNG through \code{ggplot::ggsave()}.}
+\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
+saved as a .png using ggsave. The filepath depends on the current type, but
+they will all go in subfolders below Figures/ in your project directory.}
 
 \item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }
 \value{
-A ggplot object. If save_plot_PNGs is defined as "yes", it will also
+A ggplot object. If save_plot_png is defined as "yes", it will also
 generate a .png file in the folder
 \code{Figures/Spontaneous-currents/Representative-Traces} relative to the
-project directory.
+project directory, with the \code{plot_category}, \code{plot_treatment}, and \code{state} included in the filename.
 }
 \description{
 \code{plot_spontaneous_current_trace()} generates a plot of raw current amplitude

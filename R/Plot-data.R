@@ -52,13 +52,17 @@ patchclampplotteR_theme <- function() {
 #'
 #' @param data A dataframe containing the summary data generated from
 #'   [make_summary_EPSC_data()].
+#' @param plot_category A numeric value specifying the category, which can be
+#'   used to differentiate different protocol types. In the sample dataset for
+#'   this package, `plot_category == 2` represents experiments where insulin was
+#'   applied continuously after a 5-minute baseline period.
 #' @param treatment_colour_theme A dataframe containing treatment names and
 #'   their associated colours as hex values. See
 #'   [sample_treatment_names_and_colours] for an example of what this dataframe
 #'   should look like.
-#' @param theme_options A dataframe containing theme options. See
+#' @param theme_options A dataframe containing theme options, defaults to `sample_theme_options`. See
 #'   [sample_theme_options] for an example of what this dataframe should
-#'   look like.
+#'   look like and how you can customize these values.
 #' @param include_all_treatments A character ("yes" or "no") specifying if the
 #'   plot will include data from all treatments. If "no", you must specify a
 #'   list of treatments in `list_of_treatments`.
@@ -100,6 +104,7 @@ patchclampplotteR_theme <- function() {
 #' plot_baseline_data(
 #'   data = sample_summary_eEPSC_df,
 #'   current_type = "eEPSC",
+#'   plot_category = 2,
 #'   y_variable = "raw_amplitude",
 #'   include_all_treatments = "yes",
 #'   list_of_treatments = NULL,
@@ -112,6 +117,7 @@ patchclampplotteR_theme <- function() {
 #' )
 plot_baseline_data <- function(data,
                                current_type = "eEPSC",
+                               plot_category,
                                y_variable = "raw_amplitude",
                                include_all_treatments = "yes",
                                list_of_treatments = NULL,
@@ -120,7 +126,7 @@ plot_baseline_data <- function(data,
                                large_axis_text = "no",
                                plot_width = 8,
                                treatment_colour_theme,
-                               theme_options,
+                               theme_options = sample_theme_options,
                                save_plot_png = "no",
                                ggplot_theme = patchclampplotteR_theme()) {
   if (is.null(current_type) ||
@@ -228,6 +234,7 @@ plot_baseline_data <- function(data,
   }
 
   baseline_comparison_plot <- plot_data %>%
+    dplyr::filter(.data$category == plot_category) %>%
     dplyr::filter(.data$interval == baseline_interval) %>%
     dplyr::mutate(
       treatment = stringr::str_replace_all(
@@ -288,7 +295,8 @@ plot_baseline_data <- function(data,
       file = paste0(
         "Baseline-",
         y_variable,
-        "-comparison",
+        "-comparison-category-",
+        plot_category,
         filename_suffix,
         ".png"
       ),
@@ -394,7 +402,7 @@ plot_raw_current_data <-
            hormone_added = "Insulin",
            hormone_or_HFS_start_time = 5,
            hormone_end_time = NULL,
-           theme_options,
+           theme_options = sample_theme_options,
            treatment_colour_theme,
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
@@ -714,7 +722,7 @@ plot_raw_current_data <-
 #'   specify the file-name in `representative_trace_filename`.
 #' @param representative_trace_filename A character value describing the
 #'   filename of the representative trace. This should be the name of a .png
-#'   file stored within the subfolder `Figures/Representative-Traces/`.
+#'   file stored within the subfolder `Figures/Representative-Traces/`. Representative traces must be saved as PNGS with the following file name convention: Category-[number]-[treatment]-Trace.png or a warning will display about a missing file. Here is an example of a correct filename: "Category-2-Control-Trace.png".
 #' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
 #' @param signif_stars A character ("yes" or "no") describing if significance
 #'   stars should be included as an overlay in the plot. If "yes", you must
@@ -783,7 +791,7 @@ plot_summary_current_data <- function(data,
                                       t_test_df,
                                       large_axis_text = "no",
                                       shade_intervals = "no",
-                                      theme_options,
+                                      theme_options = sample_theme_options,
                                       treatment_colour_theme,
                                       save_plot_png = "no",
                                       ggplot_theme = patchclampplotteR_theme()) {
@@ -1276,7 +1284,7 @@ plot_variance_comparison_data <- function(data,
                                           test_type,
                                           large_axis_text = "no",
                                           treatment_colour_theme,
-                                          theme_options,
+                                          theme_options = sample_theme_options,
                                           save_plot_png = "no",
                                           ggplot_theme = patchclampplotteR_theme()) {
   if (is.null(post_hormone_interval) ||
@@ -1470,8 +1478,9 @@ plot_variance_comparison_data <- function(data,
 
 plot_cv_data <- function(data,
                          plot_treatment = "Control",
+                         plot_category,
                          treatment_colour_theme,
-                         theme_options,
+                         theme_options = sample_theme_options,
                          save_plot_png = "no",
                          ggplot_theme = patchclampplotteR_theme()) {
   if (!save_plot_png %in% c("yes", "no")) {
@@ -1484,6 +1493,7 @@ plot_cv_data <- function(data,
     dplyr::pull(.data$colours)
 
   cv_plot <- data %>%
+    dplyr::filter(.data$category == plot_category) %>%
     dplyr::filter(.data$treatment == plot_treatment) %>%
     ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data$cv_P1_all_cells)) +
     ggplot2::geom_point(color = plot_colour) +
@@ -1494,11 +1504,11 @@ plot_cv_data <- function(data,
     ggplot2::ggsave(
       plot = cv_plot,
       path = here::here("Figures/Evoked-currents/CV"),
-      file = paste0("CV_plot", plot_treatment, ".png"),
+      file = paste0("CV_plot-category-", plot_category, "-", plot_treatment, ".png"),
       width = 7,
       height = 5,
       units = "in",
-      dpi = 600
+      dpi = 300
     )
   }
 
@@ -1556,7 +1566,7 @@ plot_PPR_data_one_treatment <- function(data,
                                         test_type,
                                         large_axis_text = "no",
                                         treatment_colour_theme,
-                                        theme_options,
+                                        theme_options = sample_theme_options,
                                         save_plot_png = "no",
                                         ggplot_theme = patchclampplotteR_theme()) {
   if (!large_axis_text %in% c("yes", "no")) {
@@ -1657,7 +1667,7 @@ plot_PPR_data_one_treatment <- function(data,
     ggplot2::ggsave(
       plot = PPR_one_plot,
       path = here::here("Figures/Evoked-currents/PPR"),
-      file = paste0("PPR_comparison-", plot_treatment, ".png"),
+      file = paste0("PPR_comparison-category-", plot_category, "-", plot_treatment, ".png"),
       width = 7,
       height = 5,
       units = "in",
@@ -1718,7 +1728,7 @@ plot_PPR_data_multiple_treatments <- function(data,
                                               post_hormone_label = "A",
                                               test_type,
                                               treatment_colour_theme,
-                                              theme_options,
+                                              theme_options = sample_theme_options,
                                               filename_suffix = "",
                                               save_plot_png = "no",
                                               ggplot_theme = patchclampplotteR_theme()) {
@@ -1850,7 +1860,7 @@ plot_PPR_data_multiple_treatments <- function(data,
     ggplot2::ggsave(
       plot = PPR_summary_plot,
       path = here::here("Figures/Evoked-currents/PPR"),
-      file = paste0("PPR_Summary_plot", filename_suffix, ".png"),
+      file = paste0("PPR_Summary_plot-category-", plot_category, filename_suffix, ".png"),
       width = 7,
       height = 5,
       units = "in",
@@ -1864,6 +1874,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 
 #' Plot and compare action potential parameters before and after a treatment
 #'
+#' This function produces a connected line plot which allows you to visually compare action potential parameters such as peak amplitude, after-hyperpolarization amplitude (here, `antipeak_amplitude`), half-width, etc. before and after a treatment has been applied. It requires action potential data from two recordings - one taken during the baseline (`state = "Baseline"`) and one taken after a hormone or high-frequency protocol has been applied (in this example, `state = "Insulin"`).
 #'
 #' @inheritParams plot_PPR_data_one_treatment
 #' @param data The action potential data generated from `add_new_cells()` with `data_type == "AP"`.
@@ -1900,7 +1911,7 @@ plot_AP_comparison <-
            y_axis_title,
            test_type,
            treatment_colour_theme,
-           theme_options,
+           theme_options = sample_theme_options,
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
     if (!save_plot_png %in% c("yes", "no")) {
@@ -1991,6 +2002,7 @@ plot_AP_comparison <-
 #' @inheritParams plot_spontaneous_current_parameter_comparison
 #'
 #' @param data Action potential frequency data imported through `add_new_cells()` with `data_type == "AP_count"`
+#' @param p_adjust_method This argument is directly related to `p.adjust.method` in `rstatix::t_test`. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none" (although "none" is not recommended).
 #'
 #' @returns
 #'
@@ -2009,6 +2021,7 @@ plot_AP_comparison <-
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   large_axis_text = "no",
 #'   test_type = "wilcox.test",
+#'   p_adjust_method = "holm",
 #'   theme_options = sample_theme_options,
 #'   save_plot_png = "no"
 #' )
@@ -2020,9 +2033,10 @@ plot_AP_frequencies_single_treatment <- function(data,
                                                  baseline_label = "Baseline",
                                                  hormone_added,
                                                  test_type,
+                                                 p_adjust_method = "holm",
                                                  save_plot_png = "no",
                                                  treatment_colour_theme,
-                                                 theme_options,
+                                                 theme_options = sample_theme_options,
                                                  ggplot_theme = patchclampplotteR_theme()) {
   if (!large_axis_text %in% c("yes", "no")) {
     stop("'large_axis_text' argument must be one of: 'yes' or 'no'")
@@ -2031,8 +2045,13 @@ plot_AP_frequencies_single_treatment <- function(data,
   if (!save_plot_png %in% c("yes", "no")) {
     stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
   }
+
   if (!test_type %in% c("wilcox.test", "t.test", "none")) {
     stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
+  }
+
+  if (!p_adjust_method %in% c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")) {
+    stop("'p_adjust_method' argument must be one of: 'holm', 'hochberg', 'hommel', 'bonferroni', 'BH', 'BY', 'fdr', 'none'")
   }
 
   plot_colour <- treatment_colour_theme %>%
@@ -2105,7 +2124,7 @@ plot_AP_frequencies_single_treatment <- function(data,
           AP_frequency ~ state,
           ref.group = baseline_label,
           paired = T,
-          p.adjust.method = "holm"
+          p.adjust.method = p_adjust_method
         )
     }
 
@@ -2115,7 +2134,7 @@ plot_AP_frequencies_single_treatment <- function(data,
           AP_frequency ~ state,
           ref.group = baseline_label,
           paired = T,
-          p.adjust.method = "holm"
+          p.adjust.method = p_adjust_method
         )
     }
 
@@ -2173,11 +2192,11 @@ plot_AP_frequencies_single_treatment <- function(data,
     ggplot2::ggsave(
       plot = single_treatment_AP_plot,
       path = here::here("Figures/Action-potentials"),
-      file = paste0("AP-frequency-", plot_treatment, ".png"),
+      file = paste0("AP-frequency-category-", plot_category, "-", plot_treatment, ".png"),
       width = 7,
       height = 5,
       units = "in",
-      dpi = 600
+      dpi = 300
     )
   }
   return(single_treatment_AP_plot)
@@ -2363,7 +2382,7 @@ plot_spontaneous_current_parameter_comparison <-
            test_type,
            large_axis_text = "no",
            treatment_colour_theme,
-           theme_options,
+           theme_options = sample_theme_options,
            save_plot_png,
            ggplot_theme = patchclampplotteR_theme()) {
     if (is.null(baseline_interval) ||
@@ -2481,6 +2500,8 @@ plot_spontaneous_current_parameter_comparison <-
           hormone_added,
           "-",
           y_variable,
+          "-category-",
+          plot_category,
           "-",
           plot_treatment,
           ".png"
@@ -2507,6 +2528,7 @@ plot_spontaneous_current_parameter_comparison <-
 #' @param file A dataframe containing at least these columns: `time`,
 #'   `episode`, `current`, `voltage`, `time_sec`. An easy way to obtain this is
 #'   by importing a raw .abf file through the [import_ABF_file()] function.
+#' @param state A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The `state` will be included in the .png filename if `save_plot_png = "yes"`.
 #' @param include_scale_bar A character value that determines if a scale bar
 #'   will be added to the plot. Allowed values are "yes" and "no".
 #' @param plot_episode A character value describing the sweep (e.g. `epi1`) that
@@ -2529,13 +2551,10 @@ plot_spontaneous_current_parameter_comparison <-
 #'   (in pA).
 #' @param plot_y_max A numeric value describing the maximum value on the y-axis
 #'   (in pA).
-#' @param save_plot_pngs A character ("yes" or "no") defining if the plot should
-#' be saved as a PNG through `ggplot::ggsave()`.
-#'
-#' @returns A ggplot object. If save_plot_PNGs is defined as "yes", it will also
+#' @returns A ggplot object. If save_plot_png is defined as "yes", it will also
 #'   generate a .png file in the folder
 #'   `Figures/Spontaneous-currents/Representative-Traces` relative to the
-#'   project directory.
+#'   project directory, with the `plot_category`, `plot_treatment`, and `state` included in the filename.
 #'
 #' @export
 #'
@@ -2554,6 +2573,9 @@ plot_spontaneous_current_parameter_comparison <-
 plot_spontaneous_current_trace <-
   function(file,
            plot_colour,
+           plot_category,
+           plot_treatment,
+           state,
            include_scale_bar = "yes",
            plot_episode = "epi1",
            scale_bar_x_start = 1.25,
@@ -2564,14 +2586,14 @@ plot_spontaneous_current_trace <-
            plot_x_max = 5,
            plot_y_min = -100,
            plot_y_max = 35,
-           save_plot_pngs = "no",
+           save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
     if (!include_scale_bar %in% c("yes", "no")) {
       stop("'include_scale_bar' argument must be one of: 'yes' or 'no'")
     }
 
-    if (!save_plot_pngs %in% c("yes", "no")) {
-      stop("'save_plot_pngs' argument must be one of: 'yes' or 'no'")
+    if (!save_plot_png %in% c("yes", "no")) {
+      stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
     }
 
     representative_traces_plot <- file %>%
@@ -2619,15 +2641,15 @@ plot_spontaneous_current_trace <-
         )
     }
 
-    if (save_plot_pngs == "yes") {
+    if (save_plot_png == "yes") {
       ggplot2::ggsave(
         plot = representative_traces_plot,
         path = here::here("Figures/Spontaneous-currents/Representative-Traces"),
-        file = paste0(substitute(recording_name), ".png"),
+        file = paste0("Spontaneous-current-trace-category-", plot_category, "-", plot_treatment, "-", state, ".png"),
         width = 7,
         height = 5,
         units = "in",
-        dpi = 600
+        dpi = 300
       )
     }
 

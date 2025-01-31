@@ -35,7 +35,7 @@ plot options (like line thickness). If you want to modify this file, see the sec
 \section{Defining your own theme options}{
 
 
-Step 1: Create a .csv file with two columns (\code{option} and \code{value}) modelled after this sample dataset. \emph{Important}: Your .csv must have identical columns and rows as the sample data, or else some plots won't work!
+Step 1: Create a .csv file with two columns (\code{option} and \code{value}) modelled after this sample dataset. \strong{Important!}: Your .csv must have identical columns and rows as the sample data, or else some plots won't work!
 
 Step 2: Read in the .csv file in using \code{utils::read_csv()}. This will now be an object in your R environment.
 

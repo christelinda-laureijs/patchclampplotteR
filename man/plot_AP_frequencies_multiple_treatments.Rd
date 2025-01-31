@@ -56,9 +56,11 @@ This function allows you to generate a plot of action potential frequency (y-axi
 }
 \examples{
 
-plot_AP_frequencies_multiple_treatments(data = sample_AP_count_data,
-include_all_treatments = "yes",
-plot_category = 2,
-treatment_colour_theme = sample_treatment_names_and_colours)
+plot_AP_frequencies_multiple_treatments(
+  data = sample_AP_count_data,
+  include_all_treatments = "yes",
+  plot_category = 2,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
 
 }

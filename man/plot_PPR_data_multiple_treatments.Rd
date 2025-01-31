@@ -13,7 +13,7 @@ plot_PPR_data_multiple_treatments(
   post_hormone_label = "A",
   test_type,
   treatment_colour_theme,
-  theme_options,
+  theme_options = sample_theme_options,
   filename_suffix = "",
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
@@ -51,9 +51,9 @@ their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
-\item{theme_options}{A dataframe containing theme options. See
+\item{theme_options}{A dataframe containing theme options, defaults to \code{sample_theme_options}. See
 \link{sample_theme_options} for an example of what this dataframe should
-look like.}
+look like and how you can customize these values.}
 
 \item{filename_suffix}{Optional character value to add a suffix to the
 filename of the .png file created with this plot. Could be useful if you

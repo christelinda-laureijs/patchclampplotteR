@@ -779,7 +779,7 @@ NULL
 #'
 #' @section Defining your own theme options:
 #'
-#' Step 1: Create a .csv file with two columns (`option` and `value`) modelled after this sample dataset. *Important*: Your .csv must have identical columns and rows as the sample data, or else some plots won't work!
+#' Step 1: Create a .csv file with two columns (`option` and `value`) modelled after this sample dataset. **Important!**: Your .csv must have identical columns and rows as the sample data, or else some plots won't work!
 #'
 #' Step 2: Read in the .csv file in using `utils::read_csv()`. This will now be an object in your R environment.
 #'

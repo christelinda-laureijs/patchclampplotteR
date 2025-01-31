@@ -254,7 +254,8 @@ raw_eEPSC_df %>%
   filter(time == 0) %>%
   group_by(treatment) %>%
   count(sex) %>%
-  arrange(treatment, sex)
+  arrange(treatment, sex) %>% 
+  reactable()
 ```
 
 
@@ -507,7 +508,7 @@ head(PPR_df, n = 10) %>%
 
 For a specific treatment:
 
-```{r plot-one-ppr-treatment, fig.alt = "A scatterplot of paired-pulse ratio over time (baseline or post-insulin) showing no difference in the paired pulse ratio across these two times."}
+```{r plot-one-ppr-treatment, fig.alt = "A scatterplot of paired-pulse ratio over time (baseline or post-insulin) showing no difference in the paired pulse ratio across these two times.", warning=FALSE}
 plot_PPR_data_one_treatment(
   data = PPR_df,
   plot_treatment = "Control",
@@ -598,10 +599,11 @@ vmr_comparison_control_plot
 
 ## Compare baseline parameters
 
-```{r compare-baseline-parameters, fig.alt = "A grouped scatterplot showing the baseline evoked current amplitude across four treatment groups."}
+```{r compare-baseline-parameters, fig.alt = "A grouped scatterplot showing the baseline evoked current amplitude across four treatment groups.", warning=FALSE}
 plot_baseline_data(
   data = summary_eEPSC_df,
   current_type = "eEPSC",
+  plot_category = 2,
   y_variable = "raw_amplitude",
   include_all_treatments = "yes",
   list_of_treatments = NULL,

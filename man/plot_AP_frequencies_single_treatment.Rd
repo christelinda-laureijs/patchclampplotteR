@@ -12,9 +12,10 @@ plot_AP_frequencies_single_treatment(
   baseline_label = "Baseline",
   hormone_added,
   test_type,
+  p_adjust_method = "holm",
   save_plot_png = "no",
   treatment_colour_theme,
-  theme_options,
+  theme_options = sample_theme_options,
   ggplot_theme = patchclampplotteR_theme()
 )
 }
@@ -46,6 +47,8 @@ annotation arrow will be added instead.}
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}
 
+\item{p_adjust_method}{This argument is directly related to \code{p.adjust.method} in \code{rstatix::t_test}. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none" (although "none" is not recommended).}
+
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
 they will all go in subfolders below Figures/ in your project directory.}
@@ -70,16 +73,18 @@ project directory, with the treatment and category included in the filename.
 This function allows you to generate a plot of action potential frequency (y-axis) for each current injection (x-axis), coloured by state (baseline or post-hormone/treatment).
 }
 \examples{
-plot_AP_frequencies_single_treatment(data = sample_AP_count_data,
-                                        plot_treatment = "Control",
-                                        plot_category = 2,
-                                        baseline_label = "Baseline",
-                                        hormone_added = "Insulin",
-                                        treatment_colour_theme = sample_treatment_names_and_colours,
-                                        large_axis_text = "no",
-                                        test_type = "wilcox.test",
-                                        theme_options = sample_theme_options,
-                                        save_plot_png = "no")
-
+plot_AP_frequencies_single_treatment(
+  data = sample_AP_count_data,
+  plot_treatment = "Control",
+  plot_category = 2,
+  baseline_label = "Baseline",
+  hormone_added = "Insulin",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  large_axis_text = "no",
+  test_type = "wilcox.test",
+  p_adjust_method = "holm",
+  theme_options = sample_theme_options,
+  save_plot_png = "no"
+)
 
 }

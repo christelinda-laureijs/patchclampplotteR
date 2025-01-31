@@ -7,8 +7,9 @@
 plot_cv_data(
   data,
   plot_treatment = "Control",
+  plot_category,
   treatment_colour_theme,
-  theme_options,
+  theme_options = sample_theme_options,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -20,6 +21,11 @@ third dataframe in the list generated from \code{\link[=make_pruned_EPSC_data]{m
 \item{plot_treatment}{A character value specifying the treatment you would
 like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
+
+\item{plot_category}{A numeric value specifying the category, which can be
+used to differentiate different protocol types. In the sample dataset for
+this package, \code{plot_category == 2} represents experiments where insulin was
+applied continuously after a 5-minute baseline period.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See

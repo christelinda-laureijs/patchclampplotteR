@@ -7,6 +7,7 @@
 plot_baseline_data(
   data,
   current_type = "eEPSC",
+  plot_category,
   y_variable = "raw_amplitude",
   include_all_treatments = "yes",
   list_of_treatments = NULL,
@@ -15,7 +16,7 @@ plot_baseline_data(
   large_axis_text = "no",
   plot_width = 8,
   treatment_colour_theme,
-  theme_options,
+  theme_options = sample_theme_options,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -26,6 +27,11 @@ plot_baseline_data(
 
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
+
+\item{plot_category}{A numeric value specifying the category, which can be
+used to differentiate different protocol types. In the sample dataset for
+this package, \code{plot_category == 2} represents experiments where insulin was
+applied continuously after a 5-minute baseline period.}
 
 \item{y_variable}{A character describing the parameter used on the y-axis. If
 \code{current_type == "eEPSC"}, the allowed y_variable is "raw_amplitude". If
@@ -63,9 +69,9 @@ their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
-\item{theme_options}{A dataframe containing theme options. See
+\item{theme_options}{A dataframe containing theme options, defaults to \code{sample_theme_options}. See
 \link{sample_theme_options} for an example of what this dataframe should
-look like.}
+look like and how you can customize these values.}
 
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
@@ -91,6 +97,7 @@ the baseline period can be plotted.
 plot_baseline_data(
   data = sample_summary_eEPSC_df,
   current_type = "eEPSC",
+  plot_category = 2,
   y_variable = "raw_amplitude",
   include_all_treatments = "yes",
   list_of_treatments = NULL,

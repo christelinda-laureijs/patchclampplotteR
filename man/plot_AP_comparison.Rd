@@ -14,7 +14,7 @@ plot_AP_comparison(
   y_axis_title,
   test_type,
   treatment_colour_theme,
-  theme_options,
+  theme_options = sample_theme_options,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -67,7 +67,7 @@ a .png file in the folder \code{Figures/Action-potentials} relative to the
 project directory. The treatment and y_variable will be included in the filename.
 }
 \description{
-Plot and compare action potential parameters before and after a treatment
+This function produces a connected line plot which allows you to visually compare action potential parameters such as peak amplitude, after-hyperpolarization amplitude (here, \code{antipeak_amplitude}), half-width, etc. before and after a treatment has been applied. It requires action potential data from two recordings - one taken during the baseline (\code{state = "Baseline"}) and one taken after a hormone or high-frequency protocol has been applied (in this example, \code{state = "Insulin"}).
 }
 \examples{
 plot_AP_comparison(
