@@ -36,6 +36,12 @@ layer will be applied which increases the size of the axis text.}
 \item{baseline_label}{A character value for the x-axis label applied to the
 pre-hormone state. Defaults to "Baseline".}
 
+\item{hormone_added}{A character value that will be used as the label over
+the line annotating the period when a hormone was applied. Examples include
+"500 nM Insulin", "CCK + Leptin", and "Insulin". If you applied a
+high-frequency stimulation (HFS) protocol instead, write "HFS", and an
+annotation arrow will be added instead.}
+
 \item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}

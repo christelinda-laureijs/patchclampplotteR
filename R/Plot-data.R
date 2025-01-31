@@ -1988,6 +1988,7 @@ plot_AP_comparison <-
 #'
 #' @inheritParams plot_AP_frequencies_multiple_treatments
 #' @inheritParams plot_PPR_data_one_treatment
+#' @inheritParams plot_spontaneous_current_parameter_comparison
 #'
 #' @param data Action potential frequency data imported through `add_new_cells()` with `data_type == "AP_count"`
 #'
@@ -2118,19 +2119,20 @@ plot_AP_frequencies_single_treatment <- function(data,
     # Generate cleaned results columns
     frequency_comparison_test_results <- frequency_comparison_test_results %>%
       dplyr::mutate(
-        statistic = round(statistic, 2),
-        p_string = lazyWeave::pvalString(p),
+        statistic = round(.data$statistic, 2),
+        p_string = lazyWeave::pvalString(.data$p),
         significance_stars = dplyr::case_when(p.adj.signif == "ns" ~ "", T ~ p.adj.signif)
-      ) %>%
-      merge(., max_mean_AP_frequencies, by = "current_injection")
+      )
+
+    frequency_comparison_test_results_final <- merge(frequency_comparison_test_results, max_mean_AP_frequencies, by = "current_injection")
 
     single_treatment_AP_plot <- single_treatment_AP_plot +
       ggplot2::geom_text(
-        data = frequency_comparison_test_results,
+        data = frequency_comparison_test_results_final,
         ggplot2::aes(
-          x = current_injection,
-          y = max_AP_frequency + max_se + 1,
-          label = significance_stars
+          x = .data$current_injection,
+          y = .data$max_AP_frequency + .data$max_se + 1,
+          label = .data$significance_stars
         ),
         inherit.aes = F,
         size = 5
@@ -2155,7 +2157,7 @@ plot_AP_frequencies_single_treatment <- function(data,
         axis.title.x = ggplot2::element_text(
           size = 28,
           face = "plain",
-          margin = margin(t = 10)
+          margin = ggplot2::margin(t = 10)
         ),
         axis.title.y = ggplot2::element_text(size = 28, face = "plain"),
         legend.text = ggplot2::element_text(size = 18),
@@ -2168,7 +2170,7 @@ plot_AP_frequencies_single_treatment <- function(data,
   if (save_plot_png == "yes") {
     ggplot2::ggsave(
       plot = single_treatment_AP_plot,
-      path = here("Figures/Action-potentials"),
+      path = here::here("Figures/Action-potentials"),
       file = paste0("AP-frequency-", plot_treatment, ".png"),
       width = 7,
       height = 5,
