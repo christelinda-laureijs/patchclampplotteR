@@ -13,7 +13,7 @@ plot_PPR_data_one_treatment(
   test_type,
   large_axis_text = "no",
   treatment_colour_theme,
-  theme_options = sample_theme_options,
+  theme_options,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )

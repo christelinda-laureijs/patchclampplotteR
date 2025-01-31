@@ -14,7 +14,7 @@ plot_raw_current_data(
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
   hormone_end_time = NULL,
-  theme_options = sample_theme_options,
+  theme_options,
   treatment_colour_theme,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()

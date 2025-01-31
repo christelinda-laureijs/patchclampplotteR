@@ -13,7 +13,7 @@ plot_PPR_data_multiple_treatments(
   post_hormone_label = "A",
   test_type,
   treatment_colour_theme,
-  theme_options = sample_theme_options,
+  theme_options,
   filename_suffix = "",
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()

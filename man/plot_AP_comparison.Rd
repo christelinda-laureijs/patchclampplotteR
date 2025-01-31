@@ -14,7 +14,7 @@ plot_AP_comparison(
   y_axis_title,
   test_type,
   treatment_colour_theme,
-  theme_options = sample_theme_options,
+  theme_options,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )

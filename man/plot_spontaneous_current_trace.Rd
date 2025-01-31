@@ -36,6 +36,10 @@ used to differentiate different protocol types. In the sample dataset for
 this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
+\item{plot_treatment}{A character value specifying the treatment you would
+like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
+were present on the brain slice, or the animals were fasted, etc.}
+
 \item{state}{A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The \code{state} will be included in the .png filename if \code{save_plot_png = "yes"}.}
 
 \item{include_scale_bar}{A character value that determines if a scale bar

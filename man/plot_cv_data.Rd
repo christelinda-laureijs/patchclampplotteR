@@ -9,7 +9,7 @@ plot_cv_data(
   plot_treatment = "Control",
   plot_category,
   treatment_colour_theme,
-  theme_options = sample_theme_options,
+  theme_options,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -55,6 +55,7 @@ in evoked current amplitudes over time.
 plot_cv_data(
   data = sample_pruned_eEPSC_df$all_cells,
   plot_treatment = "Control",
+  plot_category = 2,
   theme_options = sample_theme_options,
   treatment_colour_theme = sample_treatment_names_and_colours,
   save_plot_png = "no"

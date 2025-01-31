@@ -15,7 +15,7 @@ plot_AP_frequencies_single_treatment(
   p_adjust_method = "holm",
   save_plot_png = "no",
   treatment_colour_theme,
-  theme_options = sample_theme_options,
+  theme_options,
   ggplot_theme = patchclampplotteR_theme()
 )
 }

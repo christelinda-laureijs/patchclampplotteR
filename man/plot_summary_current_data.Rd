@@ -19,7 +19,7 @@ plot_summary_current_data(
   t_test_df,
   large_axis_text = "no",
   shade_intervals = "no",
-  theme_options = sample_theme_options,
+  theme_options,
   treatment_colour_theme,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
@@ -65,7 +65,7 @@ specify the file-name in \code{representative_trace_filename}.}
 
 \item{representative_trace_filename}{A character value describing the
 filename of the representative trace. This should be the name of a .png
-file stored within the subfolder \verb{Figures/Representative-Traces/}. Representative traces must be saved as PNGS with the following file name convention: Category-\link{number}-\link{treatment}-Trace.png or a warning will display about a missing file. Here is an example of a correct filename: "Category-2-Control-Trace.png".}
+file stored within the subfolder \verb{Figures/Representative-Traces/}. Representative traces must be saved as PNGS with the following file name convention: Category-number-treatment-Trace.png or a warning will display about a missing file. Here is an example of a correct filename: "Category-2-Control-Trace.png".}
 
 \item{y_axis_limit}{A numeric value describing the maximum value on the y-axis.}
 

@@ -15,7 +15,7 @@ plot_spontaneous_current_parameter_comparison(
   test_type,
   large_axis_text = "no",
   treatment_colour_theme,
-  theme_options = sample_theme_options,
+  theme_options,
   save_plot_png,
   ggplot_theme = patchclampplotteR_theme()
 )

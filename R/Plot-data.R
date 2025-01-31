@@ -126,7 +126,7 @@ plot_baseline_data <- function(data,
                                large_axis_text = "no",
                                plot_width = 8,
                                treatment_colour_theme,
-                               theme_options = sample_theme_options,
+                               theme_options,
                                save_plot_png = "no",
                                ggplot_theme = patchclampplotteR_theme()) {
   if (is.null(current_type) ||
@@ -402,7 +402,7 @@ plot_raw_current_data <-
            hormone_added = "Insulin",
            hormone_or_HFS_start_time = 5,
            hormone_end_time = NULL,
-           theme_options = sample_theme_options,
+           theme_options,
            treatment_colour_theme,
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
@@ -722,7 +722,7 @@ plot_raw_current_data <-
 #'   specify the file-name in `representative_trace_filename`.
 #' @param representative_trace_filename A character value describing the
 #'   filename of the representative trace. This should be the name of a .png
-#'   file stored within the subfolder `Figures/Representative-Traces/`. Representative traces must be saved as PNGS with the following file name convention: Category-[number]-[treatment]-Trace.png or a warning will display about a missing file. Here is an example of a correct filename: "Category-2-Control-Trace.png".
+#'   file stored within the subfolder `Figures/Representative-Traces/`. Representative traces must be saved as PNGS with the following file name convention: Category-number-treatment-Trace.png or a warning will display about a missing file. Here is an example of a correct filename: "Category-2-Control-Trace.png".
 #' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
 #' @param signif_stars A character ("yes" or "no") describing if significance
 #'   stars should be included as an overlay in the plot. If "yes", you must
@@ -791,7 +791,7 @@ plot_summary_current_data <- function(data,
                                       t_test_df,
                                       large_axis_text = "no",
                                       shade_intervals = "no",
-                                      theme_options = sample_theme_options,
+                                      theme_options,
                                       treatment_colour_theme,
                                       save_plot_png = "no",
                                       ggplot_theme = patchclampplotteR_theme()) {
@@ -1284,7 +1284,7 @@ plot_variance_comparison_data <- function(data,
                                           test_type,
                                           large_axis_text = "no",
                                           treatment_colour_theme,
-                                          theme_options = sample_theme_options,
+                                          theme_options,
                                           save_plot_png = "no",
                                           ggplot_theme = patchclampplotteR_theme()) {
   if (is.null(post_hormone_interval) ||
@@ -1466,6 +1466,7 @@ plot_variance_comparison_data <- function(data,
 #' plot_cv_data(
 #'   data = sample_pruned_eEPSC_df$all_cells,
 #'   plot_treatment = "Control",
+#'   plot_category = 2,
 #'   theme_options = sample_theme_options,
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   save_plot_png = "no"
@@ -1480,7 +1481,7 @@ plot_cv_data <- function(data,
                          plot_treatment = "Control",
                          plot_category,
                          treatment_colour_theme,
-                         theme_options = sample_theme_options,
+                         theme_options,
                          save_plot_png = "no",
                          ggplot_theme = patchclampplotteR_theme()) {
   if (!save_plot_png %in% c("yes", "no")) {
@@ -1566,7 +1567,7 @@ plot_PPR_data_one_treatment <- function(data,
                                         test_type,
                                         large_axis_text = "no",
                                         treatment_colour_theme,
-                                        theme_options = sample_theme_options,
+                                        theme_options,
                                         save_plot_png = "no",
                                         ggplot_theme = patchclampplotteR_theme()) {
   if (!large_axis_text %in% c("yes", "no")) {
@@ -1728,7 +1729,7 @@ plot_PPR_data_multiple_treatments <- function(data,
                                               post_hormone_label = "A",
                                               test_type,
                                               treatment_colour_theme,
-                                              theme_options = sample_theme_options,
+                                              theme_options,
                                               filename_suffix = "",
                                               save_plot_png = "no",
                                               ggplot_theme = patchclampplotteR_theme()) {
@@ -1911,7 +1912,7 @@ plot_AP_comparison <-
            y_axis_title,
            test_type,
            treatment_colour_theme,
-           theme_options = sample_theme_options,
+           theme_options,
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
     if (!save_plot_png %in% c("yes", "no")) {
@@ -2036,7 +2037,7 @@ plot_AP_frequencies_single_treatment <- function(data,
                                                  p_adjust_method = "holm",
                                                  save_plot_png = "no",
                                                  treatment_colour_theme,
-                                                 theme_options = sample_theme_options,
+                                                 theme_options,
                                                  ggplot_theme = patchclampplotteR_theme()) {
   if (!large_axis_text %in% c("yes", "no")) {
     stop("'large_axis_text' argument must be one of: 'yes' or 'no'")
@@ -2382,7 +2383,7 @@ plot_spontaneous_current_parameter_comparison <-
            test_type,
            large_axis_text = "no",
            treatment_colour_theme,
-           theme_options = sample_theme_options,
+           theme_options,
            save_plot_png,
            ggplot_theme = patchclampplotteR_theme()) {
     if (is.null(baseline_interval) ||
@@ -2525,6 +2526,8 @@ plot_spontaneous_current_parameter_comparison <-
 #' generated from raw .abf data with [import_ABF_file()]. The function returns a
 #' ggplot object with an optional scale bar.
 #' @inheritParams plot_baseline_data
+#' @inheritParams plot_raw_current_data
+#'
 #' @param file A dataframe containing at least these columns: `time`,
 #'   `episode`, `current`, `voltage`, `time_sec`. An easy way to obtain this is
 #'   by importing a raw .abf file through the [import_ABF_file()] function.
