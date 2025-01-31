@@ -11,7 +11,7 @@ plot_PPR_data_multiple_treatments(
   plot_category = 2,
   baseline_label = "B",
   post_hormone_label = "A",
-  test_type = "t.test",
+  test_type,
   treatment_colour_theme,
   theme_options,
   filename_suffix = "",

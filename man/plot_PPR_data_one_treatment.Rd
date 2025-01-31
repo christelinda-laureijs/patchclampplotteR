@@ -10,7 +10,7 @@ plot_PPR_data_one_treatment(
   plot_category = 2,
   baseline_label = "Baseline",
   post_hormone_label = "Post-hormone",
-  test_type = "t.test",
+  test_type,
   large_axis_text = "no",
   treatment_colour_theme,
   theme_options,

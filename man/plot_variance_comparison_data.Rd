@@ -13,7 +13,7 @@ plot_variance_comparison_data(
   baseline_label = "Baseline",
   post_hormone_interval = "t20to25",
   post_hormone_label = "Insulin",
-  test_type = "wilcox.test",
+  test_type,
   large_axis_text = "no",
   treatment_colour_theme,
   theme_options,

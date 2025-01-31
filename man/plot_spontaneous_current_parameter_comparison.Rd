@@ -12,7 +12,7 @@ plot_spontaneous_current_parameter_comparison(
   hormone_added = "Insulin",
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",
-  test_type = "wilcox.test",
+  test_type,
   large_axis_text = "no",
   treatment_colour_theme,
   theme_options,

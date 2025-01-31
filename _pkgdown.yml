@@ -54,6 +54,7 @@ reference:
   - plot_PPR_data_one_treatment
   - plot_PPR_data_multiple_treatments
   - plot_AP_comparison
+  - plot_AP_frequencies_single_treatment
   - plot_AP_frequencies_multiple_treatments
   - plot_baseline_data
   - plot_cv_data

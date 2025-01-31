@@ -586,6 +586,7 @@ vmr_comparison_control_plot <- plot_variance_comparison_data(
   post_hormone_interval = "t20to25",
   post_hormone_label = "Insulin",
   large_axis_text = "no",
+  test_type = "wilcox.test",
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options
 )
