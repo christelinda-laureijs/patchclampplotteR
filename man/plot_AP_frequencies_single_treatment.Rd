@@ -9,7 +9,7 @@ plot_AP_frequencies_single_treatment(
   plot_treatment,
   plot_category,
   large_axis_text = "no",
-  baseline_state = "Baseline",
+  baseline_label = "Baseline",
   hormone_added,
   test_type,
   save_plot_png = "no",
@@ -21,10 +21,24 @@ plot_AP_frequencies_single_treatment(
 \arguments{
 \item{data}{Action potential frequency data imported through \code{add_new_cells()} with \code{data_type == "AP_count"}}
 
+\item{plot_treatment}{A character value specifying the treatment you would
+like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
+were present on the brain slice, or the animals were fasted, etc.}
+
 \item{plot_category}{A numeric value specifying the category, which can be
 used to differentiate different protocol types. In the sample dataset for
 this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
+
+\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
+layer will be applied which increases the size of the axis text.}
+
+\item{baseline_label}{A character value for the x-axis label applied to the
+pre-hormone state. Defaults to "Baseline".}
+
+\item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
+describing the statistical model used to create a significance bracket
+comparing the pre- and post-hormone groups.}
 
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
@@ -34,6 +48,10 @@ they will all go in subfolders below Figures/ in your project directory.}
 their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
+
+\item{theme_options}{A dataframe containing theme options. See
+\link{sample_theme_options} for an example of what this dataframe should
+look like.}
 
 \item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }
@@ -49,7 +67,7 @@ This function allows you to generate a plot of action potential frequency (y-axi
 plot_AP_frequencies_single_treatment(data = sample_AP_count_data,
                                         plot_treatment = "Control",
                                         plot_category = 2,
-                                        baseline_state = "Baseline",
+                                        baseline_label = "Baseline",
                                         hormone_added = "Insulin",
                                         treatment_colour_theme = sample_treatment_names_and_colours,
                                         large_axis_text = "no",

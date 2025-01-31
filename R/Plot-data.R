@@ -1987,6 +1987,8 @@ plot_AP_comparison <-
 #'
 #'
 #' @inheritParams plot_AP_frequencies_multiple_treatments
+#' @inheritParams plot_PPR_data_one_treatment
+#'
 #' @param data Action potential frequency data imported through `add_new_cells()` with `data_type == "AP_count"`
 #'
 #' @returns
@@ -2000,7 +2002,7 @@ plot_AP_comparison <-
 #'plot_AP_frequencies_single_treatment(data = sample_AP_count_data,
 #'                                         plot_treatment = "Control",
 #'                                         plot_category = 2,
-#'                                         baseline_state = "Baseline",
+#'                                         baseline_label = "Baseline",
 #'                                         hormone_added = "Insulin",
 #'                                         treatment_colour_theme = sample_treatment_names_and_colours,
 #'                                         large_axis_text = "no",
@@ -2013,7 +2015,7 @@ plot_AP_frequencies_single_treatment <- function(data,
                                                     plot_treatment,
                                                     plot_category,
                                                     large_axis_text = "no",
-                                                    baseline_state = "Baseline",
+                                                    baseline_label = "Baseline",
                                                     hormone_added,
                                                     test_type,
                                                     save_plot_png = "no",
@@ -2060,19 +2062,19 @@ plot_AP_frequencies_single_treatment <- function(data,
     ggplot2::scale_color_manual(values = c("gray", plot_colour),
                                 labels = c(
                                   paste0(
-                                    baseline_state,
+                                    baseline_label,
                                     ", n = ",
                                     ap_plot_count_data %>%
-                                      dplyr::filter(state == baseline_state) %>%
-                                      dplyr::pull(n) %>%
+                                      dplyr::filter(.data$state == baseline_label) %>%
+                                      dplyr::pull(.data$n) %>%
                                       dplyr::first()
                                   ),
                                   paste0(
                                     hormone_added,
                                     ", n = ",
                                     ap_plot_count_data %>%
-                                      dplyr::filter(state == hormone_added) %>%
-                                      dplyr::pull(n) %>%
+                                      dplyr::filter(.data$state == hormone_added) %>%
+                                      dplyr::pull(.data$n) %>%
                                       dplyr::first()
                                   )
                                 ))
@@ -2096,8 +2098,8 @@ plot_AP_frequencies_single_treatment <- function(data,
     if (test_type == "t.test") {
       frequency_comparison_test_results <- frequency_comparison_model %>%
         rstatix::pairwise_t_test(
-          .data$AP_frequency ~ .data$state,
-          ref.group = baseline_state,
+          AP_frequency ~ state,
+          ref.group = baseline_label,
           paired = T,
           p.adjust.method = "holm"
         )
@@ -2106,8 +2108,8 @@ plot_AP_frequencies_single_treatment <- function(data,
     if (test_type == "wilcox.test") {
       frequency_comparison_test_results <- frequency_comparison_model %>%
         rstatix::pairwise_wilcox_test(
-          .data$AP_frequency ~ .data$state,
-          ref.group = baseline_state,
+          AP_frequency ~ state,
+          ref.group = baseline_label,
           paired = T,
           p.adjust.method = "holm"
         )
@@ -2116,9 +2118,9 @@ plot_AP_frequencies_single_treatment <- function(data,
     # Generate cleaned results columns
     frequency_comparison_test_results <- frequency_comparison_test_results %>%
       dplyr::mutate(
-        statistic = round(.data$statistic, 2),
-        p_string = lazyWeave::pvalString(.data$p),
-        significance_stars = dplyr::case_when(.data$p.adj.signif == "ns" ~ "", T ~ .data$p.adj.signif)
+        statistic = round(statistic, 2),
+        p_string = lazyWeave::pvalString(p),
+        significance_stars = dplyr::case_when(p.adj.signif == "ns" ~ "", T ~ p.adj.signif)
       ) %>%
       merge(., max_mean_AP_frequencies, by = "current_injection")
 
@@ -2126,9 +2128,9 @@ plot_AP_frequencies_single_treatment <- function(data,
       ggplot2::geom_text(
         data = frequency_comparison_test_results,
         ggplot2::aes(
-          x = .data$current_injection,
-          y = .data$max_AP_frequency + .data$max_se + 1,
-          label = .data$significance_stars
+          x = current_injection,
+          y = max_AP_frequency + max_se + 1,
+          label = significance_stars
         ),
         inherit.aes = F,
         size = 5
@@ -2166,17 +2168,18 @@ plot_AP_frequencies_single_treatment <- function(data,
   if (save_plot_png == "yes") {
     ggplot2::ggsave(
       plot = single_treatment_AP_plot,
-      path = here::here("Figures/Action-potentials"),
-      file = paste0("AP-frequency-category-", plot_category, "-", plot_treatment, ".png"),
+      path = here("Figures/Action-potentials"),
+      file = paste0("AP-frequency-", plot_treatment, ".png"),
       width = 7,
       height = 5,
       units = "in",
-      dpi = 300
+      dpi = 600
     )
 
   }
   return(single_treatment_AP_plot)
 }
+
 
 #' Plot action potential frequency curves for multiple treatments
 #'
