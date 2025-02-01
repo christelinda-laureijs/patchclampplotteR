@@ -70,7 +70,7 @@ presented as mean +/- the standard error.</p>
 <span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
 <span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  include_representative_trace <span class="op">=</span> <span class="st">"no"</span>,</span>
-<span>  <span class="va">representative_trace_filename</span>,</span>
+<span>  representative_trace_filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">y_axis_limit</span>,</span>
 <span>  signif_stars <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  <span class="va">t_test_df</span>,</span>
@@ -143,7 +143,7 @@ specify the file-name in <code>representative_trace_filename</code>.</p></dd>
 <dt id="arg-representative-trace-filename">representative_trace_filename<a class="anchor" aria-label="anchor" href="#arg-representative-trace-filename"></a></dt>
 <dd><p>A character value describing the
 filename of the representative trace. This should be the name of a .png
-file stored within the subfolder <code>Figures/Representative-Traces/</code>. Representative traces must be saved as PNGS with the following file name convention: Category-number-treatment-Trace.png or a warning will display about a missing file. Here is an example of a correct filename: "Category-2-Control-Trace.png".</p></dd>
+file. Use relative paths to specify files. For example, a figure in the Figures/Representative-Traces subfolder would be entered as <code>representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"</code>.</p></dd>
 
 
 <dt id="arg-y-axis-limit">y_axis_limit<a class="anchor" aria-label="anchor" href="#arg-y-axis-limit"></a></dt>
