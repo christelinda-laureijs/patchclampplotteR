@@ -14,6 +14,10 @@ plot_summary_current_data(
   hormone_or_HFS_start_time = 5,
   include_representative_trace = "no",
   representative_trace_filename = NULL,
+  annotation_x_min = 1,
+  annotation_x_max = 8,
+  annotation_y_min = 0,
+  annotation_y_max = 40,
   y_axis_limit,
   signif_stars = "no",
   t_test_df,
@@ -66,6 +70,14 @@ specify the file-name in \code{representative_trace_filename}.}
 \item{representative_trace_filename}{A character value describing the
 filename of the representative trace. This should be the name of a .png
 file. Use relative paths to specify files. For example, a figure in the Figures/Representative-Traces subfolder would be entered as \code{representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"}.}
+
+\item{annotation_x_min}{A numeric value describing the minimum value on the x-axis for the representative trace. Defaults to 1, which will place it at the lower left corner of the plot (when combined with the default value for \code{annotation_y_min}).}
+
+\item{annotation_x_max}{A numeric value describing the maximum value on the x-axis for the representative trace. Change this if your representative trace image looks squished or stretched.}
+
+\item{annotation_y_min}{A numeric value describing the minimum value on the y-axis for the representative trace. Defaults to 0, which will place it at the lower left corner of the plot (when combined with the default value for \code{annotation_x_min}).}
+
+\item{annotation_y_max}{A numeric value describing the maximum value on the y-axis for the representative trace. Change this if your representative trace image looks squished or stretched.}
 
 \item{y_axis_limit}{A numeric value describing the maximum value on the y-axis.}
 
@@ -132,7 +144,8 @@ plot_summary_current_data(
   y_variable = "amplitude",
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
-  include_representative_trace = "no",
+  include_representative_trace = "yes",
+  representative_trace_filename = import_ext_data("Control-trace.png"),
   y_axis_limit = 175,
   signif_stars = "yes",
   t_test_df = sample_eEPSC_t_test_df,

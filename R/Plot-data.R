@@ -723,6 +723,10 @@ plot_raw_current_data <-
 #' @param representative_trace_filename A character value describing the
 #'   filename of the representative trace. This should be the name of a .png
 #'   file. Use relative paths to specify files. For example, a figure in the Figures/Representative-Traces subfolder would be entered as `representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"`.
+#' @param annotation_x_min A numeric value describing the minimum value on the x-axis for the representative trace. Defaults to 1, which will place it at the lower left corner of the plot (when combined with the default value for `annotation_y_min`).
+#' @param annotation_x_max A numeric value describing the maximum value on the x-axis for the representative trace. Change this if your representative trace image looks squished or stretched.
+#' @param annotation_y_min A numeric value describing the minimum value on the y-axis for the representative trace. Defaults to 0, which will place it at the lower left corner of the plot (when combined with the default value for `annotation_x_min`).
+#' @param annotation_y_max A numeric value describing the maximum value on the y-axis for the representative trace. Change this if your representative trace image looks squished or stretched.
 #' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
 #' @param signif_stars A character ("yes" or "no") describing if significance
 #'   stars should be included as an overlay in the plot. If "yes", you must
@@ -768,7 +772,8 @@ plot_raw_current_data <-
 #'   y_variable = "amplitude",
 #'   hormone_added = "Insulin",
 #'   hormone_or_HFS_start_time = 5,
-#'   include_representative_trace = "no",
+#'   include_representative_trace = "yes",
+#'   representative_trace_filename = import_ext_data("Control-trace.png"),
 #'   y_axis_limit = 175,
 #'   signif_stars = "yes",
 #'   t_test_df = sample_eEPSC_t_test_df,
@@ -786,6 +791,10 @@ plot_summary_current_data <- function(data,
                                       hormone_or_HFS_start_time = 5,
                                       include_representative_trace = "no",
                                       representative_trace_filename = NULL,
+                                      annotation_x_min = 1,
+                                      annotation_x_max = 8,
+                                      annotation_y_min = 0,
+                                      annotation_y_max = 40,
                                       y_axis_limit,
                                       signif_stars = "no",
                                       t_test_df,
@@ -819,10 +828,6 @@ plot_summary_current_data <- function(data,
 
   if (!include_representative_trace %in% c("yes", "no")) {
     stop("'include_representative_trace' argument must be one of: 'yes' or 'no'")
-  }
-
-  if (include_representative_trace == "yes" & is.null(representative_trace_filename)) {
-    stop("include_representative_trace is 'yes' but you did not provide a character value for representative_trace_filename.")
   }
 
   if (include_representative_trace == "yes") {
@@ -1108,7 +1113,7 @@ plot_summary_current_data <- function(data,
       )
   }
 
-  # If plot_category = 1 or 3 (experiments involving HFS) add an annotation arrow at 5 minutes
+
   if (hormone_added == "HFS") {
     # Get limits of x- and y-axes
     ymax <- ggplot2::layer_scales(treatment_plot)$y$get_limits()[2]
@@ -1161,10 +1166,10 @@ plot_summary_current_data <- function(data,
       treatment_plot <- treatment_plot +
         ggplot2::annotation_custom(
           representative_trace,
-          xmin = 1,
-          xmax = 8,
-          ymin = 0,
-          ymax = 40
+          xmin = annotation_x_min,
+          xmax = annotation_x_max,
+          ymin = annotation_y_min,
+          ymax = annotation_y_max
         )
     } else {
       warning(
