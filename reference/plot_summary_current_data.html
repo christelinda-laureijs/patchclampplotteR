@@ -71,6 +71,10 @@ presented as mean +/- the standard error.</p>
 <span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  include_representative_trace <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  representative_trace_filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  annotation_x_min <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  annotation_x_max <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>  annotation_y_min <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  annotation_y_max <span class="op">=</span> <span class="fl">40</span>,</span>
 <span>  <span class="va">y_axis_limit</span>,</span>
 <span>  signif_stars <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  <span class="va">t_test_df</span>,</span>
@@ -144,6 +148,22 @@ specify the file-name in <code>representative_trace_filename</code>.</p></dd>
 <dd><p>A character value describing the
 filename of the representative trace. This should be the name of a .png
 file. Use relative paths to specify files. For example, a figure in the Figures/Representative-Traces subfolder would be entered as <code>representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"</code>.</p></dd>
+
+
+<dt id="arg-annotation-x-min">annotation_x_min<a class="anchor" aria-label="anchor" href="#arg-annotation-x-min"></a></dt>
+<dd><p>A numeric value describing the minimum value on the x-axis for the representative trace. Defaults to 1, which will place it at the lower left corner of the plot (when combined with the default value for <code>annotation_y_min</code>).</p></dd>
+
+
+<dt id="arg-annotation-x-max">annotation_x_max<a class="anchor" aria-label="anchor" href="#arg-annotation-x-max"></a></dt>
+<dd><p>A numeric value describing the maximum value on the x-axis for the representative trace. Change this if your representative trace image looks squished or stretched.</p></dd>
+
+
+<dt id="arg-annotation-y-min">annotation_y_min<a class="anchor" aria-label="anchor" href="#arg-annotation-y-min"></a></dt>
+<dd><p>A numeric value describing the minimum value on the y-axis for the representative trace. Defaults to 0, which will place it at the lower left corner of the plot (when combined with the default value for <code>annotation_x_min</code>).</p></dd>
+
+
+<dt id="arg-annotation-y-max">annotation_y_max<a class="anchor" aria-label="anchor" href="#arg-annotation-y-max"></a></dt>
+<dd><p>A numeric value describing the maximum value on the y-axis for the representative trace. Change this if your representative trace image looks squished or stretched.</p></dd>
 
 
 <dt id="arg-y-axis-limit">y_axis_limit<a class="anchor" aria-label="anchor" href="#arg-y-axis-limit"></a></dt>
@@ -232,7 +252,8 @@ summary data used in this plot.</p></div>
 <span class="r-in"><span>  y_variable <span class="op">=</span> <span class="st">"amplitude"</span>,</span></span>
 <span class="r-in"><span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span></span>
 <span class="r-in"><span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>  include_representative_trace <span class="op">=</span> <span class="st">"no"</span>,</span></span>
+<span class="r-in"><span>  include_representative_trace <span class="op">=</span> <span class="st">"yes"</span>,</span></span>
+<span class="r-in"><span>  representative_trace_filename <span class="op">=</span> <span class="fu"><a href="import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"Control-trace.png"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  y_axis_limit <span class="op">=</span> <span class="fl">175</span>,</span></span>
 <span class="r-in"><span>  signif_stars <span class="op">=</span> <span class="st">"yes"</span>,</span></span>
 <span class="r-in"><span>  t_test_df <span class="op">=</span> <span class="va">sample_eEPSC_t_test_df</span>,</span></span>
