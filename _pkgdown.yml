@@ -51,17 +51,26 @@ reference:
   contents:
   - plot_raw_current_data
   - plot_summary_current_data
-  - plot_PPR_data_one_treatment
-  - plot_PPR_data_multiple_treatments
-  - plot_AP_comparison
-  - plot_AP_frequencies_single_treatment
-  - plot_AP_frequencies_multiple_treatments
   - plot_baseline_data
-  - plot_cv_data
-  - plot_variance_comparison_data
   - plot_spontaneous_current_parameter_comparison
   - plot_spontaneous_current_trace
   - patchclampplotteR_theme
+
+- subtitle: Paired-pulse ratio
+  contents:
+  - plot_PPR_data_one_treatment
+  - plot_PPR_data_multiple_treatments
+
+- subtitle: Action potentials
+  contents:
+  - plot_AP_comparison
+  - plot_AP_frequencies_single_treatment
+  - plot_AP_frequencies_multiple_treatments
+- subtitle: Variance analysis
+  contents:
+  - plot_cv_data
+  - plot_variance_comparison_data
+
 - title: Sample datasets
   desc: >
     Sample datasets for vignettes and examples.
