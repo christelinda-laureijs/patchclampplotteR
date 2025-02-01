@@ -785,7 +785,7 @@ plot_summary_current_data <- function(data,
                                       hormone_added = "Insulin",
                                       hormone_or_HFS_start_time = 5,
                                       include_representative_trace = "no",
-                                      representative_trace_filename,
+                                      representative_trace_filename = NULL,
                                       y_axis_limit,
                                       signif_stars = "no",
                                       t_test_df,
@@ -821,7 +821,7 @@ plot_summary_current_data <- function(data,
     stop("'include_representative_trace' argument must be one of: 'yes' or 'no'")
   }
 
-  if (include_representative_trace == "no" & is.null(representative_trace_filename)) {
+  if (include_representative_trace == "yes" & is.null(representative_trace_filename)) {
     stop("include_representative_trace is 'yes' but you did not provide a character value for representative_trace_filename.")
   }
 

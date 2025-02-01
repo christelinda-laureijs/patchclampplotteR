@@ -285,7 +285,7 @@ reactable(sample_full_ap_table)
 19. Use the `plot_AP_comparison()` function to see how parameters like
     `peak_amplitude` and `half-width` change after your treatment.
 
-```{r}
+```{r ap-comparison, fig.alt = "A plot of peak amplitude in pico amps versus state (baseline or insulin). The data are coloured according to state, where baseline points are gray and insulin points are purple. Insulin decreased action potential amplitude."}
 plot_AP_comparison(
   sample_AP_data,
   plot_treatment = "Control",
@@ -361,7 +361,7 @@ reactable(read.csv("sample-ap-count-data.csv"))
 
 23. Here is an example of the type of plots you can create!
 
-```{r}
+```{r ap-frequencies-one-treatment, fig.alt = "A plot of Action Potential Frequency in Hz versus current injection on the x-axis. The data are coloured gray for baseline data and purple for insulin data. The plot is showing that action potential frequency was lower after adding insulin."}
 plot_AP_frequencies_single_treatment(
   data = sample_AP_count_data,
   plot_treatment = "Control",
@@ -376,7 +376,7 @@ plot_AP_frequencies_single_treatment(
 )
 ```
 
-```{r}
+```{r ap-plot-frequencies-multiple-treatments, fig.alt = "A smoothed line plot showing action potential frequency in Hz versus current injection in picoamps for four different treatments at two states (baseline vs. insulin). Overall, insulin decreased action potential frequency in all treatments.", message=F}
 plot_AP_frequencies_multiple_treatments(data = sample_AP_count_data,
 include_all_treatments = "yes",
 plot_category = 2,

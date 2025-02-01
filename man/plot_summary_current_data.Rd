@@ -13,7 +13,7 @@ plot_summary_current_data(
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
   include_representative_trace = "no",
-  representative_trace_filename,
+  representative_trace_filename = NULL,
   y_axis_limit,
   signif_stars = "no",
   t_test_df,
@@ -65,7 +65,7 @@ specify the file-name in \code{representative_trace_filename}.}
 
 \item{representative_trace_filename}{A character value describing the
 filename of the representative trace. This should be the name of a .png
-file stored within the subfolder \verb{Figures/Representative-Traces/}. Representative traces must be saved as PNGS with the following file name convention: Category-number-treatment-Trace.png or a warning will display about a missing file. Here is an example of a correct filename: "Category-2-Control-Trace.png".}
+file. Use relative paths to specify files. For example, a figure in the Figures/Representative-Traces subfolder would be entered as \code{representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"}.}
 
 \item{y_axis_limit}{A numeric value describing the maximum value on the y-axis.}
 
