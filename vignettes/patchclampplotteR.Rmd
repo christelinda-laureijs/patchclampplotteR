@@ -254,7 +254,7 @@ raw_eEPSC_df %>%
   filter(time == 0) %>%
   group_by(treatment) %>%
   count(sex) %>%
-  arrange(treatment, sex) %>% 
+  arrange(treatment, sex) %>%
   reactable()
 ```
 

@@ -63,9 +63,11 @@ reference:
 
 - subtitle: Action potentials
   contents:
+  - plot_AP_trace
   - plot_AP_comparison
   - plot_AP_frequencies_single_treatment
   - plot_AP_frequencies_multiple_treatments
+
 - subtitle: Variance analysis
   contents:
   - plot_cv_data

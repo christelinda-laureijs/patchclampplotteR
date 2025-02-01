@@ -179,7 +179,7 @@ knitr::include_graphics("figures/Define-graphs-button.png")
 
 25. You will see a plot that shows blue dots arranged in a rough shape that resembles the blue dots in the recording file in Step 22.
 
-> Note, I have analysed a file with fewer sweeps to reduce run-time and strain on my computer while making this tutorial.
+> Note, I have analyzed a file with fewer sweeps to reduce run-time and strain on my computer while making this tutorial.
 
 > Note: The newer version of Clampfit (from pClamp 11) appears to be applying a rounding function to the graph, which creates parallel lines of dots. In reality, spontaneous currents are not perfectly aligned like this.
 

@@ -1940,7 +1940,8 @@ plot_AP_comparison <-
         position = ggplot2::position_jitter(0.04)
       ) +
       ggplot2::scale_color_manual(
-        values = c(theme_options["baseline_group_colour", "value"], plot_colour)) +
+        values = c(theme_options["baseline_group_colour", "value"], plot_colour)
+      ) +
       ggplot2::stat_summary(
         fun.data = ggplot2::mean_se,
         geom = "pointrange",
@@ -2351,12 +2352,14 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #'
 #' @examples
 #'
-#' plot_AP_trace(file = sample_ap_abf_baseline,
-#' sweeps = c("epi1", "epi10"),
-#' trace_color = "orange",
-#' plot_category = 2,
-#' plot_treatment = "Control",
-#' state = "Baseline")
+#' plot_AP_trace(
+#'   file = sample_ap_abf_baseline,
+#'   sweeps = c("epi1", "epi10"),
+#'   trace_color = "orange",
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   state = "Baseline"
+#' )
 #'
 plot_AP_trace <-
   function(file,
@@ -2368,7 +2371,6 @@ plot_AP_trace <-
            state,
            save_plot_png = "no",
            filename_suffix) {
-
     if (!save_plot_png %in% c("yes", "no")) {
       stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
     }

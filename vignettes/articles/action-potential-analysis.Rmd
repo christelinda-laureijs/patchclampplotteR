@@ -377,10 +377,12 @@ plot_AP_frequencies_single_treatment(
 ```
 
 ```{r ap-plot-frequencies-multiple-treatments, fig.alt = "A smoothed line plot showing action potential frequency in Hz versus current injection in picoamps for four different treatments at two states (baseline vs. insulin). Overall, insulin decreased action potential frequency in all treatments.", message=F}
-plot_AP_frequencies_multiple_treatments(data = sample_AP_count_data,
-include_all_treatments = "yes",
-plot_category = 2,
-treatment_colour_theme = sample_treatment_names_and_colours)
+plot_AP_frequencies_multiple_treatments(
+  data = sample_AP_count_data,
+  include_all_treatments = "yes",
+  plot_category = 2,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
 ```
 
 

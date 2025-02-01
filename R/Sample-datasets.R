@@ -106,12 +106,14 @@ NULL
 #'  \item{current}{Numeric value representing current amplitude in pA.}
 #' }
 #' @keywords data
-#' @examples plot_AP_trace(file = sample_ap_abf_baseline,
-#' sweeps = c("epi1", "epi10"),
-#' trace_color = "orange",
-#' plot_category = 2,
-#' plot_treatment = "Control",
-#' state = "Baseline")
+#' @examples plot_AP_trace(
+#'   file = sample_ap_abf_baseline,
+#'   sweeps = c("epi1", "epi10"),
+#'   trace_color = "orange",
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   state = "Baseline"
+#' )
 NULL
 
 #' Action potential recording with insulin
@@ -132,12 +134,14 @@ NULL
 #'  \item{current}{Numeric value representing current amplitude in pA.}
 #' }
 #' @keywords data
-#' @examples plot_AP_trace(file = sample_ap_abf_insulin,
-#' sweeps = c("epi1", "epi10"),
-#' trace_color = "orange",
-#' plot_category = 2,
-#' plot_treatment = "Control",
-#' state = "Baseline")
+#' @examples plot_AP_trace(
+#'   file = sample_ap_abf_insulin,
+#'   sweeps = c("epi1", "epi10"),
+#'   trace_color = "orange",
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   state = "Baseline"
+#' )
 NULL
 
 # Raw eEPSC -----

@@ -119,7 +119,6 @@ import_cell_characteristics_df <- function(filename) {
 #' import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
 import_ABF_file <-
   function(file_name, recording_mode) {
-
     if (!recording_mode %in% c("voltage_clamp", "current_clamp")) {
       stop("'recording_mode' argument must be one of: 'voltage_clamp' or 'current_clamp'")
     }
@@ -135,7 +134,6 @@ import_ABF_file <-
     if (recording_mode == "current_clamp") {
       data <- data %>%
         dplyr::rename("voltage" = .data$chan1, "current" = .data$chan2)
-
     }
 
     data <- data %>%
