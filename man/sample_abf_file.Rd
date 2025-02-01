@@ -23,6 +23,6 @@ manipulation and plotting in R. It is used to demonstrate the
 \code{\link[=plot_spontaneous_current_trace]{plot_spontaneous_current_trace()}} function.
 }
 \examples{
-import_ABF_file(import_ext_data("sample_abf.abf"))
+import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
 }
 \keyword{data}

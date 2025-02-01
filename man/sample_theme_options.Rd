@@ -24,7 +24,6 @@ data values where \code{Sex == Female}.}
 \item{\code{connecting_line_width_PPR}}{The width of the connecting line in paired-pulse ratio comparison plots.}
 \item{\code{mean_point_size}}{The size of the mean data point in plots like the PPR comparison plot.}
 \item{\code{geom_signif_text_size}}{The size of the asterisk text in plots like the spontaneous current comparison plots.}
-\item{\code{AP_trace_size}}{DO NOT USE; this will be moved to a function argument in future releases.}
 \item{\code{baseline_group_colour}}{Hex code for the colour used when \code{state == "Baseline"} in \code{plot_AP_comparison()} and \code{plot_AP_frequencies_single_treatment()}.}
 }
 }

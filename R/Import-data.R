@@ -90,16 +90,17 @@ import_cell_characteristics_df <- function(filename) {
 }
 
 
-#' Import raw .abf files as a dataframe
+#' Import raw `.abf` files as a dataframe
 #'
 #' `import_ABF_file()` is a wrapper around `abftools::abf2_load()` and
 #' `abftools::MeltAbf()`. It converts the array from `abf2_load()` into a
 #' dataframe, and it also converts time to minutes.
 #'
-#' The file progresses from .abf to an array and then to a dataframe that can be
-#' easily manipulated in R.
+#' The file progresses from `.abf` to an array and then to a dataframe that can be
+#' easily manipulated in R. Be sure to assign a value to the dataframe so you can use it in later functions.
 #'
-#' @param file_name Filepath to an .abf file (e.g. "Data/23711004.abf")
+#' @param file_name Filepath to an `.abf` file (e.g. "Data/23711004.abf")
+#' @param recording_mode The mode used for the recording. If in `recording_mode = "voltage_clamp"` (e.g. clamping cell at -70 mV and measuring current amplitude) the primary channel (`chan1`) is set to "current" and the secondary channel (`chan2`) is "voltage". If `recording_mode = "current_clamp"`, these values are reversed, where the primary channel is "voltage" and the secondary channel is "current".
 #'
 #' @returns A dataframe with 5 columns:
 #'
@@ -115,12 +116,29 @@ import_cell_characteristics_df <- function(filename) {
 #' @export
 #'
 #' @examples
-#' import_ABF_file(import_ext_data("sample_abf.abf"))
+#' import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
 import_ABF_file <-
-  function(file_name) {
-    abftools::abf2_load(here::here(file_name)) %>%
-      abftools::MeltAbf() %>%
-      dplyr::rename("current" = .data$chan1, "voltage" = .data$chan2) %>%
+  function(file_name, recording_mode) {
+
+    if (!recording_mode %in% c("voltage_clamp", "current_clamp")) {
+      stop("'recording_mode' argument must be one of: 'voltage_clamp' or 'current_clamp'")
+    }
+
+    data <- abftools::abf2_load(here::here(file_name)) %>%
+      abftools::MeltAbf()
+
+    if (recording_mode == "voltage_clamp") {
+      data <- data %>%
+        dplyr::rename("current" = .data$chan1, "voltage" = .data$chan2)
+    }
+
+    if (recording_mode == "current_clamp") {
+      data <- data %>%
+        dplyr::rename("voltage" = .data$chan1, "current" = .data$chan2)
+
+    }
+
+    data <- data %>%
       dplyr::rename_with(tolower) %>%
       dplyr::mutate(time_sec = .data$time / 10000) %>%
       invisible()

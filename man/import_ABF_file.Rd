@@ -2,12 +2,14 @@
 % Please edit documentation in R/Import-data.R
 \name{import_ABF_file}
 \alias{import_ABF_file}
-\title{Import raw .abf files as a dataframe}
+\title{Import raw \code{.abf} files as a dataframe}
 \usage{
-import_ABF_file(file_name)
+import_ABF_file(file_name, recording_mode)
 }
 \arguments{
-\item{file_name}{Filepath to an .abf file (e.g. "Data/23711004.abf")}
+\item{file_name}{Filepath to an \code{.abf} file (e.g. "Data/23711004.abf")}
+
+\item{recording_mode}{The mode used for the recording. If in \code{recording_mode = "voltage_clamp"} (e.g. clamping cell at -70 mV and measuring current amplitude) the primary channel (\code{chan1}) is set to "current" and the secondary channel (\code{chan2}) is "voltage". If \code{recording_mode = "current_clamp"}, these values are reversed, where the primary channel is "voltage" and the secondary channel is "current".}
 }
 \value{
 A dataframe with 5 columns:
@@ -27,9 +29,9 @@ directly to "sweep" in Clampfit.
 dataframe, and it also converts time to minutes.
 }
 \details{
-The file progresses from .abf to an array and then to a dataframe that can be
-easily manipulated in R.
+The file progresses from \code{.abf} to an array and then to a dataframe that can be
+easily manipulated in R. Be sure to assign a value to the dataframe so you can use it in later functions.
 }
 \examples{
-import_ABF_file(import_ext_data("sample_abf.abf"))
+import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
 }

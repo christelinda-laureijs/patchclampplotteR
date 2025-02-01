@@ -2329,6 +2329,85 @@ plot_AP_frequencies_multiple_treatments <- function(data,
   return(AP_frequency_plot)
 }
 
+#' Plot action potential recording
+#'
+#' This function allows you to plot an `.abf` file of a recording taken in current clamp mode. It is useful if you want to display a representative trace of action potentials or the results of a current injection protocol.
+#'
+#' @inheritParams plot_baseline_data
+#' @inheritParams plot_spontaneous_current_trace
+#'
+#' @param file A dataframe generated using `import_ABF_file()` with `recording_mode = "current_clamp"`.
+#' @param sweeps A character value or list of character values of the sweeps you would like to plot. These correspond to the values in the `sweep1` column of your dataset, and will likely be in the form of "epi1", "epi2", etc.
+#' @param line_width A numeric value specifying the width of the lineplot
+#' @param trace_color A hex value of the colour of the lineplot
+#'
+#' @returns
+#'
+#' A ggplot object. If `save_plot_png == "yes"`, it will also generate
+#'   a .png file in the folder `Figures/Action-potentials/Representative-traces` relative to the
+#'   project directory.
+#'
+#' @export
+#'
+#' @examples
+#'
+#' plot_AP_trace(file = sample_ap_abf_baseline,
+#' sweeps = c("epi1", "epi10"),
+#' trace_color = "orange",
+#' plot_category = 2,
+#' plot_treatment = "Control",
+#' state = "Baseline")
+#'
+plot_AP_trace <-
+  function(file,
+           sweeps,
+           trace_color,
+           line_width = 0.7,
+           plot_category,
+           plot_treatment,
+           state,
+           save_plot_png = "no",
+           filename_suffix) {
+
+    if (!save_plot_png %in% c("yes", "no")) {
+      stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+    }
+
+    ap_trace <- file %>%
+      dplyr::filter(.data$episode %in% sweeps) %>%
+      ggplot2::ggplot(ggplot2::aes(
+        x = .data$time,
+        y = .data$voltage,
+        group = .data$episode
+      )) +
+      ggplot2::geom_line(color = trace_color, linewidth = line_width) +
+      ggplot2::theme_void()
+
+    if (save_plot_png == "yes") {
+      ggplot2::ggsave(
+        plot = ap_trace,
+        path = here::here("Figures/Action-potentials/Representative-Traces"),
+        file = paste0(
+          "Action-potential-trace-category-",
+          plot_category,
+          "-",
+          plot_treatment,
+          "-",
+          state,
+          filename_suffix,
+          ".png"
+        ),
+        width = 7,
+        height = 5,
+        units = "in",
+        dpi = 300
+      )
+    }
+
+    return(ap_trace)
+  }
+
+
 
 #' Visually compare spontaneous current parameters
 #'

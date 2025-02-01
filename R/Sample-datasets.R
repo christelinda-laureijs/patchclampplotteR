@@ -60,7 +60,7 @@
 #'
 NULL
 
-# ABF -----
+# Sample ABF -----
 
 
 #' Evoked current recording excerpt
@@ -83,7 +83,61 @@ NULL
 #'  \item{current}{Numeric value representing current amplitude in pA.}
 #' }
 #' @keywords data
-#' @examples import_ABF_file(import_ext_data("sample_abf.abf"))
+#' @examples import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
+NULL
+
+
+
+#' Action potential baseline recording
+#'
+#' This is an excerpt of a raw recording of action potentials imported as a dataframe using [import_ABF_file()]. It is used to demonstrate the
+#' [plot_AP_trace()] function.
+#'
+#' This is a current injection protocol taken during the baseline period. See `sample_ap_abf_insulin` for data from the same protocol taken after 25 minutes of exposure to 500 nM insulin.
+#'
+#' @name sample_ap_abf_baseline
+#' @docType data
+#' @format A dataframe of 100000 objects of 5 variables.
+#' \describe{
+#'  \item{episode}{A factor representing the sweep, such as "epi1".}
+#'  \item{time_sec}{Time in seconds.}
+#'  \item{time}{Time in ms*100.}
+#'  \item{voltage}{Numeric value representing voltage in mV.}
+#'  \item{current}{Numeric value representing current amplitude in pA.}
+#' }
+#' @keywords data
+#' @examples plot_AP_trace(file = sample_ap_abf_baseline,
+#' sweeps = c("epi1", "epi10"),
+#' trace_color = "orange",
+#' plot_category = 2,
+#' plot_treatment = "Control",
+#' state = "Baseline")
+NULL
+
+#' Action potential recording with insulin
+#'
+#' This is an excerpt of a raw recording of action potentials imported as a dataframe using [import_ABF_file()]. It is used to demonstrate the
+#' [plot_AP_trace()] function.
+#'
+#' This is a current injection protocol taken during after 25 minutes of exposure to 500 nM insulin. See `sample_ap_abf_baseline` for data from the same protocol taken during the baseline period.
+#'
+#' @name sample_ap_abf_insulin
+#' @docType data
+#' @format A dataframe of 100000 objects of 5 variables.
+#' \describe{
+#'  \item{episode}{A factor representing the sweep, such as "epi1".}
+#'  \item{time_sec}{Time in seconds.}
+#'  \item{time}{Time in ms*100.}
+#'  \item{voltage}{Numeric value representing voltage in mV.}
+#'  \item{current}{Numeric value representing current amplitude in pA.}
+#' }
+#' @keywords data
+#' @examples plot_AP_trace(file = sample_ap_abf_insulin,
+#' sweeps = c("epi1", "epi10"),
+#' trace_color = "orange",
+#' plot_category = 2,
+#' plot_treatment = "Control",
+#' state = "Baseline")
 NULL
 
 # Raw eEPSC -----
@@ -815,7 +869,6 @@ NULL
 #'  \item{`connecting_line_width_PPR`}{The width of the connecting line in paired-pulse ratio comparison plots.}
 #'  \item{`mean_point_size`}{The size of the mean data point in plots like the PPR comparison plot.}
 #'  \item{`geom_signif_text_size`}{The size of the asterisk text in plots like the spontaneous current comparison plots.}
-#'  \item{`AP_trace_size`}{DO NOT USE; this will be moved to a function argument in future releases.}
 #'  \item{`baseline_group_colour`}{Hex code for the colour used when `state == "Baseline"` in `plot_AP_comparison()` and `plot_AP_frequencies_single_treatment()`.}
 #' }
 #' @keywords data
