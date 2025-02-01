@@ -448,7 +448,7 @@ plot_summary_current_data(
   current_type = "eEPSC",
   y_variable = "amplitude",
   include_representative_trace = "yes",
-  representative_trace_filename = "test.png",
+  representative_trace_filename = import_ext_data("Control-trace.png"),
   y_axis_limit = 175,
   signif_stars = "yes",
   t_test_df = sample_eEPSC_t_test_df,

@@ -816,7 +816,7 @@ NULL
 #'  \item{`mean_point_size`}{The size of the mean data point in plots like the PPR comparison plot.}
 #'  \item{`geom_signif_text_size`}{The size of the asterisk text in plots like the spontaneous current comparison plots.}
 #'  \item{`AP_trace_size`}{DO NOT USE; this will be moved to a function argument in future releases.}
-#'  \item{`y_axis_limit`}{The maximum y-axis value to be used in plots.}
+#'  \item{`baseline_group_colour`}{Hex code for the colour used when `state == "Baseline"` in `plot_AP_comparison()` and `plot_AP_frequencies_single_treatment()`.}
 #' }
 #' @keywords data
 NULL

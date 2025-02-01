@@ -722,7 +722,7 @@ plot_raw_current_data <-
 #'   specify the file-name in `representative_trace_filename`.
 #' @param representative_trace_filename A character value describing the
 #'   filename of the representative trace. This should be the name of a .png
-#'   file stored within the subfolder `Figures/Representative-Traces/`. Representative traces must be saved as PNGS with the following file name convention: Category-number-treatment-Trace.png or a warning will display about a missing file. Here is an example of a correct filename: "Category-2-Control-Trace.png".
+#'   file. Use relative paths to specify files. For example, a figure in the Figures/Representative-Traces subfolder would be entered as `representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"`.
 #' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
 #' @param signif_stars A character ("yes" or "no") describing if significance
 #'   stars should be included as an overlay in the plot. If "yes", you must
@@ -819,6 +819,10 @@ plot_summary_current_data <- function(data,
 
   if (!include_representative_trace %in% c("yes", "no")) {
     stop("'include_representative_trace' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (include_representative_trace == "no" & is.null(representative_trace_filename)) {
+    stop("include_representative_trace is 'yes' but you did not provide a character value for representative_trace_filename.")
   }
 
   if (include_representative_trace == "yes") {
@@ -1151,20 +1155,8 @@ plot_summary_current_data <- function(data,
   }
 
   if (include_representative_trace == "yes") {
-    representative_trace_file <- paste0(
-      "Figures/Representative-Traces/Category-",
-      plot_category,
-      "-",
-      plot_treatment,
-      "-Trace.png"
-    )
-
-    # Representative traces must be saved as PNGS with the following file name convention:
-    # Category-[number]-[treatment]-Trace.png or a warning will display about a missing file
-    # e.g. "Category-2-Control-Trace.png"
-
-    if (file.exists(here::here(representative_trace_file))) {
-      representative_trace <- png::readPNG(here::here(representative_trace_file)) %>% grid::rasterGrob()
+    if (file.exists(here::here(representative_trace_filename))) {
+      representative_trace <- png::readPNG(here::here(representative_trace_filename)) %>% grid::rasterGrob()
 
       treatment_plot <- treatment_plot +
         ggplot2::annotation_custom(
@@ -1930,19 +1922,20 @@ plot_AP_comparison <-
     ap_parameter_plot <- data %>%
       dplyr::filter(.data$treatment == plot_treatment) %>%
       dplyr::filter(.data$category == plot_category) %>%
-      ggplot2::ggplot(ggplot2::aes(x = .data$state, y = .data[[y_variable]])) +
+      ggplot2::ggplot(ggplot2::aes(x = .data$state, y = .data[[y_variable]], color = .data$state)) +
       ggplot2::geom_line(
         ggplot2::aes(group = .data$letter),
         linewidth = as.numeric(theme_options["connecting_line_width", "value"]),
-        color = "#bfbfbf",
+        color = theme_options["mean_point_colour", "value"],
         alpha = 0.3
       ) +
       ggplot2::geom_point(
-        alpha = 0.8,
+        alpha = 0.9,
         size = 4,
-        position = ggplot2::position_jitter(0.04),
-        color = plot_colour
+        position = ggplot2::position_jitter(0.04)
       ) +
+      ggplot2::scale_color_manual(
+        values = c(theme_options["baseline_group_colour", "value"], plot_colour)) +
       ggplot2::stat_summary(
         fun.data = ggplot2::mean_se,
         geom = "pointrange",
@@ -1970,7 +1963,8 @@ plot_AP_comparison <-
         ),
         vjust = -0.3,
         textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
-        size = 0.4
+        size = 0.4,
+        color = "black"
       ) +
         ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
     }
@@ -2082,7 +2076,7 @@ plot_AP_frequencies_single_treatment <- function(data,
     ggplot2::geom_pointrange(size = 1, linewidth = 0.6) +
     ggplot2::labs(x = "Current Injection (pA)", y = "AP Frequency (Hz)", color = NULL) +
     ggplot2::scale_color_manual(
-      values = c("gray", plot_colour),
+      values = c(theme_options["mean_point_colour", "value"], plot_colour),
       labels = c(
         paste0(
           baseline_label,
