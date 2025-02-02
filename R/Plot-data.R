@@ -2405,7 +2405,7 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #' plot_AP_trace(
 #'   file = sample_ap_abf_baseline,
 #'   sweeps = c("epi1", "epi10"),
-#'   trace_color = "orange",
+#'   trace_color = "#6600cc",
 #'   plot_category = 2,
 #'   plot_treatment = "Control",
 #'   state = "Baseline",
