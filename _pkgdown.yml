@@ -49,12 +49,15 @@ reference:
   desc: >
     Functions to plot the data.
   contents:
+  - patchclampplotteR_theme
+- subtitle: Evoked and spontaneous currents
+  contents:
   - plot_raw_current_data
   - plot_summary_current_data
   - plot_baseline_data
+- subtitle: Spontaneous currents only
   - plot_spontaneous_current_parameter_comparison
   - plot_spontaneous_current_trace
-  - patchclampplotteR_theme
 
 - subtitle: Paired-pulse ratio
   contents:

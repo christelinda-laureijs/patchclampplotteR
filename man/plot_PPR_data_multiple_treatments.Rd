@@ -15,6 +15,7 @@ plot_PPR_data_multiple_treatments(
   treatment_colour_theme,
   theme_options,
   filename_suffix = "",
+  geom_signif_size = 0.3,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -58,6 +59,8 @@ look like and how you can customize these values.}
 \item{filename_suffix}{Optional character value to add a suffix to the
 filename of the .png file created with this plot. Could be useful if you
 have specified a custom list of treatments.}
+
+\item{geom_signif_size}{A numeric value describing the size of the geom_signif bracket size. Defaults to 0.3, which is a good thickness for most applications.}
 
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but

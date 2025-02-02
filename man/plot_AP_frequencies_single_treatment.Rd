@@ -15,6 +15,8 @@ plot_AP_frequencies_single_treatment(
   p_adjust_method = "holm",
   save_plot_png = "no",
   treatment_colour_theme,
+  baseline_shape = 16,
+  post_treatment_shape = 17,
   theme_options,
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -57,6 +59,10 @@ they will all go in subfolders below Figures/ in your project directory.}
 their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
+
+\item{baseline_shape}{A numeric value describing the shape used for the baseline data. Defaults to 16, which is a circle.}
+
+\item{post_treatment_shape}{A numeric value describing the shape used for the post-treatment/post-protocol data. Defaults to 17, which is a triangle.}
 
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should

@@ -15,6 +15,7 @@ plot_spontaneous_current_parameter_comparison(
   test_type,
   large_axis_text = "no",
   treatment_colour_theme,
+  geom_signif_size = 0.5,
   theme_options,
   save_plot_png,
   ggplot_theme = patchclampplotteR_theme()
@@ -62,6 +63,8 @@ layer will be applied which increases the axis text.}
 their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
+
+\item{geom_signif_size}{A numeric value describing the size of the geom_signif bracket size. Defaults to 0.5, which is a good thickness for most applications.}
 
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should

@@ -1247,6 +1247,7 @@ plot_summary_current_data <- function(data,
 #' @param post_hormone_label A character value for x-axis label applied to
 #'   the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
 #'   will likely change this to the hormone or protocol name.
+#' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to 0.4, which is a good thickness for most applications.
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
 #'   a .png file exported to `Figures/Evoked-currents/Variance-plots`. The plot
 #'   will be named in the form of
@@ -1280,6 +1281,7 @@ plot_variance_comparison_data <- function(data,
                                           post_hormone_label = "Insulin",
                                           test_type,
                                           large_axis_text = "no",
+                                          geom_signif_size = 0.4,
                                           treatment_colour_theme,
                                           theme_options,
                                           save_plot_png = "no",
@@ -1343,7 +1345,7 @@ plot_variance_comparison_data <- function(data,
         ),
         vjust = -0.3,
         textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
-        size = 0.4
+        size = geom_signif_size
       ) +
       ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
   }
@@ -1534,6 +1536,7 @@ plot_cv_data <- function(data,
 #' @param test_type A character (must be "wilcox.test", "t.test" or "none")
 #'   describing the statistical model used to create a significance bracket
 #'   comparing the pre- and post-hormone groups.
+#' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to 0.4, which is a good thickness for most applications.
 #' @export
 #'
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -1563,6 +1566,7 @@ plot_PPR_data_one_treatment <- function(data,
                                         post_hormone_label = "Post-hormone",
                                         test_type,
                                         large_axis_text = "no",
+                                        geom_signif_size = 0.4,
                                         treatment_colour_theme,
                                         theme_options,
                                         save_plot_png = "no",
@@ -1645,7 +1649,7 @@ plot_PPR_data_one_treatment <- function(data,
         ),
         vjust = -0.3,
         textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
-        size = 0.4,
+        size = geom_signif_size,
         y_position = 2.5
       )
   }
@@ -1697,6 +1701,7 @@ plot_PPR_data_one_treatment <- function(data,
 #' @inheritParams plot_PPR_data_one_treatment
 
 #' @param data Paired pulse ratio data generated from [make_PPR_data()].
+#' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to 0.3, which is a good thickness for most applications.
 #'
 #' @export
 #'
@@ -1728,6 +1733,7 @@ plot_PPR_data_multiple_treatments <- function(data,
                                               treatment_colour_theme,
                                               theme_options,
                                               filename_suffix = "",
+                                              geom_signif_size = 0.3,
                                               save_plot_png = "no",
                                               ggplot_theme = patchclampplotteR_theme()) {
   if (!include_all_treatments %in% c("yes", "no")) {
@@ -1847,7 +1853,7 @@ plot_PPR_data_multiple_treatments <- function(data,
         ),
         vjust = -0.3,
         textsize = 4,
-        size = 0.3,
+        size = geom_signif_size,
         margin_top = 0.1,
         extend_line = 0.03
       ) +
@@ -1875,9 +1881,12 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' This function produces a connected line plot which allows you to visually compare action potential parameters such as peak amplitude, after-hyperpolarization amplitude (here, `antipeak_amplitude`), half-width, etc. before and after a treatment has been applied. It requires action potential data from two recordings - one taken during the baseline (`state = "Baseline"`) and one taken after a hormone or high-frequency protocol has been applied (in this example, `state = "Insulin"`).
 #'
 #' @inheritParams plot_PPR_data_one_treatment
+#' @inheritParams plot_AP_frequencies_single_treatment
+#'
 #' @param data The action potential data generated from `add_new_cells()` with `data_type == "AP"`.
 #' @param y_variable A character value naming the variable to be plotted on the y-axis. Must be a column present in `data`. Examples include `peak_amplitude`, `time_to_peak`, `antipeak_amplitude` and `half_width`.
 #' @param y_axis_title A character value used to define a "pretty" version of `y_variable`. This will become the y-axis label on the ggplot. Examples include "Peak Amplitude (pA)" or "Time to Peak (ms)".
+#' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to 0.5, which is a good thickness for most applications.
 #'
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
 #'   a .png file in the folder `Figures/Action-potentials` relative to the
@@ -1910,6 +1919,9 @@ plot_AP_comparison <-
            test_type,
            treatment_colour_theme,
            theme_options,
+           baseline_shape = 16,
+           post_treatment_shape = 17,
+           geom_signif_size = 0.5,
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
     if (!save_plot_png %in% c("yes", "no")) {
@@ -1927,7 +1939,7 @@ plot_AP_comparison <-
     ap_parameter_plot <- data %>%
       dplyr::filter(.data$treatment == plot_treatment) %>%
       dplyr::filter(.data$category == plot_category) %>%
-      ggplot2::ggplot(ggplot2::aes(x = .data$state, y = .data[[y_variable]], color = .data$state)) +
+      ggplot2::ggplot(ggplot2::aes(x = .data$state, y = .data[[y_variable]], color = .data$state, shape = .data$state)) +
       ggplot2::geom_line(
         ggplot2::aes(group = .data$letter),
         linewidth = as.numeric(theme_options["connecting_line_width", "value"]),
@@ -1941,6 +1953,9 @@ plot_AP_comparison <-
       ) +
       ggplot2::scale_color_manual(
         values = c(theme_options["baseline_group_colour", "value"], plot_colour)
+      ) +
+      ggplot2::scale_shape_manual(
+        values = c(baseline_shape, post_treatment_shape)
       ) +
       ggplot2::stat_summary(
         fun.data = ggplot2::mean_se,
@@ -1969,7 +1984,7 @@ plot_AP_comparison <-
         ),
         vjust = -0.3,
         textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
-        size = 0.4,
+        size = geom_signif_size,
         color = theme_options["baseline_group_colour", "value"]
       ) +
         ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
@@ -2004,7 +2019,8 @@ plot_AP_comparison <-
 #'
 #' @param data Action potential frequency data imported through `add_new_cells()` with `data_type == "AP_count"`
 #' @param p_adjust_method This argument is directly related to `p.adjust.method` in `rstatix::t_test`. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none" (although "none" is not recommended).
-#'
+#' @param baseline_shape A numeric value describing the shape used for the baseline data. Defaults to 16, which is a circle.
+#' @param post_treatment_shape A numeric value describing the shape used for the post-treatment/post-protocol data. Defaults to 17, which is a triangle.
 #' @returns
 #'
 #' A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -2037,6 +2053,8 @@ plot_AP_frequencies_single_treatment <- function(data,
                                                  p_adjust_method = "holm",
                                                  save_plot_png = "no",
                                                  treatment_colour_theme,
+                                                 baseline_shape = 16,
+                                                 post_treatment_shape = 17,
                                                  theme_options,
                                                  ggplot_theme = patchclampplotteR_theme()) {
   if (!large_axis_text %in% c("yes", "no")) {
@@ -2076,13 +2094,35 @@ plot_AP_frequencies_single_treatment <- function(data,
         y = .data$mean_AP_frequency,
         ymin = .data$mean_AP_frequency - .data$SE,
         ymax = .data$mean_AP_frequency + .data$SE,
-        color = .data$state
+        color = .data$state,
+        shape = .data$state
       )
     ) +
     ggplot2::geom_pointrange(size = 1, linewidth = 0.6) +
-    ggplot2::labs(x = "Current Injection (pA)", y = "AP Frequency (Hz)", color = NULL) +
+    ggplot2::labs(x = "Current Injection (pA)", y = "AP Frequency (Hz)", color = NULL, shape = NULL) +
     ggplot2::scale_color_manual(
       values = c(theme_options["mean_point_colour", "value"], plot_colour),
+      labels = c(
+        paste0(
+          baseline_label,
+          ", n = ",
+          ap_plot_count_data %>%
+            dplyr::filter(.data$state == baseline_label) %>%
+            dplyr::pull(.data$n) %>%
+            dplyr::first()
+        ),
+        paste0(
+          hormone_added,
+          ", n = ",
+          ap_plot_count_data %>%
+            dplyr::filter(.data$state == hormone_added) %>%
+            dplyr::pull(.data$n) %>%
+            dplyr::first()
+        )
+      )
+    ) +
+    ggplot2::scale_shape_manual(
+      values = c(baseline_shape, post_treatment_shape),
       labels = c(
         paste0(
           baseline_label,
@@ -2488,6 +2528,8 @@ plot_AP_trace <-
 #' @param y_variable A character value ("raw_amplitude" or "raw_frequency") only.
 #'   Normalized amplitude and frequency are not available because all baseline
 #'   values are 100.
+#' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to 0.5, which is a good thickness for most applications.
+#'
 #' @inheritParams plot_variance_comparison_data
 #' @inheritParams plot_baseline_data
 #' @inheritParams plot_raw_current_data
@@ -2523,6 +2565,7 @@ plot_spontaneous_current_parameter_comparison <-
            test_type,
            large_axis_text = "no",
            treatment_colour_theme,
+           geom_signif_size = 0.5,
            theme_options,
            save_plot_png,
            ggplot_theme = patchclampplotteR_theme()) {
@@ -2617,7 +2660,7 @@ plot_spontaneous_current_parameter_comparison <-
           ),
           vjust = -0.3,
           textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
-          size = 0.4
+          size = geom_signif_size
         ) +
         ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
     }

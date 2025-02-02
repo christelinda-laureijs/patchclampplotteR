@@ -12,6 +12,7 @@ plot_PPR_data_one_treatment(
   post_hormone_label = "Post-hormone",
   test_type,
   large_axis_text = "no",
+  geom_signif_size = 0.4,
   treatment_colour_theme,
   theme_options,
   save_plot_png = "no",
@@ -43,6 +44,8 @@ comparing the pre- and post-hormone groups.}
 
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the size of the axis text.}
+
+\item{geom_signif_size}{A numeric value describing the size of the geom_signif bracket size. Defaults to 0.4, which is a good thickness for most applications.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See

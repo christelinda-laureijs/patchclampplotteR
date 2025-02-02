@@ -15,6 +15,9 @@ plot_AP_comparison(
   test_type,
   treatment_colour_theme,
   theme_options,
+  baseline_shape = 16,
+  post_treatment_shape = 17,
+  geom_signif_size = 0.5,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -54,6 +57,12 @@ should look like.}
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should
 look like.}
+
+\item{baseline_shape}{A numeric value describing the shape used for the baseline data. Defaults to 16, which is a circle.}
+
+\item{post_treatment_shape}{A numeric value describing the shape used for the post-treatment/post-protocol data. Defaults to 17, which is a triangle.}
+
+\item{geom_signif_size}{A numeric value describing the size of the geom_signif bracket size. Defaults to 0.5, which is a good thickness for most applications.}
 
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
