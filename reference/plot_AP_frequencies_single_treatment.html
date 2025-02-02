@@ -63,6 +63,8 @@
 <span>  p_adjust_method <span class="op">=</span> <span class="st">"holm"</span>,</span>
 <span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  <span class="va">treatment_colour_theme</span>,</span>
+<span>  baseline_shape <span class="op">=</span> <span class="fl">16</span>,</span>
+<span>  post_treatment_shape <span class="op">=</span> <span class="fl">17</span>,</span>
 <span>  <span class="va">theme_options</span>,</span>
 <span>  ggplot_theme <span class="op">=</span> <span class="fu"><a href="patchclampplotteR_theme.html">patchclampplotteR_theme</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -128,6 +130,14 @@ they will all go in subfolders below Figures/ in your project directory.</p></dd
 their associated colours as hex values. See
 <a href="sample_treatment_names_and_colours.html">sample_treatment_names_and_colours</a> for an example of what this dataframe
 should look like.</p></dd>
+
+
+<dt id="arg-baseline-shape">baseline_shape<a class="anchor" aria-label="anchor" href="#arg-baseline-shape"></a></dt>
+<dd><p>A numeric value describing the shape used for the baseline data. Defaults to 16, which is a circle.</p></dd>
+
+
+<dt id="arg-post-treatment-shape">post_treatment_shape<a class="anchor" aria-label="anchor" href="#arg-post-treatment-shape"></a></dt>
+<dd><p>A numeric value describing the shape used for the post-treatment/post-protocol data. Defaults to 17, which is a triangle.</p></dd>
 
 
 <dt id="arg-theme-options">theme_options<a class="anchor" aria-label="anchor" href="#arg-theme-options"></a></dt>
