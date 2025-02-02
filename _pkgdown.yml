@@ -108,6 +108,8 @@ reference:
   contents:
   - sample_AP_data
   - sample_AP_count_data
+  - sample_ap_abf_baseline
+  - sample_ap_abf_insulin
 
 
 articles:

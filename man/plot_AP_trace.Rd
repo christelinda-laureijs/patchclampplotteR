@@ -12,6 +12,13 @@ plot_AP_trace(
   plot_category,
   plot_treatment,
   state,
+  include_scale_bar = "yes",
+  scale_bar_x_start = 880,
+  scale_bar_x_length = 100,
+  scaling_factor = 10,
+  scale_bar_y_start = -30,
+  scale_bar_y_length = 40,
+  scale_bar_linewidth = 0.6,
   save_plot_png = "no",
   filename_suffix
 )
@@ -36,6 +43,25 @@ were present on the brain slice, or the animals were fasted, etc.}
 
 \item{state}{A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The \code{state} will be included in the .png filename if \code{save_plot_png = "yes"}.}
 
+\item{include_scale_bar}{A character value that determines if a scale bar
+will be added to the plot. Allowed values are "yes" and "no".}
+
+\item{scale_bar_x_start}{A numeric value (in milliseconds) describing the x-axis position of
+the scale bar (default is 880).}
+
+\item{scale_bar_x_length}{A numeric value describing the horizontal span (in
+milliseconds) of the scale bar (default is 100).}
+
+\item{scaling_factor}{A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is 10, and this value will likely not need to be changed.}
+
+\item{scale_bar_y_start}{A numeric value describing the y-axis position (in mV) of
+the scale bar (default is -30).}
+
+\item{scale_bar_y_length}{A numeric value describing the vertical span (in
+mV) of the scale bar (default is 40).}
+
+\item{scale_bar_linewidth}{A numeric value describing the thickness of the scalebar line (default is 0.6).}
+
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
 they will all go in subfolders below Figures/ in your project directory.}
@@ -54,11 +80,14 @@ This function allows you to plot an \code{.abf} file of a recording taken in cur
 }
 \examples{
 
-plot_AP_trace(file = sample_ap_abf_baseline,
-sweeps = c("epi1", "epi10"),
-trace_color = "orange",
-plot_category = 2,
-plot_treatment = "Control",
-state = "Baseline")
+plot_AP_trace(
+  file = sample_ap_abf_baseline,
+  sweeps = c("epi1", "epi10"),
+  trace_color = "orange",
+  plot_category = 2,
+  plot_treatment = "Control",
+  state = "Baseline",
+  include_scale_bar = "yes"
+)
 
 }

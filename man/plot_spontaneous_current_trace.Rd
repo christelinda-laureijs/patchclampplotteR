@@ -16,6 +16,7 @@ plot_spontaneous_current_trace(
   scale_bar_x_length = 0.5,
   scale_bar_y_start = 15,
   scale_bar_y_length = 20,
+  scale_bar_linewidth = 0.4,
   plot_x_min = 1,
   plot_x_max = 5,
   plot_y_min = -100,
@@ -48,18 +49,20 @@ will be added to the plot. Allowed values are "yes" and "no".}
 \item{plot_episode}{A character value describing the sweep (e.g. \code{epi1}) that
 will be used for the plot.}
 
-\item{scale_bar_x_start}{A numeric value describing the x-axis position of
-the scale bar.}
+\item{scale_bar_x_start}{A numeric value (in seconds) describing the x-axis position of
+the scale bar (default is 1.25).}
 
 \item{scale_bar_x_length}{A numeric value describing the horizontal span (in
 seconds) of the scale bar. This will automatically be converted and
-displayed in milliseconds.}
+displayed in milliseconds (default is 0.5).}
 
-\item{scale_bar_y_start}{A numeric value describing the y-axis position of
-the scale bar.}
+\item{scale_bar_y_start}{A numeric value describing the y-axis position (in pA) of
+the scale bar (default is 15).}
 
 \item{scale_bar_y_length}{A numeric value describing the vertical span (in
-pA) of the scale bar.}
+pA) of the scale bar (default is 20).}
+
+\item{scale_bar_linewidth}{A numeric value describing the thickness of the scalebar line (default is 0.4).}
 
 \item{plot_x_min}{A numeric value describing the minimum value on the x-axis
 (in seconds).}
@@ -95,6 +98,9 @@ ggplot object with an optional scale bar.
 plot_spontaneous_current_trace(
   file = sample_abf_file,
   plot_colour = "#6600cc",
+  plot_category = 2,
+  plot_treatment = "Control",
+  state = "Baseline",
   include_scale_bar = "yes",
   plot_episode = "epi1",
   scale_bar_x_length = 1,

@@ -22,11 +22,13 @@ This is an excerpt of a raw recording of action potentials imported as a datafra
 This is a current injection protocol taken during the baseline period. See \code{sample_ap_abf_insulin} for data from the same protocol taken after 25 minutes of exposure to 500 nM insulin.
 }
 \examples{
-plot_AP_trace(file = sample_ap_abf_baseline,
-sweeps = c("epi1", "epi10"),
-trace_color = "orange",
-plot_category = 2,
-plot_treatment = "Control",
-state = "Baseline")
+plot_AP_trace(
+  file = sample_ap_abf_baseline,
+  sweeps = c("epi1", "epi10"),
+  trace_color = "orange",
+  plot_category = 2,
+  plot_treatment = "Control",
+  state = "Baseline"
+)
 }
 \keyword{data}

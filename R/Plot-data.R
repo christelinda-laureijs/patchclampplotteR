@@ -2341,6 +2341,16 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #' @param sweeps A character value or list of character values of the sweeps you would like to plot. These correspond to the values in the `sweep1` column of your dataset, and will likely be in the form of "epi1", "epi2", etc.
 #' @param line_width A numeric value specifying the width of the lineplot
 #' @param trace_color A hex value of the colour of the lineplot
+#' @param scale_bar_x_start A numeric value (in milliseconds) describing the x-axis position of
+#'   the scale bar (default is 880).
+#' @param scale_bar_x_length A numeric value describing the horizontal span (in
+#'   milliseconds) of the scale bar (default is 100).
+#' @param scale_bar_y_start A numeric value describing the y-axis position (in mV) of
+#'   the scale bar (default is -30).
+#' @param scale_bar_y_length A numeric value describing the vertical span (in
+#'   mV) of the scale bar (default is 40).
+#' @param scaling_factor A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is 10, and this value will likely not need to be changed.
+#' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is 0.6).
 #'
 #' @returns
 #'
@@ -2358,7 +2368,8 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #'   trace_color = "orange",
 #'   plot_category = 2,
 #'   plot_treatment = "Control",
-#'   state = "Baseline"
+#'   state = "Baseline",
+#'   include_scale_bar = "yes"
 #' )
 #'
 plot_AP_trace <-
@@ -2369,10 +2380,21 @@ plot_AP_trace <-
            plot_category,
            plot_treatment,
            state,
+           include_scale_bar = "yes",
+           scale_bar_x_start = 880,
+           scale_bar_x_length = 100,
+           scaling_factor = 10,
+           scale_bar_y_start = -30,
+           scale_bar_y_length = 40,
+           scale_bar_linewidth = 0.6,
            save_plot_png = "no",
            filename_suffix) {
     if (!save_plot_png %in% c("yes", "no")) {
       stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+    }
+
+    if (!include_scale_bar %in% c("yes", "no")) {
+      stop("'include_scale_bar' argument must be one of: 'yes' or 'no'")
     }
 
     ap_trace <- file %>%
@@ -2384,6 +2406,44 @@ plot_AP_trace <-
       )) +
       ggplot2::geom_line(color = trace_color, linewidth = line_width) +
       ggplot2::theme_void()
+
+
+    if (include_scale_bar == "yes") {
+      ap_trace <- ap_trace +
+        ggplot2::annotate(
+          "segment",
+          x = scale_bar_x_start * scaling_factor,
+          xend = scale_bar_x_start * scaling_factor + scale_bar_x_length * scaling_factor,
+          y = scale_bar_y_start,
+          yend = scale_bar_y_start,
+          lwd = scale_bar_linewidth
+        ) +
+        ggplot2::annotate(
+          "segment",
+          x = scale_bar_x_start * scaling_factor,
+          xend = scale_bar_x_start * scaling_factor,
+          y = scale_bar_y_start,
+          yend = scale_bar_y_start + scale_bar_y_length,
+          lwd = scale_bar_linewidth
+        ) +
+        ggplot2::annotate(
+          "text",
+          x = scale_bar_x_start * scaling_factor - 100,
+          y = scale_bar_y_start + 0.5 * scale_bar_y_length,
+          label = paste0(scale_bar_y_length, "mV"),
+          hjust = 1,
+          vjust = 0.5
+        ) +
+        ggplot2::annotate(
+          "text",
+          x = scale_bar_x_start * scaling_factor + 0.5 * scale_bar_x_length *
+            scaling_factor,
+          y = scale_bar_y_start - 5,
+          label = paste0(scale_bar_x_length, "ms"),
+          hjust = 0.5,
+          vjust = 0.5
+        )
+    }
 
     if (save_plot_png == "yes") {
       ggplot2::ggsave(
@@ -2616,15 +2676,16 @@ plot_spontaneous_current_parameter_comparison <-
 #'   will be added to the plot. Allowed values are "yes" and "no".
 #' @param plot_episode A character value describing the sweep (e.g. `epi1`) that
 #'   will be used for the plot.
-#' @param scale_bar_x_start A numeric value describing the x-axis position of
-#'   the scale bar.
+#' @param scale_bar_x_start A numeric value (in seconds) describing the x-axis position of
+#'   the scale bar (default is 1.25).
 #' @param scale_bar_x_length A numeric value describing the horizontal span (in
 #'   seconds) of the scale bar. This will automatically be converted and
-#'   displayed in milliseconds.
-#' @param scale_bar_y_start A numeric value describing the y-axis position of
-#'   the scale bar.
+#'   displayed in milliseconds (default is 0.5).
+#' @param scale_bar_y_start A numeric value describing the y-axis position (in pA) of
+#'   the scale bar (default is 15).
 #' @param scale_bar_y_length A numeric value describing the vertical span (in
-#'   pA) of the scale bar.
+#'   pA) of the scale bar (default is 20).
+#' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is 0.4).
 #' @param plot_colour A character value naming the colour of the plot.
 #' @param plot_x_min A numeric value describing the minimum value on the x-axis
 #'   (in seconds).
@@ -2645,6 +2706,9 @@ plot_spontaneous_current_parameter_comparison <-
 #' plot_spontaneous_current_trace(
 #'   file = sample_abf_file,
 #'   plot_colour = "#6600cc",
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   state = "Baseline",
 #'   include_scale_bar = "yes",
 #'   plot_episode = "epi1",
 #'   scale_bar_x_length = 1,
@@ -2665,6 +2729,7 @@ plot_spontaneous_current_trace <-
            scale_bar_x_length = 0.5,
            scale_bar_y_start = 15,
            scale_bar_y_length = 20,
+           scale_bar_linewidth = 0.4,
            plot_x_min = 1,
            plot_x_max = 5,
            plot_y_min = -100,
@@ -2697,7 +2762,7 @@ plot_spontaneous_current_trace <-
           xend = scale_bar_x_start + scale_bar_x_length,
           y = scale_bar_y_start,
           yend = scale_bar_y_start,
-          lwd = 0.4
+          lwd = scale_bar_linewidth
         ) +
         ggplot2::annotate(
           "segment",
@@ -2705,7 +2770,7 @@ plot_spontaneous_current_trace <-
           xend = scale_bar_x_start,
           y = scale_bar_y_start,
           yend = scale_bar_y_start + scale_bar_y_length,
-          lwd = 0.4
+          lwd = scale_bar_linewidth
         ) +
         ggplot2::annotate(
           "text",
