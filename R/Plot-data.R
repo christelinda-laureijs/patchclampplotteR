@@ -1970,7 +1970,7 @@ plot_AP_comparison <-
         vjust = -0.3,
         textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
         size = 0.4,
-        color = "black"
+        color = theme_options["baseline_group_colour", "value"]
       ) +
         ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
     }
