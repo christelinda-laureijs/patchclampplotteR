@@ -73,6 +73,7 @@ ggplot object with an optional scale bar.</p>
 <span>  scale_bar_x_length <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  scale_bar_y_start <span class="op">=</span> <span class="fl">15</span>,</span>
 <span>  scale_bar_y_length <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  scale_bar_linewidth <span class="op">=</span> <span class="fl">0.4</span>,</span>
 <span>  plot_x_min <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  plot_x_max <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  plot_y_min <span class="op">=</span> <span class="op">-</span><span class="fl">100</span>,</span>
@@ -124,24 +125,28 @@ will be used for the plot.</p></dd>
 
 
 <dt id="arg-scale-bar-x-start">scale_bar_x_start<a class="anchor" aria-label="anchor" href="#arg-scale-bar-x-start"></a></dt>
-<dd><p>A numeric value describing the x-axis position of
-the scale bar.</p></dd>
+<dd><p>A numeric value (in seconds) describing the x-axis position of
+the scale bar (default is 1.25).</p></dd>
 
 
 <dt id="arg-scale-bar-x-length">scale_bar_x_length<a class="anchor" aria-label="anchor" href="#arg-scale-bar-x-length"></a></dt>
 <dd><p>A numeric value describing the horizontal span (in
 seconds) of the scale bar. This will automatically be converted and
-displayed in milliseconds.</p></dd>
+displayed in milliseconds (default is 0.5).</p></dd>
 
 
 <dt id="arg-scale-bar-y-start">scale_bar_y_start<a class="anchor" aria-label="anchor" href="#arg-scale-bar-y-start"></a></dt>
-<dd><p>A numeric value describing the y-axis position of
-the scale bar.</p></dd>
+<dd><p>A numeric value describing the y-axis position (in pA) of
+the scale bar (default is 15).</p></dd>
 
 
 <dt id="arg-scale-bar-y-length">scale_bar_y_length<a class="anchor" aria-label="anchor" href="#arg-scale-bar-y-length"></a></dt>
 <dd><p>A numeric value describing the vertical span (in
-pA) of the scale bar.</p></dd>
+pA) of the scale bar (default is 20).</p></dd>
+
+
+<dt id="arg-scale-bar-linewidth">scale_bar_linewidth<a class="anchor" aria-label="anchor" href="#arg-scale-bar-linewidth"></a></dt>
+<dd><p>A numeric value describing the thickness of the scalebar line (default is 0.4).</p></dd>
 
 
 <dt id="arg-plot-x-min">plot_x_min<a class="anchor" aria-label="anchor" href="#arg-plot-x-min"></a></dt>
@@ -187,6 +192,9 @@ project directory, with the <code>plot_category</code>, <code>plot_treatment</co
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">plot_spontaneous_current_trace</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  file <span class="op">=</span> <span class="va">sample_abf_file</span>,</span></span>
 <span class="r-in"><span>  plot_colour <span class="op">=</span> <span class="st">"#6600cc"</span>,</span></span>
+<span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span></span>
+<span class="r-in"><span>  state <span class="op">=</span> <span class="st">"Baseline"</span>,</span></span>
 <span class="r-in"><span>  include_scale_bar <span class="op">=</span> <span class="st">"yes"</span>,</span></span>
 <span class="r-in"><span>  plot_episode <span class="op">=</span> <span class="st">"epi1"</span>,</span></span>
 <span class="r-in"><span>  scale_bar_x_length <span class="op">=</span> <span class="fl">1</span>,</span></span>

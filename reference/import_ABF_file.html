@@ -45,7 +45,7 @@ dataframe, and it also converts time to minutes."><meta property="og:image" cont
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Import raw .abf files as a dataframe</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Import raw <code>.abf</code> files as a dataframe</h1>
       <small class="dont-index">Source: <a href="https://github.com/christelinda-laureijs/patchclampplotteR/blob/main/R/Import-data.R" class="external-link"><code>R/Import-data.R</code></a></small>
       <div class="d-none name"><code>import_ABF_file.Rd</code></div>
     </div>
@@ -58,7 +58,7 @@ dataframe, and it also converts time to minutes.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">import_ABF_file</span><span class="op">(</span><span class="va">file_name</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">import_ABF_file</span><span class="op">(</span><span class="va">file_name</span>, <span class="va">recording_mode</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -66,7 +66,11 @@ dataframe, and it also converts time to minutes.</p>
 
 
 <dl><dt id="arg-file-name">file_name<a class="anchor" aria-label="anchor" href="#arg-file-name"></a></dt>
-<dd><p>Filepath to an .abf file (e.g. "Data/23711004.abf")</p></dd>
+<dd><p>Filepath to an <code>.abf</code> file (e.g. "Data/23711004.abf")</p></dd>
+
+
+<dt id="arg-recording-mode">recording_mode<a class="anchor" aria-label="anchor" href="#arg-recording-mode"></a></dt>
+<dd><p>The mode used for the recording. If in <code>recording_mode = "voltage_clamp"</code> (e.g. clamping cell at -70 mV and measuring current amplitude) the primary channel (<code>chan1</code>) is set to "current" and the secondary channel (<code>chan2</code>) is "voltage". If <code>recording_mode = "current_clamp"</code>, these values are reversed, where the primary channel is "voltage" and the secondary channel is "current".</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -81,13 +85,13 @@ directly to "sweep" in Clampfit.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The file progresses from .abf to an array and then to a dataframe that can be
-easily manipulated in R.</p>
+    <p>The file progresses from <code>.abf</code> to an array and then to a dataframe that can be
+easily manipulated in R. Be sure to assign a value to the dataframe so you can use it in later functions.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">import_ABF_file</span><span class="op">(</span><span class="fu"><a href="import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"sample_abf.abf"</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">import_ABF_file</span><span class="op">(</span><span class="fu"><a href="import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"sample_abf.abf"</span><span class="op">)</span>, recording_mode <span class="op">=</span> <span class="st">"voltage_clamp"</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
