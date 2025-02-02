@@ -12,7 +12,8 @@ vignette: >
 ```{r knit-options-libraries, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.align = "center"
 )
 
 library(reactable)
@@ -32,6 +33,11 @@ short, distinctive name with no spaces (use hyphens instead). I would strongly
 recommend adding subfolders with names like `Data`, `Figures`, and `Thesis`.
 This will help with organization and make it easier to expand to future
 projects, like writing your thesis in R.
+
+```{r folder-structure, out.width="25%", out.extra = "", fig.alt = "A screenshot of the file structure of a typical project. There are folders for data, figures, scripts, and the thesis.", fig.cap = "A screenshot of the file structure of a typical project. There are folders for data, figures, scripts and the thesis. Files with a '.' in the name are automatically generated when you set up your project. If you aren't using git to track your files, don't worry about the filenames that start with 'git'"}
+knitr::include_graphics("articles/figures/Directory.png")
+```
+
 
 In RStudio, click on `File` -> `New project` -> `Existing Directory` and choose
 the folder you just created. Click on `Create Project` and R will refresh to a
@@ -599,6 +605,10 @@ vmr_comparison_control_plot
 
 ## Compare baseline parameters
 
+You can compare parameters across treatments during the baseline period. If `current_type` = "eEPSC", the allowed `y_variable` is "raw_amplitude". If `current_type` = "sEPSC", the allowed `y_variable` values are "raw_amplitude" or "raw_frequency".
+
+> *Note*: It does not make sense to use normalized/baseline transformed amplitudes, since these will all be 100, and the graph will be a flat line.
+
 ```{r compare-baseline-parameters, fig.alt = "A grouped scatterplot showing the baseline evoked current amplitude across four treatment groups.", warning=FALSE}
 plot_baseline_data(
   data = summary_eEPSC_df,
@@ -614,5 +624,13 @@ plot_baseline_data(
   theme_options = sample_theme_options,
   save_plot_png = "no"
 )
+```
+
+Hopefully this vignette has given you an idea of some of the plotting functions that this package can do. The documentation for each function contains lots of additional information about each argument, and you can also explore the articles for [Evoked Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html) and [Action Potential Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
+
+If you have any questions about customizing your plots, read the [FAQ](https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.html) page. There will likely be an answer there!
+
+```{r ruby-picture, fig.alt = "A picture of a knitted white rat sitting on a keyboard and working at a computer.", fig.cap = "Ruby says 'Have fun with data analysis!'"}
+knitr::include_graphics("articles/figures/Ruby-desk.jpg")
 ```
 

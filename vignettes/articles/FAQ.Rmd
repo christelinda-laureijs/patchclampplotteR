@@ -18,6 +18,11 @@ library(reactable)
 
 This article contains answers to common questions about plots and customizing
 the ggplot output of functions like `plot_raw_current_data()`.
+
+> *Note*: Above all, if you are confused about how a function works, be sure to check the help page for that function! If you type `?` and the name of the function in the R console, it will bring up the help page for the function. For example, type `?plot_AP_trace` to get information on how to use this function.
+
+> There are often extra arguments not included in the examples that you may find helpful if you need to re-adjust parameters like the image position in `plot_summary_current_data()` or the bracket line width.
+
 This is the plot we will use throughout the FAQ:
 
 ```{r cars-plot-initial, fig.alt="A scatterplot of stopping distance in feet versus speed in miles per hour. The graph is a plain scatterplot with no background or gridlines."}
@@ -264,10 +269,6 @@ plot_summary_current_data(
 
 This package replaces manual plot creation and data analysis in GraphPad Prism and/or Excel. Previously, data analysis would have required transferring data between programs, which is time-consuming and potentially error-prone. This package can be combined with report writing in R to generate fully reproducible manuscripts.
 
-```{r, include=F}
-knitr::knit_exit()
-```
-
 
 # Package FAQ
 
@@ -275,4 +276,7 @@ knitr::knit_exit()
 
 Ruby is a rat, and she's also become an unofficial lab mascot for the Crosby lab! She loves helping out with data analysis, welcoming newcomers to the lab, and keeping lab members company. She found a way to sneak into some of the documentation for this package!
 
+```{r ruby-desk-picture, fig.alt = "A picture of a knitted white rat looking directly at the viewer.", fig.cap = "Ruby says 'Hello humans!'"}
+knitr::include_graphics("figures/Ruby-table.jpg")
+```
 
