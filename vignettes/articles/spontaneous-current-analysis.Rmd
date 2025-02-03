@@ -56,13 +56,22 @@ knitr::include_graphics("figures/Viewer-buttons.png")
 
 ## Create data sheet
 
-5. Create a .csv file with six columns: `Letter`, `ID`, `Trace`, `Peak_amplitude` and `Time_of_peak`.  
+5.  Create a `.csv` file with five columns:
 
-* `Letter` The unique letter identifier of a single cell.
-* `ID` A character value indicating the recording number. This corresponds to the `File Name` column that is automatically generated in the Results sheet in Clampfit. See below for a warning about what you should put here.
-* `Trace`
-* `Peak_amplitude` 
-* `Time_of_peak`
+* `letter` A character value that is a unique identifier for a single recording. Used to link data sets for evoked or spontaneous currents and
+cell-characteristics.
+* `ID` A character value for the recording filename.
+* `recording_num` A numeric value representing the recording number.
+This was incorporated before we switched to concatenating all recordings
+into one, but it needs to remain here to prevent breaking previous projects.
+It should be set to 1.
+* `trace` A numeric value representing the trace (automatically
+generated in Clampfit) where the current occurred.
+* `amplitude` A numeric value representing the amplitude of the evoked
+current in pA.
+* `time_of_peak` A numeric value representing the time of the peak in
+milliseconds relative to trace number. This is automatically calculated in
+Clampfit.
 
 > *Note* I would strongly recommend using the filename of the first file in the series (but write down the concatenated filename in your lab book as well). This is because Clampfit will auto-generate the concatenated file names (`Concatenate001.abf`, `Concatenate002.abf`, etc.). If you update your pClamp software, Clampfit will begin naming files again at `Concatenate000.abf`, and you could lose track of which file is which.
 
@@ -204,22 +213,7 @@ knitr::include_graphics("figures/Process-events-button.png")
 
 ## Copy required columns
 
-31. Create a `.csv` file with five columns:
-
-* `letter` A character value that is a unique identifier for a single recording. Used to link data sets for evoked or spontaneous currents and
-cell-characteristics.
-* `ID` A character value for the recording filename.
-* `recording_num` A numeric value representing the recording number.
-This was incorporated before we switched to concatenating all recordings
-into one, but it needs to remain here to prevent breaking previous projects.
-It should be set to 1.
-* `trace` A numeric value representing the trace (automatically
-generated in Clampfit) where the current occurred.
-* `amplitude` A numeric value representing the amplitude of the evoked
-current in pA.
-* `time_of_peak` A numeric value representing the time of the peak in
-milliseconds relative to trace number. This is automatically calculated in
-Clampfit.
+31. Open the `.csv` file that you created in step 5.
 
 32. Paste in the values from your results sheet.
 
