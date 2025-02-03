@@ -5,6 +5,7 @@ title: "FAQ"
 ```{r faq-setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  fig.align = "center",
   comment = "#>"
 )
 
@@ -210,11 +211,35 @@ plot_PPR_data_multiple_treatments(
 
 ## How do I modify the theme_options?
 
-This dataset contains theme options that will affect all plots. These include values for line thickness and the point shapes for male vs. female data points:
+This dataset contains `sample_theme_options` that will affect all plots. These include values for line thickness and the point shapes for male vs. female data points:
 
 ```{r reactable-sample-theme-options, echo=F}
 reactable(sample_theme_options)
 ```
+
+To use the default values, just use `sample_theme_options` in the `theme_options` argument of any plotting function in `patchclampplotteR`.
+
+```{r plot-summary-current-old-options, fig.alt="A scatterplot of current amplitude (% baseline) over time in minutes. This plot demonstrates that you can change the theme options and get a different-looking plot. For example, using the default sample theme options, the horizontal line showing times when insulin was added is black, and the data points are triangles and circles."}
+plot_summary_current_data(
+  data = sample_pruned_eEPSC_df$all_cells,
+  plot_category = 2,
+  plot_treatment = "Control",
+  current_type = "eEPSC",
+  y_variable = "amplitude",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+  include_representative_trace = "no",
+  y_axis_limit = 175,
+  signif_stars = "yes",
+  t_test_df = sample_eEPSC_t_test_df,
+  large_axis_text = "no",
+  shade_intervals = "no",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
+)
+```
+
+
 
 If you want to change these values, please follow these steps.
 
@@ -276,7 +301,7 @@ This package replaces manual plot creation and data analysis in GraphPad Prism a
 
 Ruby is a rat, and she's also become an unofficial lab mascot for the Crosby lab! She loves helping out with data analysis, welcoming newcomers to the lab, and keeping lab members company. She found a way to sneak into some of the documentation for this package!
 
-```{r ruby-desk-picture, fig.alt = "A picture of a knitted white rat looking directly at the viewer.", fig.cap = "Ruby says 'Hello humans!'"}
+```{r ruby-desk-picture, echo=F, fig.alt = "A picture of a knitted white rat looking directly at the viewer.", fig.cap = "Ruby says 'Hi humans!!'"}
 knitr::include_graphics("figures/Ruby-table.jpg")
 ```
 
