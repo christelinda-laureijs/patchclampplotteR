@@ -144,22 +144,30 @@ button (orange arrow) to help you see the data faster.</p></li>
 <h2 id="create-data-sheet">Create data sheet<a class="anchor" aria-label="anchor" href="#create-data-sheet"></a>
 </h2>
 <ol start="5" style="list-style-type: decimal">
-<li>Create a .csv file with six columns: <code>Letter</code>,
-<code>ID</code>, <code>Trace</code>, <code>Peak_amplitude</code> and
-<code>Time_of_peak</code>.</li>
+<li>Create a <code>.csv</code> file with five columns:</li>
 </ol>
 <ul>
 <li>
-<code>Letter</code> The unique letter identifier of a single
-cell.</li>
+<code>letter</code> A character value that is a unique identifier
+for a single recording. Used to link data sets for evoked or spontaneous
+currents and cell-characteristics.</li>
 <li>
-<code>ID</code> A character value indicating the recording number.
-This corresponds to the <code>File Name</code> column that is
-automatically generated in the Results sheet in Clampfit. See below for
-a warning about what you should put here.</li>
-<li><code>Trace</code></li>
-<li><code>Peak_amplitude</code></li>
-<li><code>Time_of_peak</code></li>
+<code>ID</code> A character value for the recording filename.</li>
+<li>
+<code>recording_num</code> A numeric value representing the
+recording number. This was incorporated before we switched to
+concatenating all recordings into one, but it needs to remain here to
+prevent breaking previous projects. It should be set to 1.</li>
+<li>
+<code>trace</code> A numeric value representing the trace
+(automatically generated in Clampfit) where the current occurred.</li>
+<li>
+<code>amplitude</code> A numeric value representing the amplitude of
+the evoked current in pA.</li>
+<li>
+<code>time_of_peak</code> A numeric value representing the time of
+the peak in milliseconds relative to trace number. This is automatically
+calculated in Clampfit.</li>
 </ul>
 <blockquote>
 <p><em>Note</em> I would strongly recommend using the filename of the
@@ -392,32 +400,8 @@ creating a consistent naming convention, such as
 <h2 id="copy-required-columns">Copy required columns<a class="anchor" aria-label="anchor" href="#copy-required-columns"></a>
 </h2>
 <ol start="31" style="list-style-type: decimal">
-<li>Create a <code>.csv</code> file with five columns:</li>
-</ol>
-<ul>
-<li>
-<code>letter</code> A character value that is a unique identifier
-for a single recording. Used to link data sets for evoked or spontaneous
-currents and cell-characteristics.</li>
-<li>
-<code>ID</code> A character value for the recording filename.</li>
-<li>
-<code>recording_num</code> A numeric value representing the
-recording number. This was incorporated before we switched to
-concatenating all recordings into one, but it needs to remain here to
-prevent breaking previous projects. It should be set to 1.</li>
-<li>
-<code>trace</code> A numeric value representing the trace
-(automatically generated in Clampfit) where the current occurred.</li>
-<li>
-<code>amplitude</code> A numeric value representing the amplitude of
-the evoked current in pA.</li>
-<li>
-<code>time_of_peak</code> A numeric value representing the time of
-the peak in milliseconds relative to trace number. This is automatically
-calculated in Clampfit.</li>
-</ul>
-<ol start="32" style="list-style-type: decimal">
+<li><p>Open the <code>.csv</code> file that you created in step
+5.</p></li>
 <li><p>Paste in the values from your results sheet.</p></li>
 <li><p>Repeat for the number of recordings that you need to
 analyze.</p></li>
