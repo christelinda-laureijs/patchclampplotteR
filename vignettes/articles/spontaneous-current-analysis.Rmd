@@ -100,6 +100,10 @@ of it) or press `Alt+s`.
 * Column Order: `Measurement, Region, Signal`
 * Measurements: `Peak_amplitude`
 
+> **Warning!** If you have previously used Clampfit for other analyses (for example, [Action Potential Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html) or [Evoked Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html) you may need to double-check these parameters. For example, ensure that only ONE search region is enabled!
+
+> To verify if only `Search Region 1` is enabled, click on the up-arrow next to the search region number box. If `Search Region 2` is also enabled, uncheck it to avoid confusion in the results page.
+
 9. Click on the Results sheet (`Window` -> `Results1`). On the results page, copy the values in the `R1S1 Peak` column. Paste these into the A column of a blank Excel sheet.
 
 10. In cell B1, type the formula `=AVERAGE(A:A)`. This will produce the mean noise amplitude.
