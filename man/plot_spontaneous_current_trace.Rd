@@ -5,7 +5,7 @@
 \title{Plot a representative spontaneous current trace}
 \usage{
 plot_spontaneous_current_trace(
-  file,
+  data,
   plot_colour,
   plot_category,
   plot_treatment,
@@ -26,7 +26,7 @@ plot_spontaneous_current_trace(
 )
 }
 \arguments{
-\item{file}{A dataframe containing at least these columns: \code{time},
+\item{data}{A dataframe containing at least these columns: \code{time},
 \code{episode}, \code{current}, \code{voltage}, \code{time_sec}. An easy way to obtain this is
 by importing a raw .abf file through the \code{\link[=import_ABF_file]{import_ABF_file()}} function.}
 
@@ -96,7 +96,7 @@ ggplot object with an optional scale bar.
 }
 \examples{
 plot_spontaneous_current_trace(
-  file = sample_abf_file,
+  data = sample_abf_file,
   plot_colour = "#6600cc",
   plot_category = 2,
   plot_treatment = "Control",

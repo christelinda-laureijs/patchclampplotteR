@@ -5,9 +5,11 @@
 \title{Plot action potential recording}
 \usage{
 plot_AP_trace(
-  file,
+  data,
   sweeps,
-  trace_color,
+  colour_scale_option,
+  custom_scale_colours = NULL,
+  trace_colour,
   line_width = 0.7,
   plot_category,
   plot_treatment,
@@ -20,15 +22,20 @@ plot_AP_trace(
   scale_bar_y_length = 40,
   scale_bar_linewidth = 0.6,
   save_plot_png = "no",
-  filename_suffix
+  filename_suffix,
+  ...
 )
 }
 \arguments{
-\item{file}{A dataframe generated using \code{import_ABF_file()} with \code{recording_mode = "current_clamp"}.}
+\item{data}{A dataframe generated using \code{import_ABF_file()} with \code{recording_mode = "current_clamp"}.}
 
 \item{sweeps}{A character value or list of character values of the sweeps you would like to plot. These correspond to the values in the \code{sweep1} column of your dataset, and will likely be in the form of "epi1", "epi2", etc.}
 
-\item{trace_color}{A hex value of the colour of the lineplot}
+\item{colour_scale_option}{A character value ("viridis", "custom" or "single_colour") describing what colour scale should be applied to the trace. If set to "viridis" or "custom", the trace will be coloured by sweep.}
+
+\item{custom_scale_colours}{A list of character values (can be hex values or named colours) describing the custom theme. Use if \code{colour_scale_option = "custom"}.}
+
+\item{trace_colour}{A hex value of the colour of the lineplot. Use if \verb{colour_scale_option = "single_colour}.}
 
 \item{line_width}{A numeric value specifying the width of the lineplot}
 
@@ -69,6 +76,8 @@ they will all go in subfolders below Figures/ in your project directory.}
 \item{filename_suffix}{Optional character value to add a suffix to the
 filename of the .png file created with this plot. Could be useful if you
 have specified a custom list of treatments.}
+
+\item{...}{Additional arguments passed to \code{viridis::scale_color_viridis} such as \code{begin}, \code{end}, \code{option} and \code{direction}}
 }
 \value{
 A ggplot object. If \code{save_plot_png == "yes"}, it will also generate
@@ -80,14 +89,18 @@ This function allows you to plot an \code{.abf} file of a recording taken in cur
 }
 \examples{
 
+# Single colour
 plot_AP_trace(
-  file = sample_ap_abf_baseline,
-  sweeps = c("epi1", "epi10"),
-  trace_color = "#6600cc",
+  data = sample_ap_abf_baseline,
+  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+  custom_scale_colours = c("#edd03a", "#cced34",
+  "#a3fd3d", "#6bfe64",
+  "#31f199", "#18dcc3",
+  "#29bbec", "#4294ff",
+  "#466be3", "#4040a2"),
+  colour_scale_option = "custom",
   plot_category = 2,
-  plot_treatment = "Control",
-  state = "Baseline",
-  include_scale_bar = "yes"
+  plot_treatment = "Control"
 )
 
 }

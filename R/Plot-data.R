@@ -2377,10 +2377,12 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #' @inheritParams plot_baseline_data
 #' @inheritParams plot_spontaneous_current_trace
 #'
-#' @param file A dataframe generated using `import_ABF_file()` with `recording_mode = "current_clamp"`.
+#' @param data A dataframe generated using `import_ABF_file()` with `recording_mode = "current_clamp"`.
 #' @param sweeps A character value or list of character values of the sweeps you would like to plot. These correspond to the values in the `sweep1` column of your dataset, and will likely be in the form of "epi1", "epi2", etc.
 #' @param line_width A numeric value specifying the width of the lineplot
-#' @param trace_color A hex value of the colour of the lineplot
+#' @param trace_colour A hex value of the colour of the lineplot. Use if `colour_scale_option = "single_colour`.
+#' @param colour_scale_option A character value ("viridis", "custom" or "single_colour") describing what colour scale should be applied to the trace. If set to "viridis" or "custom", the trace will be coloured by sweep.
+#' @param custom_scale_colours A list of character values (can be hex values or named colours) describing the custom theme. Use if `colour_scale_option = "custom"`.
 #' @param scale_bar_x_start A numeric value (in milliseconds) describing the x-axis position of
 #'   the scale bar (default is 880).
 #' @param scale_bar_x_length A numeric value describing the horizontal span (in
@@ -2391,6 +2393,7 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #'   mV) of the scale bar (default is 40).
 #' @param scaling_factor A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is 10, and this value will likely not need to be changed.
 #' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is 0.6).
+#' @param ... Additional arguments passed to `viridis::scale_color_viridis` such as `begin`, `end`, `option` and `direction`
 #'
 #' @returns
 #'
@@ -2402,20 +2405,26 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #'
 #' @examples
 #'
+#' # Single colour
 #' plot_AP_trace(
-#'   file = sample_ap_abf_baseline,
-#'   sweeps = c("epi1", "epi10"),
-#'   trace_color = "#6600cc",
+#'   data = sample_ap_abf_baseline,
+#'   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+#'   custom_scale_colours = c("#edd03a", "#cced34",
+#'   "#a3fd3d", "#6bfe64",
+#'   "#31f199", "#18dcc3",
+#'   "#29bbec", "#4294ff",
+#'   "#466be3", "#4040a2"),
+#'   colour_scale_option = "custom",
 #'   plot_category = 2,
-#'   plot_treatment = "Control",
-#'   state = "Baseline",
-#'   include_scale_bar = "yes"
+#'   plot_treatment = "Control"
 #' )
 #'
 plot_AP_trace <-
-  function(file,
+  function(data,
            sweeps,
-           trace_color,
+           colour_scale_option,
+           custom_scale_colours = NULL,
+           trace_colour,
            line_width = 0.7,
            plot_category,
            plot_treatment,
@@ -2428,7 +2437,7 @@ plot_AP_trace <-
            scale_bar_y_length = 40,
            scale_bar_linewidth = 0.6,
            save_plot_png = "no",
-           filename_suffix) {
+           filename_suffix, ...) {
     if (!save_plot_png %in% c("yes", "no")) {
       stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
     }
@@ -2437,16 +2446,58 @@ plot_AP_trace <-
       stop("'include_scale_bar' argument must be one of: 'yes' or 'no'")
     }
 
-    ap_trace <- file %>%
-      dplyr::filter(.data$episode %in% sweeps) %>%
-      ggplot2::ggplot(ggplot2::aes(
-        x = .data$time,
-        y = .data$voltage,
-        group = .data$episode
-      )) +
-      ggplot2::geom_line(color = trace_color, linewidth = line_width) +
-      ggplot2::theme_void()
+    if (!colour_scale_option %in% c("custom", "viridis", "single_colour")) {
+      stop("'colour_scale_option' argument must be one of: 'custom', 'viridis' or 'single_colour'")
+    }
 
+    if (colour_scale_option == "single_colour") {
+      if (is.null(trace_colour) ||
+        !is.character(trace_colour)) {
+        stop(
+          "You set `colour_scale_option` to `single_colour` but `trace_colour` is blank or not a character. Please set `trace_colour` to a hex value (e.g. \"#32a852\" or named colour like \"orange\""
+        )
+      }
+
+      ap_trace <- data %>%
+        dplyr::filter(.data$episode %in% sweeps) %>%
+        ggplot2::ggplot(ggplot2::aes(
+          x = .data$time,
+          y = .data$voltage,
+          group = .data$episode
+        )) +
+        ggplot2::geom_line(color = trace_colour, linewidth = line_width) +
+        ggplot2::theme_void()
+    }
+
+    if (colour_scale_option %in% c("custom", "viridis")) {
+      ap_trace <- data %>%
+        dplyr::filter(.data$episode %in% sweeps) %>%
+        ggplot2::ggplot(
+          ggplot2::aes(
+            x = .data$time,
+            y = .data$voltage,
+            group = .data$episode,
+            color = .data$episode
+          )
+        ) +
+        ggplot2::geom_line(linewidth = line_width) +
+        ggplot2::theme_void()
+
+      if (colour_scale_option == "viridis") {
+        ap_trace <- ap_trace +
+          viridis::scale_color_viridis(discrete = T, guide = "none", ...)
+      }
+
+      if (colour_scale_option == "custom") {
+        if (is.null(custom_scale_colours)) {
+          stop(
+            "You set `colour_scale_option` to 'custom' but did not define a custom scale. Please insert a list into `custom_scale_colours`."
+          )
+        }
+        ap_trace <- ap_trace +
+          ggplot2::scale_colour_manual(values = custom_scale_colours, guide = "none")
+      }
+    }
 
     if (include_scale_bar == "yes") {
       ap_trace <- ap_trace +
@@ -2711,7 +2762,7 @@ plot_spontaneous_current_parameter_comparison <-
 #' @inheritParams plot_baseline_data
 #' @inheritParams plot_raw_current_data
 #'
-#' @param file A dataframe containing at least these columns: `time`,
+#' @param data A dataframe containing at least these columns: `time`,
 #'   `episode`, `current`, `voltage`, `time_sec`. An easy way to obtain this is
 #'   by importing a raw .abf file through the [import_ABF_file()] function.
 #' @param state A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The `state` will be included in the .png filename if `save_plot_png = "yes"`.
@@ -2747,7 +2798,7 @@ plot_spontaneous_current_parameter_comparison <-
 #'
 #' @examples
 #' plot_spontaneous_current_trace(
-#'   file = sample_abf_file,
+#'   data = sample_abf_file,
 #'   plot_colour = "#6600cc",
 #'   plot_category = 2,
 #'   plot_treatment = "Control",
@@ -2761,7 +2812,7 @@ plot_spontaneous_current_parameter_comparison <-
 #' )
 #'
 plot_spontaneous_current_trace <-
-  function(file,
+  function(data,
            plot_colour,
            plot_category,
            plot_treatment,
@@ -2787,7 +2838,7 @@ plot_spontaneous_current_trace <-
       stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
     }
 
-    representative_traces_plot <- file %>%
+    representative_traces_plot <- data %>%
       dplyr::filter(.data$episode == plot_episode) %>%
       dplyr::filter(dplyr::between(.data$time_sec, plot_x_min, plot_x_max)) %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$time_sec, y = .data$current)) +

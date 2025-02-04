@@ -23,12 +23,16 @@ This is a current injection protocol taken during the baseline period. See \code
 }
 \examples{
 plot_AP_trace(
-  file = sample_ap_abf_baseline,
-  sweeps = c("epi1", "epi10"),
-  trace_color = "orange",
+  data = sample_ap_abf_baseline,
+  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+  custom_scale_colours = c("#edd03a", "#cced34",
+  "#a3fd3d", "#6bfe64",
+  "#31f199", "#18dcc3",
+  "#29bbec", "#4294ff",
+  "#466be3", "#4040a2"),
+  colour_scale_option = "custom",
   plot_category = 2,
-  plot_treatment = "Control",
-  state = "Baseline"
+  plot_treatment = "Control"
 )
 }
 \keyword{data}
