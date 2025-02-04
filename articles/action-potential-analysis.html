@@ -88,34 +88,6 @@
 
     
     
-<div class="section level2">
-<h2 class="tabset" id="tabs">Tabs<a class="anchor" aria-label="anchor" href="#tabs"></a>
-</h2>
-<p>You can also plot all sweeps using
-<code>sweeps = as.character(unique(sample_ap_abf_baseline$episode))</code>.
-Just replace <code>sample_ap_abf_baseline</code> with the dataframe that
-you inserted into the <code>data</code> argument. Set
-<code>colour_scale_option</code> to one of three options: “viridis”,
-“custom” or “single_colour”.</p>
-<div class="section level3">
-<h3 id="viridis">Viridis<a class="anchor" aria-label="anchor" href="#viridis"></a>
-</h3>
-<p>“viridis” enables the beautiful colourblind-friendly viridis palettes
-from the <code>viridis</code> package. Look at the <a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">documentation
-for <code>scale_color_viridis</code></a> to learn about options you can
-use. These include <code>begin</code>, <code>option</code>,
-<code>theme</code> and more.</p>
-<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;"></p>
-</div>
-<div class="section level3">
-<h3 id="custom-scale">Custom scale<a class="anchor" aria-label="anchor" href="#custom-scale"></a>
-</h3>
-<p>If you use <code>colour_scale_option = "custom"</code> you must
-define a list of character values (can be hex values or named colours)
-in the <code>custom_scale_colours</code> argument.</p>
-<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;">
-## Single colour</p>
-<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-4-1.png" width="75%" style="display: block; margin: auto;"></p>
 <p>This vignette will demonstrate how to analyze action potential
 properties using a raw .abf file. You will identify the first current
 injection that resulted in action potentials and then select the first
@@ -132,7 +104,6 @@ This means that the threshold corresponds to the membrane potential
 where the action potential velocity is 10 mV/ms or greater (Farries et
 al., 2010).</p>
 </blockquote>
-</div>
 <div class="section level3">
 <h3 id="set-up-data-sheet">Set up data sheet<a class="anchor" aria-label="anchor" href="#set-up-data-sheet"></a>
 </h3>
@@ -463,6 +434,42 @@ at each sweep and count the number of action potentials present!</p>
 </ol>
 <p><img src="action-potential-analysis_files/figure-html/ap-frequencies-one-treatment-1.png" alt="A plot of Action Potential Frequency in Hz versus current injection on the x-axis. The data are coloured gray for baseline data and purple for insulin data. The plot is showing that action potential frequency was lower after adding insulin." width="75%" style="display: block; margin: auto;"></p>
 <p><img src="action-potential-analysis_files/figure-html/ap-plot-frequencies-multiple-treatments-1.png" alt="A smoothed line plot showing action potential frequency in Hz versus current injection in picoamps for four different treatments at two states (baseline vs. insulin). Overall, insulin decreased action potential frequency in all treatments." width="75%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level2">
+<h2 id="plotting-sweeps">Plotting Sweeps<a class="anchor" aria-label="anchor" href="#plotting-sweeps"></a>
+</h2>
+<p>You can plot action potential recordings using
+<code>plot_AP_traces()</code>. Use a dataframe generated using
+<code><a href="../reference/import_ABF_file.html">import_ABF_file()</a></code> with
+<code>recording_mode = "current_clamp"</code>. You can then plot all
+sweeps using
+<code>sweeps = as.character(unique(sample_ap_abf_baseline$episode))</code>.
+Just replace <code>sample_ap_abf_baseline</code> with the dataframe that
+you inserted into the <code>data</code> argument. Set
+<code>colour_scale_option</code> to one of three options: “viridis”,
+“custom” or “single_colour”.</p>
+<div class="section level3">
+<h3 id="viridis">Viridis<a class="anchor" aria-label="anchor" href="#viridis"></a>
+</h3>
+<p>“viridis” enables the beautiful colourblind-friendly viridis palettes
+from the <code>viridis</code> package. Look at the <a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">documentation
+for <code>scale_color_viridis</code></a> to learn about options you can
+use. These include <code>begin</code>, <code>option</code>,
+<code>theme</code> and more.</p>
+<p><img src="action-potential-analysis_files/figure-html/ap-trace-viridis-1.png" alt="A plot of current clamp steps where each sweep is coloured a different colour" width="75%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
+<h3 id="custom-scale">Custom scale<a class="anchor" aria-label="anchor" href="#custom-scale"></a>
+</h3>
+<p>If you use <code>colour_scale_option = "custom"</code> you must
+define a list of character values (can be hex values or named colours)
+in the <code>custom_scale_colours</code> argument.</p>
+<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
+<h3 id="single-colour">Single colour<a class="anchor" aria-label="anchor" href="#single-colour"></a>
+</h3>
+<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="faq">FAQ<a class="anchor" aria-label="anchor" href="#faq"></a>
