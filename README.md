@@ -78,7 +78,7 @@ a raw Axon Binary File (.ABF):
 
 ``` r
 plot_spontaneous_current_trace(
-  file = sample_abf_file,
+  data = sample_abf_file,
   plot_colour = "#6600cc",
   include_scale_bar = "yes",
   plot_episode = "epi1",
@@ -90,6 +90,44 @@ plot_spontaneous_current_trace(
 ```
 
 <img src="man/figures/README-example-spontaneous-current-trace-plot-1.png" alt="A representative trace from a raw abf recording, showing a series of noisy, negative-going peaks. Each peak represents a spontaneous current" width="100%" />
+
+Plot action potential traces…
+
+``` r
+plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+  colour_scale_option = "viridis",
+  plot_category = 2,
+  plot_treatment = "Control",
+  direction = -1,
+  option = "plasma",
+  begin = 0,
+  end = 0.8
+)
+```
+
+<img src="man/figures/README-ap-trace-viridis-1.png" alt="A plot of current clamp steps where each sweep is coloured a different colour" width="100%" />
+
+…and a summary of differences in action potential frequency across
+treatments.
+
+``` r
+plot_AP_frequencies_single_treatment(
+  data = sample_AP_count_data,
+  plot_treatment = "Control",
+  plot_category = 2,
+  baseline_label = "Baseline",
+  hormone_added = "Insulin",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  large_axis_text = "no",
+  test_type = "wilcox.test",
+  theme_options = sample_theme_options,
+  save_plot_png = "no"
+)
+```
+
+<img src="man/figures/README-ap-frequencies-one-treatment-1.png" alt="A plot of Action Potential Frequency in Hz versus current injection on the x-axis. The data are coloured gray for baseline data and purple for insulin data. The plot is showing that action potential frequency was lower after adding insulin." width="100%" />
 
 ## Installation
 

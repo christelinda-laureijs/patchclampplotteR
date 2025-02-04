@@ -35,7 +35,7 @@ This will help with organization and make it easier to expand to future
 projects, like writing your thesis in R.
 
 ```{r folder-structure, echo=F, out.width="25%", out.extra = "", fig.alt = "A screenshot of the file structure of a typical project. There are folders for data, figures, scripts, and the thesis.", fig.cap = "A screenshot of the file structure of a typical project. There are folders for data, figures, scripts and the thesis. Files with a '.' in the name are automatically generated when you set up your project. If you aren't using git to track your files, don't worry about the filenames that start with 'git'"}
-knitr::include_graphics("articles/figures/Directory.png")
+knitr::include_graphics("Directory.png")
 ```
 
 
@@ -631,6 +631,6 @@ Hopefully this vignette has given you an idea of some of the plotting functions 
 If you have any questions about customizing your plots, read the [FAQ](https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.html) page. There will likely be an answer there!
 
 ```{r ruby-picture, echo=F, fig.alt = "A picture of a knitted white rat sitting on a keyboard and working at a computer.", fig.cap = "Ruby likes to help us with data analysis. She says 'Have fun!'"}
-knitr::include_graphics("articles/figures/Ruby-desk.jpg")
+knitr::include_graphics("Ruby-desk.jpg")
 ```
 

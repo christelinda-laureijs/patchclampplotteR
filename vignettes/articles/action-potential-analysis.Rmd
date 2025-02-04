@@ -20,57 +20,6 @@ library(reactable)
 library(patchclampplotteR)
 ```
 
-
-# Tabs {.tabset}
-
-
-You can also plot all sweeps using `sweeps = as.character(unique(sample_ap_abf_baseline$episode))`. Just replace `sample_ap_abf_baseline` with the dataframe that you inserted into the `data` argument. Set `colour_scale_option` to one of three options: "viridis", "custom" or "single_colour".
-
-## Viridis
-
-"viridis" enables the beautiful colourblind-friendly viridis palettes from the `viridis` package. Look at the [documentation for `scale_color_viridis`](https://sjmgarnier.github.io/viridis/reference/scale_viridis.html) to learn about options you can use. These include `begin`, `option`, `theme` and more.
-
-```{r}
-plot_AP_trace(
-  data = sample_ap_abf_baseline,
-  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
-  colour_scale_option = "viridis",
-  plot_category = 2,
-  plot_treatment = "Control",
-  direction = -1,
-  option = "plasma",
-  begin = 0,
-  end = 0.8
-)
-```
-
-## Custom scale
-
-If you use `colour_scale_option = "custom"` you must define a list of character values (can be hex values or named colours) in the `custom_scale_colours` argument.
-
-```{r}
-plot_AP_trace(
-  data = sample_ap_abf_baseline,
-  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
-  custom_scale_colours = c("#edd03a", "#cced34", "#a3fd3d", "#6bfe64", "#31f199", "#18dcc3", "#29bbec", "#4294ff", "#466be3", "#4040a2"),
-  colour_scale_option = "custom",
-  plot_category = 2,
-  plot_treatment = "Control"
-)
-```
-## Single colour
-
-```{r}
-plot_AP_trace(
-  data = sample_ap_abf_baseline,
-  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
-  trace_colour = "#6600cc",
-  colour_scale_option = "single_colour",
-  plot_category = 2,
-  plot_treatment = "Control"
-)
-```
-
 This vignette will demonstrate how to analyze action potential
 properties using a raw .abf file. You will identify the first current
 injection that resulted in action potentials and then select the first
@@ -430,6 +379,55 @@ plot_AP_frequencies_multiple_treatments(
 )
 ```
 
+# Plotting Sweeps
+
+You can plot action potential recordings using `plot_AP_traces()`. Use a dataframe generated using `import_ABF_file()` with `recording_mode = "current_clamp"`. You can then plot all sweeps using `sweeps = as.character(unique(sample_ap_abf_baseline$episode))`. Just replace `sample_ap_abf_baseline` with the dataframe that you inserted into the `data` argument. Set `colour_scale_option` to one of three options: "viridis", "custom" or "single_colour".
+
+## Viridis
+
+"viridis" enables the beautiful colourblind-friendly viridis palettes from the `viridis` package. Look at the [documentation for `scale_color_viridis`](https://sjmgarnier.github.io/viridis/reference/scale_viridis.html) to learn about options you can use. These include `begin`, `option`, `theme` and more.
+
+```{r ap-trace-viridis, fig.alt = "A plot of current clamp steps where each sweep is coloured a different colour"}
+plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+  colour_scale_option = "viridis",
+  plot_category = 2,
+  plot_treatment = "Control",
+  direction = -1,
+  option = "plasma",
+  begin = 0,
+  end = 0.8
+)
+```
+
+## Custom scale
+
+If you use `colour_scale_option = "custom"` you must define a list of character values (can be hex values or named colours) in the `custom_scale_colours` argument.
+
+```{r}
+plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+  custom_scale_colours = c("#edd03a", "#cced34", "#a3fd3d", "#6bfe64", "#31f199", "#18dcc3", "#29bbec", "#4294ff", "#466be3", "#4040a2"),
+  colour_scale_option = "custom",
+  plot_category = 2,
+  plot_treatment = "Control"
+)
+```
+
+## Single colour
+
+```{r}
+plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+  trace_colour = "#6600cc",
+  colour_scale_option = "single_colour",
+  plot_category = 2,
+  plot_treatment = "Control"
+)
+```
 
 ## FAQ
 

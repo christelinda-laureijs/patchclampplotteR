@@ -87,7 +87,7 @@ make_interactive_summary_table(
   pruned_sEPSC_dataframe = sample_pruned_sEPSC_df,
   treatment_colour_theme = sample_treatment_names_and_colours,
   include_all_treatments = "no",
-  list_of_treatments = c("Control"),
+  list_of_treatments = c("Control", "PPP"),
   include_all_categories = "yes",
   list_of_categories = NULL,
   save_output_as_RDS = "no"

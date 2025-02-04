@@ -2944,14 +2944,14 @@ plot_spontaneous_current_trace <-
 #'
 #' @examples
 #'
-#' # Note, the number of treatments is limited to "Control" to reduce run-time
+#' # Note, the number of treatments is limited to "Control" and "PPP" to reduce run-time
 #' make_interactive_summary_table(
 #'   cell_characteristics_dataframe = sample_cell_characteristics,
 #'   pruned_eEPSC_dataframe = sample_pruned_eEPSC_df,
 #'   pruned_sEPSC_dataframe = sample_pruned_sEPSC_df,
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   include_all_treatments = "no",
-#'   list_of_treatments = c("Control"),
+#'   list_of_treatments = c("Control", "PPP"),
 #'   include_all_categories = "yes",
 #'   list_of_categories = NULL,
 #'   save_output_as_RDS = "no"
