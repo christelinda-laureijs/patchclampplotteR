@@ -460,14 +460,6 @@ plot_raw_current_data <-
       # The plots should go to specific folders depending on current type
       filepath <- "Figures/Evoked-currents/Output-individual-plots"
 
-      if (pruned == "yes" & y_variable == "mean_P1") {
-        annotation <- "_pruned"
-      }
-
-      if (y_variable == "P1_transformed") {
-        annotation <- "_normalized"
-      }
-
       allowed_y_variables_list <- "\"P1\", \"P1_transformed\", \"mean_P1\", or \"PPR\""
 
       if (!y_variable %in% c("P1", "P1_transformed", "mean_P1", "PPR")) {
@@ -547,16 +539,12 @@ plot_raw_current_data <-
       }
     }
 
-    if (pruned == "yes") {
+    if (pruned == "yes" & y_variable == "mean_P1") {
       annotation <- "_pruned"
-    } else {
-      annotation <- ""
     }
 
     if (y_variable == "P1_transformed") {
       annotation <- "_normalized"
-    } else {
-      annotation <- ""
     }
 
     # Pruned sEPSC amplitude plots use mean +/- SE, unlike the other plots
@@ -2418,11 +2406,13 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #' plot_AP_trace(
 #'   data = sample_ap_abf_baseline,
 #'   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
-#'   custom_scale_colours = c("#edd03a", "#cced34",
-#'   "#a3fd3d", "#6bfe64",
-#'   "#31f199", "#18dcc3",
-#'   "#29bbec", "#4294ff",
-#'   "#466be3", "#4040a2"),
+#'   custom_scale_colours = c(
+#'     "#edd03a", "#cced34",
+#'     "#a3fd3d", "#6bfe64",
+#'     "#31f199", "#18dcc3",
+#'     "#29bbec", "#4294ff",
+#'     "#466be3", "#4040a2"
+#'   ),
 #'   colour_scale_option = "custom",
 #'   plot_category = 2,
 #'   plot_treatment = "Control"
