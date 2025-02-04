@@ -88,13 +88,34 @@
 
     
     
-<blockquote>
-<p><em>Note</em>: This package does not yet contain functions to analyze
-and plot action potential data. However, I am including this vignette
-here to show you how to perform raw data analysis in Clampfit. The
-resulting data will be ready to use in future versions of
-<em>patchclampplotteR.</em></p>
-</blockquote>
+<div class="section level2">
+<h2 class="tabset" id="tabs">Tabs<a class="anchor" aria-label="anchor" href="#tabs"></a>
+</h2>
+<p>You can also plot all sweeps using
+<code>sweeps = as.character(unique(sample_ap_abf_baseline$episode))</code>.
+Just replace <code>sample_ap_abf_baseline</code> with the dataframe that
+you inserted into the <code>data</code> argument. Set
+<code>colour_scale_option</code> to one of three options: “viridis”,
+“custom” or “single_colour”.</p>
+<div class="section level3">
+<h3 id="viridis">Viridis<a class="anchor" aria-label="anchor" href="#viridis"></a>
+</h3>
+<p>“viridis” enables the beautiful colourblind-friendly viridis palettes
+from the <code>viridis</code> package. Look at the <a href="https://sjmgarnier.github.io/viridis/reference/scale_viridis.html" class="external-link">documentation
+for <code>scale_color_viridis</code></a> to learn about options you can
+use. These include <code>begin</code>, <code>option</code>,
+<code>theme</code> and more.</p>
+<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
+<h3 id="custom-scale">Custom scale<a class="anchor" aria-label="anchor" href="#custom-scale"></a>
+</h3>
+<p>If you use <code>colour_scale_option = "custom"</code> you must
+define a list of character values (can be hex values or named colours)
+in the <code>custom_scale_colours</code> argument.</p>
+<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;">
+## Single colour</p>
+<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-4-1.png" width="75%" style="display: block; margin: auto;"></p>
 <p>This vignette will demonstrate how to analyze action potential
 properties using a raw .abf file. You will identify the first current
 injection that resulted in action potentials and then select the first
@@ -111,9 +132,10 @@ This means that the threshold corresponds to the membrane potential
 where the action potential velocity is 10 mV/ms or greater (Farries et
 al., 2010).</p>
 </blockquote>
-<div class="section level2">
-<h2 id="set-up-data-sheet">Set up data sheet<a class="anchor" aria-label="anchor" href="#set-up-data-sheet"></a>
-</h2>
+</div>
+<div class="section level3">
+<h3 id="set-up-data-sheet">Set up data sheet<a class="anchor" aria-label="anchor" href="#set-up-data-sheet"></a>
+</h3>
 <p>Before you begin, you should set up a .csv file. I would suggest
 using a consistent naming scheme that includes the date. I use the
 <code>YYYYMMDD-title.csv</code> format, such as
@@ -174,9 +196,9 @@ membrane potential is half of the <code>peak_amplitude</code>.</li>
 </ul>
 <p><img src="figures%2FAP-properties.png" alt="An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire." width="75%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="get-derivative">Get derivative<a class="anchor" aria-label="anchor" href="#get-derivative"></a>
-</h2>
+<div class="section level3">
+<h3 id="get-derivative">Get derivative<a class="anchor" aria-label="anchor" href="#get-derivative"></a>
+</h3>
 <ol style="list-style-type: decimal">
 <li>Open the .abf file containing the current clamp step protocol in
 Clampfit. Ensure that the x-axis shows time in milliseconds. If it shows
@@ -245,9 +267,9 @@ the <code>Expression</code> box, write <code>t11=diff(t6)</code>
 </ol>
 <p><img src="figures%2FAP-expression-box.png" alt="A screenshot of the Arithmetic box of Clampfit showing the formula t11=diff(t6) inserted into the expression field." width="75%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="find-threshold">Find threshold<a class="anchor" aria-label="anchor" href="#find-threshold"></a>
-</h2>
+<div class="section level3">
+<h3 id="find-threshold">Find threshold<a class="anchor" aria-label="anchor" href="#find-threshold"></a>
+</h3>
 <ol start="7" style="list-style-type: decimal">
 <li><p>Click on <code>Edit</code> -&gt; <code>Transfer Traces</code> and
 set the <code>Region to transfer</code> as <code>Cursors 1..2</code>. In
@@ -290,9 +312,9 @@ this:</li>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"letter":["BN"],"state":["Baseline"],"time_of_threshold":[373.5],"t_x":[-32.1],"t11":[10.38]},"columns":[{"id":"letter","name":"letter","type":"character"},{"id":"state","name":"state","type":"character"},{"id":"time_of_threshold","name":"time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t11","name":"t11","type":"numeric"}],"dataKey":"751cef46bb0483f9558bac326d7bb488"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
-<div class="section level2">
-<h2 id="measure">Measure action potential properties<a class="anchor" aria-label="anchor" href="#measure"></a>
-</h2>
+<div class="section level3">
+<h3 id="measure">Measure action potential properties<a class="anchor" aria-label="anchor" href="#measure"></a>
+</h3>
 <ol start="11" style="list-style-type: decimal">
 <li>Double-click on Cursor 1 and change its x-position value
 (<code>time</code>) to match the <code>time_of_threshold</code>.</li>
@@ -373,9 +395,9 @@ change after your treatment.</p></li>
 </ol>
 <p><img src="action-potential-analysis_files/figure-html/ap-comparison-1.png" alt="A plot of peak amplitude in pico amps versus state (baseline or insulin). The data are coloured according to state, where baseline points are gray and insulin points are purple. Insulin decreased action potential amplitude." width="75%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="count">Count action potentials<a class="anchor" aria-label="anchor" href="#count"></a>
-</h2>
+<div class="section level3">
+<h3 id="count">Count action potentials<a class="anchor" aria-label="anchor" href="#count"></a>
+</h3>
 <p>The next step is to count the number of action potentials in each
 sweep. This will allow you to later make a plot of action potential
 frequency vs. current injection and see how a treatment affect action
@@ -442,9 +464,9 @@ at each sweep and count the number of action potentials present!</p>
 <p><img src="action-potential-analysis_files/figure-html/ap-frequencies-one-treatment-1.png" alt="A plot of Action Potential Frequency in Hz versus current injection on the x-axis. The data are coloured gray for baseline data and purple for insulin data. The plot is showing that action potential frequency was lower after adding insulin." width="75%" style="display: block; margin: auto;"></p>
 <p><img src="action-potential-analysis_files/figure-html/ap-plot-frequencies-multiple-treatments-1.png" alt="A smoothed line plot showing action potential frequency in Hz versus current injection in picoamps for four different treatments at two states (baseline vs. insulin). Overall, insulin decreased action potential frequency in all treatments." width="75%" style="display: block; margin: auto;"></p>
 </div>
-<div class="section level2">
-<h2 id="faq">FAQ<a class="anchor" aria-label="anchor" href="#faq"></a>
-</h2>
+<div class="section level3">
+<h3 id="faq">FAQ<a class="anchor" aria-label="anchor" href="#faq"></a>
+</h3>
 <p><em>What do I do if there are no action potentials following
 treatment?</em></p>
 <p>Do not discard this cell; this is important and meaningful data! Fill
@@ -467,6 +489,7 @@ period.</p>
 Threshold and Zero Membrane Slope Conductance Shape the Response of
 Subthalamic Neurons to Cortical Input. Journal of Neuroscience, 30(39),
 13180–13191. <a href="https://doi.org/10.1523/JNEUROSCI.1909-10.2010" class="external-link uri">https://doi.org/10.1523/JNEUROSCI.1909-10.2010</a></p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
