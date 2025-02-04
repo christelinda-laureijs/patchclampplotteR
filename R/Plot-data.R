@@ -532,15 +532,25 @@ plot_raw_current_data <-
 
       if (y_variable == "amplitude") {
         y_title <- "sEPSC Amplitude (pA)"
+        annotation <- "_amplitude"
+
+        if (pruned == "yes") {
+          annotation <- "_amplitude_pruned"
+        }
       }
 
       if (y_variable == "frequency") {
         y_title <- "sEPSC Frequency (Hz)"
+        annotation <- "_frequency"
       }
     }
 
     if (pruned == "yes" & y_variable == "mean_P1") {
       annotation <- "_pruned"
+    }
+
+    if (pruned == "no" & y_variable == "P1") {
+      annotation <- ""
     }
 
     if (y_variable == "P1_transformed") {
