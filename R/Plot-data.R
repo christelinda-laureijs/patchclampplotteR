@@ -324,7 +324,7 @@ plot_baseline_data <- function(data,
 #'
 #' @inheritParams plot_baseline_data
 #' @param data A dataframe containing the raw evoked current data generated from
-#'   [make_normalized_EPSC_data()].
+#'   [make_normalized_EPSC_data()]. If `pruned = "yes"` you must use the `$individual_cells` component of a pruned dataset.
 #' @param plot_treatment A character value specifying the treatment you would
 #'   like to plot (e.g. "Control"). `plot_treatment` represents antagonists that
 #'   were present on the brain slice, or the animals were fasted, etc.
@@ -460,6 +460,14 @@ plot_raw_current_data <-
       # The plots should go to specific folders depending on current type
       filepath <- "Figures/Evoked-currents/Output-individual-plots"
 
+      if (pruned == "yes" & y_variable == "mean_P1") {
+        annotation <- "_pruned"
+      }
+
+      if (y_variable == "P1_transformed") {
+        annotation <- "_normalized"
+      }
+
       allowed_y_variables_list <- "\"P1\", \"P1_transformed\", \"mean_P1\", or \"PPR\""
 
       if (!y_variable %in% c("P1", "P1_transformed", "mean_P1", "PPR")) {
@@ -509,6 +517,7 @@ plot_raw_current_data <-
 
       if (y_variable == "PPR") {
         y_title <- "Paired-pulse Ratio"
+        annotation <- "_PPR"
       }
     }
 

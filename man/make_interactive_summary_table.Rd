@@ -80,7 +80,7 @@ a particular treatment.
 }
 \examples{
 
-# Note, the number of treatments is limited to "Control" to reduce run-time
+# Note, the number of treatments is limited to "Control" and "PPP" to reduce run-time
 make_interactive_summary_table(
   cell_characteristics_dataframe = sample_cell_characteristics,
   pruned_eEPSC_dataframe = sample_pruned_eEPSC_df,
