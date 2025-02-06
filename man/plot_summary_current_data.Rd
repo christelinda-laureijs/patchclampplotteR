@@ -12,6 +12,9 @@ plot_summary_current_data(
   y_variable = "amplitude",
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
+  included_sexes = "both",
+  male_label = "Male",
+  female_label = "Female",
   include_representative_trace = "no",
   representative_trace_filename = NULL,
   annotation_x_min = 1,
@@ -61,6 +64,12 @@ annotation arrow will be added instead.}
 \item{hormone_or_HFS_start_time}{A numeric value indicating the time (in
 minutes) when a hormone was added or when HFS was applied. This will set
 the annotation line start point.}
+
+\item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name.}
+
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
+
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".}
 
 \item{include_representative_trace}{A character ("yes" or "no") describing if
 a representative trace should be included as an overlay to the plot. This
@@ -118,15 +127,19 @@ A ggplot object. If \code{save_plot_png == "yes"}, it will also generate
 a .png file exported to \code{Figures/Evoked-currents/Output-summary-plots} or
 \code{Figures/Spontaneous-currents/Output-summary-plots}, depending on the
 \code{current_type}. The .png filename will be in this format:
-"Summary-plot-\code{plot_treatment}-category-\code{plot_category}-\code{file_name_ending}-\code{text_size}.png".
+"Summary-plot-\code{plot_treatment}-category-\code{plot_category}-\code{file_name_ending}-\code{text_size}-\code{sexes}.png".
 The \code{text_size} will only be added on if you are using \code{large_axis_text}
 ("LARGE" will be included in the filename). The \code{file_name_ending} will be
 automatically added on for spontaneous current data to specify what
-y_variable is plotted (e.g. "raw_amplitude").
+y_variable is plotted (e.g. "raw_amplitude"). The \code{sexes} will only be added if you choose to plot a single sex. For example, if you set \code{included_sexes = "Male"}, the \code{.png} filename will have "-males-only" included in the filename.
 
-An example filename is: "Summary-plot-Control-category-2.png" or
-"Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
+Example auto-generated filenames include:
+\itemize{
+\item "Summary-plot-Control-category-2.png"
+\item "Summary-plot-Control-category-2-males-only.png"
+\item "Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
 currents.
+}
 }
 \description{
 This function enables you to create a scatterplot of mean evoked (or

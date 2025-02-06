@@ -22,7 +22,7 @@ plot_raw_current_data(
 }
 \arguments{
 \item{data}{A dataframe containing the raw evoked current data generated from
-\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.}
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}. If \code{pruned = "yes"} you must use the \verb{$individual_cells} component of a pruned dataset.}
 
 \item{plot_treatment}{A character value specifying the treatment you would
 like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
@@ -98,6 +98,7 @@ applied.
 }
 \examples{
 
+# Plot raw data
 plot_raw_current_data(
   data = sample_raw_eEPSC_df,
   plot_treatment = "Control",
@@ -110,6 +111,24 @@ plot_raw_current_data(
   theme_options = sample_theme_options,
   treatment_colour_theme = sample_treatment_names_and_colours,
   save_plot_png = "no"
+)
+
+
+# Plot pruned data
+
+# Note that this requires the third element of the list generated with `make_pruned_EPSC_data()`.
+
+plot_raw_current_data(
+  data = sample_pruned_eEPSC_df$individual_cells,
+  plot_treatment = "Control",
+  plot_category = 2,
+  current_type = "eEPSC",
+  y_variable = "mean_P1",
+  pruned = "yes",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+  theme_options = sample_theme_options,
+  treatment_colour_theme = sample_treatment_names_and_colours
 )
 
 }

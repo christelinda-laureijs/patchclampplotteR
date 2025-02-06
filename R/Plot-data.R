@@ -378,6 +378,7 @@ plot_baseline_data <- function(data,
 #'
 #' @examples
 #'
+#' # Plot raw data
 #' plot_raw_current_data(
 #'   data = sample_raw_eEPSC_df,
 #'   plot_treatment = "Control",
@@ -390,6 +391,24 @@ plot_baseline_data <- function(data,
 #'   theme_options = sample_theme_options,
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   save_plot_png = "no"
+#' )
+#'
+#'
+#' # Plot pruned data
+#'
+#' # Note that this requires the third element of the list generated with `make_pruned_EPSC_data()`.
+#'
+#' plot_raw_current_data(
+#'   data = sample_pruned_eEPSC_df$individual_cells,
+#'   plot_treatment = "Control",
+#'   plot_category = 2,
+#'   current_type = "eEPSC",
+#'   y_variable = "mean_P1",
+#'   pruned = "yes",
+#'   hormone_added = "Insulin",
+#'   hormone_or_HFS_start_time = 5,
+#'   theme_options = sample_theme_options,
+#'   treatment_colour_theme = sample_treatment_names_and_colours
 #' )
 #'
 plot_raw_current_data <-
@@ -734,6 +753,9 @@ plot_raw_current_data <-
 #' @param annotation_x_max A numeric value describing the maximum value on the x-axis for the representative trace. Change this if your representative trace image looks squished or stretched.
 #' @param annotation_y_min A numeric value describing the minimum value on the y-axis for the representative trace. Defaults to 0, which will place it at the lower left corner of the plot (when combined with the default value for `annotation_x_min`).
 #' @param annotation_y_max A numeric value describing the maximum value on the y-axis for the representative trace. Change this if your representative trace image looks squished or stretched.
+#' @param included_sexes A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name.
+#' @param male_label A character value used to describe how males are encoded in the `sex` column of the dataframe used in `data`. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".
+#' @param female_label A character value used to describe how females are encoded in the `sex` column of the dataframe used in `data`. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".
 #' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
 #' @param signif_stars A character ("yes" or "no") describing if significance
 #'   stars should be included as an overlay in the plot. If "yes", you must
@@ -752,14 +774,16 @@ plot_raw_current_data <-
 #'   a .png file exported to `Figures/Evoked-currents/Output-summary-plots` or
 #'   `Figures/Spontaneous-currents/Output-summary-plots`, depending on the
 #'   `current_type`. The .png filename will be in this format:
-#'   "Summary-plot-`plot_treatment`-category-`plot_category`-`file_name_ending`-`text_size`.png".
+#'   "Summary-plot-`plot_treatment`-category-`plot_category`-`file_name_ending`-`text_size`-`sexes`.png".
 #'   The `text_size` will only be added on if you are using `large_axis_text`
 #'   ("LARGE" will be included in the filename). The `file_name_ending` will be
 #'   automatically added on for spontaneous current data to specify what
-#'   y_variable is plotted (e.g. "raw_amplitude").
+#'   y_variable is plotted (e.g. "raw_amplitude"). The `sexes` will only be added if you choose to plot a single sex. For example, if you set `included_sexes = "Male"`, the `.png` filename will have "-males-only" included in the filename.
 #'
-#'   An example filename is: "Summary-plot-Control-category-2.png" or
-#'   "Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
+#'   Example auto-generated filenames include:
+#'   * "Summary-plot-Control-category-2.png"
+#'   * "Summary-plot-Control-category-2-males-only.png"
+#'   * "Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
 #'   currents.
 #'
 #' @export
@@ -796,6 +820,9 @@ plot_summary_current_data <- function(data,
                                       y_variable = "amplitude",
                                       hormone_added = "Insulin",
                                       hormone_or_HFS_start_time = 5,
+                                      included_sexes = "both",
+                                      male_label = "Male",
+                                      female_label = "Female",
                                       include_representative_trace = "no",
                                       representative_trace_filename = NULL,
                                       annotation_x_min = 1,
@@ -827,6 +854,10 @@ plot_summary_current_data <- function(data,
 
   if (!save_plot_png %in% c("yes", "no")) {
     stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!included_sexes %in% c("both", "male", "female")) {
+    stop("'included_sexes' argument must be one of: 'both', 'male' or 'female'")
   }
 
   if (!signif_stars %in% c("yes", "no")) {
@@ -877,6 +908,24 @@ plot_summary_current_data <- function(data,
     data %>%
     dplyr::filter(.data$category == plot_category) %>%
     dplyr::filter(.data$treatment == plot_treatment)
+
+  if (included_sexes == "male") {
+    df <- df %>%
+      dplyr::filter(.data$sex == male_label)
+
+    sex_annotation <- "-males-only"
+  }
+
+  if (included_sexes == "female") {
+    df <- df %>%
+      dplyr::filter(.data$sex == female_label)
+
+    sex_annotation <- "-females-only"
+  }
+
+  if (included_sexes == "both") {
+    sex_annotation <- ""
+  }
 
   plot_colour <- treatment_colour_theme %>%
     dplyr::filter(.data$treatment == plot_treatment) %>%
@@ -1210,6 +1259,7 @@ plot_summary_current_data <- function(data,
         plot_category,
         file_name_ending,
         text_size,
+        sex_annotation,
         ".png"
       ),
       width = 10,
@@ -2412,7 +2462,7 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #'
 #' @examples
 #'
-#' # Single colour
+#' # Custom colours
 #' plot_AP_trace(
 #'   data = sample_ap_abf_baseline,
 #'   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
@@ -2424,6 +2474,16 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #'     "#466be3", "#4040a2"
 #'   ),
 #'   colour_scale_option = "custom",
+#'   plot_category = 2,
+#'   plot_treatment = "Control"
+#' )
+#'
+#' # Single colour
+#' plot_AP_trace(
+#'   data = sample_ap_abf_baseline,
+#'   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+#'   colour_scale_option = "single_colour",
+#'   trace_colour = "#4294ff",
 #'   plot_category = 2,
 #'   plot_treatment = "Control"
 #' )
