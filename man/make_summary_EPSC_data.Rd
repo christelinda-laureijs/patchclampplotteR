@@ -96,12 +96,17 @@ previously specified in \code{\link[=make_normalized_EPSC_data]{make_normalized_
 }
 \examples{
 
+# Evoked Currents
+# Will return a list of two dataframes
+
 make_summary_EPSC_data(
   data = sample_raw_eEPSC_df,
   current_type = "eEPSC",
   save_output_as_RDS = "no",
   decimal_places = 2
 )
+
+# Spontaneous Data
 
 make_summary_EPSC_data(
   data = sample_pruned_sEPSC_df$individual_cells,

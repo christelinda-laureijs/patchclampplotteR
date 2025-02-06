@@ -77,7 +77,7 @@ more information, please see \href{https://doi.org/10.1016/j.jneumeth.2019.10852
 \examples{
 
 make_variance_data(
-  data = sample_summary_eEPSC_df,
+  data = sample_summary_eEPSC_df$summary_data,
   df_category = 2,
   include_all_treatments = "yes",
   list_of_treatments = NULL,

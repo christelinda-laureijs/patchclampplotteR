@@ -102,7 +102,7 @@ patchclampplotteR_theme <- function() {
 #'
 #' @examples
 #' plot_baseline_data(
-#'   data = sample_summary_eEPSC_df,
+#'   data = sample_summary_eEPSC_df$summary_data,
 #'   current_type = "eEPSC",
 #'   plot_category = 2,
 #'   y_variable = "raw_amplitude",
@@ -269,7 +269,7 @@ plot_baseline_data <- function(data,
       breaks = treatment_info$display_names,
       values = treatment_info$colours
     ) +
-    ggplot2::scale_shape_manual(values = c(17, 16)) +
+    ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
     ggplot2::theme(
       legend.position = "right",
       legend.background = ggplot2::element_rect(fill = NA)
@@ -1271,6 +1271,172 @@ plot_summary_current_data <- function(data,
   }
   treatment_plot
 }
+
+
+#' Plot percent change comparisons
+#'
+#' This function allows you to visually compare how current amplitudes changed X minutes after a treatment.
+#'
+#' More documentation will be updated soon.
+#' @inheritParams plot_baseline_data
+#'
+#' @param data A dataframe generated from `make_summary_EPSC_data()`
+#' @returns
+#'
+#' A ggplot object
+#'
+#' @export
+#'
+#' @examples
+#'
+#' plot_percent_change_comparisons(data = sample_summary_eEPSC_df$percent_change_data,
+#' plot_category = 2,
+#' treatment_colour_theme = sample_treatment_names_and_colours,
+#' theme_options = sample_theme_options)
+#'
+plot_percent_change_comparisons <- function(data,
+                               current_type = "eEPSC",
+                               plot_category,
+                               include_all_treatments = "yes",
+                               list_of_treatments = NULL,
+                               filename_suffix = "",
+                               large_axis_text = "no",
+                               plot_width = 8,
+                               treatment_colour_theme,
+                               theme_options,
+                               save_plot_png = "no",
+                               ggplot_theme = patchclampplotteR_theme()) {
+  if (is.null(current_type) ||
+      length(current_type) != 1L ||
+      !current_type %in% c("eEPSC", "sEPSC")) {
+    stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+  }
+
+  if (!save_plot_png %in% c("yes", "no")) {
+    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (!large_axis_text %in% c("yes", "no")) {
+    stop("'large_axis_text' argument must be one of: 'yes' or 'no'")
+  }
+
+  if (include_all_treatments == "yes") {
+    treatment_info <- treatment_colour_theme
+    plot_data <- data %>%
+      dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
+      droplevels()
+
+    if (!is.null(list_of_treatments)) {
+      warning(
+        "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
+      )
+    }
+  } else {
+    if (is.null(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is NULL.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    if (!is.character(list_of_treatments)) {
+      stop(
+        "include_all_treatments = \"",
+        include_all_treatments,
+        "\", but list_of_treatments is not a character object.",
+        "\nDid you forget to add a list of treatments?"
+      )
+    }
+
+    treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments)
+    plot_data <- data %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments) %>%
+      droplevels()
+  }
+
+  if (current_type == "eEPSC") {
+    filepath <- "Figures/Evoked-currents/Output-summary-plots"
+      y_title <- "Change in eEPSC Amplitude\n(% Baseline)"
+  }
+
+  percent_change_comparison_plot <- plot_data %>%
+    dplyr::filter(.data$category == plot_category) %>%
+    dplyr::mutate(
+      treatment = stringr::str_replace_all(
+        .data$treatment,
+        stats::setNames(treatment_info$display_names, treatment_info$treatment)
+      ),
+      treatment = factor(.data$treatment, levels = treatment_info$display_names)
+    ) %>%
+    ggplot2::ggplot(ggplot2::aes(
+      x = .data$treatment,
+      y = .data$percent_change,
+      color = .data$treatment,
+      shape = .data$sex
+    )) +
+    ggforce::geom_sina(
+      bw = 12,
+      alpha = 0.8,
+      maxwidth = 0.5,
+      size = 2
+    ) +
+    ggplot2::scale_color_manual(
+      breaks = treatment_info$display_names,
+      values = treatment_info$colours
+    ) +
+    ggplot2::labs(x = NULL, y = y_title, shape = "Sex") +
+    ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+    ggplot2::stat_summary(
+      fun.data = ggplot2::mean_se,
+      geom = "pointrange",
+      color = theme_options["mean_point_colour", "value"],
+      size = as.numeric(theme_options["mean_point_size", "value"]) + 0.02,
+      alpha = 0.8
+    ) +
+    ggplot2::theme(
+      legend.position = "right",
+      legend.background = ggplot2::element_rect(fill = NA)
+    ) +
+    ggplot2::guides(
+      color = "none",
+      shape = ggplot2::guide_legend(reverse = TRUE)
+    ) +
+    ggplot2::geom_hline(yintercept = 100, linetype = "dashed") +
+    ggplot_theme
+
+  if (large_axis_text == "yes") {
+    percent_change_comparison_plot <- percent_change_comparison_plot +
+      ggplot2::theme(
+        axis.text.x = ggplot2::element_text(size = 24, margin = ggplot2::margin(t = 10)),
+        axis.title.y = ggplot2::element_text(size = 24, face = "plain")
+      )
+  }
+
+  if (save_plot_png == "yes") {
+    ggplot2::ggsave(
+      percent_change_comparison_plot,
+      path = here::here(filepath),
+      file = paste0(
+        "Treatment-comparison-plot-category-",
+        plot_category,
+        filename_suffix,
+        ".png"
+      ),
+      width = plot_width,
+      height = 5,
+      units = "in",
+      dpi = 300
+    )
+  }
+
+  return(percent_change_comparison_plot)
+}
+
+
+
 
 #' Plot variance comparison for a treatment
 #'

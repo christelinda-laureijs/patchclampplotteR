@@ -75,7 +75,7 @@ be used to apply significance stars to the plot in
 }
 \examples{
 perform_t_tests_for_summary_plot(
-  data = sample_summary_eEPSC_df,
+  data = sample_summary_eEPSC_df$summary_data,
   test_category = 2,
   include_all_treatments = "yes",
   list_of_treatments = NULL,

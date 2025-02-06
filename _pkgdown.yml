@@ -55,6 +55,8 @@ reference:
   - plot_raw_current_data
   - plot_summary_current_data
   - plot_baseline_data
+  - plot_percent_change_comparisons
+
 - subtitle: Spontaneous currents only
   contents:
   - plot_spontaneous_current_parameter_comparison

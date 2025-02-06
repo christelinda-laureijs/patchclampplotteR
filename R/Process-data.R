@@ -1014,7 +1014,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #'
 #' @examples
 #' perform_t_tests_for_summary_plot(
-#'   data = sample_summary_eEPSC_df,
+#'   data = sample_summary_eEPSC_df$summary_data,
 #'   test_category = 2,
 #'   include_all_treatments = "yes",
 #'   list_of_treatments = NULL,
@@ -1268,7 +1268,7 @@ perform_t_tests_for_summary_plot <- function(data,
 #' @examples
 #'
 #' make_variance_data(
-#'   data = sample_summary_eEPSC_df,
+#'   data = sample_summary_eEPSC_df$summary_data,
 #'   df_category = 2,
 #'   include_all_treatments = "yes",
 #'   list_of_treatments = NULL,
