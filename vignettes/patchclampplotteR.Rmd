@@ -470,9 +470,7 @@ plot_summary_current_data(
 
 ### Step 3: Summarize data
 
-The next step is to group the data by treatment by sex and obtain summary data.
-This dataset groups the data into intervals and generates summary statistics
-(like mean and standard error) for each point. The interval length was already
+The next step is to group the data by treatment by sex and obtain summary data. `make_summary_EPSC_data()` will generate a list of 2 dataframes. One dataframe (accessible with `$summary_data`) grouped the data into intervals and generated summary statistics (like mean and standard error) for each point. The interval length was already
 specified during the `make_normalized_EPSC_data()` function from earlier.
 
 ```{r make-summary-data}
@@ -482,9 +480,16 @@ summary_eEPSC_df <- make_summary_EPSC_data(
   save_output_as_RDS = "no"
 )
 
-head(summary_eEPSC_df, n = 30) %>%
+reactable(summary_eEPSC_df$summary_data)
+```
+
+The second dataframe (accessible with `$percent_change_data`) contains information on the percent change in evoked current amplitude `percent_change` during a specific time interval (`ending_interval`) relative to the baseline (`baseline_interval`). For example, if currents decreased by 50% after the hormone, the value of `percent_change` is 0.5.
+
+```{r}
+head(summary_eEPSC_df$percent_change_data, n = 30) %>%
   reactable()
 ```
+
 
 
 ## Analyze the paired-pulse ratio
@@ -552,7 +557,7 @@ We can use variance measures like the coefficient of variation and the variance-
 
 ```{r make-variance-dataset}
 variance_df <- make_variance_data(
-  data = summary_eEPSC_df,
+  data = summary_eEPSC_df$summary_data,
   df_category = 2,
   include_all_treatments = "yes",
   list_of_treatments = NULL,
@@ -611,7 +616,7 @@ You can compare parameters across treatments during the baseline period. If `cur
 
 ```{r compare-baseline-parameters, fig.alt = "A grouped scatterplot showing the baseline evoked current amplitude across four treatment groups.", warning=FALSE}
 plot_baseline_data(
-  data = summary_eEPSC_df,
+  data = summary_eEPSC_df$summary_data,
   current_type = "eEPSC",
   plot_category = 2,
   y_variable = "raw_amplitude",

@@ -785,6 +785,8 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #'   generated using [make_normalized_EPSC_data()]. If the data are spontaneous
 #'   currents (`current_type == "sEPSC"`), this should be the pruned data
 #'   `$individual_cells` dataset generated using [make_pruned_EPSC_data()].
+#' @param ending_interval A character value describing the last interval in the recording. Useful for future plots in which you compare the percent decrease/increase in current amplitude relative to the baseline. Examples include "t20to25", "t10to15", etc.
+#' @param baseline_interval A character value describing the baseline interval. Defaults to "t0to5".
 #'
 #' @returns A dataframe with summary data such as the mean current amplitude,
 #'   coefficient of variation, standard deviation, standard error, variance,
@@ -842,6 +844,9 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #' further processes the data.
 #' @examples
 #'
+#' # Evoked Currents
+#' # Will return a list of two dataframes
+#'
 #' make_summary_EPSC_data(
 #'   data = sample_raw_eEPSC_df,
 #'   current_type = "eEPSC",
@@ -849,7 +854,8 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #'   decimal_places = 2
 #' )
 #'
-#' @examples
+#' # Spontaneous Data
+#'
 #' make_summary_EPSC_data(
 #'   data = sample_pruned_sEPSC_df$individual_cells,
 #'   current_type = "sEPSC",
@@ -860,7 +866,9 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
                                    current_type = "eEPSC",
                                    save_output_as_RDS = "no",
-                                   decimal_places = 2) {
+                                   decimal_places = 2,
+                                   baseline_interval = "t0to5",
+                                   ending_interval = "t20to25") {
   if (is.null(current_type) ||
     length(current_type) != 1L ||
     !current_type %in% c("eEPSC", "sEPSC")) {
@@ -875,16 +883,13 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
     stop("'decimal_places' must be a numeric value")
   }
 
-
   if (current_type == "eEPSC") {
     summary_df <- data %>%
-      dplyr::group_by(
-        .data$category,
-        .data$letter,
-        .data$sex,
-        .data$treatment,
-        .data$interval
-      ) %>%
+      dplyr::group_by(.data$category,
+                      .data$letter,
+                      .data$sex,
+                      .data$treatment,
+                      .data$interval) %>%
       dplyr::summarize(
         mean_P1_transformed = mean(.data$P1_transformed, na.rm = TRUE),
         mean_P1_raw = mean(.data$P1, na.rm = TRUE),
@@ -892,7 +897,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         sd = stats::sd(.data$P1_transformed, na.rm = TRUE),
         cv = .data$sd / .data$mean_P1_transformed,
         se = stats::sd(.data$P1_transformed, na.rm = TRUE) / sqrt(.data$n),
-        cv_inverse_square = 1 / (.data$cv^2),
+        cv_inverse_square = 1 / (.data$cv ^ 2),
         variance = stats::var(.data$P1_transformed, na.rm = TRUE),
         VMR = .data$variance / .data$mean_P1_transformed,
         age = unique(.data$age),
@@ -905,18 +910,46 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
       ) %>%
       dplyr::ungroup() %>%
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
+
+
+    percent_change_df <- summary_df %>%
+      dplyr::group_by(.data$category, .data$treatment, .data$interval, .data$letter) %>%
+      dplyr::select(!c(
+        .data$se,
+        .data$cv,
+        .data$sd,
+        .data$n,
+        .data$cv_inverse_square,
+        .data$variance,
+        .data$VMR,
+        .data$time,
+        .data$mean_P1_transformed
+      )) %>%
+      tidyr::pivot_wider(names_from = .data$interval, values_from = .data$mean_P1_raw) %>%
+      dplyr::mutate(percent_change = .data[[ending_interval]] / .data[[baseline_interval]] *
+                      100)
+
+    if (save_output_as_RDS == "yes") {
+      saveRDS(summary_df, file = here::here(
+        paste0(
+          "Data/Output-Data-from-R/summary_",
+          current_type,
+          "_df.RDS"
+        )
+      ))
+    }
+
+    return(list(percent_change_data = percent_change_df, summary_data = summary_df))
   }
 
 
   if (current_type == "sEPSC") {
     summary_df <- data %>%
-      dplyr::group_by(
-        .data$category,
-        .data$letter,
-        .data$sex,
-        .data$treatment,
-        .data$interval
-      ) %>%
+      dplyr::group_by(.data$category,
+                      .data$letter,
+                      .data$sex,
+                      .data$treatment,
+                      .data$interval) %>%
       dplyr::summarize(
         mean_transformed_amplitude = mean(.data$mean_amplitude, na.rm = TRUE),
         mean_raw_amplitude = mean(.data$mean_raw_amplitude, na.rm = TRUE),
@@ -933,19 +966,21 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         synapses = dplyr::last(.data$synapses)
       ) %>%
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
-  }
 
-  if (save_output_as_RDS == "yes") {
-    saveRDS(summary_df, file = here::here(
-      paste0(
-        "Data/Output-Data-from-R/summary_",
-        current_type,
-        "_df.RDS"
-      )
-    ))
-  }
+    if (save_output_as_RDS == "yes") {
+      saveRDS(summary_df, file = here::here(
+        paste0(
+          "Data/Output-Data-from-R/summary_",
+          current_type,
+          "_df.RDS"
+        )
+      ))
+    }
 
-  return(summary_df)
+    return(summary_df)
+
+
+  }
 }
 
 

@@ -8,7 +8,9 @@ make_summary_EPSC_data(
   data = patchclampplotteR::sample_raw_eEPSC_df,
   current_type = "eEPSC",
   save_output_as_RDS = "no",
-  decimal_places = 2
+  decimal_places = 2,
+  baseline_interval = "t0to5",
+  ending_interval = "t20to25"
 )
 }
 \arguments{
@@ -27,6 +29,10 @@ resulting object should be saved as an RDS file in the raw data folder.}
 \item{decimal_places}{A numeric value indicating the number of decimal places
 the data should be rounded to. Used to reduce file size and prevent an
 incorrect representation of the number of significant digits.}
+
+\item{baseline_interval}{A character value describing the baseline interval. Defaults to "t0to5".}
+
+\item{ending_interval}{A character value describing the last interval in the recording. Useful for future plots in which you compare the percent decrease/increase in current amplitude relative to the baseline. Examples include "t20to25", "t10to15", etc.}
 }
 \value{
 A dataframe with summary data such as the mean current amplitude,
