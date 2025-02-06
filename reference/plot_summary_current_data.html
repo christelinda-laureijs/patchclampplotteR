@@ -69,6 +69,9 @@ presented as mean +/- the standard error.</p>
 <span>  y_variable <span class="op">=</span> <span class="st">"amplitude"</span>,</span>
 <span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
 <span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  included_sexes <span class="op">=</span> <span class="st">"both"</span>,</span>
+<span>  male_label <span class="op">=</span> <span class="st">"Male"</span>,</span>
+<span>  female_label <span class="op">=</span> <span class="st">"Female"</span>,</span>
 <span>  include_representative_trace <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  representative_trace_filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  annotation_x_min <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -135,6 +138,18 @@ annotation arrow will be added instead.</p></dd>
 <dd><p>A numeric value indicating the time (in
 minutes) when a hormone was added or when HFS was applied. This will set
 the annotation line start point.</p></dd>
+
+
+<dt id="arg-included-sexes">included_sexes<a class="anchor" aria-label="anchor" href="#arg-included-sexes"></a></dt>
+<dd><p>A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name.</p></dd>
+
+
+<dt id="arg-male-label">male_label<a class="anchor" aria-label="anchor" href="#arg-male-label"></a></dt>
+<dd><p>A character value used to describe how males are encoded in the <code>sex</code> column of the dataframe used in <code>data</code>. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".</p></dd>
+
+
+<dt id="arg-female-label">female_label<a class="anchor" aria-label="anchor" href="#arg-female-label"></a></dt>
+<dd><p>A character value used to describe how females are encoded in the <code>sex</code> column of the dataframe used in <code>data</code>. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".</p></dd>
 
 
 <dt id="arg-include-representative-trace">include_representative_trace<a class="anchor" aria-label="anchor" href="#arg-include-representative-trace"></a></dt>
@@ -224,15 +239,16 @@ they will all go in subfolders below Figures/ in your project directory.</p></dd
 a .png file exported to <code>Figures/Evoked-currents/Output-summary-plots</code> or
 <code>Figures/Spontaneous-currents/Output-summary-plots</code>, depending on the
 <code>current_type</code>. The .png filename will be in this format:
-"Summary-plot-<code>plot_treatment</code>-category-<code>plot_category</code>-<code>file_name_ending</code>-<code>text_size</code>.png".
+"Summary-plot-<code>plot_treatment</code>-category-<code>plot_category</code>-<code>file_name_ending</code>-<code>text_size</code>-<code>sexes</code>.png".
 The <code>text_size</code> will only be added on if you are using <code>large_axis_text</code>
 ("LARGE" will be included in the filename). The <code>file_name_ending</code> will be
 automatically added on for spontaneous current data to specify what
-y_variable is plotted (e.g. "raw_amplitude").</p>
-<p>An example filename is: "Summary-plot-Control-category-2.png" or
-"Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
-currents.</p>
-    </div>
+y_variable is plotted (e.g. "raw_amplitude"). The <code>sexes</code> will only be added if you choose to plot a single sex. For example, if you set <code>included_sexes = "Male"</code>, the <code>.png</code> filename will have "-males-only" included in the filename.</p>
+<p>Example auto-generated filenames include:</p><ul><li><p>"Summary-plot-Control-category-2.png"</p></li>
+<li><p>"Summary-plot-Control-category-2-males-only.png"</p></li>
+<li><p>"Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
+currents.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="perform_t_tests_for_summary_plot.html">perform_t_tests_for_summary_plot()</a></code> which produces the significance

@@ -96,7 +96,7 @@ applied.</p>
 
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>A dataframe containing the raw evoked current data generated from
-<code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>.</p></dd>
+<code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>. If <code>pruned = "yes"</code> you must use the <code>$individual_cells</code> component of a pruned dataset.</p></dd>
 
 
 <dt id="arg-plot-treatment">plot_treatment<a class="anchor" aria-label="anchor" href="#arg-plot-treatment"></a></dt>
@@ -190,6 +190,7 @@ include <code>_normalized</code> in the filename. Example filenames include "A.p
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Plot raw data</span></span></span>
 <span class="r-in"><span><span class="fu">plot_raw_current_data</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_raw_eEPSC_df</span>,</span></span>
 <span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span></span>
@@ -214,6 +215,36 @@ include <code>_normalized</code> in the filename. Example filenames include "A.p
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $L</span>
 <span class="r-plt img"><img src="plot_raw_current_data-4.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Plot pruned data</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Note that this requires the third element of the list generated with `make_pruned_EPSC_data()`.</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plot_raw_current_data</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">individual_cells</span>,</span></span>
+<span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span></span>
+<span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span></span>
+<span class="r-in"><span>  y_variable <span class="op">=</span> <span class="st">"mean_P1"</span>,</span></span>
+<span class="r-in"><span>  pruned <span class="op">=</span> <span class="st">"yes"</span>,</span></span>
+<span class="r-in"><span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span></span>
+<span class="r-in"><span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span></span>
+<span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $AO</span>
+<span class="r-plt img"><img src="plot_raw_current_data-5.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $AZ</span>
+<span class="r-plt img"><img src="plot_raw_current_data-6.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $BN</span>
+<span class="r-plt img"><img src="plot_raw_current_data-7.png" alt="" width="700" height="433"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $L</span>
+<span class="r-plt img"><img src="plot_raw_current_data-8.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
