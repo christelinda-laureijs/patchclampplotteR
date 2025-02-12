@@ -169,16 +169,6 @@ the evoked current in pA.</li>
 the peak in milliseconds relative to trace number. This is automatically
 calculated in Clampfit.</li>
 </ul>
-<blockquote>
-<p><em>Note</em> I would strongly recommend using the filename of the
-first file in the series (but write down the concatenated filename in
-your lab book as well). This is because Clampfit will auto-generate the
-concatenated file names (<code>Concatenate001.abf</code>,
-<code>Concatenate002.abf</code>, etc.). If you update your pClamp
-software, Clampfit will begin naming files again at
-<code>Concatenate000.abf</code>, and you could lose track of which file
-is which.</p>
-</blockquote>
 </div>
 <div class="section level2">
 <h2 id="identify-threshold">Identify threshold<a class="anchor" aria-label="anchor" href="#identify-threshold"></a>
@@ -250,8 +240,15 @@ the standard deviation.</p></li>
 the standard deviation of the mean noise amplitude, and it will be the
 threshold value for this recording (write this in your lab book near
 your notes on this recording).</p></li>
-<li><p>You may want to save this Excel sheet for later use (just replace
-the data in the A column each time).</p></li>
+</ol>
+<blockquote>
+<p>If the currents are negative-going (they probably are) the threshold
+value will be the threshold value x -1 (e.g. a threshold of 2.51 will be
+-2.51).</p>
+</blockquote>
+<ol start="13" style="list-style-type: decimal">
+<li>You may want to save this Excel sheet for later use (just replace
+the data in the A column each time).</li>
 </ol>
 </div>
 <div class="section level2">
@@ -262,13 +259,12 @@ the data in the A column each time).</p></li>
 <code>Threshold search</code>. The recording will look faded, and some
 new horizontal cursors will appear. Set the Event Polarity to
 <code>Negative-going</code>.</p></li>
-<li><p>In the <code>Threshold Search</code> box, set the Baseline to 0
-and Trigger (pA) to the threshold value that you found in step
-12.</p></li>
-<li><p>If there are large artifacts, enable the
-<code>Reject cursor</code> and drag it to a level below the artifacts.
-Any event with an amplitude larger than this reject zone will be
-excluded.</p></li>
+<li><p>In the <code>Threshold Search</code> box, set the
+<code>Baseline</code> to 0 and <code>Trigger (pA)</code> to the
+threshold value that you found in step 12.</p></li>
+<li><p>If there are large artifacts, enable the <code>Reject (pA)</code>
+marker and drag it to a level below the artifacts. Any event with an
+amplitude larger than this reject zone will be excluded.</p></li>
 </ol>
 <blockquote>
 <p><em>Note</em> If you need to remove an entire trace, click on it and
@@ -362,11 +358,12 @@ a plot of current amplitude over time and select points to delete.</p>
 </ol>
 <p><img src="figures%2FDefine-graphs-button.png" alt="A screenshot of the Define Graphs button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 <ol start="24" style="list-style-type: decimal">
-<li><p>Set the x-axis to <code>Time of Peak</code> and the y-axis to
+<li><p>Set the x-axis to <code>Time to Peak</code> and the y-axis to
 <code>Peak amplitude</code>.</p></li>
 <li><p>You will see a plot that shows blue dots arranged in a rough
-shape that resembles the blue dots in the recording file in Step
-22.</p></li>
+shape that resembles the blue dots in the recording file in Step 22.
+Click, squeeze, and drag a line on the x-axis to change the display
+range of the graph.</p></li>
 </ol>
 <blockquote>
 <p>Note, I have analyzed a file with fewer sweeps to reduce run-time and
@@ -379,8 +376,11 @@ of dots. In reality, spontaneous currents are not perfectly aligned like
 this.</p>
 </blockquote>
 <ol start="26" style="list-style-type: decimal">
-<li>Click and hold down your cursor button and highlight the dots
-corresponding to the evoked currents and stim artifacts.</li>
+<li>Click and hold down your cursor button at an area close to the
+bottom left of the dots corresponding to the evoked currents and stim
+artifacts. While still holding down the mouse, move to the upper right
+corner to “draw” a box. This will select all points in the box that you
+outlined.</li>
 </ol>
 <div class="figure" style="text-align: center">
 <img src="figures%2FEvent-detection-graph-screenshot.png" alt="A screenshot of a plot of peak amplitude in pico amps over time to peak in milliseconds, with evoked currents highlighted in a bold blue outline." width="75%"><p class="caption">
@@ -403,19 +403,65 @@ click on <code>Change state</code> and then <code>Reject</code>.</p>
 <li>When you are confident that you have removed all of the stim
 artifacts and evoked currents, it is time to save the results sheet.
 Click on the Results sheet (<code>Window</code> -&gt;
-<code>Results1</code>) and <code>Save As</code>. I would suggest
-creating a consistent naming convention, such as
-<code>Letter</code>-events, as in <code>AA-events.sta</code>,
-<code>AB-events.sta</code>, etc.</li>
+<code>Results1</code>) and then <code>File</code> -&gt;
+<code>Save As</code>. I would suggest creating a consistent naming
+convention, such as <code>Letter</code>-events, as in
+<code>AA-events</code>, <code>AB-events</code>, etc.</li>
 </ol>
 </div>
 <div class="section level2">
 <h2 id="copy-required-columns">Copy required columns<a class="anchor" aria-label="anchor" href="#copy-required-columns"></a>
 </h2>
 <ol start="31" style="list-style-type: decimal">
-<li><p>Open the <code>.csv</code> file that you created in step
-5.</p></li>
-<li><p>Paste in the values from your results sheet.</p></li>
+<li>Open the <code>.csv</code> file that you created in step 5.</li>
+</ol>
+<p>32a. Paste in the values from your results sheet. The values should
+go in the following columns:</p>
+<ul>
+<li>
+<code>Peak Amplitude (pA)</code> -&gt; <code>amplitude</code>
+</li>
+<li>
+<code>Time of peak (ms)</code> -&gt; <code>time_of_peak</code>
+</li>
+<li>
+<code>Trace</code> -&gt; <code>trace</code>
+</li>
+<li>
+<code>recording_num</code> should be <code>1</code>, if this is a
+concatenated file. Do not use other numbers, unless the file is split up
+into 5-minute segments (must be <em>exactly</em> 5 minutes).</li>
+<li>
+<code>letter</code> type the name of the recording letter.</li>
+<li>
+<code>ID</code> type the name of the baseline recording
+(e.g. <code>20250209002.abf</code>) to help you quickly find the
+original recording if needed.</li>
+</ul>
+<blockquote>
+<p><code>recording_num</code> is left-over from an earlier analysis
+approach that relied on all recordings being exactly 5 minutes long. In
+this old approach, <code>recording_num</code> was part of a formula that
+calculated the total time (in min) from the start of the recording.
+Unfortunately, this approach falls apart if there are any recordings
+that are longer/shorter than 5 minutes. However, I have left this here
+to prevent breaking data in existing users’ projects.</p>
+</blockquote>
+<blockquote>
+<p><strong>Note</strong> I would strongly recommend using the filename
+of the first file in the series as the <code>ID</code> column, but write
+down the concatenated filename in your lab book as well. This is because
+Clampfit will auto-generate the concatenated file names
+(<code>Concatenate001.abf</code>, <code>Concatenate002.abf</code>,
+etc.). If you update your pClamp software, Clampfit will begin naming
+files again at <code>Concatenate000.abf</code>, and you could lose track
+of which file is which.</p>
+</blockquote>
+<p>32b. Select the <code>letter</code>, <code>ID</code> and
+<code>recording_num</code> columns, then double-click on the
+<code>+</code> sign on the lower right hand corner of the selection to
+extend these columns all the way down.</p>
+<ol start="33" style="list-style-type: decimal">
 <li><p>Repeat for the number of recordings that you need to
 analyze.</p></li>
 <li><p>You are now ready to import your data into R! Use the
