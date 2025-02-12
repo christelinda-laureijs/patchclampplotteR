@@ -2782,6 +2782,7 @@ plot_AP_trace <-
           plot_treatment,
           "-",
           state,
+          "-",
           filename_suffix,
           ".png"
         ),

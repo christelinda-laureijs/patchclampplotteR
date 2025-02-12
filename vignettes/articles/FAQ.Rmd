@@ -165,6 +165,26 @@ plot_AP_comparison(
 )
 ```
 
+## How do I show one sex only?
+
+You can use the `included_sexes` argument in `plot_summary_current_data()`. It defaults to "both", but if you set it to "male" or "female", the data will automatically be filtered to show one sex only, and the resulting `.png` will have "-males-only" or "-females-only" included in the filename.
+
+## How do I only show some treatments?
+
+Functions with multiple treatments (such as `plot_PPR_data_multiple_treatments()` and `plot_AP_frequencies_multiple_treatments()`) have an argument called `include_all_treatments`. Change this to "no" and then define a list of treatments in the `list_of_treatments` argument.
+
+```{r plot-ap-frequencies-limited-treatments, include=F, eval=F, fig.alt="A plot of action potential frequency over current injection in pA, showing only two treatments: Control and PPP. This figure demonstrates that you can choose how many treatments to include in a plot."}
+plot_AP_frequencies_multiple_treatments(
+  data = sample_AP_count_data,
+  include_all_treatments = "no",
+  list_of_treatments = c("PPP", "Control"),
+  plot_category = 2,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
+```
+
+
+
 # Theme FAQ
 
 ## How do I insert my own colours and treatment names?

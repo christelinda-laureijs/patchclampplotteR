@@ -218,7 +218,7 @@ NULL
 #' }
 #' @keywords data
 #'
-#' @seealso [make_normalized_EPSC_data()] and [make_pruned_EPSC_data()]
+#' @seealso [make_normalized_EPSC_data()], [make_pruned_EPSC_data()], and [plot_raw_current_data()]
 NULL
 
 # Raw sEPSC -----
@@ -704,6 +704,7 @@ NULL
 #'  detailed description of these columns, please see [sample_summary_eEPSC_df].}
 #' }
 #' @keywords data
+#' @seealso [make_variance_data()], [plot_variance_comparison_data()], and [plot_cv_data()]
 NULL
 
 # PPR eEPSC ------
@@ -734,7 +735,7 @@ NULL
 #' }
 #' @keywords data
 #'
-#' @seealso [make_normalized_EPSC_data()] and [make_PPR_data()]
+#' @seealso [make_normalized_EPSC_data()], [make_PPR_data()], [plot_PPR_data_one_treatment()] and [plot_PPR_data_multiple_treatments()]
 NULL
 
 
@@ -772,7 +773,7 @@ NULL
 #' }
 #' @keywords data
 #'
-#' @seealso [plot_AP_comparison()]
+#' @seealso [plot_AP_comparison()] and [plot_AP_trace()].
 NULL
 
 # Sample AP count data ------
@@ -797,7 +798,8 @@ NULL
 #' }
 #' @keywords data
 #'
-#' @seealso [plot_AP_frequencies_multiple_treatments()]
+#' @seealso [plot_AP_frequencies_multiple_treatments()] and
+#' [plot_AP_frequencies_single_treatment()]
 NULL
 
 # Treatment colour theme -----

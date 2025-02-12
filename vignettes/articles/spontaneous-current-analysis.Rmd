@@ -73,8 +73,6 @@ current in pA.
 milliseconds relative to trace number. This is automatically calculated in
 Clampfit.
 
-> *Note* I would strongly recommend using the filename of the first file in the series (but write down the concatenated filename in your lab book as well). This is because Clampfit will auto-generate the concatenated file names (`Concatenate001.abf`, `Concatenate002.abf`, etc.). If you update your pClamp software, Clampfit will begin naming files again at `Concatenate000.abf`, and you could lose track of which file is which.
-
 ## Identify threshold
 
 > To reduce the risk of identifying noise as spontaneous currents, we must set a detection threshold.
@@ -112,15 +110,17 @@ of it) or press `Alt+s`.
 
 12. In cell B3 type `=B2*5`. This value is the five times the standard deviation of the mean noise amplitude, and it will be the threshold value for this recording (write this in your lab book near your notes on this recording).
 
+> If the currents are negative-going (they probably are) the threshold value will be the threshold value x -1 (e.g. a threshold of 2.51 will be -2.51).
+
 13. You may want to save this Excel sheet for later use (just replace the data in the A column each time).
 
 ## Set Event Detection parameters
 
 14. Click on `Event Detection` -> `Threshold search`. The recording will look faded, and some new horizontal cursors will appear. Set the Event Polarity to `Negative-going`.
 
-15. In the `Threshold Search` box, set the Baseline to 0 and Trigger (pA) to the threshold value that you found in step 12.
+15. In the `Threshold Search` box, set the `Baseline` to 0 and `Trigger (pA)` to the threshold value that you found in step 12.
 
-16. If there are large artifacts, enable the `Reject cursor` and drag it to a level below the artifacts. Any event with an amplitude larger than this reject zone will be excluded.
+16. If there are large artifacts, enable the `Reject (pA)` marker and drag it to a level below the artifacts. Any event with an amplitude larger than this reject zone will be excluded.
 
 > *Note* If you need to remove an entire trace, click on it and press the `Delete` key. This will hide the trace Later, you will select visible traces for the analysis.
 
@@ -188,15 +188,15 @@ knitr::include_graphics("figures/Labelled-currents-diagram.png")
 knitr::include_graphics("figures/Define-graphs-button.png")
 ```
 
-24. Set the x-axis to `Time of Peak` and the y-axis to `Peak amplitude`.
+24. Set the x-axis to `Time to Peak` and the y-axis to `Peak amplitude`.
 
-25. You will see a plot that shows blue dots arranged in a rough shape that resembles the blue dots in the recording file in Step 22.
+25. You will see a plot that shows blue dots arranged in a rough shape that resembles the blue dots in the recording file in Step 22. Click, squeeze, and drag a line on the x-axis to change the display range of the graph.
 
 > Note, I have analyzed a file with fewer sweeps to reduce run-time and strain on my computer while making this tutorial.
 
 > Note: The newer version of Clampfit (from pClamp 11) appears to be applying a rounding function to the graph, which creates parallel lines of dots. In reality, spontaneous currents are not perfectly aligned like this.
 
-26. Click and hold down your cursor button and highlight the dots corresponding to the evoked currents and stim artifacts.
+26. Click and hold down your cursor button at an area close to the bottom left of the dots corresponding to the evoked currents and stim artifacts. While still holding down the mouse, move to the upper right corner to "draw" a box. This will select all points in the box that you outlined.
 
 
 ```{r time-to-peak-graph, fig.alt = "A screenshot of a plot of peak amplitude in pico amps over time to peak in milliseconds, with evoked currents highlighted in a bold blue outline.", fig.cap = "In this screenshot, notice how the stimulus artifacts are grouped together in one place. I have selected these points with my mouse."}
@@ -213,13 +213,26 @@ knitr::include_graphics("figures/Process-events-button.png")
 ```
 29. A dialog box will pop up. In the `Process` selection, click on `Change state` and then `Reject`.
 
-30. When you are confident that you have removed all of the stim artifacts and evoked currents, it is time to save the results sheet. Click on the Results sheet (`Window` -> `Results1`) and `Save As`. I would suggest creating a consistent naming convention, such as `Letter`-events, as in `AA-events.sta`, `AB-events.sta`, etc.
+30. When you are confident that you have removed all of the stim artifacts and evoked currents, it is time to save the results sheet. Click on the Results sheet (`Window` -> `Results1`) and then `File` -> `Save As`. I would suggest creating a consistent naming convention, such as `Letter`-events, as in `AA-events`, `AB-events`, etc.
 
 ## Copy required columns
 
 31. Open the `.csv` file that you created in step 5.
 
-32. Paste in the values from your results sheet.
+32a. Paste in the values from your results sheet. The values should go in the following columns:
+
+* `Peak Amplitude (pA)` -> `amplitude`
+* `Time of peak (ms)` -> `time_of_peak`
+* `Trace` -> `trace`
+* `recording_num` should be `1`, if this is a concatenated file. Do not use other numbers, unless the file is split up into 5-minute segments (must be *exactly* 5 minutes).
+* `letter` type the name of the recording letter.
+* `ID` type the name of the baseline recording (e.g. `20250209002.abf`) to help you quickly find the original recording if needed.
+
+> `recording_num` is left-over from an earlier analysis approach that relied on all recordings being exactly 5 minutes long. In this old approach, `recording_num` was part of a formula that calculated the total time (in min) from the start of the recording. Unfortunately, this approach falls apart if there are any recordings that are longer/shorter than 5 minutes. However, I have left this here to prevent breaking data in existing users' projects.
+
+> **Note** I would strongly recommend using the filename of the first file in the series as the `ID` column, but write down the concatenated filename in your lab book as well. This is because Clampfit will auto-generate the concatenated file names (`Concatenate001.abf`, `Concatenate002.abf`, etc.). If you update your pClamp software, Clampfit will begin naming files again at `Concatenate000.abf`, and you could lose track of which file is which.
+
+32b. Select the `letter`, `ID` and `recording_num` columns, then double-click on the `+` sign on the lower right hand corner of the selection to extend these columns all the way down.
 
 33. Repeat for the number of recordings that you need to analyze.
 
