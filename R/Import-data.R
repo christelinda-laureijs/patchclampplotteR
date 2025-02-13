@@ -626,9 +626,9 @@ add_new_cells <- function(new_raw_data_csv,
 
     if (write_new_csv == "yes") {
       utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
-    }
 
-    message(paste0("\n Saved data to .csv file ", new_file_name))
+      message(paste0("\nSaved data to .csv file ", new_file_name))
+    }
 
     return(full_raw_data)
   }
