@@ -184,7 +184,7 @@ import_theme_colours <- function(filename) {
 #'   the data are evoked current data (`current_type == "eEPSC"`) then this must
 #'   contain 4 columns: `letter`, `ID`, `P1` and `P2`. If the data are
 #'   spontaneous current data, the columns must be `letter`, `ID`,
-#'   `recording_num`, `trace`, `peak_amplitude` and `time_of_peak`. Please see
+#'   `recording_num`, `trace`, `amplitude` and `time_of_peak`. Please see
 #'   the section below on required columns for more details.
 #' @param cell_characteristics_csv A filepath to a csv containing information
 #'   about the cells. Please see [import_cell_characteristics_df()] for a
@@ -424,13 +424,11 @@ add_new_cells <- function(new_raw_data_csv,
     new_raw_data <- new_raw_data %>%
       dplyr::group_by(.data$letter) %>%
       dplyr::mutate(
-        amplitude = (-1) * .data$peak_amplitude,
+        amplitude = (-1) * .data$amplitude,
         time = ((.data$recording_num - 1) * 300 + (.data$trace - 1) * 5 + (.data$time_of_peak /
           1000)
         ) / 60
       )
-
-    message("Renamed `peak_amplitude` to `amplitude`")
   }
 
 
