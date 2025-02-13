@@ -628,6 +628,8 @@ add_new_cells <- function(new_raw_data_csv,
       utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
     }
 
+    message(paste0("\n Saved data to .csv file ", new_file_name))
+
     return(full_raw_data)
   }
 }
