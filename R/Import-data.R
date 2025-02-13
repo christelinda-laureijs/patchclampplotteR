@@ -424,11 +424,13 @@ add_new_cells <- function(new_raw_data_csv,
     new_raw_data <- new_raw_data %>%
       dplyr::group_by(.data$letter) %>%
       dplyr::mutate(
-        amplitude = (-1) * .data$amplitude,
+        amplitude = (-1) * .data$peak_amplitude,
         time = ((.data$recording_num - 1) * 300 + (.data$trace - 1) * 5 + (.data$time_of_peak /
           1000)
         ) / 60
       )
+
+    message("Renamed `peak_amplitude` to `amplitude`")
   }
 
 
