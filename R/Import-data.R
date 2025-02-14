@@ -602,10 +602,8 @@ add_new_cells <- function(new_raw_data_csv,
       "\"",
       old_raw_data_csv,
       "\""))
-    cli::cli_alert_success(paste0(
-      "Adding the new following new cells to the dataframe:",
-      letters_in_new_raw_data_spaces
-    ))
+    cli::cli_alert_success(
+      letters_in_new_raw_data_spaces)
 
     full_raw_data <- dplyr::bind_rows(old_raw_data, new_raw_data_complete) %>%
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
