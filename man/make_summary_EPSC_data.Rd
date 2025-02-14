@@ -35,7 +35,18 @@ incorrect representation of the number of significant digits.}
 \item{ending_interval}{A character value describing the last interval in the recording. Useful for future plots in which you compare the percent decrease/increase in current amplitude relative to the baseline. Examples include "t20to25", "t10to15", etc.}
 }
 \value{
-A dataframe with summary data such as the mean current amplitude,
+A list of two dataframes. For evoked currents (\code{current_type = "eEPSC"}) the first dataframe (\verb{$percent_change_data}) contains the mean current amplitude for each interval, with a final column (\code{percent_change}) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.
+
+Most columns (\code{age}, \code{sex}, \code{animal}, etc.) come directly from the information imported through \code{import_cell_characteristics_df()}. However, there are some new columns of note.
+
+\itemize{
+\item \code{t0to5} The mean evoked current amplitude (pA) for this cell during the period of 0 to 5 minutes.
+\item \code{t5to10} The mean evoked current amplitude (pA) for this cell during the period of 5 to 10 minutes.
+\item \code{t10to15}, \code{t15to20}, \code{tXtY} etc... The mean evoked current amplitude (pA) for this cell during the period of \emph{X} to \emph{Y} minutes.
+\item \code{percent_change} The percent change in evoked current amplitude in the interval \code{t20to25} as a percentage of the mean baseline amplitude (\code{t0to5}). For example, if currents began at 100 pA during the baseline period, but were 50 pA by \code{t20to25}, the value of \code{percent_change} will be \verb{50\%} or \code{0.50}. You can also change the value of the intervals used in this calculation through the \code{baseline_interval} and \code{ending_interval} arguments.
+}
+
+The second dataframe contains summary data such as the mean current amplitude,
 coefficient of variation, standard deviation, standard error, variance,
 variance-to-mean ratio, and inverse coefficient of variation squared for
 each interval.

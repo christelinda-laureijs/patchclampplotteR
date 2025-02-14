@@ -787,7 +787,18 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #' @param ending_interval A character value describing the last interval in the recording. Useful for future plots in which you compare the percent decrease/increase in current amplitude relative to the baseline. Examples include "t20to25", "t10to15", etc.
 #' @param baseline_interval A character value describing the baseline interval. Defaults to "t0to5".
 #'
-#' @returns A dataframe with summary data such as the mean current amplitude,
+#' @returns A list of two dataframes. For evoked currents (`current_type = "eEPSC"`) the first dataframe (`$percent_change_data`) contains the mean current amplitude for each interval, with a final column (`percent_change`) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.
+#'
+#' Most columns (`age`, `sex`, `animal`, etc.) come directly from the information imported through `import_cell_characteristics_df()`. However, there are some new columns of note.
+#'
+#' \itemize{
+#' \item `t0to5` The mean evoked current amplitude (pA) for this cell during the period of 0 to 5 minutes.
+#'  \item `t5to10` The mean evoked current amplitude (pA) for this cell during the period of 5 to 10 minutes.
+#'  \item `t10to15`, `t15to20`, `tXtY` etc... The mean evoked current amplitude (pA) for this cell during the period of *X* to *Y* minutes.
+#'  \item `percent_change` The percent change in evoked current amplitude in the interval `t20to25` as a percentage of the mean baseline amplitude (`t0to5`). For example, if currents began at 100 pA during the baseline period, but were 50 pA by `t20to25`, the value of `percent_change` will be `50%` or `0.50`. You can also change the value of the intervals used in this calculation through the `baseline_interval` and `ending_interval` arguments.
+#'}
+#'
+#' The second dataframe contains summary data such as the mean current amplitude,
 #'   coefficient of variation, standard deviation, standard error, variance,
 #'   variance-to-mean ratio, and inverse coefficient of variation squared for
 #'   each interval.

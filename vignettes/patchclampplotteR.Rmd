@@ -82,7 +82,11 @@ First, I must import a `.csv` file containing information about factors such as
 the animal's age and sex, the cell ID number, and other details. Please see the
 **Required columns** section of the documentation for
 `import_cell_characteristics_df()` for full explanations of the required columns and
-what you should include.
+what you should include. See below for a link to download an empty `.csv` file with the headers required for this dataset:
+
+```{r download-workshop-three-handout-pdf, echo=F}
+xfun::embed_file('sample_blank_cell_characteristics.csv')
+```
 
 > Note: Since this vignette is included within an R package, the following code
 requires the function `import_ext_data()` to properly locate the `.csv` file in

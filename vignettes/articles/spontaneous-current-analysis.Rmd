@@ -213,7 +213,12 @@ knitr::include_graphics("figures/Process-events-button.png")
 ```
 29. A dialog box will pop up. In the `Process` selection, click on `Change state` and then `Reject`.
 
-30. When you are confident that you have removed all of the stim artifacts and evoked currents, it is time to save the results sheet. Click on the Results sheet (`Window` -> `Results1`) and then `File` -> `Save As`. I would suggest creating a consistent naming convention, such as `Letter`-events, as in `AA-events`, `AB-events`, etc.
+30. When you are confident that you have removed all of the stim artifacts and evoked currents, it is time to save the results sheet as an **Axon Text File**.
+
+* Click anywhere within the Results sheet.
+* Next, click on (`Window` -> `Results1`) and then `File` -> `Save As`. I would suggest creating a consistent naming convention, such as `Letter`-events, as in `AA-events.atf`, `AB-events.atf`, etc.
+
+> **Note** Sometimes the events will not save if you don't click on a cell/row/anywhere within the Results sheet. This is possibly because the program does not know what sheet you want to save. Be sure to click somewhere in the sheet BEFORE you go to `File` -> `Save As`!
 
 ## Copy required columns
 

@@ -39,7 +39,8 @@ Imports:
     tibble,
     tidyr,
     utils,
-    viridis
+    viridis,
+    xfun
 Suggests: 
     knitr,
     rmarkdown,

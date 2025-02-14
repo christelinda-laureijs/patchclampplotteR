@@ -8,7 +8,7 @@
 An .rda file containing 70 objects of 16 variables.
 \describe{
 \item{\code{category}}{A factor representing the experiment type. Used to
-assign top-level groups for further analyses, with \code{treatment} as subgroups.}
+assign top-level groups for further analyses, with \code{treatment} as subgroups. For example, "1" may refer to an experiment where you applied high-frequency stimulation (HFS) to a cell, while "2" is an experiment where you added a hormone like leptin. "3" may be an experiment where you applied HFS in the continuous presence of leptin.}
 \item{\code{letter}}{A factor that is a unique identifier for a single
 recording. Used to link data sets for evoked or spontaneous currents and
 cell-characteristics.}

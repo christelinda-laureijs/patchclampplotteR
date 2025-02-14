@@ -26,7 +26,7 @@ and months when reporting animal ages). Do not use characters (e.g. avoid
 \item{treatment}{A character value such as "Control" or "HNMPA".}
 \item{category}{A numeric value representing the experiment type. Used to
 assign top-level groups for further analyses, with \code{treatment} as
-subgroups.}
+subgroups. For example, "1" may refer to an experiment where you applied high-frequency stimulation (HFS) to a cell, while "2" is an experiment where you added a hormone like leptin. "3" may be an experiment where you applied HFS in the continuous presence of leptin.}
 \item{R_a}{A list of values for the access resistance, which would have been
 monitored at several timepoints throughout the recording. See the section
 \code{R_a} formatting below.}

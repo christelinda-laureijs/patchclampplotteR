@@ -31,7 +31,7 @@ as long as the time units are consistent throughout (e.g. don't mix up days
 and months when reporting animal ages).}
 \item{\code{animal}}{A numeric value representing the animal's ID or number.}
 \item{\code{category}}{A numeric value representing the experiment type. Used to
-assign top-level groups for further analyses, with \code{treatment} as subgroups.}
+assign top-level groups for further analyses, with \code{treatment} as subgroups. For example, "1" may refer to an experiment where you applied high-frequency stimulation (HFS) to a cell, while "2" is an experiment where you added a hormone like leptin. "3" may be an experiment where you applied HFS in the continuous presence of leptin.}
 \item{\code{cell}}{A character or numeric value representing the cell. For
 example, use \verb{3.1.1} for animal #3, slice #1, cell #1.}
 \item{\code{PPR}}{(for evoked currents only) A numeric value that represents the

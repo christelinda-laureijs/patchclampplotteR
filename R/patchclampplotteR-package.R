@@ -18,5 +18,6 @@
 #' @importFrom stats sd
 #' @importFrom utils menu
 #' @importFrom viridis scale_color_viridis
+#' @importFrom xfun embed_file
 ## usethis namespace: end
 NULL
