@@ -512,18 +512,11 @@ add_new_cells <- function(new_raw_data_csv,
   new_letters_spaces <- paste0(new_letters, " ")
 
   if (all(new_letters %in% cell_characteristics$letter)) {
-    cli::cli_alert_success(paste0(
-      "\n",
-      "\n",
-      "Letter check passed: All letters are present in both \"",
+    cli::cli_alert_success(paste0("All letters are present in both \"",
       cell_characteristics_csv,
       "\" \nand \"",
       new_raw_data_csv,
-      "\".",
-      "\n \nThe matching cells are:",
-      "\n",
-      new_letters_spaces
-    ))
+      "\"."))
   } else {
     cli::cli_abort(c("x" = paste0("Missing letters detected in \"",
       cell_characteristics_csv,
@@ -611,7 +604,6 @@ add_new_cells <- function(new_raw_data_csv,
       "\""))
     cli::cli_alert_success(paste0(
       "Adding the new following new cells to the dataframe:",
-      "\n",
       letters_in_new_raw_data_spaces
     ))
 
