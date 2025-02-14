@@ -21,7 +21,7 @@ add_new_cells(
 the data are evoked current data (\code{current_type == "eEPSC"}) then this must
 contain 4 columns: \code{letter}, \code{ID}, \code{P1} and \code{P2}. If the data are
 spontaneous current data, the columns must be \code{letter}, \code{ID},
-\code{recording_num}, \code{trace}, \code{peak_amplitude} and \code{time_of_peak}. Please see
+\code{recording_num}, \code{trace}, \code{amplitude} and \code{time_of_peak}. Please see
 the section below on required columns for more details.}
 
 \item{cell_characteristics_csv}{A filepath to a csv containing information

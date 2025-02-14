@@ -25,6 +25,7 @@ the control period (state == "Baseline") or after insulin has been applied
 (state == "Insulin"). These were obtained by counting the number of action potentials present within each sweep. The data were then merged with the \code{sample_cell_characteristics} data through \code{add_new_cells()} with \code{data_type = "AP_count"}.
 }
 \seealso{
-\code{\link[=plot_AP_frequencies_multiple_treatments]{plot_AP_frequencies_multiple_treatments()}}
+\code{\link[=plot_AP_frequencies_multiple_treatments]{plot_AP_frequencies_multiple_treatments()}} and
+\code{\link[=plot_AP_frequencies_single_treatment]{plot_AP_frequencies_single_treatment()}}
 }
 \keyword{data}

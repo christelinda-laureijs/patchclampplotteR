@@ -119,7 +119,8 @@ import_cell_characteristics_df <- function(filename) {
 import_ABF_file <-
   function(file_name, recording_mode) {
     if (!recording_mode %in% c("voltage_clamp", "current_clamp")) {
-      stop("'recording_mode' argument must be one of: 'voltage_clamp' or 'current_clamp'")
+      cli::cli_abort(c("'recording_mode' argument must be one of: 'voltage_clamp' or 'current_clamp'",
+                       "x" = "You did not use the correct value"))
     }
 
     data <- abftools::abf2_load(here::here(file_name)) %>%
@@ -329,35 +330,36 @@ add_new_cells <- function(new_raw_data_csv,
   )
 
   if (!is.character(new_file_name)) {
-    stop(
-      "'new_file_name' must be a character (e.g. \"Data/Raw-CSVs/eEPSC-data/20240912-raw-data.csv\")"
-    )
+    cli::cli_abort(c("x" = "'new_file_name' must be a character",
+                     "i" = "An example of a correct value for `new_file_name` is \"Data/Raw-CSVs/eEPSC-data/20240912-raw-data.csv\")"
+    ))
   }
 
   if (is.null(cell_characteristics_csv) ||
     !is.character(cell_characteristics_csv)) {
-    stop(
-      "'cell_characteristics_csv' must be a character (e.g. \"Data/Plaintext-Cell-Characteristics.csv\")"
-    )
+    cli::cli_abort(c("x" = "'cell_characteristics_csv' must be a character",
+                     "i" = "An example of a correct value for `cell_characteristics_csv` is \"Data/Plaintext-Cell-Characteristics.csv\""
+    ))
+
   }
 
   if (!is.numeric(decimal_places)) {
-    stop("'decimal_places' must be a numeric value")
+    cli::cli_abort(c("x" = "'decimal_places' must be a numeric value"))
   }
 
   if (!write_new_csv %in% c("yes", "no")) {
-    stop("'write_new_csv' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "'write_new_csv' argument must be one of: 'yes' or 'no'"))
   }
 
   if (!is.null(new_raw_data_name) &
     !is.character(new_raw_data_name)) {
-    stop("'new_raw_data_name' must be a character (e.g. \"Data/Raw-eEPSC-data.csv\")")
+    cli::cli_abort(c("x" = "'new_raw_data_name' must be a character (e.g. \"Data/Raw-eEPSC-data.csv\")"))
   }
 
   if (is.null(data_type) ||
     length(data_type) != 1L ||
     !data_type %in% c("eEPSC", "sEPSC", "AP_parameter", "AP_count")) {
-    stop("'data_type' argument must be one of: 'eEPSC', 'sEPSC', 'AP' or 'AP_count'.")
+    cli::cli_abort(c("x" = "'data_type' argument must be one of: 'eEPSC', 'sEPSC', 'AP' or 'AP_count'."))
   }
 
   # Required to see if new cells have associated data for synapses, treatment, sex, age, etc.
@@ -387,9 +389,8 @@ add_new_cells <- function(new_raw_data_csv,
           "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
         )
       ) != 1) {
-        stop(
-          "Please double-check that you have selected csv files belonging to the same data type."
-        )
+        cli::cli_abort(c("x" = "Cannot combine files of mixed data types","i" = "Please double-check that you have selected csv files belonging to the same data type."
+        ))
       } else {
         "Okay, moving forward"
       }
@@ -413,9 +414,8 @@ add_new_cells <- function(new_raw_data_csv,
           "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
         )
       ) != 1) {
-        stop(
-          "Please double-check that you have selected csv files belonging to the same data type."
-        )
+        cli::cli_abort(c("x" = "Cannot combine files of mixed data types","i" = "Please double-check that you have selected csv files belonging to the same data type."
+        ))
       } else {
         "Okay, moving forward"
       }
@@ -444,9 +444,8 @@ add_new_cells <- function(new_raw_data_csv,
           "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
         )
       ) != 1) {
-        stop(
-          "Please double-check that you have selected csv files belonging to the same data type."
-        )
+        cli::cli_abort(c("x" = "Cannot combine files of mixed data types","i" = "Please double-check that you have selected csv files belonging to the same data type."
+        ))
       } else {
         "Okay, moving forward"
       }
@@ -479,9 +478,8 @@ add_new_cells <- function(new_raw_data_csv,
           "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
         )
       ) != 1) {
-        stop(
-          "Please double-check that you have selected csv files belonging to the same data type."
-        )
+        cli::cli_abort(c("x" = "Cannot combine files of mixed data types","i" = "Please double-check that you have selected csv files belonging to the same data type."
+        ))
       } else {
         "Okay, moving forward"
       }
@@ -508,13 +506,13 @@ add_new_cells <- function(new_raw_data_csv,
   }
 
 
-  warning("Renamed dataframe columns to lowercase")
+  cli::cli_alert_info("Renamed dataframe columns to lowercase")
 
   new_letters <- unique(new_raw_data$letter)
   new_letters_spaces <- paste0(new_letters, " ")
 
   if (all(new_letters %in% cell_characteristics$letter)) {
-    message(
+    cli::cli_alert_success(paste0(
       "\n",
       "\n",
       "Letter check passed: All letters are present in both \"",
@@ -525,17 +523,14 @@ add_new_cells <- function(new_raw_data_csv,
       "\n \nThe matching cells are:",
       "\n",
       new_letters_spaces
-    )
+    ))
   } else {
-    stop(
-      "\n",
-      "\n",
-      "Missing letters detected in \"",
+    cli::cli_abort(c("x" = paste0("Missing letters detected in \"",
       cell_characteristics_csv,
-      "\". \nDid you add cell characteristics for ALL the new cells in \"",
+      "\". Did you add cell characteristics for ALL the new cells in \"",
       new_raw_data_csv,
       "\"?"
-    )
+    )))
   }
 
   new_raw_data_complete <-
@@ -571,7 +566,7 @@ add_new_cells <- function(new_raw_data_csv,
         threshold = .data$t_x
       )
 
-    warning("Renamed column 't_x' to 'threshold'")
+    cli::cli_alert_info("Renamed column 't_x' to 'threshold'")
   }
 
   if (data_type == "AP_count") {
@@ -583,7 +578,7 @@ add_new_cells <- function(new_raw_data_csv,
     old_raw_data <- old_raw_data %>%
       dplyr::rename(cell = .data$cells)
 
-    warning("Renamed column 'cells' to 'cell'")
+    cli::cli_alert_info("Renamed column 'cells' to 'cell'")
   }
 
   letters_in_old_raw_data <- unique(old_raw_data$letter)
@@ -595,31 +590,30 @@ add_new_cells <- function(new_raw_data_csv,
     overlapping_letters <- intersect(letters_in_old_raw_data, letters_in_new_raw_data)
     overlapping_letters_spaces <- paste0(overlapping_letters, " ")
 
-    stop(
-      "\n",
-      "\n!! Overlapping letter(s) detected!!    --->  ",
-      overlapping_letters_spaces,
-      "\nThese cells in \"",
+    cli::cli_abort(c(
+      "x" = "Overlapping letter(s) detected!!",
+      "!" = paste0(overlapping_letters_spaces),
+      "!" = paste0("Some or all cells in \"",
       new_raw_data_csv,
       "\" already exist in ",
       "\"",
       old_raw_data_csv,
-      "\"",
-      "\n \nDuplicate letters will produce plotting errors and distorted statistics.",
-      "\nDid you accidentally run this code twice?"
-    )
+      "\""),
+      "i" = "Duplicate letters will produce plotting errors and distorted statistics. Did you accidentally run this code twice?"
+    ))
   } else {
-    message(
-      "\n \nDuplication check passed: All letters in \"",
+    cli::cli_alert_success("Letter duplication check passed")
+    cli::cli_alert_info(paste0("All letters in \"",
       new_raw_data_csv,
       "\" are new relative to ",
       "\"",
       old_raw_data_csv,
-      "\"",
-      "\n \nAdding the new following new cells:",
+      "\""))
+    cli::cli_alert_success(paste0(
+      "Adding the new following new cells to the dataframe:",
       "\n",
       letters_in_new_raw_data_spaces
-    )
+    ))
 
     full_raw_data <- dplyr::bind_rows(old_raw_data, new_raw_data_complete) %>%
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
@@ -627,7 +621,7 @@ add_new_cells <- function(new_raw_data_csv,
     if (write_new_csv == "yes") {
       utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
 
-      message(paste0("\nSaved data to .csv file ", new_file_name))
+      cli::cli_alert_success(paste0("\nSaved data to .csv file ", new_file_name))
     }
 
     return(full_raw_data)

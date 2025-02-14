@@ -19,6 +19,7 @@ Depends:
     R (>= 2.10)
 Imports: 
     abftools (>= 0.9.9),
+    cli,
     dataui (>= 0.0.1),
     dplyr,
     ggforce,

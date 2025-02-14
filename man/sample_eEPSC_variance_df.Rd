@@ -28,4 +28,7 @@ baseline period ("t0to5"), and a time interval after a hormone or protocol
 has been applied (in this case, "t20to25"). It can be used for further
 analyses and also to make the variance comparison plots.
 }
+\seealso{
+\code{\link[=make_variance_data]{make_variance_data()}}, \code{\link[=plot_variance_comparison_data]{plot_variance_comparison_data()}}, and \code{\link[=plot_cv_data]{plot_cv_data()}}
+}
 \keyword{data}

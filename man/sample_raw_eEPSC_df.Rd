@@ -61,6 +61,6 @@ build off of this dataset, such as \code{\link[=make_pruned_EPSC_data]{make_prun
 functions like \code{\link[=plot_raw_current_data]{plot_raw_current_data()}} and \code{\link[=plot_summary_current_data]{plot_summary_current_data()}}.
 }
 \seealso{
-\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}} and \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}, \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}, and \code{\link[=plot_raw_current_data]{plot_raw_current_data()}}
 }
 \keyword{data}
