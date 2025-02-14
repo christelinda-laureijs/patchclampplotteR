@@ -165,53 +165,52 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
   if (is.null(current_type) ||
     length(current_type) != 1L ||
     !current_type %in% c("eEPSC", "sEPSC")) {
-    stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+    cli::cli_abort(c("x" = "'current_type' argument must be either 'eEPSC' or 'sEPSC'"))
   }
 
   if (!save_output_as_RDS %in% c("yes", "no")) {
-    stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_output_as_RDS` argument must be one of: \"yes\" or \"no\""))
   }
 
   if (!negative_transform_currents %in% c("yes", "no")) {
-    stop("'negative_transform_currents' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`negative_transform_currents` argument must be either 'eEPSC' or 'sEPSC'"))
   }
 
 
   if (current_type == "eEPSC") {
     if (any(grepl("sEPSC", list_of_argument_names))) {
-      stop(
+      cli::cli_abort(c("x" = paste0(
         "current_type = \"",
         current_type,
         "\" but some arguments have the text ",
-        "\"sEPSC\".",
-        "\n Are you sure that you selected the correct current type?"
-      )
+        "\"sEPSC\"."),
+        "i" = "Are you sure that you selected the correct current type?"
+      ))
     }
   }
 
   if (current_type == "sEPSC") {
     if (any(grepl("eEPSC", list_of_argument_names))) {
-      stop(
+      cli::cli_abort(c("x" = paste0(
         "current_type = \"",
         current_type,
         "\" but some arguments have the text ",
-        "\"eEPSC\".",
-        "\n Are you sure that you selected the correct current type?"
-      )
+        "\"eEPSC\"."),
+        "i" = "Are you sure that you selected the correct current type?"
+      ))
     }
   }
 
   if (max_time_value %% baseline_length != 0) {
-    stop(
-      "max_time_value is ",
+    cli::cli_abort(c("x" = paste0("max_time_value is ",
       max_time_value,
-      ", which is not divisible by interval_length, ",
+      ", which is not divisible by interval_length ",
       interval_length
-    )
+    )))
   }
 
   if (!is.numeric(decimal_places)) {
-    stop("'decimal_places' must be a numeric value")
+    cli::cli_abort(c("x" = "`decimal_places` must be a numeric value"))
   }
 
 
@@ -581,15 +580,15 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
   if (is.null(current_type) ||
     length(current_type) != 1L ||
     !current_type %in% c("eEPSC", "sEPSC")) {
-    stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+    cli::cli_abort(c("x" = "'current_type' argument must be either 'eEPSC' or 'sEPSC'"))
   }
 
   if (!save_output_as_RDS %in% c("yes", "no")) {
-    stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_output_as_RDS` argument must be one of: \"yes\" or \"no\""))
   }
 
   if (!is.numeric(decimal_places)) {
-    stop("'decimal_places' must be a numeric value")
+    cli::cli_abort(c("x" = "`decimal_places` argument must be numeric"))
   }
 
   # Prune within individual cells
@@ -872,15 +871,15 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
   if (is.null(current_type) ||
     length(current_type) != 1L ||
     !current_type %in% c("eEPSC", "sEPSC")) {
-    stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+    cli::cli_abort(c("x" = "'current_type' argument must be either 'eEPSC' or 'sEPSC'"))
   }
 
   if (!save_output_as_RDS %in% c("yes", "no")) {
-    stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_output_as_RDS` argument must be one of: \"yes\" or \"no\""))
   }
 
   if (!is.numeric(decimal_places)) {
-    stop("'decimal_places' must be a numeric value")
+    cli::cli_abort(c("x" = "`decimal_places` argument must be numeric"))
   }
 
   if (current_type == "eEPSC") {
@@ -1038,15 +1037,15 @@ perform_t_tests_for_summary_plot <- function(data,
   if (is.null(current_type) ||
     length(current_type) != 1L ||
     !current_type %in% c("eEPSC", "sEPSC")) {
-    stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+    cli::cli_abort(c("x" = "'current_type' argument must be either 'eEPSC' or 'sEPSC'"))
   }
 
   if (!save_output_as_RDS %in% c("yes", "no")) {
-    stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_output_as_RDS` argument must be one of: \"yes\" or \"no\""))
   }
 
   if (!include_all_treatments %in% c("yes", "no")) {
-    stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`include_all_treatments` must be either \"yes\" or \"no\"."))
   }
 
   if (include_all_treatments == "yes") {
@@ -1056,32 +1055,32 @@ perform_t_tests_for_summary_plot <- function(data,
       dplyr::filter(.data$treatment %in% treatment_info$treatment)
 
     if (!is.null(list_of_treatments)) {
-      warning(
+      cli::cli_alert_info(
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
   } else {
     if (is.null(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is NULL.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is NULL."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     if (!is.character(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is not a character object.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is not a character object or list of characters."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     if (is.null(baseline_interval) ||
       !is.character(baseline_interval)) {
-      stop("'baseline_interval' must be a character (e.g. \"t0to5\" or \"t0to3\")")
+      cli::cli_abort(c("x" = "`baseline_interval` must be a character (e.g. \"t0to5\", \"t0to3\")"))
     }
 
     treatment_info <- treatment_colour_theme %>%
@@ -1095,13 +1094,14 @@ perform_t_tests_for_summary_plot <- function(data,
     allowed_parameters_list <- "\"amplitude\""
 
     if (!parameter %in% c("amplitude")) {
-      stop(
-        "parameter must be ",
+      cli::cli_abort(c("x" = paste0(
+        "`parameter` must be ",
         allowed_parameters_list,
         " for current_type \"",
         current_type,
-        "\". \nCheck parameter, current_type or data."
-      )
+        "\"."),
+        "i" = "Check that you have the correct combination of `parameter`, `current_type` and `data.`"
+      ))
     }
 
     if (parameter == "amplitude") {
@@ -1126,13 +1126,14 @@ perform_t_tests_for_summary_plot <- function(data,
       "frequency",
       "raw_frequency"
     )) {
-      stop(
-        "parameter must be ",
+      cli::cli_abort(c("x" = paste0(
+        "`parameter` must be ",
         allowed_parameters_list,
         " for current_type \"",
         current_type,
-        "\". \nCheck parameter, current_type or data."
-      )
+        "\"."),
+        "i" = "Check that you have the correct combination of `parameter`, `current_type` and `data.`"
+      ))
     }
 
     if (parameter == "amplitude") {
@@ -1287,11 +1288,11 @@ make_variance_data <- function(data,
                                treatment_colour_theme,
                                save_output_as_RDS = "no") {
   if (!save_output_as_RDS %in% c("yes", "no")) {
-    stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_output_as_RDS` argument must be one of: \"yes\" or \"no\""))
   }
 
   if (!include_all_treatments %in% c("yes", "no")) {
-    stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`include_all_treatments` must be either \"yes\" or \"no\"."))
   }
 
   if (include_all_treatments == "yes") {
@@ -1302,37 +1303,37 @@ make_variance_data <- function(data,
     treatment_info <- treatment_colour_theme
 
     if (!is.null(list_of_treatments)) {
-      warning(
+      cli::cli_alert_info(
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
   } else {
     if (is.null(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is NULL.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is NULL."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     if (!is.character(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is not a character object.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is not a character object or list of characters."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     if (is.null(baseline_interval) ||
       !is.character(baseline_interval)) {
-      stop("'baseline_interval' must be a character (e.g. \"t0to5\", \"t0to3\")")
+      cli::cli_abort(c("x" = "`baseline_interval` must be a character (e.g. \"t0to5\", \"t0to3\")"))
     }
 
     if (is.null(post_hormone_interval) ||
       !is.character(post_hormone_interval)) {
-      stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
+      cli::cli_abort(c("x" = "`post_hormone_interval` must be a character (e.g. \"t20to25\")"))
     }
 
     dataframe <- data %>%
@@ -1425,11 +1426,11 @@ make_PPR_data <- function(data,
                           treatment_colour_theme,
                           save_output_as_RDS = "no") {
   if (!save_output_as_RDS %in% c("yes", "no")) {
-    stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_output_as_RDS` argument must be one of: \"yes\" or \"no\""))
   }
 
   if (!include_all_treatments %in% c("yes", "no")) {
-    stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`include_all_treatments` must be either \"yes\" or \"no\"."))
   }
 
 
@@ -1441,27 +1442,27 @@ make_PPR_data <- function(data,
     treatment_info <- treatment_colour_theme
 
     if (!is.null(list_of_treatments)) {
-      warning(
+      cli::cli_alert_info(
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
   } else {
     if (is.null(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is NULL.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is NULL."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     if (!is.character(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is not a character object.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is not a character object or list of characters."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     dataframe <- data %>%

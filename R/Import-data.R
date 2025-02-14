@@ -119,7 +119,7 @@ import_cell_characteristics_df <- function(filename) {
 import_ABF_file <-
   function(file_name, recording_mode) {
     if (!recording_mode %in% c("voltage_clamp", "current_clamp")) {
-      cli::cli_abort(c("'recording_mode' argument must be one of: 'voltage_clamp' or 'current_clamp'",
+      cli::cli_abort(c("'recording_mode' argument must be either 'voltage_clamp' or 'current_clamp'",
                        "x" = "You did not use the correct value"))
     }
 
@@ -348,7 +348,7 @@ add_new_cells <- function(new_raw_data_csv,
   }
 
   if (!write_new_csv %in% c("yes", "no")) {
-    cli::cli_abort(c("x" = "'write_new_csv' argument must be one of: 'yes' or 'no'"))
+    cli::cli_abort(c("x" = "'write_new_csv' argument must be either 'yes' or 'no'"))
   }
 
   if (!is.null(new_raw_data_name) &

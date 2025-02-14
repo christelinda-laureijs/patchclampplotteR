@@ -132,20 +132,20 @@ plot_baseline_data <- function(data,
   if (is.null(current_type) ||
     length(current_type) != 1L ||
     !current_type %in% c("eEPSC", "sEPSC")) {
-    stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+    cli::cli_abort(c("x" = "'current_type' argument must be either 'eEPSC' or 'sEPSC'"))
   }
 
   if (is.null(baseline_interval) ||
     !is.character(baseline_interval)) {
-    stop("'baseline_interval' must be a character (e.g. \"t0to5\", \"t0to3\")")
+    cli::cli_abort(c("x" = "'baseline_interval' must be a character (e.g. \"t0to5\", \"t0to3\")"))
   }
 
   if (!save_plot_png %in% c("yes", "no")) {
-    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
 
   if (!large_axis_text %in% c("yes", "no")) {
-    stop("'large_axis_text' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`large_axis_text` argument must be either \"yes\" or \"no\""))
   }
 
   if (include_all_treatments == "yes") {
@@ -155,27 +155,27 @@ plot_baseline_data <- function(data,
       droplevels()
 
     if (!is.null(list_of_treatments)) {
-      warning(
+      cli::cli_alert_info(
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
   } else {
     if (is.null(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is NULL.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is NULL."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     if (!is.character(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is not a character object.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is not a character object or list of characters."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     treatment_info <- treatment_colour_theme %>%
@@ -191,13 +191,13 @@ plot_baseline_data <- function(data,
     allowed_y_variables_list <- "\"raw_amplitude\", or \"raw_frequency\""
 
     if (!y_variable %in% c("raw_amplitude", "raw_frequency")) {
-      stop(
-        "y_variable must be ",
+      cli::cli_abort(c(
+        "x" = paste0("`y_variable` must be ",
         allowed_y_variables_list,
         " for current_type \"",
         current_type,
         "\" \nbecause transformed data are all 100 during the baseline."
-      )
+      )))
     }
 
     if (y_variable == "raw_amplitude") {
@@ -215,14 +215,13 @@ plot_baseline_data <- function(data,
     allowed_y_variables_list <- c("\"raw_amplitude\"")
 
     if (!y_variable %in% c("raw_amplitude")) {
-      stop(
-        "y_variable must be ",
-        allowed_y_variables_list,
-        " for current_type \"",
-        current_type,
-        "\"",
-        " \nbecause transformed data are all 100 during the baseline."
-      )
+      cli::cli_abort(c(
+        "x" = paste0("`y_variable` must be ",
+                     allowed_y_variables_list,
+                     " for current_type \"",
+                     current_type,
+                     "\" \nbecause transformed data are all 100 during the baseline."
+        )))
     }
 
     filepath <- "Figures/Evoked-currents/Output-summary-plots"
@@ -430,34 +429,35 @@ plot_raw_current_data <-
     if (is.null(current_type) ||
       length(current_type) != 1L ||
       !current_type %in% c("eEPSC", "sEPSC")) {
-      stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+      cli::cli_abort(c("x" = "'current_type' argument must be either 'eEPSC' or 'sEPSC'"))
     }
 
     if (is.null(hormone_added) ||
       length(hormone_added) != 1L ||
       !is.character(hormone_added)) {
-      stop(
-        "\"hormone_added\" must be a character. Use \"HFS\" for high-frequency stimulation or \"Insulin\", \"CCK\", etc. for any hormones"
-      )
+      cli::cli_abort(c("x" = "`hormone_added` must be a character.",
+                       "i" = "For example, you could use \"HFS\" for high-frequency stimulation",
+                       "i" = "If you are adding a hormone, examples include \"Insulin\", \"CCK\", etc.",
+                       "i" = "`hormone_added` will be the label for the annotation line on the plot."
+      ))
     }
 
     if (!save_plot_png %in% c("yes", "no")) {
-      stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+      cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
     }
 
 
     if (is.null(hormone_or_HFS_start_time) ||
       !is.numeric(hormone_or_HFS_start_time)) {
-      stop(
-        "\"hormone_or_HFS_start_time\" must be numeric (e.g. 5 for
-        HFS or a hormone applied at five minutes into the recording)."
+      cli::cli_abort(c("x" = "`hormone_or_HFS_start_time` must be numeric
+      (e.g. 5 for HFS or a hormone applied at five minutes into the recording).")
       )
     }
 
     if (!is.null(hormone_end_time) &
       !is.numeric(hormone_end_time)) {
-      stop("\"hormone_end_time\" must be numeric
-        (e.g. 25 for a hormone ending at 25 minutes).")
+      cli::cli_abort(c("x" = "`hormone_end_time` must be numeric
+        (e.g. 25 for a hormone ending at 25 minutes)."))
     }
 
     df <- data %>%
@@ -482,23 +482,22 @@ plot_raw_current_data <-
       allowed_y_variables_list <- "\"P1\", \"P1_transformed\", \"mean_P1\", or \"PPR\""
 
       if (!y_variable %in% c("P1", "P1_transformed", "mean_P1", "PPR")) {
-        stop(
-          "y_variable must be ",
+        cli::cli_abort(c("x" = paste0(
+          "`y_variable` must be ",
           allowed_y_variables_list,
           " for current_type \"",
           current_type,
-          "\". \nCheck y_variable, current_type or data."
-        )
+          "\"."),
+          "i" = "Check that you have the correct combination of `y_variable`, `current_type` and `data.`"
+        ))
       }
 
       if (y_variable == "P1") {
         y_title <- "eEPSC Amplitude (pA)"
 
         if (pruned == "yes") {
-          stop(
-            "pruned = \"yes\"), but y_variable = \"P1\". ",
-            "\nDid you mean \"mean_P1\"?. "
-          )
+          cli::cli_abort(c("x" = "`pruned` = \"yes\", but `y_variable` = \"P1\". ",
+                           "i" = "Did you want to use pruned data? If so, please set `y_variable` to \"mean_P1\" instead of \"P1\"."))
         }
       }
 
@@ -506,10 +505,8 @@ plot_raw_current_data <-
         y_title <- "eEPSC Amplitude (% Baseline)"
 
         if (pruned == "yes") {
-          stop(
-            "pruned = \"yes\"), but y_variable = \"P1_transformed\". ",
-            "\nDid you mean \"mean_P1\"?. "
-          )
+          cli::cli_abort(c("x" = "`pruned` = \"yes\", but `y_variable` = \"P1_transformed\". ",
+                           "i" = "Did you want to use pruned data? If so, please set `y_variable` to \"mean_P1\" instead of \"P1\"."))
         }
       }
 
@@ -518,11 +515,8 @@ plot_raw_current_data <-
 
 
         if (pruned == "no") {
-          stop(
-            "y_variable = \"mean_P1\", but pruned = \"no\". ",
-            "Are you trying to create a pruned plot? \nIf so, change pruned to \"yes\" ",
-            "and ensure that you have specified the correct dataframe in the data argument"
-          )
+          cli::cli_abort(c("x" = "`y_variable` = \"mean_P1\", but pruned = \"no\".",
+                           "i" = "Are you trying to create a pruned plot? If so, change `pruned` to \"yes\" and ensure that you have specified the correct dataframe in the data argument."))
         }
       }
 
@@ -539,13 +533,14 @@ plot_raw_current_data <-
       allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
 
       if (!y_variable %in% c("amplitude", "frequency")) {
-        stop(
-          "y_variable must be ",
+        cli::cli_abort(c("x" = paste0(
+          "`y_variable` must be ",
           allowed_y_variables_list,
-          " for current_type \"",
+          " for `current_type` \"",
           current_type,
-          "\". \nCheck y_variable, current_type or data."
-        )
+          "\"."),
+          "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type` or `data.`"
+        ))
       }
 
 
@@ -841,66 +836,72 @@ plot_summary_current_data <- function(data,
   if (is.null(current_type) ||
     length(current_type) != 1L ||
     !current_type %in% c("eEPSC", "sEPSC")) {
-    stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+    cli::cli_abort(c("x" = "'current_type' argument must be either 'eEPSC' or 'sEPSC'"))
   }
 
   if (is.null(hormone_added) ||
     length(hormone_added) != 1L ||
     !is.character(hormone_added)) {
-    stop(
-      "\"hormone_added\" must be a character. Use \"HFS\" for high-frequency stimulation or \"Insulin\", \"CCK\", etc. for any hormones"
-    )
+    cli::cli_abort(c("x" = "`hormone_added` must be a character.",
+                     "i" = "For example, you could use \"HFS\" for high-frequency stimulation",
+                     "i" = "If you are adding a hormone, examples include \"Insulin\", \"CCK\", etc.",
+                     "i" = "`hormone_added` will be the label for the annotation line on the plot."
+    ))
   }
 
   if (!save_plot_png %in% c("yes", "no")) {
-    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
 
   if (!included_sexes %in% c("both", "male", "female")) {
-    stop("'included_sexes' argument must be one of: 'both', 'male' or 'female'")
+    cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
   }
 
   if (!signif_stars %in% c("yes", "no")) {
-    stop("'signif_stars' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`signif_stars` argument must be either \"yes\" or \"no\""))
   }
 
   if (!include_representative_trace %in% c("yes", "no")) {
-    stop("'include_representative_trace' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`include_representative_trace` argument must be either \"yes\" or \"no\""))
   }
 
   if (include_representative_trace == "yes") {
     if (is.null(representative_trace_filename) ||
       !is.character(representative_trace_filename)) {
-      stop(
-        "'include_representative_trace' is 'yes' but the filename is not
-           specified or it is not a character value. Please define the filename
+      cli::cli_abort(
+        c(
+          "x" = "`include_representative_trace` is \"yes\" but `representative_trace_filename` is not
+           specified or it is not a character value.",
+          "i" = "Please define the filename
            as a character in
-        'representative_trace_filename'"
+        `representative_trace_filename`"
+        )
       )
     }
   }
 
   if (is.null(y_axis_limit) ||
     !is.numeric(y_axis_limit)) {
-    stop(
-      "\"y_axis_limit\" must be numeric, e.g. 175."
-    )
+    cli::cli_abort(c("x" = "\"y_axis_limit\" must be numeric, e.g. 175."))
   }
 
 
   if (signif_stars == "yes" & is.null(t_test_df)) {
-    stop(
-      "signif_stars == 'yes' but you did not specify a dataframe
-      containing t-test summary data"
+    cli::cli_abort(
+      c(
+        "x" = "`signif_stars` == \"yes\" but `t_test_df` is NULL.",
+        "i" = "This is probably because you did not specify a dataframe
+      containing t-test summary data.",
+        "i" = "Please generate a t-test dataframe using `patchclampplotteR::perform_t_tests_for_summary_plot()` and insert the resulting dataframe into the `t_test_df` argument."
+      )
     )
   }
 
 
   if (is.null(hormone_or_HFS_start_time) ||
     !is.numeric(hormone_or_HFS_start_time)) {
-    stop(
-      "\"hormone_or_HFS_start_time\" must be numeric
-      (e.g. 5 for HFS or a hormone applied at five minutes into the recording)."
+    cli::cli_abort(c("x" = "`hormone_or_HFS_start_time` must be numeric
+      (e.g. 5 for HFS or a hormone applied at five minutes into the recording).")
     )
   }
 
@@ -939,13 +940,15 @@ plot_summary_current_data <- function(data,
     allowed_y_variables_list <- "\"amplitude\""
 
     if (!y_variable %in% c("amplitude")) {
-      stop(
-        "y_variable must be ",
+
+      cli::cli_abort(c("x" = paste0(
+        "`y_variable` must be ",
         allowed_y_variables_list,
-        " for current_type \"",
+        " for `current_type` \"",
         current_type,
-        "\". \nCheck y_variable, current_type or data."
-      )
+        "\"."),
+        "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type` or `data.`"
+      ))
     }
 
     if (y_variable == "amplitude") {
@@ -975,13 +978,15 @@ plot_summary_current_data <- function(data,
       "frequency",
       "raw_frequency"
     )) {
-      stop(
-        "y_variable must be ",
+
+      cli::cli_abort(c("x" = paste0(
+        "`y_variable` must be ",
         allowed_y_variables_list,
-        " for current_type \"",
+        " for `current_type` \"",
         current_type,
-        "\". \nCheck y_variable, current_type or data."
-      )
+        "\"."),
+        "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type` or `data.`"
+      ))
     }
 
 
@@ -1228,16 +1233,11 @@ plot_summary_current_data <- function(data,
           ymax = annotation_y_max
         )
     } else {
-      warning(
+      cli::cli_alert_info(paste0(
         "The file ",
         representative_trace_filename,
-        " does not exist.
-        \nAre you sure that you specified the correct filename?
-        \nDid you forget to add .png to the end of your filename?
-        \nDid you forget to include the subfolder (if required) in the filename? (e.g. \"Data/file.png\" for something in the Data/ folder)
-        \n
-        Plotting without a representative trace."
-      )
+        " cannot be found. Plotting without a representative trace."
+      ))
     }
   }
 
@@ -1309,15 +1309,15 @@ plot_percent_change_comparisons <- function(data,
   if (is.null(current_type) ||
       length(current_type) != 1L ||
       !current_type %in% c("eEPSC", "sEPSC")) {
-    stop("'current_type' argument must be one of: 'eEPSC' or 'sEPSC'")
+    cli::cli_abort(c("x" = "'current_type' argument must be either 'eEPSC' or 'sEPSC'"))
   }
 
   if (!save_plot_png %in% c("yes", "no")) {
-    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
 
   if (!large_axis_text %in% c("yes", "no")) {
-    stop("'large_axis_text' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`large_axis_text` argument must be either \"yes\" or \"no\""))
   }
 
   if (include_all_treatments == "yes") {
@@ -1327,27 +1327,27 @@ plot_percent_change_comparisons <- function(data,
       droplevels()
 
     if (!is.null(list_of_treatments)) {
-      warning(
+      cli::cli_alert_info(
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
   } else {
     if (is.null(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is NULL.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is NULL."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     if (!is.character(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is not a character object.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is not a character object or list of characters."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     treatment_info <- treatment_colour_theme %>%
@@ -1511,11 +1511,11 @@ plot_variance_comparison_data <- function(data,
                                           ggplot_theme = patchclampplotteR_theme()) {
   if (is.null(post_hormone_interval) ||
     !is.character(post_hormone_interval)) {
-    stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
+    cli::cli_abort(c("x" = "`post_hormone_interval` must be a character (e.g. \"t20to25\")"))
   }
 
   if (!test_type %in% c("wilcox.test", "t.test", "none")) {
-    stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
+    cli::cli_abort(c("x" = "`test_type` argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
   }
 
   plot_colour <- treatment_colour_theme %>%
@@ -1529,7 +1529,7 @@ plot_variance_comparison_data <- function(data,
   allowed_y_variables_list <- "\"cv\" or \"VMR\""
 
   if (!variance_measure %in% c("cv", "VMR")) {
-    stop("'variance_measure' must be one of ", allowed_y_variables_list)
+    cli::cli_abort(c("x" = paste0("`variance_measure` must be one of ", allowed_y_variables_list)))
   }
 
   if (variance_measure == "cv") {
@@ -1707,7 +1707,7 @@ plot_cv_data <- function(data,
                          save_plot_png = "no",
                          ggplot_theme = patchclampplotteR_theme()) {
   if (!save_plot_png %in% c("yes", "no")) {
-    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
 
 
@@ -1795,15 +1795,15 @@ plot_PPR_data_one_treatment <- function(data,
                                         save_plot_png = "no",
                                         ggplot_theme = patchclampplotteR_theme()) {
   if (!large_axis_text %in% c("yes", "no")) {
-    stop("'large_axis_text' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`large_axis_text` argument must be either \"yes\" or \"no\""))
   }
 
   if (!save_plot_png %in% c("yes", "no")) {
-    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
 
   if (!test_type %in% c("wilcox.test", "t.test", "none")) {
-    stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
+    cli::cli_abort(c("x" = "`test_type` argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
   }
 
   plot_colour <- treatment_colour_theme %>%
@@ -1960,15 +1960,15 @@ plot_PPR_data_multiple_treatments <- function(data,
                                               save_plot_png = "no",
                                               ggplot_theme = patchclampplotteR_theme()) {
   if (!include_all_treatments %in% c("yes", "no")) {
-    stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`include_all_treatments` must be either \"yes\" or \"no\"."))
   }
 
   if (!save_plot_png %in% c("yes", "no")) {
-    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
 
   if (!test_type %in% c("wilcox.test", "t.test", "none")) {
-    stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
+    cli::cli_abort(c("x" = "'test_type' argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
   }
 
   if (include_all_treatments == "yes") {
@@ -1978,27 +1978,27 @@ plot_PPR_data_multiple_treatments <- function(data,
       droplevels()
 
     if (!is.null(list_of_treatments)) {
-      warning(
+      cli::cli_alert_info(
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
   } else {
     if (is.null(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is NULL.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is NULL."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     if (!is.character(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is not a character object.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is not a character object or list of characters."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     treatment_info <- treatment_colour_theme %>%
@@ -2148,11 +2148,11 @@ plot_AP_comparison <-
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
     if (!save_plot_png %in% c("yes", "no")) {
-      stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+      cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
     }
 
     if (!test_type %in% c("wilcox.test", "t.test", "none")) {
-      stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
+      cli::cli_abort(c("x" = "'test_type' argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
     }
 
     plot_colour <- treatment_colour_theme %>%
@@ -2281,19 +2281,19 @@ plot_AP_frequencies_single_treatment <- function(data,
                                                  theme_options,
                                                  ggplot_theme = patchclampplotteR_theme()) {
   if (!large_axis_text %in% c("yes", "no")) {
-    stop("'large_axis_text' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`large_axis_text` argument must be either \"yes\" or \"no\""))
   }
 
   if (!save_plot_png %in% c("yes", "no")) {
-    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
 
   if (!test_type %in% c("wilcox.test", "t.test", "none")) {
-    stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
+    cli::cli_abort(c("x" = "'test_type' argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
   }
 
   if (!p_adjust_method %in% c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")) {
-    stop("'p_adjust_method' argument must be one of: 'holm', 'hochberg', 'hommel', 'bonferroni', 'BH', 'BY', 'fdr', 'none'")
+    cli::cli_abort(c("x" = "`p_adjust_method` argument must be one of: \"holm\", \"hochberg\", \"hommel\", \"bonferroni\", \"BH\", \"BY\", \"fdr\", or \"none\""))
   }
 
   plot_colour <- treatment_colour_theme %>%
@@ -2500,11 +2500,11 @@ plot_AP_frequencies_multiple_treatments <- function(data,
                                                     save_plot_png = "no",
                                                     ggplot_theme = patchclampplotteR_theme()) {
   if (!include_all_treatments %in% c("yes", "no")) {
-    stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`include_all_treatments` must be either \"yes\" or \"no\"."))
   }
 
   if (!save_plot_png %in% c("yes", "no")) {
-    stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
 
   if (include_all_treatments == "yes") {
@@ -2514,27 +2514,27 @@ plot_AP_frequencies_multiple_treatments <- function(data,
       droplevels()
 
     if (!is.null(list_of_treatments)) {
-      warning(
+      cli::cli_alert_info(
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
   } else {
     if (is.null(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is NULL.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is NULL."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     if (!is.character(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is not a character object.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is not a character object or list of characters."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     treatment_info <- treatment_colour_theme %>%
@@ -2674,22 +2674,22 @@ plot_AP_trace <-
            save_plot_png = "no",
            filename_suffix, ...) {
     if (!save_plot_png %in% c("yes", "no")) {
-      stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+      cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
     }
 
     if (!include_scale_bar %in% c("yes", "no")) {
-      stop("'include_scale_bar' argument must be one of: 'yes' or 'no'")
+      cli::cli_abort(c("x" = "`include_scale_bar` argument must be one of: \"yes\" or \"no\""))
     }
 
     if (!colour_scale_option %in% c("custom", "viridis", "single_colour")) {
-      stop("'colour_scale_option' argument must be one of: 'custom', 'viridis' or 'single_colour'")
+      cli::cli_abort(c("x" = "`colour_scale_option` argument must be one of: \"custom\", \"viridis\" or \"single_colour\""))
     }
 
     if (colour_scale_option == "single_colour") {
       if (is.null(trace_colour) ||
         !is.character(trace_colour)) {
-        stop(
-          "You set `colour_scale_option` to `single_colour` but `trace_colour` is blank or not a character. Please set `trace_colour` to a hex value (e.g. \"#32a852\" or named colour like \"orange\""
+        cli::cli_abort(c("x" = "You set `colour_scale_option` to `single_colour` but `trace_colour` is blank or not a character.",
+                         "i" = "Please set `trace_colour` to a hex value (e.g. \"#32a852\" or named colour like \"orange\")")
         )
       }
 
@@ -2725,8 +2725,7 @@ plot_AP_trace <-
 
       if (colour_scale_option == "custom") {
         if (is.null(custom_scale_colours)) {
-          stop(
-            "You set `colour_scale_option` to 'custom' but did not define a custom scale. Please insert a list into `custom_scale_colours`."
+          cli::cli_abort(c("x" = "You set `colour_scale_option` to \"custom\" but did not define a custom scale. Please insert a list into `custom_scale_colours`.")
           )
         }
         ap_trace <- ap_trace +
@@ -2858,30 +2857,29 @@ plot_spontaneous_current_parameter_comparison <-
            ggplot_theme = patchclampplotteR_theme()) {
     if (is.null(baseline_interval) ||
       !is.character(baseline_interval)) {
-      stop("'baseline_interval' must be a character (e.g. \"t0to5\" or \"t0to3\")")
+      cli::cli_abort(c("x" = "`baseline_interval` must be a character (e.g. \"t0to5\" or \"t0to3\")"))
     }
 
     if (!save_plot_png %in% c("yes", "no")) {
-      stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+      cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
     }
 
     if (is.null(post_hormone_interval) ||
       !is.character(post_hormone_interval)) {
-      stop("'post_hormone_interval' must be a character (e.g. \"t20to25\")")
+      cli::cli_abort(c("x" = "`post_hormone_interval` must be a character (e.g. \"t20to25\")"))
     }
 
     if (!test_type %in% c("wilcox.test", "t.test", "none")) {
-      stop("'test_type' argument must be one of: 'wilcox.test', 't.test', or 'none'")
+      cli::cli_abort(c("x" = "`test_type` argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
     }
 
     allowed_y_variables_list <- "\"raw_amplitude\", or \"raw_frequency\""
 
     if (!y_variable %in% c("raw_amplitude", "raw_frequency")) {
-      stop(
-        "y_variable must be ",
-        allowed_y_variables_list,
-        " because transformed data are all 100 during the baseline."
-      )
+      cli::cli_abort(c("x" = paste0("`y_variable` must be ",
+        allowed_y_variables_list),
+        "i" = "`y_variable` cannot be baseline transformed data because the graph would not show useful data. During the normalization process (`make_normalized_EPSC_data()`), all baseline values are converted to 100. This plot would therefore show points all at 100."
+      ))
     }
 
     plot_colour <- treatment_colour_theme %>%
@@ -3067,11 +3065,11 @@ plot_spontaneous_current_trace <-
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
     if (!include_scale_bar %in% c("yes", "no")) {
-      stop("'include_scale_bar' argument must be one of: 'yes' or 'no'")
+      cli::cli_abort(c("x" = "`include_scale_bar` argument must be one of: \"yes\" or \"no\""))
     }
 
     if (!save_plot_png %in% c("yes", "no")) {
-      stop("'save_plot_png' argument must be one of: 'yes' or 'no'")
+      cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
     }
 
     representative_traces_plot <- data %>%
@@ -3204,15 +3202,15 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
                                            save_output_as_RDS = "no",
                                            ggplot_theme = patchclampplotteR_theme()) {
   if (!save_output_as_RDS %in% c("yes", "no")) {
-    stop("'save_output_as_RDS' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`save_output_as_RDS` argument must be one of: \"yes\" or \"no\""))
   }
 
   if (!include_all_treatments %in% c("yes", "no")) {
-    stop("'include_all_treatments' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`include_all_treatments` must be either \"yes\" or \"no\"."))
   }
 
   if (!include_all_categories %in% c("yes", "no")) {
-    stop("'include_all_categories' argument must be one of: 'yes' or 'no'")
+    cli::cli_abort(c("x" = "`include_all_categories` must be either \"yes\" or \"no\"."))
   }
 
   table_data <-
@@ -3246,27 +3244,29 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
 
   if (include_all_treatments == "yes") {
     if (!is.null(list_of_treatments)) {
-      warning(
+      cli::cli_alert_info(
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
   } else {
     if (is.null(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_treatments` = \"",
         include_all_treatments,
-        "\", but list_of_treatments is NULL.",
-        "\nDid you forget to add a list of treatments?"
-      )
+        "\", but `list_of_treatments` is NULL."),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     if (!is.character(list_of_treatments)) {
-      stop(
-        "include_all_treatments = \"",
-        include_all_treatments,
-        "\", but list_of_treatments is not a character object.",
-        "\nDid you forget to add a list of treatments?"
-      )
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is not a character object or list of characters."
+        ),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
     }
 
     table_data <- table_data %>%
@@ -3276,27 +3276,27 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
 
   if (include_all_categories == "yes") {
     if (!is.null(list_of_categories)) {
-      warning(
+      cli::cli_alert_info(
         "include_all_categories = \"yes\", but you included a list of categories to filter. All categories will be used."
       )
     }
   } else {
     if (is.null(list_of_categories)) {
-      stop(
-        "include_all_categories = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_categories` = \"",
         include_all_categories,
-        "\", but list_of_categories is NULL.",
-        "\nDid you forget to add a list of categories?"
-      )
+        "\", but `list_of_categories` is NULL."),
+        "i" = "Did you forget to add a list of categories?"
+      ))
     }
 
     if (!is.character(list_of_categories)) {
-      stop(
-        "include_all_categories = \"",
+      cli::cli_abort(c("x" = paste0(
+        "`include_all_categories` = \"",
         include_all_categories,
-        "\", but list_of_categories is not a character object.",
-        "\nDid you forget to add a list of categories?"
-      )
+        "\", but `list_of_categories` is not a character object or list of characters."),
+        "i" = "Did you forget to add a list of categories?"
+      ))
     }
 
     table_data <- table_data %>%
