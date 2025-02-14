@@ -118,7 +118,13 @@ incorrect representation of the number of significant digits.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A dataframe with summary data such as the mean current amplitude,
+    <p>A list of two dataframes. For evoked currents (<code>current_type = "eEPSC"</code>) the first dataframe (<code>$percent_change_data</code>) contains the mean current amplitude for each interval, with a final column (<code>percent_change</code>) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.</p>
+<p>Most columns (<code>age</code>, <code>sex</code>, <code>animal</code>, etc.) come directly from the information imported through <code><a href="import_cell_characteristics_df.html">import_cell_characteristics_df()</a></code>. However, there are some new columns of note.</p>
+<ul><li><p><code>t0to5</code> The mean evoked current amplitude (pA) for this cell during the period of 0 to 5 minutes.</p></li>
+<li><p><code>t5to10</code> The mean evoked current amplitude (pA) for this cell during the period of 5 to 10 minutes.</p></li>
+<li><p><code>t10to15</code>, <code>t15to20</code>, <code>tXtY</code> etc... The mean evoked current amplitude (pA) for this cell during the period of <em>X</em> to <em>Y</em> minutes.</p></li>
+<li><p><code>percent_change</code> The percent change in evoked current amplitude in the interval <code>t20to25</code> as a percentage of the mean baseline amplitude (<code>t0to5</code>). For example, if currents began at 100 pA during the baseline period, but were 50 pA by <code>t20to25</code>, the value of <code>percent_change</code> will be <code>50%</code> or <code>0.50</code>. You can also change the value of the intervals used in this calculation through the <code>baseline_interval</code> and <code>ending_interval</code> arguments.</p></li>
+</ul><p>The second dataframe contains summary data such as the mean current amplitude,
 coefficient of variation, standard deviation, standard error, variance,
 variance-to-mean ratio, and inverse coefficient of variation squared for
 each interval.</p>
