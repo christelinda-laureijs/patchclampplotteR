@@ -359,7 +359,7 @@ add_new_cells <- function(new_raw_data_csv,
   if (is.null(data_type) ||
     length(data_type) != 1L ||
     !data_type %in% c("eEPSC", "sEPSC", "AP_parameter", "AP_count")) {
-    cli::cli_abort(c("x" = "'data_type' argument must be one of: 'eEPSC', 'sEPSC', 'AP' or 'AP_count'."))
+    cli::cli_abort(c("x" = "'data_type' argument must be one of: 'eEPSC', 'sEPSC', 'AP_parameter' or 'AP_count'."))
   }
 
   # Required to see if new cells have associated data for synapses, treatment, sex, age, etc.
@@ -534,7 +534,7 @@ add_new_cells <- function(new_raw_data_csv,
     dplyr::rename_with(tolower) %>%
     dplyr::mutate(letter = factor(.data$letter))
 
-  if (data_type %in% c("eEPSC", "sEPSC", "AP_parameter")) {
+  if (data_type %in% c("eEPSC", "sEPSC")) {
     old_raw_data <- old_raw_data %>%
       dplyr::mutate(id = factor(.data$id)) %>%
       dplyr::rename(
@@ -554,7 +554,9 @@ add_new_cells <- function(new_raw_data_csv,
 
   if (data_type == "AP_parameter") {
     old_raw_data <- old_raw_data %>%
+      dplyr::mutate(id = factor(.data$id)) %>%
       dplyr::rename(
+        ID = .data$id,
         first_sweep_with_APs = .data$first_sweep_with_aps,
         threshold = .data$t_x
       )
