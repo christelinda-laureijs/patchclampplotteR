@@ -391,10 +391,7 @@ add_new_cells <- function(new_raw_data_csv,
       ) != 1) {
         cli::cli_abort(c("x" = "Cannot combine files of mixed data types","i" = "Please double-check that you have selected csv files belonging to the same data type."
         ))
-      } else {
-        "Okay, moving forward"
-      }
-    }
+      }}
 
     new_raw_data <- new_raw_data %>%
       dplyr::rename(P1 = .data$p1, P2 = .data$p2) %>%
@@ -416,8 +413,6 @@ add_new_cells <- function(new_raw_data_csv,
       ) != 1) {
         cli::cli_abort(c("x" = "Cannot combine files of mixed data types","i" = "Please double-check that you have selected csv files belonging to the same data type."
         ))
-      } else {
-        "Okay, moving forward"
       }
     }
 
@@ -446,8 +441,6 @@ add_new_cells <- function(new_raw_data_csv,
       ) != 1) {
         cli::cli_abort(c("x" = "Cannot combine files of mixed data types","i" = "Please double-check that you have selected csv files belonging to the same data type."
         ))
-      } else {
-        "Okay, moving forward"
       }
     }
 
@@ -480,8 +473,6 @@ add_new_cells <- function(new_raw_data_csv,
       ) != 1) {
         cli::cli_abort(c("x" = "Cannot combine files of mixed data types","i" = "Please double-check that you have selected csv files belonging to the same data type."
         ))
-      } else {
-        "Okay, moving forward"
       }
     }
 
