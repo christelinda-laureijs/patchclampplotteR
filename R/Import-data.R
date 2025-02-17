@@ -534,7 +534,7 @@ add_new_cells <- function(new_raw_data_csv,
     dplyr::rename_with(tolower) %>%
     dplyr::mutate(letter = factor(.data$letter))
 
-  if (data_type %in% c("eEPSC", "sEPSC")) {
+  if (data_type %in% c("eEPSC", "sEPSC", "AP_parameter")) {
     old_raw_data <- old_raw_data %>%
       dplyr::mutate(id = factor(.data$id)) %>%
       dplyr::rename(
@@ -554,9 +554,7 @@ add_new_cells <- function(new_raw_data_csv,
 
   if (data_type == "AP_parameter") {
     old_raw_data <- old_raw_data %>%
-      dplyr::mutate(id = factor(.data$id)) %>%
       dplyr::rename(
-        ID = .data$id,
         first_sweep_with_APs = .data$first_sweep_with_aps,
         threshold = .data$t_x
       )
