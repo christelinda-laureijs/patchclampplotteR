@@ -546,11 +546,8 @@ add_new_cells <- function(new_raw_data_csv,
   if (data_type == "AP_parameter") {
     old_raw_data <- old_raw_data %>%
       dplyr::rename(
-        first_sweep_with_APs = .data$first_sweep_with_aps,
-        threshold = .data$t_x
+        first_sweep_with_APs = .data$first_sweep_with_aps
       )
-
-    cli::cli_alert_info("Renamed column 't_x' to 'threshold'")
   }
 
   if (data_type == "AP_count") {
