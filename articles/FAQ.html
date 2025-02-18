@@ -261,6 +261,75 @@ filtered to show one sex only, and the resulting <code>.png</code> will
 have “-males-only” or “-females-only” included in the filename.</p>
 </div>
 <div class="section level3">
+<h3 id="how-can-i-plot-many-treatments-at-once-andor-plot-even-faster">How can I plot many treatments at once and/or plot even faster?<a class="anchor" aria-label="anchor" href="#how-can-i-plot-many-treatments-at-once-andor-plot-even-faster"></a>
+</h3>
+<p>Let’s say that you are running a plotting function repeatedly, but
+only changing one argument at once (like <code>treatment</code>). To
+reduce repetitive code, you can use <code>pmap()</code> from the
+<code>purrr</code> package to run a function with a list of
+treatments.</p>
+<p>First, I am adding a new column to
+<code>sample_treatment_names_and_colours</code> which contains the
+filepath to each representative trace .png file.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">evoked_trace_filename</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"figures/Category-2-Control-Trace.png"</span>,</span>
+<span>    <span class="st">"figures/Category-2-HNMPA-Trace.png"</span>,</span>
+<span>    <span class="st">"figures/Category-2-PPP-Trace.png"</span>,</span>
+<span>    <span class="st">"figures/Category-2-PPP-and-HNMPA-Trace.png"</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">list_of_treatments</span> <span class="op">&lt;-</span> <span class="va">sample_treatment_names_and_colours</span></span>
+<span></span>
+<span><span class="va">list_of_treatments</span><span class="op">$</span><span class="va">representative_trace_filepath</span> <span class="op">&lt;-</span> <span class="va">evoked_trace_filename</span></span></code></pre></div>
+<p>Then, I’m using <code><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">purrr::pmap()</a></code> using the
+<code><a href="../reference/sample_treatment_names_and_colours.html">sample_treatment_names_and_colours()</a></code> dataset. I will use
+the <code>treatment</code> column in the <code>treatment</code>
+argument.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pmap</span><span class="op">(</span>.l <span class="op">=</span> <span class="va">list_of_treatments</span>,</span>
+<span>     .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span></span>
+<span>       <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,</span>
+<span>       <span class="fu"><a href="../reference/plot_summary_current_data.html">plot_summary_current_data</a></span><span class="op">(</span></span>
+<span>         data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">all_cells</span>,</span>
+<span>         plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>         plot_treatment <span class="op">=</span> <span class="va">treatment</span>,</span>
+<span>         current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
+<span>         y_variable <span class="op">=</span> <span class="st">"amplitude"</span>,</span>
+<span>         hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
+<span>         hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>         include_representative_trace <span class="op">=</span> <span class="st">"yes"</span>,</span>
+<span>         representative_trace_filename <span class="op">=</span> <span class="va">representative_trace_filepath</span>,</span>
+<span>         y_axis_limit <span class="op">=</span> <span class="fl">175</span>,</span>
+<span>         signif_stars <span class="op">=</span> <span class="st">"yes"</span>,</span>
+<span>         t_test_df <span class="op">=</span> <span class="va">sample_eEPSC_t_test_df</span>,</span>
+<span>         large_axis_text <span class="op">=</span> <span class="st">"no"</span>,</span>
+<span>         shade_intervals <span class="op">=</span> <span class="st">"no"</span>,</span>
+<span>         treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span>
+<span>         theme_options <span class="op">=</span> <span class="va">sample_theme_options</span></span>
+<span>       <span class="op">)</span></span>
+<span>     <span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The file figures/Category-2-Control-Trace.png cannot be found. Plotting without a representative trace.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The file figures/Category-2-HNMPA-Trace.png cannot be found. Plotting without a representative trace.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The file figures/Category-2-PPP-Trace.png cannot be found. Plotting without a representative trace.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The file figures/Category-2-PPP-and-HNMPA-Trace.png cannot be found. Plotting without a representative trace.</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; Warning: Removed 25 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_segment()`).</span></span></code></pre></div>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-2-1.png" width="700" style="display: block; margin: auto;"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span></code></pre>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-2-2.png" width="700" style="display: block; margin: auto;"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[3]]</span></span></code></pre>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-2-3.png" width="700" style="display: block; margin: auto;"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[4]]</span></span>
+<span><span class="co">#&gt; Warning: Removed 23 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_segment()`).</span></span></code></pre>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-2-4.png" width="700" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
 <h3 id="how-do-i-only-show-some-treatments">How do I only show some treatments?<a class="anchor" aria-label="anchor" href="#how-do-i-only-show-some-treatments"></a>
 </h3>
 <p>Functions with multiple treatments (such as
@@ -285,13 +354,13 @@ plotting functions.</p>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"treatment":["Control","HNMPA","PPP","PPP_and_HNMPA"],"display_names":["Control","HNMPA","PPP","PPP\n&\nHNMPA"],"colours":["#6600cc","#e86c00","#0093fb","#411900"],"very_pale_colours":["#d6b8f5","#ffc38f","#8fd0ff","#bf9b84"]},"columns":[{"id":"treatment","name":"treatment","type":"character"},{"id":"display_names","name":"display_names","type":"character"},{"id":"colours","name":"colours","type":"character"},{"id":"very_pale_colours","name":"very_pale_colours","type":"character"}],"dataKey":"fc1dc40dc6b5ea7c56847c9d961e04ea"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>First, check out how many treatment groups you have using
 <code>unique(raw_eEPSC_df$treatment)</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sample_raw_eEPSC_df</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] Control       HNMPA         PPP           PPP_and_HNMPA</span></span>
 <span><span class="co">#&gt; Levels: Control HNMPA PPP PPP_and_HNMPA</span></span></code></pre></div>
 <p>Next, modify this code to set up your own dataframe with your own
 hormone names and colours.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_theme_colours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  treatment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"HNMPA"</span>, <span class="st">"PPP"</span>, <span class="st">"PPP_and_HNMPA"</span><span class="op">)</span>,</span>
 <span>  display_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"HNMPA"</span>, <span class="st">"PPP"</span>, <span class="st">"PPP\n&amp;\nHNMPA"</span><span class="op">)</span>,</span>
@@ -300,7 +369,7 @@ hormone names and colours.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Every time a plot contains the argument
 <code>treatment_colour_theme</code>, refer to your custom dataframe.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_PPR_data_multiple_treatments.html">plot_PPR_data_multiple_treatments</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_PPR_df</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span>
@@ -323,7 +392,7 @@ shapes for male vs. female data points:</p>
 <script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["gray_shading_colour","line_col","rectangle_shading_colour","male_shape","female_shape","mean_point_colour","connecting_line_width","connecting_line_colour","mean_point_size","geom_signif_text_size","baseline_group_colour"],"value":["#dcdcdc","#333333","#f6f6f6","16","17","#000000","0.2","#bfbfbf","0.5","8","#727a85"]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"value","name":"value","type":"character"}],"dataKey":"6638f188a46b17dd76c0952da2ba1f75"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>To use the default values, just use <code>sample_theme_options</code>
 in the <code>theme_options</code> argument of any plotting function in
 <code>patchclampplotteR</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_summary_current_data.html">plot_summary_current_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">all_cells</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -360,7 +429,7 @@ column (<code>option</code>) into the <code>rownames</code>. This is a
 mandatory step to allow the theme_options to be indexed by row name in
 plotting functions.</p>
 <p>Step 4: Run the following code:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">my_custom_theme_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"my_custom_theme_options.csv"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -376,7 +445,7 @@ Step 5.</p>
 <p>I changed <code>line_col</code> to orange, and I also changed
 <code>male_shape</code> and <code>female_shape</code>. See, the graph
 looks different now!</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_summary_current_data.html">plot_summary_current_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">all_cells</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>

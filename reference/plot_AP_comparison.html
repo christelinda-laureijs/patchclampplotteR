@@ -98,9 +98,7 @@ pre-hormone state. Defaults to "Baseline".</p></dd>
 
 
 <dt id="arg-post-hormone-label">post_hormone_label<a class="anchor" aria-label="anchor" href="#arg-post-hormone-label"></a></dt>
-<dd><p>A character value for x-axis label applied to
-the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
-will likely change this to the hormone or protocol name.</p></dd>
+<dd><p>A character value that MUST correspond to one of the values in the <code>State</code> column. In the sample dataset, this is <code>"Insulin"</code>. This is required for the wilcox or t.test comparisons of "Baseline" vs. "Insulin".</p></dd>
 
 
 <dt id="arg-y-variable">y_variable<a class="anchor" aria-label="anchor" href="#arg-y-variable"></a></dt>

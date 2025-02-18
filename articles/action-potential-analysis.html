@@ -162,9 +162,14 @@ you have repositioned Cursor 1 to the
 after-hyperpolarization (in ms), which should be relative to the
 <code>time_of_threshold</code>.</li>
 <li>
-<code>half-width</code> The width of the action potential when the
+<code>half_width</code> The width of the action potential when the
 membrane potential is half of the <code>peak_amplitude</code>.</li>
+<li>
+<code>ap_notes</code> An optional column where you can note any
+unusual or interesting things about the recording, or flag a
+nice-looking recording for use in a paper.</li>
 </ul>
+<a href="data:text/csv;base64,bGV0dGVyLHN0YXRlLHRpbWVfb2ZfdGhyZXNob2xkLHRfeCx0MTEsSUQsZmlyc3Rfc3dlZXBfd2l0aF9BUHMsdHJhY2Vfc3RhcnQscGVha19hbXBsaXR1ZGUsdGltZV90b19wZWFrLGFudGlwZWFrX2FtcGxpdHVkZSx0aW1lX29mX2FudGlwZWFrLGhhbGZfd2lkdGgsYXBfbm90ZXMK" download="sample-blank-ap-parameter-data.csv">Download sample-blank-ap-parameter-data.csv</a>
 <p><img src="figures%2FAP-properties.png" alt="An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -261,6 +266,12 @@ does not delete data between files. If you are doing several analyses in
 one session, ensure that you are looking at the correct columns
 corresponding to the active recording.</p>
 </blockquote>
+<blockquote>
+<p><strong>Note</strong> If you recently opened a results file in
+Clampfit, it will automatically overwrite the contents of Sheet 14, and
+you will not see the transferred traces. If you don’t see any results,
+you may need to close and re-open Clampfit.</p>
+</blockquote>
 <ol start="9" style="list-style-type: decimal">
 <li>Scroll down the <code>Trace #11</code> column (the derivative
 column) until you see a series of positive values with increasing
@@ -308,9 +319,8 @@ symbol on top of it) or press <code>Alt+s</code>.</p></li>
 <li><p>Set the following settings:</p></li>
 </ol>
 <ul>
-<li>Trace Selection: Choose <code>Vm_primary ()</code> and
-<code>t_x</code> (in this case, <code>t6</code>) ONLY. Do NOT include
-<code>t11</code>.</li>
+<li>Trace Selection: Choose <code>Vm_primary ()</code>. <code>t_x</code>
+and <code>t11</code> will automatically be selected.</li>
 <li>Peak Polarity: <code>Vm_primary</code>,
 <code>Positive-going</code>
 </li>
@@ -332,18 +342,20 @@ you from accidentally copying old data</li>
 see the Results page.</p>
 <p><img src="figures%2FAP-statistics-box.png" alt="A screenshot of the Statistics box of Clampfit showing the correct options to select." width="75%" style="display: block; margin: auto;"></p>
 <ol start="14" style="list-style-type: decimal">
-<li><p>Select all data except for the <code>File Path</code> column
-(unless you think you will need it later) and paste it into the .csv
-file. You’ll notice that the .csv column names are different than the
-column names in the <code>Results</code> sheet. I changed these column
-names to make them easier to use in R code.</p></li>
+<li><p>Go to the row corresponding to Trace <code>t_x</code>. Select all
+data except for the <code>File Path</code> column (unless you think you
+will need it later) and paste it into the .csv file. You’ll notice that
+the .csv column names are different than the column names in the
+<code>Results</code> sheet. I changed these column names to make them
+easier to use in R code.</p></li>
 <li><p>Your .csv file should now look like this.</p></li>
 </ol>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"letter":["BN"],"state":["Baseline"],"time_of_threshold":[373.5],"t_x":[-32.1],"t11":[10.38],"ID":["23711003.abf"],"first_sweep_with_APs":[6],"trace_start":[5021],"peak_amplitude":[72.54],"time_to_peak":[0.7],"antipeak_amplitude":[-17.73],"time_of_antipeak":[4.4],"half_width":[1.09]},"columns":[{"id":"letter","name":"letter","type":"character"},{"id":"state","name":"state","type":"character"},{"id":"time_of_threshold","name":"time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t11","name":"t11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"first_sweep_with_APs","name":"first_sweep_with_APs","type":"numeric"},{"id":"trace_start","name":"trace_start","type":"numeric"},{"id":"peak_amplitude","name":"peak_amplitude","type":"numeric"},{"id":"time_to_peak","name":"time_to_peak","type":"numeric"},{"id":"antipeak_amplitude","name":"antipeak_amplitude","type":"numeric"},{"id":"time_of_antipeak","name":"time_of_antipeak","type":"numeric"},{"id":"half_width","name":"half_width","type":"numeric"}],"dataKey":"12e9d60e1759c119e1cbdd973e7944a8"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><ol start="16" style="list-style-type: decimal">
 <li><p>While you still have this file open, you may want to count action
 potentials (see the section on <a href="#count">counting action
-potentials</a> below).</p></li>
+potentials</a> below). Or, you could wait and do these separately, which
+you might find more efficient.</p></li>
 <li><p>A completed dataset should look something like the spreadsheet
 below.</p></li>
 </ol>
@@ -422,6 +434,18 @@ the <code>no_of_APs</code> column.</p></li>
 <p>Yes, this step may seem super simple, but that’s because it is - look
 at each sweep and count the number of action potentials present!</p>
 </blockquote>
+<p>20b. <em>Tip!</em> If there are no action potentials in a sweep,
+leave the cell in your Excel sheet blank. After you have finished
+collecting data from many cells, you can automatically fill blank cells
+with <code>0</code>.</p>
+<p>20c. Select the <code>no_of_APs</code> column. Then, click on
+<code>Home</code> -&gt; <code>Editing</code> -&gt;
+<code>Find and Select</code> -&gt; <code>Go to Special</code> and then
+choose <code>Blanks</code>.</p>
+<p>20d. All of the blank cells should be selected. Type the number
+<code>0</code>, and then press <code>Ctrl + Enter</code> or
+<code>Cmd + Enter</code> on a Mac. All blank values should be filled
+with 0s now.</p>
 <ol start="21" style="list-style-type: decimal">
 <li>Here is an example of what one recording could look like:</li>
 </ol>
