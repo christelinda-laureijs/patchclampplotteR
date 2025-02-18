@@ -287,7 +287,7 @@ filepath to each representative trace .png file.</p>
 the <code>treatment</code> column in the <code>treatment</code>
 argument.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">pmap</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu">pmap</span><span class="op">(</span></span>
 <span>  .l <span class="op">=</span> <span class="va">list_of_treatments</span>,</span>
 <span>  .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,</span>
@@ -311,9 +311,7 @@ argument.</p>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; Warning: Removed 25 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_segment()`).</span></span></code></pre></div>
+<span><span class="co">#&gt; [[1]]</span></span></code></pre></div>
 <p><img src="FAQ_files/figure-html/unnamed-chunk-2-1.png" width="700" style="display: block; margin: auto;"></p>
 <pre><code><span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span></code></pre>
@@ -322,9 +320,7 @@ argument.</p>
 <span><span class="co">#&gt; [[3]]</span></span></code></pre>
 <p><img src="FAQ_files/figure-html/unnamed-chunk-2-3.png" width="700" style="display: block; margin: auto;"></p>
 <pre><code><span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[4]]</span></span>
-<span><span class="co">#&gt; Warning: Removed 23 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_segment()`).</span></span></code></pre>
+<span><span class="co">#&gt; [[4]]</span></span></code></pre>
 <p><img src="FAQ_files/figure-html/unnamed-chunk-2-4.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
