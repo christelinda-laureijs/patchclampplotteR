@@ -2536,7 +2536,9 @@ plot_AP_frequencies_multiple_treatments <- function(data,
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
+  }
 
+  if (include_all_treatments == "no") {
     treatment_info <- treatment_colour_theme %>%
       dplyr::filter(.data$treatment %in% list_of_treatments)
     plot_data <- data %>%
@@ -2544,12 +2546,20 @@ plot_AP_frequencies_multiple_treatments <- function(data,
       droplevels()
   }
 
-  AP_frequency_plot <- data %>%
+
+  AP_frequency_plot <- plot_data %>%
     dplyr::filter(.data$category == plot_category) %>%
     dplyr::group_by(.data$treatment, .data$state, .data$current_injection) %>%
     dplyr::summarize(
       mean_AP_frequency = mean(.data$AP_frequency),
       SE = stats::sd(.data$AP_frequency) / sqrt(dplyr::n()),
+    ) %>%
+    dplyr::mutate(
+      treatment = stringr::str_replace_all(
+        .data$treatment,
+        stats::setNames(treatment_info$display_names, treatment_info$treatment)
+      ),
+      treatment = factor(.data$treatment, levels = treatment_info$display_names)
     ) %>%
     ggplot2::ggplot(
       ggplot2::aes(

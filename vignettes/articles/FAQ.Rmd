@@ -231,13 +231,12 @@ pmap(.l = list_of_treatments,
 
 Functions with multiple treatments (such as `plot_PPR_data_multiple_treatments()` and `plot_AP_frequencies_multiple_treatments()`) have an argument called `include_all_treatments`. Change this to "no" and then define a list of treatments in the `list_of_treatments` argument.
 
-```{r plot-ap-frequencies-limited-treatments, include=F, eval=F, fig.alt="A plot of action potential frequency over current injection in pA, showing only two treatments: Control and PPP. This figure demonstrates that you can choose how many treatments to include in a plot."}
+```{r plot-ap-frequencies-limited-treatments, fig.alt="A plot of action potential frequency over current injection in pA, showing only two treatments: Control and PPP. This figure demonstrates that you can choose how many treatments to include in a plot."}
 
-## CL Fix this 
 plot_AP_frequencies_multiple_treatments(
   data = sample_AP_count_data,
   include_all_treatments = "no",
-  list_of_treatments = c("PPP", "Control"),
+  list_of_treatments = c("PPP", "HNMPA"),
   plot_category = 2,
   treatment_colour_theme = sample_treatment_names_and_colours
 )
