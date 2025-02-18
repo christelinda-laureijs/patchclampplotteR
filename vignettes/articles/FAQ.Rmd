@@ -13,6 +13,7 @@ library(ggplot2)
 library(patchclampplotteR)
 library(here)
 library(reactable)
+library(purrr)
 ```
 
 # Plotting FAQ
@@ -169,11 +170,65 @@ plot_AP_comparison(
 
 You can use the `included_sexes` argument in `plot_summary_current_data()`. It defaults to "both", but if you set it to "male" or "female", the data will automatically be filtered to show one sex only, and the resulting `.png` will have "-males-only" or "-females-only" included in the filename.
 
+## How can I plot many treatments at once and/or plot even faster?
+
+Let's say that you are running a plotting function repeatedly, but only changing one argument at once (like `treatment`). To reduce repetitive code, you can use `pmap()` from the `purrr` package to run a function with a list of treatments.
+
+First, I am adding a new column to `sample_treatment_names_and_colours` which contains the filepath to each representative trace .png file.
+
+```{r echo=T}
+evoked_trace_filename = c(
+    "figures/Category-2-Control-Trace.png",
+    "figures/Category-2-HNMPA-Trace.png",
+    "figures/Category-2-PPP-Trace.png",
+    "figures/Category-2-PPP-and-HNMPA-Trace.png"
+  )
+
+list_of_treatments <- sample_treatment_names_and_colours
+
+list_of_treatments$representative_trace_filepath <- evoked_trace_filename
+```
+
+
+Then, I'm using `purrr::pmap()` using the `sample_treatment_names_and_colours()` dataset. I will use the `treatment` column in the `treatment` argument.
+
+```{r eval=T, include=T}
+pmap(.l = list_of_treatments,
+     .f = ~ with(
+       list(...),
+       plot_summary_current_data(
+         data = sample_pruned_eEPSC_df$all_cells,
+         plot_category = 2,
+         plot_treatment = treatment,
+         current_type = "eEPSC",
+         y_variable = "amplitude",
+         hormone_added = "Insulin",
+         hormone_or_HFS_start_time = 5,
+         include_representative_trace = "yes",
+         representative_trace_filename = representative_trace_filepath,
+         y_axis_limit = 175,
+         signif_stars = "yes",
+         t_test_df = sample_eEPSC_t_test_df,
+         large_axis_text = "no",
+         shade_intervals = "no",
+         treatment_colour_theme = sample_treatment_names_and_colours,
+         theme_options = sample_theme_options
+       )
+     ))
+```
+
+
+
+
+
+
 ## How do I only show some treatments?
 
 Functions with multiple treatments (such as `plot_PPR_data_multiple_treatments()` and `plot_AP_frequencies_multiple_treatments()`) have an argument called `include_all_treatments`. Change this to "no" and then define a list of treatments in the `list_of_treatments` argument.
 
 ```{r plot-ap-frequencies-limited-treatments, include=F, eval=F, fig.alt="A plot of action potential frequency over current injection in pA, showing only two treatments: Control and PPP. This figure demonstrates that you can choose how many treatments to include in a plot."}
+
+## CL Fix this 
 plot_AP_frequencies_multiple_treatments(
   data = sample_AP_count_data,
   include_all_treatments = "no",

@@ -44,7 +44,7 @@ spontaneous currents (\code{current_type = "sEPSC"}), the available y_variables
 are "amplitude" or "frequency".}
 
 \item{pruned}{A character value ("yes" or "no") specifying if the data are
-pruned. This is only used for evoked current data where \verb{y_variable = "mean_P1}. The plot will then present the data as means with error bars.}
+pruned. The plot will then present the data as means with error bars.}
 
 \item{hormone_added}{A character value that will be used as the label over
 the line annotating the period when a hormone was applied. Examples include

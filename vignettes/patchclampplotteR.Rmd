@@ -84,7 +84,7 @@ the animal's age and sex, the cell ID number, and other details. Please see the
 `import_cell_characteristics_df()` for full explanations of the required columns and
 what you should include. See below for a link to download an empty `.csv` file with the headers required for this dataset:
 
-```{r download-workshop-three-handout-pdf, echo=F}
+```{r download-sample-blank-cell-characteristics, echo=F}
 xfun::embed_file('sample_blank_cell_characteristics.csv')
 ```
 

@@ -75,8 +75,13 @@ that all (except for `ID` are in lowercase.
 -   `antipeak_amplitude` The afterhyperpolarization amplitude (in mV)
 -   `time_of_antipeak` The time of the after-hyperpolarization (in ms),
     which should be relative to the `time_of_threshold`.
--   `half-width` The width of the action potential when the membrane
+-   `half_width` The width of the action potential when the membrane
     potential is half of the `peak_amplitude`.
+-   `ap_notes` An optional column where you can note any unusual or interesting things about the recording, or flag a nice-looking recording for use in a paper.
+
+```{r download-sample-blank-ap-sheet, echo=F}
+xfun::embed_file('sample-blank-ap-parameter-data.csv')
+```
 
 ```{r ap-properties-image, fig.alt = "An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire."}
 knitr::include_graphics("figures/AP-properties.png")
@@ -162,6 +167,8 @@ knitr::include_graphics("figures/AP-expression-box.png")
 > session, ensure that you are looking at the correct columns
 > corresponding to the active recording.
 
+> **Note** If you recently opened a results file in Clampfit, it will automatically overwrite the contents of Sheet 14, and you will not see the transferred traces. If you don't see any results, you may need to close and re-open Clampfit.
+
 9.  Scroll down the `Trace #11` column (the derivative column) until you
     see a series of positive values with increasing magnitude (e.g. \>
     100 or more). This is where the derivative is increasing. Select the
@@ -206,8 +213,7 @@ knitr::include_graphics("figures/AP-cursors-new.png")
 
 13. Set the following settings:
 
--   Trace Selection: Choose `Vm_primary ()` and `t_x` (in this case,
-    `t6`) ONLY. Do NOT include `t11`.
+-   Trace Selection: Choose `Vm_primary ()`. `t_x` and `t11` will automatically be selected.
 -   Peak Polarity: `Vm_primary`, `Positive-going`
 -   Baseline Region: Fixed at
     `[paste in the threshold value (column t_x in your sheet) here]`
@@ -224,7 +230,7 @@ Click OK and then `Window` -\> `Results1` to see the Results page.
 knitr::include_graphics("figures/AP-statistics-box.png")
 ```
 
-14. Select all data except for the `File Path` column (unless you think
+14. Go to the row corresponding to Trace `t_x`. Select all data except for the `File Path` column (unless you think
     you will need it later) and paste it into the .csv file. You'll
     notice that the .csv column names are different than the column
     names in the `Results` sheet. I changed these column names to make
@@ -254,7 +260,7 @@ reactable(sample_ap_data_2)
 
 16. While you still have this file open, you may want to count action
     potentials (see the section on [counting action potentials](#count)
-    below).
+    below). Or, you could wait and do these separately, which you might find more efficient.
 
 17. A completed dataset should look something like the spreadsheet
     below.
@@ -344,6 +350,12 @@ column.
 
 > Yes, this step may seem super simple, but that's because it is - look
 > at each sweep and count the number of action potentials present!
+
+20b. *Tip!* If there are no action potentials in a sweep, leave the cell in your Excel sheet blank. After you have finished collecting data from many cells, you can automatically fill blank cells with `0`.
+
+20c. Select the `no_of_APs` column. Then, click on `Home` -> `Editing` -> `Find and Select` -> `Go to Special` and then choose `Blanks`.
+
+20d. All of the blank cells should be selected. Type the number `0`, and then press `Ctrl + Enter` or `Cmd + Enter` on a Mac. All blank values should be filled with 0s now.
 
 21. Here is an example of what one recording could look like:
 

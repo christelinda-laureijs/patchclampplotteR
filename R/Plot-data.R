@@ -340,8 +340,7 @@ plot_baseline_data <- function(data,
 #'   spontaneous currents (`current_type = "sEPSC"`), the available y_variables
 #'   are "amplitude" or "frequency".
 #' @param pruned A character value ("yes" or "no") specifying if the data are
-#'   pruned. This is only used for evoked current data where `y_variable =
-#'   "mean_P1`. The plot will then present the data as means with error bars.
+#'   pruned. The plot will then present the data as means with error bars.
 #' @param hormone_added A character value that will be used as the label over
 #'   the line annotating the period when a hormone was applied. Examples include
 #'   "500 nM Insulin", "CCK + Leptin", and "Insulin". If you applied a
@@ -2107,6 +2106,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' @inheritParams plot_AP_frequencies_single_treatment
 #'
 #' @param data The action potential data generated from `add_new_cells()` with `data_type == "AP"`.
+#' @param post_hormone_label A character value that MUST correspond to one of the values in the `State` column. In the sample dataset, this is `"Insulin"`. This is required for the wilcox or t.test comparisons of "Baseline" vs. "Insulin".
 #' @param y_variable A character value naming the variable to be plotted on the y-axis. Must be a column present in `data`. Examples include `peak_amplitude`, `time_to_peak`, `antipeak_amplitude` and `half_width`.
 #' @param y_axis_title A character value used to define a "pretty" version of `y_variable`. This will become the y-axis label on the ggplot. Examples include "Peak Amplitude (pA)" or "Time to Peak (ms)".
 #' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to 0.5, which is a good thickness for most applications.

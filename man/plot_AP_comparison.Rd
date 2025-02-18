@@ -37,9 +37,7 @@ applied continuously after a 5-minute baseline period.}
 \item{baseline_label}{A character value for the x-axis label applied to the
 pre-hormone state. Defaults to "Baseline".}
 
-\item{post_hormone_label}{A character value for x-axis label applied to
-the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
-will likely change this to the hormone or protocol name.}
+\item{post_hormone_label}{A character value that MUST correspond to one of the values in the \code{State} column. In the sample dataset, this is \code{"Insulin"}. This is required for the wilcox or t.test comparisons of "Baseline" vs. "Insulin".}
 
 \item{y_variable}{A character value naming the variable to be plotted on the y-axis. Must be a column present in \code{data}. Examples include \code{peak_amplitude}, \code{time_to_peak}, \code{antipeak_amplitude} and \code{half_width}.}
 
