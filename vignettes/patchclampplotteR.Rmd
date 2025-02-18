@@ -34,7 +34,7 @@ recommend adding subfolders with names like `Data`, `Figures`, and `Thesis`.
 This will help with organization and make it easier to expand to future
 projects, like writing your thesis in R.
 
-```{r folder-structure, echo=F, out.width="25%", out.extra = "", fig.alt = "A screenshot of the file structure of a typical project. There are folders for data, figures, scripts, and the thesis.", fig.cap = "A screenshot of the file structure of a typical project. There are folders for data, figures, scripts and the thesis. Files with a '.' in the name are automatically generated when you set up your project. If you aren't using git to track your files, don't worry about the filenames that start with 'git'"}
+```{r folder-structure, echo=F, out.width="25%", out.extra = "", fig.alt = "A screenshot of the file structure of a typical project. There are folders for data, figures, scripts, and the thesis.", fig.cap = "A screenshot of the file structure of a typical project. There are folders for data, figures, scripts and the thesis. Files with a '.' in the name, like .gitignore or .Rhistory, are automatically generated when you set up your project. If you aren't using git to track your files, don't worry about the filenames that start with 'git'"}
 knitr::include_graphics("Directory.png")
 ```
 
@@ -142,15 +142,16 @@ project goes on, you will eventually be appending new data onto your existing
 datasheet, but if you are starting completely fresh, use a blank `.csv` file
 containing just one value in cell `A1` called `letter`. This column title is all that is needed to allow R to auto-fill in the rest of the new data.
 
-> **WARNING!!** If you are starting a brand new project, the `.csv` in the `old_raw_data_csv` argument MUST contain only the `letter` column name. This would typically go in cell A1 if you are using Excel. If you try to use a completely empty `.csv` sheet, R will not recognize it as a valid `.csv`. 
+> **WARNING!!** If you are starting from an empty `.csv` file, the `.csv` in the `old_raw_data_csv` argument MUST contain at least the `letter` column name in cell A1. If you try to use a completely empty `.csv` sheet, R will not recognize it as a valid `.csv` because there is "nothing" for it to read. 
 
 ```{r blank-sheet-example}
 blank_csv <- read.csv(import_ext_data("empty_old_raw_data_sheet.csv"))
 ```
 
-```{r reactable-blank-sheet, echo=F}
-reactable(blank_csv)
+```{r blank-sheet-screenshot, echo=F, out.width="25%", out.extra = "", fig.alt = "A screenshot of what your starting csv file should look like the first time you begin a dataset."}
+knitr::include_graphics("starting-csv-sheet-screenshot.png")
 ```
+
 
 Use the `add_new_cells()` function, and carefully read the warning messages.
 
