@@ -331,7 +331,7 @@ NULL
 #'
 #'
 #' ## `$summary_data`
-#'\describe{
+#' \describe{
 #'  \item{`category`}{A factor representing the experiment type. Used to
 #'  assign top-level groups for further analyses, with `treatment` as subgroups. For example, "1" may refer to an experiment where you applied high-frequency stimulation (HFS) to a cell, while "2" is an experiment where you added a hormone like leptin. "3" may be an experiment where you applied HFS in the continuous presence of leptin.}
 #'  \item{`letter`}{A factor that is a unique identifier for a single

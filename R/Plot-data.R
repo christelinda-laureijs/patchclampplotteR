@@ -161,19 +161,23 @@ plot_baseline_data <- function(data,
     }
   } else {
     if (is.null(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is NULL."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is NULL."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
 
     if (!is.character(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is not a character object or list of characters."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is not a character object or list of characters."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
@@ -192,12 +196,14 @@ plot_baseline_data <- function(data,
 
     if (!y_variable %in% c("raw_amplitude", "raw_frequency")) {
       cli::cli_abort(c(
-        "x" = paste0("`y_variable` must be ",
-        allowed_y_variables_list,
-        " for current_type \"",
-        current_type,
-        "\" \nbecause transformed data are all 100 during the baseline."
-      )))
+        "x" = paste0(
+          "`y_variable` must be ",
+          allowed_y_variables_list,
+          " for current_type \"",
+          current_type,
+          "\" \nbecause transformed data are all 100 during the baseline."
+        )
+      ))
     }
 
     if (y_variable == "raw_amplitude") {
@@ -216,12 +222,14 @@ plot_baseline_data <- function(data,
 
     if (!y_variable %in% c("raw_amplitude")) {
       cli::cli_abort(c(
-        "x" = paste0("`y_variable` must be ",
-                     allowed_y_variables_list,
-                     " for current_type \"",
-                     current_type,
-                     "\" \nbecause transformed data are all 100 during the baseline."
-        )))
+        "x" = paste0(
+          "`y_variable` must be ",
+          allowed_y_variables_list,
+          " for current_type \"",
+          current_type,
+          "\" \nbecause transformed data are all 100 during the baseline."
+        )
+      ))
     }
 
     filepath <- "Figures/Evoked-currents/Output-summary-plots"
@@ -434,10 +442,11 @@ plot_raw_current_data <-
     if (is.null(hormone_added) ||
       length(hormone_added) != 1L ||
       !is.character(hormone_added)) {
-      cli::cli_abort(c("x" = "`hormone_added` must be a character.",
-                       "i" = "For example, you could use \"HFS\" for high-frequency stimulation",
-                       "i" = "If you are adding a hormone, examples include \"Insulin\", \"CCK\", etc.",
-                       "i" = "`hormone_added` will be the label for the annotation line on the plot."
+      cli::cli_abort(c(
+        "x" = "`hormone_added` must be a character.",
+        "i" = "For example, you could use \"HFS\" for high-frequency stimulation",
+        "i" = "If you are adding a hormone, examples include \"Insulin\", \"CCK\", etc.",
+        "i" = "`hormone_added` will be the label for the annotation line on the plot."
       ))
     }
 
@@ -449,8 +458,7 @@ plot_raw_current_data <-
     if (is.null(hormone_or_HFS_start_time) ||
       !is.numeric(hormone_or_HFS_start_time)) {
       cli::cli_abort(c("x" = "`hormone_or_HFS_start_time` must be numeric
-      (e.g. 5 for HFS or a hormone applied at five minutes into the recording).")
-      )
+      (e.g. 5 for HFS or a hormone applied at five minutes into the recording)."))
     }
 
     if (!is.null(hormone_end_time) &
@@ -481,12 +489,14 @@ plot_raw_current_data <-
       allowed_y_variables_list <- "\"P1\", \"P1_transformed\", \"mean_P1\", or \"PPR\""
 
       if (!y_variable %in% c("P1", "P1_transformed", "mean_P1", "PPR")) {
-        cli::cli_abort(c("x" = paste0(
-          "`y_variable` must be ",
-          allowed_y_variables_list,
-          " for current_type \"",
-          current_type,
-          "\"."),
+        cli::cli_abort(c(
+          "x" = paste0(
+            "`y_variable` must be ",
+            allowed_y_variables_list,
+            " for current_type \"",
+            current_type,
+            "\"."
+          ),
           "i" = "Check that you have the correct combination of `y_variable`, `current_type` and `data.`"
         ))
       }
@@ -495,8 +505,10 @@ plot_raw_current_data <-
         y_title <- "eEPSC Amplitude (pA)"
 
         if (pruned == "yes") {
-          cli::cli_abort(c("x" = "`pruned` = \"yes\", but `y_variable` = \"P1\". ",
-                           "i" = "Did you want to use pruned data? If so, please set `y_variable` to \"mean_P1\" instead of \"P1\"."))
+          cli::cli_abort(c(
+            "x" = "`pruned` = \"yes\", but `y_variable` = \"P1\". ",
+            "i" = "Did you want to use pruned data? If so, please set `y_variable` to \"mean_P1\" instead of \"P1\"."
+          ))
         }
       }
 
@@ -504,8 +516,10 @@ plot_raw_current_data <-
         y_title <- "eEPSC Amplitude (% Baseline)"
 
         if (pruned == "yes") {
-          cli::cli_abort(c("x" = "`pruned` = \"yes\", but `y_variable` = \"P1_transformed\". ",
-                           "i" = "Did you want to use pruned data? If so, please set `y_variable` to \"mean_P1\" instead of \"P1\"."))
+          cli::cli_abort(c(
+            "x" = "`pruned` = \"yes\", but `y_variable` = \"P1_transformed\". ",
+            "i" = "Did you want to use pruned data? If so, please set `y_variable` to \"mean_P1\" instead of \"P1\"."
+          ))
         }
       }
 
@@ -514,8 +528,10 @@ plot_raw_current_data <-
 
 
         if (pruned == "no") {
-          cli::cli_abort(c("x" = "`y_variable` = \"mean_P1\", but pruned = \"no\".",
-                           "i" = "Are you trying to create a pruned plot? If so, change `pruned` to \"yes\" and ensure that you have specified the correct dataframe in the data argument."))
+          cli::cli_abort(c(
+            "x" = "`y_variable` = \"mean_P1\", but pruned = \"no\".",
+            "i" = "Are you trying to create a pruned plot? If so, change `pruned` to \"yes\" and ensure that you have specified the correct dataframe in the data argument."
+          ))
         }
       }
 
@@ -532,12 +548,14 @@ plot_raw_current_data <-
       allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
 
       if (!y_variable %in% c("amplitude", "frequency")) {
-        cli::cli_abort(c("x" = paste0(
-          "`y_variable` must be ",
-          allowed_y_variables_list,
-          " for `current_type` \"",
-          current_type,
-          "\"."),
+        cli::cli_abort(c(
+          "x" = paste0(
+            "`y_variable` must be ",
+            allowed_y_variables_list,
+            " for `current_type` \"",
+            current_type,
+            "\"."
+          ),
           "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type` or `data.`"
         ))
       }
@@ -841,10 +859,11 @@ plot_summary_current_data <- function(data,
   if (is.null(hormone_added) ||
     length(hormone_added) != 1L ||
     !is.character(hormone_added)) {
-    cli::cli_abort(c("x" = "`hormone_added` must be a character.",
-                     "i" = "For example, you could use \"HFS\" for high-frequency stimulation",
-                     "i" = "If you are adding a hormone, examples include \"Insulin\", \"CCK\", etc.",
-                     "i" = "`hormone_added` will be the label for the annotation line on the plot."
+    cli::cli_abort(c(
+      "x" = "`hormone_added` must be a character.",
+      "i" = "For example, you could use \"HFS\" for high-frequency stimulation",
+      "i" = "If you are adding a hormone, examples include \"Insulin\", \"CCK\", etc.",
+      "i" = "`hormone_added` will be the label for the annotation line on the plot."
     ))
   }
 
@@ -900,8 +919,7 @@ plot_summary_current_data <- function(data,
   if (is.null(hormone_or_HFS_start_time) ||
     !is.numeric(hormone_or_HFS_start_time)) {
     cli::cli_abort(c("x" = "`hormone_or_HFS_start_time` must be numeric
-      (e.g. 5 for HFS or a hormone applied at five minutes into the recording).")
-    )
+      (e.g. 5 for HFS or a hormone applied at five minutes into the recording)."))
   }
 
   df <-
@@ -939,13 +957,14 @@ plot_summary_current_data <- function(data,
     allowed_y_variables_list <- "\"amplitude\""
 
     if (!y_variable %in% c("amplitude")) {
-
-      cli::cli_abort(c("x" = paste0(
-        "`y_variable` must be ",
-        allowed_y_variables_list,
-        " for `current_type` \"",
-        current_type,
-        "\"."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`y_variable` must be ",
+          allowed_y_variables_list,
+          " for `current_type` \"",
+          current_type,
+          "\"."
+        ),
         "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type` or `data.`"
       ))
     }
@@ -977,13 +996,14 @@ plot_summary_current_data <- function(data,
       "frequency",
       "raw_frequency"
     )) {
-
-      cli::cli_abort(c("x" = paste0(
-        "`y_variable` must be ",
-        allowed_y_variables_list,
-        " for `current_type` \"",
-        current_type,
-        "\"."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`y_variable` must be ",
+          allowed_y_variables_list,
+          " for `current_type` \"",
+          current_type,
+          "\"."
+        ),
         "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type` or `data.`"
       ))
     }
@@ -1288,26 +1308,28 @@ plot_summary_current_data <- function(data,
 #'
 #' @examples
 #'
-#' plot_percent_change_comparisons(data = sample_summary_eEPSC_df$percent_change_data,
-#' plot_category = 2,
-#' treatment_colour_theme = sample_treatment_names_and_colours,
-#' theme_options = sample_theme_options)
+#' plot_percent_change_comparisons(
+#'   data = sample_summary_eEPSC_df$percent_change_data,
+#'   plot_category = 2,
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   theme_options = sample_theme_options
+#' )
 #'
 plot_percent_change_comparisons <- function(data,
-                               current_type = "eEPSC",
-                               plot_category,
-                               include_all_treatments = "yes",
-                               list_of_treatments = NULL,
-                               filename_suffix = "",
-                               large_axis_text = "no",
-                               plot_width = 8,
-                               treatment_colour_theme,
-                               theme_options,
-                               save_plot_png = "no",
-                               ggplot_theme = patchclampplotteR_theme()) {
+                                            current_type = "eEPSC",
+                                            plot_category,
+                                            include_all_treatments = "yes",
+                                            list_of_treatments = NULL,
+                                            filename_suffix = "",
+                                            large_axis_text = "no",
+                                            plot_width = 8,
+                                            treatment_colour_theme,
+                                            theme_options,
+                                            save_plot_png = "no",
+                                            ggplot_theme = patchclampplotteR_theme()) {
   if (is.null(current_type) ||
-      length(current_type) != 1L ||
-      !current_type %in% c("eEPSC", "sEPSC")) {
+    length(current_type) != 1L ||
+    !current_type %in% c("eEPSC", "sEPSC")) {
     cli::cli_abort(c("x" = "'current_type' argument must be either 'eEPSC' or 'sEPSC'"))
   }
 
@@ -1332,19 +1354,23 @@ plot_percent_change_comparisons <- function(data,
     }
   } else {
     if (is.null(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is NULL."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is NULL."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
 
     if (!is.character(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is not a character object or list of characters."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is not a character object or list of characters."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
@@ -1358,7 +1384,7 @@ plot_percent_change_comparisons <- function(data,
 
   if (current_type == "eEPSC") {
     filepath <- "Figures/Evoked-currents/Output-summary-plots"
-      y_title <- "Change in eEPSC Amplitude\n(% Baseline)"
+    y_title <- "Change in eEPSC Amplitude\n(% Baseline)"
   }
 
   percent_change_comparison_plot <- plot_data %>%
@@ -1983,19 +2009,23 @@ plot_PPR_data_multiple_treatments <- function(data,
     }
   } else {
     if (is.null(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is NULL."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is NULL."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
 
     if (!is.character(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is not a character object or list of characters."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is not a character object or list of characters."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
@@ -2520,19 +2550,23 @@ plot_AP_frequencies_multiple_treatments <- function(data,
     }
   } else {
     if (is.null(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is NULL."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is NULL."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
 
     if (!is.character(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is not a character object or list of characters."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is not a character object or list of characters."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
@@ -2698,9 +2732,10 @@ plot_AP_trace <-
     if (colour_scale_option == "single_colour") {
       if (is.null(trace_colour) ||
         !is.character(trace_colour)) {
-        cli::cli_abort(c("x" = "You set `colour_scale_option` to `single_colour` but `trace_colour` is blank or not a character.",
-                         "i" = "Please set `trace_colour` to a hex value (e.g. \"#32a852\" or named colour like \"orange\")")
-        )
+        cli::cli_abort(c(
+          "x" = "You set `colour_scale_option` to `single_colour` but `trace_colour` is blank or not a character.",
+          "i" = "Please set `trace_colour` to a hex value (e.g. \"#32a852\" or named colour like \"orange\")"
+        ))
       }
 
       ap_trace <- data %>%
@@ -2735,8 +2770,7 @@ plot_AP_trace <-
 
       if (colour_scale_option == "custom") {
         if (is.null(custom_scale_colours)) {
-          cli::cli_abort(c("x" = "You set `colour_scale_option` to \"custom\" but did not define a custom scale. Please insert a list into `custom_scale_colours`.")
-          )
+          cli::cli_abort(c("x" = "You set `colour_scale_option` to \"custom\" but did not define a custom scale. Please insert a list into `custom_scale_colours`."))
         }
         ap_trace <- ap_trace +
           ggplot2::scale_colour_manual(values = custom_scale_colours, guide = "none")
@@ -2886,8 +2920,11 @@ plot_spontaneous_current_parameter_comparison <-
     allowed_y_variables_list <- "\"raw_amplitude\", or \"raw_frequency\""
 
     if (!y_variable %in% c("raw_amplitude", "raw_frequency")) {
-      cli::cli_abort(c("x" = paste0("`y_variable` must be ",
-        allowed_y_variables_list),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`y_variable` must be ",
+          allowed_y_variables_list
+        ),
         "i" = "`y_variable` cannot be baseline transformed data because the graph would not show useful data. During the normalization process (`make_normalized_EPSC_data()`), all baseline values are converted to 100. This plot would therefore show points all at 100."
       ))
     }
@@ -3260,10 +3297,12 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
     }
   } else {
     if (is.null(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is NULL."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is NULL."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
@@ -3292,19 +3331,23 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
     }
   } else {
     if (is.null(list_of_categories)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_categories` = \"",
-        include_all_categories,
-        "\", but `list_of_categories` is NULL."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_categories` = \"",
+          include_all_categories,
+          "\", but `list_of_categories` is NULL."
+        ),
         "i" = "Did you forget to add a list of categories?"
       ))
     }
 
     if (!is.character(list_of_categories)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_categories` = \"",
-        include_all_categories,
-        "\", but `list_of_categories` is not a character object or list of characters."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_categories` = \"",
+          include_all_categories,
+          "\", but `list_of_categories` is not a character object or list of characters."
+        ),
         "i" = "Did you forget to add a list of categories?"
       ))
     }

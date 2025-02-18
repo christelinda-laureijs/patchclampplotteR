@@ -85,7 +85,7 @@ the animal's age and sex, the cell ID number, and other details. Please see the
 what you should include. See below for a link to download an empty `.csv` file with the headers required for this dataset:
 
 ```{r download-sample-blank-cell-characteristics, echo=F}
-xfun::embed_file('sample-blank-cell-characteristics-sheet.csv')
+xfun::embed_file("sample-blank-cell-characteristics-sheet.csv")
 ```
 
 > Note: Since this vignette is included within an R package, the following code

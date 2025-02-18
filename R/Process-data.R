@@ -179,11 +179,13 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 
   if (current_type == "eEPSC") {
     if (any(grepl("sEPSC", list_of_argument_names))) {
-      cli::cli_abort(c("x" = paste0(
-        "current_type = \"",
-        current_type,
-        "\" but some arguments have the text ",
-        "\"sEPSC\"."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "current_type = \"",
+          current_type,
+          "\" but some arguments have the text ",
+          "\"sEPSC\"."
+        ),
         "i" = "Are you sure that you selected the correct current type?"
       ))
     }
@@ -191,18 +193,21 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 
   if (current_type == "sEPSC") {
     if (any(grepl("eEPSC", list_of_argument_names))) {
-      cli::cli_abort(c("x" = paste0(
-        "current_type = \"",
-        current_type,
-        "\" but some arguments have the text ",
-        "\"eEPSC\"."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "current_type = \"",
+          current_type,
+          "\" but some arguments have the text ",
+          "\"eEPSC\"."
+        ),
         "i" = "Are you sure that you selected the correct current type?"
       ))
     }
   }
 
   if (max_time_value %% baseline_length != 0) {
-    cli::cli_abort(c("x" = paste0("max_time_value is ",
+    cli::cli_abort(c("x" = paste0(
+      "max_time_value is ",
       max_time_value,
       ", which is not divisible by interval_length ",
       interval_length
@@ -796,7 +801,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #'  \item `t5to10` The mean evoked current amplitude (pA) for this cell during the period of 5 to 10 minutes.
 #'  \item `t10to15`, `t15to20`, `tXtY` etc... The mean evoked current amplitude (pA) for this cell during the period of *X* to *Y* minutes.
 #'  \item `percent_change` The percent change in evoked current amplitude in the interval `t20to25` as a percentage of the mean baseline amplitude (`t0to5`). For example, if currents began at 100 pA during the baseline period, but were 50 pA by `t20to25`, the value of `percent_change` will be `50%` or `0.50`. You can also change the value of the intervals used in this calculation through the `baseline_interval` and `ending_interval` arguments.
-#'}
+#' }
 #'
 #' The second dataframe contains summary data such as the mean current amplitude,
 #'   coefficient of variation, standard deviation, standard error, variance,
@@ -895,11 +900,13 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 
   if (current_type == "eEPSC") {
     summary_df <- data %>%
-      dplyr::group_by(.data$category,
-                      .data$letter,
-                      .data$sex,
-                      .data$treatment,
-                      .data$interval) %>%
+      dplyr::group_by(
+        .data$category,
+        .data$letter,
+        .data$sex,
+        .data$treatment,
+        .data$interval
+      ) %>%
       dplyr::summarize(
         mean_P1_transformed = mean(.data$P1_transformed, na.rm = TRUE),
         mean_P1_raw = mean(.data$P1, na.rm = TRUE),
@@ -907,7 +914,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         sd = stats::sd(.data$P1_transformed, na.rm = TRUE),
         cv = .data$sd / .data$mean_P1_transformed,
         se = stats::sd(.data$P1_transformed, na.rm = TRUE) / sqrt(.data$n),
-        cv_inverse_square = 1 / (.data$cv ^ 2),
+        cv_inverse_square = 1 / (.data$cv^2),
         variance = stats::var(.data$P1_transformed, na.rm = TRUE),
         VMR = .data$variance / .data$mean_P1_transformed,
         age = unique(.data$age),
@@ -937,7 +944,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
       )) %>%
       tidyr::pivot_wider(names_from = .data$interval, values_from = .data$mean_P1_raw) %>%
       dplyr::mutate(percent_change = .data[[ending_interval]] / .data[[baseline_interval]] *
-                      100)
+        100)
 
     if (save_output_as_RDS == "yes") {
       saveRDS(summary_df, file = here::here(
@@ -955,11 +962,13 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 
   if (current_type == "sEPSC") {
     summary_df <- data %>%
-      dplyr::group_by(.data$category,
-                      .data$letter,
-                      .data$sex,
-                      .data$treatment,
-                      .data$interval) %>%
+      dplyr::group_by(
+        .data$category,
+        .data$letter,
+        .data$sex,
+        .data$treatment,
+        .data$interval
+      ) %>%
       dplyr::summarize(
         mean_transformed_amplitude = mean(.data$mean_amplitude, na.rm = TRUE),
         mean_raw_amplitude = mean(.data$mean_raw_amplitude, na.rm = TRUE),
@@ -988,8 +997,6 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
     }
 
     return(summary_df)
-
-
   }
 }
 
@@ -1072,19 +1079,23 @@ perform_t_tests_for_summary_plot <- function(data,
     }
   } else {
     if (is.null(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is NULL."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is NULL."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
 
     if (!is.character(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is not a character object or list of characters."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is not a character object or list of characters."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
@@ -1105,12 +1116,14 @@ perform_t_tests_for_summary_plot <- function(data,
     allowed_parameters_list <- "\"amplitude\""
 
     if (!parameter %in% c("amplitude")) {
-      cli::cli_abort(c("x" = paste0(
-        "`parameter` must be ",
-        allowed_parameters_list,
-        " for current_type \"",
-        current_type,
-        "\"."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`parameter` must be ",
+          allowed_parameters_list,
+          " for current_type \"",
+          current_type,
+          "\"."
+        ),
         "i" = "Check that you have the correct combination of `parameter`, `current_type` and `data.`"
       ))
     }
@@ -1137,12 +1150,14 @@ perform_t_tests_for_summary_plot <- function(data,
       "frequency",
       "raw_frequency"
     )) {
-      cli::cli_abort(c("x" = paste0(
-        "`parameter` must be ",
-        allowed_parameters_list,
-        " for current_type \"",
-        current_type,
-        "\"."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`parameter` must be ",
+          allowed_parameters_list,
+          " for current_type \"",
+          current_type,
+          "\"."
+        ),
         "i" = "Check that you have the correct combination of `parameter`, `current_type` and `data.`"
       ))
     }
@@ -1320,19 +1335,23 @@ make_variance_data <- function(data,
     }
   } else {
     if (is.null(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is NULL."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is NULL."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
 
     if (!is.character(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is not a character object or list of characters."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is not a character object or list of characters."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
@@ -1459,19 +1478,23 @@ make_PPR_data <- function(data,
     }
   } else {
     if (is.null(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is NULL."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is NULL."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }
 
     if (!is.character(list_of_treatments)) {
-      cli::cli_abort(c("x" = paste0(
-        "`include_all_treatments` = \"",
-        include_all_treatments,
-        "\", but `list_of_treatments` is not a character object or list of characters."),
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is not a character object or list of characters."
+        ),
         "i" = "Did you forget to add a list of treatments?"
       ))
     }

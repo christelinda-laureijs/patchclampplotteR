@@ -80,7 +80,7 @@ that all (except for `ID` are in lowercase.
 -   `ap_notes` An optional column where you can note any unusual or interesting things about the recording, or flag a nice-looking recording for use in a paper.
 
 ```{r download-sample-blank-ap-sheet, echo=F}
-xfun::embed_file('sample-blank-ap-parameter-data.csv')
+xfun::embed_file("sample-blank-ap-parameter-data.csv")
 ```
 
 ```{r ap-properties-image, fig.alt = "An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire."}
