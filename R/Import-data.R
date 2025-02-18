@@ -386,6 +386,7 @@ add_new_cells <- function(new_raw_data_csv,
     new_raw_data <- new_raw_data %>%
       dplyr::mutate(id = factor(.data$id)) %>%
       dplyr::rename(ID = .data$id)
+
   }
 
   if (data_type == "eEPSC") {
@@ -536,54 +537,46 @@ add_new_cells <- function(new_raw_data_csv,
     dplyr::rename_with(tolower) %>%
     dplyr::mutate(letter = factor(.data$letter))
 
-  if (data_type %in% c("eEPSC", "sEPSC", "AP_parameter")) {
-    if ("id" %in% colnames(old_raw_data)) {
-      old_raw_data <- old_raw_data %>%
-        dplyr::mutate(id = factor(.data$id)) %>%
-        dplyr::rename(ID = .data$id)
-    }
 
-    if ("x" %in% colnames(old_raw_data)) {
-      old_raw_data <- old_raw_data %>%
-        dplyr::rename(X = .data$x)
-    }
-
-    if ("y" %in% colnames(old_raw_data)) {
-      old_raw_data <- old_raw_data %>%
-        dplyr::rename(Y = .data$y)
-    }
+  if ("id" %in% colnames(old_raw_data)) {
+    old_raw_data <- old_raw_data %>%
+      dplyr::mutate(id = factor(.data$id)) %>%
+      dplyr::rename(ID = .data$id)
   }
 
-  if (data_type == "eEPSC") {
-    if ("p1" %in% colnames(old_raw_data)) {
-      old_raw_data <- old_raw_data %>%
-        dplyr::rename(
-          P1 = .data$p1
-        )
-    }
-
-    if ("p2" %in% colnames(old_raw_data)) {
-      old_raw_data <- old_raw_data %>%
-        dplyr::rename(
-          P2 = .data$p2
-        )
-    }
+  if ("x" %in% colnames(old_raw_data)) {
+    old_raw_data <- old_raw_data %>%
+      dplyr::rename(X = .data$x)
   }
 
-  if (data_type == "AP_parameter") {
-    if ("first_sweep_with_aps" %in% colnames(old_raw_data)) {
-      old_raw_data <- old_raw_data %>%
-        dplyr::rename(
-          first_sweep_with_APs = .data$first_sweep_with_aps
-        )
-    }
+  if ("y" %in% colnames(old_raw_data)) {
+    old_raw_data <- old_raw_data %>%
+      dplyr::rename(Y = .data$y)
   }
 
-  if (data_type == "AP_count") {
-    if ("no_of_aps" %in% colnames(old_raw_data)) {
-      old_raw_data <- old_raw_data %>%
-        dplyr::rename(no_of_APs = .data$no_of_aps)
-    }
+  if ("p1" %in% colnames(old_raw_data)) {
+    old_raw_data <- old_raw_data %>%
+      dplyr::rename(P1 = .data$p1)
+  }
+
+  if ("p2" %in% colnames(old_raw_data)) {
+    old_raw_data <- old_raw_data %>%
+      dplyr::rename(P2 = .data$p2)
+  }
+
+  if ("first_sweep_with_aps" %in% colnames(old_raw_data)) {
+    old_raw_data <- old_raw_data %>%
+      dplyr::rename(first_sweep_with_APs = .data$first_sweep_with_aps)
+  }
+
+  if ("ap_frequency" %in% colnames(old_raw_data)) {
+    old_raw_data <- old_raw_data %>%
+      dplyr::rename(AP_frequency = .data$ap_frequency)
+  }
+
+  if ("no_of_aps" %in% colnames(old_raw_data)) {
+    old_raw_data <- old_raw_data %>%
+      dplyr::rename(no_of_APs = .data$no_of_aps)
   }
 
   if (any(grepl("cells", colnames(old_raw_data)))) {
