@@ -272,12 +272,12 @@ treatments.</p>
 <code>sample_treatment_names_and_colours</code> which contains the
 filepath to each representative trace .png file.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">evoked_trace_filename</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"figures/Category-2-Control-Trace.png"</span>,</span>
-<span>    <span class="st">"figures/Category-2-HNMPA-Trace.png"</span>,</span>
-<span>    <span class="st">"figures/Category-2-PPP-Trace.png"</span>,</span>
-<span>    <span class="st">"figures/Category-2-PPP-and-HNMPA-Trace.png"</span></span>
-<span>  <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">evoked_trace_filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"figures/Category-2-Control-Trace.png"</span>,</span>
+<span>  <span class="st">"figures/Category-2-HNMPA-Trace.png"</span>,</span>
+<span>  <span class="st">"figures/Category-2-PPP-Trace.png"</span>,</span>
+<span>  <span class="st">"figures/Category-2-PPP-and-HNMPA-Trace.png"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">list_of_treatments</span> <span class="op">&lt;-</span> <span class="va">sample_treatment_names_and_colours</span></span>
 <span></span>
@@ -287,28 +287,30 @@ filepath to each representative trace .png file.</p>
 the <code>treatment</code> column in the <code>treatment</code>
 argument.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pmap</span><span class="op">(</span>.l <span class="op">=</span> <span class="va">list_of_treatments</span>,</span>
-<span>     .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span></span>
-<span>       <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,</span>
-<span>       <span class="fu"><a href="../reference/plot_summary_current_data.html">plot_summary_current_data</a></span><span class="op">(</span></span>
-<span>         data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">all_cells</span>,</span>
-<span>         plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>         plot_treatment <span class="op">=</span> <span class="va">treatment</span>,</span>
-<span>         current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
-<span>         y_variable <span class="op">=</span> <span class="st">"amplitude"</span>,</span>
-<span>         hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
-<span>         hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>         include_representative_trace <span class="op">=</span> <span class="st">"yes"</span>,</span>
-<span>         representative_trace_filename <span class="op">=</span> <span class="va">representative_trace_filepath</span>,</span>
-<span>         y_axis_limit <span class="op">=</span> <span class="fl">175</span>,</span>
-<span>         signif_stars <span class="op">=</span> <span class="st">"yes"</span>,</span>
-<span>         t_test_df <span class="op">=</span> <span class="va">sample_eEPSC_t_test_df</span>,</span>
-<span>         large_axis_text <span class="op">=</span> <span class="st">"no"</span>,</span>
-<span>         shade_intervals <span class="op">=</span> <span class="st">"no"</span>,</span>
-<span>         treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span>
-<span>         theme_options <span class="op">=</span> <span class="va">sample_theme_options</span></span>
-<span>       <span class="op">)</span></span>
-<span>     <span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">pmap</span><span class="op">(</span></span>
+<span>  .l <span class="op">=</span> <span class="va">list_of_treatments</span>,</span>
+<span>  .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="../reference/plot_summary_current_data.html">plot_summary_current_data</a></span><span class="op">(</span></span>
+<span>      data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">all_cells</span>,</span>
+<span>      plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>      plot_treatment <span class="op">=</span> <span class="va">treatment</span>,</span>
+<span>      current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
+<span>      y_variable <span class="op">=</span> <span class="st">"amplitude"</span>,</span>
+<span>      hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
+<span>      hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>      include_representative_trace <span class="op">=</span> <span class="st">"yes"</span>,</span>
+<span>      representative_trace_filename <span class="op">=</span> <span class="va">representative_trace_filepath</span>,</span>
+<span>      y_axis_limit <span class="op">=</span> <span class="fl">175</span>,</span>
+<span>      signif_stars <span class="op">=</span> <span class="st">"yes"</span>,</span>
+<span>      t_test_df <span class="op">=</span> <span class="va">sample_eEPSC_t_test_df</span>,</span>
+<span>      large_axis_text <span class="op">=</span> <span class="st">"no"</span>,</span>
+<span>      shade_intervals <span class="op">=</span> <span class="st">"no"</span>,</span>
+<span>      treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span>
+<span>      theme_options <span class="op">=</span> <span class="va">sample_theme_options</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The file figures/Category-2-Control-Trace.png cannot be found. Plotting without a representative trace.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The file figures/Category-2-HNMPA-Trace.png cannot be found. Plotting without a representative trace.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The file figures/Category-2-PPP-Trace.png cannot be found. Plotting without a representative trace.</span></span>
@@ -339,8 +341,7 @@ called <code>include_all_treatments</code>. Change this to “no” and then
 define a list of treatments in the <code>list_of_treatments</code>
 argument.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="../reference/plot_AP_frequencies_multiple_treatments.html">plot_AP_frequencies_multiple_treatments</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_frequencies_multiple_treatments.html">plot_AP_frequencies_multiple_treatments</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_AP_count_data</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  list_of_treatments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PPP"</span>, <span class="st">"HNMPA"</span><span class="op">)</span>,</span>
