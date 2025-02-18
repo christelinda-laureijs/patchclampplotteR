@@ -365,8 +365,17 @@ add_new_cells <- function(new_raw_data_csv,
   # Required to see if new cells have associated data for synapses, treatment, sex, age, etc.
   cell_characteristics <-
     utils::read.csv(here::here(cell_characteristics_csv)) %>%
-    dplyr::rename_with(tolower) %>%
-    dplyr::rename(X = .data$x, Y = .data$y)
+    dplyr::rename_with(tolower)
+
+  if ("x" %in% colnames(cell_characteristics)) {
+    cell_characteristics <- cell_characteristics %>%
+    dplyr::rename(X = .data$x)
+  }
+
+  if ("y" %in% colnames(cell_characteristics)) {
+    cell_characteristics <- cell_characteristics %>%
+      dplyr::rename(Y = .data$y)
+  }
 
   new_raw_data <- utils::read.csv(here::here(new_raw_data_csv)) %>%
     dplyr::rename_with(tolower)
@@ -526,33 +535,55 @@ add_new_cells <- function(new_raw_data_csv,
     dplyr::mutate(letter = factor(.data$letter))
 
   if (data_type %in% c("eEPSC", "sEPSC", "AP_parameter")) {
+
+    if ("id" %in% colnames(old_raw_data)) {
     old_raw_data <- old_raw_data %>%
       dplyr::mutate(id = factor(.data$id)) %>%
-      dplyr::rename(
-        ID = .data$id,
-        X = .data$x,
-        Y = .data$y
-      )
+      dplyr::rename(ID = .data$id)
+    }
+
+    if ("x" %in% colnames(old_raw_data)) {
+      old_raw_data <- old_raw_data %>%
+        dplyr::rename(X = .data$x)
+    }
+
+    if ("y" %in% colnames(old_raw_data)) {
+      old_raw_data <- old_raw_data %>%
+        dplyr::rename(Y = .data$y)
+    }
   }
 
   if (data_type == "eEPSC") {
+    if ("p1" %in% colnames(old_raw_data)) {
     old_raw_data <- old_raw_data %>%
       dplyr::rename(
-        P1 = .data$p1,
-        P2 = .data$p2
+        P1 = .data$p1
       )
+    }
+
+    if ("p2" %in% colnames(old_raw_data)) {
+      old_raw_data <- old_raw_data %>%
+        dplyr::rename(
+          P2 = .data$p2
+        )
+    }
   }
 
   if (data_type == "AP_parameter") {
+    if ("first_sweep_with_aps" %in% colnames(old_raw_data)) {
     old_raw_data <- old_raw_data %>%
       dplyr::rename(
         first_sweep_with_APs = .data$first_sweep_with_aps
       )
+    }
   }
 
   if (data_type == "AP_count") {
+    if ("no_of_aps" %in% colnames(old_raw_data)) {
     old_raw_data <- old_raw_data %>%
       dplyr::rename(no_of_APs = .data$no_of_aps)
+    }
+
   }
 
   if (any(grepl("cells", colnames(old_raw_data)))) {

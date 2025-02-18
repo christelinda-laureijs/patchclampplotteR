@@ -85,7 +85,7 @@ the animal's age and sex, the cell ID number, and other details. Please see the
 what you should include. See below for a link to download an empty `.csv` file with the headers required for this dataset:
 
 ```{r download-sample-blank-cell-characteristics, echo=F}
-xfun::embed_file('sample_blank_cell_characteristics.csv')
+xfun::embed_file('sample-blank-cell-characteristics-sheet.csv')
 ```
 
 > Note: Since this vignette is included within an R package, the following code
@@ -140,13 +140,12 @@ characteristics data. `add_new_cells()` will merge these two datasets, using
 * An existing `.csv` with raw data that has been previously imported. As your
 project goes on, you will eventually be appending new data onto your existing
 datasheet, but if you are starting completely fresh, use a blank `.csv` file
-containing just the required column names.
+containing just one value in cell `A1` called `letter`. This column title is all that is needed to allow R to auto-fill in the rest of the new data.
 
-> **WARNING!!** If you are starting with a blank `.csv` file containing only the column names, you MUST type a character value in the letter column (typically, cell A2 if you are using Excel). This is so that R will recognize the letter column as a character value. Use a character that won't be confused with a true `letter` value in the dataset (e.g. "blank").
-
+> **WARNING!!** If you are starting a brand new project, the `.csv` in the `old_raw_data_csv` argument MUST contain only the `letter` column name. This would typically go in cell A1 if you are using Excel. If you try to use a completely empty `.csv` sheet, R will not recognize it as a valid `.csv`. 
 
 ```{r blank-sheet-example}
-blank_csv <- read.csv(import_ext_data("empty_eEPSC_sheet.csv"))
+blank_csv <- read.csv(import_ext_data("empty_old_raw_data_sheet.csv"))
 ```
 
 ```{r reactable-blank-sheet, echo=F}
@@ -159,7 +158,7 @@ Use the `add_new_cells()` function, and carefully read the warning messages.
 first_time_df <- add_new_cells(
   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
-  old_raw_data_csv = import_ext_data("empty_eEPSC_sheet.csv"),
+  old_raw_data_csv = import_ext_data("empty_old_raw_data_sheet.csv"),
   data_type = "eEPSC",
   write_new_csv = "no",
   new_file_name = "",
@@ -183,38 +182,13 @@ to the existing dataset. This ensures that you don't accidentally paste in the
 same data twice, resulting in duplicated data.
 
 The final message prints a list of the letters that have been added to the
-dataset. In this case, this is `AV`. It is a good way to confirm that you've
+dataset. In this case, these are "FX", "GR" and "HC". It is a good way to confirm that you've
 added the letters you were planning to add.
 
-You can also ask R to produce a list of all of the unique letters in the dataset. This won't catch duplicates, but it can help you identify if a letter is completely missing from the dataset. See, `AV` is now included!
-
-However, you can also see that the placeholder "blank" is still present.
+You can also ask R to produce a list of all of the unique letters in the dataset. This won't catch duplicates, but it can help you identify if a letter is completely missing from the dataset. See, `FX` is now included!
 
 ```{r view-unique-letters}
 unique(first_time_df$letter)
-```
-Use the following code to remove the blank first line.
-
-> NOTE: Only do this ONCE at the start of a new project, when you are adding data to a blank `.csv` file. After you have a datasheet established, you won't need to do this.
-
-```{r remove-first-blank-row}
-# Remove first "blank" row
-first_time_df <- tail(first_time_df, -1)
-
-# Re-number rows starting from 1
-rownames(first_time_df) <- 1:nrow(first_time_df)
-
-# Double-check that only true letters are present
-unique(first_time_df$letter)
-```
-
-Write the resulting, cleaned dataframe to a `.csv` file in your `Data/` folder.
-
-```{r write-cleaned-csv, eval=F}
-utils::write.csv(first_time_df,
-  here::here("Data/Insert-filename-here.csv"),
-  row.names = F
-)
 ```
 
 This is an example of what the full few rows look like now:
