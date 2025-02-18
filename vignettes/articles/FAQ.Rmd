@@ -198,7 +198,7 @@ list_of_treatments$representative_trace_filepath <- evoked_trace_filename
 Then, I'm using `purrr::pmap()` using the `sample_treatment_names_and_colours()` dataset. I will use the `treatment` column in the `treatment` argument.
 
 ```{r eval=T, include=T}
-pmap(
+purrr::pmap(
   .l = list_of_treatments,
   .f = ~ with(
     list(...),
