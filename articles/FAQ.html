@@ -264,8 +264,8 @@ have “-males-only” or “-females-only” included in the filename.</p>
 <h3 id="how-can-i-plot-many-treatments-at-once-andor-plot-even-faster">How can I plot many treatments at once and/or plot even faster?<a class="anchor" aria-label="anchor" href="#how-can-i-plot-many-treatments-at-once-andor-plot-even-faster"></a>
 </h3>
 <p>Let’s say that you are running a plotting function repeatedly, but
-only changing one argument at once (like <code>treatment</code>). To
-reduce repetitive code, you can use <code>pmap()</code> from the
+only changing one argument at once (like <code>plot_treatment</code>).
+To reduce repetitive code, you can use <code>pmap()</code> from the
 <code>purrr</code> package to run a function with a list of
 treatments.</p>
 <p>First, I am adding a new column to
@@ -282,10 +282,12 @@ filepath to each representative trace .png file.</p>
 <span><span class="va">list_of_treatments</span> <span class="op">&lt;-</span> <span class="va">sample_treatment_names_and_colours</span></span>
 <span></span>
 <span><span class="va">list_of_treatments</span><span class="op">$</span><span class="va">representative_trace_filepath</span> <span class="op">&lt;-</span> <span class="va">evoked_trace_filename</span></span></code></pre></div>
-<p>Then, I’m using <code><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">purrr::pmap()</a></code> using the
-<code><a href="../reference/sample_treatment_names_and_colours.html">sample_treatment_names_and_colours()</a></code> dataset. I will use
-the <code>treatment</code> column in the <code>treatment</code>
-argument.</p>
+<p>Then, I’m using <code><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">purrr::pmap()</a></code> and inserting the
+<code>list_of_treatments</code> that I defined above. This is so I can
+use the <code>treatment</code> column in the <code>plot_treatment</code>
+argument and the <code>representative_trace_filepath</code> column for
+the <code>representative_trace_filename</code> argument. See below - the
+summary plots for all treatments were produced with one code chunk!</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pmap</span><span class="op">(</span></span>
 <span>  .l <span class="op">=</span> <span class="va">list_of_treatments</span>,</span>
