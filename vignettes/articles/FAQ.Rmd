@@ -183,10 +183,10 @@ First, I am adding a new column to `sample_treatment_names_and_colours` which co
 
 ```{r echo=T}
 evoked_trace_filename <- c(
-  "figures/Category-2-Control-Trace.png",
-  "figures/Category-2-HNMPA-Trace.png",
-  "figures/Category-2-PPP-Trace.png",
-  "figures/Category-2-PPP-and-HNMPA-Trace.png"
+  "vignettes/articles/figures/Category-2-Control-Trace.png",
+  "vignettes/articles/figures/Category-2-HNMPA-Trace.png",
+  "vignettes/articles/figures/Category-2-PPP-Trace.png",
+  "vignettes/articles/figures/Category-2-PPP-and-HNMPA-Trace.png"
 )
 
 list_of_treatments <- sample_treatment_names_and_colours
