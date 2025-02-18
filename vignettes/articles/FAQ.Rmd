@@ -1,5 +1,10 @@
 ---
 title: "FAQ"
+resource_files:
+  - figures/Category-2-Control-Trace.png
+  - figures/Category-2-HNMPA-Trace.png
+  - figures/Category-2-PPP-Trace.png
+  - figures/Category-2-PPP-and-HNMPA-Trace.png
 ---
 
 ```{r faq-setup, include = FALSE}
