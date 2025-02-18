@@ -177,7 +177,7 @@ You can use the `included_sexes` argument in `plot_summary_current_data()`. It d
 
 ## How can I plot many treatments at once and/or plot even faster?
 
-Let's say that you are running a plotting function repeatedly, but only changing one argument at once (like `treatment`). To reduce repetitive code, you can use `pmap()` from the `purrr` package to run a function with a list of treatments.
+Let's say that you are running a plotting function repeatedly, but only changing one argument at once (like `plot_treatment`). To reduce repetitive code, you can use `pmap()` from the `purrr` package to run a function with a list of treatments.
 
 First, I am adding a new column to `sample_treatment_names_and_colours` which contains the filepath to each representative trace .png file.
 
@@ -195,7 +195,7 @@ list_of_treatments$representative_trace_filepath <- evoked_trace_filename
 ```
 
 
-Then, I'm using `purrr::pmap()` using the `sample_treatment_names_and_colours()` dataset. I will use the `treatment` column in the `treatment` argument.
+Then, I'm using `purrr::pmap()` and inserting the `list_of_treatments` that I defined above. This is so I can use the `treatment` column in the `plot_treatment` argument and the `representative_trace_filepath` column for the `representative_trace_filename` argument. See below - the summary plots for all treatments were produced with one code chunk!
 
 ```{r eval=T, include=T, warning=F, message=F}
 pmap(
