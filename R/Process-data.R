@@ -628,7 +628,9 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         category = unique(.data$category),
         time = dplyr::last(.data$time),
         baseline_mean = unique(.data$baseline_mean),
-        synapses = unique(.data$synapses)
+        synapses = unique(.data$synapses),
+        days_alone = unique(.data$days_alone),
+        animal_or_slicing_problems = unique(.data$animal_or_slicing_problems)
       ) %>%
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
 
@@ -652,6 +654,8 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         category = unique(.data$category),
         interval = unique(.data$interval),
         synapses = unique(.data$synapses),
+        days_alone = unique(.data$days_alone),
+        animal_or_slicing_problems = unique(.data$animal_or_slicing_problems),
         time = dplyr::last(.data$time) # Time at interval end; used for plots
       ) %>%
       dplyr::group_by(.data$letter) %>%
