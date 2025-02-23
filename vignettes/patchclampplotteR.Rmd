@@ -499,7 +499,7 @@ head(PPR_df, n = 10) %>%
 For a specific treatment:
 
 ```{r plot-one-ppr-treatment, fig.alt = "A scatterplot of paired-pulse ratio over time (baseline or post-insulin) showing no difference in the paired pulse ratio across these two times.", warning=FALSE}
-plot_PPR_data_one_treatment(
+plot_PPR_data_single_treatment(
   data = PPR_df,
   plot_treatment = "Control",
   plot_category = 2,

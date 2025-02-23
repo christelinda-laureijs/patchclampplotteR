@@ -78,7 +78,7 @@ to the project directory.
 experimental state (i.e. grouped as baseline/before and after) and treatment
 on the x-axis, and the paired-pulse ratio (PPR) on the y-axis. There are also
 lines connecting the "before" data point to the "after" data point for each
-letter. It is the same as \code{\link[=plot_PPR_data_one_treatment]{plot_PPR_data_one_treatment()}} but for more
+letter. It is the same as \code{\link[=plot_PPR_data_single_treatment]{plot_PPR_data_single_treatment()}} but for more
 than one treatment.
 }
 \details{
@@ -100,5 +100,5 @@ plot_PPR_data_multiple_treatments(
 
 }
 \seealso{
-\code{\link[=plot_PPR_data_one_treatment]{plot_PPR_data_one_treatment()}} to plot changes in PPR for a single treatment.
+\code{\link[=plot_PPR_data_single_treatment]{plot_PPR_data_single_treatment()}} to plot changes in PPR for a single treatment.
 }

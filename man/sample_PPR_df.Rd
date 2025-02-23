@@ -28,6 +28,6 @@ This data can be used for PPR comparison plots, and further analyses to
 determine the mechanism of synaptic plasticity.
 }
 \seealso{
-\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}, \code{\link[=make_PPR_data]{make_PPR_data()}}, \code{\link[=plot_PPR_data_one_treatment]{plot_PPR_data_one_treatment()}} and \code{\link[=plot_PPR_data_multiple_treatments]{plot_PPR_data_multiple_treatments()}}
+\code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}, \code{\link[=make_PPR_data]{make_PPR_data()}}, \code{\link[=plot_PPR_data_single_treatment]{plot_PPR_data_single_treatment()}} and \code{\link[=plot_PPR_data_multiple_treatments]{plot_PPR_data_multiple_treatments()}}
 }
 \keyword{data}

@@ -782,7 +782,7 @@ NULL
 #' }
 #' @keywords data
 #'
-#' @seealso [make_normalized_EPSC_data()], [make_PPR_data()], [plot_PPR_data_one_treatment()] and [plot_PPR_data_multiple_treatments()]
+#' @seealso [make_normalized_EPSC_data()], [make_PPR_data()], [plot_PPR_data_single_treatment()] and [plot_PPR_data_multiple_treatments()]
 NULL
 
 

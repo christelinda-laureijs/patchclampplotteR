@@ -19,7 +19,7 @@ perform_t_tests_for_summary_plot(
 }
 \arguments{
 \item{data}{A dataframe containing the summary data generated from
-\code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}}.}
+\code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}}. If \code{current_type} is "eEPSC", this must be the \verb{$summary_data} element of the list produced by \code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}}.}
 
 \item{test_category}{A numeric value describing the experimental category. In
 the sample dataset for this package, 2 represents experiments where insulin

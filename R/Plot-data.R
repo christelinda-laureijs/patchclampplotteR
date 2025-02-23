@@ -1480,7 +1480,7 @@ plot_percent_change_comparisons <- function(data,
 #'
 #' @inheritParams plot_raw_current_data
 #' @inheritParams plot_baseline_data
-#' @inheritParams plot_PPR_data_one_treatment
+#' @inheritParams plot_PPR_data_single_treatment
 #'
 #' @param data A dataframe generated using [make_variance_data()].
 #' @param variance_measure A character value ("cv" or "VMR"). The variance
@@ -1767,7 +1767,7 @@ plot_cv_data <- function(data,
 
 #' Make a PPR plot for a single treatment
 #'
-#' `plot_PPR_data_one_treatment()` creates a categorical scatter plot with
+#' `plot_PPR_data_single_treatment()` creates a categorical scatter plot with
 #' experimental state (i.e. baseline/before and after) on the x-axis and the
 #' paired-pulse ratio (PPR) on the y-axis. There are also lines connecting the
 #' "before" data point to the "after" data point for each letter.
@@ -1792,7 +1792,7 @@ plot_cv_data <- function(data,
 #'   project directory. The treatment will be included in the filename.
 #'
 #' @examples
-#' plot_PPR_data_one_treatment(
+#' plot_PPR_data_single_treatment(
 #'   data = sample_PPR_df,
 #'   plot_treatment = "Control",
 #'   plot_category = 2,
@@ -1807,7 +1807,7 @@ plot_cv_data <- function(data,
 #'
 #' @seealso [plot_PPR_data_multiple_treatments()] to plot changes in PPR for multiple treatments.
 
-plot_PPR_data_one_treatment <- function(data,
+plot_PPR_data_single_treatment <- function(data,
                                         plot_treatment = "Control",
                                         plot_category = 2,
                                         baseline_label = "Baseline",
@@ -1936,7 +1936,7 @@ plot_PPR_data_one_treatment <- function(data,
 #' experimental state (i.e. grouped as baseline/before and after) and treatment
 #' on the x-axis, and the paired-pulse ratio (PPR) on the y-axis. There are also
 #' lines connecting the "before" data point to the "after" data point for each
-#' letter. It is the same as [plot_PPR_data_one_treatment()] but for more
+#' letter. It is the same as [plot_PPR_data_single_treatment()] but for more
 #' than one treatment.
 #'
 #' If you specify a `test_type`, the function will perform a paired t-test or
@@ -1946,7 +1946,7 @@ plot_PPR_data_one_treatment <- function(data,
 #' @inheritParams plot_baseline_data
 #' @inheritParams plot_variance_comparison_data
 #' @inheritParams plot_raw_current_data
-#' @inheritParams plot_PPR_data_one_treatment
+#' @inheritParams plot_PPR_data_single_treatment
 
 #' @param data Paired pulse ratio data generated from [make_PPR_data()].
 #' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to 0.3, which is a good thickness for most applications.
@@ -1969,7 +1969,7 @@ plot_PPR_data_one_treatment <- function(data,
 #'   treatment_colour_theme = sample_treatment_names_and_colours
 #' )
 #'
-#' @seealso [plot_PPR_data_one_treatment()] to plot changes in PPR for a single treatment.
+#' @seealso [plot_PPR_data_single_treatment()] to plot changes in PPR for a single treatment.
 
 plot_PPR_data_multiple_treatments <- function(data,
                                               include_all_treatments = "yes",
@@ -2132,7 +2132,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #'
 #' This function produces a connected line plot which allows you to visually compare action potential parameters such as peak amplitude, after-hyperpolarization amplitude (here, `antipeak_amplitude`), half-width, etc. before and after a treatment has been applied. It requires action potential data from two recordings - one taken during the baseline (`state = "Baseline"`) and one taken after a hormone or high-frequency protocol has been applied (in this example, `state = "Insulin"`).
 #'
-#' @inheritParams plot_PPR_data_one_treatment
+#' @inheritParams plot_PPR_data_single_treatment
 #' @inheritParams plot_AP_frequencies_single_treatment
 #'
 #' @param data The action potential data generated from `add_new_cells()` with `data_type == "AP"`.
@@ -2267,7 +2267,7 @@ plot_AP_comparison <-
 #'
 #'
 #' @inheritParams plot_AP_frequencies_multiple_treatments
-#' @inheritParams plot_PPR_data_one_treatment
+#' @inheritParams plot_PPR_data_single_treatment
 #' @inheritParams plot_spontaneous_current_parameter_comparison
 #'
 #' @param data Action potential frequency data imported through `add_new_cells()` with `data_type == "AP_count"`
@@ -2863,7 +2863,7 @@ plot_AP_trace <-
 #' @inheritParams plot_variance_comparison_data
 #' @inheritParams plot_baseline_data
 #' @inheritParams plot_raw_current_data
-#' @inheritParams plot_PPR_data_one_treatment
+#' @inheritParams plot_PPR_data_single_treatment
 #' @inheritParams plot_baseline_data
 #' @returns A ggplot object
 #' @export

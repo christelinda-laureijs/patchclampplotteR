@@ -64,7 +64,7 @@ reference:
 
 - subtitle: Paired-pulse ratio
   contents:
-  - plot_PPR_data_one_treatment
+  - plot_PPR_data_single_treatment
   - plot_PPR_data_multiple_treatments
 
 - subtitle: Action potentials
