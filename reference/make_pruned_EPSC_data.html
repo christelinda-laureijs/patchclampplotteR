@@ -330,6 +330,10 @@ and months when reporting animal ages).</p></li>
 assign top-level groups for further analyses, with <code>treatment</code> as subgroups.</p></li>
 <li><p><code>cell</code> A character or numeric value representing the cell. For
 example, use <code>3.1.1</code> for animal #3, slice #1, cell #1.</p></li>
+<li><p><code>R_a</code> A list of values for the access resistance, which would have been monitored at several timepoints throughout the recording. See the documentation for the <code>R_a</code> column in the documentation for <code>sample_cell_characteristics</code> with <code><a href="sample_cell_characteristics.html">?sample_cell_characteristics</a></code>.</p></li>
+<li><p><code>notes</code> An optional character column with notes about any issues, sweeps that were removed during Clampfit processing, etc.</p></li>
+<li><p><code>days_alone</code> A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.</p></li>
+<li><p><code>animal_or_slicing_problems</code> A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).</p></li>
 </ul><p><strong>Evoked current data</strong>:</p>
 <p>If the data are evoked currents (<code>current_type == "eEPSC"</code>), the data must
 contain the basic columns mentioned in <strong>Required basic columns</strong> plus these
@@ -368,7 +372,9 @@ normalization works.</p></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">make_pruned_EPSC_data</span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Evoked Current Data</span></span></span>
+<span class="r-in"><span><span class="fu">make_pruned_EPSC_data</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_raw_eEPSC_df</span>,</span></span>
 <span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span></span>
 <span class="r-in"><span>  min_time_value <span class="op">=</span> <span class="fl">0</span>,</span></span>
@@ -378,7 +384,7 @@ normalization works.</p></div>
 <span class="r-in"><span>  decimal_places <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $individual_cells</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 473 × 14</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 473 × 16</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex   treatment interval_pruned mean_P1 sd_P1     n    se</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2        AO     Male  Control   t0to1             36.4  13.8     13  3.83</span>
@@ -392,8 +398,9 @@ normalization works.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        AO     Male  Control   t8to9              5.68  2       12  0.58</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        AO     Male  Control   t9to10             7.45  5.84    12  1.69</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 463 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5 more variables: cv &lt;dbl&gt;, cv_inverse_square &lt;dbl&gt;, time &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   baseline_mean &lt;dbl&gt;, synapses &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 7 more variables: cv &lt;dbl&gt;, cv_inverse_square &lt;dbl&gt;, time &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   baseline_mean &lt;dbl&gt;, synapses &lt;fct&gt;, days_alone &lt;fct&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   animal_or_slicing_problems &lt;fct&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $for_table</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 19 × 2</span></span>
@@ -438,6 +445,7 @@ normalization works.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   time &lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Spontaneous Current Data</span></span></span>
 <span class="r-in"><span><span class="fu">make_pruned_EPSC_data</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_raw_sEPSC_df</span>,</span></span>
 <span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"sEPSC"</span>,</span></span>
@@ -448,7 +456,7 @@ normalization works.</p></div>
 <span class="r-in"><span>  decimal_places <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $individual_cells</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 195 × 17</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 195 × 19</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   letter [7]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex    treatment interval_pruned mean_amplitude</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -463,8 +471,9 @@ normalization works.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        AZ     Female Control   t7to8                     97.6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        AZ     Female Control   t8to9                     94.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 185 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: mean_raw_amplitude &lt;dbl&gt;, sd_amplitude &lt;dbl&gt;, n &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   frequency &lt;dbl&gt;, se &lt;dbl&gt;, interval &lt;fct&gt;, synapses &lt;fct&gt;, time &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: mean_raw_amplitude &lt;dbl&gt;, sd_amplitude &lt;dbl&gt;, n &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   frequency &lt;dbl&gt;, se &lt;dbl&gt;, interval &lt;fct&gt;, synapses &lt;fct&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   days_alone &lt;dbl&gt;, animal_or_slicing_problems &lt;chr&gt;, time &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   baseline_range &lt;lgl&gt;, baseline_mean_frequency &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   frequency_transformed &lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

@@ -192,6 +192,10 @@ and months when reporting animal ages).</p></li>
 assign top-level groups for further analyses, with <code>treatment</code> as subgroups.</p></li>
 <li><p><code>cell</code> A character or numeric value representing the cell. For
 example, use <code>3.1.1</code> for animal #3, slice #1, cell #1.</p></li>
+<li><p><code>R_a</code> A list of values for the access resistance, which would have been monitored at several timepoints throughout the recording. See the documentation for the <code>R_a</code> column in the documentation for <code>sample_cell_characteristics</code> with <code><a href="sample_cell_characteristics.html">?sample_cell_characteristics</a></code>.</p></li>
+<li><p><code>notes</code> An optional character column with notes about any issues, sweeps that were removed during Clampfit processing, etc.</p></li>
+<li><p><code>days_alone</code> A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.</p></li>
+<li><p><code>animal_or_slicing_problems</code> A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).</p></li>
 </ul><p><strong>Evoked current data</strong>:</p>
 <p>If the data are evoked currents (<code>current_type == "eEPSC"</code>), the data must
 contain the basic columns mentioned in <strong>Required basic columns</strong> plus these
@@ -241,7 +245,7 @@ functions that further process the data.</p></div>
 <span class="r-in"><span>  decimal_places <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>  negative_transform_currents <span class="op">=</span> <span class="st">"yes"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5,680 × 21</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5,680 × 24</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   letter [19]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    letter synapses  sex   treatment  time ID          P1    P2     X     Y   age</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -256,8 +260,9 @@ functions that further process the data.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> AO     Glutamate Male  Control    0.67 23623002  60.0  52.7    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    39</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> AO     Glutamate Male  Control    0.75 23623002  46.9  60.3    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    39</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5,670 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 more variables: animal &lt;dbl&gt;, category &lt;fct&gt;, cell &lt;chr&gt;, r_a &lt;lgl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   PPR &lt;dbl&gt;, interval &lt;fct&gt;, baseline_range &lt;lgl&gt;, baseline_mean &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: animal &lt;dbl&gt;, category &lt;fct&gt;, cell &lt;chr&gt;, notes &lt;lgl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   days_alone &lt;fct&gt;, animal_or_slicing_problems &lt;fct&gt;, R_a &lt;chr&gt;, PPR &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   interval &lt;fct&gt;, baseline_range &lt;lgl&gt;, baseline_mean &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   P1_transformed &lt;dbl&gt;, P2_transformed &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

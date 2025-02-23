@@ -185,34 +185,35 @@ further processes the data.</p></div>
 <span class="r-in"><span>  decimal_places <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $percent_change_data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 19 × 15</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 19 × 17</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   category, treatment, letter [19]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex    treatment       age animal     X     Y synapses  t0to5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2        AO     Male   Control          39   17     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  Glutamate  36.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2        AZ     Female Control          32   21    353.  332. Glutamate  44.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2        BN     Male   Control          29   25    153.  337. Glutamate  72.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2        BO     Male   HNMPA            32   27     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  Glutamate  87.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2        BT     Male   HNMPA            37   30    387.  587. Glutamate  51.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2        CG     Female HNMPA            36   35    164.  367. Glutamate  44.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2        CZ     Male   HNMPA            28   41    297.  493. Glutamate  68.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2        FT     Female HNMPA            39   72    153.  337. Glutamate  77.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        FX     Female PPP              28   74    235.  496. Glutamate  61.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        GF     Female PPP              36   77    217.  324. Glutamate  79.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2        GI     Female PPP              28   81    236.  284. Glutamate  41.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2        GK     Male   PPP              35   84    249.  574. Glutamate  69.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2        GR     Male   PPP              34   90    314.  416. Glutamate  99.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 2        GX     Male   PPP_and_HNMPA    33   97     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  Glutamate  49.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> 2        HB     Male   PPP_and_HNMPA    39  100    133.  590. Glutamate  49.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> 2        HC     Male   PPP_and_HNMPA    39  100    173.  576. Glutamate  31.3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> 2        HG     Female PPP_and_HNMPA    34  103     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  Glutamate  79.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> 2        HN     Male   PPP_and_HNMPA    38  109    289.  400. Glutamate  86.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> 2        L      Male   Control          38    8.5   <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  Glutamate  77.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 5 more variables: t5to10 &lt;dbl&gt;, t10to15 &lt;dbl&gt;, t15to20 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   t20to25 &lt;dbl&gt;, percent_change &lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex    treatment   age animal     X     Y synapses days_alone</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2        AO     Male   Control      39   17     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  Glutama… 1         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2        AZ     Female Control      32   21    353.  332. Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2        BN     Male   Control      29   25    153.  337. Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2        BO     Male   HNMPA        32   27     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2        BT     Male   HNMPA        37   30    387.  587. Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2        CG     Female HNMPA        36   35    164.  367. Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2        CZ     Male   HNMPA        28   41    297.  493. Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2        FT     Female HNMPA        39   72    153.  337. Glutama… 1         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        FX     Female PPP          28   74    235.  496. Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        GF     Female PPP          36   77    217.  324. Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2        GI     Female PPP          28   81    236.  284. Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2        GK     Male   PPP          35   84    249.  574. Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2        GR     Male   PPP          34   90    314.  416. Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 2        GX     Male   PPP_and_…    33   97     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  Glutama… 1         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> 2        HB     Male   PPP_and_…    39  100    133.  590. Glutama… 2         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> 2        HC     Male   PPP_and_…    39  100    173.  576. Glutama… 2         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> 2        HG     Female PPP_and_…    34  103     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> 2        HN     Male   PPP_and_…    38  109    289.  400. Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">19</span> 2        L      Male   Control      38    8.5   <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  Glutama… 0         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 7 more variables: animal_or_slicing_problems &lt;fct&gt;, t0to5 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   t5to10 &lt;dbl&gt;, t10to15 &lt;dbl&gt;, t15to20 &lt;dbl&gt;, t20to25 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percent_change &lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $summary_data</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 95 × 20</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 95 × 22</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex    treatment interval mean_P1_transformed mean_P1_raw</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2        AO     Male   Control   t0to5                  100         36.8 </span>
@@ -226,9 +227,10 @@ further processes the data.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        AZ     Female Control   t15to20                 56.0       24.8 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        AZ     Female Control   t20to25                 50.7       22.4 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 85 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: n &lt;dbl&gt;, sd &lt;dbl&gt;, cv &lt;dbl&gt;, se &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 15 more variables: n &lt;dbl&gt;, sd &lt;dbl&gt;, cv &lt;dbl&gt;, se &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   cv_inverse_square &lt;dbl&gt;, variance &lt;dbl&gt;, VMR &lt;dbl&gt;, age &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   animal &lt;dbl&gt;, X &lt;dbl&gt;, Y &lt;dbl&gt;, time &lt;dbl&gt;, synapses &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   animal &lt;dbl&gt;, X &lt;dbl&gt;, Y &lt;dbl&gt;, time &lt;dbl&gt;, synapses &lt;fct&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   days_alone &lt;fct&gt;, animal_or_slicing_problems &lt;fct&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Spontaneous Data</span></span></span>
@@ -239,7 +241,7 @@ further processes the data.</p></div>
 <span class="r-in"><span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span>,</span></span>
 <span class="r-in"><span>  decimal_places <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 35 × 16</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 35 × 18</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   category, letter, sex, treatment [7]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex    treatment interval mean_transformed_amplitude</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -254,11 +256,11 @@ further processes the data.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        BO     Male   HNMPA     t15to20                        82.2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        BO     Male   HNMPA     t20to25                        82.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 25 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 10 more variables: mean_raw_amplitude &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 12 more variables: mean_raw_amplitude &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   sd_transformed_amplitude &lt;dbl&gt;, n &lt;dbl&gt;, se_transformed_amplitude &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   mean_transformed_frequency &lt;dbl&gt;, sd_transformed_frequency &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   se_transformed_frequency &lt;dbl&gt;, mean_raw_frequency &lt;dbl&gt;, time &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   synapses &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   synapses &lt;fct&gt;, days_alone &lt;dbl&gt;, animal_or_slicing_problems &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
