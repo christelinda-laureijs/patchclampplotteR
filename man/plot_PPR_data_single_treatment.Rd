@@ -11,6 +11,8 @@ plot_PPR_data_single_treatment(
   baseline_label = "Baseline",
   post_hormone_label = "Post-hormone",
   test_type,
+  map_signif_level_values = c(`***` = 0.001, `**` = 0.01, `*` = 0.05, ns = 2),
+  geom_signif_family = "",
   large_axis_text = "no",
   geom_signif_size = 0.4,
   treatment_colour_theme,
@@ -42,10 +44,14 @@ will likely change this to the hormone or protocol name.}
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}
 
+\item{map_signif_level_values}{A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings.}
+
+\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}.}
+
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the size of the axis text.}
 
-\item{geom_signif_size}{A numeric value describing the size of the geom_signif bracket size. Defaults to 0.4, which is a good thickness for most applications.}
+\item{geom_signif_size}{A numeric value describing the size of the \code{geom_signif} bracket size. Defaults to 0.4, which is a good thickness for most applications.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See

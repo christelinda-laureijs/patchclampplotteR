@@ -13,6 +13,8 @@ plot_AP_comparison(
   y_variable,
   y_axis_title,
   test_type,
+  map_signif_level_values = c(`***` = 0.001, `**` = 0.01, `*` = 0.05, ns = 2),
+  geom_signif_family = "",
   treatment_colour_theme,
   theme_options,
   baseline_shape = 16,
@@ -46,6 +48,10 @@ pre-hormone state. Defaults to "Baseline".}
 \item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}
+
+\item{map_signif_level_values}{A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings.}
+
+\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See

@@ -14,6 +14,8 @@ plot_variance_comparison_data(
   post_hormone_interval = "t20to25",
   post_hormone_label = "Insulin",
   test_type,
+  map_signif_level_values = c(`***` = 0.001, `**` = 0.01, `*` = 0.05, ns = 2),
+  geom_signif_family = "",
   large_axis_text = "no",
   geom_signif_size = 0.4,
   treatment_colour_theme,
@@ -57,6 +59,10 @@ will likely change this to the hormone or protocol name.}
 \item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}
+
+\item{map_signif_level_values}{A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings.}
+
+\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}.}
 
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the axis text.}

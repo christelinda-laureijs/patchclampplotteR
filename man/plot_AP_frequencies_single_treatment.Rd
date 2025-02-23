@@ -12,6 +12,7 @@ plot_AP_frequencies_single_treatment(
   baseline_label = "Baseline",
   hormone_added,
   test_type,
+  significance_display_method = "stars",
   p_adjust_method = "holm",
   save_plot_png = "no",
   treatment_colour_theme,
@@ -48,6 +49,8 @@ annotation arrow will be added instead.}
 \item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}
+
+\item{significance_display_method}{A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if \code{test_type} is "none".)}
 
 \item{p_adjust_method}{This argument is directly related to \code{p.adjust.method} in \code{rstatix::t_test}. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none" (although "none" is not recommended).}
 

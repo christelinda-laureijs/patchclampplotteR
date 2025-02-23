@@ -1528,6 +1528,11 @@ plot_variance_comparison_data <- function(data,
                                           post_hormone_interval = "t20to25",
                                           post_hormone_label = "Insulin",
                                           test_type,
+                                          map_signif_level_values = c("***" = 0.001,
+                                                                      "**" = 0.01,
+                                                                      "*" = 0.05,
+                                                                      "ns" = 2),
+                                          geom_signif_family = "",
                                           large_axis_text = "no",
                                           geom_signif_size = 0.4,
                                           treatment_colour_theme,
@@ -1585,13 +1590,9 @@ plot_variance_comparison_data <- function(data,
         )),
         test = test_type,
         test.args = list(paired = TRUE),
-        map_signif_level = c(
-          "***" = 0.001,
-          "**" = 0.01,
-          "*" = 0.05,
-          "ns" = 2
-        ),
+        map_signif_level = map_signif_level_values,
         vjust = -0.3,
+        family = geom_signif_family,
         textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
         size = geom_signif_size
       ) +
@@ -1784,7 +1785,9 @@ plot_cv_data <- function(data,
 #' @param test_type A character (must be "wilcox.test", "t.test" or "none")
 #'   describing the statistical model used to create a significance bracket
 #'   comparing the pre- and post-hormone groups.
-#' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to 0.4, which is a good thickness for most applications.
+#' @param map_signif_level_values A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings.
+#' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to 0.4, which is a good thickness for most applications.
+#' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`.
 #' @export
 #'
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -1813,6 +1816,11 @@ plot_PPR_data_single_treatment <- function(data,
                                         baseline_label = "Baseline",
                                         post_hormone_label = "Post-hormone",
                                         test_type,
+                                        map_signif_level_values = c("***" = 0.001,
+                                                                    "**" = 0.01,
+                                                                    "*" = 0.05,
+                                                                    "ns" = 2),
+                                        geom_signif_family = "",
                                         large_axis_text = "no",
                                         geom_signif_size = 0.4,
                                         treatment_colour_theme,
@@ -1889,12 +1897,8 @@ plot_PPR_data_single_treatment <- function(data,
         )),
         test = test_type,
         test.args = list(paired = TRUE),
-        map_signif_level = c(
-          "***" = 0.001,
-          "**" = 0.01,
-          "*" = 0.05,
-          "ns" = 2
-        ),
+        map_signif_level = map_signif_level_values,
+        family = geom_signif_family,
         vjust = -0.3,
         textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
         size = geom_signif_size,
@@ -1978,6 +1982,11 @@ plot_PPR_data_multiple_treatments <- function(data,
                                               baseline_label = "B",
                                               post_hormone_label = "A",
                                               test_type,
+                                              map_signif_level_values = c("***" = 0.001,
+                                                                          "**" = 0.01,
+                                                                          "*" = 0.05,
+                                                                          "ns" = 2),
+                                              geom_signif_family = "",
                                               treatment_colour_theme,
                                               theme_options,
                                               filename_suffix = "",
@@ -2097,12 +2106,8 @@ plot_PPR_data_multiple_treatments <- function(data,
         comparisons = list(c(baseline_label, post_hormone_label)),
         test = test_type,
         test.args = list(paired = TRUE),
-        map_signif_level = c(
-          "***" = 0.001,
-          "**" = 0.01,
-          "*" = 0.05,
-          "ns" = 2
-        ),
+        map_signif_level = map_signif_level_values,
+        family=geom_signif_family,
         vjust = -0.3,
         textsize = 4,
         size = geom_signif_size,
@@ -2170,6 +2175,11 @@ plot_AP_comparison <-
            y_variable,
            y_axis_title,
            test_type,
+           map_signif_level_values = c("***" = 0.001,
+                                       "**" = 0.01,
+                                       "*" = 0.05,
+                                       "ns" = 2),
+           geom_signif_family = "",
            treatment_colour_theme,
            theme_options,
            baseline_shape = 16,
@@ -2229,12 +2239,8 @@ plot_AP_comparison <-
         comparisons = list(c(baseline_label, post_hormone_label)),
         test = test_type,
         test.args = list(paired = TRUE),
-        map_signif_level = c(
-          "***" = 0.001,
-          "**" = 0.01,
-          "*" = 0.05,
-          "ns" = 2
-        ),
+        map_signif_level = map_signif_level_values,
+        family=geom_signif_family,
         vjust = -0.3,
         textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
         size = geom_signif_size,
@@ -2272,6 +2278,7 @@ plot_AP_comparison <-
 #'
 #' @param data Action potential frequency data imported through `add_new_cells()` with `data_type == "AP_count"`
 #' @param p_adjust_method This argument is directly related to `p.adjust.method` in `rstatix::t_test`. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none" (although "none" is not recommended).
+#' @param significance_display_method A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if `test_type` is "none".)
 #' @param baseline_shape A numeric value describing the shape used for the baseline data. Defaults to 16, which is a circle.
 #' @param post_treatment_shape A numeric value describing the shape used for the post-treatment/post-protocol data. Defaults to 17, which is a triangle.
 #' @returns
@@ -2303,6 +2310,7 @@ plot_AP_frequencies_single_treatment <- function(data,
                                                  baseline_label = "Baseline",
                                                  hormone_added,
                                                  test_type,
+                                                 significance_display_method = "stars",
                                                  p_adjust_method = "holm",
                                                  save_plot_png = "no",
                                                  treatment_colour_theme,
@@ -2320,6 +2328,10 @@ plot_AP_frequencies_single_treatment <- function(data,
 
   if (!test_type %in% c("wilcox.test", "t.test", "none")) {
     cli::cli_abort(c("x" = "'test_type' argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
+  }
+
+  if (!significance_display_method %in% c("stars", "p-values")) {
+    cli::cli_abort(c("x" = "'significance_display_method' argument must be one of: \"stars\" or \"p-values\"."))
   }
 
   if (!p_adjust_method %in% c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")) {
@@ -2442,6 +2454,8 @@ plot_AP_frequencies_single_treatment <- function(data,
 
     frequency_comparison_test_results_final <- merge(frequency_comparison_test_results, max_mean_AP_frequencies, by = "current_injection")
 
+return(frequency_comparison_test_results_final)
+    if (significance_display_method == "stars") {
     single_treatment_AP_plot <- single_treatment_AP_plot +
       ggplot2::geom_text(
         data = frequency_comparison_test_results_final,
@@ -2453,6 +2467,21 @@ plot_AP_frequencies_single_treatment <- function(data,
         inherit.aes = F,
         size = 5
       )
+    }
+
+    if (significance_display_method == "p-values") {
+      single_treatment_AP_plot <- single_treatment_AP_plot +
+        ggplot2::geom_text(
+          data = frequency_comparison_test_results_final,
+          ggplot2::aes(
+            x = .data$current_injection,
+            y = .data$max_AP_frequency + .data$max_se + 1,
+            label = .data$p_string
+          ),
+          inherit.aes = F,
+          size = 5
+        )
+    }
   }
 
 
@@ -2893,6 +2922,11 @@ plot_spontaneous_current_parameter_comparison <-
            baseline_interval = "t0to5",
            post_hormone_interval = "t20to25",
            test_type,
+           map_signif_level_values = c("***" = 0.001,
+                                       "**" = 0.01,
+                                       "*" = 0.05,
+                                       "ns" = 2),
+           geom_signif_family = "",
            large_axis_text = "no",
            treatment_colour_theme,
            geom_signif_size = 0.5,
@@ -2984,12 +3018,8 @@ plot_spontaneous_current_parameter_comparison <-
           )),
           test = test_type,
           test.args = list(paired = TRUE),
-          map_signif_level = c(
-            "***" = 0.001,
-            "**" = 0.01,
-            "*" = 0.05,
-            "ns" = 2
-          ),
+          map_signif_level = map_signif_level_values,
+          family = geom_signif_family,
           vjust = -0.3,
           textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
           size = geom_signif_size
