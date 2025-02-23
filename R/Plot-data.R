@@ -3240,14 +3240,14 @@ plot_spontaneous_current_parameter_comparison <-
     }
 
     if (included_sexes == "male") {
-      sEPSC_comparison_plot_data<- sEPSC_comparison_plot_data%>%
+      sEPSC_comparison_plot_data <- sEPSC_comparison_plot_data %>%
         dplyr::filter(.data$sex == male_label)
 
       sex_annotation <- "-males-only"
     }
 
     if (included_sexes == "female") {
-      sEPSC_comparison_plot_data<- sEPSC_comparison_plot_data%>%
+      sEPSC_comparison_plot_data <- sEPSC_comparison_plot_data %>%
         dplyr::filter(.data$sex == female_label)
 
       sex_annotation <- "-females-only"
