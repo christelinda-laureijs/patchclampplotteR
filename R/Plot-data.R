@@ -1528,10 +1528,12 @@ plot_variance_comparison_data <- function(data,
                                           post_hormone_interval = "t20to25",
                                           post_hormone_label = "Insulin",
                                           test_type,
-                                          map_signif_level_values = c("***" = 0.001,
-                                                                      "**" = 0.01,
-                                                                      "*" = 0.05,
-                                                                      "ns" = 2),
+                                          map_signif_level_values = c(
+                                            "***" = 0.001,
+                                            "**" = 0.01,
+                                            "*" = 0.05,
+                                            "ns" = 2
+                                          ),
                                           geom_signif_family = "",
                                           large_axis_text = "no",
                                           geom_signif_size = 0.4,
@@ -1811,22 +1813,24 @@ plot_cv_data <- function(data,
 #' @seealso [plot_PPR_data_multiple_treatments()] to plot changes in PPR for multiple treatments.
 
 plot_PPR_data_single_treatment <- function(data,
-                                        plot_treatment = "Control",
-                                        plot_category = 2,
-                                        baseline_label = "Baseline",
-                                        post_hormone_label = "Post-hormone",
-                                        test_type,
-                                        map_signif_level_values = c("***" = 0.001,
-                                                                    "**" = 0.01,
-                                                                    "*" = 0.05,
-                                                                    "ns" = 2),
-                                        geom_signif_family = "",
-                                        large_axis_text = "no",
-                                        geom_signif_size = 0.4,
-                                        treatment_colour_theme,
-                                        theme_options,
-                                        save_plot_png = "no",
-                                        ggplot_theme = patchclampplotteR_theme()) {
+                                           plot_treatment = "Control",
+                                           plot_category = 2,
+                                           baseline_label = "Baseline",
+                                           post_hormone_label = "Post-hormone",
+                                           test_type,
+                                           map_signif_level_values = c(
+                                             "***" = 0.001,
+                                             "**" = 0.01,
+                                             "*" = 0.05,
+                                             "ns" = 2
+                                           ),
+                                           geom_signif_family = "",
+                                           large_axis_text = "no",
+                                           geom_signif_size = 0.4,
+                                           treatment_colour_theme,
+                                           theme_options,
+                                           save_plot_png = "no",
+                                           ggplot_theme = patchclampplotteR_theme()) {
   if (!large_axis_text %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`large_axis_text` argument must be either \"yes\" or \"no\""))
   }
@@ -1982,10 +1986,12 @@ plot_PPR_data_multiple_treatments <- function(data,
                                               baseline_label = "B",
                                               post_hormone_label = "A",
                                               test_type,
-                                              map_signif_level_values = c("***" = 0.001,
-                                                                          "**" = 0.01,
-                                                                          "*" = 0.05,
-                                                                          "ns" = 2),
+                                              map_signif_level_values = c(
+                                                "***" = 0.001,
+                                                "**" = 0.01,
+                                                "*" = 0.05,
+                                                "ns" = 2
+                                              ),
                                               geom_signif_family = "",
                                               treatment_colour_theme,
                                               theme_options,
@@ -2107,7 +2113,7 @@ plot_PPR_data_multiple_treatments <- function(data,
         test = test_type,
         test.args = list(paired = TRUE),
         map_signif_level = map_signif_level_values,
-        family=geom_signif_family,
+        family = geom_signif_family,
         vjust = -0.3,
         textsize = 4,
         size = geom_signif_size,
@@ -2175,10 +2181,12 @@ plot_AP_comparison <-
            y_variable,
            y_axis_title,
            test_type,
-           map_signif_level_values = c("***" = 0.001,
-                                       "**" = 0.01,
-                                       "*" = 0.05,
-                                       "ns" = 2),
+           map_signif_level_values = c(
+             "***" = 0.001,
+             "**" = 0.01,
+             "*" = 0.05,
+             "ns" = 2
+           ),
            geom_signif_family = "",
            treatment_colour_theme,
            theme_options,
@@ -2240,7 +2248,7 @@ plot_AP_comparison <-
         test = test_type,
         test.args = list(paired = TRUE),
         map_signif_level = map_signif_level_values,
-        family=geom_signif_family,
+        family = geom_signif_family,
         vjust = -0.3,
         textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
         size = geom_signif_size,
@@ -2454,19 +2462,19 @@ plot_AP_frequencies_single_treatment <- function(data,
 
     frequency_comparison_test_results_final <- merge(frequency_comparison_test_results, max_mean_AP_frequencies, by = "current_injection")
 
-return(frequency_comparison_test_results_final)
+    return(frequency_comparison_test_results_final)
     if (significance_display_method == "stars") {
-    single_treatment_AP_plot <- single_treatment_AP_plot +
-      ggplot2::geom_text(
-        data = frequency_comparison_test_results_final,
-        ggplot2::aes(
-          x = .data$current_injection,
-          y = .data$max_AP_frequency + .data$max_se + 1,
-          label = .data$significance_stars
-        ),
-        inherit.aes = F,
-        size = 5
-      )
+      single_treatment_AP_plot <- single_treatment_AP_plot +
+        ggplot2::geom_text(
+          data = frequency_comparison_test_results_final,
+          ggplot2::aes(
+            x = .data$current_injection,
+            y = .data$max_AP_frequency + .data$max_se + 1,
+            label = .data$significance_stars
+          ),
+          inherit.aes = F,
+          size = 5
+        )
     }
 
     if (significance_display_method == "p-values") {
@@ -2922,10 +2930,12 @@ plot_spontaneous_current_parameter_comparison <-
            baseline_interval = "t0to5",
            post_hormone_interval = "t20to25",
            test_type,
-           map_signif_level_values = c("***" = 0.001,
-                                       "**" = 0.01,
-                                       "*" = 0.05,
-                                       "ns" = 2),
+           map_signif_level_values = c(
+             "***" = 0.001,
+             "**" = 0.01,
+             "*" = 0.05,
+             "ns" = 2
+           ),
            geom_signif_family = "",
            large_axis_text = "no",
            treatment_colour_theme,
@@ -3403,7 +3413,7 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
     showPageSizeOptions = TRUE,
     elementId = "cell-table",
     defaultPageSize = 15,
-   defaultColDef = reactable::colDef(vAlign = "center", headerVAlign = "center"),
+    defaultColDef = reactable::colDef(vAlign = "center", headerVAlign = "center"),
     columns = list(
       Colours = reactable::colDef(show = FALSE),
       Letter = reactable::colDef(
@@ -3430,20 +3440,20 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
         cell = reactablefmtr::react_sparkline(
           table_data,
           line_color_ref = "Colours",
-         show_area = TRUE,
-           area_opacity = 1
-         )
+          show_area = TRUE,
+          area_opacity = 1
+        )
       ),
       Spont_amplitude_transformed = reactable::colDef(
-              name = "sEPSC amplitude (pA)",
-              filterable = FALSE,
-              cell = reactablefmtr::react_sparkline(
-                table_data,
-                line_color_ref = "Colours",
-                show_area = TRUE,
-                area_opacity = 1
-              )
-            ),
+        name = "sEPSC amplitude (pA)",
+        filterable = FALSE,
+        cell = reactablefmtr::react_sparkline(
+          table_data,
+          line_color_ref = "Colours",
+          show_area = TRUE,
+          area_opacity = 1
+        )
+      ),
       R_a = reactable::colDef(
         name = "Ra (M\u03a9)",
         filterable = FALSE,

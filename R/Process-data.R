@@ -226,9 +226,11 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
   raw_df <- utils::read.csv(here::here(filename), header = TRUE) %>%
     dplyr::rename_with(tolower)
 
-    raw_df <- raw_df %>%
-      dplyr::mutate(days_alone = factor(.data$days_alone),
-                    animal_or_slicing_problems = factor(.data$animal_or_slicing_problems))
+  raw_df <- raw_df %>%
+    dplyr::mutate(
+      days_alone = factor(.data$days_alone),
+      animal_or_slicing_problems = factor(.data$animal_or_slicing_problems)
+    )
 
   if (current_type == "eEPSC") {
     raw_df <- raw_df %>%
@@ -636,7 +638,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         n = dplyr::n(),
         se = .data$sd_P1 / sqrt(.data$n),
         cv = .data$sd_P1 / .data$mean_P1,
-        cv_inverse_square = 1 / (.data$cv ^ 2),
+        cv_inverse_square = 1 / (.data$cv^2),
         letter = unique(.data$letter),
         category = unique(.data$category),
         time = dplyr::last(.data$time),
@@ -654,7 +656,6 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
   }
 
   if (current_type == "sEPSC") {
-
     pruned_df_individual_cells <- pruned_df_individual_cells %>%
       dplyr::reframe(
         mean_amplitude = mean(.data$amplitude_transformed, na.rm = TRUE),
@@ -936,7 +937,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         sd = stats::sd(.data$P1_transformed, na.rm = TRUE),
         cv = .data$sd / .data$mean_P1_transformed,
         se = stats::sd(.data$P1_transformed, na.rm = TRUE) / sqrt(.data$n),
-        cv_inverse_square = 1 / (.data$cv ^ 2),
+        cv_inverse_square = 1 / (.data$cv^2),
         variance = stats::var(.data$P1_transformed, na.rm = TRUE),
         VMR = .data$variance / .data$mean_P1_transformed,
         age = unique(.data$age),
@@ -996,25 +997,25 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
       )
 
 
-      summary_df <- summary_df %>%
-        dplyr::summarize(
-          mean_transformed_amplitude = mean(.data$mean_amplitude, na.rm = TRUE),
-          mean_raw_amplitude = mean(.data$mean_raw_amplitude, na.rm = TRUE),
-          sd_transformed_amplitude = stats::sd(.data$mean_amplitude, na.rm = TRUE),
-          n = dplyr::n(),
-          se_transformed_amplitude = .data$sd_transformed_amplitude / sqrt(.data$n),
-          mean_transformed_frequency = mean(.data$frequency_transformed, na.rm = TRUE),
-          sd_transformed_frequency = stats::sd(.data$frequency_transformed, na.rm = TRUE),
-          se_transformed_frequency = .data$sd_transformed_frequency / sqrt(.data$n),
-          mean_raw_frequency = mean(.data$frequency, na.rm = TRUE),
-          time = dplyr::last(.data$time),
-          interval = unique(.data$interval),
-          category = unique(.data$category),
-          synapses = dplyr::last(.data$synapses),
-          days_alone = unique(.data$days_alone),
-          animal_or_slicing_problems = unique(.data$animal_or_slicing_problems)
-        ) %>%
-        dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
+    summary_df <- summary_df %>%
+      dplyr::summarize(
+        mean_transformed_amplitude = mean(.data$mean_amplitude, na.rm = TRUE),
+        mean_raw_amplitude = mean(.data$mean_raw_amplitude, na.rm = TRUE),
+        sd_transformed_amplitude = stats::sd(.data$mean_amplitude, na.rm = TRUE),
+        n = dplyr::n(),
+        se_transformed_amplitude = .data$sd_transformed_amplitude / sqrt(.data$n),
+        mean_transformed_frequency = mean(.data$frequency_transformed, na.rm = TRUE),
+        sd_transformed_frequency = stats::sd(.data$frequency_transformed, na.rm = TRUE),
+        se_transformed_frequency = .data$sd_transformed_frequency / sqrt(.data$n),
+        mean_raw_frequency = mean(.data$frequency, na.rm = TRUE),
+        time = dplyr::last(.data$time),
+        interval = unique(.data$interval),
+        category = unique(.data$category),
+        synapses = dplyr::last(.data$synapses),
+        days_alone = unique(.data$days_alone),
+        animal_or_slicing_problems = unique(.data$animal_or_slicing_problems)
+      ) %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
 
 
 

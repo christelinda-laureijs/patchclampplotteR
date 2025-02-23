@@ -391,7 +391,6 @@ add_new_cells <- function(new_raw_data_csv,
     new_raw_data <- new_raw_data %>%
       dplyr::mutate(id = factor(.data$id)) %>%
       dplyr::rename(ID = .data$id)
-
   }
 
   if (data_type == "eEPSC") {
