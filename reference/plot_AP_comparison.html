@@ -56,6 +56,9 @@
 <span>  <span class="va">data</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  included_sexes <span class="op">=</span> <span class="st">"both"</span>,</span>
+<span>  male_label <span class="op">=</span> <span class="st">"Male"</span>,</span>
+<span>  female_label <span class="op">=</span> <span class="st">"Female"</span>,</span>
 <span>  baseline_label <span class="op">=</span> <span class="st">"Baseline"</span>,</span>
 <span>  post_hormone_label <span class="op">=</span> <span class="st">"Post-hormone"</span>,</span>
 <span>  <span class="va">y_variable</span>,</span>
@@ -92,6 +95,18 @@ were present on the brain slice, or the animals were fasted, etc.</p></dd>
 used to differentiate different protocol types. In the sample dataset for
 this package, <code>plot_category == 2</code> represents experiments where insulin was
 applied continuously after a 5-minute baseline period.</p></dd>
+
+
+<dt id="arg-included-sexes">included_sexes<a class="anchor" aria-label="anchor" href="#arg-included-sexes"></a></dt>
+<dd><p>A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the <code>t_test_df</code> contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.</p></dd>
+
+
+<dt id="arg-male-label">male_label<a class="anchor" aria-label="anchor" href="#arg-male-label"></a></dt>
+<dd><p>A character value used to describe how males are encoded in the <code>sex</code> column of the dataframe used in <code>data</code>. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".</p></dd>
+
+
+<dt id="arg-female-label">female_label<a class="anchor" aria-label="anchor" href="#arg-female-label"></a></dt>
+<dd><p>A character value used to describe how females are encoded in the <code>sex</code> column of the dataframe used in <code>data</code>. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".</p></dd>
 
 
 <dt id="arg-baseline-label">baseline_label<a class="anchor" aria-label="anchor" href="#arg-baseline-label"></a></dt>

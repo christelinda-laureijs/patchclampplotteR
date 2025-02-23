@@ -56,6 +56,9 @@
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">plot_treatment</span>,</span>
 <span>  <span class="va">plot_category</span>,</span>
+<span>  included_sexes <span class="op">=</span> <span class="st">"both"</span>,</span>
+<span>  male_label <span class="op">=</span> <span class="st">"Male"</span>,</span>
+<span>  female_label <span class="op">=</span> <span class="st">"Female"</span>,</span>
 <span>  large_axis_text <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  baseline_label <span class="op">=</span> <span class="st">"Baseline"</span>,</span>
 <span>  <span class="va">hormone_added</span>,</span>
@@ -90,6 +93,18 @@ were present on the brain slice, or the animals were fasted, etc.</p></dd>
 used to differentiate different protocol types. In the sample dataset for
 this package, <code>plot_category == 2</code> represents experiments where insulin was
 applied continuously after a 5-minute baseline period.</p></dd>
+
+
+<dt id="arg-included-sexes">included_sexes<a class="anchor" aria-label="anchor" href="#arg-included-sexes"></a></dt>
+<dd><p>A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the <code>t_test_df</code> contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.</p></dd>
+
+
+<dt id="arg-male-label">male_label<a class="anchor" aria-label="anchor" href="#arg-male-label"></a></dt>
+<dd><p>A character value used to describe how males are encoded in the <code>sex</code> column of the dataframe used in <code>data</code>. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".</p></dd>
+
+
+<dt id="arg-female-label">female_label<a class="anchor" aria-label="anchor" href="#arg-female-label"></a></dt>
+<dd><p>A character value used to describe how females are encoded in the <code>sex</code> column of the dataframe used in <code>data</code>. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".</p></dd>
 
 
 <dt id="arg-large-axis-text">large_axis_text<a class="anchor" aria-label="anchor" href="#arg-large-axis-text"></a></dt>
@@ -177,28 +192,7 @@ project directory, with the treatment and category included in the filename.</p>
 <span class="r-in"><span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span></span>
 <span class="r-in"><span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    current_injection          .y.   group1  group2 n1 n2 statistic     p p.adj</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                -50 AP_frequency Baseline Insulin  4  4       0.0   NaN   NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                -40 AP_frequency Baseline Insulin  4  4       0.0   NaN   NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                -30 AP_frequency Baseline Insulin  4  4       0.0   NaN   NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                -20 AP_frequency Baseline Insulin  4  4       0.0   NaN   NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                -10 AP_frequency Baseline Insulin  4  4       6.0 0.181 0.181</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                  0 AP_frequency Baseline Insulin  4  4      10.0 0.125 0.125</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7                 10 AP_frequency Baseline Insulin  4  4      10.0 0.098 0.098</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8                 20 AP_frequency Baseline Insulin  4  4      10.0 0.125 0.125</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9                 30 AP_frequency Baseline Insulin  4  4       1.0 1.000 1.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10                40 AP_frequency Baseline Insulin  4  4       8.5 0.269 0.269</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    p.adj.signif p_string significance_stars max_AP_frequency   max_se</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                   &lt;NA&gt;                                 0.0 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   &lt;NA&gt;                                 0.0 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                   &lt;NA&gt;                                 0.0 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                   &lt;NA&gt;                                 0.0 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            ns     0.18                                 5.5 2.500000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            ns     0.12                                 8.5 1.892969</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7            ns    0.098                                12.5 2.581989</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8            ns     0.12                                17.5 3.915780</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9            ns   &gt; 0.99                                16.0 4.856267</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10           ns     0.27                                19.0 6.658328</span>
+<span class="r-plt img"><img src="plot_AP_frequencies_single_treatment-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
