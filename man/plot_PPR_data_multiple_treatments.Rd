@@ -9,6 +9,9 @@ plot_PPR_data_multiple_treatments(
   include_all_treatments = "yes",
   list_of_treatments = NULL,
   plot_category = 2,
+  included_sexes = "both",
+  male_label = "Male",
+  female_label = "Female",
   baseline_label = "B",
   post_hormone_label = "A",
   test_type,
@@ -37,6 +40,12 @@ include_all_treatments is "yes" by default.}
 used to differentiate different protocol types. In the sample dataset for
 this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
+
+\item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
+
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".}
 
 \item{baseline_label}{A character value for the x-axis label applied to the
 pre-hormone state. Defaults to "Baseline".}

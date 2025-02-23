@@ -14,6 +14,9 @@ plot_baseline_data(
   baseline_interval = "t0to5",
   filename_suffix = "",
   large_axis_text = "no",
+  included_sexes = "both",
+  male_label = "Male",
+  female_label = "Female",
   plot_width = 8,
   treatment_colour_theme,
   theme_options,
@@ -59,6 +62,12 @@ have specified a custom list of treatments.}
 
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the axis text.}
+
+\item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
+
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".}
 
 \item{plot_width}{A numeric value specifying the width of the plot. Defaults
 to 8, but you will need to adjust this depending on how many treatments you

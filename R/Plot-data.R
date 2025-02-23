@@ -49,7 +49,7 @@ patchclampplotteR_theme <- function() {
 #' comparison. For spontaneous currents, raw amplitude and raw frequency during
 #' the baseline period can be plotted.
 #'
-#'
+#' @inheritParams plot_summary_current_data
 #' @param data A dataframe containing the summary data generated from
 #'   [make_summary_EPSC_data()]. If `current_type` is "eEPSC", this must be the `$summary_data` element of the list produced by [make_summary_EPSC_data()].
 #' @param plot_category A numeric value specifying the category, which can be
@@ -124,6 +124,9 @@ plot_baseline_data <- function(data,
                                baseline_interval = "t0to5",
                                filename_suffix = "",
                                large_axis_text = "no",
+                               included_sexes = "both",
+                               male_label = "Male",
+                               female_label = "Female",
                                plot_width = 8,
                                treatment_colour_theme,
                                theme_options,
@@ -143,6 +146,11 @@ plot_baseline_data <- function(data,
   if (!save_plot_png %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
+
+  if (!included_sexes %in% c("both", "male", "female")) {
+    cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
+  }
+
 
   if (!large_axis_text %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`large_axis_text` argument must be either \"yes\" or \"no\""))
@@ -240,6 +248,24 @@ plot_baseline_data <- function(data,
     }
   }
 
+  if (included_sexes == "male") {
+    plot_data <- plot_data %>%
+      dplyr::filter(.data$sex == male_label)
+
+    sex_annotation <- "-males-only"
+  }
+
+  if (included_sexes == "female") {
+    plot_data <- plot_data %>%
+      dplyr::filter(.data$sex == female_label)
+
+    sex_annotation <- "-females-only"
+  }
+
+  if (included_sexes == "both") {
+    sex_annotation <- ""
+  }
+
   baseline_comparison_plot <- plot_data %>%
     dplyr::filter(.data$category == plot_category) %>%
     dplyr::filter(.data$interval == baseline_interval) %>%
@@ -305,6 +331,7 @@ plot_baseline_data <- function(data,
         "-comparison-category-",
         plot_category,
         filename_suffix,
+        sex_annotation,
         ".png"
       ),
       width = plot_width,
@@ -1322,6 +1349,9 @@ plot_percent_change_comparisons <- function(data,
                                             list_of_treatments = NULL,
                                             filename_suffix = "",
                                             large_axis_text = "no",
+                                            included_sexes = "both",
+                                            male_label = "Male",
+                                            female_label = "Female",
                                             plot_width = 8,
                                             treatment_colour_theme,
                                             theme_options,
@@ -1336,6 +1366,11 @@ plot_percent_change_comparisons <- function(data,
   if (!save_plot_png %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
+
+  if (!included_sexes %in% c("both", "male", "female")) {
+    cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
+  }
+
 
   if (!large_axis_text %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`large_axis_text` argument must be either \"yes\" or \"no\""))
@@ -1385,6 +1420,24 @@ plot_percent_change_comparisons <- function(data,
   if (current_type == "eEPSC") {
     filepath <- "Figures/Evoked-currents/Output-summary-plots"
     y_title <- "Change in eEPSC Amplitude\n(% Baseline)"
+  }
+
+  if (included_sexes == "male") {
+    plot_data <- plot_data %>%
+      dplyr::filter(.data$sex == male_label)
+
+    sex_annotation <- "-males-only"
+  }
+
+  if (included_sexes == "female") {
+    plot_data <- plot_data %>%
+      dplyr::filter(.data$sex == female_label)
+
+    sex_annotation <- "-females-only"
+  }
+
+  if (included_sexes == "both") {
+    sex_annotation <- ""
   }
 
   percent_change_comparison_plot <- plot_data %>%
@@ -1448,6 +1501,7 @@ plot_percent_change_comparisons <- function(data,
         "Treatment-comparison-plot-category-",
         plot_category,
         filename_suffix,
+        sex_annotation,
         ".png"
       ),
       width = plot_width,
@@ -1527,6 +1581,9 @@ plot_variance_comparison_data <- function(data,
                                           baseline_label = "Baseline",
                                           post_hormone_interval = "t20to25",
                                           post_hormone_label = "Insulin",
+                                          included_sexes = "both",
+                                          male_label = "Male",
+                                          female_label = "Female",
                                           test_type,
                                           map_signif_level_values = c(
                                             "***" = 0.001,
@@ -1562,6 +1619,29 @@ plot_variance_comparison_data <- function(data,
 
   if (!variance_measure %in% c("cv", "VMR")) {
     cli::cli_abort(c("x" = paste0("`variance_measure` must be one of ", allowed_y_variables_list)))
+  }
+
+  if (!included_sexes %in% c("both", "male", "female")) {
+    cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
+  }
+
+  if (included_sexes == "male") {
+    variance_comparison_data <- variance_comparison_data %>%
+      dplyr::filter(.data$sex == male_label)
+
+    sex_annotation <- "-males-only"
+  }
+
+  if (included_sexes == "female") {
+    variance_comparison_data <- variance_comparison_data %>%
+      dplyr::filter(.data$sex == female_label)
+
+    sex_annotation <- "-females-only"
+  }
+
+  if (included_sexes == "both") {
+    variance_comparison_data <- variance_comparison_data
+    sex_annotation <- ""
   }
 
   if (variance_measure == "cv") {
@@ -1683,6 +1763,7 @@ plot_variance_comparison_data <- function(data,
         plot_treatment,
         "-",
         variance_measure,
+        sex_annotation,
         ".png"
       ),
       width = 7,
@@ -1731,6 +1812,9 @@ plot_cv_data <- function(data,
                          plot_treatment = "Control",
                          plot_category,
                          treatment_colour_theme,
+                         included_sexes = "both",
+                         male_label = "Male",
+                         female_label = "Female",
                          theme_options,
                          save_plot_png = "no",
                          ggplot_theme = patchclampplotteR_theme()) {
@@ -1738,12 +1822,34 @@ plot_cv_data <- function(data,
     cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
 
+  if (!included_sexes %in% c("both", "male", "female")) {
+    cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
+  }
 
   plot_colour <- treatment_colour_theme %>%
     dplyr::filter(.data$treatment == plot_treatment) %>%
     dplyr::pull(.data$colours)
 
-  cv_plot <- data %>%
+  if (included_sexes == "male") {
+    plot_data <- data %>%
+      dplyr::filter(.data$sex == male_label)
+
+    sex_annotation <- "-males-only"
+  }
+
+  if (included_sexes == "female") {
+    plot_data <- data %>%
+      dplyr::filter(.data$sex == female_label)
+
+    sex_annotation <- "-females-only"
+  }
+
+  if (included_sexes == "both") {
+    plot_data <- data
+    sex_annotation <- ""
+  }
+
+  cv_plot <- plot_data %>%
     dplyr::filter(.data$category == plot_category) %>%
     dplyr::filter(.data$treatment == plot_treatment) %>%
     ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data$cv_P1_all_cells)) +
@@ -1755,7 +1861,7 @@ plot_cv_data <- function(data,
     ggplot2::ggsave(
       plot = cv_plot,
       path = here::here("Figures/Evoked-currents/CV"),
-      file = paste0("CV_plot-category-", plot_category, "-", plot_treatment, ".png"),
+      file = paste0("CV_plot-category-", plot_category, "-", plot_treatment, sex_annotation, ".png"),
       width = 7,
       height = 5,
       units = "in",
@@ -1815,6 +1921,9 @@ plot_cv_data <- function(data,
 plot_PPR_data_single_treatment <- function(data,
                                            plot_treatment = "Control",
                                            plot_category = 2,
+                                           included_sexes = "both",
+                                           male_label = "Male",
+                                           female_label = "Female",
                                            baseline_label = "Baseline",
                                            post_hormone_label = "Post-hormone",
                                            test_type,
@@ -1839,6 +1948,11 @@ plot_PPR_data_single_treatment <- function(data,
     cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
 
+  if (!included_sexes %in% c("both", "male", "female")) {
+    cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
+  }
+
+
   if (!test_type %in% c("wilcox.test", "t.test", "none")) {
     cli::cli_abort(c("x" = "`test_type` argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
   }
@@ -1847,8 +1961,27 @@ plot_PPR_data_single_treatment <- function(data,
     dplyr::filter(.data$treatment == plot_treatment) %>%
     dplyr::pull(.data$colours)
 
+  if (included_sexes == "male") {
+    plot_data <- data %>%
+      dplyr::filter(.data$sex == male_label)
 
-  PPR_one_plot <- data %>%
+    sex_annotation <- "-males-only"
+  }
+
+  if (included_sexes == "female") {
+    plot_data <- data %>%
+      dplyr::filter(.data$sex == female_label)
+
+    sex_annotation <- "-females-only"
+  }
+
+  if (included_sexes == "both") {
+    plot_data <- data
+    sex_annotation <- ""
+  }
+
+
+  PPR_one_plot <- plot_data %>%
     dplyr::filter(.data$treatment == plot_treatment) %>%
     dplyr::filter(.data$category == plot_category) %>%
     dplyr::mutate(
@@ -1925,7 +2058,7 @@ plot_PPR_data_single_treatment <- function(data,
     ggplot2::ggsave(
       plot = PPR_one_plot,
       path = here::here("Figures/Evoked-currents/PPR"),
-      file = paste0("PPR_comparison-category-", plot_category, "-", plot_treatment, ".png"),
+      file = paste0("PPR_comparison-category-", plot_category, "-", plot_treatment, sex_annotation, ".png"),
       width = 7,
       height = 5,
       units = "in",
@@ -1983,6 +2116,9 @@ plot_PPR_data_multiple_treatments <- function(data,
                                               include_all_treatments = "yes",
                                               list_of_treatments = NULL,
                                               plot_category = 2,
+                                              included_sexes = "both",
+                                              male_label = "Male",
+                                              female_label = "Female",
                                               baseline_label = "B",
                                               post_hormone_label = "A",
                                               test_type,
@@ -2010,6 +2146,11 @@ plot_PPR_data_multiple_treatments <- function(data,
   if (!test_type %in% c("wilcox.test", "t.test", "none")) {
     cli::cli_abort(c("x" = "'test_type' argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
   }
+
+  if (!included_sexes %in% c("both", "male", "female")) {
+    cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
+  }
+
 
   if (include_all_treatments == "yes") {
     treatment_info <- treatment_colour_theme
@@ -2050,6 +2191,26 @@ plot_PPR_data_multiple_treatments <- function(data,
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% list_of_treatments) %>%
       droplevels()
+  }
+
+
+  if (included_sexes == "male") {
+    plot_data <- plot_data %>%
+      dplyr::filter(.data$sex == male_label)
+
+    sex_annotation <- "-males-only"
+  }
+
+  if (included_sexes == "female") {
+    plot_data <- plot_data %>%
+      dplyr::filter(.data$sex == female_label)
+
+    sex_annotation <- "-females-only"
+  }
+
+  if (included_sexes == "both") {
+    plot_data <- data
+    sex_annotation <- ""
   }
 
   PPR_summary_plot <- plot_data %>%
@@ -2127,7 +2288,7 @@ plot_PPR_data_multiple_treatments <- function(data,
     ggplot2::ggsave(
       plot = PPR_summary_plot,
       path = here::here("Figures/Evoked-currents/PPR"),
-      file = paste0("PPR_Summary_plot-category-", plot_category, filename_suffix, ".png"),
+      file = paste0("PPR_Summary_plot-category-", plot_category, filename_suffix, sex_annotation, ".png"),
       width = 7,
       height = 5,
       units = "in",
@@ -2176,6 +2337,9 @@ plot_AP_comparison <-
   function(data,
            plot_treatment = "Control",
            plot_category = 2,
+           included_sexes = "both",
+           male_label = "Male",
+           female_label = "Female",
            baseline_label = "Baseline",
            post_hormone_label = "Post-hormone",
            y_variable,
@@ -2203,11 +2367,36 @@ plot_AP_comparison <-
       cli::cli_abort(c("x" = "'test_type' argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
     }
 
+    if (!included_sexes %in% c("both", "male", "female")) {
+      cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
+    }
+
+
     plot_colour <- treatment_colour_theme %>%
       dplyr::filter(.data$treatment == plot_treatment) %>%
       dplyr::pull(.data$colours)
 
-    ap_parameter_plot <- data %>%
+    if (included_sexes == "male") {
+      plot_data <- data %>%
+        dplyr::filter(.data$sex == male_label)
+
+      sex_annotation <- "-males-only"
+    }
+
+    if (included_sexes == "female") {
+      plot_data <- data %>%
+        dplyr::filter(.data$sex == female_label)
+
+      sex_annotation <- "-females-only"
+    }
+
+    if (included_sexes == "both") {
+      plot_data <- data
+      sex_annotation <- ""
+    }
+
+
+    ap_parameter_plot <- plot_data %>%
       dplyr::filter(.data$treatment == plot_treatment) %>%
       dplyr::filter(.data$category == plot_category) %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$state, y = .data[[y_variable]], color = .data$state, shape = .data$state)) +
@@ -2262,7 +2451,7 @@ plot_AP_comparison <-
       ggplot2::ggsave(
         plot = ap_parameter_plot,
         path = here::here("Figures/Action-potentials/"),
-        file = paste0("AP-", y_variable, "-comparison-category-", plot_category, "-", plot_treatment, ".png"),
+        file = paste0("AP-", y_variable, "-comparison-category-", plot_category, "-", plot_treatment, sex_annotation, ".png"),
         width = 7,
         height = 5,
         units = "in",
@@ -2314,6 +2503,9 @@ plot_AP_comparison <-
 plot_AP_frequencies_single_treatment <- function(data,
                                                  plot_treatment,
                                                  plot_category,
+                                                 included_sexes = "both",
+                                                 male_label = "Male",
+                                                 female_label = "Female",
                                                  large_axis_text = "no",
                                                  baseline_label = "Baseline",
                                                  hormone_added,
@@ -2334,6 +2526,11 @@ plot_AP_frequencies_single_treatment <- function(data,
     cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
 
+  if (!included_sexes %in% c("both", "male", "female")) {
+    cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
+  }
+
+
   if (!test_type %in% c("wilcox.test", "t.test", "none")) {
     cli::cli_abort(c("x" = "'test_type' argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
   }
@@ -2350,7 +2547,28 @@ plot_AP_frequencies_single_treatment <- function(data,
     dplyr::filter(.data$treatment == plot_treatment) %>%
     dplyr::pull(.data$colours)
 
-  ap_plot_count_data <- data %>%
+
+
+  if (included_sexes == "male") {
+    ap_data <- data %>%
+      dplyr::filter(.data$sex == male_label)
+
+    sex_annotation <- "-males-only"
+  }
+
+  if (included_sexes == "female") {
+    ap_data <- data %>%
+      dplyr::filter(.data$sex == female_label)
+
+    sex_annotation <- "-females-only"
+  }
+
+  if (included_sexes == "both") {
+    ap_data <- data
+    sex_annotation <- ""
+  }
+
+  ap_plot_count_data <- ap_data %>%
     dplyr::filter(.data$category == plot_category) %>%
     dplyr::filter(.data$treatment == plot_treatment) %>%
     dplyr::group_by(.data$state, .data$current_injection) %>%
@@ -2462,7 +2680,7 @@ plot_AP_frequencies_single_treatment <- function(data,
 
     frequency_comparison_test_results_final <- merge(frequency_comparison_test_results, max_mean_AP_frequencies, by = "current_injection")
 
-    return(frequency_comparison_test_results_final)
+
     if (significance_display_method == "stars") {
       single_treatment_AP_plot <- single_treatment_AP_plot +
         ggplot2::geom_text(
@@ -2523,7 +2741,7 @@ plot_AP_frequencies_single_treatment <- function(data,
     ggplot2::ggsave(
       plot = single_treatment_AP_plot,
       path = here::here("Figures/Action-potentials"),
-      file = paste0("AP-frequency-category-", plot_category, "-", plot_treatment, ".png"),
+      file = paste0("AP-frequency-category-", plot_category, "-", plot_treatment, sex_annotation, ".png"),
       width = 7,
       height = 5,
       units = "in",
@@ -2562,6 +2780,9 @@ plot_AP_frequencies_multiple_treatments <- function(data,
                                                     include_all_treatments = "yes",
                                                     list_of_treatments = NULL,
                                                     plot_category = 2,
+                                                    included_sexes = "both",
+                                                    male_label = "Male",
+                                                    female_label = "Female",
                                                     treatment_colour_theme,
                                                     filename_suffix = "",
                                                     save_plot_png = "no",
@@ -2569,6 +2790,11 @@ plot_AP_frequencies_multiple_treatments <- function(data,
   if (!include_all_treatments %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`include_all_treatments` must be either \"yes\" or \"no\"."))
   }
+
+  if (!included_sexes %in% c("both", "male", "female")) {
+    cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
+  }
+
 
   if (!save_plot_png %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
@@ -2617,6 +2843,23 @@ plot_AP_frequencies_multiple_treatments <- function(data,
       droplevels()
   }
 
+  if (included_sexes == "male") {
+    plot_data <- plot_data %>%
+      dplyr::filter(.data$sex == male_label)
+
+    sex_annotation <- "-males-only"
+  }
+
+  if (included_sexes == "female") {
+    plot_data <- plot_data %>%
+      dplyr::filter(.data$sex == female_label)
+
+    sex_annotation <- "-females-only"
+  }
+
+  if (included_sexes == "both") {
+    sex_annotation <- ""
+  }
 
   AP_frequency_plot <- plot_data %>%
     dplyr::filter(.data$category == plot_category) %>%
@@ -2624,13 +2867,6 @@ plot_AP_frequencies_multiple_treatments <- function(data,
     dplyr::summarize(
       mean_AP_frequency = mean(.data$AP_frequency),
       SE = stats::sd(.data$AP_frequency) / sqrt(dplyr::n()),
-    ) %>%
-    dplyr::mutate(
-      treatment = stringr::str_replace_all(
-        .data$treatment,
-        stats::setNames(treatment_info$display_names, treatment_info$treatment)
-      ),
-      treatment = factor(.data$treatment, levels = treatment_info$display_names)
     ) %>%
     ggplot2::ggplot(
       ggplot2::aes(
@@ -2663,7 +2899,7 @@ plot_AP_frequencies_multiple_treatments <- function(data,
     ggplot2::ggsave(
       plot = AP_frequency_plot,
       path = here::here("Figures/Action-potentials/"),
-      file = paste0("AP-frequency-category-", plot_category, filename_suffix, ".png"),
+      file = paste0("AP-frequency-category-", plot_category, filename_suffix, sex_annotation, ".png"),
       width = 7,
       height = 5,
       units = "in",
@@ -2925,6 +3161,9 @@ plot_spontaneous_current_parameter_comparison <-
   function(data,
            plot_category = 2,
            plot_treatment = "Control",
+           included_sexes = "both",
+           male_label = "Male",
+           female_label = "Female",
            y_variable = "raw_amplitude",
            hormone_added = "Insulin",
            baseline_interval = "t0to5",
@@ -2952,6 +3191,11 @@ plot_spontaneous_current_parameter_comparison <-
       cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
     }
 
+    if (!included_sexes %in% c("both", "male", "female")) {
+      cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
+    }
+
+
     if (is.null(post_hormone_interval) ||
       !is.character(post_hormone_interval)) {
       cli::cli_abort(c("x" = "`post_hormone_interval` must be a character (e.g. \"t20to25\")"))
@@ -2977,6 +3221,8 @@ plot_spontaneous_current_parameter_comparison <-
       dplyr::filter(.data$treatment == plot_treatment) %>%
       dplyr::pull(.data$colours)
 
+
+
     sEPSC_comparison_plot_data <- data %>%
       dplyr::filter(.data$category == plot_category &
         .data$treatment == plot_treatment) %>%
@@ -2991,6 +3237,24 @@ plot_spontaneous_current_parameter_comparison <-
     if (y_variable == "raw_frequency") {
       y_var <- "mean_raw_frequency"
       y_title <- "sEPSC Frequency (Hz)"
+    }
+
+    if (included_sexes == "male") {
+      sEPSC_comparison_plot_data<- sEPSC_comparison_plot_data%>%
+        dplyr::filter(.data$sex == male_label)
+
+      sex_annotation <- "-males-only"
+    }
+
+    if (included_sexes == "female") {
+      sEPSC_comparison_plot_data<- sEPSC_comparison_plot_data%>%
+        dplyr::filter(.data$sex == female_label)
+
+      sex_annotation <- "-females-only"
+    }
+
+    if (included_sexes == "both") {
+      sex_annotation <- ""
     }
 
     sEPSC_comparison_plot <- sEPSC_comparison_plot_data %>%
@@ -3060,6 +3324,7 @@ plot_spontaneous_current_parameter_comparison <-
           plot_category,
           "-",
           plot_treatment,
+          sex_annotation,
           ".png"
         ),
         width = 7,

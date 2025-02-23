@@ -13,6 +13,9 @@ plot_variance_comparison_data(
   baseline_label = "Baseline",
   post_hormone_interval = "t20to25",
   post_hormone_label = "Insulin",
+  included_sexes = "both",
+  male_label = "Male",
+  female_label = "Female",
   test_type,
   map_signif_level_values = c(`***` = 0.001, `**` = 0.01, `*` = 0.05, ns = 2),
   geom_signif_family = "",
@@ -55,6 +58,12 @@ match the \code{post_hormone_interval} used in \code{\link[=make_variance_data]{
 \item{post_hormone_label}{A character value for x-axis label applied to
 the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
 will likely change this to the hormone or protocol name.}
+
+\item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
+
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".}
 
 \item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
 describing the statistical model used to create a significance bracket
