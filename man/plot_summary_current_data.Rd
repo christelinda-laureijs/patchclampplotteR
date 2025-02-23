@@ -65,7 +65,7 @@ annotation arrow will be added instead.}
 minutes) when a hormone was added or when HFS was applied. This will set
 the annotation line start point.}
 
-\item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name.}
+\item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
 
 \item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
 

@@ -51,7 +51,7 @@ patchclampplotteR_theme <- function() {
 #'
 #'
 #' @param data A dataframe containing the summary data generated from
-#'   [make_summary_EPSC_data()].
+#'   [make_summary_EPSC_data()]. If `current_type` is "eEPSC", this must be the `$summary_data` element of the list produced by [make_summary_EPSC_data()].
 #' @param plot_category A numeric value specifying the category, which can be
 #'   used to differentiate different protocol types. In the sample dataset for
 #'   this package, `plot_category == 2` represents experiments where insulin was
@@ -765,7 +765,7 @@ plot_raw_current_data <-
 #' @param annotation_x_max A numeric value describing the maximum value on the x-axis for the representative trace. Change this if your representative trace image looks squished or stretched.
 #' @param annotation_y_min A numeric value describing the minimum value on the y-axis for the representative trace. Defaults to 0, which will place it at the lower left corner of the plot (when combined with the default value for `annotation_x_min`).
 #' @param annotation_y_max A numeric value describing the maximum value on the y-axis for the representative trace. Change this if your representative trace image looks squished or stretched.
-#' @param included_sexes A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name.
+#' @param included_sexes A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the `t_test_df` contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.
 #' @param male_label A character value used to describe how males are encoded in the `sex` column of the dataframe used in `data`. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".
 #' @param female_label A character value used to describe how females are encoded in the `sex` column of the dataframe used in `data`. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".
 #' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
@@ -1299,7 +1299,7 @@ plot_summary_current_data <- function(data,
 #' More documentation will be updated soon.
 #' @inheritParams plot_baseline_data
 #'
-#' @param data A dataframe generated from `make_summary_EPSC_data()`
+#' @param data A dataframe generated from `make_summary_EPSC_data()`. If `current_type = "eEPSC"`, this must be the second element of the data generated from `make_summary_EPSC_data()`. Use `$summary_data` to access this dataframe.
 #' @returns
 #'
 #' A ggplot object
@@ -3274,6 +3274,8 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
         .data$P1_transformed,
         .data$spont_amplitude_transformed,
         .data$R_a,
+        .data$days_alone,
+        .data$animal_or_slicing_problems,
         .data$X,
         .data$Y,
         .data$age,
@@ -3288,6 +3290,7 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
       X = round(.data$X, -1),
       Y = round(.data$Y, -1)
     )
+
 
   if (include_all_treatments == "yes") {
     if (!is.null(list_of_treatments)) {
@@ -3362,14 +3365,15 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
     )))
   }
 
-  cell_table <- reactable::reactable(
+
+  cell_table <- suppressWarnings(reactable::reactable(
     data = table_data,
     defaultSorted = c("Category", "Treatment", "Animal"),
     filterable = TRUE,
     showPageSizeOptions = TRUE,
     elementId = "cell-table",
     defaultPageSize = 15,
-    defaultColDef = reactable::colDef(vAlign = "center", headerVAlign = "center"),
+   defaultColDef = reactable::colDef(vAlign = "center", headerVAlign = "center"),
     columns = list(
       Colours = reactable::colDef(show = FALSE),
       Letter = reactable::colDef(
@@ -3396,20 +3400,20 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
         cell = reactablefmtr::react_sparkline(
           table_data,
           line_color_ref = "Colours",
-          show_area = TRUE,
-          area_opacity = 1
-        )
+         show_area = TRUE,
+           area_opacity = 1
+         )
       ),
       Spont_amplitude_transformed = reactable::colDef(
-        name = "sEPSC amplitude (pA)",
-        filterable = FALSE,
-        cell = reactablefmtr::react_sparkline(
-          table_data,
-          line_color_ref = "Colours",
-          show_area = TRUE,
-          area_opacity = 1
-        )
-      ),
+              name = "sEPSC amplitude (pA)",
+              filterable = FALSE,
+              cell = reactablefmtr::react_sparkline(
+                table_data,
+                line_color_ref = "Colours",
+                show_area = TRUE,
+                area_opacity = 1
+              )
+            ),
       R_a = reactable::colDef(
         name = "Ra (M\u03a9)",
         filterable = FALSE,
@@ -3421,7 +3425,7 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
         )
       )
     )
-  )
+  ))
 
 
   return(cell_table)

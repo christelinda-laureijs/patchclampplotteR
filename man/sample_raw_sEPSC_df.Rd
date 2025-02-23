@@ -34,6 +34,10 @@ as long as the time units are consistent throughout (e.g. don't mix up days
 and months when reporting animal ages).}
 \item{\code{animal}}{A numeric value representing the animal's ID or number.}
 \item{\code{synapses}}{A character value (e.g. "Glutamate" or "GABA").}
+\item{\code{notes}}{An optional column for notes.}
+\item{\code{days_alone}}{A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.}
+\item{\code{animal_or_slicing_problems}}{A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).}
+\item{\code{R_a}}{A list of numeric values indicating the access resistance. Please see the documentation for the dataset \code{sample_cell_characteristics}.}
 \item{\code{treatment}}{A character value (e.g. "Control", "HNMPA") representing
 the antagonists or agonists applied, or any protocol applied to the animals
 (e.g. "Fasting").}

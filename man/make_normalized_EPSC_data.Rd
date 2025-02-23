@@ -119,6 +119,10 @@ and months when reporting animal ages).
 assign top-level groups for further analyses, with \code{treatment} as subgroups.
 \item \code{cell} A character or numeric value representing the cell. For
 example, use \verb{3.1.1} for animal #3, slice #1, cell #1.
+\item \code{R_a} A list of values for the access resistance, which would have been monitored at several timepoints throughout the recording. See the documentation for the \code{R_a} column in the documentation for \code{sample_cell_characteristics} with \code{?sample_cell_characteristics}.
+\item \code{notes} An optional character column with notes about any issues, sweeps that were removed during Clampfit processing, etc.
+\item \code{days_alone} A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.
+\item \code{animal_or_slicing_problems} A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).
 }
 
 \strong{Evoked current data}:

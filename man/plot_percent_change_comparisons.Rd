@@ -20,7 +20,7 @@ plot_percent_change_comparisons(
 )
 }
 \arguments{
-\item{data}{A dataframe generated from \code{make_summary_EPSC_data()}}
+\item{data}{A dataframe generated from \code{make_summary_EPSC_data()}. If \code{current_type = "eEPSC"}, this must be the second element of the data generated from \code{make_summary_EPSC_data()}. Use \verb{$summary_data} to access this dataframe.}
 
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
@@ -75,9 +75,11 @@ More documentation will be updated soon.
 }
 \examples{
 
-plot_percent_change_comparisons(data = sample_summary_eEPSC_df$percent_change_data,
-plot_category = 2,
-treatment_colour_theme = sample_treatment_names_and_colours,
-theme_options = sample_theme_options)
+plot_percent_change_comparisons(
+  data = sample_summary_eEPSC_df$percent_change_data,
+  plot_category = 2,
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
+)
 
 }

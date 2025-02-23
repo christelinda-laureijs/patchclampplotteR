@@ -5,7 +5,7 @@
 \alias{sample_cell_characteristics}
 \title{Information about sex, age, treatment, and animal ID}
 \format{
-A dataframe with 19 rows and 11 columns
+A dataframe with 19 rows and 14 columns
 \describe{
 \item{letter}{A character value that is a unique identifier for a single
 recording. Used to link data sets for evoked or spontaneous currents and
@@ -29,7 +29,10 @@ assign top-level groups for further analyses, with \code{treatment} as
 subgroups. For example, "1" may refer to an experiment where you applied high-frequency stimulation (HFS) to a cell, while "2" is an experiment where you added a hormone like leptin. "3" may be an experiment where you applied HFS in the continuous presence of leptin.}
 \item{R_a}{A list of values for the access resistance, which would have been
 monitored at several timepoints throughout the recording. See the section
-\code{R_a} formatting below.}
+\code{R_a} formatting in the documentation for \code{\link[=import_cell_characteristics_df]{import_cell_characteristics_df()}}.}
+\item{notes}{An optional character column with notes about any issues, sweeps that were removed during Clampfit processing, etc.}
+\item{days_alone}{A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.}
+\item{animal_or_slicing_problems}{A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).}
 }
 }
 \description{

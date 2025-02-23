@@ -92,6 +92,10 @@
 #'  assign top-level groups for further analyses, with `treatment` as subgroups.
 #'  \item `cell` A character or numeric value representing the cell. For
 #'  example, use `3.1.1` for animal #3, slice #1, cell #1.
+#'  \item `R_a` A list of values for the access resistance, which would have been monitored at several timepoints throughout the recording. See the documentation for the `R_a` column in the documentation for `sample_cell_characteristics` with `?sample_cell_characteristics`.
+#'  \item `notes` An optional character column with notes about any issues, sweeps that were removed during Clampfit processing, etc.
+#'  \item `days_alone` A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.
+#'  \item `animal_or_slicing_problems` A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).
 #' }
 #'
 #' **Evoked current data**:
@@ -222,6 +226,10 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
   raw_df <- utils::read.csv(here::here(filename), header = TRUE) %>%
     dplyr::rename_with(tolower)
 
+    raw_df <- raw_df %>%
+      dplyr::mutate(days_alone = factor(.data$days_alone),
+                    animal_or_slicing_problems = factor(.data$animal_or_slicing_problems))
+
   if (current_type == "eEPSC") {
     raw_df <- raw_df %>%
       dplyr::rename(
@@ -229,7 +237,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
         P1 = .data$p1,
         P2 = .data$p2,
         X = .data$x,
-        Y = .data$y
+        Y = .data$y,
+        R_a = .data$r_a
       )
   }
 
@@ -238,7 +247,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
       dplyr::rename(
         ID = .data$id,
         X = .data$x,
-        Y = .data$y
+        Y = .data$y,
+        R_a = .data$r_a
       )
   }
 
@@ -552,6 +562,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'   normalization works.
 #'
 #' @examples
+#'
+#' # Evoked Current Data
 #' make_pruned_EPSC_data(
 #'   data = sample_raw_eEPSC_df,
 #'   current_type = "eEPSC",
@@ -562,6 +574,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'   decimal_places = 2
 #' )
 #'
+#' # Spontaneous Current Data
 #' make_pruned_EPSC_data(
 #'   data = sample_raw_sEPSC_df,
 #'   current_type = "sEPSC",
@@ -623,7 +636,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         n = dplyr::n(),
         se = .data$sd_P1 / sqrt(.data$n),
         cv = .data$sd_P1 / .data$mean_P1,
-        cv_inverse_square = 1 / (.data$cv^2),
+        cv_inverse_square = 1 / (.data$cv ^ 2),
         letter = unique(.data$letter),
         category = unique(.data$category),
         time = dplyr::last(.data$time),
@@ -634,12 +647,14 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
       ) %>%
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
 
+
     pruned_df_for_table <- pruned_df_individual_cells %>%
       dplyr::group_by(.data$letter) %>%
       dplyr::summarize(P1_transformed = list(.data$mean_P1))
   }
 
   if (current_type == "sEPSC") {
+
     pruned_df_individual_cells <- pruned_df_individual_cells %>%
       dplyr::reframe(
         mean_amplitude = mean(.data$amplitude_transformed, na.rm = TRUE),
@@ -910,7 +925,10 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         .data$sex,
         .data$treatment,
         .data$interval
-      ) %>%
+      )
+
+
+    summary_df <- summary_df %>%
       dplyr::summarize(
         mean_P1_transformed = mean(.data$P1_transformed, na.rm = TRUE),
         mean_P1_raw = mean(.data$P1, na.rm = TRUE),
@@ -918,7 +936,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         sd = stats::sd(.data$P1_transformed, na.rm = TRUE),
         cv = .data$sd / .data$mean_P1_transformed,
         se = stats::sd(.data$P1_transformed, na.rm = TRUE) / sqrt(.data$n),
-        cv_inverse_square = 1 / (.data$cv^2),
+        cv_inverse_square = 1 / (.data$cv ^ 2),
         variance = stats::var(.data$P1_transformed, na.rm = TRUE),
         VMR = .data$variance / .data$mean_P1_transformed,
         age = unique(.data$age),
@@ -950,7 +968,8 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
       )) %>%
       tidyr::pivot_wider(names_from = .data$interval, values_from = .data$mean_P1_raw) %>%
       dplyr::mutate(percent_change = .data[[ending_interval]] / .data[[baseline_interval]] *
-        100)
+        100) %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
 
     if (save_output_as_RDS == "yes") {
       saveRDS(summary_df, file = here::here(
@@ -974,25 +993,30 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         .data$sex,
         .data$treatment,
         .data$interval
-      ) %>%
-      dplyr::summarize(
-        mean_transformed_amplitude = mean(.data$mean_amplitude, na.rm = TRUE),
-        mean_raw_amplitude = mean(.data$mean_raw_amplitude, na.rm = TRUE),
-        sd_transformed_amplitude = stats::sd(.data$mean_amplitude, na.rm = TRUE),
-        n = dplyr::n(),
-        se_transformed_amplitude = .data$sd_transformed_amplitude / sqrt(.data$n),
-        mean_transformed_frequency = mean(.data$frequency_transformed, na.rm = TRUE),
-        sd_transformed_frequency = stats::sd(.data$frequency_transformed, na.rm = TRUE),
-        se_transformed_frequency = .data$sd_transformed_frequency / sqrt(.data$n),
-        mean_raw_frequency = mean(.data$frequency, na.rm = TRUE),
-        time = dplyr::last(.data$time),
-        interval = unique(.data$interval),
-        category = unique(.data$category),
-        synapses = dplyr::last(.data$synapses),
-        days_alone = unique(.data$days_alone),
-        animal_or_slicing_problems = unique(.data$animal_or_slicing_problems)
-      ) %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
+      )
+
+
+      summary_df <- summary_df %>%
+        dplyr::summarize(
+          mean_transformed_amplitude = mean(.data$mean_amplitude, na.rm = TRUE),
+          mean_raw_amplitude = mean(.data$mean_raw_amplitude, na.rm = TRUE),
+          sd_transformed_amplitude = stats::sd(.data$mean_amplitude, na.rm = TRUE),
+          n = dplyr::n(),
+          se_transformed_amplitude = .data$sd_transformed_amplitude / sqrt(.data$n),
+          mean_transformed_frequency = mean(.data$frequency_transformed, na.rm = TRUE),
+          sd_transformed_frequency = stats::sd(.data$frequency_transformed, na.rm = TRUE),
+          se_transformed_frequency = .data$sd_transformed_frequency / sqrt(.data$n),
+          mean_raw_frequency = mean(.data$frequency, na.rm = TRUE),
+          time = dplyr::last(.data$time),
+          interval = unique(.data$interval),
+          category = unique(.data$category),
+          synapses = dplyr::last(.data$synapses),
+          days_alone = unique(.data$days_alone),
+          animal_or_slicing_problems = unique(.data$animal_or_slicing_problems)
+        ) %>%
+        dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
+
+
 
     if (save_output_as_RDS == "yes") {
       saveRDS(summary_df, file = here::here(

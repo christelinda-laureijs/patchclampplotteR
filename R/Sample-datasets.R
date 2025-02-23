@@ -22,7 +22,7 @@
 #'
 #' @name sample_cell_characteristics
 #' @docType data
-#' @format A dataframe with 19 rows and 11 columns
+#' @format A dataframe with 19 rows and 14 columns
 #' \describe{
 #'  \item{letter}{A character value that is a unique identifier for a single
 #'  recording. Used to link data sets for evoked or spontaneous currents and
@@ -46,7 +46,10 @@
 #'  subgroups. For example, "1" may refer to an experiment where you applied high-frequency stimulation (HFS) to a cell, while "2" is an experiment where you added a hormone like leptin. "3" may be an experiment where you applied HFS in the continuous presence of leptin.}
 #'  \item{R_a}{A list of values for the access resistance, which would have been
 #'  monitored at several timepoints throughout the recording. See the section
-#'  `R_a` formatting below.}
+#'  `R_a` formatting in the documentation for [import_cell_characteristics_df()].}
+#'  \item{notes}{An optional character column with notes about any issues, sweeps that were removed during Clampfit processing, etc.}
+#'  \item{days_alone}{A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.}
+#'  \item{animal_or_slicing_problems}{A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).}
 #' }
 #' @keywords data
 #' @examples
@@ -197,6 +200,10 @@ NULL
 #'  assign top-level groups for further analyses, with `treatment` as subgroups. For example, "1" may refer to an experiment where you applied high-frequency stimulation (HFS) to a cell, while "2" is an experiment where you added a hormone like leptin. "3" may be an experiment where you applied HFS in the continuous presence of leptin.}
 #'  \item{`cell`}{A character or numeric value representing the cell. For
 #'  example, use `3.1.1` for animal #3, slice #1, cell #1.}
+#'  \item{`notes`}{An optional column for notes.}
+#'  \item{`days_alone`}{A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.}
+#'  \item{`animal_or_slicing_problems`}{A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).}
+#'  \item{`R_a`}{A list of numeric values indicating the access resistance. Please see the documentation for the dataset `sample_cell_characteristics`.}
 #'  \item{`PPR`}{(for evoked currents only) A numeric value that represents the
 #'  paired pulse ratio (PPR) of the evoked currents, generated using
 #'  `dplyr::mutate(PPR = P2/P1)`.}
@@ -262,6 +269,10 @@ NULL
 #'  and months when reporting animal ages).}
 #'  \item{`animal`}{A numeric value representing the animal's ID or number.}
 #'  \item{`synapses`}{A character value (e.g. "Glutamate" or "GABA").}
+#'  \item{`notes`}{An optional column for notes.}
+#'  \item{`days_alone`}{A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.}
+#'  \item{`animal_or_slicing_problems`}{A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).}
+#'  \item{`R_a`}{A list of numeric values indicating the access resistance. Please see the documentation for the dataset `sample_cell_characteristics`.}
 #'  \item{`treatment`}{A character value (e.g. "Control", "HNMPA") representing
 #'  the antagonists or agonists applied, or any protocol applied to the animals
 #'  (e.g. "Fasting").}
@@ -323,6 +334,8 @@ NULL
 #'  \item{`Y`}{A numeric value representing the y-value of the cell's location in
 #'  µm. Leave this blank if you don't have this data.}
 #'  \item{`synapses`}{A character value (e.g. "Glutamate" or "GABA").}
+#'  \item{`days_alone`}{A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.}
+#'  \item{`animal_or_slicing_problems`}{A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).}
 #'  \item{`t0to5`}{The mean evoked current amplitude (pA) for this cell during the period of 0 to 5 minutes.}
 #'  \item{`t5to10`}{The mean evoked current amplitude (pA) for this cell during the period of 5 to 10 minutes.}
 #'  \item{`t10to15`, `t15to20`, `tXtY` etc...}{The mean evoked current amplitude (pA) for this cell during the period of *X* to *Y* minutes.}
@@ -374,6 +387,8 @@ NULL
 #'  \item{`time`}{A numeric value that represents time in minutes. This column is
 #'  autogenerated in [add_new_cells()].}
 #'  \item{`synapses`}{A character value (e.g. "Glutamate" or "GABA").}
+#'  \item{`days_alone`}{A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.}
+#'  \item{`animal_or_slicing_problems`}{A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).}
 #' }
 #' @keywords data
 #'
@@ -422,6 +437,8 @@ NULL
 #'  \item{`time`}{A numeric value that represents time in minutes. This column is
 #'  autogenerated in [add_new_cells()].}
 #'  \item{`synapses`}{A character value (e.g. "Glutamate" or "GABA").}
+#'  \item{`days_alone`}{A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.}
+#'  \item{`animal_or_slicing_problems`}{A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).}
 #' }
 #' @keywords data
 #'
