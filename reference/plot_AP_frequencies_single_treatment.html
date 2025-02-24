@@ -64,11 +64,15 @@
 <span>  <span class="va">hormone_added</span>,</span>
 <span>  <span class="va">test_type</span>,</span>
 <span>  significance_display_method <span class="op">=</span> <span class="st">"stars"</span>,</span>
+<span>  geom_signif_size <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  geom_signif_y_spacer <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  geom_signif_family <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  p_adjust_method <span class="op">=</span> <span class="st">"holm"</span>,</span>
 <span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  <span class="va">treatment_colour_theme</span>,</span>
 <span>  baseline_shape <span class="op">=</span> <span class="fl">16</span>,</span>
 <span>  post_treatment_shape <span class="op">=</span> <span class="fl">17</span>,</span>
+<span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  <span class="va">theme_options</span>,</span>
 <span>  ggplot_theme <span class="op">=</span> <span class="fu"><a href="patchclampplotteR_theme.html">patchclampplotteR_theme</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -135,6 +139,18 @@ comparing the pre- and post-hormone groups.</p></dd>
 <dd><p>A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if <code>test_type</code> is "none".)</p></dd>
 
 
+<dt id="arg-geom-signif-size">geom_signif_size<a class="anchor" aria-label="anchor" href="#arg-geom-signif-size"></a></dt>
+<dd><p>A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to <code>5</code>.</p></dd>
+
+
+<dt id="arg-geom-signif-y-spacer">geom_signif_y_spacer<a class="anchor" aria-label="anchor" href="#arg-geom-signif-y-spacer"></a></dt>
+<dd><p>A numeric value describing the vertical spacing applied to the significance markers. Defaults to 1, but can be set to a higher value if the p-values or significance stars are too close to the error bars.</p></dd>
+
+
+<dt id="arg-geom-signif-family">geom_signif_family<a class="anchor" aria-label="anchor" href="#arg-geom-signif-family"></a></dt>
+<dd><p>A character value describing the font family used for the p-value annotations used by <code><a href="https://const-ae.github.io/ggsignif/reference/stat_signif.html" class="external-link">ggsignif::geom_signif()</a></code>.</p></dd>
+
+
 <dt id="arg-p-adjust-method">p_adjust_method<a class="anchor" aria-label="anchor" href="#arg-p-adjust-method"></a></dt>
 <dd><p>This argument is directly related to <code>p.adjust.method</code> in <code><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html" class="external-link">rstatix::t_test</a></code>. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none" (although "none" is not recommended).</p></dd>
 
@@ -158,6 +174,11 @@ should look like.</p></dd>
 
 <dt id="arg-post-treatment-shape">post_treatment_shape<a class="anchor" aria-label="anchor" href="#arg-post-treatment-shape"></a></dt>
 <dd><p>A numeric value describing the shape used for the post-treatment/post-protocol data. Defaults to 17, which is a triangle.</p></dd>
+
+
+<dt id="arg-save-output-as-rds">save_output_as_RDS<a class="anchor" aria-label="anchor" href="#arg-save-output-as-rds"></a></dt>
+<dd><p>A character ("yes" or "no") describing if the
+resulting object should be saved as an RDS file in the folder 'Data/Output-Data-from-R'. The function will automatically create this folder if it doesn't already exist.</p></dd>
 
 
 <dt id="arg-theme-options">theme_options<a class="anchor" aria-label="anchor" href="#arg-theme-options"></a></dt>
@@ -192,28 +213,7 @@ project directory, with the treatment and category included in the filename.</p>
 <span class="r-in"><span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span></span>
 <span class="r-in"><span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    current_injection          .y.   group1  group2 n1 n2 statistic     p p.adj</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                -50 AP_frequency Baseline Insulin  4  4       0.0   NaN   NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                -40 AP_frequency Baseline Insulin  4  4       0.0   NaN   NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                -30 AP_frequency Baseline Insulin  4  4       0.0   NaN   NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                -20 AP_frequency Baseline Insulin  4  4       0.0   NaN   NaN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                -10 AP_frequency Baseline Insulin  4  4       6.0 0.181 0.181</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                  0 AP_frequency Baseline Insulin  4  4      10.0 0.125 0.125</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7                 10 AP_frequency Baseline Insulin  4  4      10.0 0.098 0.098</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8                 20 AP_frequency Baseline Insulin  4  4      10.0 0.125 0.125</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9                 30 AP_frequency Baseline Insulin  4  4       1.0 1.000 1.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10                40 AP_frequency Baseline Insulin  4  4       8.5 0.269 0.269</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    p.adj.signif p_string significance_stars max_AP_frequency   max_se</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                   &lt;NA&gt;                                 0.0 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   &lt;NA&gt;                                 0.0 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                   &lt;NA&gt;                                 0.0 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                   &lt;NA&gt;                                 0.0 0.000000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5            ns     0.18                                 5.5 2.500000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            ns     0.12                                 8.5 1.892969</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7            ns    0.098                                12.5 2.581989</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8            ns     0.12                                17.5 3.915780</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9            ns   &gt; 0.99                                16.0 4.856267</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10           ns     0.27                                19.0 6.658328</span>
+<span class="r-plt img"><img src="plot_AP_frequencies_single_treatment-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

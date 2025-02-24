@@ -80,6 +80,9 @@ presented as mean +/- the standard error.</p>
 <span>  annotation_y_max <span class="op">=</span> <span class="fl">40</span>,</span>
 <span>  <span class="va">y_axis_limit</span>,</span>
 <span>  signif_stars <span class="op">=</span> <span class="st">"no"</span>,</span>
+<span>  significance_display_method <span class="op">=</span> <span class="st">"stars"</span>,</span>
+<span>  geom_signif_size <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>  geom_signif_family <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  <span class="va">t_test_df</span>,</span>
 <span>  large_axis_text <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  shade_intervals <span class="op">=</span> <span class="st">"no"</span>,</span>
@@ -189,7 +192,19 @@ file. Use relative paths to specify files. For example, a figure in the Figures/
 <dd><p>A character ("yes" or "no") describing if significance
 stars should be included as an overlay in the plot. If "yes", you must
 specify a dataframe containing the results of a t-test, which is generated
-using <code><a href="perform_t_tests_for_summary_plot.html">perform_t_tests_for_summary_plot()</a></code>.</p></dd>
+using <code><a href="perform_t_tests_for_summary_plot.html">perform_t_tests_for_summary_plot()</a></code>. NOTE! If <code>included_sexes</code> is "male" or "female", you MUST use a t-test that was performed on data filtered to ONE sex.</p></dd>
+
+
+<dt id="arg-significance-display-method">significance_display_method<a class="anchor" aria-label="anchor" href="#arg-significance-display-method"></a></dt>
+<dd><p>A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if <code>signif_stars</code> is "no".)</p></dd>
+
+
+<dt id="arg-geom-signif-size">geom_signif_size<a class="anchor" aria-label="anchor" href="#arg-geom-signif-size"></a></dt>
+<dd><p>A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to <code>8</code>.</p></dd>
+
+
+<dt id="arg-geom-signif-family">geom_signif_family<a class="anchor" aria-label="anchor" href="#arg-geom-signif-family"></a></dt>
+<dd><p>A character value describing the font family used for the p-value annotations used by <code><a href="https://const-ae.github.io/ggsignif/reference/stat_signif.html" class="external-link">ggsignif::geom_signif()</a></code>.</p></dd>
 
 
 <dt id="arg-t-test-df">t_test_df<a class="anchor" aria-label="anchor" href="#arg-t-test-df"></a></dt>
