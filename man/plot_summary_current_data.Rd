@@ -23,6 +23,9 @@ plot_summary_current_data(
   annotation_y_max = 40,
   y_axis_limit,
   signif_stars = "no",
+  significance_display_method = "stars",
+  geom_signif_size = 8,
+  geom_signif_family = "",
   t_test_df,
   large_axis_text = "no",
   shade_intervals = "no",
@@ -93,7 +96,13 @@ file. Use relative paths to specify files. For example, a figure in the Figures/
 \item{signif_stars}{A character ("yes" or "no") describing if significance
 stars should be included as an overlay in the plot. If "yes", you must
 specify a dataframe containing the results of a t-test, which is generated
-using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}.}
+using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. NOTE! If \code{included_sexes} is "male" or "female", you MUST use a t-test that was performed on data filtered to ONE sex.}
+
+\item{significance_display_method}{A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if \code{signif_stars} is "no".)}
+
+\item{geom_signif_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
+
+\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}.}
 
 \item{t_test_df}{A dataframe of t-test results, which has been generated
 using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. Important note! The t-test

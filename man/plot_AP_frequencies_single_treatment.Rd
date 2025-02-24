@@ -16,11 +16,15 @@ plot_AP_frequencies_single_treatment(
   hormone_added,
   test_type,
   significance_display_method = "stars",
+  geom_signif_size = 5,
+  geom_signif_y_spacer = 1,
+  geom_signif_family = "",
   p_adjust_method = "holm",
   save_plot_png = "no",
   treatment_colour_theme,
   baseline_shape = 16,
   post_treatment_shape = 17,
+  save_output_as_RDS = "no",
   theme_options,
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -61,6 +65,12 @@ comparing the pre- and post-hormone groups.}
 
 \item{significance_display_method}{A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if \code{test_type} is "none".)}
 
+\item{geom_signif_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{5}.}
+
+\item{geom_signif_y_spacer}{A numeric value describing the vertical spacing applied to the significance markers. Defaults to 1, but can be set to a higher value if the p-values or significance stars are too close to the error bars.}
+
+\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}.}
+
 \item{p_adjust_method}{This argument is directly related to \code{p.adjust.method} in \code{rstatix::t_test}. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none" (although "none" is not recommended).}
 
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
@@ -75,6 +85,9 @@ should look like.}
 \item{baseline_shape}{A numeric value describing the shape used for the baseline data. Defaults to 16, which is a circle.}
 
 \item{post_treatment_shape}{A numeric value describing the shape used for the post-treatment/post-protocol data. Defaults to 17, which is a triangle.}
+
+\item{save_output_as_RDS}{A character ("yes" or "no") describing if the
+resulting object should be saved as an RDS file in the folder 'Data/Output-Data-from-R'. The function will automatically create this folder if it doesn't already exist.}
 
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should

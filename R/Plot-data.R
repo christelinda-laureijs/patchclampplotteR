@@ -796,10 +796,13 @@ plot_raw_current_data <-
 #' @param male_label A character value used to describe how males are encoded in the `sex` column of the dataframe used in `data`. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".
 #' @param female_label A character value used to describe how females are encoded in the `sex` column of the dataframe used in `data`. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".
 #' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
+#' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`.
+#' @param geom_signif_size A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to `8`.
 #' @param signif_stars A character ("yes" or "no") describing if significance
 #'   stars should be included as an overlay in the plot. If "yes", you must
 #'   specify a dataframe containing the results of a t-test, which is generated
-#'   using [perform_t_tests_for_summary_plot()].
+#'   using [perform_t_tests_for_summary_plot()]. NOTE! If `included_sexes` is "male" or "female", you MUST use a t-test that was performed on data filtered to ONE sex.
+#' @param significance_display_method A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if `signif_stars` is "no".)
 #' @param t_test_df A dataframe of t-test results, which has been generated
 #'   using [perform_t_tests_for_summary_plot()]. Important note! The t-test
 #'   dataframe must be filtered to match the same conditions in the `data`
@@ -870,6 +873,9 @@ plot_summary_current_data <- function(data,
                                       annotation_y_max = 40,
                                       y_axis_limit,
                                       signif_stars = "no",
+                                      significance_display_method = "stars",
+                                      geom_signif_size = 8,
+                                      geom_signif_family = "",
                                       t_test_df,
                                       large_axis_text = "no",
                                       shade_intervals = "no",
@@ -892,6 +898,10 @@ plot_summary_current_data <- function(data,
       "i" = "If you are adding a hormone, examples include \"Insulin\", \"CCK\", etc.",
       "i" = "`hormone_added` will be the label for the annotation line on the plot."
     ))
+  }
+
+  if (!significance_display_method %in% c("stars", "p-values")) {
+    cli::cli_abort(c("x" = "'significance_display_method' argument must be one of: \"stars\" or \"p-values\"."))
   }
 
   if (!save_plot_png %in% c("yes", "no")) {
@@ -1253,6 +1263,7 @@ plot_summary_current_data <- function(data,
   }
 
   if (signif_stars == "yes") {
+    if (significance_display_method == "stars") {
     treatment_plot <- treatment_plot +
       ggplot2::geom_text(
         data = t_test_df %>% dplyr::filter(.data$treatment == plot_treatment),
@@ -1262,9 +1273,27 @@ plot_summary_current_data <- function(data,
           label = .data$significance_stars
         ),
         inherit.aes = FALSE,
-        size = 8
+        size = geom_signif_size,
+        family = geom_signif_family
       )
+    }
+
+    if (significance_display_method == "p-values") {
+      treatment_plot <- treatment_plot +
+        ggplot2::geom_text(
+          data = t_test_df %>% dplyr::filter(.data$treatment == plot_treatment),
+          ggplot2::aes(
+            x = .data$asterisk_time,
+            y = y_axis_limit - 50,
+            label = .data$p_string
+          ),
+          inherit.aes = FALSE,
+          size = geom_signif_size,
+          family = geom_signif_family
+        )
+    }
   }
+
 
   if (include_representative_trace == "yes") {
     if (file.exists(here::here(representative_trace_filename))) {
@@ -2476,6 +2505,10 @@ plot_AP_comparison <-
 #' @param data Action potential frequency data imported through `add_new_cells()` with `data_type == "AP_count"`
 #' @param p_adjust_method This argument is directly related to `p.adjust.method` in `rstatix::t_test`. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none" (although "none" is not recommended).
 #' @param significance_display_method A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if `test_type` is "none".)
+#' @param geom_signif_y_spacer A numeric value describing the vertical spacing applied to the significance markers. Defaults to 1, but can be set to a higher value if the p-values or significance stars are too close to the error bars.
+#' @param geom_signif_size A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to `5`.
+#' @param save_output_as_RDS A character ("yes" or "no") describing if the
+#'   resulting object should be saved as an RDS file in the folder 'Data/Output-Data-from-R'. The function will automatically create this folder if it doesn't already exist.
 #' @param baseline_shape A numeric value describing the shape used for the baseline data. Defaults to 16, which is a circle.
 #' @param post_treatment_shape A numeric value describing the shape used for the post-treatment/post-protocol data. Defaults to 17, which is a triangle.
 #' @returns
@@ -2511,15 +2544,23 @@ plot_AP_frequencies_single_treatment <- function(data,
                                                  hormone_added,
                                                  test_type,
                                                  significance_display_method = "stars",
+                                                 geom_signif_size = 5,
+                                                 geom_signif_y_spacer = 1,
+                                                 geom_signif_family = "",
                                                  p_adjust_method = "holm",
                                                  save_plot_png = "no",
                                                  treatment_colour_theme,
                                                  baseline_shape = 16,
                                                  post_treatment_shape = 17,
+                                                 save_output_as_RDS = "no",
                                                  theme_options,
                                                  ggplot_theme = patchclampplotteR_theme()) {
   if (!large_axis_text %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`large_axis_text` argument must be either \"yes\" or \"no\""))
+  }
+
+  if (!save_output_as_RDS %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`save_output_as_RDS` argument must be one of: \"yes\" or \"no\""))
   }
 
   if (!save_plot_png %in% c("yes", "no")) {
@@ -2658,6 +2699,8 @@ plot_AP_frequencies_single_treatment <- function(data,
           paired = T,
           p.adjust.method = p_adjust_method
         )
+
+      test_annotation <- "t-test"
     }
 
     if (test_type == "wilcox.test") {
@@ -2668,6 +2711,8 @@ plot_AP_frequencies_single_treatment <- function(data,
           paired = T,
           p.adjust.method = p_adjust_method
         )
+
+      test_annotation <- "wilcox-test"
     }
 
     # Generate cleaned results columns
@@ -2679,7 +2724,29 @@ plot_AP_frequencies_single_treatment <- function(data,
       )
 
     frequency_comparison_test_results_final <- merge(frequency_comparison_test_results, max_mean_AP_frequencies, by = "current_injection")
-return(frequency_comparison_test_results_final)
+
+    if (save_output_as_RDS == "yes") {
+      RDS_path <- "Data/Output-Data-from-R/"
+
+      if (!dir.exists(RDS_path)) {
+        dir.create(RDS_path)
+      }
+
+      saveRDS(
+        frequency_comparison_test_results_final,
+        paste0(
+          RDS_path,
+          "ap-frequency-comparison-category-",
+          plot_category,
+          "-",
+          plot_treatment,
+          "-",
+          test_annotation,
+          sex_annotation,
+          ".rds"
+        )
+      )
+    }
 
     if (significance_display_method == "stars") {
       single_treatment_AP_plot <- single_treatment_AP_plot +
@@ -2687,11 +2754,11 @@ return(frequency_comparison_test_results_final)
           data = frequency_comparison_test_results_final,
           ggplot2::aes(
             x = .data$current_injection,
-            y = .data$max_AP_frequency + .data$max_se + 1,
+            y = .data$max_AP_frequency + .data$max_se + geom_signif_y_spacer,
             label = .data$significance_stars
           ),
           inherit.aes = F,
-          size = 5
+          size = geom_signif_size
         )
     }
 
@@ -2701,11 +2768,12 @@ return(frequency_comparison_test_results_final)
           data = frequency_comparison_test_results_final,
           ggplot2::aes(
             x = .data$current_injection,
-            y = .data$max_AP_frequency + .data$max_se + 1,
+            y = .data$max_AP_frequency + .data$max_se + geom_signif_y_spacer,
             label = .data$p_string
           ),
           inherit.aes = F,
-          size = 5
+          size = geom_signif_size,
+          family = geom_signif_family
         )
     }
   }
@@ -3516,7 +3584,7 @@ plot_spontaneous_current_trace <-
 #'   categories that will be in the plot. Defaults to NULL, since
 #'   include_all_categories is "yes" by default.
 #' @param save_output_as_RDS A character ("yes" or "no") describing if the
-#'   resulting object should be saved as an RDS file in the raw data folder.
+#'   resulting object should be saved as an RDS file in the folder 'Data/Output-Data-from-R'. The function will automatically create this folder if it doesn't already exist.
 #'   Note: This is not the interactive table, but it is the raw dataframe that
 #'   is later inserted into `reactable::reactable()`. This is useful if you want
 #'   to build your own table using a different package, or you want to generate
@@ -3665,8 +3733,14 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
   }
 
   if (save_output_as_RDS == "yes") {
+    RDS_path <- "Data/Output-Data-from-R/"
+
+    if (!dir.exists(RDS_path)) {
+      dir.create(RDS_path)
+    }
+
     saveRDS(table_data, file = here::here(paste0(
-      "Data/Output-Data-from-R/interactive_summary_table_df.RDS"
+      "interactive_summary_table_df.rds"
     )))
   }
 
