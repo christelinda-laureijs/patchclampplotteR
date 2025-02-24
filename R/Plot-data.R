@@ -2644,7 +2644,7 @@ plot_AP_frequencies_single_treatment <- function(data,
       )
 
     # Group data for comparisons
-    frequency_comparison_model <- data %>%
+    frequency_comparison_model <- ap_data %>%
       dplyr::filter(.data$category == plot_category) %>%
       dplyr::filter(.data$treatment == plot_treatment) %>%
       dplyr::group_by(.data$current_injection)
@@ -2679,7 +2679,7 @@ plot_AP_frequencies_single_treatment <- function(data,
       )
 
     frequency_comparison_test_results_final <- merge(frequency_comparison_test_results, max_mean_AP_frequencies, by = "current_injection")
-
+return(frequency_comparison_test_results_final)
 
     if (significance_display_method == "stars") {
       single_treatment_AP_plot <- single_treatment_AP_plot +
