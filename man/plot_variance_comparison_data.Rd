@@ -17,7 +17,7 @@ plot_variance_comparison_data(
   male_label = "Male",
   female_label = "Female",
   test_type,
-  map_signif_level_values = c(`***` = 0.001, `**` = 0.01, `*` = 0.05, ns = 2),
+  map_signif_level_values = F,
   geom_signif_family = "",
   large_axis_text = "no",
   geom_signif_size = 0.4,

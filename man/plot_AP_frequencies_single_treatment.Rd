@@ -15,7 +15,7 @@ plot_AP_frequencies_single_treatment(
   baseline_label = "Baseline",
   hormone_added,
   test_type,
-  significance_display_method = "stars",
+  significance_display_method = "p-values",
   geom_signif_size = 5,
   geom_signif_y_spacer = 1,
   geom_signif_family = "",

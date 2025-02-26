@@ -16,7 +16,7 @@ plot_spontaneous_current_parameter_comparison(
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",
   test_type,
-  map_signif_level_values = c(`***` = 0.001, `**` = 0.01, `*` = 0.05, ns = 2),
+  map_signif_level_values = F,
   geom_signif_family = "",
   large_axis_text = "no",
   treatment_colour_theme,

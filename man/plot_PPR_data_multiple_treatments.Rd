@@ -15,7 +15,7 @@ plot_PPR_data_multiple_treatments(
   baseline_label = "B",
   post_hormone_label = "A",
   test_type,
-  map_signif_level_values = c(`***` = 0.001, `**` = 0.01, `*` = 0.05, ns = 2),
+  map_signif_level_values = F,
   geom_signif_family = "",
   treatment_colour_theme,
   theme_options,
