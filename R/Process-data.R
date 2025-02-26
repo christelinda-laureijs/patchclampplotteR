@@ -330,8 +330,15 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
   return(raw_df)
 
   if (save_output_as_RDS == "yes") {
+    RDS_path <- "Data/Output-Data-from-R/"
+
+    if (!dir.exists(RDS_path)) {
+      dir.create(RDS_path)
+    }
+
     saveRDS(raw_df, file = here::here(
-      paste0("Data/Output-Data-from-R/raw_", current_type, "_df.RDS")
+      paste0(RDS_path,
+             "raw_", current_type, "_df.rds")
     ))
   }
 }
@@ -668,7 +675,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         se = .data$sd_amplitude / sqrt(.data$n),
         letter = unique(.data$letter),
         category = unique(.data$category),
-        interval = unique(.data$interval),
+        interval = dplyr::first(.data$interval),
         synapses = unique(.data$synapses),
         days_alone = unique(.data$days_alone),
         animal_or_slicing_problems = unique(.data$animal_or_slicing_problems),
@@ -689,11 +696,17 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
   }
 
   if (save_output_as_RDS == "yes") {
+    RDS_path <- "Data/Output-Data-from-R/"
+
+    if (!dir.exists(RDS_path)) {
+      dir.create(RDS_path)
+    }
+
     saveRDS(pruned_df_individual_cells, file = here::here(
-      paste0(
-        "Data/Output-Data-from-R/pruned_",
+      paste0(RDS_path,
+        "pruned_",
         current_type,
-        "_df_individual_cells.RDS"
+        "_df_individual_cells.rds"
       )
     ))
   }
@@ -775,11 +788,18 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
   }
 
   if (save_output_as_RDS == "yes") {
+    RDS_path <- "Data/Output-Data-from-R/"
+
+    if (!dir.exists(RDS_path)) {
+      dir.create(RDS_path)
+    }
+
     saveRDS(pruned_df_all_cells, file = here::here(
       paste0(
-        "Data/Output-Data-from-R/pruned_",
+        RDS_path,
+        "pruned_",
         current_type,
-        "_df_all_cells.RDS"
+        "_df_all_cells.rds"
       )
     ))
   }
@@ -812,7 +832,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #' @param ending_interval A character value describing the last interval in the recording. Useful for future plots in which you compare the percent decrease/increase in current amplitude relative to the baseline. Examples include "t20to25", "t10to15", etc.
 #' @param baseline_interval A character value describing the baseline interval. Defaults to "t0to5".
 #'
-#' @returns A list of two dataframes. For evoked currents (`current_type = "eEPSC"`) the first dataframe (`$percent_change_data`) contains the mean current amplitude for each interval, with a final column (`percent_change`) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.
+#' @returns A list of two dataframes (`current_type = eEPSC`) or three dataframes (`current_type = sEPSC`). For evoked currents (`current_type = "eEPSC"`) the first dataframe (`$percent_change_data`) contains the mean current amplitude for each interval, with a final column (`percent_change`) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.
 #'
 #' Most columns (`age`, `sex`, `animal`, etc.) come directly from the information imported through `import_cell_characteristics_df()`. However, there are some new columns of note.
 #'
@@ -823,7 +843,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #'  \item `percent_change` The percent change in evoked current amplitude in the interval `t20to25` as a percentage of the mean baseline amplitude (`t0to5`). For example, if currents began at 100 pA during the baseline period, but were 50 pA by `t20to25`, the value of `percent_change` will be `50%` or `0.50`. You can also change the value of the intervals used in this calculation through the `baseline_interval` and `ending_interval` arguments.
 #' }
 #'
-#' The second dataframe contains summary data such as the mean current amplitude,
+#' The second dataframe (accessed through `$summary_data`) contains summary data such as the mean current amplitude,
 #'   coefficient of variation, standard deviation, standard error, variance,
 #'   variance-to-mean ratio, and inverse coefficient of variation squared for
 #'   each interval.
@@ -852,7 +872,10 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #'  original dataset describing the cell's properties.
 #' }
 #'
-#' New columns for spontaneous current data (`current_type == "sEPSC"`) include:
+#'
+#' ## Spontaneous Current Data
+#'
+#' Spontaneous current data results in three dataframes. The first dataframe ($summary_data) contains summary statistics for each interval, as outlined below:
 #'
 #' \itemize{
 #'  \item `mean_transformed_amplitude` The average normalized spontaneous
@@ -873,6 +896,8 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #'  original dataset describing the cell's properties.
 #' }
 #'
+#' The second and third dataframes contain percent change data for spontaneous current amplitude and frequency, respectively. The columns are the same as the ones produced for evoked currents.
+#'
 #' @export
 #'
 #' @seealso [make_summary_EPSC_data()] for an example of a function that
@@ -890,6 +915,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #' )
 #'
 #' # Spontaneous Data
+#' # Will return a list of three dataframes
 #'
 #' make_summary_EPSC_data(
 #'   data = sample_pruned_sEPSC_df$individual_cells,
@@ -927,7 +953,6 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         .data$treatment,
         .data$interval
       )
-
 
     summary_df <- summary_df %>%
       dplyr::summarize(
@@ -973,9 +998,16 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
 
     if (save_output_as_RDS == "yes") {
+      RDS_path <- "Data/Output-Data-from-R/"
+
+      if (!dir.exists(RDS_path)) {
+        dir.create(RDS_path)
+      }
+
       saveRDS(summary_df, file = here::here(
         paste0(
-          "Data/Output-Data-from-R/summary_",
+          RDS_path,
+          "summary_",
           current_type,
           "_data.rds"
         )
@@ -990,7 +1022,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
       ))
     }
 
-    return(list(percent_change_data = percent_change_df, summary_data = summary_df))
+   return(list(percent_change_data = percent_change_df, summary_data = summary_df))
   }
 
 
@@ -1003,7 +1035,6 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         .data$treatment,
         .data$interval
       )
-
 
     summary_df <- summary_df %>%
       dplyr::summarize(
@@ -1028,8 +1059,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 
     # Percent change in sEPSC Amplitude
     percent_change_amplitude_df <- summary_df %>%
-      dplyr::group_by(.data$category, .data$treatment, .data$interval, .data$letter) %>%
-      dplyr::select(
+      dplyr::group_by(.data$category, .data$treatment, .data$interval, .data$letter)  %>% dplyr::select(
         !c(
           .data$mean_transformed_amplitude,
           .data$sd_transformed_amplitude,
@@ -1097,7 +1127,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
       ))
     }
 
-    return(list(summary_data = summary_df,
+   return(list(summary_data = summary_df,
                 percent_change_amplitude = percent_change_amplitude_df,
                 percent_change_frequency = percent_change_frequency_df))
   }

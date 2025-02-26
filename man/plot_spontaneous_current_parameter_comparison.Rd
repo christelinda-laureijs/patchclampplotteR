@@ -109,7 +109,7 @@ paired wilcox test and add brackets with significance stars through
 }
 \examples{
 plot_spontaneous_current_parameter_comparison(
-  data = sample_summary_sEPSC_df,
+  data = sample_summary_sEPSC_df$summary_data,
   plot_category = 2,
   plot_treatment = "Control",
   y_variable = "raw_amplitude",

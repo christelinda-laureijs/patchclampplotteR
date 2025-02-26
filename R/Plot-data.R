@@ -3191,7 +3191,7 @@ plot_AP_trace <-
 #'
 #' @examples
 #' plot_spontaneous_current_parameter_comparison(
-#'   data = sample_summary_sEPSC_df,
+#'   data = sample_summary_sEPSC_df$summary_data,
 #'   plot_category = 2,
 #'   plot_treatment = "Control",
 #'   y_variable = "raw_amplitude",
@@ -3714,8 +3714,8 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
       dir.create(RDS_path)
     }
 
-    saveRDS(table_data, file = here::here(paste0(
-      "interactive_summary_table_df.rds"
+    saveRDS(table_data, file = here::here(paste0(RDS_path,
+                                                 "interactive_summary_table_df.rds"
     )))
   }
 
