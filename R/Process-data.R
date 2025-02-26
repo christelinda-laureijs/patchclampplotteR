@@ -327,8 +327,6 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
   }
 
-  return(raw_df)
-
   if (save_output_as_RDS == "yes") {
     RDS_path <- "Data/Output-Data-from-R/"
 
@@ -341,6 +339,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
              "raw_", current_type, "_df.rds")
     ))
   }
+
+  return(raw_df)
 }
 
 
@@ -695,21 +695,6 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
       dplyr::summarize(spont_amplitude_transformed = list(.data$mean_amplitude))
   }
 
-  if (save_output_as_RDS == "yes") {
-    RDS_path <- "Data/Output-Data-from-R/"
-
-    if (!dir.exists(RDS_path)) {
-      dir.create(RDS_path)
-    }
-
-    saveRDS(pruned_df_individual_cells, file = here::here(
-      paste0(RDS_path,
-        "pruned_",
-        current_type,
-        "_df_individual_cells.rds"
-      )
-    ))
-  }
 
   # Prune all cells
   if (current_type == "eEPSC") {
@@ -787,6 +772,12 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
   }
 
+  pruned_data_final <- list(
+    individual_cells = pruned_df_individual_cells,
+    for_table = pruned_df_for_table,
+    all_cells = pruned_df_all_cells
+  )
+
   if (save_output_as_RDS == "yes") {
     RDS_path <- "Data/Output-Data-from-R/"
 
@@ -794,23 +785,17 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
       dir.create(RDS_path)
     }
 
-    saveRDS(pruned_df_all_cells, file = here::here(
+    saveRDS(pruned_data_final, file = here::here(
       paste0(
         RDS_path,
         "pruned_",
         current_type,
-        "_df_all_cells.rds"
+        "_data.rds"
       )
     ))
   }
 
-  return(
-    list(
-      individual_cells = pruned_df_individual_cells,
-      for_table = pruned_df_for_table,
-      all_cells = pruned_df_all_cells
-    )
-  )
+  return(pruned_data_final)
 }
 
 #' Summarize current data per 5-min for statistical tests
@@ -997,32 +982,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         100) %>%
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
 
-    if (save_output_as_RDS == "yes") {
-      RDS_path <- "Data/Output-Data-from-R/"
-
-      if (!dir.exists(RDS_path)) {
-        dir.create(RDS_path)
-      }
-
-      saveRDS(summary_df, file = here::here(
-        paste0(
-          RDS_path,
-          "summary_",
-          current_type,
-          "_data.rds"
-        )
-      ))
-
-      saveRDS(percent_change_df, file = here::here(
-        paste0(
-          "Data/Output-Data-from-R/percent_change_data_",
-          current_type,
-          ".rds"
-        )
-      ))
-    }
-
-   return(list(percent_change_data = percent_change_df, summary_data = summary_df))
+    summary_data_final <- list(percent_change_data = percent_change_df, summary_data = summary_df)
   }
 
 
@@ -1100,37 +1060,29 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), function(x)
         round(x, decimal_places)))
 
+   summary_data_final <- list(summary_data = summary_df,
+                percent_change_amplitude = percent_change_amplitude_df,
+                percent_change_frequency = percent_change_frequency_df)
+  }
 
-    if (save_output_as_RDS == "yes") {
-      saveRDS(summary_df, file = here::here(
-        paste0(
-          "Data/Output-Data-from-R/summary_",
-          current_type,
-          "_data.rds"
-        )
-      ))
+  if (save_output_as_RDS == "yes") {
+    RDS_path <- "Data/Output-Data-from-R/"
 
-      saveRDS(percent_change_amplitude_df, file = here::here(
-        paste0(
-          "Data/Output-Data-from-R/percent_change_data_amplitude_",
-          current_type,
-          "_data.rds"
-        )
-      ))
-
-      saveRDS(percent_change_frequency_df, file = here::here(
-        paste0(
-          "Data/Output-Data-from-R/percent_change_data_frequency_",
-          current_type,
-          "_data.rds"
-        )
-      ))
+    if (!dir.exists(RDS_path)) {
+      dir.create(RDS_path)
     }
 
-   return(list(summary_data = summary_df,
-                percent_change_amplitude = percent_change_amplitude_df,
-                percent_change_frequency = percent_change_frequency_df))
+    saveRDS(summary_data_final, file = here::here(
+      paste0(
+        RDS_path,
+        "summary_",
+        current_type,
+        "_data.rds"
+      )
+    ))
   }
+
+  return(summary_data_final)
 }
 
 
@@ -1377,8 +1329,15 @@ perform_t_tests_for_summary_plot <- function(data,
     dplyr::arrange(match(.data$treatment, treatment_info$treatment))
 
   if (save_output_as_RDS == "yes") {
+
+    RDS_path <- "Data/Output-Data-from-R/"
+
+    if (!dir.exists(RDS_path)) {
+      dir.create(RDS_path)
+    }
+
     saveRDS(t_test_table, file = here::here(
-      paste0("Data/Output-Data-from-R/t_test_", current_type, ".RDS")
+      paste0(RDS_path, "t_test_", current_type, ".rds")
     ))
   }
 
@@ -1527,13 +1486,21 @@ make_variance_data <- function(data,
     ) %>%
     dplyr::arrange(match(.data$treatment, treatment_info$display_names))
 
-  return(variance_data)
 
   if (save_output_as_RDS == "yes") {
+    RDS_path <- "Data/Output-Data-from-R/"
+
+    if (!dir.exists(RDS_path)) {
+      dir.create(RDS_path)
+    }
+
     saveRDS(variance_data, file = here::here(paste0(
-      "Data/Output-Data-from-R/variance_data.RDS"
+      RDS_path,
+      "variance_data.rds"
     )))
   }
+
+  return(variance_data)
 }
 
 
@@ -1653,11 +1620,18 @@ make_PPR_data <- function(data,
     ) %>%
     dplyr::arrange(match(.data$treatment, treatment_info$display_names))
 
-  return(PPR_df)
-
   if (save_output_as_RDS == "yes") {
+    RDS_path <- "Data/Output-Data-from-R/"
+
+    if (!dir.exists(RDS_path)) {
+      dir.create(RDS_path)
+    }
+
     saveRDS(PPR_df, file = here::here(paste0(
-      "Data/Output-Data-from-R/PPR_df.RDS"
+      RDS_path,
+      "PPR_df.rds"
     )))
   }
+
+  return(PPR_df)
 }
