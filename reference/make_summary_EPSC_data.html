@@ -118,13 +118,13 @@ incorrect representation of the number of significant digits.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list of two dataframes. For evoked currents (<code>current_type = "eEPSC"</code>) the first dataframe (<code>$percent_change_data</code>) contains the mean current amplitude for each interval, with a final column (<code>percent_change</code>) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.</p>
+    <p>A list of two dataframes (<code>current_type = eEPSC</code>) or three dataframes (<code>current_type = sEPSC</code>). For evoked currents (<code>current_type = "eEPSC"</code>) the first dataframe (<code>$percent_change_data</code>) contains the mean current amplitude for each interval, with a final column (<code>percent_change</code>) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.</p>
 <p>Most columns (<code>age</code>, <code>sex</code>, <code>animal</code>, etc.) come directly from the information imported through <code><a href="import_cell_characteristics_df.html">import_cell_characteristics_df()</a></code>. However, there are some new columns of note.</p>
 <ul><li><p><code>t0to5</code> The mean evoked current amplitude (pA) for this cell during the period of 0 to 5 minutes.</p></li>
 <li><p><code>t5to10</code> The mean evoked current amplitude (pA) for this cell during the period of 5 to 10 minutes.</p></li>
 <li><p><code>t10to15</code>, <code>t15to20</code>, <code>tXtY</code> etc... The mean evoked current amplitude (pA) for this cell during the period of <em>X</em> to <em>Y</em> minutes.</p></li>
 <li><p><code>percent_change</code> The percent change in evoked current amplitude in the interval <code>t20to25</code> as a percentage of the mean baseline amplitude (<code>t0to5</code>). For example, if currents began at 100 pA during the baseline period, but were 50 pA by <code>t20to25</code>, the value of <code>percent_change</code> will be <code>50%</code> or <code>0.50</code>. You can also change the value of the intervals used in this calculation through the <code>baseline_interval</code> and <code>ending_interval</code> arguments.</p></li>
-</ul><p>The second dataframe contains summary data such as the mean current amplitude,
+</ul><p>The second dataframe (accessed through <code>$summary_data</code>) contains summary data such as the mean current amplitude,
 coefficient of variation, standard deviation, standard error, variance,
 variance-to-mean ratio, and inverse coefficient of variation squared for
 each interval.</p>
@@ -148,7 +148,11 @@ point belongs to. For example, <code>interval</code> will be "t0to5" for any dat
 points from 0 to 5 minutes. Example values: "t0to5", "t5to10", etc.</p></li>
 <li><p><code>letter, synapses, sex, treatment, etc.</code> Unmodified columns from the
 original dataset describing the cell's properties.</p></li>
-</ul><p>New columns for spontaneous current data (<code>current_type == "sEPSC"</code>) include:</p>
+</ul><div class="section">
+<h3 id="spontaneous-current-data">Spontaneous Current Data<a class="anchor" aria-label="anchor" href="#spontaneous-current-data"></a></h3>
+
+
+<p>Spontaneous current data results in three dataframes. The first dataframe ($summary_data) contains summary statistics for each interval, as outlined below:</p>
 <ul><li><p><code>mean_transformed_amplitude</code> The average normalized spontaneous
 current amplitude (% Baseline sEPSC amplitude).</p></li>
 <li><p><code>mean_raw_amplitude</code> The average raw spontaneous current amplitude
@@ -165,7 +169,10 @@ Baseline frequency).</p></li>
 <li><p><code>mean_raw_frequency</code> The average raw frequency (Hz).</p></li>
 <li><p><code>letter, synapses, sex, treatment, etc.</code> Unmodified columns from the
 original dataset describing the cell's properties.</p></li>
-</ul></div>
+</ul><p>The second and third dataframes contain percent change data for spontaneous current amplitude and frequency, respectively. The columns are the same as the ones produced for evoked currents.</p>
+</div>
+
+    </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code>make_summary_EPSC_data()</code> for an example of a function that
@@ -234,6 +241,7 @@ further processes the data.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Spontaneous Data</span></span></span>
+<span class="r-in"><span><span class="co"># Will return a list of three dataframes</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">make_summary_EPSC_data</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_pruned_sEPSC_df</span><span class="op">$</span><span class="va">individual_cells</span>,</span></span>
@@ -247,12 +255,12 @@ further processes the data.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex    treatment interval mean_transformed_amplitude</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2        AZ     Female Control   t0to5                         100. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2        AZ     Female Control   t5to10                         96.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2        AZ     Female Control   t10to15                        94.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2        AZ     Female Control   t15to20                        94.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2        AZ     Female Control   t20to25                        88.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2        AZ     Female Control   t5to10                         96.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2        AZ     Female Control   t10to15                        94.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2        AZ     Female Control   t15to20                        94.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2        AZ     Female Control   t20to25                        86.8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2        BO     Male   HNMPA     t0to5                         100. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2        BO     Male   HNMPA     t5to10                         89.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2        BO     Male   HNMPA     t5to10                         87.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2        BO     Male   HNMPA     t10to15                        81.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        BO     Male   HNMPA     t15to20                        82.2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        BO     Male   HNMPA     t20to25                        82.0</span>
@@ -264,47 +272,33 @@ further processes the data.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   synapses &lt;fct&gt;, days_alone &lt;dbl&gt;, animal_or_slicing_problems &lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $percent_change_amplitude</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 14 × 14</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7 × 14</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   category, treatment, letter [7]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex    treatment         n synapses  days_alone</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2        AZ     Female Control           5 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2        AZ     Female Control           6 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2        BO     Male   HNMPA             5 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2        BO     Male   HNMPA             6 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2        FX     Female PPP               5 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2        FX     Female PPP               6 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2        GR     Male   PPP               5 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2        GR     Male   PPP               6 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        GX     Male   PPP_and_HNMPA     5 Glutamate          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        GX     Male   PPP_and_HNMPA     6 Glutamate          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2        HC     Male   PPP_and_HNMPA     5 Glutamate          2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2        HC     Male   PPP_and_HNMPA     6 Glutamate          2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2        L      Male   Control           5 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 2        L      Male   Control           6 Glutamate          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   category letter sex    treatment         n synapses  days_alone</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2        AZ     Female Control           5 Glutamate          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2        BO     Male   HNMPA             5 Glutamate          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2        FX     Female PPP               5 Glutamate          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2        GR     Male   PPP               5 Glutamate          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2        GX     Male   PPP_and_HNMPA     5 Glutamate          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2        HC     Male   PPP_and_HNMPA     5 Glutamate          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> 2        L      Male   Control           5 Glutamate          0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 7 more variables: animal_or_slicing_problems &lt;chr&gt;, t0to5 &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   t5to10 &lt;dbl&gt;, t10to15 &lt;dbl&gt;, t15to20 &lt;dbl&gt;, t20to25 &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percent_change &lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $percent_change_frequency</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 14 × 14</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7 × 14</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   category, treatment, letter [7]</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex    treatment         n synapses  days_alone</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2        AZ     Female Control           5 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 2        AZ     Female Control           6 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2        BO     Male   HNMPA             5 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2        BO     Male   HNMPA             6 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 2        FX     Female PPP               5 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 2        FX     Female PPP               6 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 2        GR     Male   PPP               5 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2        GR     Male   PPP               6 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2        GX     Male   PPP_and_HNMPA     5 Glutamate          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 2        GX     Male   PPP_and_HNMPA     6 Glutamate          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> 2        HC     Male   PPP_and_HNMPA     5 Glutamate          2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> 2        HC     Male   PPP_and_HNMPA     6 Glutamate          2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> 2        L      Male   Control           5 Glutamate          0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> 2        L      Male   Control           6 Glutamate          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   category letter sex    treatment         n synapses  days_alone</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2        AZ     Female Control           5 Glutamate          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2        BO     Male   HNMPA             5 Glutamate          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2        FX     Female PPP               5 Glutamate          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2        GR     Male   PPP               5 Glutamate          0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2        GX     Male   PPP_and_HNMPA     5 Glutamate          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2        HC     Male   PPP_and_HNMPA     5 Glutamate          2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> 2        L      Male   Control           5 Glutamate          0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 7 more variables: animal_or_slicing_problems &lt;chr&gt;, t0to5 &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   t5to10 &lt;dbl&gt;, t10to15 &lt;dbl&gt;, t15to20 &lt;dbl&gt;, t20to25 &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percent_change &lt;dbl&gt;</span></span>
