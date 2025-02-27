@@ -384,6 +384,17 @@ add_new_cells <- function(new_raw_data_csv,
       dplyr::rename(Y = .data$y)
   }
 
+  if ("days_alone" %in% colnames(cell_characteristics)) {
+    cell_characteristics <- cell_characteristics %>%
+      dplyr::mutate(days_alone = factor(.data$days_alone))
+  }
+
+  if ("animal_or_slicing_problems" %in% colnames(cell_characteristics)) {
+    cell_characteristics <- cell_characteristics %>%
+      dplyr::mutate(animal_or_slicing_problems = factor(.data$animal_or_slicing_problems))
+  }
+
+
   new_raw_data <- utils::read.csv(here::here(new_raw_data_csv)) %>%
     dplyr::rename_with(tolower)
 
@@ -555,11 +566,6 @@ add_new_cells <- function(new_raw_data_csv,
     old_raw_data <- old_raw_data %>%
       dplyr::mutate(id = factor(.data$id)) %>%
       dplyr::rename(ID = .data$id)
-  }
-
-  if ("x" %in% colnames(old_raw_data)) {
-    old_raw_data <- old_raw_data %>%
-      dplyr::rename(X = .data$x)
   }
 
   if ("r_a" %in% colnames(old_raw_data)) {

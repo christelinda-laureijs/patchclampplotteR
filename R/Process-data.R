@@ -335,8 +335,10 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
     }
 
     saveRDS(raw_df, file = here::here(
-      paste0(RDS_path,
-             "raw_", current_type, "_df.rds")
+      paste0(
+        RDS_path,
+        "raw_", current_type, "_df.rds"
+      )
     ))
   }
 
@@ -1019,7 +1021,8 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 
     # Percent change in sEPSC Amplitude
     percent_change_amplitude_df <- summary_df %>%
-      dplyr::group_by(.data$category, .data$treatment, .data$interval, .data$letter)  %>% dplyr::select(
+      dplyr::group_by(.data$category, .data$treatment, .data$interval, .data$letter) %>%
+      dplyr::select(
         !c(
           .data$mean_transformed_amplitude,
           .data$sd_transformed_amplitude,
@@ -1031,11 +1034,14 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
           .data$time
         )
       ) %>%
-      tidyr::pivot_wider(names_from = .data$interval,
-                         values_from = .data$mean_raw_amplitude) %>%
-      dplyr::mutate(percent_change = .data[[ending_interval]]/.data[[baseline_interval]]*100) %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), function(x)
-        round(x, decimal_places)))
+      tidyr::pivot_wider(
+        names_from = .data$interval,
+        values_from = .data$mean_raw_amplitude
+      ) %>%
+      dplyr::mutate(percent_change = .data[[ending_interval]] / .data[[baseline_interval]] * 100) %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), function(x) {
+        round(x, decimal_places)
+      }))
 
 
     # Percent change in sEPSC Frequency
@@ -1054,15 +1060,20 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
           .data$time
         )
       ) %>%
-      tidyr::pivot_wider(names_from = .data$interval,
-                         values_from = .data$mean_raw_frequency) %>%
-      dplyr::mutate(percent_change = .data[[ending_interval]]/.data[[baseline_interval]]*100) %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), function(x)
-        round(x, decimal_places)))
+      tidyr::pivot_wider(
+        names_from = .data$interval,
+        values_from = .data$mean_raw_frequency
+      ) %>%
+      dplyr::mutate(percent_change = .data[[ending_interval]] / .data[[baseline_interval]] * 100) %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), function(x) {
+        round(x, decimal_places)
+      }))
 
-   summary_data_final <- list(summary_data = summary_df,
-                percent_change_amplitude = percent_change_amplitude_df,
-                percent_change_frequency = percent_change_frequency_df)
+    summary_data_final <- list(
+      summary_data = summary_df,
+      percent_change_amplitude = percent_change_amplitude_df,
+      percent_change_frequency = percent_change_frequency_df
+    )
   }
 
   if (save_output_as_RDS == "yes") {
@@ -1329,7 +1340,6 @@ perform_t_tests_for_summary_plot <- function(data,
     dplyr::arrange(match(.data$treatment, treatment_info$treatment))
 
   if (save_output_as_RDS == "yes") {
-
     RDS_path <- "Data/Output-Data-from-R/"
 
     if (!dir.exists(RDS_path)) {

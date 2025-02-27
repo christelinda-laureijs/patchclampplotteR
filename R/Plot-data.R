@@ -1264,18 +1264,18 @@ plot_summary_current_data <- function(data,
 
   if (signif_stars == "yes") {
     if (significance_display_method == "stars") {
-    treatment_plot <- treatment_plot +
-      ggplot2::geom_text(
-        data = t_test_df %>% dplyr::filter(.data$treatment == plot_treatment),
-        ggplot2::aes(
-          x = .data$asterisk_time,
-          y = y_axis_limit - 50,
-          label = .data$significance_stars
-        ),
-        inherit.aes = FALSE,
-        size = geom_signif_size,
-        family = geom_signif_family
-      )
+      treatment_plot <- treatment_plot +
+        ggplot2::geom_text(
+          data = t_test_df %>% dplyr::filter(.data$treatment == plot_treatment),
+          ggplot2::aes(
+            x = .data$asterisk_time,
+            y = y_axis_limit - 50,
+            label = .data$significance_stars
+          ),
+          inherit.aes = FALSE,
+          size = geom_signif_size,
+          family = geom_signif_family
+        )
     }
 
     if (significance_display_method == "p-values") {
@@ -3714,8 +3714,9 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
       dir.create(RDS_path)
     }
 
-    saveRDS(table_data, file = here::here(paste0(RDS_path,
-                                                 "interactive_summary_table_df.rds"
+    saveRDS(table_data, file = here::here(paste0(
+      RDS_path,
+      "interactive_summary_table_df.rds"
     )))
   }
 
