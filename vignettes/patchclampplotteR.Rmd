@@ -532,13 +532,13 @@ Using `cell_characteristics` data throughout makes it very easy to answer intere
 
 > Note: The sample dataset included in this package is too small to show anything meaningful, so I'm including static images from my dataset (manuscript in preparation).
 
-```{r baseline-amplitude-vs-percent-change, eval=T, fig.align='center', fig.alt = "A  scatterplot showing baseline evoked current amplitude in pA on the x-axis and percent change in eEPSC amplitude after adding insulin on the y-axis."}
+```{r baseline-amplitude-vs-percent-change, eval=T, echo=F, fig.align='center', fig.alt = "A  scatterplot showing baseline evoked current amplitude in pA on the x-axis and percent change in eEPSC amplitude after adding insulin on the y-axis."}
 knitr::include_graphics("Baseline-amplitude-vs-percent-change.png")
 ```
 
 Does an animal's age affect the cell's sensitivity to insulin? In the following plot, I also coloured the points by the baseline evoked current amplitude to see if this would show any new patterns.
 
-```{r age-vs-percent-change, eval=T, fig.align='center', fig.alt = "A  scatterplot showing age in days on the x-axis and percent change in eEPSC amplitude after adding insulin on the y-axis."}
+```{r age-vs-percent-change, eval=T, echo=F, fig.align='center', fig.alt = "A  scatterplot showing age in days on the x-axis and percent change in eEPSC amplitude after adding insulin on the y-axis."}
 knitr::include_graphics("age-vs-percent_change-with-t0to5.png")
 ```
 

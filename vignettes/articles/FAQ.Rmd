@@ -197,7 +197,7 @@ list_of_treatments$representative_trace_filepath <- evoked_trace_filename
 
 Then, I'm using `purrr::pmap()` and inserting the `list_of_treatments` that I defined above. This is so I can use the `treatment` column in the `plot_treatment` argument and the `representative_trace_filepath` column for the `representative_trace_filename` argument. See below - the summary plots for all treatments were produced with one code chunk!
 
-```{r eval=T, echo=T, warning=F, message=F}
+```{r eval=T, echo=T, warning=F, message=F, fig.alt = "A series of evoked summary plots demonstrating the use of pmap to make many plots simultaneously."}
 pmap(
   .l = list_of_treatments,
   .f = ~ with(

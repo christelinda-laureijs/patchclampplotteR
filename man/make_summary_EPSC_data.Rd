@@ -128,7 +128,9 @@ make_summary_EPSC_data(
   data = sample_pruned_sEPSC_df$individual_cells,
   current_type = "sEPSC",
   save_output_as_RDS = "no",
-  decimal_places = 2
+  decimal_places = 2,
+  baseline_interval = "t0to5",
+  ending_interval = "t20to25"
 )
 
 }
