@@ -168,3 +168,5 @@ To learn about how to convert raw .abf data in Clampfit to .csv files for this p
 ## Using patchclampplotteR
 
 Please see the [Getting Started](https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html) page for a walk-through of the major functions of this package.
+
+If you want to learn tips and tricks for customizing your plots, please see the [FAQ](https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.html) page!

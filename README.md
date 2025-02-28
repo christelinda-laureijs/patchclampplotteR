@@ -162,3 +162,8 @@ Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/act
 Please see the [Getting
 Started](https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html)
 page for a walk-through of the major functions of this package.
+
+If you want to learn tips and tricks for customizing your plots, please
+see the
+[FAQ](https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.html)
+page!

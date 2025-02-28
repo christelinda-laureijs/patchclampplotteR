@@ -368,7 +368,7 @@ It is often useful to summarize the data per minute. If you are familiar with
 GraphPad Prism's "prune rows" function, `make_pruned_EPSC_data()` will perform
 the same function.
 
-> In this vignette, I'll use the example of pruning data per minute because this
+> In this vignette, I'll use the example of pruning data per minute (`interval_length = 1`) because this
 is what is typically used in the Crosby lab. You can change this value by
 changing the `interval_length` to something other than `1`.
 
@@ -385,7 +385,7 @@ pruned_eEPSC_df <- make_pruned_EPSC_data(
 
 This function will return a list of three dataframes. To access each list, type *the object name, followed by a dollar sign*. For example, write `pruned_eEPSC_df$individual_cells` to access the first dataframe in the list.
 
-```{r pruned-data-screenshot, echo=F, out.width="25%", out.extra = "", fig.alt = "A screenshot showing the text pruned_eEPSC_df with a dollar sign. There is a popup on the right showing the three available dataframes.", fig.cap = "In RStudio, typing up the name of the pruned dataset followed by the dollar sign will show a pop-up with the list of available dataframes."}
+```{r pruned-data-screenshot, echo=F, out.width="85%", out.extra = "", fig.alt = "A screenshot showing the text pruned_eEPSC_df with a dollar sign. There is a popup on the right showing the three available dataframes.", fig.cap = "In RStudio, typing up the name of the pruned dataset followed by the dollar sign will show a pop-up with the list of available dataframes."}
 knitr::include_graphics("Pruned-data-dataframe-popup.jpg")
 ```
 
@@ -425,11 +425,37 @@ pruned_eEPSC_control_plots <- plot_raw_current_data(
 pruned_eEPSC_control_plots$L
 ```
 
-The pruned data from all cells within a specific treatment and sex (`$all_cells`) will enable you to make a summary plot using `plot_summary_current_data()`.
+
+
+#### Perform T-tests
+
+The pruned data from all cells within a specific treatment and sex (`$all_cells`) will enable you to make a summary plot using `plot_summary_current_data()`. Before moving forward, you should perform a t-test assessing changes in the evoked current amplitude for each 5-minute interval relative to the baseline period.
+
+Use the `perform_t_tests_for_summary_plot()` function, and give the object a useful name. You will later insert this object into the `t_test_df` argument of `plot_summary_current_data()`.
+
+```{r evoked-t-test-table}
+evoked_t_test_results <- perform_t_tests_for_summary_plot(
+  data = sample_summary_eEPSC_df$summary_data,
+  test_category = 2,
+  include_all_treatments = "yes",
+  list_of_treatments = NULL,
+  current_type = "eEPSC",
+  parameter = "amplitude",
+  baseline_interval = "t0to5",
+  interval_length = 5,
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_output_as_RDS = "no"
+)
+
+reactable(evoked_t_test_results)
+```
+
+#### Plot summary data
+
 
 > Notice how `data` is now `sample_pruned_eEPSC_df$all_cells`, and `y_variable` is "amplitude". There are lots of customization opportunities when plotting summary data, including adding a representative trace as a .png overlay! You can read more about in the documentation for `plot_summary_current_data()`.
 
-```{r plot-summary-data, fig.alt = "A scatterplot showing evoked current amplitude (% baseline) versus time in minutes, where 500 nM of insulin have been added from 5 minutes and onwards. Insulin significantly decreased current amplitude in both males and females."}
+```{r plot-summary-data, warning=F, message=FALSE, fig.alt = "A scatterplot showing evoked current amplitude (% baseline) versus time in minutes, where 500 nM of insulin have been added from 5 minutes and onwards. Insulin significantly decreased current amplitude in both males and females."}
 plot_summary_current_data(
   plot_category = 2,
   plot_treatment = "Control",
@@ -437,10 +463,12 @@ plot_summary_current_data(
   current_type = "eEPSC",
   y_variable = "amplitude",
   include_representative_trace = "yes",
+  included_sexes = "both",
   representative_trace_filename = import_ext_data("Control-trace.png"),
+  significance_display_method = "stars",
   y_axis_limit = 175,
   signif_stars = "yes",
-  t_test_df = sample_eEPSC_t_test_df,
+  t_test_df = evoked_t_test_results,
   hormone_added = "Insulin",
   large_axis_text = "no",
   shade_intervals = "no",
@@ -450,6 +478,7 @@ plot_summary_current_data(
 )
 ```
 
+> **Warning!!** If you change `included_sexes` to "male" or "female", you MUST remember to use a t-test that uses the dataset that has been filtered to include **one sex only**! If you do not do this, the significance stars will not match (e.g. it may show the t-test stars for both sexes, but only one sex is visible).
 
 ### Step 3: Summarize data
 
@@ -460,19 +489,52 @@ specified during the `make_normalized_EPSC_data()` function from earlier.
 summary_eEPSC_df <- make_summary_EPSC_data(
   data = sample_raw_eEPSC_df,
   current_type = "eEPSC",
-  save_output_as_RDS = "no"
+  save_output_as_RDS = "no",
+  baseline_interval = "t0to5",
+  ending_interval = "t20to25"
 )
 
 reactable(summary_eEPSC_df$summary_data)
 ```
 
+
+### Step 4: Percent change data
 The second dataframe (accessible with `$percent_change_data`) contains information on the percent change in evoked current amplitude `percent_change` during a specific time interval (`ending_interval`) relative to the baseline (`baseline_interval`). For example, if currents decreased by 50% after the hormone, the value of `percent_change` is 0.5.
 
-```{r}
+```{r summary-percent-data-head}
 head(summary_eEPSC_df$percent_change_data, n = 30) %>%
   reactable()
 ```
 
+You can plot the percent change in current amplitude during the `ending_interval` relative to the `starting_interval`.
+
+```{r}
+plot_percent_change_comparisons(
+  data = sample_summary_eEPSC_df$percent_change_data,
+  plot_category = 2,
+  current_type = "eEPSC",
+  y_variable = "amplitude",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
+)
+```
+
+
+## Explore! Make your own plots!
+
+You now have your data in an easy-to-manipulate format, and you have the freedom to choose what analysis you want to do next!
+
+For example, you could look at the paired-pulse ratio, changes in variance parameters, or compare baseline values. See below for examples of how to use these functions.
+
+### Looking at cell characteristics
+
+Using `cell_characteristics` data throughout makes it very easy to answer interesting questions about your data. For example, does `age` affect the baseline evoked current amplitude?
+
+The sample dataset included in this package is too small to show anything meaningful, so I'm including an image from my dataset (manuscript in preparation).
+
+```{r age-vs-baseline-amplitude, eval=F, fig.align='center', fig.alt = "A picture of a knitted white rat sitting on a keyboard and working at a computer.", fig.cap = "Ruby likes to help us with data analysis and provide emotional support when needed."}
+knitr::include_graphics("Ruby-desk.jpg")
+```
 
 
 ## Analyze the paired-pulse ratio
@@ -614,11 +676,11 @@ plot_baseline_data(
 )
 ```
 
-Hopefully this vignette has given you an idea of some of the plotting functions that this package can do. The documentation for each function contains lots of additional information about each argument, and you can also explore the articles for [Evoked Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html) and [Action Potential Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
+Hopefully this vignette has given you an idea of some of the plotting functions that this package can do. The documentation for each function contains lots of additional information about each argument, and you can also explore the articles for [Evoked Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html), [Spontaneous Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/spontaneous-current-analysis.html), and [Action Potential Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
 
 If you have any questions about customizing your plots, read the [FAQ](https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.html) page. There will likely be an answer there!
 
-```{r ruby-picture, echo=F, fig.alt = "A picture of a knitted white rat sitting on a keyboard and working at a computer.", fig.cap = "Ruby likes to help us with data analysis. She says 'Have fun!'"}
+```{r ruby-picture, echo=F, fig.align='center', fig.alt = "A picture of a knitted white rat sitting on a keyboard and working at a computer.", fig.cap = "Ruby likes to help us with data analysis and provide emotional support when needed."}
 knitr::include_graphics("Ruby-desk.jpg")
 ```
 

@@ -26,8 +26,8 @@ library(purrr)
 This article contains answers to common questions about plots and customizing
 the ggplot output of functions like `plot_raw_current_data()`.
 
-> *Note*: Above all, if you are confused about how a function works, be sure to check the help page for that function! If you type `?` and the name of the function in the R console, it will bring up the help page for the function. For example, type `?plot_AP_trace` to get information on how to use this function.
-
+> *Note*: Above all, if you are confused about how a function works, be sure to check the **Documentation** for that function! If you type `?` and the name of the function in the R console, it will bring up the help page for the function. For example, type `?plot_AP_trace` and then press the Enter key. The Help window on the bottom-right side of RStudio will automatically pop up with the documentation for `plot_AP_trace()`.
+>
 > There are often extra arguments not included in the examples that you may find helpful if you need to re-adjust parameters like the image position in `plot_summary_current_data()` or the bracket line width.
 
 This is the plot we will use throughout the FAQ:
@@ -82,7 +82,7 @@ cars_plot +
 ## How do I change the plot font family?
 
 This can be tricky and it will vary depending on your operating system. I would
-recommend using the `extrafont` package. You will need to run the code below the
+use the `extrafont` package. You will need to run the code below the
 first time you do this. Use `fonts()` to see the list of fonts available to you in R.
 
 > **Warning!** font_import() will take a long time to
@@ -197,7 +197,7 @@ list_of_treatments$representative_trace_filepath <- evoked_trace_filename
 
 Then, I'm using `purrr::pmap()` and inserting the `list_of_treatments` that I defined above. This is so I can use the `treatment` column in the `plot_treatment` argument and the `representative_trace_filepath` column for the `representative_trace_filename` argument. See below - the summary plots for all treatments were produced with one code chunk!
 
-```{r eval=T, include=T, warning=F, message=F}
+```{r eval=T, echo=T, warning=F, message=F}
 pmap(
   .l = list_of_treatments,
   .f = ~ with(
@@ -299,7 +299,7 @@ reactable(sample_theme_options)
 
 To use the default values, just use `sample_theme_options` in the `theme_options` argument of any plotting function in `patchclampplotteR`.
 
-```{r plot-summary-current-old-options, fig.alt="A scatterplot of current amplitude (% baseline) over time in minutes. This plot demonstrates that you can change the theme options and get a different-looking plot. For example, using the default sample theme options, the horizontal line showing times when insulin was added is black, and the data points are triangles and circles."}
+```{r plot-summary-current-old-options, warning=F, fig.alt="A scatterplot of current amplitude (% baseline) over time in minutes. This plot demonstrates that you can change the theme options and get a different-looking plot. For example, using the default sample theme options, the horizontal line showing times when insulin was added is black, and the data points are triangles and circles."}
 plot_summary_current_data(
   data = sample_pruned_eEPSC_df$all_cells,
   plot_category = 2,
@@ -348,7 +348,7 @@ Step 6: Go to a plotting function like `plot_raw_current_data()` and replace `sa
 
 I changed `line_col` to orange, and I also changed `male_shape` and `female_shape`. See, the graph looks different now!
 
-```{r plot-summary-current-new-options, fig.alt="A scatterplot of current amplitude (% baseline) over time in minutes. This plot demonstrates that you can change the theme options and get a different-looking plot. For example, the horizontal line showing times when insulin was added is now orange, and the data points are diamonds and circles instead of triangles and circles."}
+```{r plot-summary-current-new-options, warning=F, fig.alt="A scatterplot of current amplitude (% baseline) over time in minutes. This plot demonstrates that you can change the theme options and get a different-looking plot. For example, the horizontal line showing times when insulin was added is now orange, and the data points are diamonds and circles instead of triangles and circles."}
 plot_summary_current_data(
   data = sample_pruned_eEPSC_df$all_cells,
   plot_category = 2,

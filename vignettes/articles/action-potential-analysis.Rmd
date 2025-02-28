@@ -285,7 +285,7 @@ reactable(sample_full_ap_table)
 19. Use the `plot_AP_comparison()` function to see how parameters like
     `peak_amplitude` and `half-width` change after your treatment.
 
-```{r ap-comparison, fig.alt = "A plot of peak amplitude in pico amps versus state (baseline or insulin). The data are coloured according to state, where baseline points are gray and insulin points are purple. Insulin decreased action potential amplitude."}
+```{r ap-comparison, echo=TRUE, fig.alt = "A plot of peak amplitude in pico amps versus state (baseline or insulin). The data are coloured according to state, where baseline points are gray and insulin points are purple. Insulin decreased action potential amplitude."}
 plot_AP_comparison(
   sample_AP_data,
   plot_treatment = "Control",
@@ -367,13 +367,14 @@ reactable(read.csv("sample-ap-count-data.csv"))
 
 23. Here is an example of the type of plots you can create!
 
-```{r ap-frequencies-one-treatment, fig.alt = "A plot of Action Potential Frequency in Hz versus current injection on the x-axis. The data are coloured gray for baseline data and purple for insulin data. The plot is showing that action potential frequency was lower after adding insulin."}
+```{r ap-frequencies-one-treatment, echo=TRUE, warning=FALSE, fig.alt = "A plot of Action Potential Frequency in Hz versus current injection on the x-axis. The data are coloured gray for baseline data and purple for insulin data. The plot is showing that action potential frequency was lower after adding insulin."}
 plot_AP_frequencies_single_treatment(
   data = sample_AP_count_data,
   plot_treatment = "Control",
   plot_category = 2,
   baseline_label = "Baseline",
   hormone_added = "Insulin",
+  significance_display_method = "stars",
   treatment_colour_theme = sample_treatment_names_and_colours,
   large_axis_text = "no",
   test_type = "wilcox.test",
@@ -382,7 +383,7 @@ plot_AP_frequencies_single_treatment(
 )
 ```
 
-```{r ap-plot-frequencies-multiple-treatments, fig.alt = "A smoothed line plot showing action potential frequency in Hz versus current injection in picoamps for four different treatments at two states (baseline vs. insulin). Overall, insulin decreased action potential frequency in all treatments.", message=F}
+```{r ap-plot-frequencies-multiple-treatments, echo=TRUE, warning=FALSE, fig.alt = "A smoothed line plot showing action potential frequency in Hz versus current injection in picoamps for four different treatments at two states (baseline vs. insulin). Overall, insulin decreased action potential frequency in all treatments.", message=F}
 plot_AP_frequencies_multiple_treatments(
   data = sample_AP_count_data,
   include_all_treatments = "yes",
@@ -399,7 +400,7 @@ You can plot action potential recordings using `plot_AP_traces()`. Use a datafra
 
 "viridis" enables the beautiful colourblind-friendly viridis palettes from the `viridis` package. Look at the [documentation for `scale_color_viridis`](https://sjmgarnier.github.io/viridis/reference/scale_viridis.html) to learn about options you can use. These include `begin`, `option`, `theme` and more.
 
-```{r ap-trace-viridis, fig.alt = "A plot of current clamp steps where each sweep is coloured a different colour"}
+```{r ap-trace-viridis, echo=TRUE, warning=FALSE, fig.alt = "A plot of current clamp steps where each sweep is coloured a different colour. The colour scheme is part of the plasma theme from the viridis package."}
 plot_AP_trace(
   data = sample_ap_abf_baseline,
   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
@@ -413,11 +414,28 @@ plot_AP_trace(
 )
 ```
 
+This is how you would plot selected sweeps. Include a list of one or more values corresponding to the sweep names ("epi1" to "epi10" in this example).
+
+```{r ap-trace-viridis-three-sweeps, echo=TRUE, warning=FALSE, fig.alt = "A plot of current clamp steps showing three sweeps only."}
+plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  sweeps = c("epi1", "epi5", "epi10"),
+  colour_scale_option = "viridis",
+  plot_category = 2,
+  plot_treatment = "Control",
+  direction = -1,
+  option = "plasma",
+  begin = 0,
+  end = 0.8
+)
+```
+
+
 ## Custom scale
 
 If you use `colour_scale_option = "custom"` you must define a list of character values (can be hex values or named colours) in the `custom_scale_colours` argument.
 
-```{r}
+```{r echo=TRUE, warning=FALSE, fig.alt = "A series of action potential sweeps where each sweep is a different colour. The colour scheme is part of the turbo rainbow scheme from yellow to blue."}
 plot_AP_trace(
   data = sample_ap_abf_baseline,
   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
@@ -430,7 +448,7 @@ plot_AP_trace(
 
 ## Single colour
 
-```{r}
+```{r echo=TRUE, warning=FALSE, fig.alt = "A series of action potential sweeps that are all coloured purple."}
 plot_AP_trace(
   data = sample_ap_abf_baseline,
   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
