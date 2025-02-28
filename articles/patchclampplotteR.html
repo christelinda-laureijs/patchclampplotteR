@@ -149,7 +149,8 @@ in DMH neurons.</p>
 </h3>
 <p>Please see the vignettes in the Articles page to learn about how to
 analyze data in Clampfit. These include <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html">Evoked
-Current Analysis</a> and <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html">Action
+Current Analysis</a>, <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/spontaneous-current-analysis.html">Spontaneous
+Current Analysis</a>, and <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html">Action
 Potential Analysis</a>.</p>
 </div>
 <div class="section level3">
@@ -165,7 +166,7 @@ of the documentation for <code><a href="../reference/import_cell_characteristics
 for full explanations of the required columns and what you should
 include. See below for a link to download an empty <code>.csv</code>
 file with the headers required for this dataset:</p>
-<a href="data:text/csv;base64,bGV0dGVyLGNlbGwsc2V4LFgsWSxhZ2UsYW5pbWFsLHN5bmFwc2VzLHRyZWF0bWVudCxjYXRlZ29yeSxSX2EKU0FNUExFLDI1LjEuMixNYWxlLDE1Mi45MiwzMzcuMTksMjksMjUsR2x1dGFtYXRlLENvbnRyb2wsMiwiMS42LCAxLjcsIDEuNywgMS44LCAxLjgsIDIuMCIK" download="sample-blank-cell-characteristics-sheet.csv">Download sample-blank-cell-characteristics-sheet.csv</a>
+<a href="data:text/csv;base64,bGV0dGVyLGNlbGwsc2V4LFgsWSxhZ2UsYW5pbWFsLHN5bmFwc2VzLHRyZWF0bWVudCxjYXRlZ29yeSxSX2EsZGF5c19hbG9uZSxhbmltYWxfb3Jfc2xpY2luZ19wcm9ibGVtcwpTQU1QTEUsMjUuMS4yLE1hbGUsMTUyLjkyLDMzNy4xOSwyOSwyNSxHbHV0YW1hdGUsQ29udHJvbCwyLCIxLjYsIDEuNywgMS43LCAxLjgsIDEuOCwgMi4wIiwxLHllcwo=" download="sample-blank-cell-characteristics-sheet.csv">Download sample-blank-cell-characteristics-sheet.csv</a>
 <blockquote>
 <p>Note: Since this vignette is included within an R package, the
 following code requires the function <code><a href="../reference/import_ext_data.html">import_ext_data()</a></code> to
@@ -182,11 +183,6 @@ folder.</p>
 </blockquote>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cell_characteristics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_cell_characteristics_df.html">import_cell_characteristics_df</a></span><span class="op">(</span><span class="fu"><a href="../reference/import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"sample_cell_characteristics.csv"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: There was 1 warning in `dplyr::mutate()`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> In argument: `R_a = lapply(stringr::str_split(.data$R_a, pattern = ", "), FUN</span></span>
-<span><span class="co">#&gt;   = as.numeric)`.</span></span>
-<span><span class="co">#&gt; Caused by warning in `lapply()`:</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> NAs introduced by coercion</span></span>
 <span></span>
 <span><span class="fu">reactable</span><span class="op">(</span><span class="va">cell_characteristics</span><span class="op">)</span></span></code></pre></div>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:auto;height:auto;"></div>
@@ -254,7 +250,8 @@ data.</li>
 <code>old_raw_data_csv</code> argument MUST contain at least the
 <code>letter</code> column name in cell A1. If you try to use a
 completely empty <code>.csv</code> sheet, R will not recognize it as a
-valid <code>.csv</code> because there is “nothing” for it to read.</p>
+valid <code>.csv</code> because there is “nothing” for it to read if it
+is a blank csv.</p>
 </blockquote>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">blank_csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="../reference/import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"empty_old_raw_data_sheet.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -388,9 +385,10 @@ treatment names and colours.</p>
 <span>  very_pale_colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#fabb78"</span>, <span class="st">"#fa98d5"</span>, <span class="st">"#ce90de"</span>, <span class="st">"yellow"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Every time a plot contains the argument
-<code>treatment_colour_theme</code>, refer to your custom dataframe. To
-see an example, see the <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.html#theme-faq">Theme
-FAQ</a></p>
+<code>treatment_colour_theme</code>, refer to your custom dataframe
+(<code>my_theme_colours</code> in this example). To see more information
+about defining your own theme, see the <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.html#theme-faq">Theme
+FAQ</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="analyze-current-amplitude">Analyze current amplitude<a class="anchor" aria-label="anchor" href="#analyze-current-amplitude"></a>
@@ -514,9 +512,15 @@ other than <code>1</code>.</p>
 <span>  interval_length <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>This function will return a list of three dataframes. To access each
-list, type the object name, followed by a dollar sign. For example,
-write <code>pruned_eEPSC_df$individual_cells</code> to access the first
-dataframe in the list.</p>
+list, type <em>the object name, followed by a dollar sign</em>. For
+example, write <code>pruned_eEPSC_df$individual_cells</code> to access
+the first dataframe in the list.</p>
+<div class="figure" style="text-align: center">
+<img src="Pruned-data-dataframe-popup.jpg" alt="A screenshot showing the text pruned_eEPSC_df with a dollar sign. There is a popup on the right showing the three available dataframes." width="25%"><p class="caption">
+In RStudio, typing up the name of the pruned dataset followed by the
+dollar sign will show a pop-up with the list of available dataframes.
+</p>
+</div>
 <p>The three dataframes are:</p>
 <ul>
 <li><p><code>$individual_cells</code>: This dataframe has the same

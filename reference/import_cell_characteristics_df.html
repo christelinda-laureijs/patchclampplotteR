@@ -89,7 +89,7 @@ See the details below for information on required columns.</p></dd>
 
 
 
-<p>These columns are required in the raw .csv file:</p><ul><li><p><code>letter</code> A character value that is a unique identifier for a single
+<p>The columns listed below are required in the raw .csv file. If you do not have data for any of these columns, please still include the column as an "empty" column to prevent errors caused by missing columns.</p><ul><li><p><code>letter</code> A character value that is a unique identifier for a single
 recording. Used to link data sets for evoked or spontaneous currents and
 cell-characteristics. Example: "A"</p></li>
 <li><p><code>cell</code> A character or numeric value representing the cell. For
@@ -110,6 +110,8 @@ and months when reporting animal ages). Do not use characters (e.g. avoid
 <li><p><code>R_a</code> A list of values for the access resistance, which would have been
 monitored at several timepoints throughout the recording. See the section
 <code>R_a</code> formatting below.</p></li>
+<li><p><code>days_alone</code> A numeric value representing the number of days that the animal was alone in a cage. This will always be 1 for some treatments, like fasting, but should ideally be low to reduce the effects of social isolation-related stress.</p></li>
+<li><p><code>animal_or_slicing_problems</code> A character value ("yes" or "no") indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use "yes" if the slices were crumpling during slicing or the animal was unusually anxious.)</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="r-a-formatting"><code>R_a</code> formatting<a class="anchor" aria-label="anchor" href="#r-a-formatting"></a></h2>
