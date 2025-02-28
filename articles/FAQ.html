@@ -91,13 +91,12 @@ customizing the ggplot output of functions like
 <code><a href="../reference/plot_raw_current_data.html">plot_raw_current_data()</a></code>.</p>
 <blockquote>
 <p><em>Note</em>: Above all, if you are confused about how a function
-works, be sure to check the help page for that function! If you type
-<code>?</code> and the name of the function in the R console, it will
-bring up the help page for the function. For example, type
-<code><a href="../reference/plot_AP_trace.html">?plot_AP_trace</a></code> to get information on how to use this
-function.</p>
-</blockquote>
-<blockquote>
+works, be sure to check the <strong>Documentation</strong> for that
+function! If you type <code>?</code> and the name of the function in the
+R console, it will bring up the help page for the function. For example,
+type <code><a href="../reference/plot_AP_trace.html">?plot_AP_trace</a></code> and then press the Enter key. The Help
+window on the bottom-right side of RStudio will automatically pop up
+with the documentation for <code><a href="../reference/plot_AP_trace.html">plot_AP_trace()</a></code>.</p>
 <p>There are often extra arguments not included in the examples that you
 may find helpful if you need to re-adjust parameters like the image
 position in <code><a href="../reference/plot_summary_current_data.html">plot_summary_current_data()</a></code> or the bracket line
@@ -153,9 +152,9 @@ and specify the text elements manually. For example:</p>
 <h3 id="how-do-i-change-the-plot-font-family">How do I change the plot font family?<a class="anchor" aria-label="anchor" href="#how-do-i-change-the-plot-font-family"></a>
 </h3>
 <p>This can be tricky and it will vary depending on your operating
-system. I would recommend using the <code>extrafont</code> package. You
-will need to run the code below the first time you do this. Use
-<code>fonts()</code> to see the list of fonts available to you in R.</p>
+system. I would use the <code>extrafont</code> package. You will need to
+run the code below the first time you do this. Use <code>fonts()</code>
+to see the list of fonts available to you in R.</p>
 <blockquote>
 <p><strong>Warning!</strong> font_import() will take a long time to run,
 especially if you have a lot of fonts on your computer. Luckily, you
@@ -415,9 +414,7 @@ in the <code>theme_options</code> argument of any plotting function in
 <span>  shade_intervals <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span>
 <span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 25 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_segment()`).</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="FAQ_files/figure-html/plot-summary-current-old-options-1.png" alt="A scatterplot of current amplitude (% baseline) over time in minutes. This plot demonstrates that you can change the theme options and get a different-looking plot. For example, using the default sample theme options, the horizontal line showing times when insulin was added is black, and the data points are triangles and circles." width="700" style="display: block; margin: auto;"></p>
 <p>If you want to change these values, please follow these steps.</p>
 <p>Step 1: Create a <code>.csv</code> file with two columns
@@ -468,9 +465,7 @@ looks different now!</p>
 <span>  shade_intervals <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span>
 <span>  theme_options <span class="op">=</span> <span class="va">my_custom_theme_options</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 25 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_segment()`).</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="FAQ_files/figure-html/plot-summary-current-new-options-1.png" alt="A scatterplot of current amplitude (% baseline) over time in minutes. This plot demonstrates that you can change the theme options and get a different-looking plot. For example, the horizontal line showing times when insulin was added is now orange, and the data points are diamonds and circles instead of triangles and circles." width="700" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">

@@ -376,6 +376,20 @@ time.</p></li>
 parameters like <code>peak_amplitude</code> and <code>half-width</code>
 change after your treatment.</p></li>
 </ol>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_comparison.html">plot_AP_comparison</a></span><span class="op">(</span></span>
+<span>  <span class="va">sample_AP_data</span>,</span>
+<span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
+<span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  y_variable <span class="op">=</span> <span class="st">"peak_amplitude"</span>,</span>
+<span>  y_axis_title <span class="op">=</span> <span class="st">"Peak Amplitude (pA)"</span>,</span>
+<span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span>
+<span>  baseline_label <span class="op">=</span> <span class="st">"Baseline"</span>,</span>
+<span>  test_type <span class="op">=</span> <span class="st">"wilcox.test"</span>,</span>
+<span>  post_hormone_label <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
+<span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span>
+<span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="action-potential-analysis_files/figure-html/ap-comparison-1.png" alt="A plot of peak amplitude in pico amps versus state (baseline or insulin). The data are coloured according to state, where baseline points are gray and insulin points are purple. Insulin decreased action potential amplitude." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -456,9 +470,28 @@ with 0s now.</p>
 <code>data_type == "AP_count"</code>.</p></li>
 <li><p>Here is an example of the type of plots you can create!</p></li>
 </ol>
-<pre><code><span><span class="co">## Warning: Removed 4 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">## (`geom_text()`).</span></span></code></pre>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_frequencies_single_treatment.html">plot_AP_frequencies_single_treatment</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">sample_AP_count_data</span>,</span>
+<span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
+<span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  baseline_label <span class="op">=</span> <span class="st">"Baseline"</span>,</span>
+<span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
+<span>  significance_display_method <span class="op">=</span> <span class="st">"stars"</span>,</span>
+<span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span>
+<span>  large_axis_text <span class="op">=</span> <span class="st">"no"</span>,</span>
+<span>  test_type <span class="op">=</span> <span class="st">"wilcox.test"</span>,</span>
+<span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span>
+<span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="action-potential-analysis_files/figure-html/ap-frequencies-one-treatment-1.png" alt="A plot of Action Potential Frequency in Hz versus current injection on the x-axis. The data are coloured gray for baseline data and purple for insulin data. The plot is showing that action potential frequency was lower after adding insulin." width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_frequencies_multiple_treatments.html">plot_AP_frequencies_multiple_treatments</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">sample_AP_count_data</span>,</span>
+<span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span>
+<span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="action-potential-analysis_files/figure-html/ap-plot-frequencies-multiple-treatments-1.png" alt="A smoothed line plot showing action potential frequency in Hz versus current injection in picoamps for four different treatments at two states (baseline vs. insulin). Overall, insulin decreased action potential frequency in all treatments." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
@@ -482,7 +515,35 @@ from the <code>viridis</code> package. Look at the <a href="https://sjmgarnier.g
 for <code>scale_color_viridis</code></a> to learn about options you can
 use. These include <code>begin</code>, <code>option</code>,
 <code>theme</code> and more.</p>
-<p><img src="action-potential-analysis_files/figure-html/ap-trace-viridis-1.png" alt="A plot of current clamp steps where each sweep is coloured a different colour" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_trace.html">plot_AP_trace</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">sample_ap_abf_baseline</span>,</span>
+<span>  sweeps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sample_ap_abf_baseline</span><span class="op">$</span><span class="va">episode</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  colour_scale_option <span class="op">=</span> <span class="st">"viridis"</span>,</span>
+<span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
+<span>  direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,</span>
+<span>  option <span class="op">=</span> <span class="st">"plasma"</span>,</span>
+<span>  begin <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  end <span class="op">=</span> <span class="fl">0.8</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="action-potential-analysis_files/figure-html/ap-trace-viridis-1.png" alt="A plot of current clamp steps where each sweep is coloured a different colour. The colour scheme is part of the plasma theme from the viridis package." width="75%" style="display: block; margin: auto;"></p>
+<p>This is how you would plot selected sweeps. Include a list of one or
+more values corresponding to the sweep names (“epi1” to “epi10” in this
+example).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_trace.html">plot_AP_trace</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">sample_ap_abf_baseline</span>,</span>
+<span>  sweeps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"epi1"</span>, <span class="st">"epi5"</span>, <span class="st">"epi10"</span><span class="op">)</span>,</span>
+<span>  colour_scale_option <span class="op">=</span> <span class="st">"viridis"</span>,</span>
+<span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
+<span>  direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,</span>
+<span>  option <span class="op">=</span> <span class="st">"plasma"</span>,</span>
+<span>  begin <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  end <span class="op">=</span> <span class="fl">0.8</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="action-potential-analysis_files/figure-html/ap-trace-viridis-three-sweeps-1.png" alt="A plot of current clamp steps showing three sweeps only." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="custom-scale">Custom scale<a class="anchor" aria-label="anchor" href="#custom-scale"></a>
@@ -490,12 +551,30 @@ use. These include <code>begin</code>, <code>option</code>,
 <p>If you use <code>colour_scale_option = "custom"</code> you must
 define a list of character values (can be hex values or named colours)
 in the <code>custom_scale_colours</code> argument.</p>
-<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-2-1.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_trace.html">plot_AP_trace</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">sample_ap_abf_baseline</span>,</span>
+<span>  sweeps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sample_ap_abf_baseline</span><span class="op">$</span><span class="va">episode</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  custom_scale_colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#edd03a"</span>, <span class="st">"#cced34"</span>, <span class="st">"#a3fd3d"</span>, <span class="st">"#6bfe64"</span>, <span class="st">"#31f199"</span>, <span class="st">"#18dcc3"</span>, <span class="st">"#29bbec"</span>, <span class="st">"#4294ff"</span>, <span class="st">"#466be3"</span>, <span class="st">"#4040a2"</span><span class="op">)</span>,</span>
+<span>  colour_scale_option <span class="op">=</span> <span class="st">"custom"</span>,</span>
+<span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-2-1.png" alt="A series of action potential sweeps where each sweep is a different colour. The colour scheme is part of the turbo rainbow scheme from yellow to blue." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="single-colour">Single colour<a class="anchor" aria-label="anchor" href="#single-colour"></a>
 </h3>
-<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-3-1.png" width="75%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_trace.html">plot_AP_trace</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">sample_ap_abf_baseline</span>,</span>
+<span>  sweeps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sample_ap_abf_baseline</span><span class="op">$</span><span class="va">episode</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  trace_colour <span class="op">=</span> <span class="st">"#6600cc"</span>,</span>
+<span>  colour_scale_option <span class="op">=</span> <span class="st">"single_colour"</span>,</span>
+<span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-3-1.png" alt="A series of action potential sweeps that are all coloured purple." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="faq">FAQ<a class="anchor" aria-label="anchor" href="#faq"></a>
