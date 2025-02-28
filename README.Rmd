@@ -126,8 +126,6 @@ plot_AP_trace(
 ```
 
 
-
-
 ...and a summary of differences in action potential frequency across treatments.
 
 ```{r ap-frequencies-one-treatment, fig.alt = "A plot of Action Potential Frequency in Hz versus current injection on the x-axis. The data are coloured gray for baseline data and purple for insulin data. The plot is showing that action potential frequency was lower after adding insulin."}
@@ -138,6 +136,7 @@ plot_AP_frequencies_single_treatment(
   baseline_label = "Baseline",
   hormone_added = "Insulin",
   treatment_colour_theme = sample_treatment_names_and_colours,
+  significance_display_method = "stars",
   large_axis_text = "no",
   test_type = "wilcox.test",
   theme_options = sample_theme_options,

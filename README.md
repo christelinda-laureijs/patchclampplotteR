@@ -120,6 +120,7 @@ plot_AP_frequencies_single_treatment(
   baseline_label = "Baseline",
   hormone_added = "Insulin",
   treatment_colour_theme = sample_treatment_names_and_colours,
+  significance_display_method = "stars",
   large_axis_text = "no",
   test_type = "wilcox.test",
   theme_options = sample_theme_options,

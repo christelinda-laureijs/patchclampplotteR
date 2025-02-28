@@ -1355,7 +1355,10 @@ plot_summary_current_data <- function(data,
 #' More documentation will be updated soon.
 #' @inheritParams plot_baseline_data
 #'
-#' @param data A dataframe generated from `make_summary_EPSC_data()`. If `current_type = "eEPSC"`, this must be the second element of the data generated from `make_summary_EPSC_data()`. Use `$summary_data` to access this dataframe.
+#' @param data A dataframe generated from `make_summary_EPSC_data()`. If `current_type = "eEPSC"`, this must be the percent change dataframe generated from `make_summary_EPSC_data()`. Use `$percent_change` to access this dataframe. If `current_type = "sEPSC"`, this can either be `$percent_change_amplitude` or `$percent_change_frequency`.
+#'
+#' @param y_variable A character value (must be "amplitude" for `current_type = "eEPSC"`. For `current_type = "sEPSC"`, this must be "amplitude" or "frequency", corresponding to `$percent_change_amplitude` or `$percent_change_frequency`, respectively).
+#'
 #' @returns
 #'
 #' A ggplot object
@@ -1367,12 +1370,28 @@ plot_summary_current_data <- function(data,
 #' plot_percent_change_comparisons(
 #'   data = sample_summary_eEPSC_df$percent_change_data,
 #'   plot_category = 2,
+#'   current_type = "eEPSC",
+#'   y_variable = "amplitude",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   theme_options = sample_theme_options
+#' )
+#'
+#' # Spontaneous Current Frequency
+#'
+#' # (note: this plot only has a few datapoints because sample_sEPSC_df is intentionally small to reduce file size.)
+#'
+#' plot_percent_change_comparisons(
+#'   data = sample_summary_sEPSC_df$percent_change_frequency,
+#'   plot_category = 2,
+#'   current_type = "sEPSC",
+#'   y_variable = "frequency",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   theme_options = sample_theme_options
 #' )
 #'
 plot_percent_change_comparisons <- function(data,
                                             current_type = "eEPSC",
+                                            y_variable,
                                             plot_category,
                                             include_all_treatments = "yes",
                                             list_of_treatments = NULL,
@@ -1448,7 +1467,48 @@ plot_percent_change_comparisons <- function(data,
 
   if (current_type == "eEPSC") {
     filepath <- "Figures/Evoked-currents/Output-summary-plots"
+
+    allowed_y_variables_list <- "\"amplitude\""
+
+    if (y_variable != "amplitude") {
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`y_variable` must be ",
+          allowed_y_variables_list,
+          " for current_type \"",
+          current_type,
+          "."
+        )
+      ))
+    }
+
     y_title <- "Change in eEPSC Amplitude\n(% Baseline)"
+  }
+
+  if (current_type == "sEPSC") {
+    filepath <- "Figures/Spontaneous-currents/Output-summary-plots"
+
+    allowed_y_variables_list <- "\"amplitude\", or \"frequency\""
+
+    if (!y_variable %in% c("amplitude", "frequency")) {
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`y_variable` must be ",
+          allowed_y_variables_list,
+          " for current_type \"",
+          current_type,
+          "."
+        )
+      ))
+    }
+
+    if (y_variable == "amplitude") {
+      y_title <- "Change in sEPSC Amplitude\n(% Baseline)"
+    }
+
+    if (y_variable == "frequency") {
+      y_title <- "Change in sEPSC Frequency \n(% Baseline)"
+    }
   }
 
   if (included_sexes == "male") {

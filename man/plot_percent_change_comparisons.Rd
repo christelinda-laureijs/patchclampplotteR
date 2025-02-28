@@ -7,6 +7,7 @@
 plot_percent_change_comparisons(
   data,
   current_type = "eEPSC",
+  y_variable,
   plot_category,
   include_all_treatments = "yes",
   list_of_treatments = NULL,
@@ -23,10 +24,12 @@ plot_percent_change_comparisons(
 )
 }
 \arguments{
-\item{data}{A dataframe generated from \code{make_summary_EPSC_data()}. If \code{current_type = "eEPSC"}, this must be the second element of the data generated from \code{make_summary_EPSC_data()}. Use \verb{$summary_data} to access this dataframe.}
+\item{data}{A dataframe generated from \code{make_summary_EPSC_data()}. If \code{current_type = "eEPSC"}, this must be the percent change dataframe generated from \code{make_summary_EPSC_data()}. Use \verb{$percent_change} to access this dataframe. If \code{current_type = "sEPSC"}, this can either be \verb{$percent_change_amplitude} or \verb{$percent_change_frequency}.}
 
 \item{current_type}{A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".}
+
+\item{y_variable}{A character value (must be "amplitude" for \code{current_type = "eEPSC"}. For \code{current_type = "sEPSC"}, this must be "amplitude" or "frequency", corresponding to \verb{$percent_change_amplitude} or \verb{$percent_change_frequency}, respectively).}
 
 \item{plot_category}{A numeric value specifying the category, which can be
 used to differentiate different protocol types. In the sample dataset for
@@ -87,6 +90,21 @@ More documentation will be updated soon.
 plot_percent_change_comparisons(
   data = sample_summary_eEPSC_df$percent_change_data,
   plot_category = 2,
+  current_type = "eEPSC",
+  y_variable = "amplitude",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
+)
+
+# Spontaneous Current Frequency
+
+# (note: this plot only has a few datapoints because sample_sEPSC_df is intentionally small to reduce file size.)
+
+plot_percent_change_comparisons(
+  data = sample_summary_sEPSC_df$percent_change_frequency,
+  plot_category = 2,
+  current_type = "sEPSC",
+  y_variable = "frequency",
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options
 )
