@@ -59,7 +59,12 @@ produced with this package.</p>
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>An .rda file containing 4 objects of 4 variables</p><dl><dt><code>treatment</code></dt>
+    <p>An .rda file containing 4 objects of 5 variables</p><dl><dt><code>category</code></dt>
+<dd><p>A numeric value representing the experiment type. Used to
+assign top-level groups for further analyses, with <code>treatment</code> as
+subgroups. For example, "1" may refer to an experiment where you applied high-frequency stimulation (HFS) to a cell, while "2" is an experiment where you added a hormone like leptin. "3" may be an experiment where you applied HFS in the continuous presence of leptin.</p></dd>
+
+<dt><code>treatment</code></dt>
 <dd><p>A character value specifying the treatment applied (e.g.
 "Control", "HNMPA") such as antagonists or agonists, or any protocol applied
 to the animals (e.g. "Fasting").</p></dd>
@@ -87,6 +92,7 @@ contrast in summary plots with both sexes.</p></dd>
 
 <p>Use the data.frame() function to define an object, then refer to this named object in all <code>treatment_colour_theme</code> arguments. E.g.</p>
 <p><code>my_theme_colours &lt;- data.frame(</code>
+<code>category = c(2, 2, 2, 2),</code>
 <code>treatment = c("Control", "HNMPA", "PPP", "PPP_and_HNMPA"),</code>
 <code>display_names = c("Control", "HNMPA", "PPP", "PPP\n&amp;\nHNMPA"),</code>
 <code>colours = c("#f07e05", "#f50599", "#70008c", "#DCE319"),</code>
