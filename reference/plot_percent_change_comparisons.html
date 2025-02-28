@@ -55,6 +55,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_percent_change_comparisons</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
 <span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
+<span>  <span class="va">y_variable</span>,</span>
 <span>  <span class="va">plot_category</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span>
 <span>  list_of_treatments <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -76,12 +77,16 @@
 
 
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>A dataframe generated from <code><a href="make_summary_EPSC_data.html">make_summary_EPSC_data()</a></code>. If <code>current_type = "eEPSC"</code>, this must be the second element of the data generated from <code><a href="make_summary_EPSC_data.html">make_summary_EPSC_data()</a></code>. Use <code>$summary_data</code> to access this dataframe.</p></dd>
+<dd><p>A dataframe generated from <code><a href="make_summary_EPSC_data.html">make_summary_EPSC_data()</a></code>. If <code>current_type = "eEPSC"</code>, this must be the percent change dataframe generated from <code><a href="make_summary_EPSC_data.html">make_summary_EPSC_data()</a></code>. Use <code>$percent_change</code> to access this dataframe. If <code>current_type = "sEPSC"</code>, this can either be <code>$percent_change_amplitude</code> or <code>$percent_change_frequency</code>.</p></dd>
 
 
 <dt id="arg-current-type">current_type<a class="anchor" aria-label="anchor" href="#arg-current-type"></a></dt>
 <dd><p>A character describing the current type. Allowed values
 are "eEPSC" or "sEPSC".</p></dd>
+
+
+<dt id="arg-y-variable">y_variable<a class="anchor" aria-label="anchor" href="#arg-y-variable"></a></dt>
+<dd><p>A character value (must be "amplitude" for <code>current_type = "eEPSC"</code>. For <code>current_type = "sEPSC"</code>, this must be "amplitude" or "frequency", corresponding to <code>$percent_change_amplitude</code> or <code>$percent_change_frequency</code>, respectively).</p></dd>
 
 
 <dt id="arg-plot-category">plot_category<a class="anchor" aria-label="anchor" href="#arg-plot-category"></a></dt>
@@ -170,12 +175,30 @@ they will all go in subfolders below Figures/ in your project directory.</p></dd
 <span class="r-in"><span><span class="fu">plot_percent_change_comparisons</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_summary_eEPSC_df</span><span class="op">$</span><span class="va">percent_change_data</span>,</span></span>
 <span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span></span>
+<span class="r-in"><span>  y_variable <span class="op">=</span> <span class="st">"amplitude"</span>,</span></span>
 <span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span></span>
 <span class="r-in"><span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 2 rows containing missing values or values outside the scale range</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_segment()`).</span>
 <span class="r-plt img"><img src="plot_percent_change_comparisons-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Spontaneous Current Frequency</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># (note: this plot only has a few datapoints because sample_sEPSC_df is intentionally small to reduce file size.)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plot_percent_change_comparisons</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_summary_sEPSC_df</span><span class="op">$</span><span class="va">percent_change_frequency</span>,</span></span>
+<span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"sEPSC"</span>,</span></span>
+<span class="r-in"><span>  y_variable <span class="op">=</span> <span class="st">"frequency"</span>,</span></span>
+<span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span></span>
+<span class="r-in"><span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 5 rows containing missing values or values outside the scale range</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_segment()`).</span>
+<span class="r-plt img"><img src="plot_percent_change_comparisons-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
