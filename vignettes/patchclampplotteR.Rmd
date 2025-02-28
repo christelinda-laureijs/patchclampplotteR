@@ -528,14 +528,21 @@ For example, you could look at the paired-pulse ratio, changes in variance param
 
 ### Looking at cell characteristics
 
-Using `cell_characteristics` data throughout makes it very easy to answer interesting questions about your data. For example, does `age` affect the baseline evoked current amplitude?
+Using `cell_characteristics` data throughout makes it very easy to answer interesting questions about your data. For example, does the baseline evoked current amplitude (data from `t0to5`) affect a cell's insulin sensitivity? I can use `percent_change` as a marker of the effect size of insulin.
 
-The sample dataset included in this package is too small to show anything meaningful, so I'm including an image from my dataset (manuscript in preparation).
+> Note: The sample dataset included in this package is too small to show anything meaningful, so I'm including static images from my dataset (manuscript in preparation).
 
-```{r age-vs-baseline-amplitude, eval=F, fig.align='center', fig.alt = "A picture of a knitted white rat sitting on a keyboard and working at a computer.", fig.cap = "Ruby likes to help us with data analysis and provide emotional support when needed."}
-knitr::include_graphics("Ruby-desk.jpg")
+```{r baseline-amplitude-vs-percent-change, eval=T, fig.align='center', fig.alt = "A  scatterplot showing baseline evoked current amplitude in pA on the x-axis and percent change in eEPSC amplitude after adding insulin on the y-axis."}
+knitr::include_graphics("Baseline-amplitude-vs-percent-change.png")
 ```
 
+Does an animal's age affect the cell's sensitivity to insulin? In the following plot, I also coloured the points by the baseline evoked current amplitude to see if this would show any new patterns.
+
+```{r age-vs-percent-change, eval=T, fig.align='center', fig.alt = "A  scatterplot showing age in days on the x-axis and percent change in eEPSC amplitude after adding insulin on the y-axis."}
+knitr::include_graphics("age-vs-percent_change-with-t0to5.png")
+```
+
+The next section shows some examples of functions in the package that you can try out.
 
 ## Analyze the paired-pulse ratio
 
