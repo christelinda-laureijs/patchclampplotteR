@@ -267,6 +267,7 @@ Next, modify this code to set up your own dataframe with your own hormone names 
 
 ```{r setting-own-theme-colours}
 my_theme_colours <- data.frame(
+  category = c(2, 2, 2, 2),
   treatment = c("Control", "HNMPA", "PPP", "PPP_and_HNMPA"),
   display_names = c("Control", "HNMPA", "PPP", "PPP\n&\nHNMPA"),
   colours = c("#f07e05", "#f50599", "#70008c", "#DCE319"),

@@ -5,8 +5,11 @@
 \alias{sample_treatment_names_and_colours}
 \title{A dataframe of treatments and their assigned colours for consistency across plots}
 \format{
-An .rda file containing 4 objects of 4 variables
+An .rda file containing 4 objects of 5 variables
 \describe{
+\item{\code{category}}{A numeric value representing the experiment type. Used to
+assign top-level groups for further analyses, with \code{treatment} as
+subgroups. For example, "1" may refer to an experiment where you applied high-frequency stimulation (HFS) to a cell, while "2" is an experiment where you added a hormone like leptin. "3" may be an experiment where you applied HFS in the continuous presence of leptin.}
 \item{\code{treatment}}{A character value specifying the treatment applied (e.g.
 "Control", "HNMPA") such as antagonists or agonists, or any protocol applied
 to the animals (e.g. "Fasting").}
@@ -31,6 +34,7 @@ produced with this package.
 Use the data.frame() function to define an object, then refer to this named object in all \code{treatment_colour_theme} arguments. E.g.
 
 \verb{my_theme_colours <- data.frame(}
+\verb{category = c(2, 2, 2, 2),}
 \verb{treatment = c("Control", "HNMPA", "PPP", "PPP_and_HNMPA"),}
 \verb{display_names = c("Control", "HNMPA", "PPP", "PPP\\n&\\nHNMPA"),}
 \verb{colours = c("#f07e05", "#f50599", "#70008c", "#DCE319"),}

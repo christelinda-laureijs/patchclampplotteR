@@ -502,10 +502,11 @@ plot_raw_current_data <-
     letters <- as.character(unique(unlist(df$letter)))
 
     plot_colour <- treatment_colour_theme %>%
-      dplyr::filter(.data$treatment == plot_treatment) %>%
+      dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
       dplyr::pull(.data$colours)
 
     treatment_label <- treatment_colour_theme %>%
+      dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
       dplyr::filter(.data$treatment == plot_treatment) %>%
       dplyr::pull(.data$treatment)
 
@@ -983,11 +984,11 @@ plot_summary_current_data <- function(data,
   }
 
   plot_colour <- treatment_colour_theme %>%
-    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
     dplyr::pull(.data$colours)
 
   plot_colour_pale <- treatment_colour_theme %>%
-    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
     dplyr::pull(.data$very_pale_colours)
 
   if (current_type == "eEPSC") {
@@ -1694,7 +1695,7 @@ plot_variance_comparison_data <- function(data,
   }
 
   plot_colour <- treatment_colour_theme %>%
-    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
     dplyr::pull(.data$colours)
 
   variance_comparison_data <- data %>%
@@ -1913,7 +1914,7 @@ plot_cv_data <- function(data,
   }
 
   plot_colour <- treatment_colour_theme %>%
-    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
     dplyr::pull(.data$colours)
 
   if (included_sexes == "male") {
@@ -2039,7 +2040,7 @@ plot_PPR_data_single_treatment <- function(data,
   }
 
   plot_colour <- treatment_colour_theme %>%
-    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
     dplyr::pull(.data$colours)
 
   if (included_sexes == "male") {
@@ -2444,7 +2445,7 @@ plot_AP_comparison <-
 
 
     plot_colour <- treatment_colour_theme %>%
-      dplyr::filter(.data$treatment == plot_treatment) %>%
+      dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
       dplyr::pull(.data$colours)
 
     if (included_sexes == "male") {
@@ -2627,7 +2628,7 @@ plot_AP_frequencies_single_treatment <- function(data,
   }
 
   plot_colour <- treatment_colour_theme %>%
-    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
     dplyr::pull(.data$colours)
 
 
@@ -3323,7 +3324,7 @@ plot_spontaneous_current_parameter_comparison <-
     }
 
     plot_colour <- treatment_colour_theme %>%
-      dplyr::filter(.data$treatment == plot_treatment) %>%
+      dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
       dplyr::pull(.data$colours)
 
 
@@ -3673,7 +3674,7 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
   table_data <-
     merge(pruned_eEPSC_dataframe$for_table, pruned_sEPSC_dataframe$for_table, by = "letter") %>%
     merge(cell_characteristics_dataframe, by = "letter") %>%
-    merge(treatment_colour_theme, by = "treatment") %>%
+    merge(treatment_colour_theme %>% dplyr::select(-.data$category), by = "treatment") %>%
     dplyr::select(
       c(
         .data$letter,
