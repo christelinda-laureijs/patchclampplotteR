@@ -720,12 +720,26 @@ of how to use these functions.</p>
 </h4>
 <p>Using <code>cell_characteristics</code> data throughout makes it very
 easy to answer interesting questions about your data. For example, does
-<code>age</code> affect the baseline evoked current amplitude?</p>
-<p>The sample dataset included in this package is too small to show
-anything meaningful, so I’m including an image from my dataset
+the baseline evoked current amplitude (data from <code>t0to5</code>)
+affect a cell’s insulin sensitivity? I can use
+<code>percent_change</code> as a marker of the effect size of
+insulin.</p>
+<blockquote>
+<p>Note: The sample dataset included in this package is too small to
+show anything meaningful, so I’m including static images from my dataset
 (manuscript in preparation).</p>
+</blockquote>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html" class="external-link">include_graphics</a></span><span class="op">(</span><span class="st">"Ruby-desk.jpg"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html" class="external-link">include_graphics</a></span><span class="op">(</span><span class="st">"Baseline-amplitude-vs-percent-change.png"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Baseline-amplitude-vs-percent-change.png" alt="A  scatterplot showing baseline evoked current amplitude in pA on the x-axis and percent change in eEPSC amplitude after adding insulin on the y-axis." width="1050" style="display: block; margin: auto;"></p>
+<p>Does an animal’s age affect the cell’s sensitivity to insulin? In the
+following plot, I also coloured the points by the baseline evoked
+current amplitude to see if this would show any new patterns.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html" class="external-link">include_graphics</a></span><span class="op">(</span><span class="st">"age-vs-percent_change-with-t0to5.png"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="age-vs-percent_change-with-t0to5.png" alt="A  scatterplot showing age in days on the x-axis and percent change in eEPSC amplitude after adding insulin on the y-axis." width="1050" style="display: block; margin: auto;"></p>
+<p>The next section shows some examples of functions in the package that
+you can try out.</p>
 </div>
 </div>
 <div class="section level3">
@@ -740,7 +754,7 @@ specific intervals. These represent the “before”
 (<code>baseline_interval</code>) and “after”
 (<code>post_hormone_interval</code>) states. You can also choose to
 limit the PPR values to a certain range to exclude outliers.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">PPR_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_PPR_data.html">make_PPR_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">raw_eEPSC_df</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span>
@@ -761,7 +775,7 @@ limit the PPR values to a certain range to exclude outliers.</p>
 <h4 id="plot-ppr-data">Plot PPR data<a class="anchor" aria-label="anchor" href="#plot-ppr-data"></a>
 </h4>
 <p>For a specific treatment:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_PPR_data_single_treatment.html">plot_PPR_data_single_treatment</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">PPR_df</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
@@ -776,7 +790,7 @@ limit the PPR values to a certain range to exclude outliers.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="patchclampplotteR_files/figure-html/plot-one-ppr-treatment-1.png" alt="A scatterplot of paired-pulse ratio over time (baseline or post-insulin) showing no difference in the paired pulse ratio across these two times." width="700" style="display: block; margin: auto;"></p>
 <p>For multiple treatments:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_PPR_data_multiple_treatments.html">plot_PPR_data_multiple_treatments</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">PPR_df</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span>
@@ -804,7 +818,7 @@ generated from <code><a href="../reference/make_summary_EPSC_data.html">make_sum
 <div class="section level4">
 <h4 id="create-variance-dataset">Create variance dataset<a class="anchor" aria-label="anchor" href="#create-variance-dataset"></a>
 </h4>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">variance_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_variance_data.html">make_variance_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">summary_eEPSC_df</span><span class="op">$</span><span class="va">summary_data</span>,</span>
 <span>  df_category <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -825,7 +839,7 @@ generated from <code><a href="../reference/make_summary_EPSC_data.html">make_sum
 </h4>
 <p>You can create plots comparing the inverse coefficient of variation
 squared, and the variance-to-mean ratio.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cv_comparison_control_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_variance_comparison_data.html">plot_variance_comparison_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">variance_df</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -856,7 +870,7 @@ squared, and the variance-to-mean ratio.</p>
 <span></span>
 <span><span class="va">cv_comparison_control_plot</span></span></code></pre></div>
 <p><img src="patchclampplotteR_files/figure-html/variance-comparison-plots-cv-vmr-definition-1.png" alt="Figure 1. A scatterplot showing changes in the inverse coefficient of variation squared across time (baseline or post-insulin). Figure 2. A scatterplot showing changes in the variance-to-mean ratio across time." width="700" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vmr_comparison_control_plot</span></span></code></pre></div>
 <p><img src="patchclampplotteR_files/figure-html/variance-comparison-plots-cv-vmr-definition-2.png" alt="Figure 1. A scatterplot showing changes in the inverse coefficient of variation squared across time (baseline or post-insulin). Figure 2. A scatterplot showing changes in the variance-to-mean ratio across time." width="700" style="display: block; margin: auto;"></p>
 </div>
@@ -874,7 +888,7 @@ period. If <code>current_type</code> = “eEPSC”, the allowed
 transformed amplitudes, since these will all be 100, and the graph will
 be a flat line.</p>
 </blockquote>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_baseline_data.html">plot_baseline_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">summary_eEPSC_df</span><span class="op">$</span><span class="va">summary_data</span>,</span>
 <span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
