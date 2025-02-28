@@ -687,7 +687,7 @@ Hopefully this vignette has given you an idea of some of the plotting functions 
 
 If you have any questions about customizing your plots, read the [FAQ](https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.html) page. There will likely be an answer there!
 
-```{r millie-picture, echo=F, fig.align='center', fig.alt = "So much data!", fig.cap = "So much data! Millie the Mouse is exploring plots made with patchclampplotteR."}
-knitr::include_graphics("Millie-desk-2.jpg")
+```{r millie-picture, echo=F, fig.align='center', fig.alt = "A picture of a knitted mouse laying down on several small sheets of paper with scatterplots on them.", fig.cap = "So much data! Millie the Mouse is exploring plots made with patchclampplotteR."}
+knitr::include_graphics("Millie-desk.jpg")
 ```
 
