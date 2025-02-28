@@ -58,6 +58,7 @@ plot_summary_current_data(
   data = sample_pruned_eEPSC_df$all_cells,
   current_type = "eEPSC",
   y_variable = "amplitude",
+  significance_display_method = "stars",
   include_representative_trace = "no",
   y_axis_limit = 175,
   signif_stars = "yes",
@@ -150,7 +151,9 @@ library(patchclampplotteR)
 
 To learn about how to convert raw .abf data in Clampfit to .csv files
 for this package, please see the vignettes [Evoked Current
-Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html)
+Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html),
+[Spontaneous Current
+Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/spontaneous-current-analysis.html),
 and [Action Potential
 Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
 

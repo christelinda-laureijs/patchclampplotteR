@@ -72,7 +72,7 @@ neurons.
 
 ## Analyze data in Clampfit
 
-Please see the vignettes in the Articles page to learn about how to analyze data in Clampfit. These include [Evoked Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html) and [Action Potential Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
+Please see the vignettes in the Articles page to learn about how to analyze data in Clampfit. These include [Evoked Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html), [Spontaneous Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/spontaneous-current-analysis.html), and [Action Potential Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
 
 ## Import raw .csv files
 
@@ -98,7 +98,7 @@ directly within `import_cell_characteristics_df()`. For example, you should
 write `import_cell_characteristics_df("Data/cell_info.csv")` to use
 `cell_info.csv` located within the `Data/` folder.
 
-```{r import-cell-characteristics}
+```{r import-cell-characteristics, warning=FALSE, message=FALSE}
 cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
 
 reactable(cell_characteristics)
@@ -142,7 +142,7 @@ project goes on, you will eventually be appending new data onto your existing
 datasheet, but if you are starting completely fresh, use a blank `.csv` file
 containing just one value in cell `A1` called `letter`. This column title is all that is needed to allow R to auto-fill in the rest of the new data.
 
-> **WARNING!!** If you are starting from an empty `.csv` file, the `.csv` in the `old_raw_data_csv` argument MUST contain at least the `letter` column name in cell A1. If you try to use a completely empty `.csv` sheet, R will not recognize it as a valid `.csv` because there is "nothing" for it to read. 
+> **WARNING!!** If you are starting from an empty `.csv` file, the `.csv` in the `old_raw_data_csv` argument MUST contain at least the `letter` column name in cell A1. If you try to use a completely empty `.csv` sheet, R will not recognize it as a valid `.csv` because there is "nothing" for it to read if it is a blank csv. 
 
 ```{r blank-sheet-example}
 blank_csv <- read.csv(import_ext_data("empty_old_raw_data_sheet.csv"))
@@ -270,7 +270,7 @@ my_theme_colours <- data.frame(
 )
 ```
 
-Every time a plot contains the argument `treatment_colour_theme`, refer to your custom dataframe. To see an example, see the [Theme FAQ](https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.html#theme-faq)
+Every time a plot contains the argument `treatment_colour_theme`, refer to your custom dataframe (`my_theme_colours` in this example). To see more information about defining your own theme, see the [Theme FAQ](https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.html#theme-faq).
 
 ## Analyze current amplitude
 
@@ -383,7 +383,11 @@ pruned_eEPSC_df <- make_pruned_EPSC_data(
 )
 ```
 
-This function will return a list of three dataframes. To access each list, type the object name, followed by a dollar sign. For example, write `pruned_eEPSC_df$individual_cells` to access the first dataframe in the list.
+This function will return a list of three dataframes. To access each list, type *the object name, followed by a dollar sign*. For example, write `pruned_eEPSC_df$individual_cells` to access the first dataframe in the list.
+
+```{r pruned-data-screenshot, echo=F, out.width="25%", out.extra = "", fig.alt = "A screenshot showing the text pruned_eEPSC_df with a dollar sign. There is a popup on the right showing the three available dataframes.", fig.cap = "In RStudio, typing up the name of the pruned dataset followed by the dollar sign will show a pop-up with the list of available dataframes."}
+knitr::include_graphics("Pruned-data-dataframe-popup.jpg")
+```
 
 The three dataframes are:
 

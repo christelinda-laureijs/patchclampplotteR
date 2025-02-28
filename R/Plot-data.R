@@ -1378,7 +1378,9 @@ plot_summary_current_data <- function(data,
 #'
 #' # Spontaneous Current Frequency
 #'
-#' # (note: this plot only has a few datapoints because sample_sEPSC_df is intentionally small to reduce file size.)
+#' # (note: this plot only has a few datapoints
+#' # because sample_sEPSC_df is intentionally
+#' # small to reduce file size.)
 #'
 #' plot_percent_change_comparisons(
 #'   data = sample_summary_sEPSC_df$percent_change_frequency,

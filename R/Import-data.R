@@ -33,7 +33,7 @@ import_ext_data <- function(file = NULL) {
 #'
 #' @section Required columns:
 #'
-#'  These columns are required in the raw .csv file:
+#'  The columns listed below are required in the raw .csv file. If you do not have data for any of these columns, please still include the column as an "empty" column to prevent errors caused by missing columns.
 #' \itemize{
 #'  \item `letter` A character value that is a unique identifier for a single
 #'  recording. Used to link data sets for evoked or spontaneous currents and
@@ -55,7 +55,11 @@ import_ext_data <- function(file = NULL) {
 #'  \item `category` A numeric value representing an experiment type. For example, '1' may mean 4 seconds of high-frequency stimulation (HFS), '2' may mean an experiment where you added insulin, and '3' may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the `treatment` variable. For example, perhaps you added insulin (Category `2`) and also had the antagonist HNMPA present. This would be `Category 2, Treatment = HNMPA`.
 #' \item `R_a` A list of values for the access resistance, which would have been
 #' monitored at several timepoints throughout the recording. See the section
-#' `R_a` formatting below. }
+#' `R_a` formatting below.
+#' \item `days_alone` A numeric value representing the number of days that the animal was alone in a cage. This will always be 1 for some treatments, like fasting, but should ideally be low to reduce the effects of social isolation-related stress.
+#' \item `animal_or_slicing_problems` A character value ("yes" or "no") indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use "yes" if the slices were crumpling during slicing or the animal was unusually anxious.)
+#'
+#' }
 #' @section `R_a` formatting:
 #'
 #' `R_a` is a mandatory column with information about the cell's access

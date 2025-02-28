@@ -1,2 +1,2 @@
-letter,cell,sex,X,Y,age,animal,synapses,treatment,category,R_a
-SAMPLE,25.1.2,Male,152.92,337.19,29,25,Glutamate,Control,2,"1.6, 1.7, 1.7, 1.8, 1.8, 2.0"
+letter,cell,sex,X,Y,age,animal,synapses,treatment,category,R_a,days_alone,animal_or_slicing_problems
+SAMPLE,25.1.2,Male,152.92,337.19,29,25,Glutamate,Control,2,"1.6, 1.7, 1.7, 1.8, 1.8, 2.0",1,yes
