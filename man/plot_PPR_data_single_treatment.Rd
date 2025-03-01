@@ -100,6 +100,7 @@ plot_PPR_data_single_treatment(
   plot_category = 2,
   baseline_label = "Baseline",
   post_hormone_label = "Insulin",
+  included_sexes = "both",
   test_type = "t.test",
   large_axis_text = "no",
   treatment_colour_theme = sample_treatment_names_and_colours,

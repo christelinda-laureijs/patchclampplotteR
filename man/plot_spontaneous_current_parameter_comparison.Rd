@@ -113,6 +113,7 @@ plot_spontaneous_current_parameter_comparison(
   plot_category = 2,
   plot_treatment = "Control",
   y_variable = "raw_amplitude",
+  included_sexes = "both",
   hormone_added = "Insulin",
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",

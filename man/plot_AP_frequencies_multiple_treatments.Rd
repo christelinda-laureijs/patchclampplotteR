@@ -69,6 +69,7 @@ plot_AP_frequencies_multiple_treatments(
   data = sample_AP_count_data,
   include_all_treatments = "yes",
   plot_category = 2,
+  included_sexes = "both",
   treatment_colour_theme = sample_treatment_names_and_colours
 )
 

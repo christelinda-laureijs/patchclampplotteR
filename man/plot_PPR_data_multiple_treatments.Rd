@@ -108,6 +108,7 @@ plot_PPR_data_multiple_treatments(
   plot_category = 2,
   baseline_label = "B",
   post_hormone_label = "I",
+  included_sexes = "both",
   test_type = "t.test",
   theme_options = sample_theme_options,
   treatment_colour_theme = sample_treatment_names_and_colours

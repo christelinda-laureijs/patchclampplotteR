@@ -14,10 +14,12 @@ plots.}
 periods when a hormone was applied.}
 \item{\code{rectangle_shading_colour}}{Hex code for the colour used to shade the
 rectangles.}
+\item{\code{both_sexes_shape}}{Numeric value representing the point shape used for data
+values where both sexes are included. Defaults to 15, which is a square.}
 \item{\code{male_shape}}{Numeric value representing the point shape used for data
-values where \code{Sex == Male}.}
+values where \code{Sex == Male}. Defaults to 16, which is a circle.}
 \item{\code{female_shape}}{Numeric value representing the point shape used for
-data values where \code{Sex == Female}.}
+data values where \code{Sex == Female}. Defaults to 17, which is a triangle.}
 \item{\code{mean_point_colour}}{Hex code for the colour used to fill the mean data point in plots like the PPR comparison plot.}
 \item{\code{connecting_line_width}}{The width of the connecting line in action potential comparison plots.}
 \item{\code{connecting_line_colour}}{The colour of the connecting line in action potential comparison plots.}

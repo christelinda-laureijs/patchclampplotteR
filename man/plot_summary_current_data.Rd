@@ -166,6 +166,7 @@ plot_summary_current_data(
   y_variable = "amplitude",
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
+  included_sexes = "both",
   include_representative_trace = "yes",
   representative_trace_filename = import_ext_data("Control-trace.png"),
   y_axis_limit = 175,

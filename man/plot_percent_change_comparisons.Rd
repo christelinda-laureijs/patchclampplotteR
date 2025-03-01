@@ -107,6 +107,7 @@ plot_percent_change_comparisons(
   plot_category = 2,
   current_type = "sEPSC",
   y_variable = "frequency",
+  included_sexes = "both",
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options
 )

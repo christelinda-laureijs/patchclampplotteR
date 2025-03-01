@@ -111,6 +111,7 @@ plot_baseline_data(
   include_all_treatments = "yes",
   list_of_treatments = NULL,
   baseline_interval = "t0to5",
+  included_sexes = "both",
   large_axis_text = "no",
   plot_width = 8,
   treatment_colour_theme = sample_treatment_names_and_colours,

@@ -66,6 +66,7 @@ plot_cv_data(
   plot_treatment = "Control",
   plot_category = 2,
   theme_options = sample_theme_options,
+  included_sexes = "both",
   treatment_colour_theme = sample_treatment_names_and_colours,
   save_plot_png = "no"
 )

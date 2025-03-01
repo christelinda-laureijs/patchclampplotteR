@@ -123,6 +123,7 @@ plot_variance_comparison_data(
   variance_measure = "cv",
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",
+  included_sexes = "both",
   post_hormone_label = "Insulin",
   test_type = "wilcox.test",
   large_axis_text = "no",

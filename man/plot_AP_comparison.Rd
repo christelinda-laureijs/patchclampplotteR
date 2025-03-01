@@ -96,6 +96,7 @@ plot_AP_comparison(
   sample_AP_data,
   plot_treatment = "Control",
   plot_category = 2,
+  included_sexes = "both",
   y_variable = "peak_amplitude",
   y_axis_title = "Peak Amplitude (pA)",
   theme_options = sample_theme_options,
