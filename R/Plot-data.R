@@ -253,6 +253,8 @@ plot_baseline_data <- function(data,
       dplyr::filter(.data$sex == male_label)
 
     sex_annotation <- "-males-only"
+
+    plot_shape <- as.numeric(theme_options["male_shape", "value"])
   }
 
   if (included_sexes == "female") {
@@ -260,6 +262,8 @@ plot_baseline_data <- function(data,
       dplyr::filter(.data$sex == female_label)
 
     sex_annotation <- "-females-only"
+
+    plot_shape <- as.numeric(theme_options["female_shape", "value"])
   }
 
   if (included_sexes == "both") {
@@ -275,7 +279,11 @@ plot_baseline_data <- function(data,
         stats::setNames(treatment_info$display_names, treatment_info$treatment)
       ),
       treatment = factor(.data$treatment, levels = treatment_info$display_names)
-    ) %>%
+    )
+
+
+  if (included_sexes == "both") {
+  baseline_comparison_plot <- baseline_comparison_plot %>%
     ggplot2::ggplot(
       ggplot2::aes(
         x = .data$treatment,
@@ -284,13 +292,36 @@ plot_baseline_data <- function(data,
         shape = .data$sex
       )
     ) +
-    ggplot2::labs(x = NULL, y = y_title, shape = "Sex") +
     ggforce::geom_sina(
       bw = 12,
       alpha = 0.8,
       maxwidth = 0.5,
       size = 2
     ) +
+    ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])))
+  }
+
+
+  if (included_sexes != "both") {
+    baseline_comparison_plot <- baseline_comparison_plot %>%
+      ggplot2::ggplot(
+        ggplot2::aes(
+          x = .data$treatment,
+          y = .data[[y_var]],
+          color = .data$treatment
+        )
+      ) +
+      ggforce::geom_sina(
+        bw = 12,
+        alpha = 0.8,
+        maxwidth = 0.5,
+        size = 2,
+        shape = plot_shape
+      )
+  }
+
+  baseline_comparison_plot <- baseline_comparison_plot +
+    ggplot2::labs(x = NULL, y = y_title, shape = "Sex") +
     ggplot2::stat_summary(
       fun.data = ggplot2::mean_se,
       geom = "pointrange",
@@ -302,7 +333,6 @@ plot_baseline_data <- function(data,
       breaks = treatment_info$display_names,
       values = treatment_info$colours
     ) +
-    ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
     ggplot2::theme(
       legend.position = "right",
       legend.background = ggplot2::element_rect(fill = NA)
@@ -1519,6 +1549,8 @@ plot_percent_change_comparisons <- function(data,
       dplyr::filter(.data$sex == male_label)
 
     sex_annotation <- "-males-only"
+
+    plot_shape <- as.numeric(theme_options["male_shape", "value"])
   }
 
   if (included_sexes == "female") {
@@ -1526,10 +1558,14 @@ plot_percent_change_comparisons <- function(data,
       dplyr::filter(.data$sex == female_label)
 
     sex_annotation <- "-females-only"
+
+    plot_shape <- as.numeric(theme_options["female_shape", "value"])
   }
 
   if (included_sexes == "both") {
     sex_annotation <- ""
+
+    plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
   }
 
   percent_change_comparison_plot <- plot_data %>%
@@ -1540,25 +1576,49 @@ plot_percent_change_comparisons <- function(data,
         stats::setNames(treatment_info$display_names, treatment_info$treatment)
       ),
       treatment = factor(.data$treatment, levels = treatment_info$display_names)
-    ) %>%
+    )
+
+
+  if (included_sexes == "both") {
+    percent_change_comparison_plot <- percent_change_comparison_plot %>%
     ggplot2::ggplot(ggplot2::aes(
       x = .data$treatment,
       y = .data$percent_change,
       color = .data$treatment,
       shape = .data$sex
     )) +
-    ggforce::geom_sina(
-      bw = 12,
-      alpha = 0.8,
-      maxwidth = 0.5,
-      size = 2
-    ) +
+      ggforce::geom_sina(
+        bw = 12,
+        alpha = 0.8,
+        maxwidth = 0.5,
+        size = 2
+      ) +
+      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])))
+
+  }
+
+  if (included_sexes != "both") {
+    percent_change_comparison_plot <- percent_change_comparison_plot %>%
+      ggplot2::ggplot(ggplot2::aes(
+        x = .data$treatment,
+        y = .data$percent_change,
+        color = .data$treatment
+      )) +
+      ggforce::geom_sina(
+        bw = 12,
+        alpha = 0.8,
+        maxwidth = 0.5,
+        size = 2,
+        shape = plot_shape
+      )
+  }
+
+  percent_change_comparison_plot <- percent_change_comparison_plot +
     ggplot2::scale_color_manual(
       breaks = treatment_info$display_names,
       values = treatment_info$colours
     ) +
     ggplot2::labs(x = NULL, y = y_title, shape = "Sex") +
-    ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
     ggplot2::stat_summary(
       fun.data = ggplot2::mean_se,
       geom = "pointrange",
@@ -2299,6 +2359,8 @@ plot_PPR_data_multiple_treatments <- function(data,
       dplyr::filter(.data$sex == male_label)
 
     sex_annotation <- "-males-only"
+
+    plot_shape <- as.numeric(theme_options["male_shape", "value"])
   }
 
   if (included_sexes == "female") {
@@ -2306,11 +2368,15 @@ plot_PPR_data_multiple_treatments <- function(data,
       dplyr::filter(.data$sex == female_label)
 
     sex_annotation <- "-females-only"
+
+    plot_shape <- as.numeric(theme_options["female_shape", "value"])
   }
 
   if (included_sexes == "both") {
     plot_data <- data
     sex_annotation <- ""
+
+    plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
   }
 
   PPR_summary_plot <- plot_data %>%
@@ -2335,7 +2401,8 @@ plot_PPR_data_multiple_treatments <- function(data,
       ggplot2::aes(color = .data$treatment),
       size = 2,
       position = ggplot2::position_jitter(0.01),
-      alpha = 0.9
+      alpha = 0.9,
+      shape = plot_shape
     ) +
     ggplot2::geom_line(
       ggplot2::aes(color = .data$treatment, group = .data$letter),
