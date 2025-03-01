@@ -2,6 +2,7 @@ option,value
 gray_shading_colour,#dcdcdc
 line_col,#333333
 rectangle_shading_colour,#f6f6f6
+both_sexes_shape,15
 male_shape,16
 female_shape,17
 mean_point_colour,#000000

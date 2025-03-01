@@ -2048,6 +2048,7 @@ plot_PPR_data_single_treatment <- function(data,
       dplyr::filter(.data$sex == male_label)
 
     sex_annotation <- "-males-only"
+
   }
 
   if (included_sexes == "female") {
@@ -2074,18 +2075,41 @@ plot_PPR_data_single_treatment <- function(data,
       )
     ) %>%
     dplyr::group_by(.data$treatment, .data$state, .data$letter, .data$sex) %>%
-    dplyr::summarize(mean_PPR_cell = mean(.data$PPR), .groups = "drop") %>%
-    ggplot2::ggplot(ggplot2::aes(
-      x = .data$state,
-      y = .data$mean_PPR_cell,
-      shape = .data$sex
-    )) +
-    ggplot2::geom_point(
-      size = 4,
-      color = plot_colour,
-      position = ggplot2::position_jitter(width = 0.04, height = 0),
-      alpha = 0.8
-    ) +
+    dplyr::summarize(mean_PPR_cell = mean(.data$PPR), .groups = "drop")
+
+
+  if (included_sexes == "both") {
+    PPR_one_plot <- PPR_one_plot %>%
+      ggplot2::ggplot(ggplot2::aes(
+        x = .data$state,
+        y = .data$mean_PPR_cell,
+        shape = .data$sex
+      )) +
+      ggplot2::geom_point(
+        size = 4,
+        color = plot_colour,
+        position = ggplot2::position_jitter(width = 0.04, height = 0),
+        alpha = 0.8
+      ) +
+      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])))
+  }
+
+  if (included_sexes != "both") {
+    PPR_one_plot <- PPR_one_plot %>%
+      ggplot2::ggplot(ggplot2::aes(
+        x = .data$state,
+        y = .data$mean_PPR_cell
+      )) +
+      ggplot2::geom_point(
+        size = 4,
+        color = plot_colour,
+        position = ggplot2::position_jitter(width = 0.04, height = 0),
+        alpha = 0.8,
+        shape = if (included_sexes == "male") {as.numeric(theme_options["male_shape", "value"])} else {as.numeric(theme_options["female_shape", "value"])}
+      )
+  }
+
+  PPR_one_plot <- PPR_one_plot +
     ggplot2::geom_line(
       ggplot2::aes(group = .data$letter),
       color = plot_colour,
@@ -2105,8 +2129,7 @@ plot_PPR_data_single_treatment <- function(data,
     ggplot2::coord_cartesian(ylim = c(0, 3)) +
     ggplot_theme +
     ggplot2::theme(axis.text.x = ggplot2::element_text(margin = ggplot2::margin(b = 5, t = 5))) +
-    ggplot2::labs(x = NULL, y = "Paired pulse ratio", shape = "Sex") +
-    ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])))
+    ggplot2::labs(x = NULL, y = "Paired pulse ratio", shape = "Sex")
 
   if (test_type != "none") {
     PPR_one_plot <- PPR_one_plot +
