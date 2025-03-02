@@ -13,9 +13,12 @@ plot_PPR_data_single_treatment(
   female_label = "Female",
   baseline_label = "Baseline",
   post_hormone_label = "Post-hormone",
+  y_axis_title = "PPR",
   test_type,
+  plot_y_max = 3,
   map_signif_level_values = F,
   geom_signif_family = "",
+  geom_signif_text_size = 8,
   large_axis_text = "no",
   geom_signif_size = 0.4,
   treatment_colour_theme,
@@ -49,13 +52,19 @@ pre-hormone state. Defaults to "Baseline".}
 the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
 will likely change this to the hormone or protocol name.}
 
+\item{y_axis_title}{A character value describing the y-axis title text. Defaults to "PPR" but could be expanded (e.g. "Paired pulse ratio").}
+
 \item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}
 
+\item{plot_y_max}{A numeric value describing the maximum value of the y-axis. Defaults to 3.}
+
 \item{map_signif_level_values}{A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings.}
 
 \item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}.}
+
+\item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
 
 \item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which increases the size of the axis text.}

@@ -17,10 +17,11 @@ plot_PPR_data_multiple_treatments(
   test_type,
   map_signif_level_values = F,
   geom_signif_family = "",
+  geom_signif_text_size = 4,
+  geom_signif_size = 0.3,
   treatment_colour_theme,
   theme_options,
   filename_suffix = "",
-  geom_signif_size = 0.3,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -62,6 +63,10 @@ comparing the pre- and post-hormone groups.}
 
 \item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}.}
 
+\item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
+
+\item{geom_signif_size}{A numeric value describing the size of the geom_signif bracket size. Defaults to 0.3, which is a good thickness for most applications.}
+
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
@@ -74,8 +79,6 @@ look like and how you can customize these values.}
 \item{filename_suffix}{Optional character value to add a suffix to the
 filename of the .png file created with this plot. Could be useful if you
 have specified a custom list of treatments.}
-
-\item{geom_signif_size}{A numeric value describing the size of the geom_signif bracket size. Defaults to 0.3, which is a good thickness for most applications.}
 
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but

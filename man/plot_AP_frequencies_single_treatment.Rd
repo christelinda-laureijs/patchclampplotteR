@@ -16,7 +16,7 @@ plot_AP_frequencies_single_treatment(
   hormone_added,
   test_type,
   significance_display_method = "p-values",
-  geom_signif_size = 5,
+  geom_signif_text_size = 5,
   geom_signif_y_spacer = 1,
   geom_signif_family = "",
   p_adjust_method = "holm",
@@ -65,7 +65,7 @@ comparing the pre- and post-hormone groups.}
 
 \item{significance_display_method}{A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if \code{test_type} is "none".)}
 
-\item{geom_signif_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{5}.}
+\item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{5}.}
 
 \item{geom_signif_y_spacer}{A numeric value describing the vertical spacing applied to the significance markers. Defaults to 1, but can be set to a higher value if the p-values or significance stars are too close to the error bars.}
 

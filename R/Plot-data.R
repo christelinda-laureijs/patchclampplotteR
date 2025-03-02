@@ -829,7 +829,7 @@ plot_raw_current_data <-
 #' @param female_label A character value used to describe how females are encoded in the `sex` column of the dataframe used in `data`. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".
 #' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
 #' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`.
-#' @param geom_signif_size A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to `8`.
+#' @param geom_signif_text_size A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to `8`.
 #' @param signif_stars A character ("yes" or "no") describing if significance
 #'   stars should be included as an overlay in the plot. If "yes", you must
 #'   specify a dataframe containing the results of a t-test, which is generated
@@ -907,7 +907,7 @@ plot_summary_current_data <- function(data,
                                       y_axis_limit,
                                       signif_stars = "no",
                                       significance_display_method = "stars",
-                                      geom_signif_size = 8,
+                                      geom_signif_text_size = 6,
                                       geom_signif_family = "",
                                       t_test_df,
                                       large_axis_text = "no",
@@ -1306,7 +1306,7 @@ plot_summary_current_data <- function(data,
             label = .data$significance_stars
           ),
           inherit.aes = FALSE,
-          size = geom_signif_size,
+          size = geom_signif_text_size,
           family = geom_signif_family
         )
     }
@@ -1321,7 +1321,7 @@ plot_summary_current_data <- function(data,
             label = .data$p_string
           ),
           inherit.aes = FALSE,
-          size = geom_signif_size,
+          size = geom_signif_text_size,
           family = geom_signif_family
         )
     }
@@ -1743,6 +1743,7 @@ plot_variance_comparison_data <- function(data,
                                           test_type,
                                           map_signif_level_values = F,
                                           geom_signif_family = "",
+                                          geom_signif_text_size = 6,
                                           large_axis_text = "no",
                                           geom_signif_size = 0.4,
                                           treatment_colour_theme,
@@ -1832,7 +1833,7 @@ plot_variance_comparison_data <- function(data,
         map_signif_level = map_signif_level_values,
         vjust = -0.3,
         family = geom_signif_family,
-        textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
+        textsize = geom_signif_text_size,
         size = geom_signif_size
       ) +
       ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
@@ -2059,6 +2060,7 @@ plot_cv_data <- function(data,
 #' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to 0.4, which is a good thickness for most applications.
 #' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`.
 #' @param y_axis_title A character value describing the y-axis title text. Defaults to "PPR" but could be expanded (e.g. "Paired pulse ratio").
+#' @param plot_y_max A numeric value describing the maximum value of the y-axis. Defaults to 3.
 #' @export
 #'
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -2095,6 +2097,7 @@ plot_PPR_data_single_treatment <- function(data,
                                            plot_y_max = 3,
                                            map_signif_level_values = F,
                                            geom_signif_family = "",
+                                           geom_signif_text_size = 6,
                                            large_axis_text = "no",
                                            geom_signif_size = 0.4,
                                            treatment_colour_theme,
@@ -2161,8 +2164,8 @@ plot_PPR_data_single_treatment <- function(data,
     ) %>%
     dplyr::group_by(.data$treatment, .data$state, .data$letter, .data$sex) %>%
     dplyr::summarize(mean_PPR_cell = mean(.data$PPR), .groups = "drop") %>%
-    dplyr::group_by(state) %>%
-    dplyr::mutate(mean_PPR_all_cells = mean(mean_PPR_cell))
+    dplyr::group_by(.data$state) %>%
+    dplyr::mutate(mean_PPR_all_cells = mean(.data$mean_PPR_cell))
 
   PPR_one_plot <- PPR_one_plot_data %>%
     ggplot2::ggplot(ggplot2::aes(
@@ -2215,7 +2218,7 @@ plot_PPR_data_single_treatment <- function(data,
         map_signif_level = map_signif_level_values,
         family = geom_signif_family,
         vjust = -0.3,
-        textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
+        textsize = geom_signif_text_size,
         size = geom_signif_size,
         y_position = 2.5
       )
@@ -2303,10 +2306,11 @@ plot_PPR_data_multiple_treatments <- function(data,
                                               test_type,
                                               map_signif_level_values = F,
                                               geom_signif_family = "",
+                                              geom_signif_text_size = 4,
+                                              geom_signif_size = 0.3,
                                               treatment_colour_theme,
                                               theme_options,
                                               filename_suffix = "",
-                                              geom_signif_size = 0.3,
                                               save_plot_png = "no",
                                               ggplot_theme = patchclampplotteR_theme()) {
   if (!include_all_treatments %in% c("yes", "no")) {
@@ -2457,7 +2461,7 @@ plot_PPR_data_multiple_treatments <- function(data,
         map_signif_level = map_signif_level_values,
         family = geom_signif_family,
         vjust = -0.3,
-        textsize = 4,
+        textsize = geom_signif_text_size,
         size = geom_signif_size,
         margin_top = 0.1,
         extend_line = 0.03
@@ -2529,6 +2533,7 @@ plot_AP_comparison <-
            test_type,
            map_signif_level_values = F,
            geom_signif_family = "",
+           geom_signif_text_size = 6,
            treatment_colour_theme,
            theme_options,
            baseline_shape = 16,
@@ -2623,7 +2628,7 @@ plot_AP_comparison <-
         map_signif_level = map_signif_level_values,
         family = geom_signif_family,
         vjust = -0.3,
-        textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
+        textsize = geom_signif_text_size,
         size = geom_signif_size,
         color = theme_options["baseline_group_colour", "value"]
       ) +
@@ -2661,7 +2666,7 @@ plot_AP_comparison <-
 #' @param p_adjust_method This argument is directly related to `p.adjust.method` in `rstatix::t_test`. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none" (although "none" is not recommended).
 #' @param significance_display_method A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if `test_type` is "none".)
 #' @param geom_signif_y_spacer A numeric value describing the vertical spacing applied to the significance markers. Defaults to 1, but can be set to a higher value if the p-values or significance stars are too close to the error bars.
-#' @param geom_signif_size A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to `5`.
+#' @param geom_signif_text_size A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to `5`.
 #' @param save_output_as_RDS A character ("yes" or "no") describing if the
 #'   resulting object should be saved as an RDS file in the folder 'Data/Output-Data-from-R'. The function will automatically create this folder if it doesn't already exist.
 #' @param baseline_shape A numeric value describing the shape used for the baseline data. Defaults to 16, which is a circle.
@@ -2700,7 +2705,7 @@ plot_AP_frequencies_single_treatment <- function(data,
                                                  hormone_added,
                                                  test_type,
                                                  significance_display_method = "p-values",
-                                                 geom_signif_size = 5,
+                                                 geom_signif_text_size = 5,
                                                  geom_signif_y_spacer = 1,
                                                  geom_signif_family = "",
                                                  p_adjust_method = "holm",
@@ -2914,7 +2919,7 @@ plot_AP_frequencies_single_treatment <- function(data,
             label = .data$significance_stars
           ),
           inherit.aes = F,
-          size = geom_signif_size
+          size = geom_signif_text_size
         )
     }
 
@@ -2928,7 +2933,7 @@ plot_AP_frequencies_single_treatment <- function(data,
             label = .data$p_string
           ),
           inherit.aes = F,
-          size = geom_signif_size,
+          size = geom_signif_text_size,
           family = geom_signif_family
         )
     }
@@ -3397,6 +3402,7 @@ plot_spontaneous_current_parameter_comparison <-
            test_type,
            map_signif_level_values = F,
            geom_signif_family = "",
+           geom_signif_text_size = 6,
            large_axis_text = "no",
            treatment_colour_theme,
            geom_signif_size = 0.5,
@@ -3523,7 +3529,7 @@ plot_spontaneous_current_parameter_comparison <-
           map_signif_level = map_signif_level_values,
           family = geom_signif_family,
           vjust = -0.3,
-          textsize = as.numeric(theme_options["geom_signif_text_size", "value"]),
+          textsize = geom_signif_text_size,
           size = geom_signif_size
         ) +
         ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))

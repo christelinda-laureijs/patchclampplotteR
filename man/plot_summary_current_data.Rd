@@ -24,7 +24,7 @@ plot_summary_current_data(
   y_axis_limit,
   signif_stars = "no",
   significance_display_method = "stars",
-  geom_signif_size = 8,
+  geom_signif_text_size = 8,
   geom_signif_family = "",
   t_test_df,
   large_axis_text = "no",
@@ -100,7 +100,7 @@ using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary
 
 \item{significance_display_method}{A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if \code{signif_stars} is "no".)}
 
-\item{geom_signif_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
+\item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
 
 \item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}.}
 
