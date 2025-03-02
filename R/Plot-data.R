@@ -1781,6 +1781,8 @@ plot_variance_comparison_data <- function(data,
       dplyr::filter(.data$sex == male_label)
 
     sex_annotation <- "-males-only"
+
+    plot_shape <- as.numeric(theme_options["male_shape", "value"])
   }
 
   if (included_sexes == "female") {
@@ -1788,11 +1790,15 @@ plot_variance_comparison_data <- function(data,
       dplyr::filter(.data$sex == female_label)
 
     sex_annotation <- "-females-only"
+
+    plot_shape <- as.numeric(theme_options["female_shape", "value"])
   }
 
   if (included_sexes == "both") {
     variance_comparison_data <- variance_comparison_data
     sex_annotation <- ""
+
+    plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
   }
 
   if (variance_measure == "cv") {
@@ -1833,7 +1839,7 @@ plot_variance_comparison_data <- function(data,
   }
 
   variance_comparison_plot <- variance_comparison_plot +
-    ggplot2::geom_point(color = theme_options["connecting_line_colour", "value"], size = 1.8) +
+    ggplot2::geom_point(color = theme_options["connecting_line_colour", "value"], size = 1.8, shape = plot_shape) +
     ggplot2::geom_line(color = theme_options["connecting_line_colour", "value"], linewidth = 0.4) +
     ggplot2::labs(x = NULL) +
     ggplot2::scale_x_discrete(labels = c(baseline_label, post_hormone_label)) +
@@ -1856,14 +1862,16 @@ plot_variance_comparison_data <- function(data,
         x = baseline_interval,
         y = variance_comparison_data$mean_cv_inverse_square[variance_comparison_data$interval == baseline_interval][1],
         color = plot_colour,
-        size = 2.5
+        size = 2.5,
+        shape = plot_shape
       ) +
       ggplot2::annotate(
         geom = "point",
         x = post_hormone_interval,
         y = variance_comparison_data$mean_cv_inverse_square[variance_comparison_data$interval == post_hormone_interval][1],
         color = plot_colour,
-        size = 2.5
+        size = 2.5,
+        shape = plot_shape
       )
   }
 
@@ -1883,14 +1891,16 @@ plot_variance_comparison_data <- function(data,
         x = baseline_interval,
         y = variance_comparison_data$mean_VMR[variance_comparison_data$interval == baseline_interval][1],
         color = plot_colour,
-        size = 2.5
+        size = 2.5,
+        shape = plot_shape
       ) +
       ggplot2::annotate(
         geom = "point",
         x = post_hormone_interval,
         y = variance_comparison_data$mean_VMR[variance_comparison_data$interval == post_hormone_interval][1],
         color = plot_colour,
-        size = 2.5
+        size = 2.5,
+        shape = plot_shape
       )
   }
 
@@ -2048,6 +2058,7 @@ plot_cv_data <- function(data,
 #' @param map_signif_level_values A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings.
 #' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to 0.4, which is a good thickness for most applications.
 #' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`.
+#' @param y_axis_title A character value describing the y-axis title text. Defaults to "PPR" but could be expanded (e.g. "Paired pulse ratio").
 #' @export
 #'
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -2079,7 +2090,9 @@ plot_PPR_data_single_treatment <- function(data,
                                            female_label = "Female",
                                            baseline_label = "Baseline",
                                            post_hormone_label = "Post-hormone",
+                                           y_axis_title = "PPR",
                                            test_type,
+                                           plot_y_max = 3,
                                            map_signif_level_values = F,
                                            geom_signif_family = "",
                                            large_axis_text = "no",
@@ -2115,6 +2128,8 @@ plot_PPR_data_single_treatment <- function(data,
 
     sex_annotation <- "-males-only"
 
+    plot_shape <- as.numeric(theme_options["male_shape", "value"])
+
   }
 
   if (included_sexes == "female") {
@@ -2122,15 +2137,19 @@ plot_PPR_data_single_treatment <- function(data,
       dplyr::filter(.data$sex == female_label)
 
     sex_annotation <- "-females-only"
+
+    plot_shape <- as.numeric(theme_options["female_shape", "value"])
   }
 
   if (included_sexes == "both") {
     plot_data <- data
     sex_annotation <- ""
+
+    plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
   }
 
 
-  PPR_one_plot <- plot_data %>%
+  PPR_one_plot_data <- plot_data %>%
     dplyr::filter(.data$treatment == plot_treatment) %>%
     dplyr::filter(.data$category == plot_category) %>%
     dplyr::mutate(
@@ -2141,61 +2160,49 @@ plot_PPR_data_single_treatment <- function(data,
       )
     ) %>%
     dplyr::group_by(.data$treatment, .data$state, .data$letter, .data$sex) %>%
-    dplyr::summarize(mean_PPR_cell = mean(.data$PPR), .groups = "drop")
+    dplyr::summarize(mean_PPR_cell = mean(.data$PPR), .groups = "drop") %>%
+    dplyr::group_by(state) %>%
+    dplyr::mutate(mean_PPR_all_cells = mean(mean_PPR_cell))
 
-
-  if (included_sexes == "both") {
-    PPR_one_plot <- PPR_one_plot %>%
-      ggplot2::ggplot(ggplot2::aes(
-        x = .data$state,
-        y = .data$mean_PPR_cell,
-        shape = .data$sex
-      )) +
-      ggplot2::geom_point(
-        size = 4,
-        color = plot_colour,
-        position = ggplot2::position_jitter(width = 0.04, height = 0),
-        alpha = 0.8
-      ) +
-      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])))
-  }
-
-  if (included_sexes != "both") {
-    PPR_one_plot <- PPR_one_plot %>%
-      ggplot2::ggplot(ggplot2::aes(
-        x = .data$state,
-        y = .data$mean_PPR_cell
-      )) +
-      ggplot2::geom_point(
-        size = 4,
-        color = plot_colour,
-        position = ggplot2::position_jitter(width = 0.04, height = 0),
-        alpha = 0.8,
-        shape = if (included_sexes == "male") {as.numeric(theme_options["male_shape", "value"])} else {as.numeric(theme_options["female_shape", "value"])}
-      )
-  }
-
-  PPR_one_plot <- PPR_one_plot +
-    ggplot2::geom_line(
-      ggplot2::aes(group = .data$letter),
+  PPR_one_plot <- PPR_one_plot_data %>%
+    ggplot2::ggplot(ggplot2::aes(
+      x = .data$state,
+      y = .data$mean_PPR_cell,
+      group = .data$letter
+    )) +
+    ggplot2::geom_point(color = theme_options["connecting_line_colour", "value"],
+                        size = 1.8,
+                        shape = plot_shape) +
+    ggplot2::geom_line(color = theme_options["connecting_line_colour", "value"], linewidth = 0.4) +
+    ggplot2::coord_cartesian(ylim = c(0, plot_y_max)) +
+    ggplot2::annotate(
+      geom = "segment",
+      x = baseline_label,
+      xend = post_hormone_label,
+      y = PPR_one_plot_data$mean_PPR_all_cells[PPR_one_plot_data$state == baseline_label][1],
+      yend = PPR_one_plot_data$mean_PPR_all_cells[PPR_one_plot_data$state == post_hormone_label][1],
       color = plot_colour,
-      linewidth = as.numeric(theme_options["connecting_line_width", "value"]),
-      alpha = 0.3
+      linewidth = 1.2
     ) +
-    ggplot2::stat_summary(
-      fun.data = ggplot2::mean_se,
-      geom = "pointrange",
-      color = theme_options["mean_point_colour", "value"],
-      size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
-      alpha = 1,
-      position = ggplot2::position_nudge(x = -0.04),
-      show.legend = FALSE
+    ggplot2::annotate(
+      geom = "point",
+      x = baseline_label,
+      y = PPR_one_plot_data$mean_PPR_all_cells[PPR_one_plot_data$state == baseline_label][1],
+      color = plot_colour,
+      size = 2.5,
+      shape = plot_shape
     ) +
-    ggplot2::theme(legend.position = "right") +
-    ggplot2::coord_cartesian(ylim = c(0, 3)) +
-    ggplot_theme +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(margin = ggplot2::margin(b = 5, t = 5))) +
-    ggplot2::labs(x = NULL, y = "Paired pulse ratio", shape = "Sex")
+    ggplot2::annotate(
+      geom = "point",
+      x = post_hormone_label,
+      y = PPR_one_plot_data$mean_PPR_all_cells[PPR_one_plot_data$state == post_hormone_label][1],
+      color = plot_colour,
+      size = 2.5,
+      shape = plot_shape
+    ) +
+    ggplot2::labs(x = NULL, y = y_axis_title) +
+    ggplot_theme
+
 
   if (test_type != "none") {
     PPR_one_plot <- PPR_one_plot +
@@ -2551,6 +2558,8 @@ plot_AP_comparison <-
         dplyr::filter(.data$sex == male_label)
 
       sex_annotation <- "-males-only"
+
+      plot_shape <- as.numeric(theme_options["male_shape", "value"])
     }
 
     if (included_sexes == "female") {
@@ -2558,18 +2567,22 @@ plot_AP_comparison <-
         dplyr::filter(.data$sex == female_label)
 
       sex_annotation <- "-females-only"
+
+      plot_shape <- as.numeric(theme_options["female_shape", "value"])
     }
 
     if (included_sexes == "both") {
       plot_data <- data
       sex_annotation <- ""
+
+      plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
     }
 
 
     ap_parameter_plot <- plot_data %>%
       dplyr::filter(.data$treatment == plot_treatment) %>%
       dplyr::filter(.data$category == plot_category) %>%
-      ggplot2::ggplot(ggplot2::aes(x = .data$state, y = .data[[y_variable]], color = .data$state, shape = .data$state)) +
+      ggplot2::ggplot(ggplot2::aes(x = .data$state, y = .data[[y_variable]], color = .data$state)) +
       ggplot2::geom_line(
         ggplot2::aes(group = .data$letter),
         linewidth = as.numeric(theme_options["connecting_line_width", "value"]),
@@ -2579,7 +2592,8 @@ plot_AP_comparison <-
       ggplot2::geom_point(
         alpha = 0.9,
         size = 4,
-        position = ggplot2::position_jitter(0.04)
+        position = ggplot2::position_jitter(0.04),
+        shape = plot_shape
       ) +
       ggplot2::scale_color_manual(
         values = c(theme_options["baseline_group_colour", "value"], plot_colour)
@@ -3451,6 +3465,8 @@ plot_spontaneous_current_parameter_comparison <-
         dplyr::filter(.data$sex == male_label)
 
       sex_annotation <- "-males-only"
+
+      plot_shape <- as.numeric(theme_options["male_shape", "value"])
     }
 
     if (included_sexes == "female") {
@@ -3458,10 +3474,14 @@ plot_spontaneous_current_parameter_comparison <-
         dplyr::filter(.data$sex == female_label)
 
       sex_annotation <- "-females-only"
+
+      plot_shape <- as.numeric(theme_options["female_shape", "value"])
     }
 
     if (included_sexes == "both") {
       sex_annotation <- ""
+
+      plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
     }
 
     sEPSC_comparison_plot <- sEPSC_comparison_plot_data %>%
@@ -3479,7 +3499,8 @@ plot_spontaneous_current_parameter_comparison <-
         alpha = 0.8,
         maxwidth = 0.3,
         size = 2,
-        color = plot_colour
+        color = plot_colour,
+        shape = plot_shape
       ) +
       ggplot2::stat_summary(
         fun.data = ggplot2::mean_se,
