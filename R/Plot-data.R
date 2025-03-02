@@ -158,7 +158,9 @@ plot_baseline_data <- function(data,
   }
 
   if (include_all_treatments == "yes") {
-    treatment_info <- treatment_colour_theme
+    treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(category == plot_category)
+
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
       droplevels()
@@ -192,6 +194,7 @@ plot_baseline_data <- function(data,
     }
 
     treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(category == plot_category) %>%
       dplyr::filter(.data$treatment %in% list_of_treatments)
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% list_of_treatments) %>%
@@ -1461,7 +1464,9 @@ plot_percent_change_comparisons <- function(data,
   }
 
   if (include_all_treatments == "yes") {
-    treatment_info <- treatment_colour_theme
+    treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(category == plot_category)
+
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
       droplevels()
@@ -1495,6 +1500,7 @@ plot_percent_change_comparisons <- function(data,
     }
 
     treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(category == plot_category)
       dplyr::filter(.data$treatment %in% list_of_treatments)
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% list_of_treatments) %>%
@@ -2331,7 +2337,9 @@ plot_PPR_data_multiple_treatments <- function(data,
 
 
   if (include_all_treatments == "yes") {
-    treatment_info <- treatment_colour_theme
+    treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(category == plot_category)
+
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
       droplevels()
@@ -2365,7 +2373,10 @@ plot_PPR_data_multiple_treatments <- function(data,
     }
 
     treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(category == plot_category) %>%
       dplyr::filter(.data$treatment %in% list_of_treatments)
+
+
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% list_of_treatments) %>%
       droplevels()
