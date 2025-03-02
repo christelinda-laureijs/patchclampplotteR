@@ -159,7 +159,7 @@ plot_baseline_data <- function(data,
 
   if (include_all_treatments == "yes") {
     treatment_info <- treatment_colour_theme %>%
-      dplyr::filter(category == plot_category)
+      dplyr::filter(.data$category == plot_category)
 
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
@@ -194,7 +194,7 @@ plot_baseline_data <- function(data,
     }
 
     treatment_info <- treatment_colour_theme %>%
-      dplyr::filter(category == plot_category) %>%
+      dplyr::filter(.data$category == plot_category) %>%
       dplyr::filter(.data$treatment %in% list_of_treatments)
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% list_of_treatments) %>%
@@ -910,7 +910,7 @@ plot_summary_current_data <- function(data,
                                       y_axis_limit,
                                       signif_stars = "no",
                                       significance_display_method = "stars",
-                                      geom_signif_text_size = 6,
+                                      geom_signif_text_size = 5,
                                       geom_signif_family = "",
                                       t_test_df,
                                       large_axis_text = "no",
@@ -1465,7 +1465,7 @@ plot_percent_change_comparisons <- function(data,
 
   if (include_all_treatments == "yes") {
     treatment_info <- treatment_colour_theme %>%
-      dplyr::filter(category == plot_category)
+      dplyr::filter(.data$category == plot_category)
 
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
@@ -1500,7 +1500,7 @@ plot_percent_change_comparisons <- function(data,
     }
 
     treatment_info <- treatment_colour_theme %>%
-      dplyr::filter(category == plot_category)
+      dplyr::filter(.data$category == plot_category)
       dplyr::filter(.data$treatment %in% list_of_treatments)
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% list_of_treatments) %>%
@@ -1749,7 +1749,7 @@ plot_variance_comparison_data <- function(data,
                                           test_type,
                                           map_signif_level_values = F,
                                           geom_signif_family = "",
-                                          geom_signif_text_size = 6,
+                                          geom_signif_text_size = 5,
                                           large_axis_text = "no",
                                           geom_signif_size = 0.4,
                                           treatment_colour_theme,
@@ -2103,7 +2103,7 @@ plot_PPR_data_single_treatment <- function(data,
                                            plot_y_max = 3,
                                            map_signif_level_values = F,
                                            geom_signif_family = "",
-                                           geom_signif_text_size = 6,
+                                           geom_signif_text_size = 5,
                                            large_axis_text = "no",
                                            geom_signif_size = 0.4,
                                            treatment_colour_theme,
@@ -2312,7 +2312,7 @@ plot_PPR_data_multiple_treatments <- function(data,
                                               test_type,
                                               map_signif_level_values = F,
                                               geom_signif_family = "",
-                                              geom_signif_text_size = 4,
+                                              geom_signif_text_size = 3,
                                               geom_signif_size = 0.3,
                                               treatment_colour_theme,
                                               theme_options,
@@ -2338,7 +2338,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 
   if (include_all_treatments == "yes") {
     treatment_info <- treatment_colour_theme %>%
-      dplyr::filter(category == plot_category)
+      dplyr::filter(.data$category == plot_category)
 
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
@@ -2373,7 +2373,7 @@ plot_PPR_data_multiple_treatments <- function(data,
     }
 
     treatment_info <- treatment_colour_theme %>%
-      dplyr::filter(category == plot_category) %>%
+      dplyr::filter(.data$category == plot_category) %>%
       dplyr::filter(.data$treatment %in% list_of_treatments)
 
 
@@ -2544,7 +2544,7 @@ plot_AP_comparison <-
            test_type,
            map_signif_level_values = F,
            geom_signif_family = "",
-           geom_signif_text_size = 6,
+           geom_signif_text_size = 5,
            treatment_colour_theme,
            theme_options,
            baseline_shape = 16,
@@ -3413,7 +3413,7 @@ plot_spontaneous_current_parameter_comparison <-
            test_type,
            map_signif_level_values = F,
            geom_signif_family = "",
-           geom_signif_text_size = 6,
+           geom_signif_text_size = 5,
            large_axis_text = "no",
            treatment_colour_theme,
            geom_signif_size = 0.5,

@@ -17,7 +17,7 @@ plot_PPR_data_multiple_treatments(
   test_type,
   map_signif_level_values = F,
   geom_signif_family = "",
-  geom_signif_text_size = 4,
+  geom_signif_text_size = 3,
   geom_signif_size = 0.3,
   treatment_colour_theme,
   theme_options,

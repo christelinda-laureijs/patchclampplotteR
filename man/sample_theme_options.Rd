@@ -25,7 +25,6 @@ data values where \code{Sex == Female}. Defaults to 17, which is a triangle.}
 \item{\code{connecting_line_colour}}{The colour of the connecting line in action potential comparison plots.}
 \item{\code{connecting_line_width_PPR}}{The width of the connecting line in paired-pulse ratio comparison plots.}
 \item{\code{mean_point_size}}{The size of the mean data point in plots like the PPR comparison plot.}
-\item{\code{geom_signif_text_size}}{The size of the asterisk text in plots like the spontaneous current comparison plots.}
 \item{\code{baseline_group_colour}}{Hex code for the colour used when \code{state == "Baseline"} in \code{plot_AP_comparison()} and \code{plot_AP_frequencies_single_treatment()}.}
 }
 }

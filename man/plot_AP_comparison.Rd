@@ -18,7 +18,7 @@ plot_AP_comparison(
   test_type,
   map_signif_level_values = F,
   geom_signif_family = "",
-  geom_signif_text_size = 8,
+  geom_signif_text_size = 5,
   treatment_colour_theme,
   theme_options,
   baseline_shape = 16,

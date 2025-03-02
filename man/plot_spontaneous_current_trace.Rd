@@ -12,6 +12,7 @@ plot_spontaneous_current_trace(
   state,
   include_scale_bar = "yes",
   plot_episode = "epi1",
+  line_thickness = 1,
   scale_bar_x_start = 1.25,
   scale_bar_x_length = 0.5,
   scale_bar_y_start = 15,
@@ -48,6 +49,8 @@ will be added to the plot. Allowed values are "yes" and "no".}
 
 \item{plot_episode}{A character value describing the sweep (e.g. \code{epi1}) that
 will be used for the plot.}
+
+\item{line_thickness}{A numeric value describing the thickness of the line.}
 
 \item{scale_bar_x_start}{A numeric value (in seconds) describing the x-axis position of
 the scale bar (default is 1.25).}
@@ -106,7 +109,8 @@ plot_spontaneous_current_trace(
   scale_bar_x_length = 1,
   scale_bar_y_length = 10,
   plot_x_min = 1,
-  plot_x_max = 3
+  plot_x_max = 3,
+  line_thickness = 0.9
 )
 
 }

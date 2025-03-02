@@ -18,7 +18,7 @@ plot_spontaneous_current_parameter_comparison(
   test_type,
   map_signif_level_values = F,
   geom_signif_family = "",
-  geom_signif_text_size = 8,
+  geom_signif_text_size = 5,
   large_axis_text = "no",
   treatment_colour_theme,
   geom_signif_size = 0.5,

@@ -18,7 +18,7 @@ plot_PPR_data_single_treatment(
   plot_y_max = 3,
   map_signif_level_values = F,
   geom_signif_family = "",
-  geom_signif_text_size = 8,
+  geom_signif_text_size = 5,
   large_axis_text = "no",
   geom_signif_size = 0.4,
   treatment_colour_theme,

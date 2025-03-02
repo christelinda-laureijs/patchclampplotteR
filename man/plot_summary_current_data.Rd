@@ -24,7 +24,7 @@ plot_summary_current_data(
   y_axis_limit,
   signif_stars = "no",
   significance_display_method = "stars",
-  geom_signif_text_size = 8,
+  geom_signif_text_size = 5,
   geom_signif_family = "",
   t_test_df,
   large_axis_text = "no",
