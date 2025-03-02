@@ -947,9 +947,9 @@ NULL
 # Important for future modifications of theme options
 # If redefining this, you must convert the first column (option) into the rownames
 # This is so the data can be indexed by row name in plotting functions
-library(tibble)
-
-theme_options <- read.csv(here::here("inst/extdata/sample_theme_options.csv"))
-
-sample_theme_options <- theme_options %>% remove_rownames %>% column_to_rownames(var="option")
-usethis::use_data(sample_theme_options, overwrite=T, compress="xz")
+# library(tibble)
+#
+# theme_options <- read.csv(here::here("inst/extdata/sample_theme_options.csv"))
+#
+# sample_theme_options <- theme_options %>% remove_rownames %>% column_to_rownames(var="option")
+# usethis::use_data(sample_theme_options, overwrite=T, compress="xz")

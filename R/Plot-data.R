@@ -3609,6 +3609,7 @@ plot_spontaneous_current_parameter_comparison <-
 #'   (in pA).
 #' @param plot_y_max A numeric value describing the maximum value on the y-axis
 #'   (in pA).
+#' @param line_thickness A numeric value describing the thickness of the line.
 #' @returns A ggplot object. If save_plot_png is defined as "yes", it will also
 #'   generate a .png file in the folder
 #'   `Figures/Spontaneous-currents/Representative-Traces` relative to the
@@ -3628,7 +3629,8 @@ plot_spontaneous_current_parameter_comparison <-
 #'   scale_bar_x_length = 1,
 #'   scale_bar_y_length = 10,
 #'   plot_x_min = 1,
-#'   plot_x_max = 3
+#'   plot_x_max = 3,
+#'   line_thickness = 0.9
 #' )
 #'
 plot_spontaneous_current_trace <-
@@ -3639,6 +3641,7 @@ plot_spontaneous_current_trace <-
            state,
            include_scale_bar = "yes",
            plot_episode = "epi1",
+           line_thickness = 1,
            scale_bar_x_start = 1.25,
            scale_bar_x_length = 0.5,
            scale_bar_y_start = 15,
@@ -3663,7 +3666,7 @@ plot_spontaneous_current_trace <-
       dplyr::filter(dplyr::between(.data$time_sec, plot_x_min, plot_x_max)) %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$time_sec, y = .data$current)) +
       ggplot2::coord_cartesian(ylim = c(plot_y_min, plot_y_max)) +
-      ggplot2::geom_line(color = plot_colour) +
+      ggplot2::geom_line(color = plot_colour, size = line_thickness) +
       ggplot2::theme_void()
 
     scale_bar_x_length_in_ms <- scale_bar_x_length * 1000
