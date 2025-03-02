@@ -9,5 +9,4 @@ mean_point_colour,#000000
 connecting_line_width,0.2
 connecting_line_colour,#bfbfbf
 mean_point_size,0.5
-geom_signif_text_size,8
 baseline_group_colour,#727a85

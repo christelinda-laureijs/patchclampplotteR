@@ -938,7 +938,6 @@ NULL
 #'  \item{`connecting_line_colour`}{The colour of the connecting line in action potential comparison plots.}
 #'  \item{`connecting_line_width_PPR`}{The width of the connecting line in paired-pulse ratio comparison plots.}
 #'  \item{`mean_point_size`}{The size of the mean data point in plots like the PPR comparison plot.}
-#'  \item{`geom_signif_text_size`}{The size of the asterisk text in plots like the spontaneous current comparison plots.}
 #'  \item{`baseline_group_colour`}{Hex code for the colour used when `state == "Baseline"` in `plot_AP_comparison()` and `plot_AP_frequencies_single_treatment()`.}
 #' }
 #' @keywords data
@@ -948,9 +947,9 @@ NULL
 # Important for future modifications of theme options
 # If redefining this, you must convert the first column (option) into the rownames
 # This is so the data can be indexed by row name in plotting functions
-# library(tibble)
-#
-# theme_options <- read.csv(here::here("inst/extdata/sample_theme_options.csv"))
-#
-# sample_theme_options <- theme_options %>% remove_rownames %>% column_to_rownames(var="option")
-# usethis::use_data(sample_theme_options, overwrite=T, compress="xz")
+library(tibble)
+
+theme_options <- read.csv(here::here("inst/extdata/sample_theme_options.csv"))
+
+sample_theme_options <- theme_options %>% remove_rownames %>% column_to_rownames(var="option")
+usethis::use_data(sample_theme_options, overwrite=T, compress="xz")
