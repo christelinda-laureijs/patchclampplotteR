@@ -88,19 +88,21 @@ what you should include. See below for a link to download an empty `.csv` file w
 xfun::embed_file("sample-blank-cell-characteristics-sheet.csv")
 ```
 
-> Note: Since this vignette is included within an R package, the following code
-requires the function `import_ext_data()` to properly locate the `.csv` file in
-the package folder. This won't be required when you are using the package within
-your own project folder.
->
-> Do NOT include `import_ext_data()` in your code, because it won't work. You can just write the path to the filename
-directly within `import_cell_characteristics_df()`. For example, you should
+> Note: Since you are using an R Project, it is easy to identify files in sub-folders. For example, you can
 write `import_cell_characteristics_df("Data/cell_info.csv")` to use
 `cell_info.csv` located within the `Data/` folder.
 
-```{r import-cell-characteristics, warning=FALSE, message=FALSE}
+```{r import-cell-characteristics, eval=T, echo=F, warning=FALSE, message=FALSE}
 cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
+```
 
+```{r display-import-cell, eval=F, echo=T}
+cell_characteristics <- import_cell_characteristics_df("sample_cell_characteristics.csv")
+
+cell_characteristics
+```
+
+```{r display-cell-characteristics, echo=F}
 reactable(cell_characteristics)
 ```
 
@@ -123,7 +125,13 @@ and `P2`:
 consistency across functions. Capitalized letters will be retained for columns
 like `ID`, `X`, `Y`, `P1`, and `P2`.
 
-```{r sample-eEPSC-data}
+```{r display-sample-evoked-data, eval=F, echo=T}
+sample_eEPSC_data <- read.csv("sample_new_eEPSC_data.csv")
+
+sample_eEPSC_data
+```
+
+```{r sample-eEPSC-data, eval=T, echo=F}
 sample_eEPSC_data <- read.csv(import_ext_data("sample_new_eEPSC_data.csv"))
 
 reactable(sample_eEPSC_data)
@@ -144,18 +152,25 @@ containing just one value in cell `A1` called `letter`. This column title is all
 
 > **WARNING!!** If you are starting from an empty `.csv` file, the `.csv` in the `old_raw_data_csv` argument MUST contain at least the `letter` column name in cell A1. If you try to use a completely empty `.csv` sheet, R will not recognize it as a valid `.csv` because there is "nothing" for it to read if it is a blank csv. 
 
-```{r blank-sheet-example}
-blank_csv <- read.csv(import_ext_data("empty_old_raw_data_sheet.csv"))
-```
-
-```{r blank-sheet-screenshot, echo=F, out.width="25%", out.extra = "", fig.alt = "A screenshot of what your starting csv file should look like the first time you begin a dataset."}
+```{r blank-sheet-screenshot, echo=F, out.width="50%", out.extra = "", fig.alt = "A screenshot of what your starting csv file should look like the first time you begin a dataset."}
 knitr::include_graphics("starting-csv-sheet-screenshot.png")
 ```
 
-
 Use the `add_new_cells()` function, and carefully read the warning messages.
 
-```{r add-new-cells-first-time}
+```{r display-add-new-cells, echo=T, eval=F}
+first_time_df <- add_new_cells(
+  new_raw_data_csv = "sample_new_eEPSC_data.csv",
+  cell_characteristics_csv = "sample_cell_characteristics.csv",
+  old_raw_data_csv = "empty_old_raw_data_sheet.csv",
+  data_type = "eEPSC",
+  write_new_csv = "no",
+  new_file_name = "",
+  decimal_places = 2
+)
+```
+
+```{r add-new-cells-first-time, eval=T, echo=F}
 first_time_df <- add_new_cells(
   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
@@ -201,7 +216,7 @@ head(first_time_df, n = 8) %>%
 
 As you collect more data, change the value of `old_raw_data_csv` from the empty sheet to your existing raw data sheet. This function will automatically append new data onto your existing sheet and save it to a new `.csv` file (defined by `new_file_name`). I am saving it to the `Data/` subfolder.
 
-```{r add-new-cells, eval=F, echo=T}
+```{r add-new-cells, eval=T, echo=F}
 raw_eEPSC_data <- add_new_cells(
   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
@@ -233,7 +248,17 @@ You can use `dplyr` functions to quickly explore your data. Here's just one exam
 
 *Quick Tip*: Want to know how many experiments you still need to do? Run this line of code on the raw data. Here, I filtered the data to category 2 only (experiments where I added insulin) and grouped by treatment. I then counted the number of cells per sex.
 
-```{r quick-group-stats}
+```{r quick-group-stats, eval=F, echo=T}
+raw_eEPSC_df %>%
+  filter(category == 2) %>%
+  filter(time == 0) %>%
+  group_by(treatment) %>%
+  count(sex) %>%
+  arrange(treatment, sex)
+```
+
+
+```{r actual-quick-stats, eval=T, echo=F}
 raw_eEPSC_df %>%
   filter(category == 2) %>%
   filter(time == 0) %>%
@@ -451,7 +476,9 @@ evoked_t_test_results <- perform_t_tests_for_summary_plot(
   treatment_colour_theme = sample_treatment_names_and_colours,
   save_output_as_RDS = "no"
 )
+```
 
+```{r actual-t-test, eval=T, echo=F}
 reactable(evoked_t_test_results)
 ```
 
@@ -460,7 +487,32 @@ reactable(evoked_t_test_results)
 
 > Notice how `data` is now `sample_pruned_eEPSC_df$all_cells`, and `y_variable` is "amplitude". There are lots of customization opportunities when plotting summary data, including adding a representative trace as a .png overlay! You can read more about in the documentation for `plot_summary_current_data()`.
 
-```{r plot-summary-data, warning=F, message=FALSE, fig.alt = "A scatterplot showing evoked current amplitude (% baseline) versus time in minutes, where 500 nM of insulin have been added from 5 minutes and onwards. Insulin significantly decreased current amplitude in both males and females."}
+
+```{r display-plot-summary-data, echo=F, eval=F}
+plot_summary_current_data(
+  plot_category = 2,
+  plot_treatment = "Control",
+  data = sample_pruned_eEPSC_df$all_cells,
+  current_type = "eEPSC",
+  y_variable = "amplitude",
+  include_representative_trace = "yes",
+  included_sexes = "both",
+  representative_trace_filename = "Figures/Representative-traces/Control-trace.png",
+  significance_display_method = "stars",
+  y_axis_limit = 175,
+  signif_stars = "yes",
+  t_test_df = evoked_t_test_results,
+  hormone_added = "Insulin",
+  large_axis_text = "no",
+  shade_intervals = "no",
+  hormone_or_HFS_start_time = 5,
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
+)
+```
+
+
+```{r plot-summary-data, warning=F, echo=F, message=FALSE, fig.alt = "A scatterplot showing evoked current amplitude (% baseline) versus time in minutes, where 500 nM of insulin have been added from 5 minutes and onwards. Insulin significantly decreased current amplitude in both males and females."}
 plot_summary_current_data(
   plot_category = 2,
   plot_treatment = "Control",
@@ -498,7 +550,9 @@ summary_eEPSC_df <- make_summary_EPSC_data(
   baseline_interval = "t0to5",
   ending_interval = "t20to25"
 )
+```
 
+```{r reactable-summary-data, echo=F}
 reactable(summary_eEPSC_df$summary_data)
 ```
 
@@ -506,7 +560,11 @@ reactable(summary_eEPSC_df$summary_data)
 ### Step 4: Percent change data
 The second dataframe (accessible with `$percent_change_data`) contains information on the percent change in evoked current amplitude `percent_change` during a specific time interval (`ending_interval`) relative to the baseline (`baseline_interval`). For example, if currents decreased by 50% after the hormone, the value of `percent_change` is 0.5.
 
-```{r summary-percent-data-head}
+```{r display-summary-percent-data-head, eval=F}
+head(summary_eEPSC_df$percent_change_data, n = 30)
+```
+
+```{r summary-percent-data, eval=T, echo=F} 
 head(summary_eEPSC_df$percent_change_data, n = 30) %>%
   reactable()
 ```
@@ -566,7 +624,15 @@ PPR_df <- make_PPR_data(
   post_hormone_interval = "t20to25",
   treatment_colour_theme = sample_treatment_names_and_colours
 )
+```
 
+
+```{r display-head-ppr, eval=F, echo=T}
+head(PPR_df, n = 10)
+```
+
+
+```{r actual-head-ppr, eval=T, echo=F}
 head(PPR_df, n = 10) %>%
   reactable()
 ```
@@ -623,7 +689,9 @@ variance_df <- make_variance_data(
   treatment_colour_theme = sample_treatment_names_and_colours,
   save_output_as_RDS = "no"
 )
+```
 
+```{r reactable-variance, echo=F}
 reactable(variance_df)
 ```
 
