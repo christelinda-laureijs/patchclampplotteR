@@ -61,7 +61,7 @@ comparing the pre- and post-hormone groups.}
 
 \item{map_signif_level_values}{A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings.}
 
-\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}.}
+\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
 \item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
 

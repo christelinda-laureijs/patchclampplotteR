@@ -102,7 +102,7 @@ using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary
 
 \item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
 
-\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}.}
+\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
 \item{t_test_df}{A dataframe of t-test results, which has been generated
 using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. Important note! The t-test

@@ -77,7 +77,7 @@ they will all go in subfolders below Figures/ in your project directory.}
 filename of the .png file created with this plot. Could be useful if you
 have specified a custom list of treatments.}
 
-\item{...}{Additional arguments passed to \code{viridis::scale_color_viridis} such as \code{begin}, \code{end}, \code{option} and \code{direction}}
+\item{...}{Additional arguments passed to \code{viridis::scale_color_viridis} such as \code{begin}, \code{end}, \code{option} and \code{direction}.}
 }
 \value{
 A ggplot object. If \code{save_plot_png == "yes"}, it will also generate

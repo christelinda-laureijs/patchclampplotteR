@@ -69,7 +69,7 @@ comparing the pre- and post-hormone groups.}
 
 \item{geom_signif_y_spacer}{A numeric value describing the vertical spacing applied to the significance markers. Defaults to 1, but can be set to a higher value if the p-values or significance stars are too close to the error bars.}
 
-\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}.}
+\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
 \item{p_adjust_method}{This argument is directly related to \code{p.adjust.method} in \code{rstatix::t_test}. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none" (although "none" is not recommended).}
 
