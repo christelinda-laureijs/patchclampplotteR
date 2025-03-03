@@ -3362,7 +3362,6 @@ plot_AP_trace <-
 #'   test_type = "wilcox.test",
 #'   large_axis_text = "no",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
-#'   theme_options = sample_theme_options,
 #'   save_plot_png = "no"
 #' )
 #'
@@ -3807,7 +3806,8 @@ insert_png_as_ggplot <- function(filename,
 #' plot_cell_coordinates_data(data = sample_summary_eEPSC_df$percent_change_data,
 #' background_slice_filename = import_ext_data("DMH-brain-slice.jpg"),
 #' plot_category = 2,
-#' option = "plasma")
+#' option = "plasma",
+#' theme_options = sample_theme_options)
 #'
 #'
 plot_cell_coordinates_data <- function(data,
@@ -3834,6 +3834,7 @@ plot_cell_coordinates_data <- function(data,
                                        legend_height = 10,
                                        filename_suffix,
                                        save_plot_png = "no",
+                                       theme_options,
                                        ...) {
 
   if (!save_plot_png %in% c("yes", "no")) {
@@ -3912,7 +3913,7 @@ plot_cell_coordinates_data <- function(data,
 
 
   coordinates_plot <- plot_data %>%
-    ggplot2::ggplot(ggplot2::aes(x = .data$X, y = .data$Y, color = .data$percent_change)) +
+    ggplot2::ggplot(ggplot2::aes(x = .data$X, y = .data$Y, color = .data$percent_change, shape = .data$sex)) +
     ggplot2::coord_fixed(ratio = 1) +
     ggplot2::xlim(0, background_slice_width) +
     ggplot2::scale_y_reverse(limits = c(background_slice_height, 0)) +
@@ -3947,7 +3948,9 @@ plot_cell_coordinates_data <- function(data,
       size = scale_bar_thickness,
       color = scale_bar_colour
     ) +
+    ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
     ggplot2::theme_void() +
+    ggplot2::labs(shape = "Sex") +
     ggplot2::theme(
       text = ggplot2::element_text(family = geom_text_family),
       legend.position = "right",

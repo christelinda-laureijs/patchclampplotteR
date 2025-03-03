@@ -30,6 +30,7 @@ plot_cell_coordinates_data(
   legend_height = 10,
   filename_suffix,
   save_plot_png = "no",
+  theme_options,
   ...
 )
 }
@@ -92,6 +93,10 @@ have specified a custom list of treatments.}
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
 they will all go in subfolders below Figures/ in your project directory.}
+
+\item{theme_options}{A dataframe containing theme options, defaults to \code{sample_theme_options}. See
+\link{sample_theme_options} for an example of what this dataframe should
+look like and how you can customize these values.}
 
 \item{...}{Additional arguments passed to \code{ggplot2::scale_color_viridis_c()} such as \code{begin}, \code{end}, \code{option} and \code{direction}.}
 }
