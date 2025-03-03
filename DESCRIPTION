@@ -28,7 +28,6 @@ Imports:
     ggtext,
     here,
     jpeg,
-    lazyWeave,
     magrittr,
     png,
     reactable,

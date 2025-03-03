@@ -87,6 +87,10 @@ perform_t_tests_for_summary_plot(
   save_output_as_RDS = "no"
 )
 }
+\references{
+Nutter B (2018). \emph{lazyWeave: LaTeX Wrappers for R #' Users}. R package version
+3.0.2, \url{https://CRAN.R-project.org/package=lazyWeave}.
+}
 \seealso{
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}} for an example of how the normalized
 current amplitudes were created.

@@ -1124,6 +1124,9 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #' @returns A dataframe
 #' @export
 #'
+#' @references Nutter B (2018). _lazyWeave: LaTeX Wrappers for R #' Users_. R package version
+#' 3.0.2, <https://CRAN.R-project.org/package=lazyWeave>.
+#'
 #' @seealso [make_normalized_EPSC_data()] for an example of how the normalized
 #'   current amplitudes were created.
 #'
@@ -1312,7 +1315,7 @@ perform_t_tests_for_summary_plot <- function(data,
   t_test_table <- t_test_results %>%
     dplyr::mutate(
       statistic = round(.data$statistic, 2),
-      p_string = lazyWeave::pvalString(.data$p.adj),
+      p_string = pvalString(.data$p.adj),
       significance_stars = dplyr::case_when(.data$p.adj.signif == "ns" ~ "", T ~ .data$p.adj.signif)
     )
 

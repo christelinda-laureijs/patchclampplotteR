@@ -831,7 +831,7 @@ plot_raw_current_data <-
 #' @param male_label A character value used to describe how males are encoded in the `sex` column of the dataframe used in `data`. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".
 #' @param female_label A character value used to describe how females are encoded in the `sex` column of the dataframe used in `data`. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".
 #' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
-#' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`.
+#' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`. Defaults to "", but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
 #' @param geom_signif_text_size A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to `8`.
 #' @param signif_stars A character ("yes" or "no") describing if significance
 #'   stars should be included as an overlay in the plot. If "yes", you must
@@ -2040,7 +2040,7 @@ plot_cv_data <- function(data,
 #'   comparing the pre- and post-hormone groups.
 #' @param map_signif_level_values A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings.
 #' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to 0.4, which is a good thickness for most applications.
-#' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`.
+#' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`. Defaults to "", but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
 #' @param y_axis_title A character value describing the y-axis title text. Defaults to "PPR" but could be expanded (e.g. "Paired pulse ratio").
 #' @param plot_y_max A numeric value describing the maximum value of the y-axis. Defaults to 3.
 #' @export
@@ -2653,6 +2653,9 @@ plot_AP_comparison <-
 #'   project directory, with the treatment and category included in the filename.
 #' @export
 #'
+#' @references Nutter B (2018). _lazyWeave: LaTeX Wrappers for R #' Users_. R package version
+#' 3.0.2, <https://CRAN.R-project.org/package=lazyWeave>.
+#'
 #' @examples
 #' plot_AP_frequencies_single_treatment(
 #'   data = sample_AP_count_data,
@@ -2855,7 +2858,7 @@ plot_AP_frequencies_single_treatment <- function(data,
     frequency_comparison_test_results <- frequency_comparison_test_results %>%
       dplyr::mutate(
         statistic = round(.data$statistic, 2),
-        p_string = lazyWeave::pvalString(.data$p),
+        p_string = pvalString(.data$p),
         significance_stars = dplyr::case_when(p.adj.signif == "ns" ~ "", T ~ p.adj.signif)
       )
 
@@ -3138,7 +3141,7 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #'   mV) of the scale bar (default is 40).
 #' @param scaling_factor A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is 10, and this value will likely not need to be changed.
 #' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is 0.6).
-#' @param ... Additional arguments passed to `viridis::scale_color_viridis` such as `begin`, `end`, `option` and `direction`
+#' @param ... Additional arguments passed to `viridis::scale_color_viridis` such as `begin`, `end`, `option` and `direction`.
 #'
 #' @returns
 #'
@@ -3763,6 +3766,241 @@ insert_png_as_ggplot <- function(filename,
     )
 
   return(plot)
+}
+
+
+
+#' Plot cell location data
+#'
+#' This function enables you to plot your cell locations on a coordinate system with an image of a brain slice in the background. The points are coloured by the percent change in evoked or spontaneous current amplitude over time.
+#'
+#' @inheritParams plot_percent_change_comparisons
+#'
+#' @param background_slice_filename A character value describing the location of the background slice image. This may be a png or a jpeg. It must contain just the background slice, and the height and width must be known values in `scale_bar_units`.
+#' @param background_slice_width The width of the background slice image in `scale_bar_units`.
+#' @param background_slice_height The height of the background slice image in `scale_bar_units`.
+#' @param scale_bar_x_start The starting location of the scale bar on the x-axis in `scale_bar_units`.
+#' @param scale_bar_y_start The starting location of the scale bar on the y-axis in `scale_bar_units`.
+#' @param scale_bar_x_length The length of the scale bar on the x-axis in `scale_bar_units`.
+#' @param scale_bar_y_length The length of the scale bar on the y-axis in `scale_bar_units`.
+#' @param scale_bar_units The units of the scale bar. Often, it will be "um".
+#' @param include_scale_bar_label A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from `scale_bar_x_length` and `scale_bar_y_length`.
+#' @param scale_bar_thickness A numeric value describing the thickness of the scale bar. Defaults to 0.8.
+#' @param scale_bar_colour A character value (named colour of hex value) describing the colour of the scale bar. Defaults to "black".
+#' @param geom_text_size A numeric value describing the size of the scale bar annotation text. Defaults to 4.
+#' @param geom_point_size A numeric value describing the size of the points. Defaults to 3.
+#' @param geom_text_family A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
+#' @param geom_point_alpha A numeric value describing the transparency of the points. Defaults to 0.95, but can be reduced to better view the brain slice below.
+#' @param legend_width The width of the legend colourbar. Defaults to 0.4.
+#' @param legend_text_size The size of the text labels used in the legend. Defaults to 6.
+#' @param legend_height The height of the legend colourbar. Defaults to 10.
+#' @param ... Additional arguments passed to `ggplot2::scale_color_viridis_c()` such as `begin`, `end`, `option` and `direction`.
+#' @encoding UTF-8
+#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
+#'   a .png file in `Figures/Cell-coordinates-plot`. The .png filename will
+#'   contain the `plot_category`.
+#'
+#' @export
+#'
+#' @examples
+#'
+#' plot_cell_coordinates_data(data = sample_summary_eEPSC_df$percent_change_data,
+#' background_slice_filename = import_ext_data("DMH-brain-slice.jpg"),
+#' plot_category = 2,
+#' option = "plasma")
+#'
+#'
+plot_cell_coordinates_data <- function(data,
+                                       background_slice_filename,
+                                       background_slice_height = 800,
+                                       background_slice_width = 800,
+                                       plot_category,
+                                       include_all_treatments = "yes",
+                                       list_of_treatments = NULL,
+                                       scale_bar_x_start = 700,
+                                       scale_bar_x_length = 100,
+                                       scale_bar_y_start = 100,
+                                       scale_bar_y_length = 100,
+                                       scale_bar_units = "um",
+                                       include_scale_bar_label = "yes",
+                                       scale_bar_thickness = 0.8,
+                                       scale_bar_colour = "white",
+                                       geom_text_size = 4,
+                                       geom_point_size = 3,
+                                       geom_text_family = "",
+                                       geom_point_alpha = 0.95,
+                                       legend_width = 0.4,
+                                       legend_text_size = 6,
+                                       legend_height = 10,
+                                       filename_suffix,
+                                       save_plot_png = "no",
+                                       ...) {
+
+  if (!save_plot_png %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
+  }
+
+  filetype <- deparse(substitute(background_slice_filename))
+
+  if (any(grepl(".png", filetype))) {
+    filetype <-  "png"
+  }
+
+  if (any(grepl(".jpg", filetype))) {
+    filetype <-  "jpg"
+  }
+
+  if (filetype == "png") {
+    background_slice_image <- png::readPNG(here::here(background_slice_filename)) %>% grid::rasterGrob(width = grid::unit(1, "npc"), height = grid::unit(1, "npc"))
+  }
+
+  if (filetype == "jpg") {
+    background_slice_image <- jpeg::readJPEG(here::here(background_slice_filename)) %>% grid::rasterGrob(width = grid::unit(1, "npc"), height = grid::unit(1, "npc"))
+  }
+
+  if (!include_scale_bar_label %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`include_scale_bar_label` argument must be one of: \"yes\" or \"no\""))
+  }
+  if (include_all_treatments == "yes") {
+    plot_data <- data %>%
+      dplyr::filter(.data$category == plot_category) %>%
+      droplevels()
+
+    if (!is.null(list_of_treatments)) {
+      cli::cli_alert_info(
+        "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
+      )
+    }
+  } else {
+    if (is.null(list_of_treatments)) {
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is NULL."
+        ),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
+    }
+
+    if (!is.character(list_of_treatments)) {
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_treatments` = \"",
+          include_all_treatments,
+          "\", but `list_of_treatments` is not a character object or list of characters."
+        ),
+        "i" = "Did you forget to add a list of treatments?"
+      ))
+    }
+
+    plot_data <- data %>%
+      dplyr::filter(.data$category == plot_category) %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments) %>%
+      droplevels()
+  }
+
+  plot_data <- plot_data %>%
+    dplyr::filter(!is.na(.data$X) & !is.na(.data$Y))
+
+  max_percent_change <- plot_data %>%
+    dplyr::ungroup() %>%
+    dplyr::summarise(max(.data$percent_change)) %>%
+    dplyr::pull()
+
+  max_percent_change <- round(max_percent_change/ 10)*10
+
+
+  coordinates_plot <- plot_data %>%
+    ggplot2::ggplot(ggplot2::aes(x = .data$X, y = .data$Y, color = .data$percent_change)) +
+    ggplot2::coord_fixed(ratio = 1) +
+    ggplot2::xlim(0, background_slice_width) +
+    ggplot2::scale_y_reverse(limits = c(background_slice_height, 0)) +
+    ggplot2::annotation_custom(background_slice_image) +
+    ggplot2::scale_color_viridis_c(limits = c(0, max_percent_change), ...) +
+    ggplot2::geom_point(size = geom_point_size, alpha = geom_point_alpha) +
+    ggplot2::guides(
+      color = ggplot2::guide_colorbar(
+        title = NULL,
+        ticks.colour = NA,
+        theme = ggplot2::theme(
+          legend.key.width = grid::unit(legend_width, "lines"),
+          legend.key.height = grid::unit(legend_height, "lines")
+        )
+      )
+    ) +
+    ggplot2::annotate(
+      geom = "segment",
+      x = scale_bar_x_start,
+      xend = scale_bar_x_start,
+      y = scale_bar_y_start,
+      yend = scale_bar_y_start - scale_bar_y_length,
+      size = scale_bar_thickness,
+      color = scale_bar_colour
+    ) +
+    ggplot2::annotate(
+      geom = "segment",
+      x = scale_bar_x_start,
+      xend = scale_bar_x_start + scale_bar_x_length,
+      y = scale_bar_y_start,
+      yend = scale_bar_y_start,
+      size = scale_bar_thickness,
+      color = scale_bar_colour
+    ) +
+    ggplot2::theme_void() +
+    ggplot2::theme(
+      text = ggplot2::element_text(family = geom_text_family),
+      legend.position = "right",
+      legend.text = ggplot2::element_text(size = legend_text_size),
+      legend.margin = ggplot2::margin(10, 5, 10, 5)
+    )
+
+
+  if (include_scale_bar_label == "yes") {
+    coordinates_plot <- coordinates_plot +
+      ggplot2::annotate(
+        geom = "text",
+        x = scale_bar_x_start + 1/2*(scale_bar_x_length),
+        y = scale_bar_y_start + 25,
+        label = paste0(scale_bar_x_length, " ", scale_bar_units),
+        hjust = 0.5,
+        vjust = 0.5,
+        family = geom_text_family,
+        size = geom_text_size,
+        color = scale_bar_colour
+      ) +
+      ggplot2::annotate(
+        geom = "text",
+        x = scale_bar_x_start - 25,
+        y = scale_bar_y_start - 1/2*(scale_bar_y_length),
+        label = paste0(scale_bar_y_length, " ", scale_bar_units),
+        hjust = 1,
+        vjust = 0.5,
+        family = geom_text_family,
+        size = geom_text_size,
+        color = scale_bar_colour
+      )
+  }
+
+  if (save_plot_png == "yes") {
+    ggplot2::ggsave(
+      plot = coordinates_plot,
+      path = here::here("Figures/Cell-coordinates-plot"),
+      file = paste0(
+        "Cell-coordinates-plot-category-",
+        plot_category,
+        "-",
+        filename_suffix,
+        ".png"
+      ),
+      width = 7,
+      height = 5,
+      units = "in",
+      dpi = 300
+    )
+  }
+
+  return(coordinates_plot)
 }
 
 

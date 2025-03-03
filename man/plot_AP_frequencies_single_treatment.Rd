@@ -120,3 +120,7 @@ plot_AP_frequencies_single_treatment(
 )
 
 }
+\references{
+Nutter B (2018). \emph{lazyWeave: LaTeX Wrappers for R #' Users}. R package version
+3.0.2, \url{https://CRAN.R-project.org/package=lazyWeave}.
+}
