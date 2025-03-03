@@ -50,6 +50,7 @@ reference:
     Functions to plot the data.
   contents:
   - patchclampplotteR_theme
+  - insert_png_as_ggplot
 - subtitle: Evoked and spontaneous currents
   contents:
   - plot_raw_current_data

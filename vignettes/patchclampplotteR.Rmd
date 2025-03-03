@@ -295,9 +295,10 @@ to values between 0 min and 25 minutes.
 `negative_transform_currents` to "yes" which will flip the current amplitudes to
 positive values.
 
-```{r normalize-data}
+
+```{r normalize-data, eval=F, echo=T}
 raw_eEPSC_df <- make_normalized_EPSC_data(
-  filename = import_ext_data("sample_eEPSC_data.csv"),
+  filename = "sample_eEPSC_data.csv",
   current_type = "eEPSC",
   min_time_value = 0,
   max_time_value = 25,
@@ -307,6 +308,9 @@ raw_eEPSC_df <- make_normalized_EPSC_data(
 )
 ```
 
+```{r echo=F, eval=T}
+raw_eEPSC_df <- sample_raw_eEPSC_df
+```
 
 
 `make_normalized_EPSC_data()` will retain the cell characteristics and `P1` and
