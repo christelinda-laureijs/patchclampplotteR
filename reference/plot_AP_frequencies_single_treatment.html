@@ -148,7 +148,7 @@ comparing the pre- and post-hormone groups.</p></dd>
 
 
 <dt id="arg-geom-signif-family">geom_signif_family<a class="anchor" aria-label="anchor" href="#arg-geom-signif-family"></a></dt>
-<dd><p>A character value describing the font family used for the p-value annotations used by <code><a href="https://const-ae.github.io/ggsignif/reference/stat_signif.html" class="external-link">ggsignif::geom_signif()</a></code>.</p></dd>
+<dd><p>A character value describing the font family used for the p-value annotations used by <code><a href="https://const-ae.github.io/ggsignif/reference/stat_signif.html" class="external-link">ggsignif::geom_signif()</a></code>. Defaults to "", but can be replaced with a named font. Use a package like <code>extrafont</code> to load system fonts into R.</p></dd>
 
 
 <dt id="arg-p-adjust-method">p_adjust_method<a class="anchor" aria-label="anchor" href="#arg-p-adjust-method"></a></dt>
@@ -196,6 +196,11 @@ look like.</p></dd>
     <p>A ggplot object. If <code>save_plot_png == "yes"</code>, it will also generate
 a .png file in the folder <code>Figures/Action-potentials</code> relative to the
 project directory, with the treatment and category included in the filename.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Nutter B (2018). <em>lazyWeave: LaTeX Wrappers for R #' Users</em>. R package version
+3.0.2, <a href="https://CRAN.R-project.org/package=lazyWeave" class="external-link">https://CRAN.R-project.org/package=lazyWeave</a>.</p>
     </div>
 
     <div class="section level2">
