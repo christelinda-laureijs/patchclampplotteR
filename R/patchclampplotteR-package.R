@@ -14,6 +14,5 @@
 #' @importFrom rstatix pairwise_t_test
 #' @importFrom stats sd
 #' @importFrom utils menu
-#' @importFrom viridis scale_color_viridis
 ## usethis namespace: end
 NULL

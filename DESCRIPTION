@@ -38,8 +38,7 @@ Imports:
     stringr,
     tibble,
     tidyr,
-    utils,
-    viridis
+    utils
 Suggests: 
     knitr,
     rmarkdown,

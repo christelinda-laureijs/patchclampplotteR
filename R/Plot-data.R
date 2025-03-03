@@ -3246,7 +3246,7 @@ plot_AP_trace <-
 
       if (colour_scale_option == "viridis") {
         ap_trace <- ap_trace +
-          viridis::scale_color_viridis(discrete = T, guide = "none", ...)
+          ggplot2::scale_color_viridis_d(guide = "none", ...)
       }
 
       if (colour_scale_option == "custom") {
