@@ -174,7 +174,7 @@ first_time_df <- add_new_cells(
 first_time_df <- add_new_cells(
   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
-  old_raw_data_csv = import_ext_data("empty_old_raw_data_sheet.csv"),
+  old_raw_data_csv = import_ext_data("empty_raw_datasheet.csv"),
   data_type = "eEPSC",
   write_new_csv = "no",
   new_file_name = "",
@@ -220,8 +220,8 @@ As you collect more data, change the value of `old_raw_data_csv` from the empty 
 raw_eEPSC_data <- add_new_cells(
   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
-  old_raw_data_csv = import_ext_data("empty_raw_eEPSC_datasheet.csv"),
-  current_type = "eEPSC",
+  old_raw_data_csv = import_ext_data("empty_raw_datasheet.csv"),
+  data_type = "eEPSC",
   write_new_csv = "no",
   new_file_name = "Data/20241118-Raw-eEPSC-Data.csv",
   decimal_places = 2
