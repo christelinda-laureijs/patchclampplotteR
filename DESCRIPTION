@@ -27,6 +27,7 @@ Imports:
     ggsignif,
     ggtext,
     here,
+    jpeg,
     lazyWeave,
     magrittr,
     png,

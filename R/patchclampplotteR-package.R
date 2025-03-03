@@ -7,6 +7,7 @@
 #' @importFrom ggplot2 %+replace%
 #' @importFrom ggsignif geom_signif
 #' @importFrom ggtext element_markdown
+#' @importFrom jpeg readJPEG
 #' @importFrom lazyWeave pvalString
 #' @importFrom png readPNG
 #' @importFrom reactable reactable

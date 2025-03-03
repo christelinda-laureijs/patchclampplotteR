@@ -3697,6 +3697,77 @@ plot_spontaneous_current_trace <-
   }
 
 
+
+
+#' Import an image as a ggplot object
+#'
+#' This function will insert an external `.png` or `.jpg` file over an empty ggplot object. The resulting ggplot object can then be included with other ggplot layouts. This is useful for when you want to use the image in a multiplot layout. For example, in a publication, figure "1A" may be a schematic of your experimental set-up that you created elsewhere and saved as a `.png` or `.jpg` file. Rather than inserting this as a standalone image, you can use this function to store your image as a ggplot object, and combine it with other ggplot plots in a flexible layout using the `patchwork` library.
+#'
+#' @param filename A character value specifying a path to the .png file. Examples include "Figures/methods-schematic.png"
+#' @param xmin The minimum position of the image on the x-axis. Defaults to `-Inf` which is the left-most plot boundary.
+#' @param xmax The maximum position of the image on the x-axis. The minimum position of the image on the x-axis. Defaults to `Inf` which is the right-most plot boundary.
+#' @param ymin The minimum position of the image on the y-axis. Defaults to `-Inf` which is the lowest plot boundary.
+#' @param ymax The minimum position of the image on the y-axis. Defaults to `-Inf` which is the highest plot boundary on the y-axis.
+#' @param x_axis_max A numeric value describing the maximum value of the sample dataset used to create the "empty" dataframe underneath the plot. You may need to change this to better match the aspect ratio of your .png. Defaults to 10.
+#' @param y_axis_max A numeric value describing the maximum value of the sample dataset used to create the "empty" dataframe underneath the plot. You may need to change this to better match the aspect ratio of your .png. Defaults to 10
+#'
+#' @returns A ggplot object featuring your png file on an empty plot background. There are no plot elements (e.g. no axis titles).
+#' @export
+#'
+#' @examples
+#'
+#' # Note: In your code, simply insert the filename
+#' # as a character value. Do not use import_ext_data()
+#'
+#'
+#' insert_png_as_ggplot(import_ext_data("rat-methods.jpg"))
+#'
+#'
+insert_png_as_ggplot <- function(filename,
+                                 x_axis_max = 10,
+                                 y_axis_max = 10,
+                                 xmin = -Inf,
+                                 xmax = Inf,
+                                 ymin = -Inf,
+                                 ymax = Inf) {
+
+  filetype <- deparse(substitute(filename))
+
+  if (any(grepl(".png", filetype))) {
+    filetype <-  "png"
+  }
+
+  if (any(grepl(".jpg", filetype))) {
+    filetype <-  "jpg"
+  }
+
+  empty_plot_dataframe <- data.frame(data.frame(x = 1:x_axis_max, y = 1:y_axis_max))
+
+  if (filetype == "png") {
+  image_overlay <- png::readPNG(here::here(filename)) %>% grid::rasterGrob()
+  }
+
+  if (filetype == "jpg") {
+    image_overlay <- jpeg::readJPEG(here::here(filename)) %>% grid::rasterGrob()
+  }
+
+  plot <- empty_plot_dataframe %>% ggplot2::ggplot(ggplot2::aes(.data$x, .data$y)) +
+    ggplot2::geom_blank() +
+    ggplot2::theme_void() +
+    ggplot2::annotation_custom(
+      grob = image_overlay,
+      xmin = xmin,
+      xmax = xmax,
+      ymin = ymin,
+      ymax = ymax
+    )
+
+  return(plot)
+}
+
+
+
+
 #' Make interactive overview table of all recordings
 #'
 #' This function pulls information from multiple dataframes to display
