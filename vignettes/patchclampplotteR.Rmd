@@ -90,7 +90,7 @@ xfun::embed_file("sample-blank-cell-characteristics-sheet.csv")
 
 > Note: Since you are using an R Project, it is easy to identify files in sub-folders. For example, you can
 write `import_cell_characteristics_df("Data/cell_info.csv")` to use
-`cell_info.csv` located within the `Data/` folder.
+`cell_info.csv` located within the `Data/` subfolder.
 
 ```{r import-cell-characteristics, eval=T, echo=F, warning=FALSE, message=FALSE}
 cell_characteristics <- import_cell_characteristics_df(import_ext_data("sample_cell_characteristics.csv"))
