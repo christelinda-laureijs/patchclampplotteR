@@ -216,14 +216,14 @@ head(first_time_df, n = 8) %>%
 
 As you collect more data, change the value of `old_raw_data_csv` from the empty sheet to your existing raw data sheet. This function will automatically append new data onto your existing sheet and save it to a new `.csv` file (defined by `new_file_name`). I am saving it to the `Data/` subfolder.
 
-```{r add-new-cells, eval=T, echo=F}
-raw_eEPSC_data <- add_new_cells(
-  new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
-  cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
-  old_raw_data_csv = import_ext_data("empty_raw_datasheet.csv"),
+```{r add-new-cells, eval=F, echo=T}
+add_new_cells(
+  new_raw_data_csv = "sample_new_eEPSC_data.csv",
+  cell_characteristics_csv = "sample_cell_characteristics.csv",
+  old_raw_data_csv = "Data/Raw-eEPSC-df.csv",
   data_type = "eEPSC",
   write_new_csv = "no",
-  new_file_name = "Data/20241118-Raw-eEPSC-Data.csv",
+  new_file_name = "",
   decimal_places = 2
 )
 ```
@@ -234,7 +234,12 @@ Let's look at an example of a full dataset. This is the sample raw evoked curren
 the vignette size, I am printing just the first 20 rows. The full dataset
 contains > 5680 rows!)
 
-```{r view-sample-raw-data}
+```{r display-raw-data, eval=F, echo=T}
+head(raw_eEPSC_df, n = 20)
+```
+
+
+```{r view-sample-raw-data, echo=F}
 raw_eEPSC_df <- sample_raw_eEPSC_df
 
 head(raw_eEPSC_df, n = 20) %>%
