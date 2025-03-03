@@ -36,7 +36,7 @@ patchclampplotteR_theme <- function() {
       axis.title.x = ggplot2::element_text(margin = ggplot2::margin(b = 25, t = 20)),
       axis.ticks = ggplot2::element_blank(),
       strip.background = ggplot2::element_rect(color = NA, fill = NA),
-      strip.text = ggplot2::element_text(size = 20)
+      strip.text = ggplot2::element_text(size = 12)
     )
 }
 
@@ -1864,22 +1864,10 @@ plot_variance_comparison_data <- function(data,
         color = plot_colour,
         linewidth = 1.2
       ) +
-      ggplot2::annotate(
-        geom = "point",
-        x = baseline_interval,
-        y = variance_comparison_data$mean_cv_inverse_square[variance_comparison_data$interval == baseline_interval][1],
-        color = plot_colour,
-        size = 2.5,
-        shape = plot_shape
-      ) +
-      ggplot2::annotate(
-        geom = "point",
-        x = post_hormone_interval,
-        y = variance_comparison_data$mean_cv_inverse_square[variance_comparison_data$interval == post_hormone_interval][1],
-        color = plot_colour,
-        size = 2.5,
-        shape = plot_shape
-      )
+      ggplot2::geom_point(ggplot2::aes(y = .data$mean_cv_inverse_square),
+                          size = 2.5,
+                          color = plot_colour,
+                          shape = plot_shape)
   }
 
   if (variance_measure == "VMR") {
@@ -1893,22 +1881,10 @@ plot_variance_comparison_data <- function(data,
         color = plot_colour,
         linewidth = 1.2
       ) +
-      ggplot2::annotate(
-        geom = "point",
-        x = baseline_interval,
-        y = variance_comparison_data$mean_VMR[variance_comparison_data$interval == baseline_interval][1],
-        color = plot_colour,
-        size = 2.5,
-        shape = plot_shape
-      ) +
-      ggplot2::annotate(
-        geom = "point",
-        x = post_hormone_interval,
-        y = variance_comparison_data$mean_VMR[variance_comparison_data$interval == post_hormone_interval][1],
-        color = plot_colour,
-        size = 2.5,
-        shape = plot_shape
-      )
+      ggplot2::geom_point(ggplot2::aes(y = .data$mean_VMR),
+                 size = 2.5,
+                 color = plot_colour,
+                 shape = plot_shape)
   }
 
 
@@ -2193,22 +2169,10 @@ plot_PPR_data_single_treatment <- function(data,
       color = plot_colour,
       linewidth = 1.2
     ) +
-    ggplot2::annotate(
-      geom = "point",
-      x = baseline_label,
-      y = PPR_one_plot_data$mean_PPR_all_cells[PPR_one_plot_data$state == baseline_label][1],
-      color = plot_colour,
-      size = 2.5,
-      shape = plot_shape
-    ) +
-    ggplot2::annotate(
-      geom = "point",
-      x = post_hormone_label,
-      y = PPR_one_plot_data$mean_PPR_all_cells[PPR_one_plot_data$state == post_hormone_label][1],
-      color = plot_colour,
-      size = 2.5,
-      shape = plot_shape
-    ) +
+    ggplot2::geom_point(ggplot2::aes(y = .data$mean_PPR_all_cells),
+                        size = 2.5,
+                        color = plot_colour,
+                        shape = plot_shape) +
     ggplot2::labs(x = NULL, y = y_axis_title) +
     ggplot_theme
 
