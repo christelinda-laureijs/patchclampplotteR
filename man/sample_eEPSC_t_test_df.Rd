@@ -22,7 +22,7 @@ the paired t-test. Examples include "t5to10" and "t10to15".}
 \item{\code{statistic}}{The test statistic.}
 \item{\code{df}}{The degrees of freedom.}
 \item{\code{p_string}}{The p-value expressed as a character value using
-\code{lazyWeave::pvalString()}, which rounds the values and expresses them
+\code{pvalString} from the \code{lazyWeave} package, which rounds the values and expresses them
 according to typical published values (e.g. > 0.99, < 0.001 instead of
 exact values).}
 \item{\code{significance_stars}}{A character value containing asterisks indicating

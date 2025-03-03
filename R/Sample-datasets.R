@@ -474,7 +474,7 @@ NULL
 #'  \item{`statistic`}{The test statistic.}
 #'  \item{`df`}{The degrees of freedom.}
 #'  \item{`p_string`}{The p-value expressed as a character value using
-#'  `lazyWeave::pvalString()`, which rounds the values and expresses them
+#'  `pvalString` from the `lazyWeave` package, which rounds the values and expresses them
 #'  according to typical published values (e.g. > 0.99, < 0.001 instead of
 #'  exact values).}
 #'  \item{`significance_stars`}{A character value containing asterisks indicating
@@ -516,7 +516,7 @@ NULL
 #'  \item{`statistic`}{The test statistic.}
 #'  \item{`df`}{The degrees of freedom.}
 #'  \item{`p_string`}{The p-value expressed as a character value using
-#'  `lazyWeave::pvalString()`, which rounds the values and expresses them
+#'  `pvalString` from the `lazyWeave` package, which rounds the values and expresses them
 #'  according to typical published values (e.g. > 0.99, < 0.001 instead of
 #'  exact values).}
 #'  \item{`significance_stars`}{A character value containing asterisks indicating
