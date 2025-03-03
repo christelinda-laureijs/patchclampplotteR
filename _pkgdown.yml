@@ -51,6 +51,7 @@ reference:
   contents:
   - patchclampplotteR_theme
   - insert_png_as_ggplot
+  - plot_cell_coordinates_data
 - subtitle: Evoked and spontaneous currents
   contents:
   - plot_raw_current_data

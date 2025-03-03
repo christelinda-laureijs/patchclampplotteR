@@ -36,7 +36,7 @@ patchclampplotteR_theme <- function() {
       axis.title.x = ggplot2::element_text(margin = ggplot2::margin(b = 25, t = 20)),
       axis.ticks = ggplot2::element_blank(),
       strip.background = ggplot2::element_rect(color = NA, fill = NA),
-      strip.text = ggplot2::element_text(size = 12)
+      strip.text = ggplot2::element_text(size = 12, face = "italic")
     )
 }
 
@@ -3936,7 +3936,7 @@ plot_cell_coordinates_data <- function(data,
       xend = scale_bar_x_start,
       y = scale_bar_y_start,
       yend = scale_bar_y_start - scale_bar_y_length,
-      size = scale_bar_thickness,
+      linewidth = scale_bar_thickness,
       color = scale_bar_colour
     ) +
     ggplot2::annotate(
@@ -3945,7 +3945,7 @@ plot_cell_coordinates_data <- function(data,
       xend = scale_bar_x_start + scale_bar_x_length,
       y = scale_bar_y_start,
       yend = scale_bar_y_start,
-      size = scale_bar_thickness,
+      linewidth = scale_bar_thickness,
       color = scale_bar_colour
     ) +
     ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
