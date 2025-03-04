@@ -3954,7 +3954,7 @@ plot_cell_coordinates_data <- function(data,
     ggplot2::theme(
       text = ggplot2::element_text(family = geom_text_family),
       legend.position = "right",
-      legend.text = ggplot2::element_text(size = legend_text_size),
+      legend.text = ggplot2::element_text(size = legend_text_size, family = geom_text_family),
       legend.margin = ggplot2::margin(10, 5, 10, 5)
     )
 
