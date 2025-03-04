@@ -31,6 +31,7 @@ plot_cell_coordinates_data(
   filename_suffix,
   save_plot_png = "no",
   theme_options,
+  ggplot_theme = NULL,
   ...
 )
 }
@@ -98,6 +99,8 @@ they will all go in subfolders below Figures/ in your project directory.}
 \link{sample_theme_options} for an example of what this dataframe should
 look like and how you can customize these values.}
 
+\item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
+
 \item{...}{Additional arguments passed to \code{ggplot2::scale_color_viridis_c()} such as \code{begin}, \code{end}, \code{option} and \code{direction}.}
 }
 \value{
@@ -113,7 +116,8 @@ This function enables you to plot your cell locations on a coordinate system wit
 plot_cell_coordinates_data(data = sample_summary_eEPSC_df$percent_change_data,
 background_slice_filename = import_ext_data("DMH-brain-slice.jpg"),
 plot_category = 2,
-option = "plasma")
+option = "plasma",
+theme_options = sample_theme_options)
 
 
 }

@@ -3362,7 +3362,8 @@ plot_AP_trace <-
 #'   test_type = "wilcox.test",
 #'   large_axis_text = "no",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
-#'   save_plot_png = "no"
+#'   save_plot_png = "no",
+#'   theme_options = sample_theme_options
 #' )
 #'
 plot_spontaneous_current_parameter_comparison <-
@@ -3835,6 +3836,7 @@ plot_cell_coordinates_data <- function(data,
                                        filename_suffix,
                                        save_plot_png = "no",
                                        theme_options,
+                                       ggplot_theme = NULL,
                                        ...) {
 
   if (!save_plot_png %in% c("yes", "no")) {
@@ -3950,13 +3952,14 @@ plot_cell_coordinates_data <- function(data,
     ) +
     ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
     ggplot2::theme_void() +
-    ggplot2::labs(shape = "Sex") +
+    ggplot2::labs(shape = NULL) +
     ggplot2::theme(
       text = ggplot2::element_text(family = geom_text_family),
       legend.position = "right",
       legend.text = ggplot2::element_text(size = legend_text_size, family = geom_text_family),
       legend.margin = ggplot2::margin(10, 5, 10, 5)
-    )
+    ) +
+    ggplot_theme
 
 
   if (include_scale_bar_label == "yes") {

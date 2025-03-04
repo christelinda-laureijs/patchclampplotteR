@@ -123,7 +123,8 @@ plot_spontaneous_current_parameter_comparison(
   test_type = "wilcox.test",
   large_axis_text = "no",
   treatment_colour_theme = sample_treatment_names_and_colours,
-  save_plot_png = "no"
+  save_plot_png = "no",
+  theme_options = sample_theme_options
 )
 
 }
