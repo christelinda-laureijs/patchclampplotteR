@@ -66,6 +66,7 @@ ggplot object with an optional scale bar.</p>
 <span>  <span class="va">plot_colour</span>,</span>
 <span>  <span class="va">plot_category</span>,</span>
 <span>  <span class="va">plot_treatment</span>,</span>
+<span>  <span class="va">sex</span>,</span>
 <span>  <span class="va">state</span>,</span>
 <span>  include_scale_bar <span class="op">=</span> <span class="st">"yes"</span>,</span>
 <span>  plot_episode <span class="op">=</span> <span class="st">"epi1"</span>,</span>
@@ -109,6 +110,10 @@ applied continuously after a 5-minute baseline period.</p></dd>
 <dd><p>A character value specifying the treatment you would
 like to plot (e.g. "Control"). <code>plot_treatment</code> represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.</p></dd>
+
+
+<dt id="arg-sex">sex<a class="anchor" aria-label="anchor" href="#arg-sex"></a></dt>
+<dd><p>A character value ("male" or "female"), which will be added to the file name.</p></dd>
 
 
 <dt id="arg-state">state<a class="anchor" aria-label="anchor" href="#arg-state"></a></dt>
@@ -190,6 +195,10 @@ they will all go in subfolders below Figures/ in your project directory.</p></dd
 generate a .png file in the folder
 <code>Figures/Spontaneous-currents/Representative-Traces</code> relative to the
 project directory, with the <code>plot_category</code>, <code>plot_treatment</code>, and <code>state</code> included in the filename.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="import_ABF_file.html">import_ABF_file()</a></code></p></div>
     </div>
 
     <div class="section level2">
