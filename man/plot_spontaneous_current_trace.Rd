@@ -13,7 +13,7 @@ plot_spontaneous_current_trace(
   state,
   include_scale_bar = "yes",
   plot_episode = "epi1",
-  line_thickness = 1,
+  line_thickness = 0.7,
   scale_bar_x_start = 1.25,
   scale_bar_x_length = 0.5,
   scale_bar_y_start = 15,

@@ -2111,7 +2111,8 @@ plot_cv_data <- function(data,
 #' @param test_type A character (must be "wilcox.test", "t.test" or "none")
 #'   describing the statistical model used to create a significance bracket
 #'   comparing the pre- and post-hormone groups.
-#' @param map_signif_level_values A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings.
+#' @param map_signif_level_values A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  `map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}` to only display the p-values when they are below 0.1.
+
 #' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to 0.4, which is a good thickness for most applications.
 #' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`. Defaults to "", but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
 #' @param y_axis_title A character value describing the y-axis title text. Defaults to "PPR" but could be expanded (e.g. "Paired pulse ratio").
@@ -3746,7 +3747,7 @@ plot_spontaneous_current_trace <-
            state,
            include_scale_bar = "yes",
            plot_episode = "epi1",
-           line_thickness = 1,
+           line_thickness = 0.7,
            scale_bar_x_start = 1.25,
            scale_bar_x_length = 0.5,
            scale_bar_y_start = 15,
