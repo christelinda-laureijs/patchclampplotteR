@@ -65,6 +65,7 @@ connecting the "before" data point to the "after" data point for each letter.</p
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">plot_category</span>,</span>
 <span>  <span class="va">plot_treatment</span>,</span>
+<span>  facet_by_sex <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  variance_measure <span class="op">=</span> <span class="st">"cv"</span>,</span>
 <span>  baseline_interval <span class="op">=</span> <span class="st">"t0to5"</span>,</span>
 <span>  baseline_label <span class="op">=</span> <span class="st">"Baseline"</span>,</span>
@@ -105,6 +106,10 @@ applied continuously after a 5-minute baseline period.</p></dd>
 <dd><p>A character value specifying the treatment you would
 like to plot (e.g. "Control"). <code>plot_treatment</code> represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.</p></dd>
+
+
+<dt id="arg-facet-by-sex">facet_by_sex<a class="anchor" aria-label="anchor" href="#arg-facet-by-sex"></a></dt>
+<dd><p>A character value ("yes" or "no") describing if the plots should be faceted by sex. This is only available if "included_sexes" is "both". The resulting plot will be split in two, with male data on the left and female data on the right.</p></dd>
 
 
 <dt id="arg-variance-measure">variance_measure<a class="anchor" aria-label="anchor" href="#arg-variance-measure"></a></dt>
