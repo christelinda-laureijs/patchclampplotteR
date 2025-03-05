@@ -3388,7 +3388,7 @@ plot_spontaneous_current_parameter_comparison <-
            save_plot_png,
            ggplot_theme = patchclampplotteR_theme()) {
     if (is.null(baseline_interval) ||
-      !is.character(baseline_interval)) {
+        !is.character(baseline_interval)) {
       cli::cli_abort(c("x" = "`baseline_interval` must be a character (e.g. \"t0to5\" or \"t0to3\")"))
     }
 
@@ -3396,43 +3396,63 @@ plot_spontaneous_current_parameter_comparison <-
       cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
     }
 
+    if (!facet_by_sex %in% c("yes", "no")) {
+      cli::cli_abort(c("x" = "`facet_by_sex` argument must be either \"yes\" or \"no\""))
+    }
+
     if (!included_sexes %in% c("both", "male", "female")) {
       cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
     }
 
+    if (facet_by_sex == "yes" & included_sexes != "both") {
+      cli::cli_abort(
+        c("x" = "You set `facet_by_sex` to 'yes' but `included_sexes` is not 'both'. Faceting by sex is only possible when `included_sexes` is 'both'")
+      )
+    }
 
     if (is.null(post_hormone_interval) ||
-      !is.character(post_hormone_interval)) {
+        !is.character(post_hormone_interval)) {
       cli::cli_abort(c("x" = "`post_hormone_interval` must be a character (e.g. \"t20to25\")"))
     }
 
     if (!test_type %in% c("wilcox.test", "t.test", "none")) {
-      cli::cli_abort(c("x" = "`test_type` argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
+      cli::cli_abort(
+        c("x" = "`test_type` argument must be one of: \"wilcox.test\", \"t.test\", or \"none\"")
+      )
     }
 
     allowed_y_variables_list <- "\"raw_amplitude\", or \"raw_frequency\""
 
     if (!y_variable %in% c("raw_amplitude", "raw_frequency")) {
-      cli::cli_abort(c(
-        "x" = paste0(
-          "`y_variable` must be ",
-          allowed_y_variables_list
-        ),
-        "i" = "`y_variable` cannot be baseline transformed data because the graph would not show useful data. During the normalization process (`make_normalized_EPSC_data()`), all baseline values are converted to 100. This plot would therefore show points all at 100."
-      ))
+      cli::cli_abort(
+        c(
+          "x" = paste0("`y_variable` must be ", allowed_y_variables_list),
+          "i" = "`y_variable` cannot be baseline transformed data because the graph would not show useful data. During the normalization process (`make_normalized_EPSC_data()`), all baseline values are converted to 100. This plot would therefore show points all at 100."
+        )
+      )
     }
 
     plot_colour <- treatment_colour_theme %>%
-      dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
+      dplyr::filter(.data$category == plot_category &
+                      .data$treatment == plot_treatment) %>%
       dplyr::pull(.data$colours)
 
 
 
     sEPSC_comparison_plot_data <- data %>%
       dplyr::filter(.data$category == plot_category &
-        .data$treatment == plot_treatment) %>%
+                      .data$treatment == plot_treatment) %>%
       dplyr::filter(.data$interval == baseline_interval |
-        .data$interval == post_hormone_interval)
+                      .data$interval == post_hormone_interval)
+
+
+    if (facet_by_sex == "yes") {
+      sEPSC_comparison_plot_data <- sEPSC_comparison_plot_data %>%
+        dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+
+      facet_label <- "-faceted-by-sex"
+
+    }
 
     if (y_variable == "raw_amplitude") {
       y_var <- "mean_raw_amplitude"
@@ -3468,24 +3488,51 @@ plot_spontaneous_current_parameter_comparison <-
       plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
     }
 
-    sEPSC_comparison_plot <- sEPSC_comparison_plot_data %>%
-      ggplot2::ggplot(ggplot2::aes(x = .data$interval, y = .data[[y_var]])) +
+
+    if (facet_by_sex == "no") {
+      facet_label <- ""
+
+      sEPSC_comparison_plot <- sEPSC_comparison_plot_data %>%
+        ggplot2::ggplot(ggplot2::aes(x = .data$interval, y = .data[[y_var]])) +
+        ggplot2::geom_violin(
+          fill = theme_options["gray_shading_colour", "value"],
+          color = NA,
+          scale = "width",
+          width = 0.2
+        ) +
+        ggforce::geom_sina(
+          bw = 12,
+          alpha = 0.8,
+          maxwidth = 0.3,
+          size = 2,
+          color = plot_colour,
+          shape = plot_shape
+        )
+    }
+
+    if (facet_by_sex == "yes") {
+      sEPSC_comparison_plot <- sEPSC_comparison_plot_data %>%
+        ggplot2::ggplot(ggplot2::aes(x = .data$interval, y = .data[[y_var]]), shape = .data$sex) +
+        ggplot2::geom_violin(
+          fill = theme_options["gray_shading_colour", "value"],
+          color = NA,
+          scale = "width",
+          width = 0.2
+        ) +
+        ggforce::geom_sina(
+          bw = 12,
+          alpha = 0.8,
+          maxwidth = 0.3,
+          size = 2,
+          color = plot_colour
+        ) +
+        ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+        ggplot2::facet_wrap( ~ .data$sex)
+    }
+
+    sEPSC_comparison_plot <- sEPSC_comparison_plot +
       ggplot2::labs(x = NULL, y = y_title) +
       ggplot2::scale_x_discrete(labels = c("Baseline", hormone_added)) +
-      ggplot2::geom_violin(
-        fill = theme_options["gray_shading_colour", "value"],
-        color = NA,
-        scale = "width",
-        width = 0.2
-      ) +
-      ggforce::geom_sina(
-        bw = 12,
-        alpha = 0.8,
-        maxwidth = 0.3,
-        size = 2,
-        color = plot_colour,
-        shape = plot_shape
-      ) +
       ggplot2::stat_summary(
         fun.data = ggplot2::mean_se,
         geom = "pointrange",
@@ -3537,6 +3584,7 @@ plot_spontaneous_current_parameter_comparison <-
           "-",
           plot_treatment,
           sex_annotation,
+          facet_label,
           ".png"
         ),
         width = 7,
@@ -3548,8 +3596,6 @@ plot_spontaneous_current_parameter_comparison <-
 
     sEPSC_comparison_plot
   }
-
-
 
 #' Plot a representative spontaneous current trace
 #'
