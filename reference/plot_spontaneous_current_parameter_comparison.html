@@ -163,7 +163,7 @@ comparing the pre- and post-hormone groups.</p></dd>
 
 
 <dt id="arg-map-signif-level-values">map_signif_level_values<a class="anchor" aria-label="anchor" href="#arg-map-signif-level-values"></a></dt>
-<dd><p>A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p &lt; 0.05, for p &lt; 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings.</p></dd>
+<dd><p>A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p &lt; 0.05, for p &lt; 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  <code>map_signif_level_values = function(p) if (p &lt; 0.1) {round(p, 3)} else {"ns"}</code> to only display the p-values when they are below 0.1.</p></dd>
 
 
 <dt id="arg-geom-signif-family">geom_signif_family<a class="anchor" aria-label="anchor" href="#arg-geom-signif-family"></a></dt>
