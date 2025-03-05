@@ -3336,6 +3336,7 @@ plot_AP_trace <-
 #' `ggsignif::geom_signif()`.
 #'
 #' @param data Summary data for spontaneous currents generated using [make_summary_EPSC_data()] where `current_type == "sEPSC"`.
+#' @param facet_by_sex A character value ("yes" or "no") describing if the plots should be faceted by sex. This is only available if "included_sexes" is "both". The resulting plot will be split in two, with male data on the left and female data on the right.
 #' @param y_variable A character value ("raw_amplitude" or "raw_frequency") only.
 #'   Normalized amplitude and frequency are not available because all baseline
 #'   values are 100.
@@ -3371,6 +3372,7 @@ plot_spontaneous_current_parameter_comparison <-
            plot_category = 2,
            plot_treatment = "Control",
            included_sexes = "both",
+           facet_by_sex = "no",
            male_label = "Male",
            female_label = "Female",
            y_variable = "raw_amplitude",

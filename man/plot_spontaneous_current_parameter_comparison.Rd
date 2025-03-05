@@ -9,6 +9,7 @@ plot_spontaneous_current_parameter_comparison(
   plot_category = 2,
   plot_treatment = "Control",
   included_sexes = "both",
+  facet_by_sex = "no",
   male_label = "Male",
   female_label = "Female",
   y_variable = "raw_amplitude",
@@ -40,6 +41,8 @@ like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
 
 \item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+
+\item{facet_by_sex}{A character value ("yes" or "no") describing if the plots should be faceted by sex. This is only available if "included_sexes" is "both". The resulting plot will be split in two, with male data on the left and female data on the right.}
 
 \item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
 
