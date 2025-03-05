@@ -1831,56 +1831,31 @@ plot_variance_comparison_data <- function(data,
   if (variance_measure == "cv") {
     y_axis_title <- "1/CV^2^"
 
-    if (facet_by_sex == "no") {
-      variance_comparison_plot <- variance_comparison_data %>%
+    variance_comparison_plot <- variance_comparison_data %>%
         ggplot2::ggplot(
           ggplot2::aes(
             x = .data$interval,
             y = .data$cv_inverse_square
           )
         )
-    }
-
-    if (facet_by_sex == "yes") {
-      variance_comparison_plot <- variance_comparison_data  %>%
-        ggplot2::ggplot(
-          ggplot2::aes(
-            x = .data$interval,
-            y = .data$cv_inverse_square,
-            shape = .data$sex
-          )
-        )
-    }
   }
 
   if (variance_measure == "VMR") {
     y_axis_title = "VMR"
 
-    if (facet_by_sex == "no") {
+
       variance_comparison_plot <- variance_comparison_data %>%
         ggplot2::ggplot(ggplot2::aes(
           x = .data$interval,
           y = .data$VMR
         ))
-    }
-
-    if (facet_by_sex == "yes") {
-      variance_comparison_plot <- variance_comparison_data %>%
-        ggplot2::ggplot(
-          ggplot2::aes(
-            x = .data$interval,
-            y = .data$VMR,
-            shape = .data$sex
-          )
-        )
-    }
-
   }
 
 
   if (facet_by_sex == "yes") {
     variance_comparison_plot <- variance_comparison_plot +
       ggplot2::geom_point(
+        ggplot2::aes(shape = .data$sex),
         color = theme_options["connecting_line_colour", "value"],
         size = 1.8) +
       ggplot2::scale_shape_manual(
