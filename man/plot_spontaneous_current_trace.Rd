@@ -9,6 +9,7 @@ plot_spontaneous_current_trace(
   plot_colour,
   plot_category,
   plot_treatment,
+  sex,
   state,
   include_scale_bar = "yes",
   plot_episode = "epi1",
@@ -41,6 +42,8 @@ applied continuously after a 5-minute baseline period.}
 \item{plot_treatment}{A character value specifying the treatment you would
 like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
+
+\item{sex}{A character value ("male" or "female"), which will be added to the file name.}
 
 \item{state}{A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The \code{state} will be included in the .png filename if \code{save_plot_png = "yes"}.}
 
@@ -113,4 +116,7 @@ plot_spontaneous_current_trace(
   line_thickness = 0.9
 )
 
+}
+\seealso{
+\code{\link[=import_ABF_file]{import_ABF_file()}}
 }

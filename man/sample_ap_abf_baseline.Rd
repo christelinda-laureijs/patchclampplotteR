@@ -36,5 +36,9 @@ plot_AP_trace(
   plot_category = 2,
   plot_treatment = "Control"
 )
+
+}
+\seealso{
+\code{\link[=plot_AP_trace]{plot_AP_trace()}}
 }
 \keyword{data}

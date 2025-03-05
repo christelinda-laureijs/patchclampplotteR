@@ -24,5 +24,9 @@ manipulation and plotting in R. It is used to demonstrate the
 }
 \examples{
 import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
+
+}
+\seealso{
+\code{\link[=plot_spontaneous_current_trace]{plot_spontaneous_current_trace()}}
 }
 \keyword{data}

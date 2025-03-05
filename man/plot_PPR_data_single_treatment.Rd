@@ -119,5 +119,5 @@ plot_PPR_data_single_treatment(
 
 }
 \seealso{
-\code{\link[=plot_PPR_data_multiple_treatments]{plot_PPR_data_multiple_treatments()}} to plot changes in PPR for multiple treatments.
+\code{\link[=plot_PPR_data_multiple_treatments]{plot_PPR_data_multiple_treatments()}} to plot changes in PPR for multiple treatments. See \code{\link[=make_PPR_data]{make_PPR_data()}} for the function used to create the PPR data.
 }

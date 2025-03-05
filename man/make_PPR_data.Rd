@@ -78,3 +78,6 @@ make_PPR_data(
 )
 
 }
+\seealso{
+\code{\link[=plot_PPR_data_single_treatment]{plot_PPR_data_single_treatment()}} and \code{\link[=plot_PPR_data_multiple_treatments]{plot_PPR_data_multiple_treatments()}}
+}

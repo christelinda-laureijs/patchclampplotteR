@@ -138,3 +138,6 @@ plot_variance_comparison_data(
 )
 
 }
+\seealso{
+\code{\link[=make_variance_data]{make_variance_data()}} to make the data required to make this plot.
+}

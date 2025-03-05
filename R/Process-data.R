@@ -1399,6 +1399,8 @@ perform_t_tests_for_summary_plot <- function(data,
 #'
 #' @export
 #'
+#' @seealso [plot_variance_comparison_data()] to plot this data.
+#'
 #' @examples
 #'
 #' make_variance_data(
@@ -1547,6 +1549,8 @@ make_variance_data <- function(data,
 #'   `post_hormone_interval`.
 #'
 #' @export
+#'
+#' @seealso [plot_PPR_data_single_treatment()] and [plot_PPR_data_multiple_treatments()]
 #'
 #' @examples
 #'

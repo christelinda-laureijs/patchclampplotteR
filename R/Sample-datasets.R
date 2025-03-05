@@ -87,6 +87,8 @@ NULL
 #' }
 #' @keywords data
 #' @examples import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
+#'
+#' @seealso [plot_spontaneous_current_trace()]
 NULL
 
 
@@ -123,6 +125,8 @@ NULL
 #'   plot_category = 2,
 #'   plot_treatment = "Control"
 #' )
+#'
+#' @seealso [plot_AP_trace()]
 NULL
 
 #' Action potential recording with insulin

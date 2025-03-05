@@ -88,3 +88,6 @@ make_variance_data(
 )
 
 }
+\seealso{
+\code{\link[=plot_variance_comparison_data]{plot_variance_comparison_data()}} to plot this data.
+}

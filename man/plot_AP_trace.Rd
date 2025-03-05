@@ -116,3 +116,6 @@ plot_AP_trace(
 )
 
 }
+\seealso{
+\code{\link[=import_ABF_file]{import_ABF_file()}}
+}

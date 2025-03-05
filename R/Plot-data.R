@@ -1720,6 +1720,9 @@ plot_percent_change_comparisons <- function(data,
 #'
 #' @export
 #'
+#'
+#' @seealso [make_variance_data()] to make the data required to make this plot.
+#'
 #' @examples
 #' plot_variance_comparison_data(
 #'   data = sample_eEPSC_variance_df,
@@ -2134,7 +2137,7 @@ plot_cv_data <- function(data,
 #'   save_plot_png = "no"
 #' )
 #'
-#' @seealso [plot_PPR_data_multiple_treatments()] to plot changes in PPR for multiple treatments.
+#' @seealso [plot_PPR_data_multiple_treatments()] to plot changes in PPR for multiple treatments. See [make_PPR_data()] for the function used to create the PPR data.
 
 plot_PPR_data_single_treatment <- function(data,
                                            plot_treatment = "Control",
@@ -2332,7 +2335,7 @@ plot_PPR_data_single_treatment <- function(data,
 #'   treatment_colour_theme = sample_treatment_names_and_colours
 #' )
 #'
-#' @seealso [plot_PPR_data_single_treatment()] to plot changes in PPR for a single treatment.
+#' @seealso [plot_PPR_data_single_treatment()] to plot changes in PPR for a single treatment. See [make_PPR_data()] for the function used to create the PPR data.
 
 plot_PPR_data_multiple_treatments <- function(data,
                                               include_all_treatments = "yes",
@@ -3221,6 +3224,8 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #'
 #' @export
 #'
+#' @seealso [import_ABF_file()]
+#'
 #' @examples
 #'
 #' # Custom colours
@@ -3682,6 +3687,7 @@ plot_spontaneous_current_parameter_comparison <-
 #'   `episode`, `current`, `voltage`, `time_sec`. An easy way to obtain this is
 #'   by importing a raw .abf file through the [import_ABF_file()] function.
 #' @param state A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The `state` will be included in the .png filename if `save_plot_png = "yes"`.
+#' @param sex A character value ("male" or "female"), which will be added to the file name.
 #' @param include_scale_bar A character value that determines if a scale bar
 #'   will be added to the plot. Allowed values are "yes" and "no".
 #' @param plot_episode A character value describing the sweep (e.g. `epi1`) that
@@ -3713,6 +3719,8 @@ plot_spontaneous_current_parameter_comparison <-
 #'
 #' @export
 #'
+#' @seealso [import_ABF_file()]
+#'
 #' @examples
 #' plot_spontaneous_current_trace(
 #'   data = sample_abf_file,
@@ -3734,6 +3742,7 @@ plot_spontaneous_current_trace <-
            plot_colour,
            plot_category,
            plot_treatment,
+           sex,
            state,
            include_scale_bar = "yes",
            plot_episode = "epi1",
@@ -3806,7 +3815,7 @@ plot_spontaneous_current_trace <-
       ggplot2::ggsave(
         plot = representative_traces_plot,
         path = here::here("Figures/Spontaneous-currents/Representative-Traces"),
-        file = paste0("Spontaneous-current-trace-category-", plot_category, "-", plot_treatment, "-", state, ".png"),
+        file = paste0("Spontaneous-current-trace-category-", plot_category, "-", plot_treatment, "-", state, sex, ".png"),
         width = 7,
         height = 5,
         units = "in",
