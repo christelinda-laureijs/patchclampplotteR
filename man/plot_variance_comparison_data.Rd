@@ -8,6 +8,7 @@ plot_variance_comparison_data(
   data,
   plot_category,
   plot_treatment,
+  facet_by_sex = "no",
   variance_measure = "cv",
   baseline_interval = "t0to5",
   baseline_label = "Baseline",
@@ -39,6 +40,8 @@ applied continuously after a 5-minute baseline period.}
 \item{plot_treatment}{A character value specifying the treatment you would
 like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
+
+\item{facet_by_sex}{A character value ("yes" or "no") describing if the plots should be faceted by sex. This is only available if "included_sexes" is "both". The resulting plot will be split in two, with male data on the left and female data on the right.}
 
 \item{variance_measure}{A character value ("cv" or "VMR"). The variance
 measures can be either the inverse coefficient of variation squared

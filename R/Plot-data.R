@@ -1702,6 +1702,7 @@ plot_percent_change_comparisons <- function(data,
 #'   measures can be either the inverse coefficient of variation squared
 #'   (`variance_measure == "cv"`) or variance-to-mean ratio (`variance_measure
 #'   == "VMR"`).
+#' @param facet_by_sex A character value ("yes" or "no") describing if the plots should be faceted by sex. This is only available if "included_sexes" is "both". The resulting plot will be split in two, with male data on the left and female data on the right.
 #' @param post_hormone_interval A character value specifying the interval used
 #'   for the data points after a hormone or protocol was applied. This must
 #'   match the `post_hormone_interval` used in [make_variance_data()].
@@ -1738,6 +1739,7 @@ plot_percent_change_comparisons <- function(data,
 plot_variance_comparison_data <- function(data,
                                           plot_category,
                                           plot_treatment,
+                                          facet_by_sex = "no",
                                           variance_measure = "cv",
                                           baseline_interval = "t0to5",
                                           baseline_label = "Baseline",
@@ -1763,6 +1765,16 @@ plot_variance_comparison_data <- function(data,
 
   if (!test_type %in% c("wilcox.test", "t.test", "none")) {
     cli::cli_abort(c("x" = "`test_type` argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
+  }
+
+  if (!facet_by_sex %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`facet_by_sex` argument must be either \"yes\" or \"no\""))
+  }
+
+  if (facet_by_sex == "yes" & included_sexes != "both") {
+    cli::cli_abort(
+      c("x" = "You set `facet_by_sex` to 'yes' but `included_sexes` is not 'both'. Faceting by sex is only possible when `included_sexes` is 'both'")
+    )
   }
 
   plot_colour <- treatment_colour_theme %>%
@@ -1805,27 +1817,85 @@ plot_variance_comparison_data <- function(data,
     variance_comparison_data <- variance_comparison_data
     sex_annotation <- ""
 
+    if (facet_by_sex == "yes") {
+      variance_comparison_data <- variance_comparison_data %>%
+        dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+
+      facet_label <- "-faceted-by-sex"
+
+    }
+
     plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
   }
 
   if (variance_measure == "cv") {
-    variance_comparison_plot <- variance_comparison_data %>%
-      ggplot2::ggplot(ggplot2::aes(
-        x = .data$interval,
-        y = .data$cv_inverse_square,
-        group = .data$letter
-      )) +
-      ggplot2::labs(y = "1/CV^2^")
+    y_axis_title <- "1/CV^2^"
+
+    if (facet_by_sex == "no") {
+      variance_comparison_plot <- variance_comparison_data %>%
+        ggplot2::ggplot(
+          ggplot2::aes(
+            x = .data$interval,
+            y = .data$cv_inverse_square
+          )
+        )
+    }
+
+    if (facet_by_sex == "yes") {
+      variance_comparison_plot <- variance_comparison_data  %>%
+        ggplot2::ggplot(
+          ggplot2::aes(
+            x = .data$interval,
+            y = .data$cv_inverse_square,
+            shape = .data$sex
+          )
+        )
+    }
   }
 
   if (variance_measure == "VMR") {
-    variance_comparison_plot <- variance_comparison_data %>%
-      ggplot2::ggplot(ggplot2::aes(
-        x = .data$interval,
-        y = .data$VMR,
-        group = .data$letter
-      )) +
-      ggplot2::labs(y = "VMR")
+    y_axis_title = "VMR"
+
+    if (facet_by_sex == "no") {
+      variance_comparison_plot <- variance_comparison_data %>%
+        ggplot2::ggplot(ggplot2::aes(
+          x = .data$interval,
+          y = .data$VMR
+        ))
+    }
+
+    if (facet_by_sex == "yes") {
+      variance_comparison_plot <- variance_comparison_data %>%
+        ggplot2::ggplot(
+          ggplot2::aes(
+            x = .data$interval,
+            y = .data$VMR,
+            shape = .data$sex
+          )
+        )
+    }
+
+  }
+
+
+  if (facet_by_sex == "yes") {
+    variance_comparison_plot <- variance_comparison_plot +
+      ggplot2::geom_point(
+        color = theme_options["connecting_line_colour", "value"],
+        size = 1.8) +
+      ggplot2::scale_shape_manual(
+        values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+      ggplot2::guides(shape = "none") +
+      ggplot2::facet_wrap( ~ .data$sex)
+  }
+
+
+
+  if (facet_by_sex == "no") {
+    variance_comparison_plot <- variance_comparison_plot +
+      ggplot2::geom_point(color = theme_options["connecting_line_colour", "value"],
+                          size = 1.8,
+                          shape = plot_shape)
   }
 
   if (test_type != "none") {
@@ -1846,9 +1916,8 @@ plot_variance_comparison_data <- function(data,
   }
 
   variance_comparison_plot <- variance_comparison_plot +
-    ggplot2::geom_point(color = theme_options["connecting_line_colour", "value"], size = 1.8, shape = plot_shape) +
-    ggplot2::geom_line(color = theme_options["connecting_line_colour", "value"], linewidth = 0.4) +
-    ggplot2::labs(x = NULL) +
+    ggplot2::labs(x = NULL, y = y_axis_title) +
+    ggplot2::geom_line(ggplot2::aes(group = .data$letter), color = theme_options["connecting_line_colour", "value"], linewidth = 0.4) +
     ggplot2::scale_x_discrete(labels = c(baseline_label, post_hormone_label)) +
     ggplot_theme +
     ggplot2::theme(axis.title.y = ggtext::element_markdown())
@@ -1863,11 +1932,24 @@ plot_variance_comparison_data <- function(data,
         yend = variance_comparison_data$mean_cv_inverse_square[variance_comparison_data$interval == post_hormone_interval][1],
         color = plot_colour,
         linewidth = 1.2
-      ) +
+      )
+
+    if (facet_by_sex == "no") {
+    variance_comparison_plot <- variance_comparison_plot +
       ggplot2::geom_point(ggplot2::aes(y = .data$mean_cv_inverse_square),
                           size = 2.5,
                           color = plot_colour,
                           shape = plot_shape)
+    }
+
+    if (facet_by_sex == "yes") {
+      variance_comparison_plot <- variance_comparison_plot +
+        ggplot2::geom_point(ggplot2::aes(y = .data$mean_cv_inverse_square),
+                            size = 2.5,
+                            color = plot_colour)
+    }
+
+
   }
 
   if (variance_measure == "VMR") {
@@ -1880,11 +1962,23 @@ plot_variance_comparison_data <- function(data,
         yend = variance_comparison_data$mean_VMR[variance_comparison_data$interval == post_hormone_interval][1],
         color = plot_colour,
         linewidth = 1.2
-      ) +
+      )
+
+
+    if (facet_by_sex == "no") {
+      variance_comparison_plot <- variance_comparison_plot +
       ggplot2::geom_point(ggplot2::aes(y = .data$mean_VMR),
                  size = 2.5,
                  color = plot_colour,
                  shape = plot_shape)
+    }
+
+    if (facet_by_sex == "yes") {
+      variance_comparison_plot <- variance_comparison_plot +
+        ggplot2::geom_point(ggplot2::aes(y = .data$mean_VMR),
+                            size = 2.5,
+                            color = plot_colour)
+    }
   }
 
 
@@ -1908,6 +2002,7 @@ plot_variance_comparison_data <- function(data,
         "-",
         variance_measure,
         sex_annotation,
+        facet_label,
         ".png"
       ),
       width = 7,
