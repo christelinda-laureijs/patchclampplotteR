@@ -66,6 +66,7 @@ paired-pulse ratio (PPR) on the y-axis. There are also lines connecting the
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  included_sexes <span class="op">=</span> <span class="st">"both"</span>,</span>
+<span>  facet_by_sex <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  male_label <span class="op">=</span> <span class="st">"Male"</span>,</span>
 <span>  female_label <span class="op">=</span> <span class="st">"Female"</span>,</span>
 <span>  baseline_label <span class="op">=</span> <span class="st">"Baseline"</span>,</span>
@@ -108,6 +109,10 @@ applied continuously after a 5-minute baseline period.</p></dd>
 
 <dt id="arg-included-sexes">included_sexes<a class="anchor" aria-label="anchor" href="#arg-included-sexes"></a></dt>
 <dd><p>A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the <code>t_test_df</code> contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.</p></dd>
+
+
+<dt id="arg-facet-by-sex">facet_by_sex<a class="anchor" aria-label="anchor" href="#arg-facet-by-sex"></a></dt>
+<dd><p>A character value ("yes" or "no") describing if the plots should be faceted by sex. This is only available if "included_sexes" is "both". The resulting plot will be split in two, with male data on the left and female data on the right.</p></dd>
 
 
 <dt id="arg-male-label">male_label<a class="anchor" aria-label="anchor" href="#arg-male-label"></a></dt>
@@ -213,6 +218,7 @@ paired wilcox test and add brackets with significance stars through
 <span class="r-in"><span>  baseline_label <span class="op">=</span> <span class="st">"Baseline"</span>,</span></span>
 <span class="r-in"><span>  post_hormone_label <span class="op">=</span> <span class="st">"Insulin"</span>,</span></span>
 <span class="r-in"><span>  included_sexes <span class="op">=</span> <span class="st">"both"</span>,</span></span>
+<span class="r-in"><span>  facet_by_sex <span class="op">=</span> <span class="st">"no"</span>,</span></span>
 <span class="r-in"><span>  test_type <span class="op">=</span> <span class="st">"t.test"</span>,</span></span>
 <span class="r-in"><span>  large_axis_text <span class="op">=</span> <span class="st">"no"</span>,</span></span>
 <span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span></span>
