@@ -1732,6 +1732,7 @@ plot_percent_change_comparisons <- function(data,
 #'   baseline_interval = "t0to5",
 #'   post_hormone_interval = "t20to25",
 #'   included_sexes = "both",
+#'   facet_by_sex = "no",
 #'   post_hormone_label = "Insulin",
 #'   test_type = "wilcox.test",
 #'   large_axis_text = "no",
@@ -1828,6 +1829,10 @@ plot_variance_comparison_data <- function(data,
 
     }
 
+    if (facet_by_sex == "no") {
+      facet_label <- ""
+    }
+
     plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
   }
 
@@ -1922,7 +1927,8 @@ plot_variance_comparison_data <- function(data,
 
     if (facet_by_sex == "yes") {
       variance_comparison_plot <- variance_comparison_plot +
-        ggplot2::geom_point(ggplot2::aes(y = .data$mean_cv_inverse_square),
+        ggplot2::geom_point(ggplot2::aes(y = .data$mean_cv_inverse_square,
+                                         shape = .data$sex),
                             size = 2.5,
                             color = plot_colour)
     }
@@ -1953,7 +1959,8 @@ plot_variance_comparison_data <- function(data,
 
     if (facet_by_sex == "yes") {
       variance_comparison_plot <- variance_comparison_plot +
-        ggplot2::geom_point(ggplot2::aes(y = .data$mean_VMR),
+        ggplot2::geom_point(ggplot2::aes(y = .data$mean_VMR,
+                                         shape = .data$sex),
                             size = 2.5,
                             color = plot_colour)
     }
@@ -2131,6 +2138,7 @@ plot_cv_data <- function(data,
 #'   baseline_label = "Baseline",
 #'   post_hormone_label = "Insulin",
 #'   included_sexes = "both",
+#'   facet_by_sex = "no",
 #'   test_type = "t.test",
 #'   large_axis_text = "no",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
@@ -2144,6 +2152,7 @@ plot_PPR_data_single_treatment <- function(data,
                                            plot_treatment = "Control",
                                            plot_category = 2,
                                            included_sexes = "both",
+                                           facet_by_sex = "no",
                                            male_label = "Male",
                                            female_label = "Female",
                                            baseline_label = "Baseline",
@@ -2177,6 +2186,17 @@ plot_PPR_data_single_treatment <- function(data,
     cli::cli_abort(c("x" = "`test_type` argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
   }
 
+  if (!facet_by_sex %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`facet_by_sex` argument must be either \"yes\" or \"no\""))
+  }
+
+  if (facet_by_sex == "yes" & included_sexes != "both") {
+    cli::cli_abort(
+      c("x" = "You set `facet_by_sex` to 'yes' but `included_sexes` is not 'both'. Faceting by sex is only possible when `included_sexes` is 'both'")
+    )
+  }
+
+
   plot_colour <- treatment_colour_theme %>%
     dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
     dplyr::pull(.data$colours)
@@ -2205,6 +2225,19 @@ plot_PPR_data_single_treatment <- function(data,
     sex_annotation <- ""
 
     plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
+
+
+    if (facet_by_sex == "yes") {
+      plot_data <- plot_data %>%
+        dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+
+      facet_label <- "-faceted-by-sex"
+
+    }
+
+    if (facet_by_sex == "no") {
+      facet_label <- ""
+    }
   }
 
 
@@ -2226,13 +2259,31 @@ plot_PPR_data_single_treatment <- function(data,
   PPR_one_plot <- PPR_one_plot_data %>%
     ggplot2::ggplot(ggplot2::aes(
       x = .data$state,
-      y = .data$mean_PPR_cell,
-      group = .data$letter
-    )) +
-    ggplot2::geom_point(color = theme_options["connecting_line_colour", "value"],
-                        size = 1.8,
-                        shape = plot_shape) +
-    ggplot2::geom_line(color = theme_options["connecting_line_colour", "value"], linewidth = 0.4) +
+      y = .data$mean_PPR_cell
+    ))
+
+
+  if (facet_by_sex == "yes") {
+    PPR_one_plot <- PPR_one_plot +
+      ggplot2::geom_point(ggplot2::aes(shape = .data$sex),
+                          color = theme_options["connecting_line_colour", "value"],
+                          size = 1.8) +
+      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+      ggplot2::guides(shape = "none") +
+      ggplot2::facet_wrap(~ .data$sex)
+  }
+
+  if (facet_by_sex == "no") {
+    PPR_one_plot <- PPR_one_plot +
+      ggplot2::geom_point(color = theme_options["connecting_line_colour", "value"],
+                          size = 1.8,
+                          shape = plot_shape)
+  }
+
+
+  PPR_one_plot <- PPR_one_plot +
+    ggplot2::geom_line(ggplot2::aes(group = .data$letter),
+                       color = theme_options["connecting_line_colour", "value"], linewidth = 0.4) +
     ggplot2::coord_cartesian(ylim = c(0, plot_y_max)) +
     ggplot2::annotate(
       geom = "segment",
@@ -2243,12 +2294,28 @@ plot_PPR_data_single_treatment <- function(data,
       color = plot_colour,
       linewidth = 1.2
     ) +
-    ggplot2::geom_point(ggplot2::aes(y = .data$mean_PPR_all_cells),
-                        size = 2.5,
-                        color = plot_colour,
-                        shape = plot_shape) +
     ggplot2::labs(x = NULL, y = y_axis_title) +
     ggplot_theme
+
+  if (facet_by_sex == "yes") {
+    PPR_one_plot <- PPR_one_plot +
+      ggplot2::geom_point(
+        ggplot2::aes(y = .data$mean_PPR_all_cells,
+                     shape = .data$sex),
+        size = 2.5,
+        color = plot_colour
+      )
+  }
+
+  if (facet_by_sex == "no") {
+    PPR_one_plot <- PPR_one_plot +
+      ggplot2::geom_point(
+        ggplot2::aes(y = .data$mean_PPR_all_cells),
+        size = 2.5,
+        color = plot_colour,
+        shape = plot_shape
+      )
+  }
 
 
   if (test_type != "none") {
@@ -2283,7 +2350,7 @@ plot_PPR_data_single_treatment <- function(data,
     ggplot2::ggsave(
       plot = PPR_one_plot,
       path = here::here("Figures/Evoked-currents/PPR"),
-      file = paste0("PPR_comparison-category-", plot_category, "-", plot_treatment, sex_annotation, ".png"),
+      file = paste0("PPR_comparison-category-", plot_category, "-", plot_treatment, sex_annotation, facet_label, ".png"),
       width = 7,
       height = 5,
       units = "in",
@@ -3433,6 +3500,7 @@ plot_AP_trace <-
 #'   plot_treatment = "Control",
 #'   y_variable = "raw_amplitude",
 #'   included_sexes = "both",
+#'   facet_by_sex = "no",
 #'   hormone_added = "Insulin",
 #'   baseline_interval = "t0to5",
 #'   post_hormone_interval = "t20to25",
