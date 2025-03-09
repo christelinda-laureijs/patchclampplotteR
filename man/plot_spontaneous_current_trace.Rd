@@ -9,9 +9,11 @@ plot_spontaneous_current_trace(
   plot_colour,
   plot_category,
   plot_treatment,
-  sex,
-  state,
+  sex = "",
+  state = "",
+  letter = "",
   include_scale_bar = "yes",
+  include_scale_bar_label = "yes",
   plot_episode = "epi1",
   line_thickness = 0.7,
   scale_bar_x_start = 1.25,
@@ -21,8 +23,8 @@ plot_spontaneous_current_trace(
   scale_bar_linewidth = 0.4,
   plot_x_min = 1,
   plot_x_max = 5,
-  plot_y_min = -100,
-  plot_y_max = 35,
+  plot_y_min = NULL,
+  plot_y_max = NULL,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -43,12 +45,16 @@ applied continuously after a 5-minute baseline period.}
 like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
 
-\item{sex}{A character value ("male" or "female"), which will be added to the file name.}
+\item{sex}{An optional character value ("male" or "female"), which will be added to the file name.}
 
 \item{state}{A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The \code{state} will be included in the .png filename if \code{save_plot_png = "yes"}.}
 
+\item{letter}{An optional character value describing the recording letter ID, (e.g. "A", "AB") that will be appended to the filename.}
+
 \item{include_scale_bar}{A character value that determines if a scale bar
 will be added to the plot. Allowed values are "yes" and "no".}
+
+\item{include_scale_bar_label}{A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from \code{scale_bar_x_length} and \code{scale_bar_y_length}.}
 
 \item{plot_episode}{A character value describing the sweep (e.g. \code{epi1}) that
 will be used for the plot.}
@@ -77,10 +83,10 @@ pA) of the scale bar (default is 20).}
 (in seconds).}
 
 \item{plot_y_min}{A numeric value describing the minimum value on the y-axis
-(in pA).}
+(in pA). Defaults to NULL, so it will automatically re-size to fit the data.}
 
 \item{plot_y_max}{A numeric value describing the maximum value on the y-axis
-(in pA).}
+(in pA). Defaults to NULL, so it will automatically re-size to fit the data.}
 
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but

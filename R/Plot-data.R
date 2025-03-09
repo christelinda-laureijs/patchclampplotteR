@@ -3756,9 +3756,11 @@ plot_spontaneous_current_parameter_comparison <-
 #'   `episode`, `current`, `voltage`, `time_sec`. An easy way to obtain this is
 #'   by importing a raw .abf file through the [import_ABF_file()] function.
 #' @param state A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The `state` will be included in the .png filename if `save_plot_png = "yes"`.
-#' @param sex A character value ("male" or "female"), which will be added to the file name.
+#' @param sex An optional character value ("male" or "female"), which will be added to the file name.
+#' @param letter An optional character value describing the recording letter ID, (e.g. "A", "AB") that will be appended to the filename.
 #' @param include_scale_bar A character value that determines if a scale bar
 #'   will be added to the plot. Allowed values are "yes" and "no".
+#' @param include_scale_bar_label A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from `scale_bar_x_length` and `scale_bar_y_length`.
 #' @param plot_episode A character value describing the sweep (e.g. `epi1`) that
 #'   will be used for the plot.
 #' @param scale_bar_x_start A numeric value (in seconds) describing the x-axis position of
@@ -3777,9 +3779,9 @@ plot_spontaneous_current_parameter_comparison <-
 #' @param plot_x_max A numeric value describing the maximum value on the x-axis
 #'   (in seconds).
 #' @param plot_y_min A numeric value describing the minimum value on the y-axis
-#'   (in pA).
+#'   (in pA). Defaults to NULL, so it will automatically re-size to fit the data.
 #' @param plot_y_max A numeric value describing the maximum value on the y-axis
-#'   (in pA).
+#'   (in pA). Defaults to NULL, so it will automatically re-size to fit the data.
 #' @param line_thickness A numeric value describing the thickness of the line.
 #' @returns A ggplot object. If save_plot_png is defined as "yes", it will also
 #'   generate a .png file in the folder
@@ -3811,9 +3813,11 @@ plot_spontaneous_current_trace <-
            plot_colour,
            plot_category,
            plot_treatment,
-           sex,
-           state,
+           sex = "",
+           state = "",
+           letter = "",
            include_scale_bar = "yes",
+           include_scale_bar_label = "yes",
            plot_episode = "epi1",
            line_thickness = 0.7,
            scale_bar_x_start = 1.25,
@@ -3823,12 +3827,16 @@ plot_spontaneous_current_trace <-
            scale_bar_linewidth = 0.4,
            plot_x_min = 1,
            plot_x_max = 5,
-           plot_y_min = -100,
-           plot_y_max = 35,
+           plot_y_min = NULL,
+           plot_y_max = NULL,
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
     if (!include_scale_bar %in% c("yes", "no")) {
       cli::cli_abort(c("x" = "`include_scale_bar` argument must be one of: \"yes\" or \"no\""))
+    }
+
+    if (!include_scale_bar_label %in% c("yes", "no")) {
+      cli::cli_abort(c("x" = "`include_scale_bar_label` argument must be one of: \"yes\" or \"no\""))
     }
 
     if (!save_plot_png %in% c("yes", "no")) {
@@ -3840,7 +3848,7 @@ plot_spontaneous_current_trace <-
       dplyr::filter(dplyr::between(.data$time_sec, plot_x_min, plot_x_max)) %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$time_sec, y = .data$current)) +
       ggplot2::coord_cartesian(ylim = c(plot_y_min, plot_y_max)) +
-      ggplot2::geom_line(color = plot_colour, size = line_thickness) +
+      ggplot2::geom_line(color = plot_colour, linewidth = line_thickness) +
       ggplot2::theme_void()
 
     scale_bar_x_length_in_ms <- scale_bar_x_length * 1000
@@ -3862,29 +3870,34 @@ plot_spontaneous_current_trace <-
           y = scale_bar_y_start,
           yend = scale_bar_y_start + scale_bar_y_length,
           lwd = scale_bar_linewidth
-        ) +
-        ggplot2::annotate(
-          "text",
-          x = scale_bar_x_start - (plot_x_max - plot_x_min) / 100,
-          y = scale_bar_y_start + 0.5 * scale_bar_y_length,
-          label = paste0(scale_bar_y_length, " pA"),
-          hjust = 1,
-          vjust = 0.5
-        ) +
-        ggplot2::annotate(
-          "text",
-          x = scale_bar_x_start + 0.5 * scale_bar_x_length,
-          y = scale_bar_y_start - 5,
-          label = paste0(scale_bar_x_length_in_ms, " ms"),
-          hjust = 0.5
         )
+
+
+      if (include_scale_bar_label == "yes") {
+        representative_traces_plot <- representative_traces_plot +
+          ggplot2::annotate(
+            "text",
+            x = scale_bar_x_start - (plot_x_max - plot_x_min) / 100,
+            y = scale_bar_y_start + 0.5 * scale_bar_y_length,
+            label = paste0(scale_bar_y_length, " pA"),
+            hjust = 1,
+            vjust = 0.5
+          ) +
+          ggplot2::annotate(
+            "text",
+            x = scale_bar_x_start + 0.5 * scale_bar_x_length,
+            y = scale_bar_y_start - 5,
+            label = paste0(scale_bar_x_length_in_ms, " ms"),
+            hjust = 0.5
+          )
+      }
     }
 
     if (save_plot_png == "yes") {
       ggplot2::ggsave(
         plot = representative_traces_plot,
         path = here::here("Figures/Spontaneous-currents/Representative-Traces"),
-        file = paste0("Spontaneous-current-trace-category-", plot_category, "-", plot_treatment, "-", state, sex, ".png"),
+        file = paste0("Spontaneous-current-trace-category-", plot_category, "-", plot_treatment, "-", state, "-",  sex, "-", letter, ".png"),
         width = 7,
         height = 5,
         units = "in",
