@@ -3281,6 +3281,7 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #' @param scale_bar_y_length A numeric value describing the vertical span (in
 #'   mV) of the scale bar (default is 40).
 #' @param scaling_factor A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is 10, and this value will likely not need to be changed.
+#' @param scale_bar_label_y_nudge An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to 5.
 #' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is 0.6).
 #' @param ... Additional arguments passed to `viridis::scale_color_viridis` such as `begin`, `end`, `option` and `direction`.
 #'
@@ -3333,6 +3334,8 @@ plot_AP_trace <-
            plot_treatment,
            state,
            include_scale_bar = "yes",
+           scale_bar_label_y_nudge = 5,
+           include_scale_bar_label = "yes",
            scale_bar_x_start = 880,
            scale_bar_x_length = 100,
            scaling_factor = 10,
@@ -3348,7 +3351,9 @@ plot_AP_trace <-
     if (!include_scale_bar %in% c("yes", "no")) {
       cli::cli_abort(c("x" = "`include_scale_bar` argument must be one of: \"yes\" or \"no\""))
     }
-
+    if (!include_scale_bar_label %in% c("yes", "no")) {
+      cli::cli_abort(c("x" = "`include_scale_bar_label` argument must be one of: \"yes\" or \"no\""))
+    }
     if (!colour_scale_option %in% c("custom", "viridis", "single_colour")) {
       cli::cli_abort(c("x" = "`colour_scale_option` argument must be one of: \"custom\", \"viridis\" or \"single_colour\""))
     }
@@ -3394,7 +3399,9 @@ plot_AP_trace <-
 
       if (colour_scale_option == "custom") {
         if (is.null(custom_scale_colours)) {
-          cli::cli_abort(c("x" = "You set `colour_scale_option` to \"custom\" but did not define a custom scale. Please insert a list into `custom_scale_colours`."))
+          cli::cli_abort(
+            c("x" = "You set `colour_scale_option` to \"custom\" but did not define a custom scale. Please insert a list into `custom_scale_colours`.")
+          )
         }
         ap_trace <- ap_trace +
           ggplot2::scale_colour_manual(values = custom_scale_colours, guide = "none")
@@ -3418,7 +3425,11 @@ plot_AP_trace <-
           y = scale_bar_y_start,
           yend = scale_bar_y_start + scale_bar_y_length,
           lwd = scale_bar_linewidth
-        ) +
+        )
+
+
+      if (include_scale_bar_label == "yes") {
+        ap_trace <- ap_trace +
         ggplot2::annotate(
           "text",
           x = scale_bar_x_start * scaling_factor - 100,
@@ -3427,15 +3438,16 @@ plot_AP_trace <-
           hjust = 1,
           vjust = 0.5
         ) +
-        ggplot2::annotate(
-          "text",
-          x = scale_bar_x_start * scaling_factor + 0.5 * scale_bar_x_length *
-            scaling_factor,
-          y = scale_bar_y_start - 5,
-          label = paste0(scale_bar_x_length, "ms"),
-          hjust = 0.5,
-          vjust = 0.5
-        )
+          ggplot2::annotate(
+            "text",
+            x = scale_bar_x_start * scaling_factor + 0.5 * scale_bar_x_length *
+              scaling_factor,
+            y = scale_bar_y_start - scale_bar_label_y_nudge,
+            label = paste0(scale_bar_x_length, "ms"),
+            hjust = 0.5,
+            vjust = 0.5
+          )
+      }
     }
 
     if (save_plot_png == "yes") {
@@ -3779,9 +3791,10 @@ plot_spontaneous_current_parameter_comparison <-
 #' @param plot_x_max A numeric value describing the maximum value on the x-axis
 #'   (in seconds).
 #' @param plot_y_min A numeric value describing the minimum value on the y-axis
-#'   (in pA). Defaults to NULL, so it will automatically re-size to fit the data.
+#'   (in pA). Defaults to -80. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
 #' @param plot_y_max A numeric value describing the maximum value on the y-axis
-#'   (in pA). Defaults to NULL, so it will automatically re-size to fit the data.
+#'   (in pA). Defaults to 5. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
+#' @param scale_bar_label_y_nudge An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to 1.5.
 #' @param line_thickness A numeric value describing the thickness of the line.
 #' @returns A ggplot object. If save_plot_png is defined as "yes", it will also
 #'   generate a .png file in the folder
@@ -3825,10 +3838,11 @@ plot_spontaneous_current_trace <-
            scale_bar_y_start = 15,
            scale_bar_y_length = 20,
            scale_bar_linewidth = 0.4,
+           scale_bar_label_y_nudge = 1.5,
            plot_x_min = 1,
            plot_x_max = 5,
-           plot_y_min = NULL,
-           plot_y_max = NULL,
+           plot_y_min = -80,
+           plot_y_max = 5,
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
     if (!include_scale_bar %in% c("yes", "no")) {
@@ -3886,9 +3900,10 @@ plot_spontaneous_current_trace <-
           ggplot2::annotate(
             "text",
             x = scale_bar_x_start + 0.5 * scale_bar_x_length,
-            y = scale_bar_y_start - 5,
+            y = scale_bar_y_start - scale_bar_label_y_nudge,
             label = paste0(scale_bar_x_length_in_ms, " ms"),
-            hjust = 0.5
+            hjust = 0.5,
+            vjust = 1
           )
       }
     }

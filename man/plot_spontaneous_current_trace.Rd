@@ -21,10 +21,11 @@ plot_spontaneous_current_trace(
   scale_bar_y_start = 15,
   scale_bar_y_length = 20,
   scale_bar_linewidth = 0.4,
+  scale_bar_label_y_nudge = 1.5,
   plot_x_min = 1,
   plot_x_max = 5,
-  plot_y_min = NULL,
-  plot_y_max = NULL,
+  plot_y_min = -80,
+  plot_y_max = 5,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -76,6 +77,8 @@ pA) of the scale bar (default is 20).}
 
 \item{scale_bar_linewidth}{A numeric value describing the thickness of the scalebar line (default is 0.4).}
 
+\item{scale_bar_label_y_nudge}{An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to 1.5.}
+
 \item{plot_x_min}{A numeric value describing the minimum value on the x-axis
 (in seconds).}
 
@@ -83,10 +86,10 @@ pA) of the scale bar (default is 20).}
 (in seconds).}
 
 \item{plot_y_min}{A numeric value describing the minimum value on the y-axis
-(in pA). Defaults to NULL, so it will automatically re-size to fit the data.}
+(in pA). Defaults to -80. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!}
 
 \item{plot_y_max}{A numeric value describing the maximum value on the y-axis
-(in pA). Defaults to NULL, so it will automatically re-size to fit the data.}
+(in pA). Defaults to 5. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!}
 
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
