@@ -63,6 +63,8 @@
 <span>  <span class="va">plot_treatment</span>,</span>
 <span>  <span class="va">state</span>,</span>
 <span>  include_scale_bar <span class="op">=</span> <span class="st">"yes"</span>,</span>
+<span>  scale_bar_label_y_nudge <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  include_scale_bar_label <span class="op">=</span> <span class="st">"yes"</span>,</span>
 <span>  scale_bar_x_start <span class="op">=</span> <span class="fl">880</span>,</span>
 <span>  scale_bar_x_length <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  scaling_factor <span class="op">=</span> <span class="fl">10</span>,</span>
@@ -123,6 +125,14 @@ were present on the brain slice, or the animals were fasted, etc.</p></dd>
 <dt id="arg-include-scale-bar">include_scale_bar<a class="anchor" aria-label="anchor" href="#arg-include-scale-bar"></a></dt>
 <dd><p>A character value that determines if a scale bar
 will be added to the plot. Allowed values are "yes" and "no".</p></dd>
+
+
+<dt id="arg-scale-bar-label-y-nudge">scale_bar_label_y_nudge<a class="anchor" aria-label="anchor" href="#arg-scale-bar-label-y-nudge"></a></dt>
+<dd><p>An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to 5.</p></dd>
+
+
+<dt id="arg-include-scale-bar-label">include_scale_bar_label<a class="anchor" aria-label="anchor" href="#arg-include-scale-bar-label"></a></dt>
+<dd><p>A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from <code>scale_bar_x_length</code> and <code>scale_bar_y_length</code>.</p></dd>
 
 
 <dt id="arg-scale-bar-x-start">scale_bar_x_start<a class="anchor" aria-label="anchor" href="#arg-scale-bar-x-start"></a></dt>
