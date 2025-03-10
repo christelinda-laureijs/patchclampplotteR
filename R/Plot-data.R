@@ -1500,7 +1500,7 @@ plot_percent_change_comparisons <- function(data,
     }
 
     treatment_info <- treatment_colour_theme %>%
-      dplyr::filter(.data$category == plot_category)
+      dplyr::filter(.data$category == plot_category) %>%
       dplyr::filter(.data$treatment %in% list_of_treatments)
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% list_of_treatments) %>%
@@ -2479,7 +2479,8 @@ plot_PPR_data_multiple_treatments <- function(data,
 
     treatment_info <- treatment_colour_theme %>%
       dplyr::filter(.data$category == plot_category) %>%
-      dplyr::filter(.data$treatment %in% list_of_treatments)
+      dplyr::filter(.data$treatment %in% list_of_treatments) %>%
+      droplevels()
 
 
     plot_data <- data %>%
@@ -2507,7 +2508,7 @@ plot_PPR_data_multiple_treatments <- function(data,
   }
 
   if (included_sexes == "both") {
-    plot_data <- data
+    plot_data <- plot_data
     sex_annotation <- ""
 
     plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
@@ -4125,6 +4126,8 @@ plot_cell_coordinates_data <- function(data,
       dplyr::filter(.data$category == plot_category) %>%
       dplyr::filter(.data$treatment %in% list_of_treatments) %>%
       droplevels()
+
+
   }
 
   plot_data <- plot_data %>%
