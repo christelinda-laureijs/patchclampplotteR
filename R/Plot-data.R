@@ -1867,7 +1867,7 @@ plot_variance_comparison_data <- function(data,
         color = theme_options["connecting_line_colour", "value"],
         size = 1.8) +
       ggplot2::scale_shape_manual(
-        values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+        values = c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))) +
       ggplot2::guides(shape = "none") +
       ggplot2::facet_wrap( ~ .data$sex)
   }
@@ -2268,7 +2268,7 @@ plot_PPR_data_single_treatment <- function(data,
       ggplot2::geom_point(ggplot2::aes(shape = .data$sex),
                           color = theme_options["connecting_line_colour", "value"],
                           size = 1.8) +
-      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))) +
       ggplot2::guides(shape = "none") +
       ggplot2::facet_wrap(~ .data$sex)
   }
