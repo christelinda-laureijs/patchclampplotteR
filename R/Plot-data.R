@@ -3931,6 +3931,8 @@ plot_spontaneous_current_trace <-
 #'
 #' This function will insert an external `.png` or `.jpg` file over an empty ggplot object. The resulting ggplot object can then be included with other ggplot layouts. This is useful for when you want to use the image in a multiplot layout. For example, in a publication, figure "1A" may be a schematic of your experimental set-up that you created elsewhere and saved as a `.png` or `.jpg` file. Rather than inserting this as a standalone image, you can use this function to store your image as a ggplot object, and combine it with other ggplot plots in a flexible layout using the `patchwork` library.
 #'
+#' This function is very similar to `wrap_elements()` from the `patchwork` package in that it allows you to insert a non-ggplot2 object to a patchwork layout. However, `insert_png_as_ggplot()` gives you much finer control over the dimensions of the plot and the amount of space it can take up.
+
 #' @param filename A character value specifying a path to the .png file. Examples include "Figures/methods-schematic.png"
 #' @param xmin The minimum position of the image on the x-axis. Defaults to `-Inf` which is the left-most plot boundary.
 #' @param xmax The maximum position of the image on the x-axis. The minimum position of the image on the x-axis. Defaults to `Inf` which is the right-most plot boundary.

@@ -80,13 +80,42 @@ Please see the vignettes in the Articles page to learn about how to analyze data
 
 First, I must import a `.csv` file containing information about factors such as
 the animal's age and sex, the cell ID number, and other details. Please see the
-**Required columns** section of the documentation for
-`import_cell_characteristics_df()` for full explanations of the required columns and
-what you should include. See below for a link to download an empty `.csv` file with the headers required for this dataset:
+**Required columns** section below for full explanations of the required columns and
+what you should include. There is also a link to download an empty `.csv` file with the headers required for this dataset:
 
 ```{r download-sample-blank-cell-characteristics, echo=F}
 xfun::embed_file("sample-blank-cell-characteristics-sheet.csv")
 ```
+
+#### Required columns
+
+The columns listed below are required in the raw .csv file. If you do not have data for any of these columns, please still include the column as an "empty" column to prevent errors caused by missing columns.
+
+> Don't worry about missing data! R will automatically fill blank cells with 'NA' values, which will be ignored in the analyses.
+
+ * `letter` A character value that is a unique identifier for a single
+recording. Used to link data sets for evoked or spontaneous currents and
+cell-characteristics. Example: "A"
+ * `cell` A character or numeric value representing the cell. For
+example, use `3.1.1` for animal #3, slice #1, cell #1.
+ * `sex` A character value such as "Male" or "Female".
+ * `X` A numeric value representing the x-value of the cell's location in
+µm.
+ * `Y` A numeric value representing the y-value of the cell's location in
+µm.
+ * `age` A numeric value representing the animal's age. Can be any value
+as long as the time units are consistent throughout (e.g. don't mix up days
+and months when reporting animal ages). Do not use characters (e.g. avoid
+"P31" and use 31 instead).
+ * `animal` A numeric value representing the animal's ID or number.
+ * `synapses` A character value such as "Glutamate" or "GABA".
+ * `treatment` A character value such as "Control" or "HNMPA".
+ * `category` A numeric value representing an experiment type. For example, '1' may mean 4 seconds of high-frequency stimulation (HFS), '2' may mean an experiment where you added insulin, and '3' may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the `treatment` variable. For example, perhaps you added insulin (Category `2`) and also had the antagonist HNMPA present. This would be `Category = 2, Treatment = HNMPA`.
+ * `R_a` A list of values for the access resistance, which would have been
+monitored at several timepoints throughout the recording. See the section
+`R_a` formatting below.
+ * `days_alone` A numeric value representing the number of days that the animal was alone in a cage. This will always be 1 for some treatments, like fasting, but should ideally be low to reduce the effects of social isolation-related stress.
+ * `animal_or_slicing_problems` A character value ("yes" or "no") indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use "yes" if the slices were crumpling during slicing or the animal was unusually anxious.)
 
 > Note: Since you are using an R Project, it is easy to identify files in sub-folders. For example, you can
 write `import_cell_characteristics_df("Data/cell_info.csv")` to use

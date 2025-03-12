@@ -52,7 +52,7 @@ import_ext_data <- function(file = NULL) {
 #'  \item `animal` A numeric value representing the animal's ID or number.
 #'  \item `synapses` A character value such as "Glutamate" or "GABA".
 #'  \item `treatment` A character value such as "Control" or "HNMPA".
-#'  \item `category` A numeric value representing an experiment type. For example, '1' may mean 4 seconds of high-frequency stimulation (HFS), '2' may mean an experiment where you added insulin, and '3' may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the `treatment` variable. For example, perhaps you added insulin (Category `2`) and also had the antagonist HNMPA present. This would be `Category 2, Treatment = HNMPA`.
+#'  \item `category` A numeric value representing an experiment type. For example, '1' may mean 4 seconds of high-frequency stimulation (HFS), '2' may mean an experiment where you added insulin, and '3' may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the `treatment` variable. For example, perhaps you added insulin (Category `2`) and also had the antagonist HNMPA present. This would be `Category = 2, Treatment = HNMPA`.
 #' \item `R_a` A list of values for the access resistance, which would have been
 #' monitored at several timepoints throughout the recording. See the section
 #' `R_a` formatting below.

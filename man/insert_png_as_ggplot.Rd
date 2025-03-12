@@ -35,6 +35,9 @@ A ggplot object featuring your png file on an empty plot background. There are n
 \description{
 This function will insert an external \code{.png} or \code{.jpg} file over an empty ggplot object. The resulting ggplot object can then be included with other ggplot layouts. This is useful for when you want to use the image in a multiplot layout. For example, in a publication, figure "1A" may be a schematic of your experimental set-up that you created elsewhere and saved as a \code{.png} or \code{.jpg} file. Rather than inserting this as a standalone image, you can use this function to store your image as a ggplot object, and combine it with other ggplot plots in a flexible layout using the \code{patchwork} library.
 }
+\details{
+This function is very similar to \code{wrap_elements()} from the \code{patchwork} package in that it allows you to insert a non-ggplot2 object to a patchwork layout. However, \code{insert_png_as_ggplot()} gives you much finer control over the dimensions of the plot and the amount of space it can take up.
+}
 \examples{
 
 # Note: In your code, simply insert the filename

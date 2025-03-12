@@ -129,39 +129,6 @@ NULL
 #' @seealso [plot_AP_trace()]
 NULL
 
-#' Action potential recording with insulin
-#'
-#' This is an excerpt of a raw recording of action potentials imported as a dataframe using [import_ABF_file()]. It is used to demonstrate the
-#' [plot_AP_trace()] function.
-#'
-#' This is a current injection protocol taken during after 25 minutes of exposure to 500 nM insulin. See `sample_ap_abf_baseline` for data from the same protocol taken during the baseline period.
-#'
-#' @name sample_ap_abf_insulin
-#' @docType data
-#' @format A dataframe of 100000 objects of 5 variables.
-#' \describe{
-#'  \item{episode}{A factor representing the sweep, such as "epi1".}
-#'  \item{time_sec}{Time in seconds.}
-#'  \item{time}{Time in ms*100.}
-#'  \item{voltage}{Numeric value representing voltage in mV.}
-#'  \item{current}{Numeric value representing current amplitude in pA.}
-#' }
-#' @keywords data
-#' @examples plot_AP_trace(
-#'   data = sample_ap_abf_insulin,
-#'   sweeps = as.character(unique(sample_ap_abf_insulin$episode)),
-#'   custom_scale_colours = c(
-#'     "#edd03a", "#cced34",
-#'     "#a3fd3d", "#6bfe64",
-#'     "#31f199", "#18dcc3",
-#'     "#29bbec", "#4294ff",
-#'     "#466be3", "#4040a2"
-#'   ),
-#'   colour_scale_option = "custom",
-#'   plot_category = 2,
-#'   plot_treatment = "Control"
-#' )
-NULL
 
 # Raw eEPSC -----
 
