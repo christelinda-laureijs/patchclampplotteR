@@ -947,19 +947,34 @@ from <code><a href="../reference/make_summary_EPSC_data.html">make_summary_EPSC_
 here because this is from my own research, but the list below should
 give you a good idea of what functions you could use to create similar
 plots.</p>
-<p><strong>A)</strong> <em>Grouped categorical scatterplot</em> with
-<code>geom_point(position = position_dodge</code> to separate the sexes.
-<strong>B)</strong> <em>Sina plot</em>. Uses <code>geom_sina</code> from
-the <code>ggforce</code> package. <strong>C)</strong> <em>Coloured
-violin plot with sina plot</em>. <strong>D)</strong> <em>Violin plot
-with coloured sina plot</em>. <strong>E)</strong> <em>Boxplot + sina
-plot</em> where <code>fill = treatment</code>. <strong>F)</strong>
-<em>Boxplot + sina plot</em> where <code>colour = treatment</code>.
+<ul>
+<li>
+<strong>A)</strong> <em>Grouped categorical scatterplot</em> with
+<code>geom_point(position = position_dodge</code> to separate the
+sexes.</li>
+<li>
+<strong>B)</strong> <em>Sina plot</em>. Uses <code>geom_sina</code>
+from the <code>ggforce</code> package.</li>
+<li>
+<strong>C)</strong> <em>Coloured violin plot with sina
+plot</em>.</li>
+<li>
+<strong>D)</strong> <em>Violin plot with coloured sina
+plot</em>.</li>
+<li>
+<strong>E)</strong> <em>Boxplot + sina plot</em> where
+<code>fill = treatment</code>.</li>
+<li>
+<strong>F)</strong> <em>Boxplot + sina plot</em> where
+<code>colour = treatment</code>.</li>
+<li>
 <strong>G)</strong> <em>Strip plot </em> (this is just
 <code>geom_point(shape = 95, size = 10)</code>, with
-<code>alpha = sex</code>) <strong>H)</strong> <em>Half-eye plot</em>
-using <code>stat_halfeye()</code> from the <code>ggdist()</code>
-package</p>
+<code>alpha = sex</code>)</li>
+<li>
+<strong>H)</strong> <em>Half-eye plot</em> using
+<code>stat_halfeye()</code> from the <code>ggdist()</code> package</li>
+</ul>
 <p><img src="Same-data-8-ways.png" alt="A series of plots showing percent change in evoked current amplitude after 25 minutes of adding insulin. There are eight plots that all show the same data but in different ways. For example, figure A shows a grouped scatterplot, figure B shows a sina plot, figures C and D show violin plots. Figures E and F show boxplots, and Figure G shows a strip plot. Figure H shows a half-eye plot." width="1800" style="display: block; margin: auto;"></p>
 <p>Hopefully this vignette has given you an idea of some of the plotting
 functions that this package can do. The documentation for each function
