@@ -91,10 +91,10 @@
 <div class="section level2">
 <h2 id="how-to-use-patchclampplotter">How to use patchclampplotteR<a class="anchor" aria-label="anchor" href="#how-to-use-patchclampplotter"></a>
 </h2>
-<p><code>patchclampplotteR</code> will help you analyze and plot your
-patch clamp data efficiently. This vignette will walk you through the
-complete process of transforming raw data into publication-quality
-plots!</p>
+<p><code>patchclampplotteR</code> is an exciting new package that will
+help you analyze and plot your patch clamp data efficiently. This
+vignette will walk you through the complete process of transforming raw
+data into publication-quality plots!</p>
 <div class="section level3">
 <h3 id="set-up-r-project">Set up R Project<a class="anchor" aria-label="anchor" href="#set-up-r-project"></a>
 </h3>
@@ -179,8 +179,9 @@ with ‘NA’ values, which will be ignored in the analyses.</p>
 <ul>
 <li>
 <code>letter</code> A character value that is a unique identifier
-for a single recording. Used to link data sets for evoked or spontaneous
-currents and cell-characteristics. Example: “A”</li>
+for a single recording. You can use this link recordings that came from
+the same cell. For example, from cell “A” you may have action potential
+recordings, evoked current data, and spontaneous current data.</li>
 <li>
 <code>cell</code> A character or numeric value representing the
 cell. For example, use <code>3.1.1</code> for animal #3, slice #1, cell
@@ -189,17 +190,18 @@ cell. For example, use <code>3.1.1</code> for animal #3, slice #1, cell
 <code>sex</code> A character value such as “Male” or “Female”.</li>
 <li>
 <code>X</code> A numeric value representing the x-value of the
-cell’s location in µm.</li>
+cell’s location in µm. (Leave blank if you don’t have this).</li>
 <li>
 <code>Y</code> A numeric value representing the y-value of the
-cell’s location in µm.</li>
+cell’s location in µm. (Leave blank if you don’t have this).</li>
 <li>
 <code>age</code> A numeric value representing the animal’s age. Can
 be any value as long as the time units are consistent throughout
 (e.g. don’t mix up days and months when reporting animal ages). Do not
-use characters (e.g. avoid “P31” and use 31 instead).</li>
+use characters (e.g. Do NOT write <code>P31</code>. Use <code>31</code>
+instead).</li>
 <li>
-<code>animal</code> A numeric value representing the animal’s ID or
+<code>animal</code> A numeric value representing the animal’s ID
 number.</li>
 <li>
 <code>synapses</code> A character value such as “Glutamate” or
@@ -216,6 +218,9 @@ top-level division of your data. You can then have subgroups using the
 <code>treatment</code> variable. For example, perhaps you added insulin
 (Category <code>2</code>) and also had the antagonist HNMPA present.
 This would be <code>Category = 2, Treatment = HNMPA</code>.</li>
+</ul>
+<p><img src="Treatment-schematic.jpg" alt="A diagram showing two rows of data. The first has the text Category = 2 (add insulin), while the second row has Treatment, followed by the words Control, HNMPA, PPP and HNMPA and PPP combined. The goal of this figure is to show that treatments are nested under category." width="100%" style="display: block; margin: auto;"></p>
+<ul>
 <li>
 <code>R_a</code> A list of values for the access resistance, which
 would have been monitored at several timepoints throughout the
