@@ -2610,6 +2610,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' @inheritParams plot_AP_frequencies_single_treatment
 #'
 #' @param data The action potential data generated from `add_new_cells()` with `data_type == "AP"`.
+#' @param geom_point_size A numeric value describing the size of the points on the plot. Defaults to 3.8.
 #' @param post_hormone_label A character value that MUST correspond to one of the values in the `State` column. In the sample dataset, this is `"Insulin"`. This is required for the wilcox or t.test comparisons of "Baseline" vs. "Insulin".
 #' @param y_variable A character value naming the variable to be plotted on the y-axis. Must be a column present in `data`. Examples include `peak_amplitude`, `time_to_peak`, `antipeak_amplitude` and `half_width`.
 #' @param y_axis_title A character value used to define a "pretty" version of `y_variable`. This will become the y-axis label on the ggplot. Examples include "Peak Amplitude (pA)" or "Time to Peak (ms)".
@@ -2641,6 +2642,7 @@ plot_AP_comparison <-
            plot_treatment = "Control",
            plot_category = 2,
            included_sexes = "both",
+           facet_by_sex = "no",
            male_label = "Male",
            female_label = "Female",
            baseline_label = "Baseline",
@@ -2649,6 +2651,7 @@ plot_AP_comparison <-
            y_axis_title,
            test_type,
            map_signif_level_values = F,
+           geom_point_size = 3.8,
            geom_signif_family = "",
            geom_signif_text_size = 5,
            treatment_colour_theme,
@@ -2671,9 +2674,25 @@ plot_AP_comparison <-
     }
 
 
+    if (!facet_by_sex %in% c("yes", "no")) {
+      cli::cli_abort(c("x" = "`facet_by_sex` argument must be either \"yes\" or \"no\""))
+    }
+
+    if (facet_by_sex == "yes" & included_sexes != "both") {
+      cli::cli_abort(
+        c("x" = "You set `facet_by_sex` to 'yes' but `included_sexes` is not 'both'. Faceting by sex is only possible when `included_sexes` is 'both'")
+      )
+    }
+
+
     plot_colour <- treatment_colour_theme %>%
       dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
       dplyr::pull(.data$colours)
+
+
+    plot_colour_pale <- treatment_colour_theme %>%
+      dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
+      dplyr::pull(.data$very_pale_colours)
 
     if (included_sexes == "male") {
       plot_data <- data %>%
@@ -2698,40 +2717,77 @@ plot_AP_comparison <-
       sex_annotation <- ""
 
       plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
-    }
 
+
+      if (facet_by_sex == "yes") {
+        plot_data <- plot_data %>%
+          dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+
+        facet_label <- "-faceted-by-sex"
+
+      }
+
+      if (facet_by_sex == "no") {
+        facet_label <- ""
+      }
+    }
 
     ap_parameter_plot <- plot_data %>%
       dplyr::filter(.data$treatment == plot_treatment) %>%
       dplyr::filter(.data$category == plot_category) %>%
-      ggplot2::ggplot(ggplot2::aes(x = .data$state, y = .data[[y_variable]], color = .data$state)) +
+      ggplot2::ggplot(ggplot2::aes(x = .data$state, y = .data[[y_variable]])) +
       ggplot2::geom_line(
         ggplot2::aes(group = .data$letter),
         linewidth = as.numeric(theme_options["connecting_line_width", "value"]),
         color = theme_options["mean_point_colour", "value"],
         alpha = 0.3
-      ) +
+      )
+
+
+    if (facet_by_sex == "no") {
+      ap_parameter_plot <- ap_parameter_plot +
       ggplot2::geom_point(
         alpha = 0.9,
-        size = 4,
-        position = ggplot2::position_jitter(0.04),
-        shape = plot_shape
+        size = geom_point_size,
+        position = ggplot2::position_jitter(width = 0.02, height = 0),
+        shape = plot_shape,
+        color = plot_colour
       ) +
-      ggplot2::scale_color_manual(
-        values = c(theme_options["baseline_group_colour", "value"], plot_colour)
-      ) +
-      ggplot2::scale_shape_manual(
-        values = c(baseline_shape, post_treatment_shape)
-      ) +
-      ggplot2::stat_summary(
-        fun.data = ggplot2::mean_se,
-        geom = "pointrange",
-        color = theme_options["mean_point_colour", "value"],
-        size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
-        alpha = 1,
-        position = ggplot2::position_nudge(x = -0.02),
-        show.legend = FALSE
-      ) +
+        ggplot2::stat_summary(
+          fun.data = ggplot2::mean_se,
+          geom = "pointrange",
+          color = theme_options["mean_point_colour", "value"],
+          size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
+          alpha = 1,
+          position = ggplot2::position_nudge(x = -0.02),
+          show.legend = FALSE
+        )
+    }
+
+    if (facet_by_sex == "yes") {
+      ap_parameter_plot <- ap_parameter_plot +
+        ggplot2::geom_point(ggplot2::aes(shape = .data$sex, color = .data$sex),
+                            size = geom_point_size,
+                            alpha = 0.9,
+                            position = ggplot2::position_jitter(width = 0.02, height = 0)) +
+        ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))) +
+        ggplot2::scale_color_manual(values = c(plot_colour, plot_colour_pale)) +
+        ggplot2::guides(shape = "none") +
+        ggplot2::stat_summary(
+          ggplot2::aes(shape = .data$sex),
+          fun.data = ggplot2::mean_se,
+          geom = "pointrange",
+          color = theme_options["mean_point_colour", "value"],
+          size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
+          alpha = 1,
+          position = ggplot2::position_nudge(x = -0.02),
+          show.legend = FALSE
+        ) +
+        ggplot2::facet_wrap(~ .data$sex)
+
+    }
+
+    ap_parameter_plot <- ap_parameter_plot +
       ggplot_theme +
       ggplot2::theme(legend.position = "none") +
       ggplot2::labs(x = NULL, y = y_axis_title)
@@ -2757,7 +2813,7 @@ plot_AP_comparison <-
       ggplot2::ggsave(
         plot = ap_parameter_plot,
         path = here::here("Figures/Action-potentials/"),
-        file = paste0("AP-", y_variable, "-comparison-category-", plot_category, "-", plot_treatment, sex_annotation, ".png"),
+        file = paste0("AP-", y_variable, "-comparison-category-", plot_category, "-", plot_treatment, sex_annotation, facet_label, ".png"),
         width = 7,
         height = 5,
         units = "in",

@@ -9,6 +9,7 @@ plot_AP_comparison(
   plot_treatment = "Control",
   plot_category = 2,
   included_sexes = "both",
+  facet_by_sex = "no",
   male_label = "Male",
   female_label = "Female",
   baseline_label = "Baseline",
@@ -17,6 +18,7 @@ plot_AP_comparison(
   y_axis_title,
   test_type,
   map_signif_level_values = F,
+  geom_point_size = 3.8,
   geom_signif_family = "",
   geom_signif_text_size = 5,
   treatment_colour_theme,
@@ -42,6 +44,8 @@ applied continuously after a 5-minute baseline period.}
 
 \item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
 
+\item{facet_by_sex}{A character value ("yes" or "no") describing if the plots should be faceted by sex. This is only available if "included_sexes" is "both". The resulting plot will be split in two, with male data on the left and female data on the right.}
+
 \item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
 
 \item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".}
@@ -60,6 +64,8 @@ describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}
 
 \item{map_signif_level_values}{A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  \code{map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}} to only display the p-values when they are below 0.1.}
+
+\item{geom_point_size}{A numeric value describing the size of the points on the plot. Defaults to 3.8.}
 
 \item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
