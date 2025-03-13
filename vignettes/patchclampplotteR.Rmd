@@ -798,14 +798,14 @@ The plotting functions provided in `patchclampplotteR` are actually just shortcu
 
 As an example, here is the same `$percent_change_data` from `make_summary_EPSC_data()` presented in **8** different ways!! I haven't included the code and data here because this is from my own research, but the list below should give you a good idea of what functions you could use to create similar plots.
 
-**A)** *Grouped categorical scatterplot* with `geom_point(position = position_dodge` to separate the sexes.
-**B)** *Sina plot*. Uses `geom_sina` from the `ggforce` package.
-**C)** *Coloured violin plot with sina plot*.
-**D)** *Violin plot with coloured sina plot*.
-**E)** *Boxplot + sina plot* where `fill = treatment`.
-**F)** *Boxplot + sina plot* where `colour = treatment`.
-**G)** *Strip plot * (this is just `geom_point(shape = 95, size = 10)`, with `alpha = sex`)
-**H)** *Half-eye plot* using `stat_halfeye()` from the `ggdist()` package
+ * **A)** *Grouped categorical scatterplot* with `geom_point(position = position_dodge` to separate the sexes.
+ * **B)** *Sina plot*. Uses `geom_sina` from the `ggforce` package.
+ * **C)** *Coloured violin plot with sina plot*.
+ * **D)** *Violin plot with coloured sina plot*.
+ * **E)** *Boxplot + sina plot* where `fill = treatment`.
+ * **F)** *Boxplot + sina plot* where `colour = treatment`.
+ * **G)** *Strip plot * (this is just `geom_point(shape = 95, size = 10)`, with `alpha = sex`)
+ * **H)** *Half-eye plot* using `stat_halfeye()` from the `ggdist()` package
 
 
 ```{r same-data-multiple-ways, echo=F, fig.align='center', fig.alt = "A series of plots showing percent change in evoked current amplitude after 25 minutes of adding insulin. There are eight plots that all show the same data but in different ways. For example, figure A shows a grouped scatterplot, figure B shows a sina plot, figures C and D show violin plots. Figures E and F show boxplots, and Figure G shows a strip plot. Figure H shows a half-eye plot."}
