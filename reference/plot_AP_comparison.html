@@ -57,6 +57,7 @@
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  included_sexes <span class="op">=</span> <span class="st">"both"</span>,</span>
+<span>  facet_by_sex <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  male_label <span class="op">=</span> <span class="st">"Male"</span>,</span>
 <span>  female_label <span class="op">=</span> <span class="st">"Female"</span>,</span>
 <span>  baseline_label <span class="op">=</span> <span class="st">"Baseline"</span>,</span>
@@ -65,6 +66,7 @@
 <span>  <span class="va">y_axis_title</span>,</span>
 <span>  <span class="va">test_type</span>,</span>
 <span>  map_signif_level_values <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>  geom_point_size <span class="op">=</span> <span class="fl">3.8</span>,</span>
 <span>  geom_signif_family <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  geom_signif_text_size <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  <span class="va">treatment_colour_theme</span>,</span>
@@ -102,6 +104,10 @@ applied continuously after a 5-minute baseline period.</p></dd>
 <dd><p>A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the <code>t_test_df</code> contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.</p></dd>
 
 
+<dt id="arg-facet-by-sex">facet_by_sex<a class="anchor" aria-label="anchor" href="#arg-facet-by-sex"></a></dt>
+<dd><p>A character value ("yes" or "no") describing if the plots should be faceted by sex. This is only available if "included_sexes" is "both". The resulting plot will be split in two, with male data on the left and female data on the right.</p></dd>
+
+
 <dt id="arg-male-label">male_label<a class="anchor" aria-label="anchor" href="#arg-male-label"></a></dt>
 <dd><p>A character value used to describe how males are encoded in the <code>sex</code> column of the dataframe used in <code>data</code>. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".</p></dd>
 
@@ -135,6 +141,10 @@ comparing the pre- and post-hormone groups.</p></dd>
 
 <dt id="arg-map-signif-level-values">map_signif_level_values<a class="anchor" aria-label="anchor" href="#arg-map-signif-level-values"></a></dt>
 <dd><p>A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p &lt; 0.05, for p &lt; 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  <code>map_signif_level_values = function(p) if (p &lt; 0.1) {round(p, 3)} else {"ns"}</code> to only display the p-values when they are below 0.1.</p></dd>
+
+
+<dt id="arg-geom-point-size">geom_point_size<a class="anchor" aria-label="anchor" href="#arg-geom-point-size"></a></dt>
+<dd><p>A numeric value describing the size of the points on the plot. Defaults to 3.8.</p></dd>
 
 
 <dt id="arg-geom-signif-family">geom_signif_family<a class="anchor" aria-label="anchor" href="#arg-geom-signif-family"></a></dt>
