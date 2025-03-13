@@ -49,7 +49,7 @@ import_ext_data <- function(file = NULL) {
 #'  as long as the time units are consistent throughout (e.g. don't mix up days
 #'  and months when reporting animal ages). Do not use characters (e.g. avoid
 #'  "P31" and use 31 instead).
-#'  \item `animal` A numeric value representing the animal's ID or number.
+#'  \item `animal` A numeric value representing the animal's ID number.
 #'  \item `synapses` A character value such as "Glutamate" or "GABA".
 #'  \item `treatment` A character value such as "Control" or "HNMPA".
 #'  \item `category` A numeric value representing an experiment type. For example, '1' may mean 4 seconds of high-frequency stimulation (HFS), '2' may mean an experiment where you added insulin, and '3' may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the `treatment` variable. For example, perhaps you added insulin (Category `2`) and also had the antagonist HNMPA present. This would be `Category = 2, Treatment = HNMPA`.

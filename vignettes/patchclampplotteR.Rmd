@@ -22,7 +22,7 @@ library(dplyr)
 
 # How to use patchclampplotteR
 
-`patchclampplotteR` will help you analyze and plot your patch clamp data
+`patchclampplotteR` is an exciting new package that will help you analyze and plot your patch clamp data
 efficiently. This vignette will walk you through the complete process of
 transforming raw data into publication-quality plots!
 
@@ -94,23 +94,27 @@ The columns listed below are required in the raw .csv file. If you do not have d
 > Don't worry about missing data! R will automatically fill blank cells with 'NA' values, which will be ignored in the analyses.
 
  * `letter` A character value that is a unique identifier for a single
-recording. Used to link data sets for evoked or spontaneous currents and
-cell-characteristics. Example: "A"
+recording. You can use this link recordings that came from the same cell. For example, from cell "A" you may have action potential recordings, evoked current data, and spontaneous current data.
  * `cell` A character or numeric value representing the cell. For
 example, use `3.1.1` for animal #3, slice #1, cell #1.
  * `sex` A character value such as "Male" or "Female".
  * `X` A numeric value representing the x-value of the cell's location in
-µm.
+µm. (Leave blank if you don't have this).
  * `Y` A numeric value representing the y-value of the cell's location in
-µm.
+µm.  (Leave blank if you don't have this).
  * `age` A numeric value representing the animal's age. Can be any value
 as long as the time units are consistent throughout (e.g. don't mix up days
-and months when reporting animal ages). Do not use characters (e.g. avoid
-"P31" and use 31 instead).
- * `animal` A numeric value representing the animal's ID or number.
+and months when reporting animal ages). Do not use characters (e.g. Do NOT write
+`P31`. Use `31` instead).
+ * `animal` A numeric value representing the animal's ID number.
  * `synapses` A character value such as "Glutamate" or "GABA".
  * `treatment` A character value such as "Control" or "HNMPA".
  * `category` A numeric value representing an experiment type. For example, '1' may mean 4 seconds of high-frequency stimulation (HFS), '2' may mean an experiment where you added insulin, and '3' may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the `treatment` variable. For example, perhaps you added insulin (Category `2`) and also had the antagonist HNMPA present. This would be `Category = 2, Treatment = HNMPA`.
+ 
+```{r treatment-schematic, echo=F, out.width="100%", out.extra = "", fig.alt = "A diagram showing two rows of data. The first has the text Category = 2 (add insulin), while the second row has Treatment, followed by the words "Control", "HNMPA", "PPP" and "HNMPA + PPP". The goal of this figure is to show that treatments are nested under category."}
+knitr::include_graphics("Treatment-schematic.jpg")
+```
+ 
  * `R_a` A list of values for the access resistance, which would have been
 monitored at several timepoints throughout the recording. See the section
 `R_a` formatting below.
