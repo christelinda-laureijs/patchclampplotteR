@@ -744,19 +744,20 @@ decreased by 50% after the hormone, the value of
 <h3 id="explore-make-your-own-plots">Explore! Make your own plots!<a class="anchor" aria-label="anchor" href="#explore-make-your-own-plots"></a>
 </h3>
 <p>You now have your data in an easy-to-manipulate format, and you have
-the freedom to choose what analysis you want to do next!</p>
-<p>For example, you could look at the paired-pulse ratio, changes in
-variance parameters, or compare baseline values. See below for examples
-of how to use these functions.</p>
+the freedom to choose what analysis you want to do next! For example,
+you could look at the paired-pulse ratio, changes in variance
+parameters, or compare baseline values. See below for examples of how to
+use these functions.</p>
 <div class="section level4">
 <h4 id="looking-at-cell-characteristics">Looking at cell characteristics<a class="anchor" aria-label="anchor" href="#looking-at-cell-characteristics"></a>
 </h4>
-<p>Using <code>cell_characteristics</code> data throughout makes it very
-easy to answer interesting questions about your data. For example, does
-the baseline evoked current amplitude (data from <code>t0to5</code>)
-affect a cell’s insulin sensitivity? I can use
-<code>percent_change</code> as a marker of the effect size of
-insulin.</p>
+<p>You can use your summary data (particularly the
+<code>$percent_change_data</code>) to make some interesting plots. Using
+<code>cell_characteristics</code> data throughout makes it very easy to
+answer interesting questions about your data. For example, does the
+baseline evoked current amplitude (data from <code>t0to5</code>) affect
+a cell’s insulin sensitivity? I can use <code>percent_change</code> as a
+marker of the effect size of insulin.</p>
 <blockquote>
 <p>Note: The sample dataset included in this package is too small to
 show anything meaningful, so I’m including static images from my dataset
@@ -930,6 +931,36 @@ be a flat line.</p>
 <span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="patchclampplotteR_files/figure-html/compare-baseline-parameters-1.png" alt="A grouped scatterplot showing the baseline evoked current amplitude across four treatment groups." width="700" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level3">
+<h3 id="making-your-own-plots">Making your own plots<a class="anchor" aria-label="anchor" href="#making-your-own-plots"></a>
+</h3>
+<p>The plotting functions provided in <code>patchclampplotteR</code> are
+actually just shortcuts to make plots with ggplot. All the data that you
+need is provided with functions like
+<code><a href="../reference/make_summary_EPSC_data.html">make_summary_EPSC_data()</a></code>, <code><a href="../reference/make_variance_data.html">make_variance_data()</a></code>
+and <code><a href="../reference/make_PPR_data.html">make_PPR_data()</a></code>. Why don’t you try making your own
+plots in ggplot?</p>
+<p>As an example, here is the same <code>$percent_change_data</code>
+from <code><a href="../reference/make_summary_EPSC_data.html">make_summary_EPSC_data()</a></code> presented in
+<strong>8</strong> different ways!! I haven’t included the code and data
+here because this is from my own research, but the list below should
+give you a good idea of what functions you could use to create similar
+plots.</p>
+<p><strong>A)</strong> <em>Grouped categorical scatterplot</em> with
+<code>geom_point(position = position_dodge</code> to separate the sexes.
+<strong>B)</strong> <em>Sina plot</em>. Uses <code>geom_sina</code> from
+the <code>ggforce</code> package. <strong>C)</strong> <em>Coloured
+violin plot with sina plot</em>. <strong>D)</strong> <em>Violin plot
+with coloured sina plot</em>. <strong>E)</strong> <em>Boxplot + sina
+plot</em> where <code>fill = treatment</code>. <strong>F)</strong>
+<em>Boxplot + sina plot</em> where <code>colour = treatment</code>.
+<strong>G)</strong> <em>Strip plot </em> (this is just
+<code>geom_point(shape = 95, size = 10)</code>, with
+<code>alpha = sex</code>) <strong>H)</strong> <em>Half-eye plot</em>
+using <code>stat_halfeye()</code> from the <code>ggdist()</code>
+package</p>
+<p><img src="Same-data-8-ways.png" alt="A series of plots showing percent change in evoked current amplitude after 25 minutes of adding insulin. There are eight plots that all show the same data but in different ways. For example, figure A shows a grouped scatterplot, figure B shows a sina plot, figures C and D show violin plots. Figures E and F show boxplots, and Figure G shows a strip plot. Figure H shows a half-eye plot." width="1800" style="display: block; margin: auto;"></p>
 <p>Hopefully this vignette has given you an idea of some of the plotting
 functions that this package can do. The documentation for each function
 contains lots of additional information about each argument, and you can
