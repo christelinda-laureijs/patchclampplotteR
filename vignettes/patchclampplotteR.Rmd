@@ -623,13 +623,11 @@ plot_percent_change_comparisons(
 
 ## Explore! Make your own plots!
 
-You now have your data in an easy-to-manipulate format, and you have the freedom to choose what analysis you want to do next!
-
-For example, you could look at the paired-pulse ratio, changes in variance parameters, or compare baseline values. See below for examples of how to use these functions.
+You now have your data in an easy-to-manipulate format, and you have the freedom to choose what analysis you want to do next! For example, you could look at the paired-pulse ratio, changes in variance parameters, or compare baseline values. See below for examples of how to use these functions.
 
 ### Looking at cell characteristics
 
-Using `cell_characteristics` data throughout makes it very easy to answer interesting questions about your data. For example, does the baseline evoked current amplitude (data from `t0to5`) affect a cell's insulin sensitivity? I can use `percent_change` as a marker of the effect size of insulin.
+ You can use your summary data (particularly the `$percent_change_data`) to make some interesting plots. Using `cell_characteristics` data throughout makes it very easy to answer interesting questions about your data. For example, does the baseline evoked current amplitude (data from `t0to5`) affect a cell's insulin sensitivity? I can use `percent_change` as a marker of the effect size of insulin.
 
 > Note: The sample dataset included in this package is too small to show anything meaningful, so I'm including static images from my dataset (manuscript in preparation).
 
@@ -793,6 +791,27 @@ plot_baseline_data(
   save_plot_png = "no"
 )
 ```
+
+## Making your own plots
+
+The plotting functions provided in `patchclampplotteR` are actually just shortcuts to make plots with ggplot. All the data that you need is provided with functions like `make_summary_EPSC_data()`, `make_variance_data()` and `make_PPR_data()`. Why don't you try making your own plots in ggplot?
+
+As an example, here is the same `$percent_change_data` from `make_summary_EPSC_data()` presented in **8** different ways!! I haven't included the code and data here because this is from my own research, but the list below should give you a good idea of what functions you could use to create similar plots.
+
+**A)** *Grouped categorical scatterplot* with `geom_point(position = position_dodge` to separate the sexes.
+**B)** *Sina plot*. Uses `geom_sina` from the `ggforce` package.
+**C)** *Coloured violin plot with sina plot*.
+**D)** *Violin plot with coloured sina plot*.
+**E)** *Boxplot + sina plot* where `fill = treatment`.
+**F)** *Boxplot + sina plot* where `colour = treatment`.
+**G)** *Strip plot * (this is just `geom_point(shape = 95, size = 10)`, with `alpha = sex`)
+**H)** *Half-eye plot* using `stat_halfeye()` from the `ggdist()` package
+
+
+```{r same-data-multiple-ways, echo=F, fig.align='center', fig.alt = "A series of plots showing percent change in evoked current amplitude after 25 minutes of adding insulin. There are eight plots that all show the same data but in different ways. For example, figure A shows a grouped scatterplot, figure B shows a sina plot, figures C and D show violin plots. Figures E and F show boxplots, and Figure G shows a strip plot. Figure H shows a half-eye plot."}
+knitr::include_graphics("Same-data-8-ways.png")
+```
+
 
 Hopefully this vignette has given you an idea of some of the plotting functions that this package can do. The documentation for each function contains lots of additional information about each argument, and you can also explore the articles for [Evoked Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html), [Spontaneous Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/spontaneous-current-analysis.html), and [Action Potential Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
 
