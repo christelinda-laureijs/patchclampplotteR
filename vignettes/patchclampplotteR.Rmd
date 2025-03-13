@@ -111,7 +111,7 @@ and months when reporting animal ages). Do not use characters (e.g. Do NOT write
  * `treatment` A character value such as "Control" or "HNMPA".
  * `category` A numeric value representing an experiment type. For example, '1' may mean 4 seconds of high-frequency stimulation (HFS), '2' may mean an experiment where you added insulin, and '3' may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the `treatment` variable. For example, perhaps you added insulin (Category `2`) and also had the antagonist HNMPA present. This would be `Category = 2, Treatment = HNMPA`.
  
-```{r treatment-schematic, echo=F, out.width="100%", out.extra = "", fig.alt = "A diagram showing two rows of data. The first has the text Category = 2 (add insulin), while the second row has Treatment, followed by the words "Control", "HNMPA", "PPP" and "HNMPA + PPP". The goal of this figure is to show that treatments are nested under category."}
+```{r treatment-schematic, echo=F, out.width="100%", out.extra = "", fig.alt = "A diagram showing two rows of data. The first has the text Category = 2 (add insulin), while the second row has Treatment, followed by the words Control, HNMPA, PPP and HNMPA and PPP combined. The goal of this figure is to show that treatments are nested under category."}
 knitr::include_graphics("Treatment-schematic.jpg")
 ```
  
