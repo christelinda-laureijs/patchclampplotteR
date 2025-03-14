@@ -119,7 +119,12 @@ import_cell_characteristics_df <- function(filename) {
 #' @export
 #'
 #' @examples
+#'
+#' # To make this package documentation work, the function documentation requires `import_ext_data()`. When you are using this function, please do NOT use `import_ext_data()`. You must insert a direct filepath (e.g. use `import_ABF_file("Data/20250314.abf")`).
+#'
 #' import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
+#'
+#'
 import_ABF_file <-
   function(file_name, recording_mode) {
     if (!recording_mode %in% c("voltage_clamp", "current_clamp")) {

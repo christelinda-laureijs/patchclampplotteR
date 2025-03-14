@@ -69,29 +69,39 @@ NULL
 #' Evoked current recording excerpt
 #'
 #' This is an excerpt from a raw recording of evoked currents exported from
-#' Clampfit as an .abf file. It can be read using the [import_ABF_file()]
-#' function, which will convert it into a regular dataframe for further
-#' manipulation and plotting in R. It is used to demonstrate the
+#' Clampfit as an .abf file. It was then converted into a regular dataframe using the [import_ABF_file()]
+#' function. To reduce the package installation size, I kept only three columns from the original file. This dataset is used to demonstrate the
 #' [plot_spontaneous_current_trace()] function.
 #'
 #' @name sample_abf_file
 #' @docType data
-#' @format An Axon Binary Format (.abf) file with 10000 observations of 5
+#' @format An Axon Binary Format (.abf) file with 43061 observations of 3
 #' variables.
 #' \describe{
 #'  \item{episode}{A factor representing the sweep, such as "epi1".}
-#'  \item{time_sec}{Time in seconds.}
-#'  \item{time}{Time in ms*100.}
-#'  \item{voltage}{Numeric value representing voltage in mV.}
 #'  \item{current}{Numeric value representing current amplitude in pA.}
+#'  \item{time_sec}{Time in seconds.}
 #' }
 #' @keywords data
-#' @examples import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
+#' @examples
+#'
+#' plot_spontaneous_current_trace(
+#'   data = sample_abf_file,
+#'   plot_colour = "#6600cc",
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   state = "Baseline",
+#'   include_scale_bar = "yes",
+#'   plot_episode = "epi1",
+#'   scale_bar_x_length = 1,
+#'   scale_bar_y_length = 10,
+#'   plot_x_min = 1,
+#'   plot_x_max = 3,
+#'   line_thickness = 0.9
+#' )
 #'
 #' @seealso [plot_spontaneous_current_trace()]
 NULL
-
-
 
 #' Action potential baseline recording
 #'
