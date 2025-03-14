@@ -430,6 +430,7 @@ plot_baseline_data <- function(data,
 #'   their associated colours as hex values. See
 #'   [sample_treatment_names_and_colours] for an example of what this dataframe
 #'   should look like.
+#' @param geom_text_family A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
 #'
 #' @returns A list of ggplot objects, where each list element is a scatterplot
 #'   of one recording. If `save_plot_png == "yes"`, it will also generate a .png
@@ -490,6 +491,7 @@ plot_raw_current_data <-
            hormone_end_time = NULL,
            theme_options,
            treatment_colour_theme,
+           geom_text_family = "",
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
     list_of_plots <- list()
@@ -756,7 +758,8 @@ plot_raw_current_data <-
             y = ymax2 + 0.16 * ymax2,
             label = hormone_added,
             size = 4,
-            hjust = 0
+            hjust = 0,
+            family = geom_text_family
           )
       }
 
@@ -784,7 +787,8 @@ plot_raw_current_data <-
             y = ymax + 0.27 * ymax,
             label = "HFS",
             size = 3.5,
-            hjust = 0.5
+            hjust = 0.5,
+            family = geom_text_family
           )
       }
 
@@ -1257,6 +1261,7 @@ plot_summary_current_data <- function(data,
         x = hormone_or_HFS_start_time,
         y = ymax + 0.06 * ymax,
         label = hormone_added,
+        family = geom_signif_family,
         size = if (large_axis_text == "yes") {
           6
         } else {
@@ -1293,6 +1298,7 @@ plot_summary_current_data <- function(data,
         x = hormone_or_HFS_start_time,
         y = ymax + 0.27 * ymax,
         label = "HFS",
+        family = geom_signif_family,
         size = 3.5,
         hjust = 0.5
       )

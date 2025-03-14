@@ -16,6 +16,7 @@ plot_raw_current_data(
   hormone_end_time = NULL,
   theme_options,
   treatment_colour_theme,
+  geom_text_family = "",
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -67,6 +68,8 @@ look like.}
 their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
+
+\item{geom_text_family}{A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
 \item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
