@@ -325,7 +325,7 @@ plot_baseline_data <- function(data,
   }
 
   baseline_comparison_plot <- baseline_comparison_plot +
-    ggplot2::labs(x = NULL, y = y_title, shape = "Sex") +
+    ggplot2::labs(x = NULL, y = y_title, shape = NULL) +
     ggplot2::stat_summary(
       fun.data = ggplot2::mean_se,
       geom = "pointrange",
@@ -1173,8 +1173,8 @@ plot_summary_current_data <- function(data,
     ggplot2::labs(
       x = "Time (min)",
       y = y_title,
-      shape = "Sex",
-      color = "Sex"
+      shape = NULL,
+      color = NULL
     ) +
     ggplot_theme
 
@@ -1627,7 +1627,7 @@ plot_percent_change_comparisons <- function(data,
       breaks = treatment_info$display_names,
       values = treatment_info$colours
     ) +
-    ggplot2::labs(x = NULL, y = y_title, shape = "Sex") +
+    ggplot2::labs(x = NULL, y = y_title, shape = NULL) +
     ggplot2::stat_summary(
       fun.data = ggplot2::mean_se,
       geom = "pointrange",
