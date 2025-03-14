@@ -17,6 +17,7 @@ plot_AP_trace(
   include_scale_bar = "yes",
   scale_bar_label_y_nudge = 5,
   include_scale_bar_label = "yes",
+  geom_text_family = "",
   scale_bar_x_start = 880,
   scale_bar_x_length = 100,
   scaling_factor = 10,
@@ -58,6 +59,8 @@ will be added to the plot. Allowed values are "yes" and "no".}
 \item{scale_bar_label_y_nudge}{An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to 5.}
 
 \item{include_scale_bar_label}{A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from \code{scale_bar_x_length} and \code{scale_bar_y_length}.}
+
+\item{geom_text_family}{A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
 \item{scale_bar_x_start}{A numeric value (in milliseconds) describing the x-axis position of
 the scale bar (default is 880).}

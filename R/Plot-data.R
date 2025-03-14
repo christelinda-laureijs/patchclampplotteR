@@ -3393,6 +3393,7 @@ plot_AP_trace <-
            include_scale_bar = "yes",
            scale_bar_label_y_nudge = 5,
            include_scale_bar_label = "yes",
+           geom_text_family = "",
            scale_bar_x_start = 880,
            scale_bar_x_length = 100,
            scaling_factor = 10,
@@ -3473,7 +3474,8 @@ plot_AP_trace <-
           xend = scale_bar_x_start * scaling_factor + scale_bar_x_length * scaling_factor,
           y = scale_bar_y_start,
           yend = scale_bar_y_start,
-          lwd = scale_bar_linewidth
+          lwd = scale_bar_linewidth,
+          lineend = "square"
         ) +
         ggplot2::annotate(
           "segment",
@@ -3481,7 +3483,8 @@ plot_AP_trace <-
           xend = scale_bar_x_start * scaling_factor,
           y = scale_bar_y_start,
           yend = scale_bar_y_start + scale_bar_y_length,
-          lwd = scale_bar_linewidth
+          lwd = scale_bar_linewidth,
+          lineend = "square"
         )
 
 
@@ -3493,7 +3496,8 @@ plot_AP_trace <-
           y = scale_bar_y_start + 0.5 * scale_bar_y_length,
           label = paste0(scale_bar_y_length, "mV"),
           hjust = 1,
-          vjust = 0.5
+          vjust = 0.5,
+          family = geom_text_family
         ) +
           ggplot2::annotate(
             "text",
@@ -3502,7 +3506,8 @@ plot_AP_trace <-
             y = scale_bar_y_start - scale_bar_label_y_nudge,
             label = paste0(scale_bar_x_length, "ms"),
             hjust = 0.5,
-            vjust = 0.5
+            vjust = 0.5,
+            family = geom_text_family
           )
       }
     }
@@ -3820,6 +3825,7 @@ plot_spontaneous_current_parameter_comparison <-
 #' ggplot object with an optional scale bar.
 #' @inheritParams plot_baseline_data
 #' @inheritParams plot_raw_current_data
+#' @inheritParams plot_cell_coordinates_data
 #'
 #' @param data A dataframe containing at least these columns: `time`,
 #'   `episode`, `current`, `voltage`, `time_sec`. An easy way to obtain this is
@@ -3842,7 +3848,11 @@ plot_spontaneous_current_parameter_comparison <-
 #' @param scale_bar_y_length A numeric value describing the vertical span (in
 #'   pA) of the scale bar (default is 20).
 #' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is 0.4).
+#' @param trace_annotation A character value (e.g. "Baseline") that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to "Baseline".
+#' @param trace_annotation_x_position A numeric value for the location of the `trace_annotation` on the x-axis. Defaults to 1.
+#' @param trace_annotation_y_position A numeric value for the location of the `trace_annotation` on the y-axis. Defaults to 6.
 #' @param plot_colour A character value naming the colour of the plot.
+#' @param geom_text_colour A character value describing the colour of the `trace_annotation` text. Defaults to "#000000".
 #' @param plot_x_min A numeric value describing the minimum value on the x-axis
 #'   (in seconds).
 #' @param plot_x_max A numeric value describing the maximum value on the x-axis
@@ -3852,7 +3862,7 @@ plot_spontaneous_current_parameter_comparison <-
 #' @param plot_y_max A numeric value describing the maximum value on the y-axis
 #'   (in pA). Defaults to 5. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
 #' @param scale_bar_label_y_nudge An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to 1.5.
-#' @param line_thickness A numeric value describing the thickness of the line.
+#' @param trace_thickness A numeric value describing the thickness of the line.
 #' @returns A ggplot object. If save_plot_png is defined as "yes", it will also
 #'   generate a .png file in the folder
 #'   `Figures/Spontaneous-currents/Representative-Traces` relative to the
@@ -3864,42 +3874,44 @@ plot_spontaneous_current_parameter_comparison <-
 #'
 #' @examples
 #' plot_spontaneous_current_trace(
-#'   data = sample_abf_file,
-#'   plot_colour = "#6600cc",
-#'   plot_category = 2,
-#'   plot_treatment = "Control",
-#'   state = "Baseline",
-#'   include_scale_bar = "yes",
-#'   plot_episode = "epi1",
-#'   scale_bar_x_length = 1,
-#'   scale_bar_y_length = 10,
-#'   plot_x_min = 1,
-#'   plot_x_max = 3,
-#'   line_thickness = 0.9
+#'  data = sample_abf_file,
+#'  plot_colour = "#6600cc",
+#'  plot_category = 2,
+#'  plot_treatment = "Control",
+#'  state = "Baseline",
+#'  plot_episode = "epi1",
+#'  trace_annotation = "Baseline",
+#'  geom_text_colour = "#6600cc"
 #' )
 #'
 plot_spontaneous_current_trace <-
   function(data,
-           plot_colour,
+           plot_colour = "#000000",
            plot_category,
            plot_treatment,
-           sex = "",
-           state = "",
-           letter = "",
+           sex,
+           state,
+           letter,
            include_scale_bar = "yes",
            include_scale_bar_label = "yes",
+           trace_annotation = "",
+           trace_annotation_x_position = 1,
+           trace_annotation_y_position = 6,
+           geom_text_family = "",
+           geom_text_colour = "#000000",
+           geom_text_size = 6,
            plot_episode = "epi1",
-           line_thickness = 0.7,
-           scale_bar_x_start = 1.25,
-           scale_bar_x_length = 0.5,
-           scale_bar_y_start = 15,
+           trace_thickness = 0.8,
+           scale_bar_x_start = 2.8,
+           scale_bar_x_length = 0.2,
            scale_bar_y_length = 20,
-           scale_bar_linewidth = 0.4,
+           scale_bar_y_start = -30,
+           scale_bar_linewidth = 0.75,
            scale_bar_label_y_nudge = 1.5,
            plot_x_min = 1,
-           plot_x_max = 5,
-           plot_y_min = -80,
-           plot_y_max = 5,
+           plot_x_max = 3,
+           plot_y_min = -60,
+           plot_y_max = 15,
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
     if (!include_scale_bar %in% c("yes", "no")) {
@@ -3919,8 +3931,19 @@ plot_spontaneous_current_trace <-
       dplyr::filter(dplyr::between(.data$time_sec, plot_x_min, plot_x_max)) %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$time_sec, y = .data$current)) +
       ggplot2::coord_cartesian(ylim = c(plot_y_min, plot_y_max)) +
-      ggplot2::geom_line(color = plot_colour, linewidth = line_thickness) +
-      ggplot2::theme_void()
+      ggplot2::geom_line(color = plot_colour, linewidth = trace_thickness) +
+      ggplot2::theme_void() +
+      ggplot2::annotate(
+        geom = "text",
+        x = trace_annotation_x_position,
+        y = trace_annotation_y_position,
+        label = trace_annotation,
+        family = geom_text_family,
+        size = geom_text_size,
+        color = geom_text_colour,
+        hjust = 0,
+        vjust = 0
+      )
 
     scale_bar_x_length_in_ms <- scale_bar_x_length * 1000
 
@@ -3932,7 +3955,8 @@ plot_spontaneous_current_trace <-
           xend = scale_bar_x_start + scale_bar_x_length,
           y = scale_bar_y_start,
           yend = scale_bar_y_start,
-          lwd = scale_bar_linewidth
+          lwd = scale_bar_linewidth,
+          lineend = "square"
         ) +
         ggplot2::annotate(
           "segment",
@@ -3940,7 +3964,8 @@ plot_spontaneous_current_trace <-
           xend = scale_bar_x_start,
           y = scale_bar_y_start,
           yend = scale_bar_y_start + scale_bar_y_length,
-          lwd = scale_bar_linewidth
+          lwd = scale_bar_linewidth,
+          lineend = "square"
         )
 
 
@@ -3952,7 +3977,8 @@ plot_spontaneous_current_trace <-
             y = scale_bar_y_start + 0.5 * scale_bar_y_length,
             label = paste0(scale_bar_y_length, " pA"),
             hjust = 1,
-            vjust = 0.5
+            vjust = 0.5,
+            family = geom_text_family
           ) +
           ggplot2::annotate(
             "text",
@@ -3960,7 +3986,8 @@ plot_spontaneous_current_trace <-
             y = scale_bar_y_start - scale_bar_label_y_nudge,
             label = paste0(scale_bar_x_length_in_ms, " ms"),
             hjust = 0.5,
-            vjust = 1
+            vjust = 1,
+            family = geom_text_family
           )
       }
     }
@@ -4224,7 +4251,8 @@ plot_cell_coordinates_data <- function(data,
       y = scale_bar_y_start,
       yend = scale_bar_y_start - scale_bar_y_length,
       linewidth = scale_bar_thickness,
-      color = scale_bar_colour
+      color = scale_bar_colour,
+      lineend = "square"
     ) +
     ggplot2::annotate(
       geom = "segment",
@@ -4233,7 +4261,8 @@ plot_cell_coordinates_data <- function(data,
       y = scale_bar_y_start,
       yend = scale_bar_y_start,
       linewidth = scale_bar_thickness,
-      color = scale_bar_colour
+      color = scale_bar_colour,
+      lineend = "square"
     ) +
     ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
     ggplot2::theme_void() +

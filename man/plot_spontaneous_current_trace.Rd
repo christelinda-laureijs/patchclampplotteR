@@ -6,26 +6,32 @@
 \usage{
 plot_spontaneous_current_trace(
   data,
-  plot_colour,
+  plot_colour = "#000000",
   plot_category,
   plot_treatment,
-  sex = "",
-  state = "",
-  letter = "",
+  sex,
+  state,
+  letter,
   include_scale_bar = "yes",
   include_scale_bar_label = "yes",
+  trace_annotation = "",
+  trace_annotation_x_position = 1,
+  trace_annotation_y_position = 6,
+  geom_text_family = "",
+  geom_text_colour = "#000000",
+  geom_text_size = 6,
   plot_episode = "epi1",
-  line_thickness = 0.7,
-  scale_bar_x_start = 1.25,
-  scale_bar_x_length = 0.5,
-  scale_bar_y_start = 15,
+  trace_thickness = 0.8,
+  scale_bar_x_start = 2.8,
+  scale_bar_x_length = 0.2,
   scale_bar_y_length = 20,
-  scale_bar_linewidth = 0.4,
+  scale_bar_y_start = -30,
+  scale_bar_linewidth = 0.75,
   scale_bar_label_y_nudge = 1.5,
   plot_x_min = 1,
-  plot_x_max = 5,
-  plot_y_min = -80,
-  plot_y_max = 5,
+  plot_x_max = 3,
+  plot_y_min = -60,
+  plot_y_max = 15,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -57,10 +63,22 @@ will be added to the plot. Allowed values are "yes" and "no".}
 
 \item{include_scale_bar_label}{A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from \code{scale_bar_x_length} and \code{scale_bar_y_length}.}
 
+\item{trace_annotation}{A character value (e.g. "Baseline") that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to "Baseline".}
+
+\item{trace_annotation_x_position}{A numeric value for the location of the \code{trace_annotation} on the x-axis. Defaults to 1.}
+
+\item{trace_annotation_y_position}{A numeric value for the location of the \code{trace_annotation} on the y-axis. Defaults to 6.}
+
+\item{geom_text_family}{A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
+
+\item{geom_text_colour}{A character value describing the colour of the \code{trace_annotation} text. Defaults to "#000000".}
+
+\item{geom_text_size}{A numeric value describing the size of the scale bar annotation text. Defaults to 4.}
+
 \item{plot_episode}{A character value describing the sweep (e.g. \code{epi1}) that
 will be used for the plot.}
 
-\item{line_thickness}{A numeric value describing the thickness of the line.}
+\item{trace_thickness}{A numeric value describing the thickness of the line.}
 
 \item{scale_bar_x_start}{A numeric value (in seconds) describing the x-axis position of
 the scale bar (default is 1.25).}
@@ -69,11 +87,11 @@ the scale bar (default is 1.25).}
 seconds) of the scale bar. This will automatically be converted and
 displayed in milliseconds (default is 0.5).}
 
-\item{scale_bar_y_start}{A numeric value describing the y-axis position (in pA) of
-the scale bar (default is 15).}
-
 \item{scale_bar_y_length}{A numeric value describing the vertical span (in
 pA) of the scale bar (default is 20).}
+
+\item{scale_bar_y_start}{A numeric value describing the y-axis position (in pA) of
+the scale bar (default is 15).}
 
 \item{scale_bar_linewidth}{A numeric value describing the thickness of the scalebar line (default is 0.4).}
 
@@ -111,18 +129,14 @@ ggplot object with an optional scale bar.
 }
 \examples{
 plot_spontaneous_current_trace(
-  data = sample_abf_file,
-  plot_colour = "#6600cc",
-  plot_category = 2,
-  plot_treatment = "Control",
-  state = "Baseline",
-  include_scale_bar = "yes",
-  plot_episode = "epi1",
-  scale_bar_x_length = 1,
-  scale_bar_y_length = 10,
-  plot_x_min = 1,
-  plot_x_max = 3,
-  line_thickness = 0.9
+ data = sample_abf_file,
+ plot_colour = "#6600cc",
+ plot_category = 2,
+ plot_treatment = "Control",
+ state = "Baseline",
+ plot_episode = "epi1",
+ trace_annotation = "Baseline",
+ geom_text_colour = "#6600cc"
 )
 
 }

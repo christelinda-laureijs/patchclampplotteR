@@ -5,25 +5,32 @@
 \alias{sample_abf_file}
 \title{Evoked current recording excerpt}
 \format{
-An Axon Binary Format (.abf) file with 10000 observations of 5
+An Axon Binary Format (.abf) file with 43061 observations of 3
 variables.
 \describe{
 \item{episode}{A factor representing the sweep, such as "epi1".}
-\item{time_sec}{Time in seconds.}
-\item{time}{Time in ms*100.}
-\item{voltage}{Numeric value representing voltage in mV.}
 \item{current}{Numeric value representing current amplitude in pA.}
+\item{time_sec}{Time in seconds.}
 }
 }
 \description{
 This is an excerpt from a raw recording of evoked currents exported from
-Clampfit as an .abf file. It can be read using the \code{\link[=import_ABF_file]{import_ABF_file()}}
-function, which will convert it into a regular dataframe for further
-manipulation and plotting in R. It is used to demonstrate the
+Clampfit as an .abf file. It was then converted into a regular dataframe using the \code{\link[=import_ABF_file]{import_ABF_file()}}
+function. To reduce the package installation size, I kept only three columns from the original file. This dataset is used to demonstrate the
 \code{\link[=plot_spontaneous_current_trace]{plot_spontaneous_current_trace()}} function.
 }
 \examples{
-import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
+
+plot_spontaneous_current_trace(
+ data = sample_abf_file,
+ plot_colour = "#6600cc",
+ plot_category = 2,
+ plot_treatment = "Control",
+ state = "Baseline",
+ plot_episode = "epi1",
+ trace_annotation = "Baseline",
+ geom_text_colour = "#6600cc"
+)
 
 }
 \seealso{

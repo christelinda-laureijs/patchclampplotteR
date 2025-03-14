@@ -86,18 +86,14 @@ NULL
 #' @examples
 #'
 #' plot_spontaneous_current_trace(
-#'   data = sample_abf_file,
-#'   plot_colour = "#6600cc",
-#'   plot_category = 2,
-#'   plot_treatment = "Control",
-#'   state = "Baseline",
-#'   include_scale_bar = "yes",
-#'   plot_episode = "epi1",
-#'   scale_bar_x_length = 1,
-#'   scale_bar_y_length = 10,
-#'   plot_x_min = 1,
-#'   plot_x_max = 3,
-#'   line_thickness = 0.9
+#'  data = sample_abf_file,
+#'  plot_colour = "#6600cc",
+#'  plot_category = 2,
+#'  plot_treatment = "Control",
+#'  state = "Baseline",
+#'  plot_episode = "epi1",
+#'  trace_annotation = "Baseline",
+#'  geom_text_colour = "#6600cc"
 #' )
 #'
 #' @seealso [plot_spontaneous_current_trace()]

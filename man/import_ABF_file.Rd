@@ -33,5 +33,8 @@ The file progresses from \code{.abf} to an array and then to a dataframe that ca
 easily manipulated in R. Be sure to assign a value to the dataframe so you can use it in later functions.
 }
 \examples{
+
 import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
+
+
 }
