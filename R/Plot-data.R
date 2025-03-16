@@ -287,22 +287,22 @@ plot_baseline_data <- function(data,
 
 
   if (included_sexes == "both") {
-  baseline_comparison_plot <- baseline_comparison_plot %>%
-    ggplot2::ggplot(
-      ggplot2::aes(
-        x = .data$treatment,
-        y = .data[[y_var]],
-        color = .data$treatment,
-        shape = .data$sex
-      )
-    ) +
-    ggforce::geom_sina(
-      bw = 12,
-      alpha = 0.8,
-      maxwidth = 0.5,
-      size = 2
-    ) +
-    ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])))
+    baseline_comparison_plot <- baseline_comparison_plot %>%
+      ggplot2::ggplot(
+        ggplot2::aes(
+          x = .data$treatment,
+          y = .data[[y_var]],
+          color = .data$treatment,
+          shape = .data$sex
+        )
+      ) +
+      ggforce::geom_sina(
+        bw = 12,
+        alpha = 0.8,
+        maxwidth = 0.5,
+        size = 2
+      ) +
+      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])))
   }
 
 
@@ -846,8 +846,9 @@ plot_raw_current_data <-
 #'   using [perform_t_tests_for_summary_plot()]. Important note! The t-test
 #'   dataframe must be filtered to match the same conditions in the `data`
 #'   argument, or the significance stars will be misleading.
-#' @param large_axis_text A character ("yes" or "no"). If "yes", a ggplot theme
-#'   layer will be applied which increases the size of the axis text.
+#' @param large_axis_text A character ("yes" or "no"). If "yes", a ggplot theme layer will be applied which increases the size of the axis text.
+#' @param legend_position A character value ("left", "right", "top", "bottom", "inside") which describes the location of the legend. If you set this to "inside", you may need to adjust the location of the representative trace with `annotation_x_min`, `annotation_x_max`, etc. Or, you can choose to insert the representative trace as a separate geom using the `patchwork` package (e.g. set up a two-row patchwork with the representative trace in the top row, and the summary plot in the second row).
+#' @param legend_position_inside A list of two numeric values describing the coordinates of the legend. This only applies if `legend_position = "inside"`.
 #' @param shade_intervals A character ("yes" or "no"). If "yes", a ggplot theme
 #'   layer will be applied which adds lightly shaded rectangles to highlight
 #'   5-minute intervals.
@@ -902,6 +903,8 @@ plot_summary_current_data <- function(data,
                                       y_variable = "amplitude",
                                       hormone_added = "Insulin",
                                       hormone_or_HFS_start_time = 5,
+                                      legend_position = "right",
+                                      legend_position_inside = c(0.13, 0.15),
                                       included_sexes = "both",
                                       male_label = "Male",
                                       female_label = "Female",
@@ -946,6 +949,10 @@ plot_summary_current_data <- function(data,
 
   if (!save_plot_png %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
+  }
+
+  if (!legend_position %in% c("left", "right", "top", "bottom", "inside")) {
+    cli::cli_abort(c("x" = "`legend_position` argument must be \"left\", \"right\", \"top\", \"bottom\" or \"inside\""))
   }
 
   if (!included_sexes %in% c("both", "male", "female")) {
@@ -1182,16 +1189,29 @@ plot_summary_current_data <- function(data,
     ) +
     ggplot_theme
 
+  if (legend_position %in% c("bottom", "top", "left", "right")) {
+    treatment_plot <- treatment_plot +
+      ggplot2::theme(
+        legend.position = legend_position,
+        legend.background = ggplot2::element_blank()
+      )
+  }
+
+  if (legend_position == "inside") {
+    treatment_plot <- treatment_plot +
+      ggplot2::theme(
+        legend.position = "inside",
+        legend.position.inside = legend_position_inside,
+        legend.background = ggplot2::element_blank()
+      )
+  }
+
   if (large_axis_text == "yes") {
     treatment_plot <- treatment_plot +
       ggplot2::theme(
         axis.title = ggplot2::element_text(size = 24, face = "plain"),
-        legend.title = ggplot2::element_blank(),
-        legend.position = "inside",
-        legend.position.inside = c(0.17, 0.13),
         legend.text = ggplot2::element_text(size = 14),
-        legend.key.spacing.y = grid::unit(0.5, "cm"),
-        legend.background = ggplot2::element_rect(fill = NA)
+        legend.key.spacing.y = grid::unit(0.5, "cm")
       )
   }
 
@@ -1596,12 +1616,12 @@ plot_percent_change_comparisons <- function(data,
 
   if (included_sexes == "both") {
     percent_change_comparison_plot <- percent_change_comparison_plot %>%
-    ggplot2::ggplot(ggplot2::aes(
-      x = .data$treatment,
-      y = .data$percent_change,
-      color = .data$treatment,
-      shape = .data$sex
-    )) +
+      ggplot2::ggplot(ggplot2::aes(
+        x = .data$treatment,
+        y = .data$percent_change,
+        color = .data$treatment,
+        shape = .data$sex
+      )) +
       ggforce::geom_sina(
         bw = 12,
         alpha = 0.8,
@@ -1609,7 +1629,6 @@ plot_percent_change_comparisons <- function(data,
         size = 2
       ) +
       ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])))
-
   }
 
   if (included_sexes != "both") {
@@ -1832,7 +1851,6 @@ plot_variance_comparison_data <- function(data,
         dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
 
       facet_label <- "-faceted-by-sex"
-
     }
 
     if (facet_by_sex == "no") {
@@ -1846,23 +1864,23 @@ plot_variance_comparison_data <- function(data,
     y_axis_title <- "1/CV^2^"
 
     variance_comparison_plot <- variance_comparison_data %>%
-        ggplot2::ggplot(
-          ggplot2::aes(
-            x = .data$interval,
-            y = .data$cv_inverse_square
-          )
+      ggplot2::ggplot(
+        ggplot2::aes(
+          x = .data$interval,
+          y = .data$cv_inverse_square
         )
+      )
   }
 
   if (variance_measure == "VMR") {
-    y_axis_title = "VMR"
+    y_axis_title <- "VMR"
 
 
-      variance_comparison_plot <- variance_comparison_data %>%
-        ggplot2::ggplot(ggplot2::aes(
-          x = .data$interval,
-          y = .data$VMR
-        ))
+    variance_comparison_plot <- variance_comparison_data %>%
+      ggplot2::ggplot(ggplot2::aes(
+        x = .data$interval,
+        y = .data$VMR
+      ))
   }
 
 
@@ -1871,20 +1889,24 @@ plot_variance_comparison_data <- function(data,
       ggplot2::geom_point(
         ggplot2::aes(shape = .data$sex),
         color = theme_options["connecting_line_colour", "value"],
-        size = 1.8) +
+        size = 1.8
+      ) +
       ggplot2::scale_shape_manual(
-        values = c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))) +
+        values = c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))
+      ) +
       ggplot2::guides(shape = "none") +
-      ggplot2::facet_wrap( ~ .data$sex)
+      ggplot2::facet_wrap(~ .data$sex)
   }
 
 
 
   if (facet_by_sex == "no") {
     variance_comparison_plot <- variance_comparison_plot +
-      ggplot2::geom_point(color = theme_options["connecting_line_colour", "value"],
-                          size = 1.8,
-                          shape = plot_shape)
+      ggplot2::geom_point(
+        color = theme_options["connecting_line_colour", "value"],
+        size = 1.8,
+        shape = plot_shape
+      )
   }
 
   if (test_type != "none") {
@@ -1924,22 +1946,25 @@ plot_variance_comparison_data <- function(data,
       )
 
     if (facet_by_sex == "no") {
-    variance_comparison_plot <- variance_comparison_plot +
-      ggplot2::geom_point(ggplot2::aes(y = .data$mean_cv_inverse_square),
-                          size = 2.5,
-                          color = plot_colour,
-                          shape = plot_shape)
+      variance_comparison_plot <- variance_comparison_plot +
+        ggplot2::geom_point(ggplot2::aes(y = .data$mean_cv_inverse_square),
+          size = 2.5,
+          color = plot_colour,
+          shape = plot_shape
+        )
     }
 
     if (facet_by_sex == "yes") {
       variance_comparison_plot <- variance_comparison_plot +
-        ggplot2::geom_point(ggplot2::aes(y = .data$mean_cv_inverse_square,
-                                         shape = .data$sex),
-                            size = 2.5,
-                            color = plot_colour)
+        ggplot2::geom_point(
+          ggplot2::aes(
+            y = .data$mean_cv_inverse_square,
+            shape = .data$sex
+          ),
+          size = 2.5,
+          color = plot_colour
+        )
     }
-
-
   }
 
   if (variance_measure == "VMR") {
@@ -1957,18 +1982,23 @@ plot_variance_comparison_data <- function(data,
 
     if (facet_by_sex == "no") {
       variance_comparison_plot <- variance_comparison_plot +
-      ggplot2::geom_point(ggplot2::aes(y = .data$mean_VMR),
-                 size = 2.5,
-                 color = plot_colour,
-                 shape = plot_shape)
+        ggplot2::geom_point(ggplot2::aes(y = .data$mean_VMR),
+          size = 2.5,
+          color = plot_colour,
+          shape = plot_shape
+        )
     }
 
     if (facet_by_sex == "yes") {
       variance_comparison_plot <- variance_comparison_plot +
-        ggplot2::geom_point(ggplot2::aes(y = .data$mean_VMR,
-                                         shape = .data$sex),
-                            size = 2.5,
-                            color = plot_colour)
+        ggplot2::geom_point(
+          ggplot2::aes(
+            y = .data$mean_VMR,
+            shape = .data$sex
+          ),
+          size = 2.5,
+          color = plot_colour
+        )
     }
   }
 
@@ -2214,7 +2244,6 @@ plot_PPR_data_single_treatment <- function(data,
     sex_annotation <- "-males-only"
 
     plot_shape <- as.numeric(theme_options["male_shape", "value"])
-
   }
 
   if (included_sexes == "female") {
@@ -2238,7 +2267,6 @@ plot_PPR_data_single_treatment <- function(data,
         dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
 
       facet_label <- "-faceted-by-sex"
-
     }
 
     if (facet_by_sex == "no") {
@@ -2272,8 +2300,9 @@ plot_PPR_data_single_treatment <- function(data,
   if (facet_by_sex == "yes") {
     PPR_one_plot <- PPR_one_plot +
       ggplot2::geom_point(ggplot2::aes(shape = .data$sex),
-                          color = theme_options["connecting_line_colour", "value"],
-                          size = 1.8) +
+        color = theme_options["connecting_line_colour", "value"],
+        size = 1.8
+      ) +
       ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))) +
       ggplot2::guides(shape = "none") +
       ggplot2::facet_wrap(~ .data$sex)
@@ -2281,15 +2310,18 @@ plot_PPR_data_single_treatment <- function(data,
 
   if (facet_by_sex == "no") {
     PPR_one_plot <- PPR_one_plot +
-      ggplot2::geom_point(color = theme_options["connecting_line_colour", "value"],
-                          size = 1.8,
-                          shape = plot_shape)
+      ggplot2::geom_point(
+        color = theme_options["connecting_line_colour", "value"],
+        size = 1.8,
+        shape = plot_shape
+      )
   }
 
 
   PPR_one_plot <- PPR_one_plot +
     ggplot2::geom_line(ggplot2::aes(group = .data$letter),
-                       color = theme_options["connecting_line_colour", "value"], linewidth = 0.4) +
+      color = theme_options["connecting_line_colour", "value"], linewidth = 0.4
+    ) +
     ggplot2::coord_cartesian(ylim = c(0, plot_y_max)) +
     ggplot2::annotate(
       geom = "segment",
@@ -2306,8 +2338,10 @@ plot_PPR_data_single_treatment <- function(data,
   if (facet_by_sex == "yes") {
     PPR_one_plot <- PPR_one_plot +
       ggplot2::geom_point(
-        ggplot2::aes(y = .data$mean_PPR_all_cells,
-                     shape = .data$sex),
+        ggplot2::aes(
+          y = .data$mean_PPR_all_cells,
+          shape = .data$sex
+        ),
         size = 2.5,
         color = plot_colour
       )
@@ -2730,7 +2764,6 @@ plot_AP_comparison <-
           dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
 
         facet_label <- "-faceted-by-sex"
-
       }
 
       if (facet_by_sex == "no") {
@@ -2752,13 +2785,13 @@ plot_AP_comparison <-
 
     if (facet_by_sex == "no") {
       ap_parameter_plot <- ap_parameter_plot +
-      ggplot2::geom_point(
-        alpha = 0.9,
-        size = geom_point_size,
-        position = ggplot2::position_jitter(width = 0.02, height = 0),
-        shape = plot_shape,
-        color = plot_colour
-      ) +
+        ggplot2::geom_point(
+          alpha = 0.9,
+          size = geom_point_size,
+          position = ggplot2::position_jitter(width = 0.02, height = 0),
+          shape = plot_shape,
+          color = plot_colour
+        ) +
         ggplot2::stat_summary(
           fun.data = ggplot2::mean_se,
           geom = "pointrange",
@@ -2773,9 +2806,10 @@ plot_AP_comparison <-
     if (facet_by_sex == "yes") {
       ap_parameter_plot <- ap_parameter_plot +
         ggplot2::geom_point(ggplot2::aes(shape = .data$sex, color = .data$sex),
-                            size = geom_point_size,
-                            alpha = 0.9,
-                            position = ggplot2::position_jitter(width = 0.02, height = 0)) +
+          size = geom_point_size,
+          alpha = 0.9,
+          position = ggplot2::position_jitter(width = 0.02, height = 0)
+        ) +
         ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))) +
         ggplot2::scale_color_manual(values = c(plot_colour, plot_colour_pale)) +
         ggplot2::guides(shape = "none") +
@@ -2790,7 +2824,6 @@ plot_AP_comparison <-
           show.legend = FALSE
         ) +
         ggplot2::facet_wrap(~ .data$sex)
-
     }
 
     ap_parameter_plot <- ap_parameter_plot +
@@ -3496,15 +3529,15 @@ plot_AP_trace <-
 
       if (include_scale_bar_label == "yes") {
         ap_trace <- ap_trace +
-        ggplot2::annotate(
-          "text",
-          x = scale_bar_x_start * scaling_factor - 100,
-          y = scale_bar_y_start + 0.5 * scale_bar_y_length,
-          label = paste0(scale_bar_y_length, "mV"),
-          hjust = 1,
-          vjust = 0.5,
-          family = geom_text_family
-        ) +
+          ggplot2::annotate(
+            "text",
+            x = scale_bar_x_start * scaling_factor - 100,
+            y = scale_bar_y_start + 0.5 * scale_bar_y_length,
+            label = paste0(scale_bar_y_length, "mV"),
+            hjust = 1,
+            vjust = 0.5,
+            family = geom_text_family
+          ) +
           ggplot2::annotate(
             "text",
             x = scale_bar_x_start * scaling_factor + 0.5 * scale_bar_x_length *
@@ -3614,7 +3647,7 @@ plot_spontaneous_current_parameter_comparison <-
            save_plot_png,
            ggplot_theme = patchclampplotteR_theme()) {
     if (is.null(baseline_interval) ||
-        !is.character(baseline_interval)) {
+      !is.character(baseline_interval)) {
       cli::cli_abort(c("x" = "`baseline_interval` must be a character (e.g. \"t0to5\" or \"t0to3\")"))
     }
 
@@ -3637,7 +3670,7 @@ plot_spontaneous_current_parameter_comparison <-
     }
 
     if (is.null(post_hormone_interval) ||
-        !is.character(post_hormone_interval)) {
+      !is.character(post_hormone_interval)) {
       cli::cli_abort(c("x" = "`post_hormone_interval` must be a character (e.g. \"t20to25\")"))
     }
 
@@ -3660,16 +3693,16 @@ plot_spontaneous_current_parameter_comparison <-
 
     plot_colour <- treatment_colour_theme %>%
       dplyr::filter(.data$category == plot_category &
-                      .data$treatment == plot_treatment) %>%
+        .data$treatment == plot_treatment) %>%
       dplyr::pull(.data$colours)
 
 
 
     sEPSC_comparison_plot_data <- data %>%
       dplyr::filter(.data$category == plot_category &
-                      .data$treatment == plot_treatment) %>%
+        .data$treatment == plot_treatment) %>%
       dplyr::filter(.data$interval == baseline_interval |
-                      .data$interval == post_hormone_interval)
+        .data$interval == post_hormone_interval)
 
 
     if (facet_by_sex == "yes") {
@@ -3677,7 +3710,6 @@ plot_spontaneous_current_parameter_comparison <-
         dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
 
       facet_label <- "-faceted-by-sex"
-
     }
 
     if (y_variable == "raw_amplitude") {
@@ -3753,7 +3785,7 @@ plot_spontaneous_current_parameter_comparison <-
           color = plot_colour
         ) +
         ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
-        ggplot2::facet_wrap( ~ .data$sex)
+        ggplot2::facet_wrap(~ .data$sex)
     }
 
     sEPSC_comparison_plot <- sEPSC_comparison_plot +
@@ -3880,14 +3912,14 @@ plot_spontaneous_current_parameter_comparison <-
 #'
 #' @examples
 #' plot_spontaneous_current_trace(
-#'  data = sample_abf_file,
-#'  plot_colour = "#6600cc",
-#'  plot_category = 2,
-#'  plot_treatment = "Control",
-#'  state = "Baseline",
-#'  plot_episode = "epi1",
-#'  trace_annotation = "Baseline",
-#'  geom_text_colour = "#6600cc"
+#'   data = sample_abf_file,
+#'   plot_colour = "#6600cc",
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   state = "Baseline",
+#'   plot_episode = "epi1",
+#'   trace_annotation = "Baseline",
+#'   geom_text_colour = "#6600cc"
 #' )
 #'
 plot_spontaneous_current_trace <-
@@ -3905,7 +3937,7 @@ plot_spontaneous_current_trace <-
            trace_annotation_y_position = 6,
            geom_text_family = "",
            geom_text_colour = "#000000",
-           geom_text_size = 6,
+           geom_text_size = 5,
            plot_episode = "epi1",
            trace_thickness = 0.8,
            scale_bar_x_start = 2.8,
@@ -4002,7 +4034,7 @@ plot_spontaneous_current_trace <-
       ggplot2::ggsave(
         plot = representative_traces_plot,
         path = here::here("Figures/Spontaneous-currents/Representative-Traces"),
-        file = paste0("Spontaneous-current-trace-category-", plot_category, "-", plot_treatment, "-", state, "-",  sex, "-", letter, ".png"),
+        file = paste0("Spontaneous-current-trace-category-", plot_category, "-", plot_treatment, "-", state, "-", sex, "-", letter, ".png"),
         width = 7,
         height = 5,
         units = "in",
@@ -4041,7 +4073,6 @@ plot_spontaneous_current_trace <-
 #'
 #' insert_png_as_ggplot(import_ext_data("rat-methods.jpg"))
 #'
-#'
 insert_png_as_ggplot <- function(filename,
                                  x_axis_max = 10,
                                  y_axis_max = 10,
@@ -4049,21 +4080,20 @@ insert_png_as_ggplot <- function(filename,
                                  xmax = Inf,
                                  ymin = -Inf,
                                  ymax = Inf) {
-
   filetype <- deparse(substitute(filename))
 
   if (any(grepl(".png", filetype))) {
-    filetype <-  "png"
+    filetype <- "png"
   }
 
   if (any(grepl(".jpg", filetype))) {
-    filetype <-  "jpg"
+    filetype <- "jpg"
   }
 
   empty_plot_dataframe <- data.frame(data.frame(x = 1:x_axis_max, y = 1:y_axis_max))
 
   if (filetype == "png") {
-  image_overlay <- png::readPNG(here::here(filename)) %>% grid::rasterGrob()
+    image_overlay <- png::readPNG(here::here(filename)) %>% grid::rasterGrob()
   }
 
   if (filetype == "jpg") {
@@ -4120,12 +4150,13 @@ insert_png_as_ggplot <- function(filename,
 #'
 #' @examples
 #'
-#' plot_cell_coordinates_data(data = sample_summary_eEPSC_df$percent_change_data,
-#' background_slice_filename = import_ext_data("DMH-brain-slice.jpg"),
-#' plot_category = 2,
-#' option = "plasma",
-#' theme_options = sample_theme_options)
-#'
+#' plot_cell_coordinates_data(
+#'   data = sample_summary_eEPSC_df$percent_change_data,
+#'   background_slice_filename = import_ext_data("DMH-brain-slice.jpg"),
+#'   plot_category = 2,
+#'   option = "plasma",
+#'   theme_options = sample_theme_options
+#' )
 #'
 plot_cell_coordinates_data <- function(data,
                                        background_slice_filename,
@@ -4154,7 +4185,6 @@ plot_cell_coordinates_data <- function(data,
                                        theme_options,
                                        ggplot_theme = NULL,
                                        ...) {
-
   if (!save_plot_png %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
   }
@@ -4162,11 +4192,11 @@ plot_cell_coordinates_data <- function(data,
   filetype <- deparse(substitute(background_slice_filename))
 
   if (any(grepl(".png", filetype))) {
-    filetype <-  "png"
+    filetype <- "png"
   }
 
   if (any(grepl(".jpg", filetype))) {
-    filetype <-  "jpg"
+    filetype <- "jpg"
   }
 
   if (filetype == "png") {
@@ -4217,8 +4247,6 @@ plot_cell_coordinates_data <- function(data,
       dplyr::filter(.data$category == plot_category) %>%
       dplyr::filter(.data$treatment %in% list_of_treatments) %>%
       droplevels()
-
-
   }
 
   plot_data <- plot_data %>%
@@ -4229,7 +4257,7 @@ plot_cell_coordinates_data <- function(data,
     dplyr::summarise(max(.data$percent_change)) %>%
     dplyr::pull()
 
-  max_percent_change <- round(max_percent_change/ 10)*10
+  max_percent_change <- round(max_percent_change / 10) * 10
 
 
   coordinates_plot <- plot_data %>%
@@ -4287,7 +4315,7 @@ plot_cell_coordinates_data <- function(data,
     coordinates_plot <- coordinates_plot +
       ggplot2::annotate(
         geom = "text",
-        x = scale_bar_x_start + 1/2*(scale_bar_x_length),
+        x = scale_bar_x_start + 1 / 2 * (scale_bar_x_length),
         y = scale_bar_y_start + 25,
         label = paste0(scale_bar_x_length, " ", scale_bar_units),
         hjust = 0.5,
@@ -4299,7 +4327,7 @@ plot_cell_coordinates_data <- function(data,
       ggplot2::annotate(
         geom = "text",
         x = scale_bar_x_start - 25,
-        y = scale_bar_y_start - 1/2*(scale_bar_y_length),
+        y = scale_bar_y_start - 1 / 2 * (scale_bar_y_length),
         label = paste0(scale_bar_y_length, " ", scale_bar_units),
         hjust = 1,
         vjust = 0.5,
