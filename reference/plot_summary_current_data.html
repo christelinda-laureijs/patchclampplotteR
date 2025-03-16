@@ -69,6 +69,8 @@ presented as mean +/- the standard error.</p>
 <span>  y_variable <span class="op">=</span> <span class="st">"amplitude"</span>,</span>
 <span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
 <span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  legend_position <span class="op">=</span> <span class="st">"right"</span>,</span>
+<span>  legend_position_inside <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.13</span>, <span class="fl">0.15</span><span class="op">)</span>,</span>
 <span>  included_sexes <span class="op">=</span> <span class="st">"both"</span>,</span>
 <span>  male_label <span class="op">=</span> <span class="st">"Male"</span>,</span>
 <span>  female_label <span class="op">=</span> <span class="st">"Female"</span>,</span>
@@ -143,6 +145,14 @@ minutes) when a hormone was added or when HFS was applied. This will set
 the annotation line start point.</p></dd>
 
 
+<dt id="arg-legend-position">legend_position<a class="anchor" aria-label="anchor" href="#arg-legend-position"></a></dt>
+<dd><p>A character value ("left", "right", "top", "bottom", "inside") which describes the location of the legend. If you set this to "inside", you may need to adjust the location of the representative trace with <code>annotation_x_min</code>, <code>annotation_x_max</code>, etc. Or, you can choose to insert the representative trace as a separate geom using the <code>patchwork</code> package (e.g. set up a two-row patchwork with the representative trace in the top row, and the summary plot in the second row).</p></dd>
+
+
+<dt id="arg-legend-position-inside">legend_position_inside<a class="anchor" aria-label="anchor" href="#arg-legend-position-inside"></a></dt>
+<dd><p>A list of two numeric values describing the coordinates of the legend. This only applies if <code>legend_position = "inside"</code>.</p></dd>
+
+
 <dt id="arg-included-sexes">included_sexes<a class="anchor" aria-label="anchor" href="#arg-included-sexes"></a></dt>
 <dd><p>A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the <code>t_test_df</code> contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.</p></dd>
 
@@ -215,8 +225,7 @@ argument, or the significance stars will be misleading.</p></dd>
 
 
 <dt id="arg-large-axis-text">large_axis_text<a class="anchor" aria-label="anchor" href="#arg-large-axis-text"></a></dt>
-<dd><p>A character ("yes" or "no"). If "yes", a ggplot theme
-layer will be applied which increases the size of the axis text.</p></dd>
+<dd><p>A character ("yes" or "no"). If "yes", a ggplot theme layer will be applied which increases the size of the axis text.</p></dd>
 
 
 <dt id="arg-shade-intervals">shade_intervals<a class="anchor" aria-label="anchor" href="#arg-shade-intervals"></a></dt>

@@ -68,7 +68,7 @@
 <span>  include_scale_bar_label <span class="op">=</span> <span class="st">"yes"</span>,</span>
 <span>  scale_bar_thickness <span class="op">=</span> <span class="fl">0.8</span>,</span>
 <span>  scale_bar_colour <span class="op">=</span> <span class="st">"white"</span>,</span>
-<span>  geom_text_size <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  scale_bar_label_size <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  geom_point_size <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  geom_text_family <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  geom_point_alpha <span class="op">=</span> <span class="fl">0.95</span>,</span>
@@ -154,7 +154,7 @@ include_all_treatments is "yes" by default.</p></dd>
 <dd><p>A character value (named colour of hex value) describing the colour of the scale bar. Defaults to "black".</p></dd>
 
 
-<dt id="arg-geom-text-size">geom_text_size<a class="anchor" aria-label="anchor" href="#arg-geom-text-size"></a></dt>
+<dt id="arg-scale-bar-label-size">scale_bar_label_size<a class="anchor" aria-label="anchor" href="#arg-scale-bar-label-size"></a></dt>
 <dd><p>A numeric value describing the size of the scale bar annotation text. Defaults to 4.</p></dd>
 
 
@@ -218,13 +218,14 @@ contain the <code>plot_category</code>.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">plot_cell_coordinates_data</span><span class="op">(</span>data <span class="op">=</span> <span class="va">sample_summary_eEPSC_df</span><span class="op">$</span><span class="va">percent_change_data</span>,</span></span>
-<span class="r-in"><span>background_slice_filename <span class="op">=</span> <span class="fu"><a href="import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"DMH-brain-slice.jpg"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
-<span class="r-in"><span>option <span class="op">=</span> <span class="st">"plasma"</span>,</span></span>
-<span class="r-in"><span>theme_options <span class="op">=</span> <span class="va">sample_theme_options</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plot_cell_coordinates_data</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_summary_eEPSC_df</span><span class="op">$</span><span class="va">percent_change_data</span>,</span></span>
+<span class="r-in"><span>  background_slice_filename <span class="op">=</span> <span class="fu"><a href="import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"DMH-brain-slice.jpg"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  option <span class="op">=</span> <span class="st">"plasma"</span>,</span></span>
+<span class="r-in"><span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot_cell_coordinates_data-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
