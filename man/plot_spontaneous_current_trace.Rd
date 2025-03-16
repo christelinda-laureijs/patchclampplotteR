@@ -14,12 +14,13 @@ plot_spontaneous_current_trace(
   letter,
   include_scale_bar = "yes",
   include_scale_bar_label = "yes",
+  scale_bar_label_size = 4,
   trace_annotation = "",
   trace_annotation_x_position = 1,
   trace_annotation_y_position = 6,
   geom_text_family = "",
   geom_text_colour = "#000000",
-  geom_text_size = 6,
+  geom_text_size = 5,
   plot_episode = "epi1",
   trace_thickness = 0.8,
   scale_bar_x_start = 2.8,
@@ -63,6 +64,8 @@ will be added to the plot. Allowed values are "yes" and "no".}
 
 \item{include_scale_bar_label}{A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from \code{scale_bar_x_length} and \code{scale_bar_y_length}.}
 
+\item{scale_bar_label_size}{A numeric value describing the size of the scale bar annotation text. Defaults to 4.}
+
 \item{trace_annotation}{A character value (e.g. "Baseline") that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to "Baseline".}
 
 \item{trace_annotation_x_position}{A numeric value for the location of the \code{trace_annotation} on the x-axis. Defaults to 1.}
@@ -73,7 +76,7 @@ will be added to the plot. Allowed values are "yes" and "no".}
 
 \item{geom_text_colour}{A character value describing the colour of the \code{trace_annotation} text. Defaults to "#000000".}
 
-\item{geom_text_size}{A numeric value describing the size of the scale bar annotation text. Defaults to 4.}
+\item{geom_text_size}{A numeric value describing the size of the \code{trace_annotation} text. Defaults to 5.}
 
 \item{plot_episode}{A character value describing the sweep (e.g. \code{epi1}) that
 will be used for the plot.}
@@ -129,14 +132,14 @@ ggplot object with an optional scale bar.
 }
 \examples{
 plot_spontaneous_current_trace(
- data = sample_abf_file,
- plot_colour = "#6600cc",
- plot_category = 2,
- plot_treatment = "Control",
- state = "Baseline",
- plot_episode = "epi1",
- trace_annotation = "Baseline",
- geom_text_colour = "#6600cc"
+  data = sample_abf_file,
+  plot_colour = "#6600cc",
+  plot_category = 2,
+  plot_treatment = "Control",
+  state = "Baseline",
+  plot_episode = "epi1",
+  trace_annotation = "Baseline",
+  geom_text_colour = "#6600cc"
 )
 
 }

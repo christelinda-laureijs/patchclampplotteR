@@ -12,6 +12,8 @@ plot_summary_current_data(
   y_variable = "amplitude",
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
+  legend_position = "right",
+  legend_position_inside = c(0.13, 0.15),
   included_sexes = "both",
   male_label = "Male",
   female_label = "Female",
@@ -68,6 +70,10 @@ annotation arrow will be added instead.}
 minutes) when a hormone was added or when HFS was applied. This will set
 the annotation line start point.}
 
+\item{legend_position}{A character value ("left", "right", "top", "bottom", "inside") which describes the location of the legend. If you set this to "inside", you may need to adjust the location of the representative trace with \code{annotation_x_min}, \code{annotation_x_max}, etc. Or, you can choose to insert the representative trace as a separate geom using the \code{patchwork} package (e.g. set up a two-row patchwork with the representative trace in the top row, and the summary plot in the second row).}
+
+\item{legend_position_inside}{A list of two numeric values describing the coordinates of the legend. This only applies if \code{legend_position = "inside"}.}
+
 \item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
 
 \item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
@@ -109,8 +115,7 @@ using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary
 dataframe must be filtered to match the same conditions in the \code{data}
 argument, or the significance stars will be misleading.}
 
-\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
-layer will be applied which increases the size of the axis text.}
+\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme layer will be applied which increases the size of the axis text.}
 
 \item{shade_intervals}{A character ("yes" or "no"). If "yes", a ggplot theme
 layer will be applied which adds lightly shaded rectangles to highlight

@@ -36,5 +36,4 @@ easily manipulated in R. Be sure to assign a value to the dataframe so you can u
 
 import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
 
-
 }

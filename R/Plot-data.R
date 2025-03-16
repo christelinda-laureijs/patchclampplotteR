@@ -3891,6 +3891,7 @@ plot_spontaneous_current_parameter_comparison <-
 #' @param trace_annotation_y_position A numeric value for the location of the `trace_annotation` on the y-axis. Defaults to 6.
 #' @param plot_colour A character value naming the colour of the plot.
 #' @param geom_text_colour A character value describing the colour of the `trace_annotation` text. Defaults to "#000000".
+#' @param geom_text_size A numeric value describing the size of the `trace_annotation` text. Defaults to 5.
 #' @param plot_x_min A numeric value describing the minimum value on the x-axis
 #'   (in seconds).
 #' @param plot_x_max A numeric value describing the maximum value on the x-axis
@@ -3932,6 +3933,7 @@ plot_spontaneous_current_trace <-
            letter,
            include_scale_bar = "yes",
            include_scale_bar_label = "yes",
+           scale_bar_label_size = 4,
            trace_annotation = "",
            trace_annotation_x_position = 1,
            trace_annotation_y_position = 6,
@@ -4016,7 +4018,8 @@ plot_spontaneous_current_trace <-
             label = paste0(scale_bar_y_length, " pA"),
             hjust = 1,
             vjust = 0.5,
-            family = geom_text_family
+            family = geom_text_family,
+            size = scale_bar_label_size
           ) +
           ggplot2::annotate(
             "text",
@@ -4025,7 +4028,8 @@ plot_spontaneous_current_trace <-
             label = paste0(scale_bar_x_length_in_ms, " ms"),
             hjust = 0.5,
             vjust = 1,
-            family = geom_text_family
+            family = geom_text_family,
+            size = scale_bar_label_size
           )
       }
     }
@@ -4133,7 +4137,7 @@ insert_png_as_ggplot <- function(filename,
 #' @param include_scale_bar_label A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from `scale_bar_x_length` and `scale_bar_y_length`.
 #' @param scale_bar_thickness A numeric value describing the thickness of the scale bar. Defaults to 0.8.
 #' @param scale_bar_colour A character value (named colour of hex value) describing the colour of the scale bar. Defaults to "black".
-#' @param geom_text_size A numeric value describing the size of the scale bar annotation text. Defaults to 4.
+#' @param scale_bar_label_size A numeric value describing the size of the scale bar annotation text. Defaults to 4.
 #' @param geom_point_size A numeric value describing the size of the points. Defaults to 3.
 #' @param geom_text_family A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
 #' @param geom_point_alpha A numeric value describing the transparency of the points. Defaults to 0.95, but can be reduced to better view the brain slice below.
@@ -4173,7 +4177,7 @@ plot_cell_coordinates_data <- function(data,
                                        include_scale_bar_label = "yes",
                                        scale_bar_thickness = 0.8,
                                        scale_bar_colour = "white",
-                                       geom_text_size = 4,
+                                       scale_bar_label_size = 4,
                                        geom_point_size = 3,
                                        geom_text_family = "",
                                        geom_point_alpha = 0.95,
@@ -4321,7 +4325,7 @@ plot_cell_coordinates_data <- function(data,
         hjust = 0.5,
         vjust = 0.5,
         family = geom_text_family,
-        size = geom_text_size,
+        size = scale_bar_label_size,
         color = scale_bar_colour
       ) +
       ggplot2::annotate(
@@ -4332,7 +4336,7 @@ plot_cell_coordinates_data <- function(data,
         hjust = 1,
         vjust = 0.5,
         family = geom_text_family,
-        size = geom_text_size,
+        size = scale_bar_label_size,
         color = scale_bar_colour
       )
   }

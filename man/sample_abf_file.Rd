@@ -22,14 +22,14 @@ function. To reduce the package installation size, I kept only three columns fro
 \examples{
 
 plot_spontaneous_current_trace(
- data = sample_abf_file,
- plot_colour = "#6600cc",
- plot_category = 2,
- plot_treatment = "Control",
- state = "Baseline",
- plot_episode = "epi1",
- trace_annotation = "Baseline",
- geom_text_colour = "#6600cc"
+  data = sample_abf_file,
+  plot_colour = "#6600cc",
+  plot_category = 2,
+  plot_treatment = "Control",
+  state = "Baseline",
+  plot_episode = "epi1",
+  trace_annotation = "Baseline",
+  geom_text_colour = "#6600cc"
 )
 
 }

@@ -69,8 +69,7 @@ comparing the pre- and post-hormone groups.}
 
 \item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
 
-\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
-layer will be applied which increases the size of the axis text.}
+\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme layer will be applied which increases the size of the axis text.}
 
 \item{geom_signif_size}{A numeric value describing the size of the \code{geom_signif} bracket size. Defaults to 0.4, which is a good thickness for most applications.}
 

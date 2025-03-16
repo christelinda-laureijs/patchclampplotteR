@@ -21,7 +21,7 @@ plot_cell_coordinates_data(
   include_scale_bar_label = "yes",
   scale_bar_thickness = 0.8,
   scale_bar_colour = "white",
-  geom_text_size = 4,
+  scale_bar_label_size = 4,
   geom_point_size = 3,
   geom_text_family = "",
   geom_point_alpha = 0.95,
@@ -73,7 +73,7 @@ include_all_treatments is "yes" by default.}
 
 \item{scale_bar_colour}{A character value (named colour of hex value) describing the colour of the scale bar. Defaults to "black".}
 
-\item{geom_text_size}{A numeric value describing the size of the scale bar annotation text. Defaults to 4.}
+\item{scale_bar_label_size}{A numeric value describing the size of the scale bar annotation text. Defaults to 4.}
 
 \item{geom_point_size}{A numeric value describing the size of the points. Defaults to 3.}
 
@@ -113,11 +113,12 @@ This function enables you to plot your cell locations on a coordinate system wit
 }
 \examples{
 
-plot_cell_coordinates_data(data = sample_summary_eEPSC_df$percent_change_data,
-background_slice_filename = import_ext_data("DMH-brain-slice.jpg"),
-plot_category = 2,
-option = "plasma",
-theme_options = sample_theme_options)
-
+plot_cell_coordinates_data(
+  data = sample_summary_eEPSC_df$percent_change_data,
+  background_slice_filename = import_ext_data("DMH-brain-slice.jpg"),
+  plot_category = 2,
+  option = "plasma",
+  theme_options = sample_theme_options
+)
 
 }

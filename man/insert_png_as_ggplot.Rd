@@ -46,5 +46,4 @@ This function is very similar to \code{wrap_elements()} from the \code{patchwork
 
 insert_png_as_ggplot(import_ext_data("rat-methods.jpg"))
 
-
 }

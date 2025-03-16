@@ -47,8 +47,7 @@ applied continuously after a 5-minute baseline period.}
 
 \item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".}
 
-\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
-layer will be applied which increases the size of the axis text.}
+\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme layer will be applied which increases the size of the axis text.}
 
 \item{baseline_label}{A character value for the x-axis label applied to the
 pre-hormone state. Defaults to "Baseline".}
