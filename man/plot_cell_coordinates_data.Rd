@@ -28,6 +28,8 @@ plot_cell_coordinates_data(
   legend_width = 0.4,
   legend_title = "Change in eEPSC\\namplitude (\%)",
   legend_text_size = 6,
+  legend_title_size = 12,
+  legend_title_bottom_margin = 10,
   legend_height = 10,
   filename_suffix,
   save_plot_png = "no",
@@ -87,6 +89,10 @@ include_all_treatments is "yes" by default.}
 \item{legend_title}{A character value for the colourbar title. Defaults to "Change in eEPSC amplitude (\%)"}
 
 \item{legend_text_size}{The size of the text labels used in the legend. Defaults to 6.}
+
+\item{legend_title_size}{A numeric value for the size of the colourbar legend title. Defaults to 12.}
+
+\item{legend_title_bottom_margin}{A numeric value for the bottom margin of the colourbar legend title. Defaults to 10.}
 
 \item{legend_height}{The height of the legend colourbar. Defaults to 10.}
 

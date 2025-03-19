@@ -4143,6 +4143,8 @@ insert_png_as_ggplot <- function(filename,
 #' @param geom_point_alpha A numeric value describing the transparency of the points. Defaults to 0.95, but can be reduced to better view the brain slice below.
 #' @param legend_width The width of the legend colourbar. Defaults to 0.4.
 #' @param legend_text_size The size of the text labels used in the legend. Defaults to 6.
+#' @param legend_title_size A numeric value for the size of the colourbar legend title. Defaults to 12.
+#' @param legend_title_bottom_margin A numeric value for the bottom margin of the colourbar legend title. Defaults to 10.
 #' @param legend_height The height of the legend colourbar. Defaults to 10.
 #' @param legend_title A character value for the colourbar title. Defaults to "Change in eEPSC amplitude (%)"
 #' @param ... Additional arguments passed to `ggplot2::scale_color_viridis_c()` such as `begin`, `end`, `option` and `direction`.
@@ -4185,7 +4187,8 @@ plot_cell_coordinates_data <- function(data,
                                        legend_width = 0.4,
                                        legend_title = "Change in eEPSC\namplitude (%)",
                                        legend_text_size = 6,
-                                       legend_height = 10,
+                                       legend_title_size = 12,
+                                       legend_title_bottom_margin = 10,                                       legend_height = 10,
                                        filename_suffix,
                                        save_plot_png = "no",
                                        theme_options,
@@ -4312,6 +4315,11 @@ plot_cell_coordinates_data <- function(data,
       text = ggplot2::element_text(family = geom_text_family),
       legend.position = "right",
       legend.text = ggplot2::element_text(size = legend_text_size, family = geom_text_family),
+      legend.title = ggplot2::element_text(
+        size = legend_title_size,
+        family = geom_text_family,
+        margin = ggplot2::margin(b = legend_title_bottom_margin)
+      ),
       legend.key.spacing.y = grid::unit(0.03, "npc"),
       legend.margin = ggplot2::margin(10, 5, 10, 5)
     ) +
