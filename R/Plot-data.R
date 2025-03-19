@@ -4144,6 +4144,7 @@ insert_png_as_ggplot <- function(filename,
 #' @param legend_width The width of the legend colourbar. Defaults to 0.4.
 #' @param legend_text_size The size of the text labels used in the legend. Defaults to 6.
 #' @param legend_height The height of the legend colourbar. Defaults to 10.
+#' @param legend_title A character value for the colourbar title. Defaults to "Change in eEPSC amplitude (%)"
 #' @param ... Additional arguments passed to `ggplot2::scale_color_viridis_c()` such as `begin`, `end`, `option` and `direction`.
 #' @encoding UTF-8
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -4182,6 +4183,7 @@ plot_cell_coordinates_data <- function(data,
                                        geom_text_family = "",
                                        geom_point_alpha = 0.95,
                                        legend_width = 0.4,
+                                       legend_title = "Change in eEPSC\namplitude (%)",
                                        legend_text_size = 6,
                                        legend_height = 10,
                                        filename_suffix,
@@ -4274,12 +4276,13 @@ plot_cell_coordinates_data <- function(data,
     ggplot2::geom_point(size = geom_point_size, alpha = geom_point_alpha) +
     ggplot2::guides(
       color = ggplot2::guide_colorbar(
-        title = NULL,
+        title = legend_title,
         ticks.colour = NA,
         theme = ggplot2::theme(
           legend.key.width = grid::unit(legend_width, "lines"),
           legend.key.height = grid::unit(legend_height, "lines")
-        )
+        ),
+        order = 1
       )
     ) +
     ggplot2::annotate(

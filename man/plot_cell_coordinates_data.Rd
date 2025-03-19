@@ -26,6 +26,7 @@ plot_cell_coordinates_data(
   geom_text_family = "",
   geom_point_alpha = 0.95,
   legend_width = 0.4,
+  legend_title = "Change in eEPSC\\namplitude (\%)",
   legend_text_size = 6,
   legend_height = 10,
   filename_suffix,
@@ -82,6 +83,8 @@ include_all_treatments is "yes" by default.}
 \item{geom_point_alpha}{A numeric value describing the transparency of the points. Defaults to 0.95, but can be reduced to better view the brain slice below.}
 
 \item{legend_width}{The width of the legend colourbar. Defaults to 0.4.}
+
+\item{legend_title}{A character value for the colourbar title. Defaults to "Change in eEPSC amplitude (\%)"}
 
 \item{legend_text_size}{The size of the text labels used in the legend. Defaults to 6.}
 
