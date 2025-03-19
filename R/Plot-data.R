@@ -3359,24 +3359,27 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #'
 #' This function allows you to plot an `.abf` file of a recording taken in current clamp mode. It is useful if you want to display a representative trace of action potentials or the results of a current injection protocol.
 #'
+#' WARNING: If you choose to plot current injections (`y_var = "current"`) you MUST change `scale_bar_y_unit` to the correct unit (likely pA).
+#'
 #' @inheritParams plot_baseline_data
 #' @inheritParams plot_spontaneous_current_trace
 #'
 #' @param data A dataframe generated using `import_ABF_file()` with `recording_mode = "current_clamp"`.
 #' @param sweeps A character value or list of character values of the sweeps you would like to plot. These correspond to the values in the `sweep1` column of your dataset, and will likely be in the form of "epi1", "epi2", etc.
 #' @param line_width A numeric value specifying the width of the lineplot
+#' @param y_var A character value ("voltage" or "current") describing what variable will be plotted on the y-axis. Defaults to "voltage". Use "current" if you want to demonstrate current injections.
 #' @param trace_colour A hex value of the colour of the lineplot. Use if `colour_scale_option = "single_colour`.
 #' @param colour_scale_option A character value ("viridis", "custom" or "single_colour") describing what colour scale should be applied to the trace. If set to "viridis" or "custom", the trace will be coloured by sweep.
 #' @param custom_scale_colours A list of character values (can be hex values or named colours) describing the custom theme. Use if `colour_scale_option = "custom"`.
-#' @param scale_bar_x_start A numeric value (in milliseconds) describing the x-axis position of
+#' @param scale_bar_x_start A numeric value (in `scale_bar_x_unit`s, so likely milliseconds) describing the x-axis position of
 #'   the scale bar (default is 880).
-#' @param scale_bar_x_length A numeric value describing the horizontal span (in
-#'   milliseconds) of the scale bar (default is 100).
-#' @param scale_bar_y_start A numeric value describing the y-axis position (in mV) of
+#' @param scale_bar_x_length A numeric value describing the horizontal span (in `scale_bar_x_unit`s, so likely milliseconds) of the scale bar (default is 100).
+#' @param scale_bar_y_start A numeric value describing the y-axis position (in `scale_bar_x_unit`s, so likely mV) of
 #'   the scale bar (default is -30).
-#' @param scale_bar_y_length A numeric value describing the vertical span (in
-#'   mV) of the scale bar (default is 40).
+#' @param scale_bar_y_length A numeric value describing the vertical span (in `scale_bar_x_unit`s, so likely mV) of the scale bar (default is 40).
 #' @param scaling_factor A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is 10, and this value will likely not need to be changed.
+#' @param scale_bar_y_unit A character value (defaults to "mV") which will be present on the scale bar label.
+#' @param scale_bar_x_unit A character value (defaults to "ms") which will be present on the scale bar label.
 #' @param scale_bar_label_y_nudge An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to 5.
 #' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is 0.6).
 #' @param ... Additional arguments passed to `viridis::scale_color_viridis` such as `begin`, `end`, `option` and `direction`.
@@ -3412,6 +3415,7 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #' # Single colour
 #' plot_AP_trace(
 #'   data = sample_ap_abf_baseline,
+#'   y_var = "voltage",
 #'   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
 #'   colour_scale_option = "single_colour",
 #'   trace_colour = "#4294ff",
@@ -3421,6 +3425,7 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #'
 plot_AP_trace <-
   function(data,
+           y_var = "voltage",
            sweeps,
            colour_scale_option,
            custom_scale_colours = NULL,
@@ -3435,14 +3440,32 @@ plot_AP_trace <-
            geom_text_family = "",
            scale_bar_x_start = 880,
            scale_bar_x_length = 100,
+           scale_bar_x_unit = "ms",
            scaling_factor = 10,
            scale_bar_y_start = -30,
            scale_bar_y_length = 40,
+           scale_bar_y_unit = "mV",
            scale_bar_linewidth = 0.6,
            save_plot_png = "no",
            filename_suffix, ...) {
     if (!save_plot_png %in% c("yes", "no")) {
       cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
+    }
+
+    if (!y_var %in% c("voltage", "current")) {
+      cli::cli_abort(c("x" = "`y_var` argument must be one of: \"voltage\" or \"current\""))
+    }
+
+    if (y_var == "current" & scale_bar_y_unit != "pA") {
+      cli::cli_alert_info(
+        "You set `y_var` to \"current\", but `scale_bar_y_unit` is not in \"pA\". Did you forget to change the scale bar units?"
+      )
+    }
+
+    if (y_var == "voltage" & scale_bar_y_unit != "mV") {
+      cli::cli_alert_info(
+        "You set `y_var` to \"current\", but `scale_bar_y_unit` is not in \"pA\". Did you forget to change the scale bar units?"
+      )
     }
 
     if (!include_scale_bar %in% c("yes", "no")) {
@@ -3481,7 +3504,7 @@ plot_AP_trace <-
         ggplot2::ggplot(
           ggplot2::aes(
             x = .data$time,
-            y = .data$voltage,
+            y = .data[[y_var]],
             group = .data$episode,
             color = .data$episode
           )
@@ -3526,14 +3549,13 @@ plot_AP_trace <-
           lineend = "square"
         )
 
-
       if (include_scale_bar_label == "yes") {
         ap_trace <- ap_trace +
           ggplot2::annotate(
             "text",
             x = scale_bar_x_start * scaling_factor - 100,
             y = scale_bar_y_start + 0.5 * scale_bar_y_length,
-            label = paste0(scale_bar_y_length, "mV"),
+            label = paste0(scale_bar_y_length, " ", scale_bar_y_unit),
             hjust = 1,
             vjust = 0.5,
             family = geom_text_family
@@ -3543,7 +3565,7 @@ plot_AP_trace <-
             x = scale_bar_x_start * scaling_factor + 0.5 * scale_bar_x_length *
               scaling_factor,
             y = scale_bar_y_start - scale_bar_label_y_nudge,
-            label = paste0(scale_bar_x_length, "ms"),
+            label = paste0(scale_bar_x_length, " ", scale_bar_x_unit),
             hjust = 0.5,
             vjust = 0.5,
             family = geom_text_family

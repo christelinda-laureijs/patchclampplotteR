@@ -6,6 +6,7 @@
 \usage{
 plot_AP_trace(
   data,
+  y_var = "voltage",
   sweeps,
   colour_scale_option,
   custom_scale_colours = NULL,
@@ -20,9 +21,11 @@ plot_AP_trace(
   geom_text_family = "",
   scale_bar_x_start = 880,
   scale_bar_x_length = 100,
+  scale_bar_x_unit = "ms",
   scaling_factor = 10,
   scale_bar_y_start = -30,
   scale_bar_y_length = 40,
+  scale_bar_y_unit = "mV",
   scale_bar_linewidth = 0.6,
   save_plot_png = "no",
   filename_suffix,
@@ -31,6 +34,8 @@ plot_AP_trace(
 }
 \arguments{
 \item{data}{A dataframe generated using \code{import_ABF_file()} with \code{recording_mode = "current_clamp"}.}
+
+\item{y_var}{A character value ("voltage" or "current") describing what variable will be plotted on the y-axis. Defaults to "voltage". Use "current" if you want to demonstrate current injections.}
 
 \item{sweeps}{A character value or list of character values of the sweeps you would like to plot. These correspond to the values in the \code{sweep1} column of your dataset, and will likely be in the form of "epi1", "epi2", etc.}
 
@@ -62,19 +67,21 @@ will be added to the plot. Allowed values are "yes" and "no".}
 
 \item{geom_text_family}{A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
-\item{scale_bar_x_start}{A numeric value (in milliseconds) describing the x-axis position of
+\item{scale_bar_x_start}{A numeric value (in \code{scale_bar_x_unit}s, so likely milliseconds) describing the x-axis position of
 the scale bar (default is 880).}
 
-\item{scale_bar_x_length}{A numeric value describing the horizontal span (in
-milliseconds) of the scale bar (default is 100).}
+\item{scale_bar_x_length}{A numeric value describing the horizontal span (in \code{scale_bar_x_unit}s, so likely milliseconds) of the scale bar (default is 100).}
+
+\item{scale_bar_x_unit}{A character value (defaults to "ms") which will be present on the scale bar label.}
 
 \item{scaling_factor}{A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is 10, and this value will likely not need to be changed.}
 
-\item{scale_bar_y_start}{A numeric value describing the y-axis position (in mV) of
+\item{scale_bar_y_start}{A numeric value describing the y-axis position (in \code{scale_bar_x_unit}s, so likely mV) of
 the scale bar (default is -30).}
 
-\item{scale_bar_y_length}{A numeric value describing the vertical span (in
-mV) of the scale bar (default is 40).}
+\item{scale_bar_y_length}{A numeric value describing the vertical span (in \code{scale_bar_x_unit}s, so likely mV) of the scale bar (default is 40).}
+
+\item{scale_bar_y_unit}{A character value (defaults to "mV") which will be present on the scale bar label.}
 
 \item{scale_bar_linewidth}{A numeric value describing the thickness of the scalebar line (default is 0.6).}
 
@@ -95,6 +102,9 @@ project directory.
 }
 \description{
 This function allows you to plot an \code{.abf} file of a recording taken in current clamp mode. It is useful if you want to display a representative trace of action potentials or the results of a current injection protocol.
+}
+\details{
+WARNING: If you choose to plot current injections (\code{y_var = "current"}) you MUST change \code{scale_bar_y_unit} to the correct unit (likely pA).
 }
 \examples{
 
@@ -117,6 +127,7 @@ plot_AP_trace(
 # Single colour
 plot_AP_trace(
   data = sample_ap_abf_baseline,
+  y_var = "voltage",
   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
   colour_scale_option = "single_colour",
   trace_colour = "#4294ff",
