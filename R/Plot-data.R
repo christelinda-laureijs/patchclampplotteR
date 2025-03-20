@@ -3464,7 +3464,7 @@ plot_AP_trace <-
 
     if (y_var == "voltage" & scale_bar_y_unit != "mV") {
       cli::cli_alert_info(
-        "You set `y_var` to \"current\", but `scale_bar_y_unit` is not in \"pA\". Did you forget to change the scale bar units?"
+        "You set `y_var` to \"voltage\", but `scale_bar_y_unit` is not in \"mV\". Did you forget to change the scale bar units?"
       )
     }
 
@@ -3491,7 +3491,7 @@ plot_AP_trace <-
         dplyr::filter(.data$episode %in% sweeps) %>%
         ggplot2::ggplot(ggplot2::aes(
           x = .data$time,
-          y = .data$voltage,
+          y = .data[[y_var]],
           group = .data$episode
         )) +
         ggplot2::geom_line(color = trace_colour, linewidth = line_width) +
