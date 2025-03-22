@@ -3396,6 +3396,20 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #'
 #' @examples
 #'
+#' # Viridis
+#'
+#' plot_AP_trace(
+#' data = sample_ap_abf_baseline,
+#' sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+#' colour_scale_option = "viridis",
+#' plot_category = 2,
+#' plot_treatment = "Control",
+#' direction = -1,
+#' option = "plasma",
+#' begin = 0,
+#' end = 0.8
+#' )
+#'
 #' # Custom colours
 #' plot_AP_trace(
 #'   data = sample_ap_abf_baseline,
@@ -3787,6 +3801,13 @@ plot_spontaneous_current_parameter_comparison <-
           size = 2,
           color = plot_colour,
           shape = plot_shape
+        ) +
+        ggplot2::stat_summary(
+          fun.data = ggplot2::mean_se,
+          geom = "pointrange",
+          color = theme_options["mean_point_colour", "value"],
+          size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
+          alpha = 0.8
         )
     }
 
@@ -3807,19 +3828,20 @@ plot_spontaneous_current_parameter_comparison <-
           color = plot_colour
         ) +
         ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+        ggplot2::stat_summary(
+          fun.data = ggplot2::mean_se,
+          geom = "pointrange",
+          color = theme_options["mean_point_colour", "value"],
+          size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
+          alpha = 0.8
+        ) +
+        ggplot2::guides(shape = "none") +
         ggplot2::facet_wrap(~ .data$sex)
     }
 
     sEPSC_comparison_plot <- sEPSC_comparison_plot +
       ggplot2::labs(x = NULL, y = y_title) +
       ggplot2::scale_x_discrete(labels = c("Baseline", hormone_added)) +
-      ggplot2::stat_summary(
-        fun.data = ggplot2::mean_se,
-        geom = "pointrange",
-        color = theme_options["mean_point_colour", "value"],
-        size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
-        alpha = 0.8
-      ) +
       ggplot_theme
 
 
