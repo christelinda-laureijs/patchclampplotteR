@@ -3813,7 +3813,7 @@ plot_spontaneous_current_parameter_comparison <-
 
     if (facet_by_sex == "yes") {
       sEPSC_comparison_plot <- sEPSC_comparison_plot_data %>%
-        ggplot2::ggplot(ggplot2::aes(x = .data$interval, y = .data[[y_var]]), shape = .data$sex) +
+        ggplot2::ggplot(ggplot2::aes(x = .data$interval, y = .data[[y_var]])) +
         ggplot2::geom_violin(
           fill = theme_options["gray_shading_colour", "value"],
           color = NA,
@@ -3821,13 +3821,14 @@ plot_spontaneous_current_parameter_comparison <-
           width = 0.2
         ) +
         ggforce::geom_sina(
+          ggplot2::aes(shape = .data$sex),
           bw = 12,
           alpha = 0.8,
           maxwidth = 0.3,
           size = 2,
           color = plot_colour
         ) +
-        ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+        ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))) +
         ggplot2::stat_summary(
           fun.data = ggplot2::mean_se,
           geom = "pointrange",

@@ -108,6 +108,20 @@ WARNING: If you choose to plot current injections (\code{y_var = "current"}) you
 }
 \examples{
 
+# Viridis
+
+plot_AP_trace(
+data = sample_ap_abf_baseline,
+sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+colour_scale_option = "viridis",
+plot_category = 2,
+plot_treatment = "Control",
+direction = -1,
+option = "plasma",
+begin = 0,
+end = 0.8
+)
+
 # Custom colours
 plot_AP_trace(
   data = sample_ap_abf_baseline,
