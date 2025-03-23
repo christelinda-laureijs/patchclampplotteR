@@ -1339,6 +1339,7 @@ perform_t_tests_for_summary_plot <- function(data,
       .data$statistic,
       .data$df,
       .data$p_string,
+      .data$p.adj,
       .data$significance_stars,
       .data$asterisk_time
     ) %>%
