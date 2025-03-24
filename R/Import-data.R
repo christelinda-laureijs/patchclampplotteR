@@ -37,7 +37,7 @@ import_ext_data <- function(file = NULL) {
 #' \itemize{
 #'  \item `letter` A character value that is a unique identifier for a single
 #'  recording. Used to link data sets for evoked or spontaneous currents and
-#'  cell-characteristics. Example: "A"
+#'  cell-characteristics. Example: `"A"`
 #'  \item `cell` A character or numeric value representing the cell. For
 #'  example, use `3.1.1` for animal #3, slice #1, cell #1.
 #'  \item `sex` A character value such as "Male" or "Female".
@@ -50,14 +50,14 @@ import_ext_data <- function(file = NULL) {
 #'  and months when reporting animal ages). Do not use characters (e.g. avoid
 #'  "P31" and use 31 instead).
 #'  \item `animal` A numeric value representing the animal's ID number.
-#'  \item `synapses` A character value such as "Glutamate" or "GABA".
-#'  \item `treatment` A character value such as "Control" or "HNMPA".
-#'  \item `category` A numeric value representing an experiment type. For example, '1' may mean 4 seconds of high-frequency stimulation (HFS), '2' may mean an experiment where you added insulin, and '3' may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the `treatment` variable. For example, perhaps you added insulin (Category `2`) and also had the antagonist HNMPA present. This would be `Category = 2, Treatment = HNMPA`.
+#'  \item `synapses` A character value such as `"Glutamate"` or `"GABA"`.
+#'  \item `treatment` A character value such as `"Control"` or `"HNMPA"`.
+#'  \item `category` A numeric value representing an experiment type. For example, `'1'` may mean 4 seconds of high-frequency stimulation (HFS), `'2'` may mean an experiment where you added insulin, and `'3'` may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the `treatment` variable. For example, perhaps you added insulin (Category = `2`) and also had the antagonist HNMPA present. This would be `Category = 2, Treatment = HNMPA`.
 #' \item `R_a` A list of values for the access resistance, which would have been
 #' monitored at several timepoints throughout the recording. See the section
 #' `R_a` formatting below.
 #' \item `days_alone` A numeric value representing the number of days that the animal was alone in a cage. This will always be 1 for some treatments, like fasting, but should ideally be low to reduce the effects of social isolation-related stress.
-#' \item `animal_or_slicing_problems` A character value ("yes" or "no") indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use "yes" if the slices were crumpling during slicing or the animal was unusually anxious.)
+#' \item `animal_or_slicing_problems` A character value (`"yes"` or `"no"`) indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use `"yes"` if the slices were crumpling during slicing or the animal was unusually anxious.)
 #'
 #' }
 #' @section `R_a` formatting:
@@ -103,7 +103,7 @@ import_cell_characteristics_df <- function(filename) {
 #' easily manipulated in R. Be sure to assign a value to the dataframe so you can use it in later functions.
 #'
 #' @param file_name Filepath to an `.abf` file (e.g. "Data/23711004.abf")
-#' @param recording_mode The mode used for the recording. If in `recording_mode = "voltage_clamp"` (e.g. clamping cell at -70 mV and measuring current amplitude) the primary channel (`chan1`) is set to "current" and the secondary channel (`chan2`) is "voltage". If `recording_mode = "current_clamp"`, these values are reversed, where the primary channel is "voltage" and the secondary channel is "current".
+#' @param recording_mode The mode used for the recording. If in `recording_mode = "voltage_clamp"` (e.g. clamping cell at -70 mV and measuring current amplitude) the primary channel (`chan1`) is set to `"current"` and the secondary channel (`chan2`) is `"voltage"`. If `recording_mode = "current_clamp"`, these values are reversed, where the primary channel is `"voltage"` and the secondary channel is `"current"`.
 #'
 #' @returns A dataframe with 5 columns:
 #'
@@ -204,13 +204,13 @@ import_theme_colours <- function(filename) {
 #'   the same current_type as the new data (e.g. the columns must be the same).
 #'   If this is the first time you are running this function, start with a blank
 #'   .csv file containing just the column titles in the first row.
-#' @param data_type A character ("eEPSC", "sEPSC", "AP_parameter" or "AP_count") describing the data type that is being imported.
-#' @param write_new_csv A character ("yes" or "no") describing if the new data
-#'   should be written to a csv file. Defaults to "yes". Please specify
+#' @param data_type A character (`"eEPSC"`, `"sEPSC"`, `"AP_parameter"` or `"AP_count"`) describing the data type that is being imported.
+#' @param write_new_csv A character (`"yes"` or `"no"`) describing if the new data
+#'   should be written to a csv file. Defaults to `"yes"`. Please specify
 #'   a filename for the new csv file in `new_file_name`.
 #' @param new_file_name A filename for the csv containing the new data appended
 #'   to the old data. Must be a character representing a filepath to a csv file.
-#'   Examples include "Data/20241118-Raw-eEPSC-data.csv".
+#'   Examples include `"Data/20241118-Raw-eEPSC-data.csv"`.
 #' @param injection_start_time For action potential data only: A numeric value describing the start time (in ms) when current injection was applied. Used to calculate the latency to fire.
 #' @param length_of_current_injection For action potential data only: A numeric value indicating the duration of the current injection (in s, default is 0.5 s).
 #' @param decimal_places A numeric value indicating the number of decimal places the data should be rounded to. Used to reduce file size and prevent an incorrect representation of the number of significant digits.
@@ -274,7 +274,7 @@ import_theme_colours <- function(filename) {
 #'  recording. Used to link data sets for evoked or spontaneous currents and
 #'  cell-characteristics.
 #'  \item `ID` A character value for the recording filename.
-#'  \item `state` A character ("Baseline" or "Insulin") representing
+#'  \item `state` A character (`"Baseline"` or `"Insulin"`) representing
 #'  the timepoint that the data point belongs to.
 #'  \item `time_of_threshold` The time (in ms) when the membrane potential
 #'  reaches the threshold value.

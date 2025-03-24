@@ -63,35 +63,35 @@ patchclampplotteR_theme <- function() {
 #' @param theme_options A dataframe containing theme options, defaults to `sample_theme_options`. See
 #'   [sample_theme_options] for an example of what this dataframe should
 #'   look like and how you can customize these values.
-#' @param include_all_treatments A character ("yes" or "no") specifying if the
-#'   plot will include data from all treatments. If "no", you must specify a
+#' @param include_all_treatments A character (`"yes"` or `"no"`) specifying if the
+#'   plot will include data from all treatments. If `"no"`, you must specify a
 #'   list of treatments in `list_of_treatments`.
 #' @param list_of_treatments A list of character values describing the
-#'   treatments that will be in the plot. Defaults to NULL, since
-#'   include_all_treatments is "yes" by default.
+#'   treatments that will be in the plot. Defaults to `NULL`, since
+#'   include_all_treatments is `"yes"` by default.
 #' @param baseline_interval A character value indicating the name of the
-#'   interval used as the baseline. Defaults to "t0to5", but can be changed.
+#'   interval used as the baseline. Defaults to `"t0to5"`, but can be changed.
 #'   Make sure that this matches the baseline interval that you set in
 #'   [make_normalized_EPSC_data()].
 #' @param filename_suffix Optional character value to add a suffix to the
 #'   filename of the .png file created with this plot. Could be useful if you
 #'   have specified a custom list of treatments.
 #' @param current_type A character describing the current type. Allowed values
-#'   are "eEPSC" or "sEPSC".
+#'   are `"eEPSC"` or `"sEPSC"`.
 #' @param y_variable A character describing the parameter used on the y-axis. If
-#'   `current_type == "eEPSC"`, the allowed y_variable is "raw_amplitude". If
-#'   `current_type == "sEPSC"`, the allowed y_variables are "raw_amplitude" or
-#'   "raw_frequency". Note: It does not make sense to use normalized/baseline
+#'   `current_type == "eEPSC"`, the allowed y_variable is `"raw_amplitude"`. If
+#'   `current_type == "sEPSC"`, the allowed y_variables are `"raw_amplitude"` or
+#'   `"raw_frequency"`. Note: It does not make sense to use normalized/baseline
 #'   transformed amplitudes, since these will all be 100, and the graph will be
 #'   a flat line.
-#' @param large_axis_text A character ("yes" or "no"). If "yes", a ggplot theme
+#' @param large_axis_text A character (`"yes"` or `"no"`). If `"yes"`, a ggplot theme
 #'   layer will be applied which increases the axis text.
 #' @param plot_width A numeric value specifying the width of the plot. Defaults
 #'   to 8, but you will need to adjust this depending on how many treatments you
 #'   have.
-#' @param save_plot_png A character ("yes" or "no"). If "yes", the plot will be
-#'   saved as a .png using ggsave. The filepath depends on the current type, but
-#'   they will all go in subfolders below Figures/ in your project directory.
+#' @param save_plot_png A character (`"yes"` or `"no"`). If `"yes"`, the plot will be
+#'   saved as a .png using `ggsave()`. The filepath depends on the current type, but
+#'   they will all go in subfolders below `Figures/` in your project directory.
 #' @param ggplot_theme The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is `patchclampplotteR_theme()`, but other valid entries include `theme_bw()`, `theme_classic()` or the name of a custom ggplot theme stored as an object.
 #'
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -387,32 +387,32 @@ plot_baseline_data <- function(data,
 #' subtitle will include the sex and treatment. The plot will also contain a
 #' horizontal line annotation displayed over the time region where a hormone was
 #' applied. If a high-frequency stimulation (HFS) protocol is used, the plot
-#' will display an arrow with the label "HFS" to indicate the time when HFS was
+#' will display an arrow with the label `"HFS"` to indicate the time when HFS was
 #' applied.
 #'
 #' @inheritParams plot_baseline_data
 #' @param data A dataframe containing the raw evoked current data generated from
 #'   [make_normalized_EPSC_data()]. If `pruned = "yes"` you must use the `$individual_cells` component of a pruned dataset.
 #' @param plot_treatment A character value specifying the treatment you would
-#'   like to plot (e.g. "Control"). `plot_treatment` represents antagonists that
+#'   like to plot (e.g. `"Control"`). `plot_treatment` represents antagonists that
 #'   were present on the brain slice, or the animals were fasted, etc.
 #' @param plot_category A numeric value specifying the category, which can be
 #'   used to differentiate different protocol types. In the sample dataset for
 #'   this package, `plot_category == 2` represents experiments where insulin was
 #'   applied continuously after a 5-minute baseline period.
 #' @param current_type A character describing the current type. Allowed values
-#'   are "eEPSC" or "sEPSC".
+#'   are `"eEPSC"` or `"sEPSC"`.
 #' @param y_variable A character value specifying the variable to be plotted on
 #'   the y-axis. For evoked currents (`current_type = "eEPSC"`), the available
-#'   y_variables are "P1", "P1_transformed", "mean_P1" and "PPR". *Note*: If you
-#'   select "mean_P1", you must set the `pruned` argument to "yes". For
+#'   y_variables are `"P1"`, `"P1_transformed"`, `"mean_P1"` and `"PPR"`. *Note*: If you
+#'   select `"mean_P1"`, you must set the `pruned` argument to `"yes"`. For
 #'   spontaneous currents (`current_type = "sEPSC"`), the available y_variables
-#'   are "amplitude" or "frequency".
-#' @param pruned A character value ("yes" or "no") specifying if the data are
+#'   are `"amplitude"` or `"frequency"`.
+#' @param pruned A character value (`"yes"` or `"no"`) specifying if the data are
 #'   pruned. The plot will then present the data as means with error bars.
 #' @param hormone_added A character value that will be used as the label over
 #'   the line annotating the period when a hormone was applied. Examples include
-#'   "500 nM Insulin", "CCK + Leptin", and "Insulin". If you applied a
+#'   `"500 nM Insulin"`, `"CCK + Leptin"`, and `"Insulin"`. If you applied a
 #'   high-frequency stimulation (HFS) protocol instead, write "HFS", and an
 #'   annotation arrow will be added instead.
 #' @param hormone_or_HFS_start_time A numeric value indicating the time (in
@@ -423,14 +423,14 @@ plot_baseline_data <- function(data,
 #' @param theme_options A dataframe containing theme options. See
 #'   [sample_theme_options] for an example of what this dataframe should
 #'   look like.
-#' @param save_plot_png A character ("yes" or "no"). If "yes", the plot will be
+#' @param save_plot_png A character (`"yes"` or `"no"`). If `"yes"`, the plot will be
 #'   saved as a .png using ggsave. The filepath depends on the current type, but
-#'   they will all go in subfolders below Figures/ in your project directory.
+#'   they will all go in subfolders below `Figures/` in your project directory.
 #' @param treatment_colour_theme A dataframe containing treatment names and
 #'   their associated colours as hex values. See
 #'   [sample_treatment_names_and_colours] for an example of what this dataframe
 #'   should look like.
-#' @param geom_text_family A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
+#' @param geom_text_family A character value describing the font family used for the scale bar annotations. Defaults to `""` (empty, will use default system font), but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
 #'
 #' @returns A list of ggplot objects, where each list element is a scatterplot
 #'   of one recording. If `save_plot_png == "yes"`, it will also generate a .png
@@ -440,8 +440,8 @@ plot_baseline_data <- function(data,
 #'   `current_type`. The .png filename will contain the `letter`. If the data
 #'   are pruned, the filename will also include `_pruned` in the filename. If
 #'   the data are normalized (`y_variable == "P1_transformed`), the title will
-#'   include `_normalized` in the filename. Example filenames include "A.png",
-#'   "A_normalized", and "A_pruned.png".
+#'   include `_normalized` in the filename. Example filenames include `"A.png"`,
+#'   `"A_normalized"`, and `"A_pruned.png"`.
 #' @export
 #'
 #' @examples
@@ -820,39 +820,39 @@ plot_raw_current_data <-
 #' @inheritParams plot_baseline_data
 #' @param data A dataframe containing pruned summary data for all cells. This is
 #'   the third element of the list generated from [make_pruned_EPSC_data()].
-#' @param include_representative_trace A character ("yes" or "no") describing if
+#' @param include_representative_trace A character (`"yes"` or `"no"`) describing if
 #'   a representative trace should be included as an overlay to the plot. This
 #'   pulls from a png file stored in `Figures/Representative-Traces/`". Please
 #'   specify the file-name in `representative_trace_filename`.
 #' @param representative_trace_filename A character value describing the
 #'   filename of the representative trace. This should be the name of a .png
-#'   file. Use relative paths to specify files. For example, a figure in the Figures/Representative-Traces subfolder would be entered as `representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"`.
-#' @param annotation_x_min A numeric value describing the minimum value on the x-axis for the representative trace. Defaults to 1, which will place it at the lower left corner of the plot (when combined with the default value for `annotation_y_min`).
+#'   file. Use relative paths to specify files. For example, a figure in the `Figures/Representative-Traces` subfolder would be entered as `representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"`.
+#' @param annotation_x_min A numeric value describing the minimum value on the x-axis for the representative trace. Defaults to `1`, which will place it at the lower left corner of the plot (when combined with the default value for `annotation_y_min`).
 #' @param annotation_x_max A numeric value describing the maximum value on the x-axis for the representative trace. Change this if your representative trace image looks squished or stretched.
-#' @param annotation_y_min A numeric value describing the minimum value on the y-axis for the representative trace. Defaults to 0, which will place it at the lower left corner of the plot (when combined with the default value for `annotation_x_min`).
+#' @param annotation_y_min A numeric value describing the minimum value on the y-axis for the representative trace. Defaults to `0`, which will place it at the lower left corner of the plot (when combined with the default value for `annotation_x_min`).
 #' @param annotation_y_max A numeric value describing the maximum value on the y-axis for the representative trace. Change this if your representative trace image looks squished or stretched.
-#' @param included_sexes A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the `t_test_df` contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.
-#' @param male_label A character value used to describe how males are encoded in the `sex` column of the dataframe used in `data`. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".
-#' @param female_label A character value used to describe how females are encoded in the `sex` column of the dataframe used in `data`. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".
+#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name. WARNING!! If you choose `"male"` or `"female"`, you MUST ensure that the `t_test_df` contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.
+#' @param male_label A character value used to describe how males are encoded in the `sex` column of the dataframe used in `data`. Examples include `"Males"`, `"Male"`, `"male"`, `"males"`, `"M"`, etc.  This must be consistent in all data sheets. Defaults to `"Male"`.
+#' @param female_label A character value used to describe how females are encoded in the `sex` column of the dataframe used in `data`. Examples include `"Females"`, `"Female"`, `"female"`, `"females"`, `"F"`, etc. This must be consistent in all data sheets. Defaults to `"Female"`.
 #' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
-#' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`. Defaults to "", but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
+#' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`. Defaults to `""` (empty, will use default system font), but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
 #' @param geom_signif_text_size A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to `8`.
-#' @param signif_stars A character ("yes" or "no") describing if significance
-#'   stars should be included as an overlay in the plot. If "yes", you must
+#' @param signif_stars A character (`"yes"` or `"no"`) describing if significance
+#'   stars should be included as an overlay in the plot. If `"yes"`, you must
 #'   specify a dataframe containing the results of a t-test, which is generated
-#'   using [perform_t_tests_for_summary_plot()]. NOTE! If `included_sexes` is "male" or "female", you MUST use a t-test that was performed on data filtered to ONE sex.
-#' @param significance_display_method A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if `signif_stars` is "no".)
+#'   using [perform_t_tests_for_summary_plot()]. NOTE! If `included_sexes` is `"male"` or `"female"`, you MUST use a t-test that was performed on data filtered to ONE sex.
+#' @param significance_display_method A character value (`"stars"` or `"p-value"`) describing how significance values should be displayed. These annotations will not appear if `signif_stars` is `"no"`.)
 #' @param t_test_df A dataframe of t-test results, which has been generated
 #'   using [perform_t_tests_for_summary_plot()]. Important note! The t-test
 #'   dataframe must be filtered to match the same conditions in the `data`
 #'   argument, or the significance stars will be misleading.
-#' @param large_axis_text A character ("yes" or "no"). If "yes", a ggplot theme layer will be applied which increases the size of the axis text.
-#' @param legend_position A character value ("left", "right", "top", "bottom", "inside") which describes the location of the legend. If you set this to "inside", you may need to adjust the location of the representative trace with `annotation_x_min`, `annotation_x_max`, etc. Or, you can choose to insert the representative trace as a separate geom using the `patchwork` package (e.g. set up a two-row patchwork with the representative trace in the top row, and the summary plot in the second row).
+#' @param large_axis_text A character (`"yes"` or `"no"`). If `"yes"`, a ggplot theme layer will be applied which increases the size of the axis text.
+#' @param legend_position A character value (`"left"`, `"right"`, `"top"`, `"bottom"`, `"inside"`) which describes the location of the legend. If you set this to `"inside"`, you may need to adjust the location of the representative trace with `annotation_x_min`, `annotation_x_max`, etc. Or, you can choose to insert the representative trace as a separate geom using the `patchwork` package (e.g. set up a two-row patchwork with the representative trace in the top row, and the summary plot in the second row).
 #' @param legend_position_inside A list of two numeric values describing the coordinates of the legend. This only applies if `legend_position = "inside"`.
-#' @param shade_intervals A character ("yes" or "no"). If "yes", a ggplot theme
+#' @param shade_intervals A character (`"yes"` or `"no"`). If `"yes"`, a ggplot theme
 #'   layer will be applied which adds lightly shaded rectangles to highlight
 #'   5-minute intervals.
-#' @param position_dodge_size A numeric value describing the distance that points should be dodged through `ggplot2::position_dodge()`. Defaults to 0.1.
+#' @param position_dodge_size A numeric value describing the distance that points should be dodged through `ggplot2::position_dodge()`. Defaults to `0.1`.
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
 #'   a .png file exported to `Figures/Evoked-currents/Output-summary-plots` or
 #'   `Figures/Spontaneous-currents/Output-summary-plots`, depending on the
@@ -861,12 +861,12 @@ plot_raw_current_data <-
 #'   The `text_size` will only be added on if you are using `large_axis_text`
 #'   ("LARGE" will be included in the filename). The `file_name_ending` will be
 #'   automatically added on for spontaneous current data to specify what
-#'   y_variable is plotted (e.g. "raw_amplitude"). The `sexes` will only be added if you choose to plot a single sex. For example, if you set `included_sexes = "Male"`, the `.png` filename will have "-males-only" included in the filename.
+#'   y_variable is plotted (e.g. `"raw_amplitude"`). The `sexes` will only be added if you choose to plot a single sex. For example, if you set `included_sexes = "Male"`, the `.png` filename will have `"-males-only"` included in the filename.
 #'
 #'   Example auto-generated filenames include:
-#'   * "Summary-plot-Control-category-2.png"
-#'   * "Summary-plot-Control-category-2-males-only.png"
-#'   * "Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
+#'   * `"Summary-plot-Control-category-2.png"`
+#'   * `"Summary-plot-Control-category-2-males-only.png"`
+#'   * `"Summary-plot-Control-category-2_raw_amplitude.png"` for spontaneous
 #'   currents.
 #'
 #' @export
@@ -1421,7 +1421,7 @@ plot_summary_current_data <- function(data,
 #'
 #' @param data A dataframe generated from `make_summary_EPSC_data()`. If `current_type = "eEPSC"`, this must be the percent change dataframe generated from `make_summary_EPSC_data()`. Use `$percent_change` to access this dataframe. If `current_type = "sEPSC"`, this can either be `$percent_change_amplitude` or `$percent_change_frequency`.
 #'
-#' @param y_variable A character value (must be "amplitude" for `current_type = "eEPSC"`. For `current_type = "sEPSC"`, this must be "amplitude" or "frequency", corresponding to `$percent_change_amplitude` or `$percent_change_frequency`, respectively).
+#' @param y_variable A character value (must be `"amplitude"` for `current_type = "eEPSC"`. For `current_type = "sEPSC"`, this must be `"amplitude"` or `"frequency"`, corresponding to `$percent_change_amplitude` or `$percent_change_frequency`, respectively).
 #'
 #' @returns
 #'
@@ -1729,21 +1729,21 @@ plot_percent_change_comparisons <- function(data,
 #'   measures can be either the inverse coefficient of variation squared
 #'   (`variance_measure == "cv"`) or variance-to-mean ratio (`variance_measure
 #'   == "VMR"`).
-#' @param facet_by_sex A character value ("yes" or "no") describing if the plots should be faceted by sex. This is only available if "included_sexes" is "both". The resulting plot will be split in two, with male data on the left and female data on the right.
+#' @param facet_by_sex A character value (`"yes"` or `"no"`) describing if the plots should be faceted by sex. This is only available if `included_sexes` is `"both"`. The resulting plot will be split in two, with male data on the left and female data on the right.
 #' @param post_hormone_interval A character value specifying the interval used
 #'   for the data points after a hormone or protocol was applied. This must
 #'   match the `post_hormone_interval` used in [make_variance_data()].
 #' @param baseline_label A character value for the x-axis label applied to the
-#'   pre-hormone state. Defaults to "Baseline".
+#'   pre-hormone state. Defaults to `"Baseline"`.
 #' @param post_hormone_label A character value for x-axis label applied to
-#'   the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
+#'   the post-hormone or post-protocol state. Defaults to `"Post-hormone"` but you
 #'   will likely change this to the hormone or protocol name.
-#' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to 0.4, which is a good thickness for most applications.
+#' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.4`, which is a good thickness for most applications.
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
 #'   a .png file exported to `Figures/Evoked-currents/Variance-plots`. The plot
 #'   will be named in the form of
 #'   "Variance-comparison-category-`plot_category`-`plot_treatment`-`variance_measure`.png".
-#'   An example filename is "Variance-comparison-category-2-Control-cv.png".
+#'   An example filename is `"Variance-comparison-category-2-Control-cv.png"`.
 #'
 #' @export
 #'
@@ -2153,15 +2153,15 @@ plot_cv_data <- function(data,
 #' @inheritParams plot_variance_comparison_data
 #' @inheritParams plot_baseline_data
 #' @param data Paired pulse ratio data generated from [make_PPR_data()].
-#' @param test_type A character (must be "wilcox.test", "t.test" or "none")
+#' @param test_type A character (must be `"wilcox.test"`, `"t.test"` or `"none"`)
 #'   describing the statistical model used to create a significance bracket
 #'   comparing the pre- and post-hormone groups.
-#' @param map_signif_level_values A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  `map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}` to only display the p-values when they are below 0.1.
+#' @param map_signif_level_values A `TRUE/FALSE` value or a list of character values for mapping p-values. If `TRUE`, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If `FALSE`, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  `map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}` to only display the p-values when they are below 0.1.
 
-#' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to 0.4, which is a good thickness for most applications.
-#' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`. Defaults to "", but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
-#' @param y_axis_title A character value describing the y-axis title text. Defaults to "PPR" but could be expanded (e.g. "Paired pulse ratio").
-#' @param plot_y_max A numeric value describing the maximum value of the y-axis. Defaults to 3.
+#' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.4`, which is a good thickness for most applications.
+#' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`. Defaults to `""` (empty value, will be replaced with default system font), but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
+#' @param y_axis_title A character value describing the y-axis title text. Defaults to `"PPR"` but could be expanded (e.g. `"Paired pulse ratio"`).
+#' @param plot_y_max A numeric value describing the maximum value of the y-axis. Defaults to `3`.
 #' @export
 #'
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -2424,11 +2424,11 @@ plot_PPR_data_single_treatment <- function(data,
 #' @inheritParams plot_PPR_data_single_treatment
 
 #' @param data Paired pulse ratio data generated from [make_PPR_data()].
-#' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to 0.3, which is a good thickness for most applications.
+#' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.3`, which is a good thickness for most applications.
 #'
 #' @export
 #'
-#' @returns A ggplot object. If save_plot_png is defined as "yes", it will also
+#' @returns A ggplot object. If `save_plot_png` is defined as "yes", it will also
 #'   generate a .png file in the folder `Figures/Evoked-currents/PPR` relative
 #'   to the project directory.
 #'
@@ -2652,11 +2652,11 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' @inheritParams plot_AP_frequencies_single_treatment
 #'
 #' @param data The action potential data generated from `add_new_cells()` with `data_type == "AP"`.
-#' @param geom_point_size A numeric value describing the size of the points on the plot. Defaults to 3.8.
-#' @param post_hormone_label A character value that MUST correspond to one of the values in the `State` column. In the sample dataset, this is `"Insulin"`. This is required for the wilcox or t.test comparisons of "Baseline" vs. "Insulin".
+#' @param geom_point_size A numeric value describing the size of the points on the plot. Defaults to `3.8`.
+#' @param post_hormone_label A character value that MUST correspond to one of the values in the `State` column. In the sample dataset, this is `"Insulin"`. This is required for the wilcox.test or t.test comparisons of `"Baseline"` vs. `"Insulin"`.
 #' @param y_variable A character value naming the variable to be plotted on the y-axis. Must be a column present in `data`. Examples include `peak_amplitude`, `time_to_peak`, `antipeak_amplitude` and `half_width`.
-#' @param y_axis_title A character value used to define a "pretty" version of `y_variable`. This will become the y-axis label on the ggplot. Examples include "Peak Amplitude (pA)" or "Time to Peak (ms)".
-#' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to 0.5, which is a good thickness for most applications.
+#' @param y_axis_title A character value used to define a "pretty" version of `y_variable`. This will become the y-axis label on the ggplot. Examples include `"Peak Amplitude (pA)"` or `"Time to Peak (ms)"`.
+#' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.5`, which is a good thickness for most applications.
 #'
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
 #'   a .png file in the folder `Figures/Action-potentials` relative to the
@@ -2877,14 +2877,14 @@ plot_AP_comparison <-
 #' @inheritParams plot_spontaneous_current_parameter_comparison
 #'
 #' @param data Action potential frequency data imported through `add_new_cells()` with `data_type == "AP_count"`
-#' @param p_adjust_method This argument is directly related to `p.adjust.method` in `rstatix::t_test`. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none" (although "none" is not recommended).
-#' @param significance_display_method A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if `test_type` is "none".)
+#' @param p_adjust_method This argument is directly related to `p.adjust.method` in `rstatix::t_test`. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include `"holm"`, `"hochberg"`, `"hommel"`, `"bonferroni"`, `"BH"`, `"BY"`, `"fdr"`, `"none"` (although `"none"` is not recommended).
+#' @param significance_display_method A character value (`"stars"` or `"p-value"`) describing how significance values should be displayed. These annotations will not appear if `test_type` is `"none"`.)
 #' @param geom_signif_y_spacer A numeric value describing the vertical spacing applied to the significance markers. Defaults to 1, but can be set to a higher value if the p-values or significance stars are too close to the error bars.
 #' @param geom_signif_text_size A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to `5`.
-#' @param save_output_as_RDS A character ("yes" or "no") describing if the
-#'   resulting object should be saved as an RDS file in the folder 'Data/Output-Data-from-R'. The function will automatically create this folder if it doesn't already exist.
-#' @param baseline_shape A numeric value describing the shape used for the baseline data. Defaults to 16, which is a circle.
-#' @param post_treatment_shape A numeric value describing the shape used for the post-treatment/post-protocol data. Defaults to 17, which is a triangle.
+#' @param save_output_as_RDS A character (`"yes"` or `"no"`) describing if the
+#'   resulting object should be saved as an RDS file in the folder `"Data/Output-Data-from-R"`. The function will automatically create this folder if it doesn't already exist.
+#' @param baseline_shape A numeric value describing the shape used for the baseline data. Defaults to `16`, which is a circle.
+#' @param post_treatment_shape A numeric value describing the shape used for the post-treatment/post-protocol data. Defaults to `17`, which is a triangle.
 #' @returns
 #'
 #' A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -3361,29 +3361,29 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #'
 #' This function allows you to plot an `.abf` file of a recording taken in current clamp mode. It is useful if you want to display a representative trace of action potentials or the results of a current injection protocol.
 #'
-#' WARNING: If you choose to plot current injections (`y_var = "current"`) you MUST change `scale_bar_y_unit` to the correct unit (likely pA).
+#' WARNING: If you choose to plot current injections (`y_var = "current"`) you MUST change `scale_bar_y_unit` to the correct unit (likely `"pA"`).
 #'
 #' @inheritParams plot_baseline_data
 #' @inheritParams plot_spontaneous_current_trace
 #'
 #' @param data A dataframe generated using `import_ABF_file()` with `recording_mode = "current_clamp"`.
-#' @param sweeps A character value or list of character values of the sweeps you would like to plot. These correspond to the values in the `sweep1` column of your dataset, and will likely be in the form of "epi1", "epi2", etc.
+#' @param sweeps A character value or list of character values of the sweeps you would like to plot. These correspond to the values in the `sweep1` column of your dataset, and will likely be in the form of `"epi1"`, `"epi2"`, etc.
 #' @param line_width A numeric value specifying the width of the lineplot
-#' @param y_var A character value ("voltage" or "current") describing what variable will be plotted on the y-axis. Defaults to "voltage". Use "current" if you want to demonstrate current injections.
+#' @param y_var A character value (`"voltage"` or `"current"`) describing what variable will be plotted on the y-axis. Defaults to `"voltage"`. Use `"current"` if you want to demonstrate current injections.
 #' @param trace_colour A hex value of the colour of the lineplot. Use if `colour_scale_option = "single_colour`.
-#' @param colour_scale_option A character value ("viridis", "custom" or "single_colour") describing what colour scale should be applied to the trace. If set to "viridis" or "custom", the trace will be coloured by sweep.
+#' @param colour_scale_option A character value (`"viridis"`, `"custom"` or `"single_colour"`) describing what colour scale should be applied to the trace. If set to `"viridis"` or `"custom"`, the trace will be coloured by sweep.
 #' @param custom_scale_colours A list of character values (can be hex values or named colours) describing the custom theme. Use if `colour_scale_option = "custom"`.
 #' @param scale_bar_x_start A numeric value (in `scale_bar_x_unit`s, so likely milliseconds) describing the x-axis position of
-#'   the scale bar (default is 880).
-#' @param scale_bar_x_length A numeric value describing the horizontal span (in `scale_bar_x_unit`s, so likely milliseconds) of the scale bar (default is 100).
+#'   the scale bar (default is `880`).
+#' @param scale_bar_x_length A numeric value describing the horizontal span (in `scale_bar_x_unit`s, so likely milliseconds) of the scale bar (default is `100`).
 #' @param scale_bar_y_start A numeric value describing the y-axis position (in `scale_bar_x_unit`s, so likely mV) of
-#'   the scale bar (default is -30).
-#' @param scale_bar_y_length A numeric value describing the vertical span (in `scale_bar_x_unit`s, so likely mV) of the scale bar (default is 40).
-#' @param scaling_factor A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is 10, and this value will likely not need to be changed.
-#' @param scale_bar_y_unit A character value (defaults to "mV") which will be present on the scale bar label.
-#' @param scale_bar_x_unit A character value (defaults to "ms") which will be present on the scale bar label.
-#' @param scale_bar_label_y_nudge An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to 5.
-#' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is 0.6).
+#'   the scale bar (default is `-30`).
+#' @param scale_bar_y_length A numeric value describing the vertical span (in `scale_bar_x_unit`s, so likely mV) of the scale bar (default is `40`).
+#' @param scaling_factor A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is `10`, and this value will likely not need to be changed.
+#' @param scale_bar_y_unit A character value (defaults to `"mV"`) which will be present on the scale bar label.
+#' @param scale_bar_x_unit A character value (defaults to `"ms"`) which will be present on the scale bar label.
+#' @param scale_bar_label_y_nudge An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to `5`.
+#' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is `0.6`).
 #' @param ... Additional arguments passed to `viridis::scale_color_viridis` such as `begin`, `end`, `option` and `direction`.
 #'
 #' @returns
@@ -3630,11 +3630,11 @@ plot_AP_trace <-
 #' `ggsignif::geom_signif()`.
 #'
 #' @param data Summary data for spontaneous currents generated using [make_summary_EPSC_data()] where `current_type == "sEPSC"`.
-#' @param facet_by_sex A character value ("yes" or "no") describing if the plots should be faceted by sex. This is only available if "included_sexes" is "both". The resulting plot will be split in two, with male data on the left and female data on the right.
-#' @param y_variable A character value ("raw_amplitude" or "raw_frequency") only.
+#' @param facet_by_sex A character value (`"yes"` or `"no"`) describing if the plots should be faceted by sex. This is only available if `"included_sexes"` is `"both"`. The resulting plot will be split in two, with male data on the left and female data on the right.
+#' @param y_variable A character value (`"raw_amplitude"` or `"raw_frequency"`) only.
 #'   Normalized amplitude and frequency are not available because all baseline
 #'   values are 100.
-#' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to 0.5, which is a good thickness for most applications.
+#' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to `0.5`, which is a good thickness for most applications.
 #'
 #' @inheritParams plot_variance_comparison_data
 #' @inheritParams plot_baseline_data
@@ -3915,41 +3915,41 @@ plot_spontaneous_current_parameter_comparison <-
 #' @param data A dataframe containing at least these columns: `time`,
 #'   `episode`, `current`, `voltage`, `time_sec`. An easy way to obtain this is
 #'   by importing a raw .abf file through the [import_ABF_file()] function.
-#' @param state A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The `state` will be included in the .png filename if `save_plot_png = "yes"`.
-#' @param sex An optional character value ("male" or "female"), which will be added to the file name.
-#' @param letter An optional character value describing the recording letter ID, (e.g. "A", "AB") that will be appended to the filename.
+#' @param state A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include `"Baseline"`, `"Post-insulin"`. The `state` will be included in the .png filename if `save_plot_png = "yes"`.
+#' @param sex An optional character value (`"male"` or `"female"`), which will be added to the file name.
+#' @param letter An optional character value describing the recording letter ID, (e.g. `"A"`, `"AB"`) that will be appended to the filename.
 #' @param include_scale_bar A character value that determines if a scale bar
-#'   will be added to the plot. Allowed values are "yes" and "no".
-#' @param include_scale_bar_label A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from `scale_bar_x_length` and `scale_bar_y_length`.
+#'   will be added to the plot. Allowed values are `"yes"` and `"no"`.
+#' @param include_scale_bar_label A character value (`"yes"` or `"no"`) describing whether to include text labels on the scale bar. If `"yes"`, the text annotation values will be pulled from `scale_bar_x_length` and `scale_bar_y_length`.
 #' @param plot_episode A character value describing the sweep (e.g. `epi1`) that
 #'   will be used for the plot.
 #' @param scale_bar_x_start A numeric value (in seconds) describing the x-axis position of
-#'   the scale bar (default is 1.25).
+#'   the scale bar (default is `1.25`).
 #' @param scale_bar_x_length A numeric value describing the horizontal span (in
 #'   seconds) of the scale bar. This will automatically be converted and
-#'   displayed in milliseconds (default is 0.5).
+#'   displayed in milliseconds (default is `0.5`).
 #' @param scale_bar_y_start A numeric value describing the y-axis position (in pA) of
-#'   the scale bar (default is 15).
+#'   the scale bar (default is `15`).
 #' @param scale_bar_y_length A numeric value describing the vertical span (in
-#'   pA) of the scale bar (default is 20).
-#' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is 0.4).
-#' @param trace_annotation A character value (e.g. "Baseline") that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to "Baseline".
-#' @param trace_annotation_x_position A numeric value for the location of the `trace_annotation` on the x-axis. Defaults to 1.
-#' @param trace_annotation_y_position A numeric value for the location of the `trace_annotation` on the y-axis. Defaults to 6.
+#'   pA) of the scale bar (default is `20`).
+#' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is `0.4`).
+#' @param trace_annotation A character value (e.g. `"Baseline"`) that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to `"Baseline"`.
+#' @param trace_annotation_x_position A numeric value for the location of the `trace_annotation` on the x-axis. Defaults to `1`.
+#' @param trace_annotation_y_position A numeric value for the location of the `trace_annotation` on the y-axis. Defaults to `6`.
 #' @param plot_colour A character value naming the colour of the plot.
-#' @param geom_text_colour A character value describing the colour of the `trace_annotation` text. Defaults to "#000000".
-#' @param geom_text_size A numeric value describing the size of the `trace_annotation` text. Defaults to 5.
+#' @param geom_text_colour A character value describing the colour of the `trace_annotation` text. Defaults to `"#000000"`.
+#' @param geom_text_size A numeric value describing the size of the `trace_annotation` text. Defaults to `5`.
 #' @param plot_x_min A numeric value describing the minimum value on the x-axis
-#'   (in seconds).
+#'   (in seconds). Defaults to `1`.
 #' @param plot_x_max A numeric value describing the maximum value on the x-axis
-#'   (in seconds).
+#'   (in seconds). Defaults to `3`.
 #' @param plot_y_min A numeric value describing the minimum value on the y-axis
-#'   (in pA). Defaults to -80. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
+#'   (in pA). Defaults to `-80`. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
 #' @param plot_y_max A numeric value describing the maximum value on the y-axis
-#'   (in pA). Defaults to 5. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
-#' @param scale_bar_label_y_nudge An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to 1.5.
+#'   (in pA). Defaults to `5`. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
+#' @param scale_bar_label_y_nudge An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to `1.5`.
 #' @param trace_thickness A numeric value describing the thickness of the line.
-#' @returns A ggplot object. If save_plot_png is defined as "yes", it will also
+#' @returns A ggplot object. If `save_plot_png` is defined as "yes", it will also
 #'   generate a .png file in the folder
 #'   `Figures/Spontaneous-currents/Representative-Traces` relative to the
 #'   project directory, with the `plot_category`, `plot_treatment`, and `state` included in the filename.
@@ -4174,16 +4174,16 @@ insert_png_as_ggplot <- function(filename,
 #' @inheritParams plot_percent_change_comparisons
 #'
 #' @param background_slice_filename A character value describing the location of the background slice image. This may be a png or a jpeg. It must contain just the background slice, and the height and width must be known values in `scale_bar_units`.
-#' @param background_slice_width The width of the background slice image in `scale_bar_units`.
-#' @param background_slice_height The height of the background slice image in `scale_bar_units`.
-#' @param scale_bar_x_start The starting location of the scale bar on the x-axis in `scale_bar_units`.
-#' @param scale_bar_y_start The starting location of the scale bar on the y-axis in `scale_bar_units`.
+#' @param background_slice_width The width of the background slice image in `scale_bar_units`. Defaults to `800`.
+#' @param background_slice_height The height of the background slice image in `scale_bar_units`. Defaults to `800`.
+#' @param scale_bar_x_start The starting location of the scale bar on the x-axis in `scale_bar_units`. Defaults to `700`.
+#' @param scale_bar_y_start The starting location of the scale bar on the y-axis in `scale_bar_units`. Defaults to `100`.
 #' @param scale_bar_x_length The length of the scale bar on the x-axis in `scale_bar_units`.
 #' @param scale_bar_y_length The length of the scale bar on the y-axis in `scale_bar_units`.
 #' @param scale_bar_units The units of the scale bar. Often, it will be "um".
-#' @param include_scale_bar_label A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from `scale_bar_x_length` and `scale_bar_y_length`.
+#' @param include_scale_bar_label A character value (`"yes"` or `"no"`) describing whether to include text labels on the scale bar. If `"yes"`, the text annotation values will be pulled from `scale_bar_x_length` and `scale_bar_y_length`.
 #' @param scale_bar_thickness A numeric value describing the thickness of the scale bar. Defaults to 0.8.
-#' @param scale_bar_colour A character value (named colour of hex value) describing the colour of the scale bar. Defaults to "black".
+#' @param scale_bar_colour A character value (named colour of hex value) describing the colour of the scale bar. Defaults to `"black"`.
 #' @param scale_bar_label_size A numeric value describing the size of the scale bar annotation text. Defaults to 4.
 #' @param geom_point_size A numeric value describing the size of the points. Defaults to 3.
 #' @param geom_text_family A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
@@ -4442,19 +4442,17 @@ plot_cell_coordinates_data <- function(data,
 #' @param cell_characteristics_dataframe A dataframe containing the cell
 #'   characteristics, generated from [import_cell_characteristics_df()].
 #' @param pruned_eEPSC_dataframe A dataframe containing pruned evoked current
-#'   data, generated from [make_pruned_EPSC_data()], where `current_type ==
-#'   "eEPSC"`.
+#'   data, generated from [make_pruned_EPSC_data()], where `current_type == "eEPSC"`.
 #' @param pruned_sEPSC_dataframe A dataframe containing pruned spontaneous
-#'   current data, generated from [make_pruned_EPSC_data()], where `current_type
-#'   == "sEPSC"`.
-#' @param include_all_categories A character ("yes" or "no") specifying if the
-#'   plot will include data from all categories. If "no", you must specify a
+#'   current data, generated from [make_pruned_EPSC_data()], where `current_type == "sEPSC"`.
+#' @param include_all_categories A character (`"yes"` or `"no"`) specifying if the
+#'   plot will include data from all categories. If `"no"`, you must specify a
 #'   list of categories in `list_of_categories`.
 #' @param list_of_categories A list of character values describing the
-#'   categories that will be in the plot. Defaults to NULL, since
-#'   include_all_categories is "yes" by default.
-#' @param save_output_as_RDS A character ("yes" or "no") describing if the
-#'   resulting object should be saved as an RDS file in the folder 'Data/Output-Data-from-R'. The function will automatically create this folder if it doesn't already exist.
+#'   categories that will be in the plot. Defaults to `NULL`, since
+#'   include_all_categories is `"yes"` by default.
+#' @param save_output_as_RDS A character (`"yes"` or `"no"`) describing if the
+#'   resulting object should be saved as an RDS file in the folder `"Data/Output-Data-from-R"`. The function will automatically create this folder if it doesn't already exist.
 #'   Note: This is not the interactive table, but it is the raw dataframe that
 #'   is later inserted into `reactable::reactable()`. This is useful if you want
 #'   to build your own table using a different package, or you want to generate
