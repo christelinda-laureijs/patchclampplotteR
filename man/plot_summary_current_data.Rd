@@ -19,6 +19,7 @@ plot_summary_current_data(
   female_label = "Female",
   include_representative_trace = "no",
   representative_trace_filename = NULL,
+  position_dodge_size = 0,
   annotation_x_min = 1,
   annotation_x_max = 8,
   annotation_y_min = 0,
@@ -88,6 +89,8 @@ specify the file-name in \code{representative_trace_filename}.}
 \item{representative_trace_filename}{A character value describing the
 filename of the representative trace. This should be the name of a .png
 file. Use relative paths to specify files. For example, a figure in the Figures/Representative-Traces subfolder would be entered as \code{representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"}.}
+
+\item{position_dodge_size}{A numeric value describing the distance that points should be dodged through \code{ggplot2::position_dodge()}. Defaults to 0.1.}
 
 \item{annotation_x_min}{A numeric value describing the minimum value on the x-axis for the representative trace. Defaults to 1, which will place it at the lower left corner of the plot (when combined with the default value for \code{annotation_y_min}).}
 

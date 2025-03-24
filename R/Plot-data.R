@@ -852,6 +852,7 @@ plot_raw_current_data <-
 #' @param shade_intervals A character ("yes" or "no"). If "yes", a ggplot theme
 #'   layer will be applied which adds lightly shaded rectangles to highlight
 #'   5-minute intervals.
+#' @param position_dodge_size A numeric value describing the distance that points should be dodged through `ggplot2::position_dodge()`. Defaults to 0.1.
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
 #'   a .png file exported to `Figures/Evoked-currents/Output-summary-plots` or
 #'   `Figures/Spontaneous-currents/Output-summary-plots`, depending on the
@@ -910,6 +911,7 @@ plot_summary_current_data <- function(data,
                                       female_label = "Female",
                                       include_representative_trace = "no",
                                       representative_trace_filename = NULL,
+                                      position_dodge_size = 0,
                                       annotation_x_min = 1,
                                       annotation_x_max = 8,
                                       annotation_y_min = 0,
@@ -1174,7 +1176,7 @@ plot_summary_current_data <- function(data,
       },
       alpha = 1,
       position = ggplot2::position_dodge(width = if (current_type == "eEPSC") {
-        0.3
+        position_dodge_size
       } else {
         0
       })
