@@ -3401,15 +3401,15 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #' # Viridis
 #'
 #' plot_AP_trace(
-#' data = sample_ap_abf_baseline,
-#' sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
-#' colour_scale_option = "viridis",
-#' plot_category = 2,
-#' plot_treatment = "Control",
-#' direction = -1,
-#' option = "plasma",
-#' begin = 0,
-#' end = 0.8
+#'   data = sample_ap_abf_baseline,
+#'   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+#'   colour_scale_option = "viridis",
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   direction = -1,
+#'   option = "plasma",
+#'   begin = 0,
+#'   end = 0.8
 #' )
 #'
 #' # Custom colours
@@ -4235,7 +4235,7 @@ plot_cell_coordinates_data <- function(data,
                                        legend_title = "Change in eEPSC\namplitude (%)",
                                        legend_text_size = 6,
                                        legend_title_size = 12,
-                                       legend_title_bottom_margin = 10,                                       legend_height = 10,
+                                       legend_title_bottom_margin = 10, legend_height = 10,
                                        filename_suffix,
                                        save_plot_png = "no",
                                        theme_options,
