@@ -76,6 +76,7 @@ presented as mean +/- the standard error.</p>
 <span>  female_label <span class="op">=</span> <span class="st">"Female"</span>,</span>
 <span>  include_representative_trace <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  representative_trace_filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  position_dodge_size <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  annotation_x_min <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  annotation_x_max <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>  annotation_y_min <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -176,6 +177,10 @@ specify the file-name in <code>representative_trace_filename</code>.</p></dd>
 <dd><p>A character value describing the
 filename of the representative trace. This should be the name of a .png
 file. Use relative paths to specify files. For example, a figure in the Figures/Representative-Traces subfolder would be entered as <code>representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"</code>.</p></dd>
+
+
+<dt id="arg-position-dodge-size">position_dodge_size<a class="anchor" aria-label="anchor" href="#arg-position-dodge-size"></a></dt>
+<dd><p>A numeric value describing the distance that points should be dodged through <code><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html" class="external-link">ggplot2::position_dodge()</a></code>. Defaults to 0.1.</p></dd>
 
 
 <dt id="arg-annotation-x-min">annotation_x_min<a class="anchor" aria-label="anchor" href="#arg-annotation-x-min"></a></dt>
