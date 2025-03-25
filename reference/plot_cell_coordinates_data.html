@@ -99,11 +99,11 @@
 
 
 <dt id="arg-background-slice-height">background_slice_height<a class="anchor" aria-label="anchor" href="#arg-background-slice-height"></a></dt>
-<dd><p>The height of the background slice image in <code>scale_bar_units</code>.</p></dd>
+<dd><p>The height of the background slice image in <code>scale_bar_units</code>. Defaults to <code>800</code>.</p></dd>
 
 
 <dt id="arg-background-slice-width">background_slice_width<a class="anchor" aria-label="anchor" href="#arg-background-slice-width"></a></dt>
-<dd><p>The width of the background slice image in <code>scale_bar_units</code>.</p></dd>
+<dd><p>The width of the background slice image in <code>scale_bar_units</code>. Defaults to <code>800</code>.</p></dd>
 
 
 <dt id="arg-plot-category">plot_category<a class="anchor" aria-label="anchor" href="#arg-plot-category"></a></dt>
@@ -114,19 +114,19 @@ applied continuously after a 5-minute baseline period.</p></dd>
 
 
 <dt id="arg-include-all-treatments">include_all_treatments<a class="anchor" aria-label="anchor" href="#arg-include-all-treatments"></a></dt>
-<dd><p>A character ("yes" or "no") specifying if the
-plot will include data from all treatments. If "no", you must specify a
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>) specifying if the
+plot will include data from all treatments. If <code>"no"</code>, you must specify a
 list of treatments in <code>list_of_treatments</code>.</p></dd>
 
 
 <dt id="arg-list-of-treatments">list_of_treatments<a class="anchor" aria-label="anchor" href="#arg-list-of-treatments"></a></dt>
 <dd><p>A list of character values describing the
-treatments that will be in the plot. Defaults to NULL, since
-include_all_treatments is "yes" by default.</p></dd>
+treatments that will be in the plot. Defaults to <code>NULL</code>, since
+include_all_treatments is <code>"yes"</code> by default.</p></dd>
 
 
 <dt id="arg-scale-bar-x-start">scale_bar_x_start<a class="anchor" aria-label="anchor" href="#arg-scale-bar-x-start"></a></dt>
-<dd><p>The starting location of the scale bar on the x-axis in <code>scale_bar_units</code>.</p></dd>
+<dd><p>The starting location of the scale bar on the x-axis in <code>scale_bar_units</code>. Defaults to <code>700</code>.</p></dd>
 
 
 <dt id="arg-scale-bar-x-length">scale_bar_x_length<a class="anchor" aria-label="anchor" href="#arg-scale-bar-x-length"></a></dt>
@@ -134,7 +134,7 @@ include_all_treatments is "yes" by default.</p></dd>
 
 
 <dt id="arg-scale-bar-y-start">scale_bar_y_start<a class="anchor" aria-label="anchor" href="#arg-scale-bar-y-start"></a></dt>
-<dd><p>The starting location of the scale bar on the y-axis in <code>scale_bar_units</code>.</p></dd>
+<dd><p>The starting location of the scale bar on the y-axis in <code>scale_bar_units</code>. Defaults to <code>100</code>.</p></dd>
 
 
 <dt id="arg-scale-bar-y-length">scale_bar_y_length<a class="anchor" aria-label="anchor" href="#arg-scale-bar-y-length"></a></dt>
@@ -146,7 +146,7 @@ include_all_treatments is "yes" by default.</p></dd>
 
 
 <dt id="arg-include-scale-bar-label">include_scale_bar_label<a class="anchor" aria-label="anchor" href="#arg-include-scale-bar-label"></a></dt>
-<dd><p>A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from <code>scale_bar_x_length</code> and <code>scale_bar_y_length</code>.</p></dd>
+<dd><p>A character value (<code>"yes"</code> or <code>"no"</code>) describing whether to include text labels on the scale bar. If <code>"yes"</code>, the text annotation values will be pulled from <code>scale_bar_x_length</code> and <code>scale_bar_y_length</code>.</p></dd>
 
 
 <dt id="arg-scale-bar-thickness">scale_bar_thickness<a class="anchor" aria-label="anchor" href="#arg-scale-bar-thickness"></a></dt>
@@ -154,7 +154,7 @@ include_all_treatments is "yes" by default.</p></dd>
 
 
 <dt id="arg-scale-bar-colour">scale_bar_colour<a class="anchor" aria-label="anchor" href="#arg-scale-bar-colour"></a></dt>
-<dd><p>A character value (named colour of hex value) describing the colour of the scale bar. Defaults to "black".</p></dd>
+<dd><p>A character value (named colour of hex value) describing the colour of the scale bar. Defaults to <code>"black"</code>.</p></dd>
 
 
 <dt id="arg-scale-bar-label-size">scale_bar_label_size<a class="anchor" aria-label="anchor" href="#arg-scale-bar-label-size"></a></dt>
@@ -204,9 +204,9 @@ have specified a custom list of treatments.</p></dd>
 
 
 <dt id="arg-save-plot-png">save_plot_png<a class="anchor" aria-label="anchor" href="#arg-save-plot-png"></a></dt>
-<dd><p>A character ("yes" or "no"). If "yes", the plot will be
-saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.</p></dd>
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>). If <code>"yes"</code>, the plot will be
+saved as a .png using <code>ggsave()</code>. The filepath depends on the current type, but
+they will all go in subfolders below <code>Figures/</code> in your project directory.</p></dd>
 
 
 <dt id="arg-theme-options">theme_options<a class="anchor" aria-label="anchor" href="#arg-theme-options"></a></dt>

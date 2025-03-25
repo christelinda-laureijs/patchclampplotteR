@@ -63,7 +63,7 @@ more information, please see Huijstee &amp;amp; Kessels (2020).'><meta property=
 time points. They are the baseline period and a user-specified interval after
 a hormone or protocol has been applied. The variance measures are the inverse
 coefficient of variation squared and the variance-to-mean ratio (VMR). A
-"before vs. after" comparison of these two variance measures is useful to
+<code>"before vs. after"</code> comparison of these two variance measures is useful to
 determine which mechanism is involved in modifying synaptic plasticity. For
 more information, please see <a href="https://doi.org/10.1016/j.jneumeth.2019.108526" class="external-link">Huijstee &amp; Kessels (2020)</a>.</p>
     </div>
@@ -100,27 +100,27 @@ slice, or the animals were fasted, etc.</p></dd>
 
 
 <dt id="arg-include-all-treatments">include_all_treatments<a class="anchor" aria-label="anchor" href="#arg-include-all-treatments"></a></dt>
-<dd><p>A character ("yes" or "no") specifying if the
-plot will include data from all treatments. If "no", you must specify a
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>) specifying if the
+plot will include data from all treatments. If <code>"no"</code>, you must specify a
 list of treatments in <code>list_of_treatments</code>.</p></dd>
 
 
 <dt id="arg-list-of-treatments">list_of_treatments<a class="anchor" aria-label="anchor" href="#arg-list-of-treatments"></a></dt>
 <dd><p>A list of character values describing the
-treatments that will be in the plot. Defaults to NULL, since
-include_all_treatments is "yes" by default.</p></dd>
+treatments that will be in the plot. Defaults to <code>NULL</code>, since
+include_all_treatments is <code>"yes"</code> by default.</p></dd>
 
 
 <dt id="arg-baseline-interval">baseline_interval<a class="anchor" aria-label="anchor" href="#arg-baseline-interval"></a></dt>
 <dd><p>A character value indicating the name of the
-interval used as the baseline. Defaults to "t0to5", but can be changed.
+interval used as the baseline. Defaults to <code>"t0to5"</code>, but can be changed.
 Make sure that this matches the baseline interval that you set in
 <code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>.</p></dd>
 
 
 <dt id="arg-post-hormone-interval">post_hormone_interval<a class="anchor" aria-label="anchor" href="#arg-post-hormone-interval"></a></dt>
 <dd><p>A character value indicating the name of the
-interval used as "after" timepoint for comparison. Defaults to "t20to25",
+interval used as "after" timepoint for comparison. Defaults to <code>"t20to25"</code>,
 but can be changed. Make sure that this matches an interval present in
 <code>data</code></p></dd>
 
@@ -133,7 +133,7 @@ should look like.</p></dd>
 
 
 <dt id="arg-save-output-as-rds">save_output_as_RDS<a class="anchor" aria-label="anchor" href="#arg-save-output-as-rds"></a></dt>
-<dd><p>A character ("yes" or "no") describing if the
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>) describing if the
 resulting object should be saved as an RDS file in the raw data folder.</p></dd>
 
 </dl></div>
@@ -142,12 +142,12 @@ resulting object should be saved as an RDS file in the raw data folder.</p></dd>
     <p>A dataframe containing all of the columns within the summary data
 (see <a href="sample_summary_eEPSC_df.html">sample_summary_eEPSC_df</a> for a detailed description of these columns)
 plus three additional columns:</p><ul><li><p><code>state</code> A character value describing if a data point belongs to the
-baseline interval ("Baseline") or an interval after a hormone or protocol has
-been applied ("Post-modification"). These intervals are selected from
+baseline interval (<code>"Baseline"</code>) or an interval after a hormone or protocol has
+been applied (<code>"Post-modification"</code>). These intervals are selected from
 <code>baseline_interval</code> and <code>post_hormone_interval</code>.</p></li>
 <li><p><code>mean_cv_inverse_square</code> The mean inverse coefficient of variation
-squared within a specific state.</p></li>
-<li><p><code>mean_VMR</code> The mean variance-to-mean ratio within a specific state.</p></li>
+squared within a specific state and sex.</p></li>
+<li><p><code>mean_VMR</code> The mean variance-to-mean ratio within a specific state and sex.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -168,7 +168,7 @@ squared within a specific state.</p></li>
 <span class="r-in"><span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 38 × 25</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   treatment, state [8]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   treatment, state, sex [16]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    category letter sex    treatment interval mean_P1_transformed mean_P1_raw</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 2        AO     Male   Control   t0to5                 100          36.8 </span>

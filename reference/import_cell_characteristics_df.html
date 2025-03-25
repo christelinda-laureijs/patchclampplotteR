@@ -91,7 +91,7 @@ See the details below for information on required columns.</p></dd>
 
 <p>The columns listed below are required in the raw .csv file. If you do not have data for any of these columns, please still include the column as an "empty" column to prevent errors caused by missing columns.</p><ul><li><p><code>letter</code> A character value that is a unique identifier for a single
 recording. Used to link data sets for evoked or spontaneous currents and
-cell-characteristics. Example: "A"</p></li>
+cell-characteristics. Example: <code>"A"</code></p></li>
 <li><p><code>cell</code> A character or numeric value representing the cell. For
 example, use <code>3.1.1</code> for animal #3, slice #1, cell #1.</p></li>
 <li><p><code>sex</code> A character value such as "Male" or "Female".</p></li>
@@ -104,14 +104,14 @@ as long as the time units are consistent throughout (e.g. don't mix up days
 and months when reporting animal ages). Do not use characters (e.g. avoid
 "P31" and use 31 instead).</p></li>
 <li><p><code>animal</code> A numeric value representing the animal's ID number.</p></li>
-<li><p><code>synapses</code> A character value such as "Glutamate" or "GABA".</p></li>
-<li><p><code>treatment</code> A character value such as "Control" or "HNMPA".</p></li>
-<li><p><code>category</code> A numeric value representing an experiment type. For example, '1' may mean 4 seconds of high-frequency stimulation (HFS), '2' may mean an experiment where you added insulin, and '3' may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the <code>treatment</code> variable. For example, perhaps you added insulin (Category <code>2</code>) and also had the antagonist HNMPA present. This would be <code>Category = 2, Treatment = HNMPA</code>.</p></li>
+<li><p><code>synapses</code> A character value such as <code>"Glutamate"</code> or <code>"GABA"</code>.</p></li>
+<li><p><code>treatment</code> A character value such as <code>"Control"</code> or <code>"HNMPA"</code>.</p></li>
+<li><p><code>category</code> A numeric value representing an experiment type. For example, <code>'1'</code> may mean 4 seconds of high-frequency stimulation (HFS), <code>'2'</code> may mean an experiment where you added insulin, and <code>'3'</code> may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the <code>treatment</code> variable. For example, perhaps you added insulin (Category = <code>2</code>) and also had the antagonist HNMPA present. This would be <code>Category = 2, Treatment = HNMPA</code>.</p></li>
 <li><p><code>R_a</code> A list of values for the access resistance, which would have been
 monitored at several timepoints throughout the recording. See the section
 <code>R_a</code> formatting below.</p></li>
 <li><p><code>days_alone</code> A numeric value representing the number of days that the animal was alone in a cage. This will always be 1 for some treatments, like fasting, but should ideally be low to reduce the effects of social isolation-related stress.</p></li>
-<li><p><code>animal_or_slicing_problems</code> A character value ("yes" or "no") indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use "yes" if the slices were crumpling during slicing or the animal was unusually anxious.)</p></li>
+<li><p><code>animal_or_slicing_problems</code> A character value (<code>"yes"</code> or <code>"no"</code>) indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use <code>"yes"</code> if the slices were crumpling during slicing or the animal was unusually anxious.)</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="r-a-formatting"><code>R_a</code> formatting<a class="anchor" aria-label="anchor" href="#r-a-formatting"></a></h2>

@@ -3,11 +3,13 @@
 current data from a raw .csv file. The function will create a new column
 containing the evoked or spontaneous current amplitudes normalized relative
 to the mean current amplitude during the baseline period. For evoked current
-data, the function also adds a column for the paired pulse ratio (PPR = P2/P1, where P2 is the amplitude of the second evoked current)."><meta property="og:description" content="make_normalized_EPSC_data() creates a dataframe of evoked or spontaneous
+data, the function also adds a column for the paired pulse ratio (PPR = P2/P1, where P2 is the amplitude of the
+second evoked current)."><meta property="og:description" content="make_normalized_EPSC_data() creates a dataframe of evoked or spontaneous
 current data from a raw .csv file. The function will create a new column
 containing the evoked or spontaneous current amplitudes normalized relative
 to the mean current amplitude during the baseline period. For evoked current
-data, the function also adds a column for the paired pulse ratio (PPR = P2/P1, where P2 is the amplitude of the second evoked current)."><meta property="og:image" content="https://christelinda-laureijs.github.io/patchclampplotteR/logo.png"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-M92L6F0ZB2"></script><script>
+data, the function also adds a column for the paired pulse ratio (PPR = P2/P1, where P2 is the amplitude of the
+second evoked current)."><meta property="og:image" content="https://christelinda-laureijs.github.io/patchclampplotteR/logo.png"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-M92L6F0ZB2"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -59,7 +61,8 @@ data, the function also adds a column for the paired pulse ratio (PPR = P2/P1, w
 current data from a raw .csv file. The function will create a new column
 containing the evoked or spontaneous current amplitudes normalized relative
 to the mean current amplitude during the baseline period. For evoked current
-data, the function also adds a column for the paired pulse ratio (<code>PPR = P2/P1</code>, where <code>P2</code> is the amplitude of the second evoked current).</p>
+data, the function also adds a column for the paired pulse ratio (<code>PPR = P2/P1</code>, where <code>P2</code> is the amplitude of the
+second evoked current).</p>
     </div>
 
     <div class="section level2">
@@ -91,31 +94,31 @@ factors like <code>animal</code>, <code>age</code>, <code>sex</code>, <code>syna
 
 <dt id="arg-current-type">current_type<a class="anchor" aria-label="anchor" href="#arg-current-type"></a></dt>
 <dd><p>A character describing the current type. Allowed values
-are "eEPSC" or "sEPSC".</p></dd>
+are <code>"eEPSC"</code> or <code>"sEPSC"</code>.</p></dd>
 
 
 <dt id="arg-min-time-value">min_time_value<a class="anchor" aria-label="anchor" href="#arg-min-time-value"></a></dt>
 <dd><p>Minimum time value (numeric; in minutes), which
-defaults to 0.</p></dd>
+defaults to <code>0</code>.</p></dd>
 
 
 <dt id="arg-max-time-value">max_time_value<a class="anchor" aria-label="anchor" href="#arg-max-time-value"></a></dt>
 <dd><p>Maximum recording length (numeric; in minutes). All
 data points will be filtered to time values less than or equal to this
-value. Defaults to 25.</p></dd>
+value. Defaults to <code>25</code>.</p></dd>
 
 
 <dt id="arg-baseline-length">baseline_length<a class="anchor" aria-label="anchor" href="#arg-baseline-length"></a></dt>
 <dd><p>Length of the baseline (numeric; in minutes). Refers
 to data collected before applying a hormone, antagonist, or a protocol like
-high frequency stimulation. Defaults to 5.</p></dd>
+high frequency stimulation. Defaults to <code>5</code>.</p></dd>
 
 
 <dt id="arg-interval-length">interval_length<a class="anchor" aria-label="anchor" href="#arg-interval-length"></a></dt>
 <dd><p>Length of each interval (numeric; in minutes). Used to
 divide the dataset into broad ranges for statistical analysis. Important!
 <code>max_recording_length</code> must be evenly divisible by <code>interval_length</code>.
-Defaults to 5.</p></dd>
+Defaults to <code>5</code>.</p></dd>
 
 
 <dt id="arg-decimal-places">decimal_places<a class="anchor" aria-label="anchor" href="#arg-decimal-places"></a></dt>
@@ -125,14 +128,14 @@ incorrect representation of the number of significant digits.</p></dd>
 
 
 <dt id="arg-negative-transform-currents">negative_transform_currents<a class="anchor" aria-label="anchor" href="#arg-negative-transform-currents"></a></dt>
-<dd><p>A character ("yes" or "no") describing if
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>) describing if
 <code>P1</code> and <code>P2</code> should be negative transformed. If "yes", the values will be
 multiplied by (-1). This only applies when <code>current_type == "eEPSC"</code> - It
 will be ignored for spontaneous current data.</p></dd>
 
 
 <dt id="arg-save-output-as-rds">save_output_as_RDS<a class="anchor" aria-label="anchor" href="#arg-save-output-as-rds"></a></dt>
-<dd><p>A character ("yes" or "no") describing if the
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>) describing if the
 resulting object should be saved as an RDS file in the raw data folder.</p></dd>
 
 </dl></div>
@@ -140,18 +143,18 @@ resulting object should be saved as an RDS file in the raw data folder.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A dataframe that can be viewed and used for further analyses in R.
 New or modified columns include:</p><ul><li><p><code>P1</code> (for evoked currents only) May be negative-transformed if
-<code>negative_transform</code> == "yes"</p></li>
+<code>negative_transform</code> == <code>"yes"</code></p></li>
 <li><p><code>P2</code> (for evoked currents only) May be negative-transformed if
-<code>negative_transform</code> == "yes"</p></li>
+<code>negative_transform</code> == <code>"yes"</code></p></li>
 <li><p><code>PPR</code> (for evoked currents only) A numeric value that represents the
 paired pulse ratio (PPR) of the evoked currents, generated using
 <code>dplyr::mutate(PPR = P2/P1)</code>.</p></li>
 <li><p><code>interval</code> A character value indicating the interval that the data
-point belongs to. For example, <code>interval</code> will be "t0to5" for any data
-points from 0 to 5 minutes. Example values: "t0to5", "t5to10", etc.</p></li>
+point belongs to. For example, <code>interval</code> will be <code>"t0to5"</code> for any data
+points from 0 to 5 minutes. Example values: <code>"t0to5"</code>, <code>"t5to10"</code>, etc.</p></li>
 <li><p><code>baseline_range</code> A logical value required for the baseline
-transformation. It is set to TRUE when time is within the baseline period
-(e.g. Time &lt;= 5) and FALSE at all other times.</p></li>
+transformation. It is set to <code>TRUE</code> when time is within the baseline period
+(e.g. <code>Time &lt;= 5</code>) and <code>FALSE</code> at all other times.</p></li>
 <li><p><code>baseline_mean</code> A numeric value representing the mean evoked current
 amplitude during the baseline period. There is a different baseline_mean for
 each letter.</p></li>
@@ -174,9 +177,9 @@ relative to the mean amplitude during the recording's baseline.</p></li>
 should be included in your data.</p><ul><li><p><code>letter</code> A character value that is a unique identifier for a single
 recording. Used to link data sets for evoked or spontaneous currents and
 cell-characteristics.</p></li>
-<li><p><code>synapses</code> A character value (e.g. "Glutamate" or "GABA").</p></li>
-<li><p><code>sex</code> A character value (e.g. "Male" or "Female").</p></li>
-<li><p><code>treatment</code> A character value (e.g. "Control", "HNMPA").</p></li>
+<li><p><code>synapses</code> A character value (e.g. <code>"Glutamate"</code> or <code>"GABA"</code>).</p></li>
+<li><p><code>sex</code> A character value (e.g. <code>"Male"</code> or <code>"Female"</code>).</p></li>
+<li><p><code>treatment</code> A character value (e.g. <code>"Control"</code>, <code>"HNMPA"</code>).</p></li>
 <li><p><code>time</code> A numeric value that represents time in minutes. This column is
 autogenerated in <code><a href="add_new_cells.html">add_new_cells()</a></code>.</p></li>
 <li><p><code>ID</code> A character value for the recording filename.</p></li>
@@ -195,7 +198,7 @@ example, use <code>3.1.1</code> for animal #3, slice #1, cell #1.</p></li>
 <li><p><code>R_a</code> A list of values for the access resistance, which would have been monitored at several timepoints throughout the recording. See the documentation for the <code>R_a</code> column in the documentation for <code>sample_cell_characteristics</code> with <code><a href="sample_cell_characteristics.html">?sample_cell_characteristics</a></code>.</p></li>
 <li><p><code>notes</code> An optional character column with notes about any issues, sweeps that were removed during Clampfit processing, etc.</p></li>
 <li><p><code>days_alone</code> A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.</p></li>
-<li><p><code>animal_or_slicing_problems</code> A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).</p></li>
+<li><p><code>animal_or_slicing_problems</code> A character value (<code>"yes"</code> or <code>"no"</code>) describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).</p></li>
 </ul><p><strong>Evoked current data</strong>:</p>
 <p>If the data are evoked currents (<code>current_type == "eEPSC"</code>), the data must
 contain the basic columns mentioned in <strong>Required basic columns</strong> plus these
@@ -210,7 +213,7 @@ must contain the basic columns mentioned in <strong>Required basic columns</stro
 these columns:</p><ul><li><p><code>recording_num</code> A numeric value representing the recording number.
 This was incorporated before we switched to concatenating all recordings
 into one, but it needs to remain here to prevent breaking previous projects.
-It should be set to 1.</p></li>
+It should be set to <code>1</code>.</p></li>
 <li><p><code>trace</code> A numeric value representing the trace (automatically
 generated in Clampfit) where the current occurred.</p></li>
 <li><p><code>time_of_peak</code> A numeric value representing the time of the peak in

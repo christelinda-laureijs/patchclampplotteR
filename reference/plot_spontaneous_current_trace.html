@@ -118,29 +118,29 @@ applied continuously after a 5-minute baseline period.</p></dd>
 
 <dt id="arg-plot-treatment">plot_treatment<a class="anchor" aria-label="anchor" href="#arg-plot-treatment"></a></dt>
 <dd><p>A character value specifying the treatment you would
-like to plot (e.g. "Control"). <code>plot_treatment</code> represents antagonists that
+like to plot (e.g. <code>"Control"</code>). <code>plot_treatment</code> represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.</p></dd>
 
 
 <dt id="arg-sex">sex<a class="anchor" aria-label="anchor" href="#arg-sex"></a></dt>
-<dd><p>An optional character value ("male" or "female"), which will be added to the file name.</p></dd>
+<dd><p>An optional character value (<code>"male"</code> or <code>"female"</code>), which will be added to the file name.</p></dd>
 
 
 <dt id="arg-state">state<a class="anchor" aria-label="anchor" href="#arg-state"></a></dt>
-<dd><p>A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The <code>state</code> will be included in the .png filename if <code>save_plot_png = "yes"</code>.</p></dd>
+<dd><p>A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include <code>"Baseline"</code>, <code>"Post-insulin"</code>. The <code>state</code> will be included in the .png filename if <code>save_plot_png = "yes"</code>.</p></dd>
 
 
 <dt id="arg-letter">letter<a class="anchor" aria-label="anchor" href="#arg-letter"></a></dt>
-<dd><p>An optional character value describing the recording letter ID, (e.g. "A", "AB") that will be appended to the filename.</p></dd>
+<dd><p>An optional character value describing the recording letter ID, (e.g. <code>"A"</code>, <code>"AB"</code>) that will be appended to the filename.</p></dd>
 
 
 <dt id="arg-include-scale-bar">include_scale_bar<a class="anchor" aria-label="anchor" href="#arg-include-scale-bar"></a></dt>
 <dd><p>A character value that determines if a scale bar
-will be added to the plot. Allowed values are "yes" and "no".</p></dd>
+will be added to the plot. Allowed values are <code>"yes"</code> and <code>"no"</code>.</p></dd>
 
 
 <dt id="arg-include-scale-bar-label">include_scale_bar_label<a class="anchor" aria-label="anchor" href="#arg-include-scale-bar-label"></a></dt>
-<dd><p>A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from <code>scale_bar_x_length</code> and <code>scale_bar_y_length</code>.</p></dd>
+<dd><p>A character value (<code>"yes"</code> or <code>"no"</code>) describing whether to include text labels on the scale bar. If <code>"yes"</code>, the text annotation values will be pulled from <code>scale_bar_x_length</code> and <code>scale_bar_y_length</code>.</p></dd>
 
 
 <dt id="arg-scale-bar-label-size">scale_bar_label_size<a class="anchor" aria-label="anchor" href="#arg-scale-bar-label-size"></a></dt>
@@ -148,27 +148,27 @@ will be added to the plot. Allowed values are "yes" and "no".</p></dd>
 
 
 <dt id="arg-trace-annotation">trace_annotation<a class="anchor" aria-label="anchor" href="#arg-trace-annotation"></a></dt>
-<dd><p>A character value (e.g. "Baseline") that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to "Baseline".</p></dd>
+<dd><p>A character value (e.g. <code>"Baseline"</code>) that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to <code>"Baseline"</code>.</p></dd>
 
 
 <dt id="arg-trace-annotation-x-position">trace_annotation_x_position<a class="anchor" aria-label="anchor" href="#arg-trace-annotation-x-position"></a></dt>
-<dd><p>A numeric value for the location of the <code>trace_annotation</code> on the x-axis. Defaults to 1.</p></dd>
+<dd><p>A numeric value for the location of the <code>trace_annotation</code> on the x-axis. Defaults to <code>1</code>.</p></dd>
 
 
 <dt id="arg-trace-annotation-y-position">trace_annotation_y_position<a class="anchor" aria-label="anchor" href="#arg-trace-annotation-y-position"></a></dt>
-<dd><p>A numeric value for the location of the <code>trace_annotation</code> on the y-axis. Defaults to 6.</p></dd>
+<dd><p>A numeric value for the location of the <code>trace_annotation</code> on the y-axis. Defaults to <code>6</code>.</p></dd>
 
 
 <dt id="arg-geom-text-family">geom_text_family<a class="anchor" aria-label="anchor" href="#arg-geom-text-family"></a></dt>
-<dd><p>A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like <code>extrafont</code> to load system fonts into R.</p></dd>
+<dd><p>A character value describing the font family used for the scale bar annotations. Defaults to <code>""</code> (empty, will use default system font), but can be replaced with a named font. Use a package like <code>extrafont</code> to load system fonts into R.</p></dd>
 
 
 <dt id="arg-geom-text-colour">geom_text_colour<a class="anchor" aria-label="anchor" href="#arg-geom-text-colour"></a></dt>
-<dd><p>A character value describing the colour of the <code>trace_annotation</code> text. Defaults to "#000000".</p></dd>
+<dd><p>A character value describing the colour of the <code>trace_annotation</code> text. Defaults to <code>"#000000"</code>.</p></dd>
 
 
 <dt id="arg-geom-text-size">geom_text_size<a class="anchor" aria-label="anchor" href="#arg-geom-text-size"></a></dt>
-<dd><p>A numeric value describing the size of the <code>trace_annotation</code> text. Defaults to 5.</p></dd>
+<dd><p>A numeric value describing the size of the <code>trace_annotation</code> text. Defaults to <code>5</code>.</p></dd>
 
 
 <dt id="arg-plot-episode">plot_episode<a class="anchor" aria-label="anchor" href="#arg-plot-episode"></a></dt>
@@ -182,57 +182,57 @@ will be used for the plot.</p></dd>
 
 <dt id="arg-scale-bar-x-start">scale_bar_x_start<a class="anchor" aria-label="anchor" href="#arg-scale-bar-x-start"></a></dt>
 <dd><p>A numeric value (in seconds) describing the x-axis position of
-the scale bar (default is 1.25).</p></dd>
+the scale bar (default is <code>1.25</code>).</p></dd>
 
 
 <dt id="arg-scale-bar-x-length">scale_bar_x_length<a class="anchor" aria-label="anchor" href="#arg-scale-bar-x-length"></a></dt>
 <dd><p>A numeric value describing the horizontal span (in
 seconds) of the scale bar. This will automatically be converted and
-displayed in milliseconds (default is 0.5).</p></dd>
+displayed in milliseconds (default is <code>0.5</code>).</p></dd>
 
 
 <dt id="arg-scale-bar-y-length">scale_bar_y_length<a class="anchor" aria-label="anchor" href="#arg-scale-bar-y-length"></a></dt>
 <dd><p>A numeric value describing the vertical span (in
-pA) of the scale bar (default is 20).</p></dd>
+pA) of the scale bar (default is <code>20</code>).</p></dd>
 
 
 <dt id="arg-scale-bar-y-start">scale_bar_y_start<a class="anchor" aria-label="anchor" href="#arg-scale-bar-y-start"></a></dt>
 <dd><p>A numeric value describing the y-axis position (in pA) of
-the scale bar (default is 15).</p></dd>
+the scale bar (default is <code>15</code>).</p></dd>
 
 
 <dt id="arg-scale-bar-linewidth">scale_bar_linewidth<a class="anchor" aria-label="anchor" href="#arg-scale-bar-linewidth"></a></dt>
-<dd><p>A numeric value describing the thickness of the scalebar line (default is 0.4).</p></dd>
+<dd><p>A numeric value describing the thickness of the scalebar line (default is <code>0.4</code>).</p></dd>
 
 
 <dt id="arg-scale-bar-label-y-nudge">scale_bar_label_y_nudge<a class="anchor" aria-label="anchor" href="#arg-scale-bar-label-y-nudge"></a></dt>
-<dd><p>An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to 1.5.</p></dd>
+<dd><p>An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to <code>1.5</code>.</p></dd>
 
 
 <dt id="arg-plot-x-min">plot_x_min<a class="anchor" aria-label="anchor" href="#arg-plot-x-min"></a></dt>
 <dd><p>A numeric value describing the minimum value on the x-axis
-(in seconds).</p></dd>
+(in seconds). Defaults to <code>1</code>.</p></dd>
 
 
 <dt id="arg-plot-x-max">plot_x_max<a class="anchor" aria-label="anchor" href="#arg-plot-x-max"></a></dt>
 <dd><p>A numeric value describing the maximum value on the x-axis
-(in seconds).</p></dd>
+(in seconds). Defaults to <code>3</code>.</p></dd>
 
 
 <dt id="arg-plot-y-min">plot_y_min<a class="anchor" aria-label="anchor" href="#arg-plot-y-min"></a></dt>
 <dd><p>A numeric value describing the minimum value on the y-axis
-(in pA). Defaults to -80. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!</p></dd>
+(in pA). Defaults to <code>-80</code>. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!</p></dd>
 
 
 <dt id="arg-plot-y-max">plot_y_max<a class="anchor" aria-label="anchor" href="#arg-plot-y-max"></a></dt>
 <dd><p>A numeric value describing the maximum value on the y-axis
-(in pA). Defaults to 5. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!</p></dd>
+(in pA). Defaults to <code>5</code>. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!</p></dd>
 
 
 <dt id="arg-save-plot-png">save_plot_png<a class="anchor" aria-label="anchor" href="#arg-save-plot-png"></a></dt>
-<dd><p>A character ("yes" or "no"). If "yes", the plot will be
-saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.</p></dd>
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>). If <code>"yes"</code>, the plot will be
+saved as a .png using <code>ggsave()</code>. The filepath depends on the current type, but
+they will all go in subfolders below <code>Figures/</code> in your project directory.</p></dd>
 
 
 <dt id="arg-ggplot-theme">ggplot_theme<a class="anchor" aria-label="anchor" href="#arg-ggplot-theme"></a></dt>
@@ -241,7 +241,7 @@ they will all go in subfolders below Figures/ in your project directory.</p></dd
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A ggplot object. If save_plot_png is defined as "yes", it will also
+    <p>A ggplot object. If <code>save_plot_png</code> is defined as "yes", it will also
 generate a .png file in the folder
 <code>Figures/Spontaneous-currents/Representative-Traces</code> relative to the
 project directory, with the <code>plot_category</code>, <code>plot_treatment</code>, and <code>state</code> included in the filename.</p>

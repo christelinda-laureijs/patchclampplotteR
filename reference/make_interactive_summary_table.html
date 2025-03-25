@@ -102,32 +102,32 @@ should look like.</p></dd>
 
 
 <dt id="arg-include-all-treatments">include_all_treatments<a class="anchor" aria-label="anchor" href="#arg-include-all-treatments"></a></dt>
-<dd><p>A character ("yes" or "no") specifying if the
-plot will include data from all treatments. If "no", you must specify a
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>) specifying if the
+plot will include data from all treatments. If <code>"no"</code>, you must specify a
 list of treatments in <code>list_of_treatments</code>.</p></dd>
 
 
 <dt id="arg-list-of-treatments">list_of_treatments<a class="anchor" aria-label="anchor" href="#arg-list-of-treatments"></a></dt>
 <dd><p>A list of character values describing the
-treatments that will be in the plot. Defaults to NULL, since
-include_all_treatments is "yes" by default.</p></dd>
+treatments that will be in the plot. Defaults to <code>NULL</code>, since
+include_all_treatments is <code>"yes"</code> by default.</p></dd>
 
 
 <dt id="arg-include-all-categories">include_all_categories<a class="anchor" aria-label="anchor" href="#arg-include-all-categories"></a></dt>
-<dd><p>A character ("yes" or "no") specifying if the
-plot will include data from all categories. If "no", you must specify a
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>) specifying if the
+plot will include data from all categories. If <code>"no"</code>, you must specify a
 list of categories in <code>list_of_categories</code>.</p></dd>
 
 
 <dt id="arg-list-of-categories">list_of_categories<a class="anchor" aria-label="anchor" href="#arg-list-of-categories"></a></dt>
 <dd><p>A list of character values describing the
-categories that will be in the plot. Defaults to NULL, since
-include_all_categories is "yes" by default.</p></dd>
+categories that will be in the plot. Defaults to <code>NULL</code>, since
+include_all_categories is <code>"yes"</code> by default.</p></dd>
 
 
 <dt id="arg-save-output-as-rds">save_output_as_RDS<a class="anchor" aria-label="anchor" href="#arg-save-output-as-rds"></a></dt>
-<dd><p>A character ("yes" or "no") describing if the
-resulting object should be saved as an RDS file in the folder 'Data/Output-Data-from-R'. The function will automatically create this folder if it doesn't already exist.
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>) describing if the
+resulting object should be saved as an RDS file in the folder <code>"Data/Output-Data-from-R"</code>. The function will automatically create this folder if it doesn't already exist.
 Note: This is not the interactive table, but it is the raw dataframe that
 is later inserted into <code><a href="https://glin.github.io/reactable/reference/reactable.html" class="external-link">reactable::reactable()</a></code>. This is useful if you want
 to build your own table using a different package, or you want to generate

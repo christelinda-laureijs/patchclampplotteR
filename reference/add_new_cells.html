@@ -107,19 +107,19 @@ If this is the first time you are running this function, start with a blank
 
 
 <dt id="arg-data-type">data_type<a class="anchor" aria-label="anchor" href="#arg-data-type"></a></dt>
-<dd><p>A character ("eEPSC", "sEPSC", "AP_parameter" or "AP_count") describing the data type that is being imported.</p></dd>
+<dd><p>A character (<code>"eEPSC"</code>, <code>"sEPSC"</code>, <code>"AP_parameter"</code> or <code>"AP_count"</code>) describing the data type that is being imported.</p></dd>
 
 
 <dt id="arg-write-new-csv">write_new_csv<a class="anchor" aria-label="anchor" href="#arg-write-new-csv"></a></dt>
-<dd><p>A character ("yes" or "no") describing if the new data
-should be written to a csv file. Defaults to "yes". Please specify
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>) describing if the new data
+should be written to a csv file. Defaults to <code>"yes"</code>. Please specify
 a filename for the new csv file in <code>new_file_name</code>.</p></dd>
 
 
 <dt id="arg-new-file-name">new_file_name<a class="anchor" aria-label="anchor" href="#arg-new-file-name"></a></dt>
 <dd><p>A filename for the csv containing the new data appended
 to the old data. Must be a character representing a filepath to a csv file.
-Examples include "Data/20241118-Raw-eEPSC-data.csv".</p></dd>
+Examples include <code>"Data/20241118-Raw-eEPSC-data.csv"</code>.</p></dd>
 
 
 <dt id="arg-decimal-places">decimal_places<a class="anchor" aria-label="anchor" href="#arg-decimal-places"></a></dt>
@@ -179,7 +179,7 @@ must contain the following columns:</p><ul><li><p><code>letter</code> A characte
 recording. Used to link data sets for evoked or spontaneous currents and
 cell-characteristics.</p></li>
 <li><p><code>ID</code> A character value for the recording filename.</p></li>
-<li><p><code>state</code> A character ("Baseline" or "Insulin") representing
+<li><p><code>state</code> A character (<code>"Baseline"</code> or <code>"Insulin"</code>) representing
 the timepoint that the data point belongs to.</p></li>
 <li><p><code>time_of_threshold</code> The time (in ms) when the membrane potential
 reaches the threshold value.</p></li>

@@ -67,7 +67,7 @@ pulled from the recording ID (the <code>letter</code> column in the raw data), a
 subtitle will include the sex and treatment. The plot will also contain a
 horizontal line annotation displayed over the time region where a hormone was
 applied. If a high-frequency stimulation (HFS) protocol is used, the plot
-will display an arrow with the label "HFS" to indicate the time when HFS was
+will display an arrow with the label <code>"HFS"</code> to indicate the time when HFS was
 applied.</p>
     </div>
 
@@ -102,7 +102,7 @@ applied.</p>
 
 <dt id="arg-plot-treatment">plot_treatment<a class="anchor" aria-label="anchor" href="#arg-plot-treatment"></a></dt>
 <dd><p>A character value specifying the treatment you would
-like to plot (e.g. "Control"). <code>plot_treatment</code> represents antagonists that
+like to plot (e.g. <code>"Control"</code>). <code>plot_treatment</code> represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.</p></dd>
 
 
@@ -115,27 +115,27 @@ applied continuously after a 5-minute baseline period.</p></dd>
 
 <dt id="arg-current-type">current_type<a class="anchor" aria-label="anchor" href="#arg-current-type"></a></dt>
 <dd><p>A character describing the current type. Allowed values
-are "eEPSC" or "sEPSC".</p></dd>
+are <code>"eEPSC"</code> or <code>"sEPSC"</code>.</p></dd>
 
 
 <dt id="arg-y-variable">y_variable<a class="anchor" aria-label="anchor" href="#arg-y-variable"></a></dt>
 <dd><p>A character value specifying the variable to be plotted on
 the y-axis. For evoked currents (<code>current_type = "eEPSC"</code>), the available
-y_variables are "P1", "P1_transformed", "mean_P1" and "PPR". <em>Note</em>: If you
-select "mean_P1", you must set the <code>pruned</code> argument to "yes". For
+y_variables are <code>"P1"</code>, <code>"P1_transformed"</code>, <code>"mean_P1"</code> and <code>"PPR"</code>. <em>Note</em>: If you
+select <code>"mean_P1"</code>, you must set the <code>pruned</code> argument to <code>"yes"</code>. For
 spontaneous currents (<code>current_type = "sEPSC"</code>), the available y_variables
-are "amplitude" or "frequency".</p></dd>
+are <code>"amplitude"</code> or <code>"frequency"</code>.</p></dd>
 
 
 <dt id="arg-pruned">pruned<a class="anchor" aria-label="anchor" href="#arg-pruned"></a></dt>
-<dd><p>A character value ("yes" or "no") specifying if the data are
+<dd><p>A character value (<code>"yes"</code> or <code>"no"</code>) specifying if the data are
 pruned. The plot will then present the data as means with error bars.</p></dd>
 
 
 <dt id="arg-hormone-added">hormone_added<a class="anchor" aria-label="anchor" href="#arg-hormone-added"></a></dt>
 <dd><p>A character value that will be used as the label over
 the line annotating the period when a hormone was applied. Examples include
-"500 nM Insulin", "CCK + Leptin", and "Insulin". If you applied a
+<code>"500 nM Insulin"</code>, <code>"CCK + Leptin"</code>, and <code>"Insulin"</code>. If you applied a
 high-frequency stimulation (HFS) protocol instead, write "HFS", and an
 annotation arrow will be added instead.</p></dd>
 
@@ -165,13 +165,13 @@ should look like.</p></dd>
 
 
 <dt id="arg-geom-text-family">geom_text_family<a class="anchor" aria-label="anchor" href="#arg-geom-text-family"></a></dt>
-<dd><p>A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like <code>extrafont</code> to load system fonts into R.</p></dd>
+<dd><p>A character value describing the font family used for the scale bar annotations. Defaults to <code>""</code> (empty, will use default system font), but can be replaced with a named font. Use a package like <code>extrafont</code> to load system fonts into R.</p></dd>
 
 
 <dt id="arg-save-plot-png">save_plot_png<a class="anchor" aria-label="anchor" href="#arg-save-plot-png"></a></dt>
-<dd><p>A character ("yes" or "no"). If "yes", the plot will be
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>). If <code>"yes"</code>, the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.</p></dd>
+they will all go in subfolders below <code>Figures/</code> in your project directory.</p></dd>
 
 
 <dt id="arg-ggplot-theme">ggplot_theme<a class="anchor" aria-label="anchor" href="#arg-ggplot-theme"></a></dt>
@@ -188,8 +188,8 @@ file from each ggplot element in the list. The figures will be exported to
 <code>current_type</code>. The .png filename will contain the <code>letter</code>. If the data
 are pruned, the filename will also include <code>_pruned</code> in the filename. If
 the data are normalized (<code>y_variable == "P1_transformed</code>), the title will
-include <code>_normalized</code> in the filename. Example filenames include "A.png",
-"A_normalized", and "A_pruned.png".</p>
+include <code>_normalized</code> in the filename. Example filenames include <code>"A.png"</code>,
+<code>"A_normalized"</code>, and <code>"A_pruned.png"</code>.</p>
     </div>
 
     <div class="section level2">
