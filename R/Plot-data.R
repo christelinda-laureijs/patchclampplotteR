@@ -1944,14 +1944,28 @@ plot_variance_comparison_data <- function(data,
       geom = "line",
       colour = plot_colour,
       linewidth = mean_line_thickness
-    ) +
-    ggplot2::stat_summary(
+    )
+
+
+  if (facet_by_sex == "yes") {
+    variance_comparison_plot <- variance_comparison_plot +
+      ggplot2::stat_summary(
       ggplot2::aes(shape = .data$sex),
       fun.data = ggplot2::mean_se,
       geom = "point",
       colour = plot_colour,
       size = mean_point_size
     )
+  } else {
+    variance_comparison_plot <- variance_comparison_plot +
+      ggplot2::stat_summary(
+        fun.data = ggplot2::mean_se,
+        geom = "point",
+        colour = plot_colour,
+        size = mean_point_size,
+        shape = plot_shape
+      )
+    }
 
   if (large_axis_text == "yes") {
     variance_comparison_plot <- variance_comparison_plot +
@@ -2150,6 +2164,8 @@ plot_PPR_data_single_treatment <- function(data,
                                            geom_signif_family = "",
                                            geom_signif_text_size = 5,
                                            large_axis_text = "no",
+                                           mean_line_thickness = 1.2,
+                                           mean_point_size = 2.5,
                                            geom_signif_size = 0.4,
                                            treatment_colour_theme,
                                            theme_options,
@@ -2273,39 +2289,71 @@ plot_PPR_data_single_treatment <- function(data,
       color = theme_options["connecting_line_colour", "value"], linewidth = 0.4
     ) +
     ggplot2::coord_cartesian(ylim = c(0, plot_y_max)) +
-    ggplot2::annotate(
-      geom = "segment",
-      x = baseline_label,
-      xend = post_hormone_label,
-      y = PPR_one_plot_data$mean_PPR_all_cells[PPR_one_plot_data$state == baseline_label][1],
-      yend = PPR_one_plot_data$mean_PPR_all_cells[PPR_one_plot_data$state == post_hormone_label][1],
-      color = plot_colour,
-      linewidth = 1.2
+    ggplot2::stat_summary(
+      ggplot2::aes(group = 1),
+      fun.data = ggplot2::mean_se,
+      geom = "line",
+      colour = plot_colour,
+      linewidth = mean_line_thickness
     ) +
-    ggplot2::labs(x = NULL, y = y_axis_title) +
-    ggplot_theme
+  ggplot2::labs(x = NULL, y = y_axis_title) +
+  ggplot_theme
+
 
   if (facet_by_sex == "yes") {
     PPR_one_plot <- PPR_one_plot +
-      ggplot2::geom_point(
-        ggplot2::aes(
-          y = .data$mean_PPR_all_cells,
-          shape = .data$sex
-        ),
-        size = 2.5,
-        color = plot_colour
-      )
-  }
-
-  if (facet_by_sex == "no") {
+    ggplot2::stat_summary(
+      ggplot2::aes(shape = .data$sex),
+      fun.data = ggplot2::mean_se,
+      geom = "point",
+      colour = plot_colour,
+      size = mean_point_size
+    )
+  } else {
     PPR_one_plot <- PPR_one_plot +
-      ggplot2::geom_point(
-        ggplot2::aes(y = .data$mean_PPR_all_cells),
-        size = 2.5,
-        color = plot_colour,
+      ggplot2::stat_summary(
+        fun.data = ggplot2::mean_se,
+        geom = "point",
+        colour = plot_colour,
+        size = mean_point_size,
         shape = plot_shape
       )
   }
+
+  #
+  #   ggplot2::annotate(
+  #     geom = "segment",
+  #     x = baseline_label,
+  #     xend = post_hormone_label,
+  #     y = PPR_one_plot_data$mean_PPR_all_cells[PPR_one_plot_data$state == baseline_label][1],
+  #     yend = PPR_one_plot_data$mean_PPR_all_cells[PPR_one_plot_data$state == post_hormone_label][1],
+  #     color = plot_colour,
+  #     linewidth = 1.2
+  #   ) +
+  #   ggplot2::labs(x = NULL, y = y_axis_title) +
+  #   ggplot_theme
+  #
+  # if (facet_by_sex == "yes") {
+  #   PPR_one_plot <- PPR_one_plot +
+  #     ggplot2::geom_point(
+  #       ggplot2::aes(
+  #         y = .data$mean_PPR_all_cells,
+  #         shape = .data$sex
+  #       ),
+  #       size = 2.5,
+  #       color = plot_colour
+  #     )
+  # }
+  #
+  # if (facet_by_sex == "no") {
+  #   PPR_one_plot <- PPR_one_plot +
+  #     ggplot2::geom_point(
+  #       ggplot2::aes(y = .data$mean_PPR_all_cells),
+  #       size = 2.5,
+  #       color = plot_colour,
+  #       shape = plot_shape
+  #     )
+  # }
 
 
   if (test_type != "none") {

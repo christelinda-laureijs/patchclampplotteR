@@ -21,6 +21,8 @@ plot_PPR_data_single_treatment(
   geom_signif_family = "",
   geom_signif_text_size = 5,
   large_axis_text = "no",
+  mean_line_thickness = 1.2,
+  mean_point_size = 2.5,
   geom_signif_size = 0.4,
   treatment_colour_theme,
   theme_options,
@@ -70,6 +72,10 @@ comparing the pre- and post-hormone groups.}
 \item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
 
 \item{large_axis_text}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, a ggplot theme layer will be applied which increases the size of the axis text.}
+
+\item{mean_line_thickness}{A numeric value describing the thickness of the line used to indicate the mean for a group. Defaults to \code{1.2}.}
+
+\item{mean_point_size}{A numeric value describing the size of the points used to indicate the means. Defaults to \code{2.5}.}
 
 \item{geom_signif_size}{A numeric value describing the size of the \code{geom_signif} bracket size. Defaults to \code{0.4}, which is a good thickness for most applications.}
 
