@@ -36,15 +36,15 @@ the same current_type as the new data (e.g. the columns must be the same).
 If this is the first time you are running this function, start with a blank
 .csv file containing just the column titles in the first row.}
 
-\item{data_type}{A character ("eEPSC", "sEPSC", "AP_parameter" or "AP_count") describing the data type that is being imported.}
+\item{data_type}{A character (\code{"eEPSC"}, \code{"sEPSC"}, \code{"AP_parameter"} or \code{"AP_count"}) describing the data type that is being imported.}
 
-\item{write_new_csv}{A character ("yes" or "no") describing if the new data
-should be written to a csv file. Defaults to "yes". Please specify
+\item{write_new_csv}{A character (\code{"yes"} or \code{"no"}) describing if the new data
+should be written to a csv file. Defaults to \code{"yes"}. Please specify
 a filename for the new csv file in \code{new_file_name}.}
 
 \item{new_file_name}{A filename for the csv containing the new data appended
 to the old data. Must be a character representing a filepath to a csv file.
-Examples include "Data/20241118-Raw-eEPSC-data.csv".}
+Examples include \code{"Data/20241118-Raw-eEPSC-data.csv"}.}
 
 \item{decimal_places}{A numeric value indicating the number of decimal places the data should be rounded to. Used to reduce file size and prevent an incorrect representation of the number of significant digits.}
 
@@ -111,7 +111,7 @@ must contain the following columns:
 recording. Used to link data sets for evoked or spontaneous currents and
 cell-characteristics.
 \item \code{ID} A character value for the recording filename.
-\item \code{state} A character ("Baseline" or "Insulin") representing
+\item \code{state} A character (\code{"Baseline"} or \code{"Insulin"}) representing
 the timepoint that the data point belongs to.
 \item \code{time_of_threshold} The time (in ms) when the membrane potential
 reaches the threshold value.

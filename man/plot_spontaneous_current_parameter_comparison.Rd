@@ -37,29 +37,29 @@ this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
 \item{plot_treatment}{A character value specifying the treatment you would
-like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
+like to plot (e.g. \code{"Control"}). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
 
-\item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+\item{included_sexes}{A character value (\code{"both"}, \code{"male"} or \code{"female"}). Useful if you want to have a plot with data from one sex only. Defaults to \code{"both"}. If you choose a single sex, the resulting plot will have \code{"-males-only"} or \code{"-females-only"} in the file name. WARNING!! If you choose \code{"male"} or \code{"female"}, you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
 
-\item{facet_by_sex}{A character value ("yes" or "no") describing if the plots should be faceted by sex. This is only available if "included_sexes" is "both". The resulting plot will be split in two, with male data on the left and female data on the right.}
+\item{facet_by_sex}{A character value (\code{"yes"} or \code{"no"}) describing if the plots should be faceted by sex. This is only available if \code{"included_sexes"} is \code{"both"}. The resulting plot will be split in two, with male data on the left and female data on the right.}
 
-\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Males"}, \code{"Male"}, \code{"male"}, \code{"males"}, \code{"M"}, etc.  This must be consistent in all data sheets. Defaults to \code{"Male"}.}
 
-\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".}
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Females"}, \code{"Female"}, \code{"female"}, \code{"females"}, \code{"F"}, etc. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
 
-\item{y_variable}{A character value ("raw_amplitude" or "raw_frequency") only.
+\item{y_variable}{A character value (\code{"raw_amplitude"} or \code{"raw_frequency"}) only.
 Normalized amplitude and frequency are not available because all baseline
 values are 100.}
 
 \item{hormone_added}{A character value that will be used as the label over
 the line annotating the period when a hormone was applied. Examples include
-"500 nM Insulin", "CCK + Leptin", and "Insulin". If you applied a
+\code{"500 nM Insulin"}, \code{"CCK + Leptin"}, and \code{"Insulin"}. If you applied a
 high-frequency stimulation (HFS) protocol instead, write "HFS", and an
 annotation arrow will be added instead.}
 
 \item{baseline_interval}{A character value indicating the name of the
-interval used as the baseline. Defaults to "t0to5", but can be changed.
+interval used as the baseline. Defaults to \code{"t0to5"}, but can be changed.
 Make sure that this matches the baseline interval that you set in
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.}
 
@@ -67,17 +67,17 @@ Make sure that this matches the baseline interval that you set in
 for the data points after a hormone or protocol was applied. This must
 match the \code{post_hormone_interval} used in \code{\link[=make_variance_data]{make_variance_data()}}.}
 
-\item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
+\item{test_type}{A character (must be \code{"wilcox.test"}, \code{"t.test"} or \code{"none"})
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}
 
-\item{map_signif_level_values}{A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  \code{map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}} to only display the p-values when they are below 0.1.}
+\item{map_signif_level_values}{A \code{TRUE/FALSE} value or a list of character values for mapping p-values. If \code{TRUE}, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If \code{FALSE}, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  \code{map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}} to only display the p-values when they are below 0.1.}
 
-\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
+\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to \code{""} (empty value, will be replaced with default system font), but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
 \item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
 
-\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
+\item{large_axis_text}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, a ggplot theme
 layer will be applied which increases the axis text.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
@@ -85,15 +85,15 @@ their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
-\item{geom_signif_size}{A numeric value describing the size of the geom_signif bracket size. Defaults to 0.5, which is a good thickness for most applications.}
+\item{geom_signif_size}{A numeric value describing the size of the geom_signif bracket size. Defaults to \code{0.5}, which is a good thickness for most applications.}
 
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should
 look like.}
 
-\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
+\item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.}
+they will all go in subfolders below \verb{Figures/} in your project directory.}
 
 \item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }

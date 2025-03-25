@@ -43,38 +43,38 @@ plot_cell_coordinates_data(
 
 \item{background_slice_filename}{A character value describing the location of the background slice image. This may be a png or a jpeg. It must contain just the background slice, and the height and width must be known values in \code{scale_bar_units}.}
 
-\item{background_slice_height}{The height of the background slice image in \code{scale_bar_units}.}
+\item{background_slice_height}{The height of the background slice image in \code{scale_bar_units}. Defaults to \code{800}.}
 
-\item{background_slice_width}{The width of the background slice image in \code{scale_bar_units}.}
+\item{background_slice_width}{The width of the background slice image in \code{scale_bar_units}. Defaults to \code{800}.}
 
 \item{plot_category}{A numeric value specifying the category, which can be
 used to differentiate different protocol types. In the sample dataset for
 this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
-\item{include_all_treatments}{A character ("yes" or "no") specifying if the
-plot will include data from all treatments. If "no", you must specify a
+\item{include_all_treatments}{A character (\code{"yes"} or \code{"no"}) specifying if the
+plot will include data from all treatments. If \code{"no"}, you must specify a
 list of treatments in \code{list_of_treatments}.}
 
 \item{list_of_treatments}{A list of character values describing the
-treatments that will be in the plot. Defaults to NULL, since
-include_all_treatments is "yes" by default.}
+treatments that will be in the plot. Defaults to \code{NULL}, since
+include_all_treatments is \code{"yes"} by default.}
 
-\item{scale_bar_x_start}{The starting location of the scale bar on the x-axis in \code{scale_bar_units}.}
+\item{scale_bar_x_start}{The starting location of the scale bar on the x-axis in \code{scale_bar_units}. Defaults to \code{700}.}
 
 \item{scale_bar_x_length}{The length of the scale bar on the x-axis in \code{scale_bar_units}.}
 
-\item{scale_bar_y_start}{The starting location of the scale bar on the y-axis in \code{scale_bar_units}.}
+\item{scale_bar_y_start}{The starting location of the scale bar on the y-axis in \code{scale_bar_units}. Defaults to \code{100}.}
 
 \item{scale_bar_y_length}{The length of the scale bar on the y-axis in \code{scale_bar_units}.}
 
 \item{scale_bar_units}{The units of the scale bar. Often, it will be "um".}
 
-\item{include_scale_bar_label}{A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from \code{scale_bar_x_length} and \code{scale_bar_y_length}.}
+\item{include_scale_bar_label}{A character value (\code{"yes"} or \code{"no"}) describing whether to include text labels on the scale bar. If \code{"yes"}, the text annotation values will be pulled from \code{scale_bar_x_length} and \code{scale_bar_y_length}.}
 
 \item{scale_bar_thickness}{A numeric value describing the thickness of the scale bar. Defaults to 0.8.}
 
-\item{scale_bar_colour}{A character value (named colour of hex value) describing the colour of the scale bar. Defaults to "black".}
+\item{scale_bar_colour}{A character value (named colour of hex value) describing the colour of the scale bar. Defaults to \code{"black"}.}
 
 \item{scale_bar_label_size}{A numeric value describing the size of the scale bar annotation text. Defaults to 4.}
 
@@ -100,9 +100,9 @@ include_all_treatments is "yes" by default.}
 filename of the .png file created with this plot. Could be useful if you
 have specified a custom list of treatments.}
 
-\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
-saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.}
+\item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
+saved as a .png using \code{ggsave()}. The filepath depends on the current type, but
+they will all go in subfolders below \verb{Figures/} in your project directory.}
 
 \item{theme_options}{A dataframe containing theme options, defaults to \code{sample_theme_options}. See
 \link{sample_theme_options} for an example of what this dataframe should

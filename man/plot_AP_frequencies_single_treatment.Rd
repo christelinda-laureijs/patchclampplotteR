@@ -33,7 +33,7 @@ plot_AP_frequencies_single_treatment(
 \item{data}{Action potential frequency data imported through \code{add_new_cells()} with \code{data_type == "AP_count"}}
 
 \item{plot_treatment}{A character value specifying the treatment you would
-like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
+like to plot (e.g. \code{"Control"}). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
 
 \item{plot_category}{A numeric value specifying the category, which can be
@@ -41,52 +41,52 @@ used to differentiate different protocol types. In the sample dataset for
 this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
-\item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+\item{included_sexes}{A character value (\code{"both"}, \code{"male"} or \code{"female"}). Useful if you want to have a plot with data from one sex only. Defaults to \code{"both"}. If you choose a single sex, the resulting plot will have \code{"-males-only"} or \code{"-females-only"} in the file name. WARNING!! If you choose \code{"male"} or \code{"female"}, you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
 
-\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Males"}, \code{"Male"}, \code{"male"}, \code{"males"}, \code{"M"}, etc.  This must be consistent in all data sheets. Defaults to \code{"Male"}.}
 
-\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".}
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Females"}, \code{"Female"}, \code{"female"}, \code{"females"}, \code{"F"}, etc. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
 
-\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme layer will be applied which increases the size of the axis text.}
+\item{large_axis_text}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, a ggplot theme layer will be applied which increases the size of the axis text.}
 
 \item{baseline_label}{A character value for the x-axis label applied to the
-pre-hormone state. Defaults to "Baseline".}
+pre-hormone state. Defaults to \code{"Baseline"}.}
 
 \item{hormone_added}{A character value that will be used as the label over
 the line annotating the period when a hormone was applied. Examples include
-"500 nM Insulin", "CCK + Leptin", and "Insulin". If you applied a
+\code{"500 nM Insulin"}, \code{"CCK + Leptin"}, and \code{"Insulin"}. If you applied a
 high-frequency stimulation (HFS) protocol instead, write "HFS", and an
 annotation arrow will be added instead.}
 
-\item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
+\item{test_type}{A character (must be \code{"wilcox.test"}, \code{"t.test"} or \code{"none"})
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}
 
-\item{significance_display_method}{A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if \code{test_type} is "none".)}
+\item{significance_display_method}{A character value (\code{"stars"} or \code{"p-value"}) describing how significance values should be displayed. These annotations will not appear if \code{test_type} is \code{"none"}.)}
 
 \item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{5}.}
 
 \item{geom_signif_y_spacer}{A numeric value describing the vertical spacing applied to the significance markers. Defaults to 1, but can be set to a higher value if the p-values or significance stars are too close to the error bars.}
 
-\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
+\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to \code{""} (empty value, will be replaced with default system font), but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
-\item{p_adjust_method}{This argument is directly related to \code{p.adjust.method} in \code{rstatix::t_test}. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include "holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none" (although "none" is not recommended).}
+\item{p_adjust_method}{This argument is directly related to \code{p.adjust.method} in \code{rstatix::t_test}. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include \code{"holm"}, \code{"hochberg"}, \code{"hommel"}, \code{"bonferroni"}, \code{"BH"}, \code{"BY"}, \code{"fdr"}, \code{"none"} (although \code{"none"} is not recommended).}
 
-\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
-saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.}
+\item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
+saved as a .png using \code{ggsave()}. The filepath depends on the current type, but
+they will all go in subfolders below \verb{Figures/} in your project directory.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
-\item{baseline_shape}{A numeric value describing the shape used for the baseline data. Defaults to 16, which is a circle.}
+\item{baseline_shape}{A numeric value describing the shape used for the baseline data. Defaults to \code{16}, which is a circle.}
 
-\item{post_treatment_shape}{A numeric value describing the shape used for the post-treatment/post-protocol data. Defaults to 17, which is a triangle.}
+\item{post_treatment_shape}{A numeric value describing the shape used for the post-treatment/post-protocol data. Defaults to \code{17}, which is a triangle.}
 
-\item{save_output_as_RDS}{A character ("yes" or "no") describing if the
-resulting object should be saved as an RDS file in the folder 'Data/Output-Data-from-R'. The function will automatically create this folder if it doesn't already exist.}
+\item{save_output_as_RDS}{A character (\code{"yes"} or \code{"no"}) describing if the
+resulting object should be saved as an RDS file in the folder \code{"Data/Output-Data-from-R"}. The function will automatically create this folder if it doesn't already exist.}
 
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should

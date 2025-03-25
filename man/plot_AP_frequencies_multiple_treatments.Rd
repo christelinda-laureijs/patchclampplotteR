@@ -21,24 +21,24 @@ plot_AP_frequencies_multiple_treatments(
 \arguments{
 \item{data}{Action potential frequency data imported through \code{add_new_cells()} with \code{data_type == "AP_count"}}
 
-\item{include_all_treatments}{A character ("yes" or "no") specifying if the
-plot will include data from all treatments. If "no", you must specify a
+\item{include_all_treatments}{A character (\code{"yes"} or \code{"no"}) specifying if the
+plot will include data from all treatments. If \code{"no"}, you must specify a
 list of treatments in \code{list_of_treatments}.}
 
 \item{list_of_treatments}{A list of character values describing the
-treatments that will be in the plot. Defaults to NULL, since
-include_all_treatments is "yes" by default.}
+treatments that will be in the plot. Defaults to \code{NULL}, since
+include_all_treatments is \code{"yes"} by default.}
 
 \item{plot_category}{A numeric value specifying the category, which can be
 used to differentiate different protocol types. In the sample dataset for
 this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
-\item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+\item{included_sexes}{A character value (\code{"both"}, \code{"male"} or \code{"female"}). Useful if you want to have a plot with data from one sex only. Defaults to \code{"both"}. If you choose a single sex, the resulting plot will have \code{"-males-only"} or \code{"-females-only"} in the file name. WARNING!! If you choose \code{"male"} or \code{"female"}, you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
 
-\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Males"}, \code{"Male"}, \code{"male"}, \code{"males"}, \code{"M"}, etc.  This must be consistent in all data sheets. Defaults to \code{"Male"}.}
 
-\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".}
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Females"}, \code{"Female"}, \code{"female"}, \code{"females"}, \code{"F"}, etc. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See
@@ -49,9 +49,9 @@ should look like.}
 filename of the .png file created with this plot. Could be useful if you
 have specified a custom list of treatments.}
 
-\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
-saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.}
+\item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
+saved as a .png using \code{ggsave()}. The filepath depends on the current type, but
+they will all go in subfolders below \verb{Figures/} in your project directory.}
 
 \item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }

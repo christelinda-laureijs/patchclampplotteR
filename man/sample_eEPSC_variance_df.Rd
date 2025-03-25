@@ -12,8 +12,8 @@ baseline interval ("Baseline") or an interval after a hormone or protocol has
 been applied ("Post-modification"). These intervals are selected from
 \code{baseline_interval} and \code{post_hormone_interval}.}
 \item{\code{mean_cv_inverse_square}}{The mean inverse coefficient of variation
-squared within a specific state.}
-\item{\code{mean_VMR}}{The mean variance-to-mean ratio within a specific state.}
+squared within a specific state and sex.}
+\item{\code{mean_VMR}}{The mean variance-to-mean ratio within a specific state and sex.}
 \item{\verb{category, letter, sex, treatment, etc.}}{Other columns which are
 imported directly from the summary data without modifications. For a
 detailed description of these columns, please see \link{sample_summary_eEPSC_df}.}

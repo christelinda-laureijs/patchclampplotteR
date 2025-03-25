@@ -29,43 +29,43 @@ plot_PPR_data_multiple_treatments(
 \arguments{
 \item{data}{Paired pulse ratio data generated from \code{\link[=make_PPR_data]{make_PPR_data()}}.}
 
-\item{include_all_treatments}{A character ("yes" or "no") specifying if the
-plot will include data from all treatments. If "no", you must specify a
+\item{include_all_treatments}{A character (\code{"yes"} or \code{"no"}) specifying if the
+plot will include data from all treatments. If \code{"no"}, you must specify a
 list of treatments in \code{list_of_treatments}.}
 
 \item{list_of_treatments}{A list of character values describing the
-treatments that will be in the plot. Defaults to NULL, since
-include_all_treatments is "yes" by default.}
+treatments that will be in the plot. Defaults to \code{NULL}, since
+include_all_treatments is \code{"yes"} by default.}
 
 \item{plot_category}{A numeric value specifying the category, which can be
 used to differentiate different protocol types. In the sample dataset for
 this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
-\item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+\item{included_sexes}{A character value (\code{"both"}, \code{"male"} or \code{"female"}). Useful if you want to have a plot with data from one sex only. Defaults to \code{"both"}. If you choose a single sex, the resulting plot will have \code{"-males-only"} or \code{"-females-only"} in the file name. WARNING!! If you choose \code{"male"} or \code{"female"}, you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
 
-\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Males"}, \code{"Male"}, \code{"male"}, \code{"males"}, \code{"M"}, etc.  This must be consistent in all data sheets. Defaults to \code{"Male"}.}
 
-\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".}
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Females"}, \code{"Female"}, \code{"female"}, \code{"females"}, \code{"F"}, etc. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
 
 \item{baseline_label}{A character value for the x-axis label applied to the
-pre-hormone state. Defaults to "Baseline".}
+pre-hormone state. Defaults to \code{"Baseline"}.}
 
 \item{post_hormone_label}{A character value for x-axis label applied to
-the post-hormone or post-protocol state. Defaults to "Post-hormone" but you
+the post-hormone or post-protocol state. Defaults to \code{"Post-hormone"} but you
 will likely change this to the hormone or protocol name.}
 
-\item{test_type}{A character (must be "wilcox.test", "t.test" or "none")
+\item{test_type}{A character (must be \code{"wilcox.test"}, \code{"t.test"} or \code{"none"})
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}
 
-\item{map_signif_level_values}{A TRUE/FALSE value or a list of character values for mapping p-values. If TRUE, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If FALSE, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  \code{map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}} to only display the p-values when they are below 0.1.}
+\item{map_signif_level_values}{A \code{TRUE/FALSE} value or a list of character values for mapping p-values. If \code{TRUE}, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If \code{FALSE}, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  \code{map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}} to only display the p-values when they are below 0.1.}
 
-\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
+\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to \code{""} (empty value, will be replaced with default system font), but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
 \item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
 
-\item{geom_signif_size}{A numeric value describing the size of the geom_signif bracket size. Defaults to 0.3, which is a good thickness for most applications.}
+\item{geom_signif_size}{A numeric value describing the size of the \code{geom_signif} bracket size. Defaults to \code{0.3}, which is a good thickness for most applications.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See
@@ -80,14 +80,14 @@ look like and how you can customize these values.}
 filename of the .png file created with this plot. Could be useful if you
 have specified a custom list of treatments.}
 
-\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
-saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.}
+\item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
+saved as a .png using \code{ggsave()}. The filepath depends on the current type, but
+they will all go in subfolders below \verb{Figures/} in your project directory.}
 
 \item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }
 \value{
-A ggplot object. If save_plot_png is defined as "yes", it will also
+A ggplot object. If \code{save_plot_png} is defined as "yes", it will also
 generate a .png file in the folder \code{Figures/Evoked-currents/PPR} relative
 to the project directory.
 }

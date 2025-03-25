@@ -26,7 +26,7 @@ plot_raw_current_data(
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}. If \code{pruned = "yes"} you must use the \verb{$individual_cells} component of a pruned dataset.}
 
 \item{plot_treatment}{A character value specifying the treatment you would
-like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
+like to plot (e.g. \code{"Control"}). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
 
 \item{plot_category}{A numeric value specifying the category, which can be
@@ -35,21 +35,21 @@ this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
 \item{current_type}{A character describing the current type. Allowed values
-are "eEPSC" or "sEPSC".}
+are \code{"eEPSC"} or \code{"sEPSC"}.}
 
 \item{y_variable}{A character value specifying the variable to be plotted on
 the y-axis. For evoked currents (\code{current_type = "eEPSC"}), the available
-y_variables are "P1", "P1_transformed", "mean_P1" and "PPR". \emph{Note}: If you
-select "mean_P1", you must set the \code{pruned} argument to "yes". For
+y_variables are \code{"P1"}, \code{"P1_transformed"}, \code{"mean_P1"} and \code{"PPR"}. \emph{Note}: If you
+select \code{"mean_P1"}, you must set the \code{pruned} argument to \code{"yes"}. For
 spontaneous currents (\code{current_type = "sEPSC"}), the available y_variables
-are "amplitude" or "frequency".}
+are \code{"amplitude"} or \code{"frequency"}.}
 
-\item{pruned}{A character value ("yes" or "no") specifying if the data are
+\item{pruned}{A character value (\code{"yes"} or \code{"no"}) specifying if the data are
 pruned. The plot will then present the data as means with error bars.}
 
 \item{hormone_added}{A character value that will be used as the label over
 the line annotating the period when a hormone was applied. Examples include
-"500 nM Insulin", "CCK + Leptin", and "Insulin". If you applied a
+\code{"500 nM Insulin"}, \code{"CCK + Leptin"}, and \code{"Insulin"}. If you applied a
 high-frequency stimulation (HFS) protocol instead, write "HFS", and an
 annotation arrow will be added instead.}
 
@@ -69,11 +69,11 @@ their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
-\item{geom_text_family}{A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
+\item{geom_text_family}{A character value describing the font family used for the scale bar annotations. Defaults to \code{""} (empty, will use default system font), but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
-\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
+\item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.}
+they will all go in subfolders below \verb{Figures/} in your project directory.}
 
 \item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }
@@ -86,8 +86,8 @@ file from each ggplot element in the list. The figures will be exported to
 \code{current_type}. The .png filename will contain the \code{letter}. If the data
 are pruned, the filename will also include \verb{_pruned} in the filename. If
 the data are normalized (\verb{y_variable == "P1_transformed}), the title will
-include \verb{_normalized} in the filename. Example filenames include "A.png",
-"A_normalized", and "A_pruned.png".
+include \verb{_normalized} in the filename. Example filenames include \code{"A.png"},
+\code{"A_normalized"}, and \code{"A_pruned.png"}.
 }
 \description{
 This function enables you to create a scatterplot of raw evoked (or
@@ -96,7 +96,7 @@ pulled from the recording ID (the \code{letter} column in the raw data), and the
 subtitle will include the sex and treatment. The plot will also contain a
 horizontal line annotation displayed over the time region where a hormone was
 applied. If a high-frequency stimulation (HFS) protocol is used, the plot
-will display an arrow with the label "HFS" to indicate the time when HFS was
+will display an arrow with the label \code{"HFS"} to indicate the time when HFS was
 applied.
 }
 \examples{

@@ -50,33 +50,33 @@ this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
 \item{plot_treatment}{A character value specifying the treatment you would
-like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
+like to plot (e.g. \code{"Control"}). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
 
-\item{sex}{An optional character value ("male" or "female"), which will be added to the file name.}
+\item{sex}{An optional character value (\code{"male"} or \code{"female"}), which will be added to the file name.}
 
-\item{state}{A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The \code{state} will be included in the .png filename if \code{save_plot_png = "yes"}.}
+\item{state}{A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include \code{"Baseline"}, \code{"Post-insulin"}. The \code{state} will be included in the .png filename if \code{save_plot_png = "yes"}.}
 
-\item{letter}{An optional character value describing the recording letter ID, (e.g. "A", "AB") that will be appended to the filename.}
+\item{letter}{An optional character value describing the recording letter ID, (e.g. \code{"A"}, \code{"AB"}) that will be appended to the filename.}
 
 \item{include_scale_bar}{A character value that determines if a scale bar
-will be added to the plot. Allowed values are "yes" and "no".}
+will be added to the plot. Allowed values are \code{"yes"} and \code{"no"}.}
 
-\item{include_scale_bar_label}{A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from \code{scale_bar_x_length} and \code{scale_bar_y_length}.}
+\item{include_scale_bar_label}{A character value (\code{"yes"} or \code{"no"}) describing whether to include text labels on the scale bar. If \code{"yes"}, the text annotation values will be pulled from \code{scale_bar_x_length} and \code{scale_bar_y_length}.}
 
 \item{scale_bar_label_size}{A numeric value describing the size of the scale bar annotation text. Defaults to 4.}
 
-\item{trace_annotation}{A character value (e.g. "Baseline") that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to "Baseline".}
+\item{trace_annotation}{A character value (e.g. \code{"Baseline"}) that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to \code{"Baseline"}.}
 
-\item{trace_annotation_x_position}{A numeric value for the location of the \code{trace_annotation} on the x-axis. Defaults to 1.}
+\item{trace_annotation_x_position}{A numeric value for the location of the \code{trace_annotation} on the x-axis. Defaults to \code{1}.}
 
-\item{trace_annotation_y_position}{A numeric value for the location of the \code{trace_annotation} on the y-axis. Defaults to 6.}
+\item{trace_annotation_y_position}{A numeric value for the location of the \code{trace_annotation} on the y-axis. Defaults to \code{6}.}
 
-\item{geom_text_family}{A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
+\item{geom_text_family}{A character value describing the font family used for the scale bar annotations. Defaults to \code{""} (empty, will use default system font), but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
-\item{geom_text_colour}{A character value describing the colour of the \code{trace_annotation} text. Defaults to "#000000".}
+\item{geom_text_colour}{A character value describing the colour of the \code{trace_annotation} text. Defaults to \code{"#000000"}.}
 
-\item{geom_text_size}{A numeric value describing the size of the \code{trace_annotation} text. Defaults to 5.}
+\item{geom_text_size}{A numeric value describing the size of the \code{trace_annotation} text. Defaults to \code{5}.}
 
 \item{plot_episode}{A character value describing the sweep (e.g. \code{epi1}) that
 will be used for the plot.}
@@ -84,42 +84,42 @@ will be used for the plot.}
 \item{trace_thickness}{A numeric value describing the thickness of the line.}
 
 \item{scale_bar_x_start}{A numeric value (in seconds) describing the x-axis position of
-the scale bar (default is 1.25).}
+the scale bar (default is \code{1.25}).}
 
 \item{scale_bar_x_length}{A numeric value describing the horizontal span (in
 seconds) of the scale bar. This will automatically be converted and
-displayed in milliseconds (default is 0.5).}
+displayed in milliseconds (default is \code{0.5}).}
 
 \item{scale_bar_y_length}{A numeric value describing the vertical span (in
-pA) of the scale bar (default is 20).}
+pA) of the scale bar (default is \code{20}).}
 
 \item{scale_bar_y_start}{A numeric value describing the y-axis position (in pA) of
-the scale bar (default is 15).}
+the scale bar (default is \code{15}).}
 
-\item{scale_bar_linewidth}{A numeric value describing the thickness of the scalebar line (default is 0.4).}
+\item{scale_bar_linewidth}{A numeric value describing the thickness of the scalebar line (default is \code{0.4}).}
 
-\item{scale_bar_label_y_nudge}{An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to 1.5.}
+\item{scale_bar_label_y_nudge}{An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to \code{1.5}.}
 
 \item{plot_x_min}{A numeric value describing the minimum value on the x-axis
-(in seconds).}
+(in seconds). Defaults to \code{1}.}
 
 \item{plot_x_max}{A numeric value describing the maximum value on the x-axis
-(in seconds).}
+(in seconds). Defaults to \code{3}.}
 
 \item{plot_y_min}{A numeric value describing the minimum value on the y-axis
-(in pA). Defaults to -80. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!}
+(in pA). Defaults to \code{-80}. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!}
 
 \item{plot_y_max}{A numeric value describing the maximum value on the y-axis
-(in pA). Defaults to 5. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!}
+(in pA). Defaults to \code{5}. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!}
 
-\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
-saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.}
+\item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
+saved as a .png using \code{ggsave()}. The filepath depends on the current type, but
+they will all go in subfolders below \verb{Figures/} in your project directory.}
 
 \item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }
 \value{
-A ggplot object. If save_plot_png is defined as "yes", it will also
+A ggplot object. If \code{save_plot_png} is defined as "yes", it will also
 generate a .png file in the folder
 \code{Figures/Spontaneous-currents/Representative-Traces} relative to the
 project directory, with the \code{plot_category}, \code{plot_treatment}, and \code{state} included in the filename.

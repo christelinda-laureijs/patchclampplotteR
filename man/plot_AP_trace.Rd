@@ -35,11 +35,11 @@ plot_AP_trace(
 \arguments{
 \item{data}{A dataframe generated using \code{import_ABF_file()} with \code{recording_mode = "current_clamp"}.}
 
-\item{y_var}{A character value ("voltage" or "current") describing what variable will be plotted on the y-axis. Defaults to "voltage". Use "current" if you want to demonstrate current injections.}
+\item{y_var}{A character value (\code{"voltage"} or \code{"current"}) describing what variable will be plotted on the y-axis. Defaults to \code{"voltage"}. Use \code{"current"} if you want to demonstrate current injections.}
 
-\item{sweeps}{A character value or list of character values of the sweeps you would like to plot. These correspond to the values in the \code{sweep1} column of your dataset, and will likely be in the form of "epi1", "epi2", etc.}
+\item{sweeps}{A character value or list of character values of the sweeps you would like to plot. These correspond to the values in the \code{sweep1} column of your dataset, and will likely be in the form of \code{"epi1"}, \code{"epi2"}, etc.}
 
-\item{colour_scale_option}{A character value ("viridis", "custom" or "single_colour") describing what colour scale should be applied to the trace. If set to "viridis" or "custom", the trace will be coloured by sweep.}
+\item{colour_scale_option}{A character value (\code{"viridis"}, \code{"custom"} or \code{"single_colour"}) describing what colour scale should be applied to the trace. If set to \code{"viridis"} or \code{"custom"}, the trace will be coloured by sweep.}
 
 \item{custom_scale_colours}{A list of character values (can be hex values or named colours) describing the custom theme. Use if \code{colour_scale_option = "custom"}.}
 
@@ -53,41 +53,41 @@ this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
 \item{plot_treatment}{A character value specifying the treatment you would
-like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
+like to plot (e.g. \code{"Control"}). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
 
-\item{state}{A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include "Baseline", "Post-insulin". The \code{state} will be included in the .png filename if \code{save_plot_png = "yes"}.}
+\item{state}{A character value describing if the recording was taken during the baseline period or post-treatment/protocol. Examples include \code{"Baseline"}, \code{"Post-insulin"}. The \code{state} will be included in the .png filename if \code{save_plot_png = "yes"}.}
 
 \item{include_scale_bar}{A character value that determines if a scale bar
-will be added to the plot. Allowed values are "yes" and "no".}
+will be added to the plot. Allowed values are \code{"yes"} and \code{"no"}.}
 
-\item{scale_bar_label_y_nudge}{An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to 5.}
+\item{scale_bar_label_y_nudge}{An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to \code{5}.}
 
-\item{include_scale_bar_label}{A character value ("yes" or "no") describing whether to include text labels on the scale bar. If "yes", the text annotation values will be pulled from \code{scale_bar_x_length} and \code{scale_bar_y_length}.}
+\item{include_scale_bar_label}{A character value (\code{"yes"} or \code{"no"}) describing whether to include text labels on the scale bar. If \code{"yes"}, the text annotation values will be pulled from \code{scale_bar_x_length} and \code{scale_bar_y_length}.}
 
-\item{geom_text_family}{A character value describing the font family used for the scale bar annotations. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
+\item{geom_text_family}{A character value describing the font family used for the scale bar annotations. Defaults to \code{""} (empty, will use default system font), but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
 \item{scale_bar_x_start}{A numeric value (in \code{scale_bar_x_unit}s, so likely milliseconds) describing the x-axis position of
-the scale bar (default is 880).}
+the scale bar (default is \code{880}).}
 
-\item{scale_bar_x_length}{A numeric value describing the horizontal span (in \code{scale_bar_x_unit}s, so likely milliseconds) of the scale bar (default is 100).}
+\item{scale_bar_x_length}{A numeric value describing the horizontal span (in \code{scale_bar_x_unit}s, so likely milliseconds) of the scale bar (default is \code{100}).}
 
-\item{scale_bar_x_unit}{A character value (defaults to "ms") which will be present on the scale bar label.}
+\item{scale_bar_x_unit}{A character value (defaults to \code{"ms"}) which will be present on the scale bar label.}
 
-\item{scaling_factor}{A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is 10, and this value will likely not need to be changed.}
+\item{scaling_factor}{A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is \code{10}, and this value will likely not need to be changed.}
 
 \item{scale_bar_y_start}{A numeric value describing the y-axis position (in \code{scale_bar_x_unit}s, so likely mV) of
-the scale bar (default is -30).}
+the scale bar (default is \code{-30}).}
 
-\item{scale_bar_y_length}{A numeric value describing the vertical span (in \code{scale_bar_x_unit}s, so likely mV) of the scale bar (default is 40).}
+\item{scale_bar_y_length}{A numeric value describing the vertical span (in \code{scale_bar_x_unit}s, so likely mV) of the scale bar (default is \code{40}).}
 
-\item{scale_bar_y_unit}{A character value (defaults to "mV") which will be present on the scale bar label.}
+\item{scale_bar_y_unit}{A character value (defaults to \code{"mV"}) which will be present on the scale bar label.}
 
-\item{scale_bar_linewidth}{A numeric value describing the thickness of the scalebar line (default is 0.6).}
+\item{scale_bar_linewidth}{A numeric value describing the thickness of the scalebar line (default is \code{0.6}).}
 
-\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
-saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.}
+\item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
+saved as a .png using \code{ggsave()}. The filepath depends on the current type, but
+they will all go in subfolders below \verb{Figures/} in your project directory.}
 
 \item{filename_suffix}{Optional character value to add a suffix to the
 filename of the .png file created with this plot. Could be useful if you
@@ -104,22 +104,22 @@ project directory.
 This function allows you to plot an \code{.abf} file of a recording taken in current clamp mode. It is useful if you want to display a representative trace of action potentials or the results of a current injection protocol.
 }
 \details{
-WARNING: If you choose to plot current injections (\code{y_var = "current"}) you MUST change \code{scale_bar_y_unit} to the correct unit (likely pA).
+WARNING: If you choose to plot current injections (\code{y_var = "current"}) you MUST change \code{scale_bar_y_unit} to the correct unit (likely \code{"pA"}).
 }
 \examples{
 
 # Viridis
 
 plot_AP_trace(
-data = sample_ap_abf_baseline,
-sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
-colour_scale_option = "viridis",
-plot_category = 2,
-plot_treatment = "Control",
-direction = -1,
-option = "plasma",
-begin = 0,
-end = 0.8
+  data = sample_ap_abf_baseline,
+  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+  colour_scale_option = "viridis",
+  plot_category = 2,
+  plot_treatment = "Control",
+  direction = -1,
+  option = "plasma",
+  begin = 0,
+  end = 0.8
 )
 
 # Custom colours

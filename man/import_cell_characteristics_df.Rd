@@ -29,7 +29,7 @@ The columns listed below are required in the raw .csv file. If you do not have d
 \itemize{
 \item \code{letter} A character value that is a unique identifier for a single
 recording. Used to link data sets for evoked or spontaneous currents and
-cell-characteristics. Example: "A"
+cell-characteristics. Example: \code{"A"}
 \item \code{cell} A character or numeric value representing the cell. For
 example, use \verb{3.1.1} for animal #3, slice #1, cell #1.
 \item \code{sex} A character value such as "Male" or "Female".
@@ -42,14 +42,14 @@ as long as the time units are consistent throughout (e.g. don't mix up days
 and months when reporting animal ages). Do not use characters (e.g. avoid
 "P31" and use 31 instead).
 \item \code{animal} A numeric value representing the animal's ID number.
-\item \code{synapses} A character value such as "Glutamate" or "GABA".
-\item \code{treatment} A character value such as "Control" or "HNMPA".
-\item \code{category} A numeric value representing an experiment type. For example, '1' may mean 4 seconds of high-frequency stimulation (HFS), '2' may mean an experiment where you added insulin, and '3' may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the \code{treatment} variable. For example, perhaps you added insulin (Category \code{2}) and also had the antagonist HNMPA present. This would be \verb{Category = 2, Treatment = HNMPA}.
+\item \code{synapses} A character value such as \code{"Glutamate"} or \code{"GABA"}.
+\item \code{treatment} A character value such as \code{"Control"} or \code{"HNMPA"}.
+\item \code{category} A numeric value representing an experiment type. For example, \code{'1'} may mean 4 seconds of high-frequency stimulation (HFS), \code{'2'} may mean an experiment where you added insulin, and \code{'3'} may mean HFS with insulin in the bath at all times. A category is the top-level division of your data. You can then have subgroups using the \code{treatment} variable. For example, perhaps you added insulin (Category = \code{2}) and also had the antagonist HNMPA present. This would be \verb{Category = 2, Treatment = HNMPA}.
 \item \code{R_a} A list of values for the access resistance, which would have been
 monitored at several timepoints throughout the recording. See the section
 \code{R_a} formatting below.
 \item \code{days_alone} A numeric value representing the number of days that the animal was alone in a cage. This will always be 1 for some treatments, like fasting, but should ideally be low to reduce the effects of social isolation-related stress.
-\item \code{animal_or_slicing_problems} A character value ("yes" or "no") indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use "yes" if the slices were crumpling during slicing or the animal was unusually anxious.)
+\item \code{animal_or_slicing_problems} A character value (\code{"yes"} or \code{"no"}) indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use \code{"yes"} if the slices were crumpling during slicing or the animal was unusually anxious.)
 
 }
 }

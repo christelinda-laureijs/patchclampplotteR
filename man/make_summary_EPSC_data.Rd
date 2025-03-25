@@ -21,18 +21,18 @@ currents (\code{current_type == "sEPSC"}), this should be the pruned data
 \verb{$individual_cells} dataset generated using \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}.}
 
 \item{current_type}{A character describing the current type. Allowed values
-are "eEPSC" or "sEPSC".}
+are \code{"eEPSC"} or \code{"sEPSC"}.}
 
-\item{save_output_as_RDS}{A character ("yes" or "no") describing if the
+\item{save_output_as_RDS}{A character (\code{"yes"} or \code{"no"}) describing if the
 resulting object should be saved as an RDS file in the raw data folder.}
 
 \item{decimal_places}{A numeric value indicating the number of decimal places
 the data should be rounded to. Used to reduce file size and prevent an
 incorrect representation of the number of significant digits.}
 
-\item{baseline_interval}{A character value describing the baseline interval. Defaults to "t0to5".}
+\item{baseline_interval}{A character value describing the baseline interval. Defaults to \code{"t0to5"}.}
 
-\item{ending_interval}{A character value describing the last interval in the recording. Useful for future plots in which you compare the percent decrease/increase in current amplitude relative to the baseline. Examples include "t20to25", "t10to15", etc.}
+\item{ending_interval}{A character value describing the last interval in the recording. Useful for future plots in which you compare the percent decrease/increase in current amplitude relative to the baseline. Examples include \code{"t20to25"}, \code{"t10to15"}, etc.}
 }
 \value{
 A list of two dataframes (\code{current_type = eEPSC}) or three dataframes (\code{current_type = sEPSC}). For evoked currents (\code{current_type = "eEPSC"}) the first dataframe (\verb{$percent_change_data}) contains the mean current amplitude for each interval, with a final column (\code{percent_change}) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.

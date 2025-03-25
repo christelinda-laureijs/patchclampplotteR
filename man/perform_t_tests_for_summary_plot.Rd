@@ -25,16 +25,16 @@ perform_t_tests_for_summary_plot(
 the sample dataset for this package, 2 represents experiments where insulin
 was applied continuously after a 5-minute baseline period.}
 
-\item{include_all_treatments}{A character ("yes" or "no") specifying if the
-plot will include data from all treatments. If "no", you must specify a
+\item{include_all_treatments}{A character (\code{"yes"} or \code{"no"}) specifying if the
+plot will include data from all treatments. If \code{"no"}, you must specify a
 list of treatments in \code{list_of_treatments}.}
 
 \item{list_of_treatments}{A list of character values describing the
-treatments that will be in the plot. Defaults to NULL, since
-include_all_treatments is "yes" by default.}
+treatments that will be in the plot. Defaults to \code{NULL}, since
+include_all_treatments is \code{"yes"} by default.}
 
 \item{current_type}{A character describing the current type. Allowed values
-are "eEPSC" or "sEPSC".}
+are \code{"eEPSC"} or \code{"sEPSC"}.}
 
 \item{parameter}{A character value specifying the parameter to be plotted on
 the y-axis. For evoked currents (\code{current_type = "eEPSC"}), the available
@@ -44,21 +44,21 @@ available parameters are "amplitude" (normalized currents),
 "raw_amplitude", "frequency" (normalized frequency) or "raw_frequency".}
 
 \item{baseline_interval}{A character value indicating the name of the
-interval used as the baseline. Defaults to "t0to5", but can be changed.
+interval used as the baseline. Defaults to \code{"t0to5"}, but can be changed.
 Make sure that this matches the baseline interval that you set in
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.}
 
 \item{interval_length}{Length of each interval (numeric; in minutes). Used to
 divide the dataset into broad ranges for statistical analysis. Important!
 \code{max_recording_length} must be evenly divisible by \code{interval_length}.
-Defaults to 5.}
+Defaults to \code{5}.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
-\item{save_output_as_RDS}{A character ("yes" or "no") describing if the
+\item{save_output_as_RDS}{A character (\code{"yes"} or \code{"no"}) describing if the
 resulting object should be saved as an RDS file in the raw data folder.}
 }
 \value{

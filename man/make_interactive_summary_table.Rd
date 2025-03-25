@@ -32,24 +32,24 @@ their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
-\item{include_all_treatments}{A character ("yes" or "no") specifying if the
-plot will include data from all treatments. If "no", you must specify a
+\item{include_all_treatments}{A character (\code{"yes"} or \code{"no"}) specifying if the
+plot will include data from all treatments. If \code{"no"}, you must specify a
 list of treatments in \code{list_of_treatments}.}
 
 \item{list_of_treatments}{A list of character values describing the
-treatments that will be in the plot. Defaults to NULL, since
-include_all_treatments is "yes" by default.}
+treatments that will be in the plot. Defaults to \code{NULL}, since
+include_all_treatments is \code{"yes"} by default.}
 
-\item{include_all_categories}{A character ("yes" or "no") specifying if the
-plot will include data from all categories. If "no", you must specify a
+\item{include_all_categories}{A character (\code{"yes"} or \code{"no"}) specifying if the
+plot will include data from all categories. If \code{"no"}, you must specify a
 list of categories in \code{list_of_categories}.}
 
 \item{list_of_categories}{A list of character values describing the
-categories that will be in the plot. Defaults to NULL, since
-include_all_categories is "yes" by default.}
+categories that will be in the plot. Defaults to \code{NULL}, since
+include_all_categories is \code{"yes"} by default.}
 
-\item{save_output_as_RDS}{A character ("yes" or "no") describing if the
-resulting object should be saved as an RDS file in the folder 'Data/Output-Data-from-R'. The function will automatically create this folder if it doesn't already exist.
+\item{save_output_as_RDS}{A character (\code{"yes"} or \code{"no"}) describing if the
+resulting object should be saved as an RDS file in the folder \code{"Data/Output-Data-from-R"}. The function will automatically create this folder if it doesn't already exist.
 Note: This is not the interactive table, but it is the raw dataframe that
 is later inserted into \code{reactable::reactable()}. This is useful if you want
 to build your own table using a different package, or you want to generate

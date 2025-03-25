@@ -48,22 +48,22 @@ this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
 \item{plot_treatment}{A character value specifying the treatment you would
-like to plot (e.g. "Control"). \code{plot_treatment} represents antagonists that
+like to plot (e.g. \code{"Control"}). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
 
 \item{current_type}{A character describing the current type. Allowed values
-are "eEPSC" or "sEPSC".}
+are \code{"eEPSC"} or \code{"sEPSC"}.}
 
 \item{y_variable}{A character value specifying the variable to be plotted on
 the y-axis. For evoked currents (\code{current_type = "eEPSC"}), the available
-y_variables are "P1", "P1_transformed", "mean_P1" and "PPR". \emph{Note}: If you
-select "mean_P1", you must set the \code{pruned} argument to "yes". For
+y_variables are \code{"P1"}, \code{"P1_transformed"}, \code{"mean_P1"} and \code{"PPR"}. \emph{Note}: If you
+select \code{"mean_P1"}, you must set the \code{pruned} argument to \code{"yes"}. For
 spontaneous currents (\code{current_type = "sEPSC"}), the available y_variables
-are "amplitude" or "frequency".}
+are \code{"amplitude"} or \code{"frequency"}.}
 
 \item{hormone_added}{A character value that will be used as the label over
 the line annotating the period when a hormone was applied. Examples include
-"500 nM Insulin", "CCK + Leptin", and "Insulin". If you applied a
+\code{"500 nM Insulin"}, \code{"CCK + Leptin"}, and \code{"Insulin"}. If you applied a
 high-frequency stimulation (HFS) protocol instead, write "HFS", and an
 annotation arrow will be added instead.}
 
@@ -71,56 +71,56 @@ annotation arrow will be added instead.}
 minutes) when a hormone was added or when HFS was applied. This will set
 the annotation line start point.}
 
-\item{legend_position}{A character value ("left", "right", "top", "bottom", "inside") which describes the location of the legend. If you set this to "inside", you may need to adjust the location of the representative trace with \code{annotation_x_min}, \code{annotation_x_max}, etc. Or, you can choose to insert the representative trace as a separate geom using the \code{patchwork} package (e.g. set up a two-row patchwork with the representative trace in the top row, and the summary plot in the second row).}
+\item{legend_position}{A character value (\code{"left"}, \code{"right"}, \code{"top"}, \code{"bottom"}, \code{"inside"}) which describes the location of the legend. If you set this to \code{"inside"}, you may need to adjust the location of the representative trace with \code{annotation_x_min}, \code{annotation_x_max}, etc. Or, you can choose to insert the representative trace as a separate geom using the \code{patchwork} package (e.g. set up a two-row patchwork with the representative trace in the top row, and the summary plot in the second row).}
 
 \item{legend_position_inside}{A list of two numeric values describing the coordinates of the legend. This only applies if \code{legend_position = "inside"}.}
 
-\item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+\item{included_sexes}{A character value (\code{"both"}, \code{"male"} or \code{"female"}). Useful if you want to have a plot with data from one sex only. Defaults to \code{"both"}. If you choose a single sex, the resulting plot will have \code{"-males-only"} or \code{"-females-only"} in the file name. WARNING!! If you choose \code{"male"} or \code{"female"}, you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
 
-\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Males"}, \code{"Male"}, \code{"male"}, \code{"males"}, \code{"M"}, etc.  This must be consistent in all data sheets. Defaults to \code{"Male"}.}
 
-\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".}
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Females"}, \code{"Female"}, \code{"female"}, \code{"females"}, \code{"F"}, etc. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
 
-\item{include_representative_trace}{A character ("yes" or "no") describing if
+\item{include_representative_trace}{A character (\code{"yes"} or \code{"no"}) describing if
 a representative trace should be included as an overlay to the plot. This
 pulls from a png file stored in \verb{Figures/Representative-Traces/}". Please
 specify the file-name in \code{representative_trace_filename}.}
 
 \item{representative_trace_filename}{A character value describing the
 filename of the representative trace. This should be the name of a .png
-file. Use relative paths to specify files. For example, a figure in the Figures/Representative-Traces subfolder would be entered as \code{representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"}.}
+file. Use relative paths to specify files. For example, a figure in the \code{Figures/Representative-Traces} subfolder would be entered as \code{representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"}.}
 
-\item{position_dodge_size}{A numeric value describing the distance that points should be dodged through \code{ggplot2::position_dodge()}. Defaults to 0.1.}
+\item{position_dodge_size}{A numeric value describing the distance that points should be dodged through \code{ggplot2::position_dodge()}. Defaults to \code{0.1}.}
 
-\item{annotation_x_min}{A numeric value describing the minimum value on the x-axis for the representative trace. Defaults to 1, which will place it at the lower left corner of the plot (when combined with the default value for \code{annotation_y_min}).}
+\item{annotation_x_min}{A numeric value describing the minimum value on the x-axis for the representative trace. Defaults to \code{1}, which will place it at the lower left corner of the plot (when combined with the default value for \code{annotation_y_min}).}
 
 \item{annotation_x_max}{A numeric value describing the maximum value on the x-axis for the representative trace. Change this if your representative trace image looks squished or stretched.}
 
-\item{annotation_y_min}{A numeric value describing the minimum value on the y-axis for the representative trace. Defaults to 0, which will place it at the lower left corner of the plot (when combined with the default value for \code{annotation_x_min}).}
+\item{annotation_y_min}{A numeric value describing the minimum value on the y-axis for the representative trace. Defaults to \code{0}, which will place it at the lower left corner of the plot (when combined with the default value for \code{annotation_x_min}).}
 
 \item{annotation_y_max}{A numeric value describing the maximum value on the y-axis for the representative trace. Change this if your representative trace image looks squished or stretched.}
 
 \item{y_axis_limit}{A numeric value describing the maximum value on the y-axis.}
 
-\item{signif_stars}{A character ("yes" or "no") describing if significance
-stars should be included as an overlay in the plot. If "yes", you must
+\item{signif_stars}{A character (\code{"yes"} or \code{"no"}) describing if significance
+stars should be included as an overlay in the plot. If \code{"yes"}, you must
 specify a dataframe containing the results of a t-test, which is generated
-using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. NOTE! If \code{included_sexes} is "male" or "female", you MUST use a t-test that was performed on data filtered to ONE sex.}
+using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. NOTE! If \code{included_sexes} is \code{"male"} or \code{"female"}, you MUST use a t-test that was performed on data filtered to ONE sex.}
 
-\item{significance_display_method}{A character value ("stars" or "p-value") describing how significance values should be displayed. These annotations will not appear if \code{signif_stars} is "no".)}
+\item{significance_display_method}{A character value (\code{"stars"} or \code{"p-value"}) describing how significance values should be displayed. These annotations will not appear if \code{signif_stars} is \code{"no"}.)}
 
 \item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
 
-\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to "", but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
+\item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to \code{""} (empty, will use default system font), but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
 \item{t_test_df}{A dataframe of t-test results, which has been generated
 using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. Important note! The t-test
 dataframe must be filtered to match the same conditions in the \code{data}
 argument, or the significance stars will be misleading.}
 
-\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme layer will be applied which increases the size of the axis text.}
+\item{large_axis_text}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, a ggplot theme layer will be applied which increases the size of the axis text.}
 
-\item{shade_intervals}{A character ("yes" or "no"). If "yes", a ggplot theme
+\item{shade_intervals}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, a ggplot theme
 layer will be applied which adds lightly shaded rectangles to highlight
 5-minute intervals.}
 
@@ -133,9 +133,9 @@ their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
-\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
+\item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.}
+they will all go in subfolders below \verb{Figures/} in your project directory.}
 
 \item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }
@@ -148,13 +148,13 @@ a .png file exported to \code{Figures/Evoked-currents/Output-summary-plots} or
 The \code{text_size} will only be added on if you are using \code{large_axis_text}
 ("LARGE" will be included in the filename). The \code{file_name_ending} will be
 automatically added on for spontaneous current data to specify what
-y_variable is plotted (e.g. "raw_amplitude"). The \code{sexes} will only be added if you choose to plot a single sex. For example, if you set \code{included_sexes = "Male"}, the \code{.png} filename will have "-males-only" included in the filename.
+y_variable is plotted (e.g. \code{"raw_amplitude"}). The \code{sexes} will only be added if you choose to plot a single sex. For example, if you set \code{included_sexes = "Male"}, the \code{.png} filename will have \code{"-males-only"} included in the filename.
 
 Example auto-generated filenames include:
 \itemize{
-\item "Summary-plot-Control-category-2.png"
-\item "Summary-plot-Control-category-2-males-only.png"
-\item "Summary-plot-Control-category-2_raw_amplitude.png" for spontaneous
+\item \code{"Summary-plot-Control-category-2.png"}
+\item \code{"Summary-plot-Control-category-2-males-only.png"}
+\item \code{"Summary-plot-Control-category-2_raw_amplitude.png"} for spontaneous
 currents.
 }
 }

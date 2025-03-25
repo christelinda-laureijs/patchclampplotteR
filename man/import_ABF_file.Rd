@@ -9,7 +9,7 @@ import_ABF_file(file_name, recording_mode)
 \arguments{
 \item{file_name}{Filepath to an \code{.abf} file (e.g. "Data/23711004.abf")}
 
-\item{recording_mode}{The mode used for the recording. If in \code{recording_mode = "voltage_clamp"} (e.g. clamping cell at -70 mV and measuring current amplitude) the primary channel (\code{chan1}) is set to "current" and the secondary channel (\code{chan2}) is "voltage". If \code{recording_mode = "current_clamp"}, these values are reversed, where the primary channel is "voltage" and the secondary channel is "current".}
+\item{recording_mode}{The mode used for the recording. If in \code{recording_mode = "voltage_clamp"} (e.g. clamping cell at -70 mV and measuring current amplitude) the primary channel (\code{chan1}) is set to \code{"current"} and the secondary channel (\code{chan2}) is \code{"voltage"}. If \code{recording_mode = "current_clamp"}, these values are reversed, where the primary channel is \code{"voltage"} and the secondary channel is \code{"current"}.}
 }
 \value{
 A dataframe with 5 columns:

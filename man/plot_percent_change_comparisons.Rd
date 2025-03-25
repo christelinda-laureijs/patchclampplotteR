@@ -27,35 +27,35 @@ plot_percent_change_comparisons(
 \item{data}{A dataframe generated from \code{make_summary_EPSC_data()}. If \code{current_type = "eEPSC"}, this must be the percent change dataframe generated from \code{make_summary_EPSC_data()}. Use \verb{$percent_change} to access this dataframe. If \code{current_type = "sEPSC"}, this can either be \verb{$percent_change_amplitude} or \verb{$percent_change_frequency}.}
 
 \item{current_type}{A character describing the current type. Allowed values
-are "eEPSC" or "sEPSC".}
+are \code{"eEPSC"} or \code{"sEPSC"}.}
 
-\item{y_variable}{A character value (must be "amplitude" for \code{current_type = "eEPSC"}. For \code{current_type = "sEPSC"}, this must be "amplitude" or "frequency", corresponding to \verb{$percent_change_amplitude} or \verb{$percent_change_frequency}, respectively).}
+\item{y_variable}{A character value (must be \code{"amplitude"} for \code{current_type = "eEPSC"}. For \code{current_type = "sEPSC"}, this must be \code{"amplitude"} or \code{"frequency"}, corresponding to \verb{$percent_change_amplitude} or \verb{$percent_change_frequency}, respectively).}
 
 \item{plot_category}{A numeric value specifying the category, which can be
 used to differentiate different protocol types. In the sample dataset for
 this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
-\item{include_all_treatments}{A character ("yes" or "no") specifying if the
-plot will include data from all treatments. If "no", you must specify a
+\item{include_all_treatments}{A character (\code{"yes"} or \code{"no"}) specifying if the
+plot will include data from all treatments. If \code{"no"}, you must specify a
 list of treatments in \code{list_of_treatments}.}
 
 \item{list_of_treatments}{A list of character values describing the
-treatments that will be in the plot. Defaults to NULL, since
-include_all_treatments is "yes" by default.}
+treatments that will be in the plot. Defaults to \code{NULL}, since
+include_all_treatments is \code{"yes"} by default.}
 
 \item{filename_suffix}{Optional character value to add a suffix to the
 filename of the .png file created with this plot. Could be useful if you
 have specified a custom list of treatments.}
 
-\item{large_axis_text}{A character ("yes" or "no"). If "yes", a ggplot theme
+\item{large_axis_text}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, a ggplot theme
 layer will be applied which increases the axis text.}
 
-\item{included_sexes}{A character value ("both", "male" or "female"). Useful if you want to have a plot with data from one sex only. Defaults to "both". If you choose a single sex, the resulting plot will have "-males-only" or "-females-only" in the file name. WARNING!! If you choose "male" or "female", you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+\item{included_sexes}{A character value (\code{"both"}, \code{"male"} or \code{"female"}). Useful if you want to have a plot with data from one sex only. Defaults to \code{"both"}. If you choose a single sex, the resulting plot will have \code{"-males-only"} or \code{"-females-only"} in the file name. WARNING!! If you choose \code{"male"} or \code{"female"}, you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
 
-\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Males", "Male", "male", "males", "M", etc. Defaults to "Male".}
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Males"}, \code{"Male"}, \code{"male"}, \code{"males"}, \code{"M"}, etc.  This must be consistent in all data sheets. Defaults to \code{"Male"}.}
 
-\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include "Females", "Female", "female", "females", "F", etc. Defaults to "Female".}
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Females"}, \code{"Female"}, \code{"female"}, \code{"females"}, \code{"F"}, etc. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
 
 \item{plot_width}{A numeric value specifying the width of the plot. Defaults
 to 8, but you will need to adjust this depending on how many treatments you
@@ -70,9 +70,9 @@ should look like.}
 \link{sample_theme_options} for an example of what this dataframe should
 look like and how you can customize these values.}
 
-\item{save_plot_png}{A character ("yes" or "no"). If "yes", the plot will be
-saved as a .png using ggsave. The filepath depends on the current type, but
-they will all go in subfolders below Figures/ in your project directory.}
+\item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
+saved as a .png using \code{ggsave()}. The filepath depends on the current type, but
+they will all go in subfolders below \verb{Figures/} in your project directory.}
 
 \item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }

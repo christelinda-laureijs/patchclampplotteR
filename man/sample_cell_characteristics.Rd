@@ -12,7 +12,7 @@ recording. Used to link data sets for evoked or spontaneous currents and
 cell-characteristics. Example: "A"}
 \item{cell}{A character or numeric value representing the cell. For example,
 use \verb{3.1.1} for animal #3, slice #1, cell #1.}
-\item{sex}{A character value such as "Male" or "Female".}
+\item{sex}{A character value such as \code{"Male"} or \code{"Female"}.}
 \item{X}{A numeric value representing the x-value of the cell's location in
 µm.}
 \item{Y}{A numeric value representing the y-value of the cell's location in

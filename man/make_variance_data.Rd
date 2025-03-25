@@ -25,21 +25,21 @@ was applied continuously after a 5-minute baseline period. Here,
 \code{plot_treatment} represents antagonists that were present on the brain
 slice, or the animals were fasted, etc.}
 
-\item{include_all_treatments}{A character ("yes" or "no") specifying if the
-plot will include data from all treatments. If "no", you must specify a
+\item{include_all_treatments}{A character (\code{"yes"} or \code{"no"}) specifying if the
+plot will include data from all treatments. If \code{"no"}, you must specify a
 list of treatments in \code{list_of_treatments}.}
 
 \item{list_of_treatments}{A list of character values describing the
-treatments that will be in the plot. Defaults to NULL, since
-include_all_treatments is "yes" by default.}
+treatments that will be in the plot. Defaults to \code{NULL}, since
+include_all_treatments is \code{"yes"} by default.}
 
 \item{baseline_interval}{A character value indicating the name of the
-interval used as the baseline. Defaults to "t0to5", but can be changed.
+interval used as the baseline. Defaults to \code{"t0to5"}, but can be changed.
 Make sure that this matches the baseline interval that you set in
 \code{\link[=make_normalized_EPSC_data]{make_normalized_EPSC_data()}}.}
 
 \item{post_hormone_interval}{A character value indicating the name of the
-interval used as "after" timepoint for comparison. Defaults to "t20to25",
+interval used as "after" timepoint for comparison. Defaults to \code{"t20to25"},
 but can be changed. Make sure that this matches an interval present in
 \code{data}}
 
@@ -48,7 +48,7 @@ their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
-\item{save_output_as_RDS}{A character ("yes" or "no") describing if the
+\item{save_output_as_RDS}{A character (\code{"yes"} or \code{"no"}) describing if the
 resulting object should be saved as an RDS file in the raw data folder.}
 }
 \value{
@@ -57,12 +57,12 @@ A dataframe containing all of the columns within the summary data
 plus three additional columns:
 \itemize{
 \item \code{state} A character value describing if a data point belongs to the
-baseline interval ("Baseline") or an interval after a hormone or protocol has
-been applied ("Post-modification"). These intervals are selected from
+baseline interval (\code{"Baseline"}) or an interval after a hormone or protocol has
+been applied (\code{"Post-modification"}). These intervals are selected from
 \code{baseline_interval} and \code{post_hormone_interval}.
 \item \code{mean_cv_inverse_square} The mean inverse coefficient of variation
-squared within a specific state.
-\item \code{mean_VMR} The mean variance-to-mean ratio within a specific state.
+squared within a specific state and sex.
+\item \code{mean_VMR} The mean variance-to-mean ratio within a specific state and sex.
 }
 }
 \description{
@@ -70,7 +70,7 @@ squared within a specific state.
 time points. They are the baseline period and a user-specified interval after
 a hormone or protocol has been applied. The variance measures are the inverse
 coefficient of variation squared and the variance-to-mean ratio (VMR). A
-"before vs. after" comparison of these two variance measures is useful to
+\code{"before vs. after"} comparison of these two variance measures is useful to
 determine which mechanism is involved in modifying synaptic plasticity. For
 more information, please see \href{https://doi.org/10.1016/j.jneumeth.2019.108526}{Huijstee & Kessels (2020)}.
 }
