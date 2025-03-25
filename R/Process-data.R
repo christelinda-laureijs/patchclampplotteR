@@ -819,7 +819,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #' @param ending_interval A character value describing the last interval in the recording. Useful for future plots in which you compare the percent decrease/increase in current amplitude relative to the baseline. Examples include `"t20to25"`, `"t10to15"`, etc.
 #' @param baseline_interval A character value describing the baseline interval. Defaults to `"t0to5"`.
 #'
-#' @returns A list of two dataframes (`current_type = eEPSC`) or three dataframes (`current_type = sEPSC`). For evoked currents (`current_type = "eEPSC"`) the first dataframe (`$percent_change_data`) contains the mean current amplitude for each interval, with a final column (`percent_change`) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.
+#' @returns A list of three dataframes (`current_type = eEPSC`) or three dataframes (`current_type = sEPSC`). For evoked currents (`current_type = "eEPSC"`) the first dataframe (`$percent_change_data`) contains the mean current amplitude for each interval, with a final column (`percent_change`) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.
 #'
 #' Most columns (`age`, `sex`, `animal`, etc.) come directly from the information imported through `import_cell_characteristics_df()`. However, there are some new columns of note.
 #'
@@ -840,8 +840,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #'  \item `mean_P1_transformed` The amplitude of the first evoked current
 #'  amplitude (% Baseline eEPSC amplitude) normalized to the mean baseline
 #'  amplitude and averaged over the interval.
-#'  \item `mean_P1_raw` The amplitude of the first evoked current amplitude (pA)
-#'  averaged over the interval.
+#'  \item `mean_P1_raw` The amplitude of the first evoked current amplitude (pA) averaged over the interval.
 #'  \item `n` The number of datapoints used to create the averaged values.
 #'  Corresponds to the number of sweeps per interval.
 #'  \item `sd` The standard deviation of the normalized evoked current data
@@ -859,10 +858,32 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #'  original dataset describing the cell's properties.
 #' }
 #'
+#' The third dataframe (accessed with `$mean_SE`) contains summary statistics that will be useful for publications. It presents mean evoked current amplitudes (taken from raw `P1` values) grouped by category, treatment, and sex. This will make it easy to report your findings as *mean +/- SE or SD* with *n* in publications. For example, "eEPSC amplitude decreased significantly in males (baseline: 24.1 +/- 0.11 pA, n = 6, insulin: 12.4 +/- 0.23 pA, n = 7)."
+#'
+#' \itemize{
+#'  \item `category` The experiment category (please see `import_cell_characteristics_df()` for more details).
+#'  \item `sex` The sex of the animal
+#'  \item `treatment` The treatment applied.
+#'  \item `n` The number of data points (i.e. cells)
+#'  \item `mean_baseline_raw_P1` The average evoked current amplitude (taken from `mean_P1_raw`) during the `baseline_interval`.
+#'  \item `sd_baseline_raw_P1` The standard deviation of `mean_baseline_raw_P1.`
+#'  \item `se_baseline_raw_P1` The standard error of `mean_baseline_raw_P1`. Taken by dividing `sd_baseline_raw_P1` by the square root of `n`.
+#'  \item `mean_ending_raw_P1` The average evoked current amplitude (taken from `mean_P1_raw`) during the `ending_interval`.
+#'  \item `sd_ending_raw_P1` The standard deviation of `mean_ending_raw_P1.`
+#'  \item `se_ending_raw_P1` The standard error of `mean_ending_raw_P1`. Taken by dividing `sd_ending_raw_P1` by the square root of `n`.
+#'
+#'  \item `VMR` The variance-to-mean ratio (VMR) of `P1_transformed`.
+#'  \item `interval` A character value indicating the interval that the data
+#'  point belongs to. For example, `interval` will be "t0to5" for any data
+#'  points from 0 to 5 minutes. Example values: "t0to5", "t5to10", etc.
+#'  \item `letter, synapses, sex, treatment, etc.` Unmodified columns from the
+#'  original dataset describing the cell's properties.
+#' }
+#'
 #'
 #' ## Spontaneous Current Data
 #'
-#' Spontaneous current data results in three dataframes. The first dataframe ($summary_data) contains summary statistics for each interval, as outlined below:
+#' Spontaneous current data results in five dataframes. The first dataframe ($summary_data) contains summary statistics for each interval, as outlined below:
 #'
 #' \itemize{
 #'  \item `mean_transformed_amplitude` The average normalized spontaneous
@@ -883,16 +904,16 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 #'  original dataset describing the cell's properties.
 #' }
 #'
-#' The second and third dataframes contain percent change data for spontaneous current amplitude and frequency, respectively. The columns are the same as the ones produced for evoked currents.
+#' The second and third dataframes contain percent change data for spontaneous current amplitude and frequency, respectively. The columns are the same as the ones produced for evoked currents (read the documentation for `$percent_change_data`.
+#'
+#' The fourth and fifth dataframes contain the mean, SE, SD, and n data for spontaneous current amplitude and frequency, respectively. Read the description for the `$mean_SE` to learn about these columns.
 #'
 #' @export
 #'
-#' @seealso [make_summary_EPSC_data()] for an example of a function that
-#' further processes the data.
 #' @examples
 #'
 #' # Evoked Currents
-#' # Will return a list of two dataframes
+#' # Will return a list of three dataframes
 #'
 #' make_summary_EPSC_data(
 #'   data = sample_raw_eEPSC_df,
@@ -950,7 +971,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         n = dplyr::n(),
         sd = stats::sd(.data$P1_transformed, na.rm = TRUE),
         cv = .data$sd / .data$mean_P1_transformed,
-        se = stats::sd(.data$P1_transformed, na.rm = TRUE) / sqrt(.data$n),
+        se = .data$sd / sqrt(.data$n),
         cv_inverse_square = 1 / (.data$cv^2),
         variance = stats::var(.data$P1_transformed, na.rm = TRUE),
         VMR = .data$variance / .data$mean_P1_transformed,
@@ -986,7 +1007,23 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         100) %>%
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
 
-    summary_data_final <- list(percent_change_data = percent_change_df, summary_data = summary_df)
+
+    mean_and_SE_df <- percent_change_df %>%
+      dplyr::group_by(.data$category, .data$treatment, .data$sex) %>%
+      dplyr::summarize(n = dplyr::n(),
+                mean_baseline_raw_P1 = mean(.data[[baseline_interval]], na.rm=T),
+                sd_baseline_raw_P1 = sd(.data[[baseline_interval]], na.rm=T),
+                se_baseline_raw_P1 = .data$sd_baseline_raw_P1/sqrt(.data$n),
+                mean_ending_raw_P1 = mean(.data[[ending_interval]], na.rm=T),
+                sd_ending_raw_P1 = sd(.data[[ending_interval]], na.rm=T),
+                se_ending_raw_P1 = .data$sd_ending_raw_P1/sqrt(.data$n)
+      )
+
+    summary_data_final <- list(
+      percent_change_data = percent_change_df,
+      summary_data = summary_df,
+      mean_SE = mean_and_SE_df
+    )
   }
 
 
@@ -1071,10 +1108,45 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         round(x, decimal_places)
       }))
 
+
+    mean_and_SE_df_amplitude_df <- percent_change_amplitude_df %>%
+      dplyr::group_by(.data$category, .data$treatment, .data$sex) %>%
+      dplyr::summarize(
+        n = dplyr::n(),
+        mean_baseline_amplitude = mean(.data[[baseline_interval]], na.rm =
+                                      T),
+        sd_baseline_amplitude = sd(.data[[baseline_interval]], na.rm =
+                                  T),
+        se_baseline_amplitude = .data$sd_baseline_amplitude / sqrt(.data$n),
+        mean_ending_amplitude = mean(.data[[ending_interval]], na.rm =
+                                    T),
+        sd_ending_amplitude = sd(.data[[ending_interval]], na.rm =
+                                T),
+        se_ending_amplitude = .data$sd_ending_amplitude / sqrt(.data$n)
+      )
+
+    mean_and_SE_df_frequency_df <- percent_change_frequency_df %>%
+      dplyr::group_by(.data$category, .data$treatment, .data$sex) %>%
+      dplyr::summarize(
+        n = dplyr::n(),
+        mean_baseline_frequency = mean(.data[[baseline_interval]], na.rm =
+                                         T),
+        sd_baseline_frequency = sd(.data[[baseline_interval]], na.rm =
+                                     T),
+        se_baseline_frequency = .data$sd_baseline_frequency / sqrt(.data$n),
+        mean_ending_frequency = mean(.data[[ending_interval]], na.rm =
+                                       T),
+        sd_ending_frequency = sd(.data[[ending_interval]], na.rm =
+                                   T),
+        se_ending_frequency = .data$sd_ending_frequency / sqrt(.data$n)
+      )
+
     summary_data_final <- list(
       summary_data = summary_df,
       percent_change_amplitude = percent_change_amplitude_df,
-      percent_change_frequency = percent_change_frequency_df
+      percent_change_frequency = percent_change_frequency_df,
+      mean_SE_amplitude = mean_and_SE_df_amplitude_df,
+      mean_SE_frequency = mean_and_SE_df_frequency_df
     )
   }
 

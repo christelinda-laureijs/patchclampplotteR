@@ -35,7 +35,7 @@ incorrect representation of the number of significant digits.}
 \item{ending_interval}{A character value describing the last interval in the recording. Useful for future plots in which you compare the percent decrease/increase in current amplitude relative to the baseline. Examples include \code{"t20to25"}, \code{"t10to15"}, etc.}
 }
 \value{
-A list of two dataframes (\code{current_type = eEPSC}) or three dataframes (\code{current_type = sEPSC}). For evoked currents (\code{current_type = "eEPSC"}) the first dataframe (\verb{$percent_change_data}) contains the mean current amplitude for each interval, with a final column (\code{percent_change}) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.
+A list of three dataframes (\code{current_type = eEPSC}) or three dataframes (\code{current_type = sEPSC}). For evoked currents (\code{current_type = "eEPSC"}) the first dataframe (\verb{$percent_change_data}) contains the mean current amplitude for each interval, with a final column (\code{percent_change}) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.
 
 Most columns (\code{age}, \code{sex}, \code{animal}, etc.) come directly from the information imported through \code{import_cell_characteristics_df()}. However, there are some new columns of note.
 
@@ -56,8 +56,7 @@ New columns for evoked current data (\code{current_type == "eEPSC"}) include:
 \item \code{mean_P1_transformed} The amplitude of the first evoked current
 amplitude (\% Baseline eEPSC amplitude) normalized to the mean baseline
 amplitude and averaged over the interval.
-\item \code{mean_P1_raw} The amplitude of the first evoked current amplitude (pA)
-averaged over the interval.
+\item \code{mean_P1_raw} The amplitude of the first evoked current amplitude (pA) averaged over the interval.
 \item \code{n} The number of datapoints used to create the averaged values.
 Corresponds to the number of sweeps per interval.
 \item \code{sd} The standard deviation of the normalized evoked current data
@@ -74,9 +73,31 @@ points from 0 to 5 minutes. Example values: "t0to5", "t5to10", etc.
 \item \verb{letter, synapses, sex, treatment, etc.} Unmodified columns from the
 original dataset describing the cell's properties.
 }
+
+The third dataframe (accessed with \verb{$mean_SE}) contains summary statistics that will be useful for publications. It presents mean evoked current amplitudes (taken from raw \code{P1} values) grouped by category, treatment, and sex. This will make it easy to report your findings as \emph{mean +/- SE or SD} with \emph{n} in publications. For example, "eEPSC amplitude decreased significantly in males (baseline: 24.1 +/- 0.11 pA, n = 6, insulin: 12.4 +/- 0.23 pA, n = 7)."
+
+\itemize{
+\item \code{category} The experiment category (please see \code{import_cell_characteristics_df()} for more details).
+\item \code{sex} The sex of the animal
+\item \code{treatment} The treatment applied.
+\item \code{n} The number of data points (i.e. cells)
+\item \code{mean_baseline_raw_P1} The average evoked current amplitude (taken from \code{mean_P1_raw}) during the \code{baseline_interval}.
+\item \code{sd_baseline_raw_P1} The standard deviation of \code{mean_baseline_raw_P1.}
+\item \code{se_baseline_raw_P1} The standard error of \code{mean_baseline_raw_P1}. Taken by dividing \code{sd_baseline_raw_P1} by the square root of \code{n}.
+\item \code{mean_ending_raw_P1} The average evoked current amplitude (taken from \code{mean_P1_raw}) during the \code{ending_interval}.
+\item \code{sd_ending_raw_P1} The standard deviation of \code{mean_ending_raw_P1.}
+\item \code{se_ending_raw_P1} The standard error of \code{mean_ending_raw_P1}. Taken by dividing \code{sd_ending_raw_P1} by the square root of \code{n}.
+
+\item \code{VMR} The variance-to-mean ratio (VMR) of \code{P1_transformed}.
+\item \code{interval} A character value indicating the interval that the data
+point belongs to. For example, \code{interval} will be "t0to5" for any data
+points from 0 to 5 minutes. Example values: "t0to5", "t5to10", etc.
+\item \verb{letter, synapses, sex, treatment, etc.} Unmodified columns from the
+original dataset describing the cell's properties.
+}
 \subsection{Spontaneous Current Data}{
 
-Spontaneous current data results in three dataframes. The first dataframe ($summary_data) contains summary statistics for each interval, as outlined below:
+Spontaneous current data results in five dataframes. The first dataframe ($summary_data) contains summary statistics for each interval, as outlined below:
 
 \itemize{
 \item \code{mean_transformed_amplitude} The average normalized spontaneous
@@ -97,7 +118,9 @@ Baseline frequency).
 original dataset describing the cell's properties.
 }
 
-The second and third dataframes contain percent change data for spontaneous current amplitude and frequency, respectively. The columns are the same as the ones produced for evoked currents.
+The second and third dataframes contain percent change data for spontaneous current amplitude and frequency, respectively. The columns are the same as the ones produced for evoked currents (read the documentation for \verb{$percent_change_data}.
+
+The fourth and fifth dataframes contain the mean, SE, SD, and n data for spontaneous current amplitude and frequency, respectively. Read the description for the \verb{$mean_SE} to learn about these columns.
 }
 }
 \description{
@@ -112,7 +135,7 @@ previously specified in \code{\link[=make_normalized_EPSC_data]{make_normalized_
 \examples{
 
 # Evoked Currents
-# Will return a list of two dataframes
+# Will return a list of three dataframes
 
 make_summary_EPSC_data(
   data = sample_raw_eEPSC_df,
@@ -133,8 +156,4 @@ make_summary_EPSC_data(
   ending_interval = "t20to25"
 )
 
-}
-\seealso{
-\code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}} for an example of a function that
-further processes the data.
 }
