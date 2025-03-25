@@ -721,8 +721,8 @@ NULL
 #' been applied ("Post-modification"). These intervals are selected from
 #' `baseline_interval` and `post_hormone_interval`.}
 #'  \item{`mean_cv_inverse_square`}{The mean inverse coefficient of variation
-#'  squared within a specific state.}
-#'  \item{`mean_VMR`}{The mean variance-to-mean ratio within a specific state.}
+#'  squared within a specific state and sex.}
+#'  \item{`mean_VMR`}{The mean variance-to-mean ratio within a specific state and sex.}
 #'  \item{`category, letter, sex, treatment, etc.`}{Other columns which are
 #'  imported directly from the summary data without modifications. For a
 #'  detailed description of these columns, please see [sample_summary_eEPSC_df].}

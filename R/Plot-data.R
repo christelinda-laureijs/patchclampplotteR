@@ -1738,6 +1738,8 @@ plot_percent_change_comparisons <- function(data,
 #' @param post_hormone_label A character value for x-axis label applied to
 #'   the post-hormone or post-protocol state. Defaults to `"Post-hormone"` but you
 #'   will likely change this to the hormone or protocol name.
+#' @param mean_line_thickness A numeric value describing the thickness of the line used to indicate the mean for a group. Defaults to `1.2`.
+#' @param mean_point_size A numeric value describing the size of the points used to indicate the means. Defaults to `2.5`.
 #' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.4`, which is a good thickness for most applications.
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
 #'   a .png file exported to `Figures/Evoked-currents/Variance-plots`. The plot
@@ -1785,6 +1787,8 @@ plot_variance_comparison_data <- function(data,
                                           geom_signif_text_size = 5,
                                           large_axis_text = "no",
                                           geom_signif_size = 0.4,
+                                          mean_line_thickness = 1.2,
+                                          mean_point_size = 2.5,
                                           treatment_colour_theme,
                                           theme_options,
                                           save_plot_png = "no",
@@ -1933,77 +1937,21 @@ plot_variance_comparison_data <- function(data,
     ggplot2::geom_line(ggplot2::aes(group = .data$letter), color = theme_options["connecting_line_colour", "value"], linewidth = 0.4) +
     ggplot2::scale_x_discrete(labels = c(baseline_label, post_hormone_label)) +
     ggplot_theme +
-    ggplot2::theme(axis.title.y = ggtext::element_markdown())
-
-  if (variance_measure == "cv") {
-    variance_comparison_plot <- variance_comparison_plot +
-      ggplot2::annotate(
-        geom = "segment",
-        x = baseline_interval,
-        xend = post_hormone_interval,
-        y = variance_comparison_data$mean_cv_inverse_square[variance_comparison_data$interval == baseline_interval][1],
-        yend = variance_comparison_data$mean_cv_inverse_square[variance_comparison_data$interval == post_hormone_interval][1],
-        color = plot_colour,
-        linewidth = 1.2
-      )
-
-    if (facet_by_sex == "no") {
-      variance_comparison_plot <- variance_comparison_plot +
-        ggplot2::geom_point(ggplot2::aes(y = .data$mean_cv_inverse_square),
-          size = 2.5,
-          color = plot_colour,
-          shape = plot_shape
-        )
-    }
-
-    if (facet_by_sex == "yes") {
-      variance_comparison_plot <- variance_comparison_plot +
-        ggplot2::geom_point(
-          ggplot2::aes(
-            y = .data$mean_cv_inverse_square,
-            shape = .data$sex
-          ),
-          size = 2.5,
-          color = plot_colour
-        )
-    }
-  }
-
-  if (variance_measure == "VMR") {
-    variance_comparison_plot <- variance_comparison_plot +
-      ggplot2::annotate(
-        geom = "segment",
-        x = baseline_interval,
-        xend = post_hormone_interval,
-        y = variance_comparison_data$mean_VMR[variance_comparison_data$interval == baseline_interval][1],
-        yend = variance_comparison_data$mean_VMR[variance_comparison_data$interval == post_hormone_interval][1],
-        color = plot_colour,
-        linewidth = 1.2
-      )
-
-
-    if (facet_by_sex == "no") {
-      variance_comparison_plot <- variance_comparison_plot +
-        ggplot2::geom_point(ggplot2::aes(y = .data$mean_VMR),
-          size = 2.5,
-          color = plot_colour,
-          shape = plot_shape
-        )
-    }
-
-    if (facet_by_sex == "yes") {
-      variance_comparison_plot <- variance_comparison_plot +
-        ggplot2::geom_point(
-          ggplot2::aes(
-            y = .data$mean_VMR,
-            shape = .data$sex
-          ),
-          size = 2.5,
-          color = plot_colour
-        )
-    }
-  }
-
+    ggplot2::theme(axis.title.y = ggtext::element_markdown()) +
+    ggplot2::stat_summary(
+      ggplot2::aes(group = 1),
+      fun.data = ggplot2::mean_se,
+      geom = "line",
+      colour = plot_colour,
+      linewidth = mean_line_thickness
+    ) +
+    ggplot2::stat_summary(
+      ggplot2::aes(shape = .data$sex),
+      fun.data = ggplot2::mean_se,
+      geom = "point",
+      colour = plot_colour,
+      size = mean_point_size
+    )
 
   if (large_axis_text == "yes") {
     variance_comparison_plot <- variance_comparison_plot +

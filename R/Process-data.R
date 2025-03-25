@@ -1394,8 +1394,8 @@ perform_t_tests_for_summary_plot <- function(data,
 #' been applied (`"Post-modification"`). These intervals are selected from
 #' `baseline_interval` and `post_hormone_interval`.
 #'  \item `mean_cv_inverse_square` The mean inverse coefficient of variation
-#'  squared within a specific state.
-#'  \item `mean_VMR` The mean variance-to-mean ratio within a specific state.
+#'  squared within a specific state and sex.
+#'  \item `mean_VMR` The mean variance-to-mean ratio within a specific state and sex.
 #' }
 #'
 #' @export
@@ -1497,7 +1497,7 @@ make_variance_data <- function(data,
         T ~ interval
       )
     ) %>%
-    dplyr::group_by(.data$treatment, .data$state) %>%
+    dplyr::group_by(.data$treatment, .data$state, .data$sex) %>%
     dplyr::mutate(
       mean_cv_inverse_square = mean(.data$cv_inverse_square),
       mean_VMR = mean(.data$VMR)
