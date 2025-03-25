@@ -118,7 +118,7 @@ incorrect representation of the number of significant digits.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list of two dataframes (<code>current_type = eEPSC</code>) or three dataframes (<code>current_type = sEPSC</code>). For evoked currents (<code>current_type = "eEPSC"</code>) the first dataframe (<code>$percent_change_data</code>) contains the mean current amplitude for each interval, with a final column (<code>percent_change</code>) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.</p>
+    <p>A list of three dataframes (<code>current_type = eEPSC</code>) or three dataframes (<code>current_type = sEPSC</code>). For evoked currents (<code>current_type = "eEPSC"</code>) the first dataframe (<code>$percent_change_data</code>) contains the mean current amplitude for each interval, with a final column (<code>percent_change</code>) containing the final percent change in amplitude in the last interval relative to the mean amplitude during the baseline interval.</p>
 <p>Most columns (<code>age</code>, <code>sex</code>, <code>animal</code>, etc.) come directly from the information imported through <code><a href="import_cell_characteristics_df.html">import_cell_characteristics_df()</a></code>. However, there are some new columns of note.</p>
 <ul><li><p><code>t0to5</code> The mean evoked current amplitude (pA) for this cell during the period of 0 to 5 minutes.</p></li>
 <li><p><code>t5to10</code> The mean evoked current amplitude (pA) for this cell during the period of 5 to 10 minutes.</p></li>
@@ -131,8 +131,7 @@ each interval.</p>
 <p>New columns for evoked current data (<code>current_type == "eEPSC"</code>) include:</p><ul><li><p><code>mean_P1_transformed</code> The amplitude of the first evoked current
 amplitude (% Baseline eEPSC amplitude) normalized to the mean baseline
 amplitude and averaged over the interval.</p></li>
-<li><p><code>mean_P1_raw</code> The amplitude of the first evoked current amplitude (pA)
-averaged over the interval.</p></li>
+<li><p><code>mean_P1_raw</code> The amplitude of the first evoked current amplitude (pA) averaged over the interval.</p></li>
 <li><p><code>n</code> The number of datapoints used to create the averaged values.
 Corresponds to the number of sweeps per interval.</p></li>
 <li><p><code>sd</code> The standard deviation of the normalized evoked current data
@@ -148,11 +147,28 @@ point belongs to. For example, <code>interval</code> will be "t0to5" for any dat
 points from 0 to 5 minutes. Example values: "t0to5", "t5to10", etc.</p></li>
 <li><p><code>letter, synapses, sex, treatment, etc.</code> Unmodified columns from the
 original dataset describing the cell's properties.</p></li>
+</ul><p>The third dataframe (accessed with <code>$mean_SE</code>) contains summary statistics that will be useful for publications. It presents mean evoked current amplitudes (taken from raw <code>P1</code> values) grouped by category, treatment, and sex. This will make it easy to report your findings as <em>mean +/- SE or SD</em> with <em>n</em> in publications. For example, "eEPSC amplitude decreased significantly in males (baseline: 24.1 +/- 0.11 pA, n = 6, insulin: 12.4 +/- 0.23 pA, n = 7)."</p>
+<ul><li><p><code>category</code> The experiment category (please see <code><a href="import_cell_characteristics_df.html">import_cell_characteristics_df()</a></code> for more details).</p></li>
+<li><p><code>sex</code> The sex of the animal</p></li>
+<li><p><code>treatment</code> The treatment applied.</p></li>
+<li><p><code>n</code> The number of data points (i.e. cells)</p></li>
+<li><p><code>mean_baseline_raw_P1</code> The average evoked current amplitude (taken from <code>mean_P1_raw</code>) during the <code>baseline_interval</code>.</p></li>
+<li><p><code>sd_baseline_raw_P1</code> The standard deviation of <code>mean_baseline_raw_P1.</code></p></li>
+<li><p><code>se_baseline_raw_P1</code> The standard error of <code>mean_baseline_raw_P1</code>. Taken by dividing <code>sd_baseline_raw_P1</code> by the square root of <code>n</code>.</p></li>
+<li><p><code>mean_ending_raw_P1</code> The average evoked current amplitude (taken from <code>mean_P1_raw</code>) during the <code>ending_interval</code>.</p></li>
+<li><p><code>sd_ending_raw_P1</code> The standard deviation of <code>mean_ending_raw_P1.</code></p></li>
+<li><p><code>se_ending_raw_P1</code> The standard error of <code>mean_ending_raw_P1</code>. Taken by dividing <code>sd_ending_raw_P1</code> by the square root of <code>n</code>.</p></li>
+<li><p><code>VMR</code> The variance-to-mean ratio (VMR) of <code>P1_transformed</code>.</p></li>
+<li><p><code>interval</code> A character value indicating the interval that the data
+point belongs to. For example, <code>interval</code> will be "t0to5" for any data
+points from 0 to 5 minutes. Example values: "t0to5", "t5to10", etc.</p></li>
+<li><p><code>letter, synapses, sex, treatment, etc.</code> Unmodified columns from the
+original dataset describing the cell's properties.</p></li>
 </ul><div class="section">
 <h3 id="spontaneous-current-data">Spontaneous Current Data<a class="anchor" aria-label="anchor" href="#spontaneous-current-data"></a></h3>
 
 
-<p>Spontaneous current data results in three dataframes. The first dataframe ($summary_data) contains summary statistics for each interval, as outlined below:</p>
+<p>Spontaneous current data results in five dataframes. The first dataframe ($summary_data) contains summary statistics for each interval, as outlined below:</p>
 <ul><li><p><code>mean_transformed_amplitude</code> The average normalized spontaneous
 current amplitude (% Baseline sEPSC amplitude).</p></li>
 <li><p><code>mean_raw_amplitude</code> The average raw spontaneous current amplitude
@@ -169,21 +185,17 @@ Baseline frequency).</p></li>
 <li><p><code>mean_raw_frequency</code> The average raw frequency (Hz).</p></li>
 <li><p><code>letter, synapses, sex, treatment, etc.</code> Unmodified columns from the
 original dataset describing the cell's properties.</p></li>
-</ul><p>The second and third dataframes contain percent change data for spontaneous current amplitude and frequency, respectively. The columns are the same as the ones produced for evoked currents.</p>
+</ul><p>The second and third dataframes contain percent change data for spontaneous current amplitude and frequency, respectively. The columns are the same as the ones produced for evoked currents (read the documentation for <code>$percent_change_data</code>.</p>
+<p>The fourth and fifth dataframes contain the mean, SE, SD, and n data for spontaneous current amplitude and frequency, respectively. Read the description for the <code>$mean_SE</code> to learn about these columns.</p>
 </div>
 
-    </div>
-    <div class="section level2">
-    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code>make_summary_EPSC_data()</code> for an example of a function that
-further processes the data.</p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Evoked Currents</span></span></span>
-<span class="r-in"><span><span class="co"># Will return a list of two dataframes</span></span></span>
+<span class="r-in"><span><span class="co"># Will return a list of three dataframes</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">make_summary_EPSC_data</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_raw_eEPSC_df</span>,</span></span>
@@ -238,6 +250,22 @@ further processes the data.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   cv_inverse_square &lt;dbl&gt;, variance &lt;dbl&gt;, VMR &lt;dbl&gt;, age &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   animal &lt;dbl&gt;, X &lt;dbl&gt;, Y &lt;dbl&gt;, time &lt;dbl&gt;, synapses &lt;fct&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   days_alone &lt;fct&gt;, animal_or_slicing_problems &lt;fct&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $mean_SE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   category, treatment [4]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   category treatment     sex        n mean_baseline_raw_P1 sd_baseline_raw_P1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2        Control       Female     1                 44.3               <span style="color: #BB0000;">NA</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2        Control       Male       3                 62.0               22.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2        HNMPA         Female     2                 61.1               23.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2        HNMPA         Male       3                 69.0               18.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2        PPP           Female     3                 60.5               19.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2        PPP           Male       2                 84.1               21.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> 2        PPP_and_HNMPA Female     1                 79.9               <span style="color: #BB0000;">NA</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> 2        PPP_and_HNMPA Male       4                 54.3               23.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: se_baseline_raw_P1 &lt;dbl&gt;, mean_ending_raw_P1 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   sd_ending_raw_P1 &lt;dbl&gt;, se_ending_raw_P1 &lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Spontaneous Data</span></span></span>
@@ -304,6 +332,36 @@ further processes the data.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 7 more variables: animal_or_slicing_problems &lt;chr&gt;, t0to5 &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   t5to10 &lt;dbl&gt;, t10to15 &lt;dbl&gt;, t15to20 &lt;dbl&gt;, t20to25 &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percent_change &lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $mean_SE_amplitude</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   category, treatment [4]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   category treatment    sex       n mean_baseline_amplit…¹ sd_baseline_amplitude</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2        Control      Fema…     1                   11.0                 <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2        Control      Male      1                   29.1                 <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2        HNMPA        Male      1                   12.7                 <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2        PPP          Fema…     1                   14.5                 <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2        PPP          Male      1                   14.1                 <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2        PPP_and_HNM… Male      2                   15.3                  6.08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​mean_baseline_amplitude</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: se_baseline_amplitude &lt;dbl&gt;, mean_ending_amplitude &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   sd_ending_amplitude &lt;dbl&gt;, se_ending_amplitude &lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $mean_SE_frequency</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 10</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   category, treatment [4]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   category treatment    sex       n mean_baseline_freque…¹ sd_baseline_frequency</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2        Control      Fema…     1                   7.99                 <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2        Control      Male      1                   2.25                 <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2        HNMPA        Male      1                  19.2                  <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2        PPP          Fema…     1                   6.74                 <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2        PPP          Male      1                  13.2                  <span style="color: #BB0000;">NA</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2        PPP_and_HNM… Male      2                   6.09                  3.59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​mean_baseline_frequency</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: se_baseline_frequency &lt;dbl&gt;, mean_ending_frequency &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   sd_ending_frequency &lt;dbl&gt;, se_ending_frequency &lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
