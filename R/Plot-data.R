@@ -2937,6 +2937,7 @@ plot_AP_comparison <-
 #'   baseline_label = "Baseline",
 #'   hormone_added = "Insulin",
 #'   included_sexes = "both",
+#'   significance_display_method = "stars",
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   large_axis_text = "no",
 #'   test_type = "wilcox.test",
