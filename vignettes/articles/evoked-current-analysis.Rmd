@@ -49,7 +49,7 @@ knitr::include_graphics("figures/Concatenate-files.png")
 
 ## View recording
 
-4. Click on the `Show Aquistion Signals` button and then `Previous Signal` (blue arrow in the figure below) to view the sweeps showing changes in current (`Im_primary ()`). The traces should all be stacked on top of each other, but if they are not, click on `View` -> `Data Display` -> `Sweeps`.
+4. Click on the `Show Aquistion Signals` button and then `Previous Signal` (blue arrow in the figure below) to view the sweeps showing changes in current (`Im_primary`). The traces should all be stacked on top of each other, but if they are not, click on `View` -> `Data Display` -> `Sweeps`.
 
 5. You can also click on the `Auto Scale All Y Axes` button (orange arrow) to help you see the data faster.
 

@@ -110,6 +110,14 @@ the x-axis is in milliseconds!
 knitr::include_graphics("figures/Fix-y-scale.png")
 ```
 
+1c. Click on the `Show Aquistion Signals` button and then `Previous Signal` (blue arrow in the figure below) to view the sweeps showing changes in current (`Vm_primary`). The traces should all be stacked on top of each other, but if they are not, click on `View` -> `Data Display` -> `Sweeps`.
+
+1d. You can also click on the `Auto Scale All Y Axes` button (orange arrow) to help you see the data faster.
+
+```{r viewer-buttons, out.width="25%", fig.alt = "A screenshot of the Show Signals buttons and other viewing buttons available in the upper toolbar in Clampfit."}
+knitr::include_graphics("figures/Viewer-buttons.png")
+```
+
 2.  Press the “Enter” key to show just one sweep at a time. It will
     begin at the sweep corresponding to the lowest current injection.
     Use greater than symbol (`>`) to cycle up through the sweeps.
@@ -343,6 +351,12 @@ column.
 19. Open a current clamp steps recording in Clampfit (you may be coming
     directly from step 16 when you [measured action potential
     properties](#measure)).
+    
+19b. *Ignore these instructions if you've already set up the plot view* You may need to zoom in to see it better. Click on the `Show Aquistion Signals` button and then `Previous Signal` (blue arrow in the figure below) to view the sweeps showing changes in current (`Im_primary ()`). The traces should all be stacked on top of each other, but if they are not, click on `View` -> `Data Display` -> `Sweeps`. You can also click on the `Auto Scale All Y Axes` button (orange arrow) to help you see the data faster.
+
+```{r viewer-buttons, out.width="25%", fig.alt = "A screenshot of the Show Signals buttons and other viewing buttons available in the upper toolbar in Clampfit."}
+knitr::include_graphics("figures/Viewer-buttons.png")
+```
 
 20. Press the `Enter` key to view one sweep at a time, and use `<` and
     `>` to cycle through the sweeps. Count the number of action

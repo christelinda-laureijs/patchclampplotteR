@@ -660,6 +660,10 @@ reactable(summary_eEPSC_df$mean_SE)
 
 You now have your data in an easy-to-manipulate format, and you have the freedom to choose what analysis you want to do next! For example, you could look at the paired-pulse ratio, changes in variance parameters, or compare baseline values. See below for examples of how to use these functions.
 
+> Quick tip! Want to see how I built some of these functions? Type the name of the function without the () brackets into the console and then hit enter (for example, type `plot_summary_current_data`). You should then see the raw code used to produce this function. This is helpful if you want to use a geom similar to mine (like the sina plot) and want to see what code to use.
+
+> Quick tip #2! If you need help, the [R Graphics Cookbook](https://r-graphics.org/) is a great place to start! If you need inspiration on what type of graph to make, look at the [R Graph Gallery](https://r-graph-gallery.com/)!
+
 ### Looking at cell characteristics
 
  You can use your summary data (particularly the `$percent_change_data`) to make some interesting plots. Using `cell_characteristics` data throughout makes it very easy to answer interesting questions about your data. For example, does the baseline evoked current amplitude (data from `t0to5`) affect a cell's insulin sensitivity? I can use `percent_change` as a marker of the effect size of insulin.
