@@ -650,7 +650,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         cv_inverse_square = 1 / (.data$cv^2),
         letter = unique(.data$letter),
         category = unique(.data$category),
-        time = dplyr::last(.data$time),
+        time = max(.data$time),
         baseline_mean = unique(.data$baseline_mean),
         synapses = unique(.data$synapses),
         days_alone = unique(.data$days_alone),
@@ -681,7 +681,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         synapses = unique(.data$synapses),
         days_alone = unique(.data$days_alone),
         animal_or_slicing_problems = unique(.data$animal_or_slicing_problems),
-        time = dplyr::last(.data$time) # Time at interval end; used for plots
+        time = max(.data$time) # Time at interval end; used for plots
       ) %>%
       dplyr::group_by(.data$letter) %>%
       # Obtain normalized frequency
@@ -724,7 +724,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         cv = .data$sd_P1 / .data$mean_P1 * 100,
         letter = unique(.data$letter),
         category = unique(.data$category),
-        time = dplyr::last(.data$time)
+        time = max(.data$time)
       ) %>%
       dplyr::group_by(
         .data$category,
@@ -738,7 +738,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         n = dplyr::n(),
         se_P1_all_cells = .data$sd_P1_all_cells / sqrt(.data$n),
         cv_P1_all_cells = .data$sd_P1_all_cells / .data$mean_P1_all_cells * 100,
-        time = dplyr::last(.data$time),
+        time = max(.data$time),
         category = unique(.data$category),
       ) %>%
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
@@ -767,7 +767,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         mean_all_raw_frequency = mean(.data$frequency, na.rm = TRUE),
         sd_all_raw_frequency = stats::sd(.data$frequency, na.rm = TRUE),
         se_raw_frequency = .data$sd_all_raw_frequency / sqrt(.data$n),
-        time = dplyr::last(.data$time),
+        time = max(.data$time),
         interval = unique(.data$interval),
         category = unique(.data$category)
       ) %>%
@@ -980,7 +980,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         animal = unique(.data$animal),
         X = unique(.data$X),
         Y = unique(.data$Y),
-        time = dplyr::last(.data$time),
+        time = max(.data$time),
         synapses = unique(.data$synapses),
         days_alone = unique(.data$days_alone),
         animal_or_slicing_problems = unique(.data$animal_or_slicing_problems)
@@ -1048,7 +1048,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         sd_transformed_frequency = stats::sd(.data$frequency_transformed, na.rm = TRUE),
         se_transformed_frequency = .data$sd_transformed_frequency / sqrt(.data$n),
         mean_raw_frequency = mean(.data$frequency, na.rm = TRUE),
-        time = dplyr::last(.data$time),
+        time = max(.data$time),
         interval = unique(.data$interval),
         category = unique(.data$category),
         synapses = dplyr::last(.data$synapses),
