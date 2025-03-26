@@ -513,7 +513,7 @@ pruned_eEPSC_control_plots <- plot_raw_current_data(
 pruned_eEPSC_control_plots$L
 ```
 
-
+> Quick tip! If you need help for a specific function, type `?` followed by the name of the function. For example, if you type `?plot_raw_current_data` into the Console and press Enter, this will open the help page, with information about how to use each argument in the function, and there are examples to get you started (just replace the example code with your data).
 
 #### Perform T-tests
 
@@ -639,6 +639,21 @@ plot_percent_change_comparisons(
   theme_options = sample_theme_options
 )
 ```
+
+#### Means and SE for publication
+
+A third dataframe (accessed with `$mean_SE`) contains summary information that may be useful for publications. For example, you may want to report the mean ± SE before and after applying a hormone, along with *n*, the sample size.
+
+```{r eval=F, echo=T}
+summary_eEPSC_df$mean_SE
+```
+
+This dataset contains the values for mean, standard deviation, standard error, and sample size, *n*, both before and after protocol or hormone. The time of the "after" period comes from what you would have entered as the "ending_interval" when you ran `summary_eEPSC_df()` above.
+
+```{r echo=F, eval=T}
+reactable(summary_eEPSC_df$mean_SE)
+```
+
 
 
 ## Explore! Make your own plots!
@@ -858,6 +873,8 @@ knitr::include_graphics("Same-data-8-ways.png")
 Hopefully this vignette has given you an idea of some of the plotting functions that this package can do. The documentation for each function contains lots of additional information about each argument, and you can also explore the articles for [Evoked Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/evoked-current-analysis.html), [Spontaneous Current Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/spontaneous-current-analysis.html), and [Action Potential Analysis](https://christelinda-laureijs.github.io/patchclampplotteR/articles/action-potential-analysis.html).
 
 If you have any questions about customizing your plots, read the [FAQ](https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.html) page. There will likely be an answer there!
+
+And, please be sure to check out the [Reference page](https://christelinda-laureijs.github.io/patchclampplotteR/reference/index.html) and read the documentation for each function. Each function has many additional arguments that I didn't cover here, and there are some functions there that may help you to create the plot you need!
 
 ```{r millie-picture, echo=F, fig.align='center', fig.alt = "A picture of a knitted mouse laying down on several small sheets of paper with scatterplots on them.", fig.cap = "So much data! Millie the Mouse is exploring plots made with patchclampplotteR."}
 knitr::include_graphics("Millie-desk.jpg")
