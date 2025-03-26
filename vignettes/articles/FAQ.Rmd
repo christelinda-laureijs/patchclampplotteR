@@ -382,11 +382,11 @@ This package replaces manual plot creation and data analysis in GraphPad Prism a
 
 Ruby is a rat, and she's also become an unofficial lab mascot for the Crosby lab! She loves helping out with data analysis, welcoming newcomers to the lab, keeping lab members company, and serving as an emotional support rat. She found a way to sneak into some of the documentation for this package!
 
-```{r ruby-desk-picture, echo=F, fig.alt = "A picture of a knitted white rat looking directly at the viewer.", fig.cap = "Ruby says 'Hi humans!!'"}
+```{r ruby-desk-picture, echo=F, fig.align='center', fig.alt = "A picture of a knitted white rat looking directly at the viewer.", fig.cap = "Ruby says 'Hi humans!!'"}
 knitr::include_graphics("figures/Ruby-table.jpg")
 ```
 
-When the lab humans aren't around, Ruby can often be found at the computer or snuggling in one of the many hiding places in the lab.
+When the lab humans aren't around, Ruby can often be found at the computer or snuggling up with her friends, Millie and Lilly, in one of the many hiding places in the lab.
 
 ```{r ruby-picture, echo=F, fig.align='center', fig.alt = "A picture of a knitted white rat sitting on a keyboard and working at a computer."}
 knitr::include_graphics("figures/Ruby-desk.jpg")

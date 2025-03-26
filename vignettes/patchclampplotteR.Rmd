@@ -376,6 +376,12 @@ raw_eEPSC_df <- sample_raw_eEPSC_df
 ```
 
 
+To view the data, type the name of the object `raw_eEPSC_df`
+
+```{r echo=T, eval=F}
+raw_eEPSC_df
+```
+
 `make_normalized_EPSC_data()` will retain the cell characteristics and `P1` and
 `P2` values from before. However, you will notice some changes.
 
@@ -423,8 +429,13 @@ raw_eEPSC_control_plots <- plot_raw_current_data(
 )
 ```
 
-`plot_raw_current_data()` will return a list of ggplot objects. If you want to
-observe just one specific plot, you can select it by letter.  
+`plot_raw_current_data()` will return a list of ggplot objects. To see all of your plots at once, type the name of the object that you just made (`raw_eEPSC_control_plots`):
+
+```{r echo=T, eval=F}
+raw_eEPSC_control_plots
+```
+
+If you want to observe just one specific plot, you can select it by letter.  
 
 ```{r view-one-raw-plot, fig.alt = "A plot of evoked current amplitude (in pA) over time in minutes showing a decrease in evoked current amplitude after adding insulin."}
 raw_eEPSC_control_plots$L
@@ -432,8 +443,7 @@ raw_eEPSC_control_plots$L
 
 ### Step 2: Prune data
 
-It is often useful to summarize the data per minute. If you are familiar with
-GraphPad Prism's "prune rows" function, `make_pruned_EPSC_data()` will perform
+It is often useful to summarize the data per minute. If you are familiar with GraphPad Prism's "prune rows" function, `make_pruned_EPSC_data()` will perform
 the same function.
 
 > In this vignette, I'll use the example of pruning data per minute (`interval_length = 1`) because this
@@ -449,9 +459,19 @@ pruned_eEPSC_df <- make_pruned_EPSC_data(
   baseline_length = 5,
   interval_length = 1
 )
+
+
 ```
 
-This function will return a list of three dataframes. To access each list, type *the object name, followed by a dollar sign*. For example, write `pruned_eEPSC_df$individual_cells` to access the first dataframe in the list.
+```{r echo=T, eval=F}
+pruned_eEPSC_df
+```
+
+This function will return a list of three dataframes. To access each list, type *the object name, followed by a dollar sign*. For example, write `pruned_eEPSC_df$individual_cells` to access the first dataframe in the list:
+
+```{r echo=T, eval=F}
+pruned_eEPSC_df$individual_cells
+```
 
 ```{r pruned-data-screenshot, echo=F, out.width="85%", out.extra = "", fig.alt = "A screenshot showing the text pruned_eEPSC_df with a dollar sign. There is a popup on the right showing the three available dataframes.", fig.cap = "In RStudio, typing up the name of the pruned dataset followed by the dollar sign will show a pop-up with the list of available dataframes."}
 knitr::include_graphics("Pruned-data-dataframe-popup.jpg")
@@ -693,6 +713,24 @@ plot_PPR_data_single_treatment(
 )
 ```
 
+You could also facet this by sex (note this data has only one datapoint for females):
+
+```{r plot-one-ppr-treatment-facet, fig.alt = "A scatterplot of paired-pulse ratio over time (baseline or post-insulin) showing no difference in the paired pulse ratio across these two times. The plot is divided by sex", warning=FALSE}
+plot_PPR_data_single_treatment(
+  data = PPR_df,
+  plot_treatment = "Control",
+  plot_category = 2,
+  baseline_label = "Baseline",
+  post_hormone_label = "Insulin",
+  facet_by_sex = "yes",
+  test_type = "t.test",
+  large_axis_text = "no",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options,
+  save_plot_png = "no"
+)
+```
+
 For multiple treatments:
 
 ```{r plot-multiple-ppr-treatments, fig.alt="A grouped scatterplot showing paired-pulse ratio across state (baseline or post-insulin) for all four treatment groups. This plot demonstrates the plot_PPR_data_multiple_treatments function."}
@@ -733,7 +771,7 @@ reactable(variance_df)
 
 ### Plot variance comparisons
 
-You can create plots comparing the inverse coefficient of variation squared, and the variance-to-mean ratio.
+You can create plots comparing the inverse coefficient of variation squared, and the variance-to-mean ratio. Here, I have faceted the plots by sex
 
 ```{r variance-comparison-plots-cv-vmr-definition, fig.alt = "Figure 1. A scatterplot showing changes in the inverse coefficient of variation squared across time (baseline or post-insulin). Figure 2. A scatterplot showing changes in the variance-to-mean ratio across time."}
 cv_comparison_control_plot <- plot_variance_comparison_data(
@@ -741,6 +779,8 @@ cv_comparison_control_plot <- plot_variance_comparison_data(
   plot_category = 2,
   plot_treatment = "Control",
   variance_measure = "cv",
+  included_sexes = "both",
+  facet_by_sex = "yes",
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",
   post_hormone_label = "Insulin",
@@ -753,6 +793,8 @@ cv_comparison_control_plot <- plot_variance_comparison_data(
 vmr_comparison_control_plot <- plot_variance_comparison_data(
   data = variance_df,
   plot_category = 2,
+  included_sexes = "both",
+  facet_by_sex = "yes",
   plot_treatment = "Control",
   variance_measure = "VMR",
   baseline_interval = "t0to5",
