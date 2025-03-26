@@ -1010,13 +1010,14 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 
     mean_and_SE_df <- percent_change_df %>%
       dplyr::group_by(.data$category, .data$treatment, .data$sex) %>%
-      dplyr::summarize(n = dplyr::n(),
-                mean_baseline_raw_P1 = mean(.data[[baseline_interval]], na.rm=T),
-                sd_baseline_raw_P1 = sd(.data[[baseline_interval]], na.rm=T),
-                se_baseline_raw_P1 = .data$sd_baseline_raw_P1/sqrt(.data$n),
-                mean_ending_raw_P1 = mean(.data[[ending_interval]], na.rm=T),
-                sd_ending_raw_P1 = sd(.data[[ending_interval]], na.rm=T),
-                se_ending_raw_P1 = .data$sd_ending_raw_P1/sqrt(.data$n)
+      dplyr::summarize(
+        n = dplyr::n(),
+        mean_baseline_raw_P1 = mean(.data[[baseline_interval]], na.rm = T),
+        sd_baseline_raw_P1 = sd(.data[[baseline_interval]], na.rm = T),
+        se_baseline_raw_P1 = .data$sd_baseline_raw_P1 / sqrt(.data$n),
+        mean_ending_raw_P1 = mean(.data[[ending_interval]], na.rm = T),
+        sd_ending_raw_P1 = sd(.data[[ending_interval]], na.rm = T),
+        se_ending_raw_P1 = .data$sd_ending_raw_P1 / sqrt(.data$n)
       )
 
     summary_data_final <- list(
@@ -1113,15 +1114,23 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
       dplyr::group_by(.data$category, .data$treatment, .data$sex) %>%
       dplyr::summarize(
         n = dplyr::n(),
-        mean_baseline_amplitude = mean(.data[[baseline_interval]], na.rm =
-                                      T),
-        sd_baseline_amplitude = sd(.data[[baseline_interval]], na.rm =
-                                  T),
+        mean_baseline_amplitude = mean(.data[[baseline_interval]],
+          na.rm =
+            T
+        ),
+        sd_baseline_amplitude = sd(.data[[baseline_interval]],
+          na.rm =
+            T
+        ),
         se_baseline_amplitude = .data$sd_baseline_amplitude / sqrt(.data$n),
-        mean_ending_amplitude = mean(.data[[ending_interval]], na.rm =
-                                    T),
-        sd_ending_amplitude = sd(.data[[ending_interval]], na.rm =
-                                T),
+        mean_ending_amplitude = mean(.data[[ending_interval]],
+          na.rm =
+            T
+        ),
+        sd_ending_amplitude = sd(.data[[ending_interval]],
+          na.rm =
+            T
+        ),
         se_ending_amplitude = .data$sd_ending_amplitude / sqrt(.data$n)
       )
 
@@ -1129,15 +1138,23 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
       dplyr::group_by(.data$category, .data$treatment, .data$sex) %>%
       dplyr::summarize(
         n = dplyr::n(),
-        mean_baseline_frequency = mean(.data[[baseline_interval]], na.rm =
-                                         T),
-        sd_baseline_frequency = sd(.data[[baseline_interval]], na.rm =
-                                     T),
+        mean_baseline_frequency = mean(.data[[baseline_interval]],
+          na.rm =
+            T
+        ),
+        sd_baseline_frequency = sd(.data[[baseline_interval]],
+          na.rm =
+            T
+        ),
         se_baseline_frequency = .data$sd_baseline_frequency / sqrt(.data$n),
-        mean_ending_frequency = mean(.data[[ending_interval]], na.rm =
-                                       T),
-        sd_ending_frequency = sd(.data[[ending_interval]], na.rm =
-                                   T),
+        mean_ending_frequency = mean(.data[[ending_interval]],
+          na.rm =
+            T
+        ),
+        sd_ending_frequency = sd(.data[[ending_interval]],
+          na.rm =
+            T
+        ),
         se_ending_frequency = .data$sd_ending_frequency / sqrt(.data$n)
       )
 

@@ -1753,6 +1753,9 @@ plot_percent_change_comparisons <- function(data,
 #' @seealso [make_variance_data()] to make the data required to make this plot.
 #'
 #' @examples
+#'
+#' # Without facets
+#'
 #' plot_variance_comparison_data(
 #'   data = sample_eEPSC_variance_df,
 #'   plot_category = 2,
@@ -1762,6 +1765,24 @@ plot_percent_change_comparisons <- function(data,
 #'   post_hormone_interval = "t20to25",
 #'   included_sexes = "both",
 #'   facet_by_sex = "no",
+#'   post_hormone_label = "Insulin",
+#'   test_type = "wilcox.test",
+#'   large_axis_text = "no",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   theme_options = sample_theme_options
+#' )
+#'
+#' # With facets
+#'
+#' plot_variance_comparison_data(
+#'   data = sample_eEPSC_variance_df,
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   variance_measure = "cv",
+#'   baseline_interval = "t0to5",
+#'   post_hormone_interval = "t20to25",
+#'   included_sexes = "both",
+#'   facet_by_sex = "yes",
 #'   post_hormone_label = "Insulin",
 #'   test_type = "wilcox.test",
 #'   large_axis_text = "no",
@@ -1950,12 +1971,12 @@ plot_variance_comparison_data <- function(data,
   if (facet_by_sex == "yes") {
     variance_comparison_plot <- variance_comparison_plot +
       ggplot2::stat_summary(
-      ggplot2::aes(shape = .data$sex),
-      fun.data = ggplot2::mean_se,
-      geom = "point",
-      colour = plot_colour,
-      size = mean_point_size
-    )
+        ggplot2::aes(shape = .data$sex),
+        fun.data = ggplot2::mean_se,
+        geom = "point",
+        colour = plot_colour,
+        size = mean_point_size
+      )
   } else {
     variance_comparison_plot <- variance_comparison_plot +
       ggplot2::stat_summary(
@@ -1965,7 +1986,7 @@ plot_variance_comparison_data <- function(data,
         size = mean_point_size,
         shape = plot_shape
       )
-    }
+  }
 
   if (large_axis_text == "yes") {
     variance_comparison_plot <- variance_comparison_plot +
@@ -2146,6 +2167,23 @@ plot_cv_data <- function(data,
 #'   save_plot_png = "no"
 #' )
 #'
+#' # Facet by sex
+#'
+#' plot_PPR_data_single_treatment(
+#'   data = sample_PPR_df,
+#'   plot_treatment = "Control",
+#'   plot_category = 2,
+#'   baseline_label = "Baseline",
+#'   post_hormone_label = "Insulin",
+#'   included_sexes = "both",
+#'   facet_by_sex = "yes",
+#'   test_type = "t.test",
+#'   large_axis_text = "no",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   theme_options = sample_theme_options,
+#'   save_plot_png = "no"
+#' )
+#'
 #' @seealso [plot_PPR_data_multiple_treatments()] to plot changes in PPR for multiple treatments. See [make_PPR_data()] for the function used to create the PPR data.
 
 plot_PPR_data_single_treatment <- function(data,
@@ -2296,19 +2334,19 @@ plot_PPR_data_single_treatment <- function(data,
       colour = plot_colour,
       linewidth = mean_line_thickness
     ) +
-  ggplot2::labs(x = NULL, y = y_axis_title) +
-  ggplot_theme
+    ggplot2::labs(x = NULL, y = y_axis_title) +
+    ggplot_theme
 
 
   if (facet_by_sex == "yes") {
     PPR_one_plot <- PPR_one_plot +
-    ggplot2::stat_summary(
-      ggplot2::aes(shape = .data$sex),
-      fun.data = ggplot2::mean_se,
-      geom = "point",
-      colour = plot_colour,
-      size = mean_point_size
-    )
+      ggplot2::stat_summary(
+        ggplot2::aes(shape = .data$sex),
+        fun.data = ggplot2::mean_se,
+        geom = "point",
+        colour = plot_colour,
+        size = mean_point_size
+      )
   } else {
     PPR_one_plot <- PPR_one_plot +
       ggplot2::stat_summary(
@@ -3648,6 +3686,25 @@ plot_AP_trace <-
 #'   y_variable = "raw_amplitude",
 #'   included_sexes = "both",
 #'   facet_by_sex = "no",
+#'   hormone_added = "Insulin",
+#'   baseline_interval = "t0to5",
+#'   post_hormone_interval = "t20to25",
+#'   test_type = "wilcox.test",
+#'   large_axis_text = "no",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   save_plot_png = "no",
+#'   theme_options = sample_theme_options
+#' )
+#'
+#' # Facet by sex
+#'
+#' plot_spontaneous_current_parameter_comparison(
+#'   data = sample_summary_sEPSC_df$summary_data,
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   y_variable = "raw_amplitude",
+#'   included_sexes = "both",
+#'   facet_by_sex = "yes",
 #'   hormone_added = "Insulin",
 #'   baseline_interval = "t0to5",
 #'   post_hormone_interval = "t20to25",
