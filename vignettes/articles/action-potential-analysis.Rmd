@@ -354,7 +354,7 @@ column.
     
 19b. *Ignore these instructions if you've already set up the plot view* You may need to zoom in to see it better. Click on the `Show Aquistion Signals` button and then `Previous Signal` (blue arrow in the figure below) to view the sweeps showing changes in current (`Im_primary ()`). The traces should all be stacked on top of each other, but if they are not, click on `View` -> `Data Display` -> `Sweeps`. You can also click on the `Auto Scale All Y Axes` button (orange arrow) to help you see the data faster.
 
-```{r viewer-buttons, out.width="25%", fig.alt = "A screenshot of the Show Signals buttons and other viewing buttons available in the upper toolbar in Clampfit."}
+```{r viewer-buttons-second, out.width="25%", fig.alt = "A screenshot of the Show Signals buttons and other viewing buttons available in the upper toolbar in Clampfit."}
 knitr::include_graphics("figures/Viewer-buttons.png")
 ```
 
