@@ -59,6 +59,14 @@ And then load the package each time you want to use it:
 library(patchclampplotteR)
 ```
 
+You may also find the following packages helpful. The `here` package will help R find your files in the correct subfolders in your project folder. `dplyr` will allow you to rearrange, sort, filter, and change your data, and `ggplot2` will allow you to make custom plots with your data.
+
+```{r eval=F, echo=T}
+library(here)
+library(dplyr)
+library(ggplot2)
+```
+
 ## About the data
 
 This sample dataset consists of whole-cell patch clamp recordings of neurons within the
@@ -255,8 +263,8 @@ add_new_cells(
   cell_characteristics_csv = "sample_cell_characteristics.csv",
   old_raw_data_csv = "Data/Raw-eEPSC-df.csv",
   data_type = "eEPSC",
-  write_new_csv = "no",
-  new_file_name = "",
+  write_new_csv = "yes",
+  new_file_name = "Data/Raw-eEPSC-df.csv", #Note! This will overwrite your old Raw-eEPSC-df.csv file! 
   decimal_places = 2
 )
 ```
@@ -266,6 +274,11 @@ add_new_cells(
 Let's look at an example of a full dataset. This is the sample raw evoked current dataset included in the package. To reduce
 the vignette size, I am printing just the first 20 rows. The full dataset
 contains > 5680 rows!)
+
+```{r echo=T, eval=F}
+# Don't forget to run library(here) at the top of your document!
+raw_eEPSC_df <- read.csv(here("Data/Raw-eEPSC-df.csv"))
+```
 
 ```{r display-raw-data, eval=F, echo=T}
 head(raw_eEPSC_df, n = 20)
@@ -338,7 +351,10 @@ Every time a plot contains the argument `treatment_colour_theme`, refer to your 
 
 ## Analyze current amplitude
 
-After you have finished a brief exploration of your data, it is time to analyze it!
+After you have finished a brief exploration of your data, it is time to analyze it! You must read in the FULL .csv file that you created and saved with `add_new_cells()`. This is the dataframe that has columns for `letter`, `ID`, `P1`, `P2`, `age`, `sex`, `days_alone`, etc.
+
+> Do NOT use the raw dataframe that has only 4 columns!
+> You MUST import the .csv file that you created with `add_new_cells(), where write_new_csv = "yes"!
 
 ### Step 1: Normalize currents
 
@@ -374,7 +390,6 @@ raw_eEPSC_df <- make_normalized_EPSC_data(
 ```{r echo=F, eval=T}
 raw_eEPSC_df <- sample_raw_eEPSC_df
 ```
-
 
 To view the data, type the name of the object `raw_eEPSC_df`
 
