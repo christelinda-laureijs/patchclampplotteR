@@ -527,19 +527,20 @@ add_new_cells <- function(new_raw_data_csv,
   }
 
 
-  cli::cli_alert_info("Renamed dataframe columns to lowercase")
+  cli::cli_alert_info(cli::col_silver("Renamed dataframe columns to lowercase"))
 
   new_letters <- unique(new_raw_data$letter)
   new_letters_spaces <- paste0(new_letters, " ")
 
   if (all(new_letters %in% cell_characteristics$letter)) {
-    cli::cli_alert_success(paste0(
+    cli::cli_alert_success(cli::col_green("Cell info check passed"))
+    cli::cli_alert_success(cli::col_silver(paste0(
       "All letters are present in both \"",
       cell_characteristics_csv,
       "\" \nand \"",
       new_raw_data_csv,
       "\"."
-    ))
+    )))
   } else {
     cli::cli_abort(c("x" = paste0(
       "Missing letters detected in \"",
@@ -644,17 +645,18 @@ add_new_cells <- function(new_raw_data_csv,
       "i" = "Duplicate letters will produce plotting errors and distorted statistics. Did you accidentally run this code twice?"
     ))
   } else {
-    cli::cli_alert_success("Letter duplication check passed")
-    cli::cli_alert_info(paste0(
+    cli::cli_alert_success(cli::col_green("Letter duplication check passed"))
+    cli::cli_alert_info(cli::col_silver(paste0(
       "All letters in \"",
       new_raw_data_csv,
       "\" are new relative to ",
       "\"",
       old_raw_data_csv,
       "\""
-    ))
+    )))
+    cli::cli_alert_info(cli::col_green("Adding the following new cells:"))
     cli::cli_alert_success(
-      letters_in_new_raw_data_spaces
+      cli::col_silver(letters_in_new_raw_data_spaces)
     )
 
     full_raw_data <- dplyr::bind_rows(old_raw_data, new_raw_data_complete) %>%
@@ -663,7 +665,7 @@ add_new_cells <- function(new_raw_data_csv,
     if (write_new_csv == "yes") {
       utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
 
-      cli::cli_alert_success(paste0("\nSaved data to .csv file ", new_file_name))
+      cli::cli_alert_success(cli::col_green(paste0("\nSaved data to .csv file ", new_file_name)))
     }
 
     return(full_raw_data)
