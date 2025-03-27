@@ -663,6 +663,10 @@ add_new_cells <- function(new_raw_data_csv,
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
 
     if (write_new_csv == "yes") {
+      if (!grepl("\\.csv", new_file_name)) {
+        cli::cli_abort("Filename does not contain .csv. Did you forget to include this in `new_file_name?")
+      }
+
       utils::write.csv(full_raw_data, here::here(new_file_name), row.names = F)
 
       cli::cli_alert_success(cli::col_green(paste0("\nSaved data to .csv file ", new_file_name)))
