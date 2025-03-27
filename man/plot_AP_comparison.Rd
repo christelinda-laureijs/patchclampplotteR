@@ -46,9 +46,9 @@ applied continuously after a 5-minute baseline period.}
 
 \item{facet_by_sex}{A character value (\code{"yes"} or \code{"no"}) describing if the plots should be faceted by sex. This is only available if \code{included_sexes} is \code{"both"}. The resulting plot will be split in two, with male data on the left and female data on the right.}
 
-\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Males"}, \code{"Male"}, \code{"male"}, \code{"males"}, \code{"M"}, etc.  This must be consistent in all data sheets. Defaults to \code{"Male"}.}
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for male data in the \code{sex} column, and it must be consistent across data sheets. Defaults to \code{"Male"}.}
 
-\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Females"}, \code{"Female"}, \code{"female"}, \code{"females"}, \code{"F"}, etc. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for female data in the \code{sex} column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
 
 \item{baseline_label}{A character value for the x-axis label applied to the
 pre-hormone state. Defaults to \code{"Baseline"}.}

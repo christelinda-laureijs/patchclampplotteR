@@ -44,9 +44,9 @@ were present on the brain slice, or the animals were fasted, etc.}
 
 \item{facet_by_sex}{A character value (\code{"yes"} or \code{"no"}) describing if the plots should be faceted by sex. This is only available if \code{"included_sexes"} is \code{"both"}. The resulting plot will be split in two, with male data on the left and female data on the right.}
 
-\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Males"}, \code{"Male"}, \code{"male"}, \code{"males"}, \code{"M"}, etc.  This must be consistent in all data sheets. Defaults to \code{"Male"}.}
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for male data in the \code{sex} column, and it must be consistent across data sheets. Defaults to \code{"Male"}.}
 
-\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. Examples include \code{"Females"}, \code{"Female"}, \code{"female"}, \code{"females"}, \code{"F"}, etc. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for female data in the \code{sex} column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
 
 \item{y_variable}{A character value (\code{"raw_amplitude"} or \code{"raw_frequency"}) only.
 Normalized amplitude and frequency are not available because all baseline
@@ -121,6 +121,25 @@ plot_spontaneous_current_parameter_comparison(
   y_variable = "raw_amplitude",
   included_sexes = "both",
   facet_by_sex = "no",
+  hormone_added = "Insulin",
+  baseline_interval = "t0to5",
+  post_hormone_interval = "t20to25",
+  test_type = "wilcox.test",
+  large_axis_text = "no",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_plot_png = "no",
+  theme_options = sample_theme_options
+)
+
+# Facet by sex
+
+plot_spontaneous_current_parameter_comparison(
+  data = sample_summary_sEPSC_df$summary_data,
+  plot_category = 2,
+  plot_treatment = "Control",
+  y_variable = "raw_amplitude",
+  included_sexes = "both",
+  facet_by_sex = "yes",
   hormone_added = "Insulin",
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",
