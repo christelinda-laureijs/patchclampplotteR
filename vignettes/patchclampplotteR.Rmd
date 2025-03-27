@@ -530,9 +530,71 @@ pruned_eEPSC_control_plots$L
 
 > Quick tip! If you need help for a specific function, type `?` followed by the name of the function. For example, if you type `?plot_raw_current_data` into the Console and press Enter, this will open the help page, with information about how to use each argument in the function, and there are examples to get you started (just replace the example code with your data).
 
+#### Observe percent change data
+
+The second dataframe of (accessible with `$percent_change_data`) contains information on the percent change in evoked current amplitude `percent_change` during a specific time interval (`ending_interval`) relative to the baseline (`baseline_interval`). For example, if currents decreased by 50% after the hormone, the value of `percent_change` is 0.5.
+
+```{r display-summary-percent-data-head, eval=F}
+head(summary_eEPSC_df$percent_change_data, n = 30)
+```
+
+```{r summary-percent-data, eval=T, echo=F} 
+head(summary_eEPSC_df$percent_change_data, n = 30) %>%
+  reactable()
+```
+
+You can plot the percent change in current amplitude during the `ending_interval` relative to the `starting_interval`.
+
+```{r}
+plot_percent_change_comparisons(
+  data = sample_summary_eEPSC_df$percent_change_data,
+  plot_category = 2,
+  current_type = "eEPSC",
+  y_variable = "amplitude",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
+)
+```
+
+#### Means and SE for publication
+
+A third dataframe (accessed with `$mean_SE`) contains summary information that may be useful for publications. For example, you may want to report the mean ± SE before and after applying a hormone, along with *n*, the sample size.
+
+```{r eval=F, echo=T}
+summary_eEPSC_df$mean_SE
+```
+
+This dataset contains the values for mean, standard deviation, standard error, and sample size, *n*, both before and after protocol or hormone. The time of the "after" period comes from what you would have entered as the "ending_interval" when you ran `summary_eEPSC_df()` above.
+
+```{r echo=F, eval=T}
+reactable(summary_eEPSC_df$mean_SE)
+```
+
+
+### Step 3: Summarize data
+
+The next step is to group the data by treatment by sex and obtain summary data. `make_summary_EPSC_data()` will generate a list of 2 dataframes. One dataframe (accessible with `$summary_data`) grouped the data into intervals and generated summary statistics (like mean and standard error) for each point. The interval length was already
+specified during the `make_normalized_EPSC_data()` function from earlier.
+
+```{r make-summary-data}
+summary_eEPSC_df <- make_summary_EPSC_data(
+  data = sample_raw_eEPSC_df,
+  current_type = "eEPSC",
+  save_output_as_RDS = "no",
+  baseline_interval = "t0to5",
+  ending_interval = "t20to25"
+)
+```
+
+```{r reactable-summary-data, echo=F}
+reactable(summary_eEPSC_df$summary_data)
+```
+
 #### Perform T-tests
 
-The pruned data from all cells within a specific treatment and sex (`$all_cells`) will enable you to make a summary plot using `plot_summary_current_data()`. Before moving forward, you should perform a t-test assessing changes in the evoked current amplitude for each 5-minute interval relative to the baseline period.
+The *pruned data* from all cells within a specific treatment and sex (`$all_cells`) will enable you to make a summary plot using `plot_summary_current_data()`. Before moving forward, you should perform a t-test assessing changes in the evoked current amplitude for each 5-minute interval relative to the baseline period.
+
+> **NOTE!** You will be making summary plots with the **pruned data** (`$all_cells`) dataframe, but you will be running t-tests with the **summary data** (`$summary_data`)!
 
 Use the `perform_t_tests_for_summary_plot()` function, and give the object a useful name. You will later insert this object into the `t_test_df` argument of `plot_summary_current_data()`.
 
@@ -557,9 +619,7 @@ reactable(evoked_t_test_results)
 
 #### Plot summary data
 
-
 > Notice how `data` is now `sample_pruned_eEPSC_df$all_cells`, and `y_variable` is "amplitude". There are lots of customization opportunities when plotting summary data, including adding a representative trace as a .png overlay! You can read more about in the documentation for `plot_summary_current_data()`.
-
 
 ```{r display-plot-summary-data, echo=F, eval=F}
 plot_summary_current_data(
@@ -609,65 +669,6 @@ plot_summary_current_data(
 ```
 
 > **Warning!!** If you change `included_sexes` to "male" or "female", you MUST remember to use a t-test that uses the dataset that has been filtered to include **one sex only**! If you do not do this, the significance stars will not match (e.g. it may show the t-test stars for both sexes, but only one sex is visible).
-
-### Step 3: Summarize data
-
-The next step is to group the data by treatment by sex and obtain summary data. `make_summary_EPSC_data()` will generate a list of 2 dataframes. One dataframe (accessible with `$summary_data`) grouped the data into intervals and generated summary statistics (like mean and standard error) for each point. The interval length was already
-specified during the `make_normalized_EPSC_data()` function from earlier.
-
-```{r make-summary-data}
-summary_eEPSC_df <- make_summary_EPSC_data(
-  data = sample_raw_eEPSC_df,
-  current_type = "eEPSC",
-  save_output_as_RDS = "no",
-  baseline_interval = "t0to5",
-  ending_interval = "t20to25"
-)
-```
-
-```{r reactable-summary-data, echo=F}
-reactable(summary_eEPSC_df$summary_data)
-```
-
-
-### Step 4: Percent change data
-The second dataframe (accessible with `$percent_change_data`) contains information on the percent change in evoked current amplitude `percent_change` during a specific time interval (`ending_interval`) relative to the baseline (`baseline_interval`). For example, if currents decreased by 50% after the hormone, the value of `percent_change` is 0.5.
-
-```{r display-summary-percent-data-head, eval=F}
-head(summary_eEPSC_df$percent_change_data, n = 30)
-```
-
-```{r summary-percent-data, eval=T, echo=F} 
-head(summary_eEPSC_df$percent_change_data, n = 30) %>%
-  reactable()
-```
-
-You can plot the percent change in current amplitude during the `ending_interval` relative to the `starting_interval`.
-
-```{r}
-plot_percent_change_comparisons(
-  data = sample_summary_eEPSC_df$percent_change_data,
-  plot_category = 2,
-  current_type = "eEPSC",
-  y_variable = "amplitude",
-  treatment_colour_theme = sample_treatment_names_and_colours,
-  theme_options = sample_theme_options
-)
-```
-
-#### Means and SE for publication
-
-A third dataframe (accessed with `$mean_SE`) contains summary information that may be useful for publications. For example, you may want to report the mean ± SE before and after applying a hormone, along with *n*, the sample size.
-
-```{r eval=F, echo=T}
-summary_eEPSC_df$mean_SE
-```
-
-This dataset contains the values for mean, standard deviation, standard error, and sample size, *n*, both before and after protocol or hormone. The time of the "after" period comes from what you would have entered as the "ending_interval" when you ran `summary_eEPSC_df()` above.
-
-```{r echo=F, eval=T}
-reactable(summary_eEPSC_df$mean_SE)
-```
 
 
 
