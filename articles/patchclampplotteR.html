@@ -129,6 +129,15 @@ Only do this once per computer, or if there’s a major update.</p>
 <p>And then load the package each time you want to use it:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/christelinda-laureijs/patchclampplotteR" class="external-link">patchclampplotteR</a></span><span class="op">)</span></span></code></pre></div>
+<p>You may also find the following packages helpful. The
+<code>here</code> package will help R find your files in the correct
+subfolders in your project folder. <code>dplyr</code> will allow you to
+rearrange, sort, filter, and change your data, and <code>ggplot2</code>
+will allow you to make custom plots with your data.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/" class="external-link">here</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="about-the-data">About the data<a class="anchor" aria-label="anchor" href="#about-the-data"></a>
@@ -244,7 +253,7 @@ in sub-folders. For example, you can write
 <code>cell_info.csv</code> located within the <code>Data/</code>
 subfolder.</p>
 </blockquote>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cell_characteristics</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_cell_characteristics_df.html">import_cell_characteristics_df</a></span><span class="op">(</span><span class="st">"sample_cell_characteristics.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cell_characteristics</span></span></code></pre></div>
@@ -282,7 +291,7 @@ to lowercase for consistency across functions. Capitalized letters will
 be retained for columns like <code>ID</code>, <code>X</code>,
 <code>Y</code>, <code>P1</code>, and <code>P2</code>.</p>
 </blockquote>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sample_eEPSC_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"sample_new_eEPSC_data.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sample_eEPSC_data</span></span></code></pre></div>
@@ -320,7 +329,7 @@ is a blank csv.</p>
 <p><img src="starting-csv-sheet-screenshot.png" alt="A screenshot of what your starting csv file should look like the first time you begin a dataset." width="50%" style="display: block; margin: auto;"></p>
 <p>Use the <code><a href="../reference/add_new_cells.html">add_new_cells()</a></code> function, and carefully read the
 warning messages.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">first_time_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_new_cells.html">add_new_cells</a></span><span class="op">(</span></span>
 <span>  new_raw_data_csv <span class="op">=</span> <span class="st">"sample_new_eEPSC_data.csv"</span>,</span>
 <span>  cell_characteristics_csv <span class="op">=</span> <span class="st">"sample_cell_characteristics.csv"</span>,</span>
@@ -360,7 +369,7 @@ add.</p>
 the dataset. This won’t catch duplicates, but it can help you identify
 if a letter is completely missing from the dataset. See, <code>FX</code>
 is now included!</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">first_time_df</span><span class="op">$</span><span class="va">letter</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "FX" "GR" "HC"</span></span></code></pre></div>
 <p>This is an example of what the full few rows look like now:</p>
@@ -371,14 +380,14 @@ data sheet. This function will automatically append new data onto your
 existing sheet and save it to a new <code>.csv</code> file (defined by
 <code>new_file_name</code>). I am saving it to the <code>Data/</code>
 subfolder.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/add_new_cells.html">add_new_cells</a></span><span class="op">(</span></span>
 <span>  new_raw_data_csv <span class="op">=</span> <span class="st">"sample_new_eEPSC_data.csv"</span>,</span>
 <span>  cell_characteristics_csv <span class="op">=</span> <span class="st">"sample_cell_characteristics.csv"</span>,</span>
 <span>  old_raw_data_csv <span class="op">=</span> <span class="st">"Data/Raw-eEPSC-df.csv"</span>,</span>
 <span>  data_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
-<span>  write_new_csv <span class="op">=</span> <span class="st">"no"</span>,</span>
-<span>  new_file_name <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  write_new_csv <span class="op">=</span> <span class="st">"yes"</span>,</span>
+<span>  new_file_name <span class="op">=</span> <span class="st">"Data/Raw-eEPSC-df.csv"</span>, <span class="co">#Note! This will overwrite your old Raw-eEPSC-df.csv file! </span></span>
 <span>  decimal_places <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -390,7 +399,10 @@ subfolder.</p>
 evoked current dataset included in the package. To reduce the vignette
 size, I am printing just the first 20 rows. The full dataset contains
 &gt; 5680 rows!)</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Don't forget to run library(here) at the top of your document!</span></span>
+<span><span class="va">raw_eEPSC_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Data/Raw-eEPSC-df.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">raw_eEPSC_df</span>, n <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-febe03efa1a2d8d52a86" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-febe03efa1a2d8d52a86">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"letter":["AO","AO","AO","AO","AO","AO","AO","AO","AO","AO","AO","AO","AO","AO","AO","AO","AO","AO","AO","AO"],"synapses":["Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate"],"sex":["Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male"],"treatment":["Control","Control","Control","Control","Control","Control","Control","Control","Control","Control","Control","Control","Control","Control","Control","Control","Control","Control","Control","Control"],"time":[0,0.08,0.17,0.25,0.33,0.42,0.5,0.58,0.67,0.75,0.83,0.92,1,1.08,1.17,1.25,1.33,1.42,1.5,1.58],"ID":["23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002"],"P1":[17.37,24.14,35.6,15.82,53.91,45.48,28.13,27.81,60.01,46.89,47.01,40.36,31.1,64.87,27.88,11.46,54.54,37.18,17.35,61.64],"P2":[78.41,58.93,60.02,32.3,26.45,74.78,69.64,61.99,52.68,60.32,67.15,72.09,64.67,51.44,24.83,28.55,62.47,44.51,20.4,22.57],"X":["NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA"],"Y":["NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA","NA"],"age":[39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39,39],"animal":[17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17],"category":["2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2"],"cell":["17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1"],"notes":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"days_alone":["1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1"],"animal_or_slicing_problems":["no","no","no","no","no","no","no","no","no","no","no","no","no","no","no","no","no","no","no","no"],"R_a":["1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0"],"PPR":[4.51,2.44,1.69,2.04,0.49,1.64,2.48,2.23,0.88,1.29,1.43,1.79,2.08,0.79,0.89,2.49,1.15,1.2,1.18,0.37],"interval":["t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5"],"baseline_range":[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],"baseline_mean":[36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77],"P1_transformed":[47.24,65.66,96.83,43.03,146.63,123.7,76.51,75.64,163.22,127.54,127.86,109.78,84.59,176.44,75.83,31.17,148.34,101.13,47.19,167.66],"P2_transformed":[213.27,160.28,163.25,87.85,71.94,203.39,189.41,168.61,143.28,164.07,182.64,196.08,175.9,139.91,67.54,77.65,169.91,121.06,55.49,61.39]},"columns":[{"id":"letter","name":"letter","type":"factor"},{"id":"synapses","name":"synapses","type":"factor"},{"id":"sex","name":"sex","type":"factor"},{"id":"treatment","name":"treatment","type":"factor"},{"id":"time","name":"time","type":"numeric"},{"id":"ID","name":"ID","type":"factor"},{"id":"P1","name":"P1","type":"numeric"},{"id":"P2","name":"P2","type":"numeric"},{"id":"X","name":"X","type":"numeric"},{"id":"Y","name":"Y","type":"numeric"},{"id":"age","name":"age","type":"numeric"},{"id":"animal","name":"animal","type":"numeric"},{"id":"category","name":"category","type":"factor"},{"id":"cell","name":"cell","type":"character"},{"id":"notes","name":"notes","type":"logical"},{"id":"days_alone","name":"days_alone","type":"factor"},{"id":"animal_or_slicing_problems","name":"animal_or_slicing_problems","type":"factor"},{"id":"R_a","name":"R_a","type":"character"},{"id":"PPR","name":"PPR","type":"numeric"},{"id":"interval","name":"interval","type":"factor"},{"id":"baseline_range","name":"baseline_range","type":"logical"},{"id":"baseline_mean","name":"baseline_mean","type":"numeric"},{"id":"P1_transformed","name":"P1_transformed","type":"numeric"},{"id":"P2_transformed","name":"P2_transformed","type":"numeric"}],"dataKey":"887687e49d67dbce4e45aea4b7fef1df"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>You can use <code>dplyr</code> functions to quickly explore your
@@ -402,13 +414,13 @@ data. Here’s just one example of a quick and useful analysis:</p>
 to do? Run this line of code on the raw data. Here, I filtered the data
 to category 2 only (experiments where I added insulin) and grouped by
 treatment. I then counted the number of cells per sex.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_eEPSC_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">category</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">time</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">treatment</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">count</span><span class="op">(</span><span class="va">sex</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">treatment</span>, <span class="va">sex</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">category</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">time</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">treatment</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">treatment</span>, <span class="va">sex</span><span class="op">)</span></span></code></pre></div>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-1fb4450895fe099f74a1" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-1fb4450895fe099f74a1">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"treatment":["Control","Control","HNMPA","HNMPA","PPP","PPP","PPP_and_HNMPA","PPP_and_HNMPA"],"sex":["Female","Male","Female","Male","Female","Male","Female","Male"],"n":[1,3,2,3,3,2,1,4]},"columns":[{"id":"treatment","name":"treatment","type":"factor"},{"id":"sex","name":"sex","type":"factor"},{"id":"n","name":"n","type":"numeric"}],"dataKey":"6c6b673bf9cda7f098515907c2d107ec"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -429,13 +441,13 @@ as hex codes or named R colours. The only difference between
 and tables.</p>
 <p>First, check out how many treatment groups you have using
 <code>unique(raw_eEPSC_df$treatment)</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">raw_eEPSC_df</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] Control       HNMPA         PPP           PPP_and_HNMPA</span></span>
 <span><span class="co">#&gt; Levels: Control HNMPA PPP PPP_and_HNMPA</span></span></code></pre></div>
 <p>Next, modify this code to set up your own dataframe with your
 treatment names and colours.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_theme_colours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  category <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  treatment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"HNMPA"</span>, <span class="st">"PPP"</span>, <span class="st">"PPP_and_HNMPA"</span><span class="op">)</span>,</span>
@@ -453,7 +465,16 @@ FAQ</a>.</p>
 <h3 id="analyze-current-amplitude">Analyze current amplitude<a class="anchor" aria-label="anchor" href="#analyze-current-amplitude"></a>
 </h3>
 <p>After you have finished a brief exploration of your data, it is time
-to analyze it!</p>
+to analyze it! You must read in the FULL .csv file that you created and
+saved with <code><a href="../reference/add_new_cells.html">add_new_cells()</a></code>. This is the dataframe that has
+columns for <code>letter</code>, <code>ID</code>, <code>P1</code>,
+<code>P2</code>, <code>age</code>, <code>sex</code>,
+<code>days_alone</code>, etc.</p>
+<blockquote>
+<p>Do NOT use the raw dataframe that has only 4 columns! You MUST import
+the .csv file that you created with `add_new_cells(), where
+write_new_csv = “yes”!</p>
+</blockquote>
 <div class="section level4">
 <h4 id="step-1-normalize-currents">Step 1: Normalize currents<a class="anchor" aria-label="anchor" href="#step-1-normalize-currents"></a>
 </h4>
@@ -473,7 +494,7 @@ Clampfit recorded the current amplitude as negative values, so I set
 <code>negative_transform_currents</code> to “yes” which will flip the
 current amplitudes to positive values.</p>
 </blockquote>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_eEPSC_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_normalized_EPSC_data.html">make_normalized_EPSC_data</a></span><span class="op">(</span></span>
 <span>  filename <span class="op">=</span> <span class="st">"sample_eEPSC_data.csv"</span>,</span>
 <span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
@@ -485,7 +506,7 @@ current amplitudes to positive values.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>To view the data, type the name of the object
 <code>raw_eEPSC_df</code></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_eEPSC_df</span></span></code></pre></div>
 <p><code><a href="../reference/make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code> will retain the cell
 characteristics and <code>P1</code> and <code>P2</code> values from
@@ -532,7 +553,7 @@ runs a loop over each letter, generating a ggplot object for each
 recording.</p>
 <p>Please see the documentation for <code><a href="../reference/plot_raw_current_data.html">plot_raw_current_data()</a></code>
 to learn about the arguments in more detail.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_eEPSC_control_plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_raw_current_data.html">plot_raw_current_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">raw_eEPSC_df</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
@@ -548,11 +569,11 @@ to learn about the arguments in more detail.</p>
 <p><code><a href="../reference/plot_raw_current_data.html">plot_raw_current_data()</a></code> will return a list of ggplot
 objects. To see all of your plots at once, type the name of the object
 that you just made (<code>raw_eEPSC_control_plots</code>):</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_eEPSC_control_plots</span></span></code></pre></div>
 <p>If you want to observe just one specific plot, you can select it by
 letter.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_eEPSC_control_plots</span><span class="op">$</span><span class="va">L</span></span></code></pre></div>
 <p><img src="patchclampplotteR_files/figure-html/view-one-raw-plot-1.png" alt="A plot of evoked current amplitude (in pA) over time in minutes showing a decrease in evoked current amplitude after adding insulin." width="700" style="display: block; margin: auto;"></p>
 </div>
@@ -569,7 +590,7 @@ familiar with GraphPad Prism’s “prune rows” function,
 used in the Crosby lab. You can change this value by changing the
 <code>interval_length</code> to something other than <code>1</code>.</p>
 </blockquote>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pruned_eEPSC_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_pruned_EPSC_data.html">make_pruned_EPSC_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">raw_eEPSC_df</span>,</span>
 <span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
@@ -578,13 +599,13 @@ used in the Crosby lab. You can change this value by changing the
 <span>  baseline_length <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  interval_length <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pruned_eEPSC_df</span></span></code></pre></div>
 <p>This function will return a list of three dataframes. To access each
 list, type <em>the object name, followed by a dollar sign</em>. For
 example, write <code>pruned_eEPSC_df$individual_cells</code> to access
 the first dataframe in the list:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pruned_eEPSC_df</span><span class="op">$</span><span class="va">individual_cells</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="Pruned-data-dataframe-popup.jpg" alt="A screenshot showing the text pruned_eEPSC_df with a dollar sign. There is a popup on the right showing the three available dataframes." width="85%"><p class="caption">
@@ -628,7 +649,7 @@ from <code><a href="../reference/make_pruned_EPSC_data.html">make_pruned_EPSC_da
 <li>
 <code>pruned</code>: Change this to “yes”</li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pruned_eEPSC_control_plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_raw_current_data.html">plot_raw_current_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">individual_cells</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
@@ -641,7 +662,7 @@ from <code><a href="../reference/make_pruned_EPSC_data.html">make_pruned_EPSC_da
 <span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span>
 <span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pruned_eEPSC_control_plots</span><span class="op">$</span><span class="va">L</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="patchclampplotteR_files/figure-html/plot-pruned-cell-L-1.png" alt="A plot of evoked current amplitude (in pA) over time in minutes showing a decrease in evoked current amplitude after adding insulin. This is the same plot as the raw plot from earlier, but there are fewer data points because this is the pruned dataset." width="700"><p class="caption">
@@ -671,7 +692,7 @@ period.</p>
 give the object a useful name. You will later insert this object into
 the <code>t_test_df</code> argument of
 <code><a href="../reference/plot_summary_current_data.html">plot_summary_current_data()</a></code>.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">evoked_t_test_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/perform_t_tests_for_summary_plot.html">perform_t_tests_for_summary_plot</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_summary_eEPSC_df</span><span class="op">$</span><span class="va">summary_data</span>,</span>
 <span>  test_category <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -719,7 +740,7 @@ of 2 dataframes. One dataframe (accessible with
 generated summary statistics (like mean and standard error) for each
 point. The interval length was already specified during the
 <code><a href="../reference/make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code> function from earlier.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summary_eEPSC_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_summary_EPSC_data.html">make_summary_EPSC_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_raw_eEPSC_df</span>,</span>
 <span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
@@ -740,13 +761,13 @@ specific time interval (<code>ending_interval</code>) relative to the
 baseline (<code>baseline_interval</code>). For example, if currents
 decreased by 50% after the hormone, the value of
 <code>percent_change</code> is 0.5.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">summary_eEPSC_df</span><span class="op">$</span><span class="va">percent_change_data</span>, n <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-25c3e940e6859592f801" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-25c3e940e6859592f801">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"category":["2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2","2"],"letter":["AO","AZ","BN","BO","BT","CG","CZ","FT","FX","GF","GI","GK","GR","GX","HB","HC","HG","HN","L"],"sex":["Male","Female","Male","Male","Male","Female","Male","Female","Female","Female","Female","Male","Male","Male","Male","Male","Female","Male","Male"],"treatment":["Control","Control","Control","HNMPA","HNMPA","HNMPA","HNMPA","HNMPA","PPP","PPP","PPP","PPP","PPP","PPP_and_HNMPA","PPP_and_HNMPA","PPP_and_HNMPA","PPP_and_HNMPA","PPP_and_HNMPA","Control"],"age":[39,32,29,32,37,36,28,39,28,36,28,35,34,33,39,39,34,38,38],"animal":[17,21,25,27,30,35,41,72,74,77,81,84,90,97,100,100,103,109,8.5],"X":["NA",352.62,152.92,"NA",387.19,164.18,296.51,153.33,234.69,217.23,235.96,248.74,313.5,"NA",133.2,172.54,"NA",288.97,"NA"],"Y":["NA",331.74,337.19,"NA",586.98,366.52,492.9,337.18,495.5,323.55,284.23,574.44,415.97,"NA",590.25,576.26,"NA",400.18,"NA"],"synapses":["Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate"],"days_alone":["1","0","0","0","0","0","0","1","0","0","0","0","0","1","2","2","0","0","0"],"animal_or_slicing_problems":["no","no","no","no","no","no","no","no","no","no","no","yes","no","yes","yes","yes","no","yes","no"],"t0to5":[36.77,44.27,72.09,87.72,51.28,44.39,68.06,77.76,61.34,79.15,41.01,69.11,99.1,49.92,49.35,31.31,79.88,86.58,77.05],"t5to10":[12.49,32.8,73.11,30.86,10.72,32.4,67.28,45.69,61.71,81.83,38.95,16.35,113.28,53.96,50.85,27.8,94.07,83.87,14.78],"t10to15":[6.49,23.77,43.8,23.22,8.83,27.1,66.84,52.01,52.11,86.28,33.09,6.03,125.57,40.22,50.53,26.12,86.46,86.41,4.72],"t15to20":[6.85,24.79,12.67,24.47,8.72,21.29,69.66,57,47.97,84.55,20.77,4.73,111.13,34.57,46.07,21.47,105.79,75.6,4.79],"t20to25":[7.82,22.42,13.76,21.35,7.76,16.23,67.68,56.25,36.74,79.11,18.07,4.58,106.54,37.54,50.7,21.28,91.96,65.51,4.43],"percent_change":[21.27,50.64,19.09,24.34,15.13,36.56,99.44,72.34,59.9,99.95,44.06,6.63,107.51,75.2,102.74,67.97,115.12,75.66,5.75]},"columns":[{"id":"category","name":"category","type":"factor"},{"id":"letter","name":"letter","type":"factor"},{"id":"sex","name":"sex","type":"factor"},{"id":"treatment","name":"treatment","type":"factor"},{"id":"age","name":"age","type":"numeric"},{"id":"animal","name":"animal","type":"numeric"},{"id":"X","name":"X","type":"numeric"},{"id":"Y","name":"Y","type":"numeric"},{"id":"synapses","name":"synapses","type":"factor"},{"id":"days_alone","name":"days_alone","type":"factor"},{"id":"animal_or_slicing_problems","name":"animal_or_slicing_problems","type":"factor"},{"id":"t0to5","name":"t0to5","type":"numeric"},{"id":"t5to10","name":"t5to10","type":"numeric"},{"id":"t10to15","name":"t10to15","type":"numeric"},{"id":"t15to20","name":"t15to20","type":"numeric"},{"id":"t20to25","name":"t20to25","type":"numeric"},{"id":"percent_change","name":"percent_change","type":"numeric"}],"dataKey":"c237c604694fdb64f7bc709dc1938015"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>You can plot the percent change in current amplitude during the
 <code>ending_interval</code> relative to the
 <code>starting_interval</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_percent_change_comparisons.html">plot_percent_change_comparisons</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_summary_eEPSC_df</span><span class="op">$</span><span class="va">percent_change_data</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -757,7 +778,7 @@ decreased by 50% after the hormone, the value of
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_segment()`).</span></span></code></pre></div>
-<p><img src="patchclampplotteR_files/figure-html/unnamed-chunk-6-1.png" width="700" style="display: block; margin: auto;"></p>
+<p><img src="patchclampplotteR_files/figure-html/unnamed-chunk-8-1.png" width="700" style="display: block; margin: auto;"></p>
 <div class="section level5">
 <h5 id="means-and-se-for-publication">Means and SE for publication<a class="anchor" aria-label="anchor" href="#means-and-se-for-publication"></a>
 </h5>
@@ -765,7 +786,7 @@ decreased by 50% after the hormone, the value of
 summary information that may be useful for publications. For example,
 you may want to report the mean ± SE before and after applying a
 hormone, along with <em>n</em>, the sample size.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summary_eEPSC_df</span><span class="op">$</span><span class="va">mean_SE</span></span></code></pre></div>
 <p>This dataset contains the values for mean, standard deviation,
 standard error, and sample size, <em>n</em>, both before and after
@@ -834,7 +855,7 @@ specific intervals. These represent the “before”
 (<code>baseline_interval</code>) and “after”
 (<code>post_hormone_interval</code>) states. You can also choose to
 limit the PPR values to a certain range to exclude outliers.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">PPR_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_PPR_data.html">make_PPR_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">raw_eEPSC_df</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span>
@@ -845,7 +866,7 @@ limit the PPR values to a certain range to exclude outliers.</p>
 <span>  post_hormone_interval <span class="op">=</span> <span class="st">"t20to25"</span>,</span>
 <span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">PPR_df</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-416566eb193bf50d04e6" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-416566eb193bf50d04e6">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"letter":["AO","AO","AO","AO","AO","AO","AO","AO","AO","AO"],"synapses":["Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate","Glutamate"],"sex":["Male","Male","Male","Male","Male","Male","Male","Male","Male","Male"],"treatment":["Control","Control","Control","Control","Control","Control","Control","Control","Control","Control"],"time":[0,0.08,0.17,0.25,0.33,0.42,0.5,0.58,0.67,0.75],"ID":["23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002","23623002"],"P1":[17.37,24.14,35.6,15.82,53.91,45.48,28.13,27.81,60.01,46.89],"P2":[78.41,58.93,60.02,32.3,26.45,74.78,69.64,61.99,52.68,60.32],"X":["NA","NA","NA","NA","NA","NA","NA","NA","NA","NA"],"Y":["NA","NA","NA","NA","NA","NA","NA","NA","NA","NA"],"age":[39,39,39,39,39,39,39,39,39,39],"animal":[17,17,17,17,17,17,17,17,17,17],"category":["2","2","2","2","2","2","2","2","2","2"],"cell":["17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1","17.1.1"],"notes":[null,null,null,null,null,null,null,null,null,null],"days_alone":["1","1","1","1","1","1","1","1","1","1"],"animal_or_slicing_problems":["no","no","no","no","no","no","no","no","no","no"],"R_a":["1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0","1.9, 1.9, 1.8, 1.9, 2.0, 3.0"],"PPR":[4.51,2.44,1.69,2.04,0.49,1.64,2.48,2.23,0.88,1.29],"interval":["t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5","t0to5"],"baseline_range":[true,true,true,true,true,true,true,true,true,true],"baseline_mean":[36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77,36.77],"P1_transformed":[47.24,65.66,96.83,43.03,146.63,123.7,76.51,75.64,163.22,127.54],"P2_transformed":[213.27,160.28,163.25,87.85,71.94,203.39,189.41,168.61,143.28,164.07],"state":["Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline","Baseline"]},"columns":[{"id":"letter","name":"letter","type":"factor"},{"id":"synapses","name":"synapses","type":"factor"},{"id":"sex","name":"sex","type":"factor"},{"id":"treatment","name":"treatment","type":"factor"},{"id":"time","name":"time","type":"numeric"},{"id":"ID","name":"ID","type":"factor"},{"id":"P1","name":"P1","type":"numeric"},{"id":"P2","name":"P2","type":"numeric"},{"id":"X","name":"X","type":"numeric"},{"id":"Y","name":"Y","type":"numeric"},{"id":"age","name":"age","type":"numeric"},{"id":"animal","name":"animal","type":"numeric"},{"id":"category","name":"category","type":"factor"},{"id":"cell","name":"cell","type":"character"},{"id":"notes","name":"notes","type":"logical"},{"id":"days_alone","name":"days_alone","type":"factor"},{"id":"animal_or_slicing_problems","name":"animal_or_slicing_problems","type":"factor"},{"id":"R_a","name":"R_a","type":"character"},{"id":"PPR","name":"PPR","type":"numeric"},{"id":"interval","name":"interval","type":"factor"},{"id":"baseline_range","name":"baseline_range","type":"logical"},{"id":"baseline_mean","name":"baseline_mean","type":"numeric"},{"id":"P1_transformed","name":"P1_transformed","type":"numeric"},{"id":"P2_transformed","name":"P2_transformed","type":"numeric"},{"id":"state","name":"state","type":"character"}],"dataKey":"782528dfee134a4109634e7b4af5e14d"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
@@ -854,7 +875,7 @@ limit the PPR values to a certain range to exclude outliers.</p>
 <h4 id="plot-ppr-data">Plot PPR data<a class="anchor" aria-label="anchor" href="#plot-ppr-data"></a>
 </h4>
 <p>For a specific treatment:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_PPR_data_single_treatment.html">plot_PPR_data_single_treatment</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">PPR_df</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
@@ -870,7 +891,7 @@ limit the PPR values to a certain range to exclude outliers.</p>
 <p><img src="patchclampplotteR_files/figure-html/plot-one-ppr-treatment-1.png" alt="A scatterplot of paired-pulse ratio over time (baseline or post-insulin) showing no difference in the paired pulse ratio across these two times." width="700" style="display: block; margin: auto;"></p>
 <p>You could also facet this by sex (note this data has only one
 datapoint for females):</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_PPR_data_single_treatment.html">plot_PPR_data_single_treatment</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">PPR_df</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
@@ -886,7 +907,7 @@ datapoint for females):</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="patchclampplotteR_files/figure-html/plot-one-ppr-treatment-facet-1.png" alt="A scatterplot of paired-pulse ratio over time (baseline or post-insulin) showing no difference in the paired pulse ratio across these two times. The plot is divided by sex" width="700" style="display: block; margin: auto;"></p>
 <p>For multiple treatments:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_PPR_data_multiple_treatments.html">plot_PPR_data_multiple_treatments</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">PPR_df</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span>
@@ -914,7 +935,7 @@ generated from <code><a href="../reference/make_summary_EPSC_data.html">make_sum
 <div class="section level4">
 <h4 id="create-variance-dataset">Create variance dataset<a class="anchor" aria-label="anchor" href="#create-variance-dataset"></a>
 </h4>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">variance_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_variance_data.html">make_variance_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">summary_eEPSC_df</span><span class="op">$</span><span class="va">summary_data</span>,</span>
 <span>  df_category <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -934,7 +955,7 @@ generated from <code><a href="../reference/make_summary_EPSC_data.html">make_sum
 <p>You can create plots comparing the inverse coefficient of variation
 squared, and the variance-to-mean ratio. Here, I have faceted the plots
 by sex</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cv_comparison_control_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_variance_comparison_data.html">plot_variance_comparison_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">variance_df</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -969,7 +990,7 @@ by sex</p>
 <span></span>
 <span><span class="va">cv_comparison_control_plot</span></span></code></pre></div>
 <p><img src="patchclampplotteR_files/figure-html/variance-comparison-plots-cv-vmr-definition-1.png" alt="Figure 1. A scatterplot showing changes in the inverse coefficient of variation squared across time (baseline or post-insulin). Figure 2. A scatterplot showing changes in the variance-to-mean ratio across time." width="700" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vmr_comparison_control_plot</span></span></code></pre></div>
 <p><img src="patchclampplotteR_files/figure-html/variance-comparison-plots-cv-vmr-definition-2.png" alt="Figure 1. A scatterplot showing changes in the inverse coefficient of variation squared across time (baseline or post-insulin). Figure 2. A scatterplot showing changes in the variance-to-mean ratio across time." width="700" style="display: block; margin: auto;"></p>
 </div>
@@ -987,7 +1008,7 @@ period. If <code>current_type</code> = “eEPSC”, the allowed
 transformed amplitudes, since these will all be 100, and the graph will
 be a flat line.</p>
 </blockquote>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_baseline_data.html">plot_baseline_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">summary_eEPSC_df</span><span class="op">$</span><span class="va">summary_data</span>,</span>
 <span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
