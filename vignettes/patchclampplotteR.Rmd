@@ -665,6 +665,7 @@ evoked_t_test_results <- perform_t_tests_for_summary_plot(
   parameter = "amplitude",
   baseline_interval = "t0to5",
   interval_length = 5,
+  test_type = "pairwise.t.test",
   treatment_colour_theme = sample_treatment_names_and_colours,
   save_output_as_RDS = "no"
 )

@@ -1188,18 +1188,21 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 }
 
 
-#' Perform t-tests for EPSC summary plots
+#' Perform t-tests (or Wilcoxon tests) for EPSC summary plots
 #'
-#' This function enables you to perform a series of paired t-tests comparing the
+#' This function enables you to perform a series of paired t-tests (or Wilcoxon tests) comparing the
 #' mean current amplitude within each interval relative to the mean current
-#' amplitude during the baseline. This uses the `paired_t_test` function from
+#' amplitude during the baseline. This uses the `pairwise_t_test` or `pairwise_wilcox_test` functions from
 #' `rstatix`, with `paired = TRUE` and Holm's adjustment for multiple
-#' comparisons (`p.adjust.method = "holm"`). The resulting output table can also
+#' comparisons (`p_adjust_method = "holm"`) by default. The resulting output table can also
 #' be used to apply significance stars to the plot in
 #' [plot_summary_current_data()].
 #'
 #' @inheritParams plot_baseline_data
 #' @inheritParams make_normalized_EPSC_data
+#' @param p_adjust_method This argument is directly related to `p.adjust.method` in `rstatix::t_test`. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include `"holm"`, `"hochberg"`, `"hommel"`, `"bonferroni"`, `"BH"`, `"BY"`, `"fdr"`, `"none"` (although `"none"` is not recommended).
+#' @param test_type A character (must be `"pairwise.wilcox.test"` or `"pairwise.t.test"`)
+#'   describing the statistical model used in this function.
 #' @param test_category A numeric value describing the experimental category. In
 #'   the sample dataset for this package, 2 represents experiments where insulin
 #'   was applied continuously after a 5-minute baseline period.
@@ -1241,6 +1244,8 @@ perform_t_tests_for_summary_plot <- function(data,
                                              baseline_interval = "t0to5",
                                              interval_length = 5,
                                              treatment_colour_theme,
+                                             test_type = "pairwise.t.test",
+                                             p_adjust_method = "holm",
                                              save_output_as_RDS = "no") {
   if (is.null(current_type) ||
     length(current_type) != 1L ||
@@ -1252,8 +1257,16 @@ perform_t_tests_for_summary_plot <- function(data,
     cli::cli_abort(c("x" = "`save_output_as_RDS` argument must be one of: \"yes\" or \"no\""))
   }
 
+  if (!test_type %in% c("pairwise.wilcox.test", "pairwise.t.test")) {
+    cli::cli_abort(c("x" = "'test_type' argument must be one of: \"pairwise.wilcox.test\" or \"pairwise.t.test\""))
+  }
+
   if (!include_all_treatments %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`include_all_treatments` must be either \"yes\" or \"no\"."))
+  }
+
+  if (!p_adjust_method %in% c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")) {
+    cli::cli_abort(c("x" = "`p_adjust_method` argument must be one of: \"holm\", \"hochberg\", \"hommel\", \"bonferroni\", \"BH\", \"BY\", \"fdr\", or \"none\""))
   }
 
   if (include_all_treatments == "yes") {
@@ -1319,6 +1332,7 @@ perform_t_tests_for_summary_plot <- function(data,
     }
 
     if (parameter == "amplitude") {
+      if (test_type == "pairwise.t.test") {
       t_test_results <- t_test_data %>%
         dplyr::filter(.data$category == test_category) %>%
         dplyr::group_by(.data$treatment) %>%
@@ -1326,8 +1340,21 @@ perform_t_tests_for_summary_plot <- function(data,
           mean_P1_transformed ~ interval,
           ref.group = baseline_interval,
           paired = TRUE,
-          p.adjust.method = "holm"
+          p.adjust.method = p_adjust_method
         )
+      }
+
+      if (test_type == "pairwise.wilcox.test") {
+        t_test_results <- t_test_data %>%
+          dplyr::filter(.data$category == test_category) %>%
+          dplyr::group_by(.data$treatment) %>%
+          rstatix::pairwise_wilcox_test(
+            mean_P1_transformed ~ interval,
+            ref.group = baseline_interval,
+            paired = TRUE,
+            p.adjust.method = p_adjust_method
+          )
+      }
     }
   }
 
@@ -1353,6 +1380,7 @@ perform_t_tests_for_summary_plot <- function(data,
     }
 
     if (parameter == "amplitude") {
+      if (test_type == "pairwise.t.test") {
       t_test_results <- t_test_data %>%
         dplyr::filter(.data$category == test_category) %>%
         dplyr::group_by(.data$treatment) %>%
@@ -1360,11 +1388,25 @@ perform_t_tests_for_summary_plot <- function(data,
           mean_transformed_amplitude ~ interval,
           ref.group = baseline_interval,
           paired = TRUE,
-          p.adjust.method = "holm"
+          p.adjust.method = p_adjust_method
         )
+      }
+
+      if (test_type == "pairwise.wilcox.test") {
+        t_test_results <- t_test_data %>%
+          dplyr::filter(.data$category == test_category) %>%
+          dplyr::group_by(.data$treatment) %>%
+          rstatix::pairwise_wilcox_test(
+            mean_transformed_amplitude ~ interval,
+            ref.group = baseline_interval,
+            paired = TRUE,
+            p.adjust.method = p_adjust_method
+          )
+      }
     }
 
     if (parameter == "raw_amplitude") {
+      if (test_type == "pairwise.t.test") {
       t_test_results <- t_test_data %>%
         dplyr::filter(.data$category == test_category) %>%
         dplyr::group_by(.data$treatment) %>%
@@ -1372,11 +1414,25 @@ perform_t_tests_for_summary_plot <- function(data,
           mean_raw_amplitude ~ interval,
           ref.group = baseline_interval,
           paired = TRUE,
-          p.adjust.method = "holm"
+          p.adjust.method = p_adjust_method
         )
+      }
+
+      if (test_type == "pairwise.wilcox.test") {
+        t_test_results <- t_test_data %>%
+          dplyr::filter(.data$category == test_category) %>%
+          dplyr::group_by(.data$treatment) %>%
+          rstatix::pairwise_wilcox_test(
+            mean_raw_amplitude ~ interval,
+            ref.group = baseline_interval,
+            paired = TRUE,
+            p.adjust.method = p_adjust_method
+          )
+      }
     }
 
     if (parameter == "frequency") {
+      if (test_type == "pairwise.t.test") {
       t_test_results <- t_test_data %>%
         dplyr::filter(.data$category == test_category) %>%
         dplyr::group_by(.data$treatment) %>%
@@ -1384,11 +1440,25 @@ perform_t_tests_for_summary_plot <- function(data,
           mean_transformed_frequency ~ interval,
           ref.group = baseline_interval,
           paired = TRUE,
-          p.adjust.method = "holm"
+          p.adjust.method = p_adjust_method
         )
+      }
+
+      if (test_type == "pairwise.wilcox.test") {
+        t_test_results <- t_test_data %>%
+          dplyr::filter(.data$category == test_category) %>%
+          dplyr::group_by(.data$treatment) %>%
+          rstatix::pairwise_wilcox_test(
+            mean_transformed_frequency ~ interval,
+            ref.group = baseline_interval,
+            paired = TRUE,
+            p.adjust.method = p_adjust_method
+          )
+      }
     }
 
     if (parameter == "raw_frequency") {
+      if (test_type == "pairwise.t.test") {
       t_test_results <- t_test_data %>%
         dplyr::filter(.data$category == test_category) %>%
         dplyr::group_by(.data$treatment) %>%
@@ -1396,8 +1466,20 @@ perform_t_tests_for_summary_plot <- function(data,
           mean_raw_frequency ~ interval,
           ref.group = baseline_interval,
           paired = TRUE,
-          p.adjust.method = "holm"
+          p.adjust.method = p_adjust_method
         )
+      }
+      if (test_type == "pairwise.wilcox.test") {
+        t_test_results <- t_test_data %>%
+          dplyr::filter(.data$category == test_category) %>%
+          dplyr::group_by(.data$treatment) %>%
+          rstatix::pairwise_wilcox_test(
+            mean_raw_frequency ~ interval,
+            ref.group = baseline_interval,
+            paired = TRUE,
+            p.adjust.method = p_adjust_method
+          )
+      }
     }
   }
 

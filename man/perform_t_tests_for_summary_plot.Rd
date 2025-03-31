@@ -2,7 +2,7 @@
 % Please edit documentation in R/Process-data.R
 \name{perform_t_tests_for_summary_plot}
 \alias{perform_t_tests_for_summary_plot}
-\title{Perform t-tests for EPSC summary plots}
+\title{Perform t-tests (or Wilcoxon tests) for EPSC summary plots}
 \usage{
 perform_t_tests_for_summary_plot(
   data,
@@ -14,6 +14,8 @@ perform_t_tests_for_summary_plot(
   baseline_interval = "t0to5",
   interval_length = 5,
   treatment_colour_theme,
+  test_type = "pairwise.t.test",
+  p_adjust_method = "holm",
   save_output_as_RDS = "no"
 )
 }
@@ -58,6 +60,10 @@ their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
+\item{p_adjust_method}{This argument is directly related to \code{p.adjust.method} in \code{rstatix::t_test}. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include \code{"holm"}, \code{"hochberg"}, \code{"hommel"}, \code{"bonferroni"}, \code{"BH"}, \code{"BY"}, \code{"fdr"}, \code{"none"} (although \code{"none"} is not recommended).
+#' @param test_type A character (must be \code{"pairwise.wilcox.test"} or \code{"pairwise.t.test"})
+describing the statistical model used in this function.}
+
 \item{save_output_as_RDS}{A character (\code{"yes"} or \code{"no"}) describing if the
 resulting object should be saved as an RDS file in the raw data folder.}
 }
@@ -65,11 +71,11 @@ resulting object should be saved as an RDS file in the raw data folder.}
 A dataframe
 }
 \description{
-This function enables you to perform a series of paired t-tests comparing the
+This function enables you to perform a series of paired t-tests (or Wilcoxon tests) comparing the
 mean current amplitude within each interval relative to the mean current
-amplitude during the baseline. This uses the \code{paired_t_test} function from
+amplitude during the baseline. This uses the \code{pairwise_t_test} or \code{pairwise_wilcox_test} functions from
 \code{rstatix}, with \code{paired = TRUE} and Holm's adjustment for multiple
-comparisons (\code{p.adjust.method = "holm"}). The resulting output table can also
+comparisons (\code{p_adjust_method = "holm"}) by default. The resulting output table can also
 be used to apply significance stars to the plot in
 \code{\link[=plot_summary_current_data]{plot_summary_current_data()}}.
 }
