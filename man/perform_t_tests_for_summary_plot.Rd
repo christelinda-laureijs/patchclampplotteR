@@ -60,9 +60,10 @@ their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
-\item{p_adjust_method}{This argument is directly related to \code{p.adjust.method} in \code{rstatix::t_test}. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include \code{"holm"}, \code{"hochberg"}, \code{"hommel"}, \code{"bonferroni"}, \code{"BH"}, \code{"BY"}, \code{"fdr"}, \code{"none"} (although \code{"none"} is not recommended).
-#' @param test_type A character (must be \code{"pairwise.wilcox.test"} or \code{"pairwise.t.test"})
+\item{test_type}{A character (must be \code{"pairwise.wilcox.test"} or \code{"pairwise.t.test"})
 describing the statistical model used in this function.}
+
+\item{p_adjust_method}{This argument is directly related to \code{p.adjust.method} in \code{rstatix::t_test}. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include \code{"holm"}, \code{"hochberg"}, \code{"hommel"}, \code{"bonferroni"}, \code{"BH"}, \code{"BY"}, \code{"fdr"}, \code{"none"} (although \code{"none"} is not recommended).}
 
 \item{save_output_as_RDS}{A character (\code{"yes"} or \code{"no"}) describing if the
 resulting object should be saved as an RDS file in the raw data folder.}
@@ -88,6 +89,7 @@ perform_t_tests_for_summary_plot(
   current_type = "eEPSC",
   parameter = "amplitude",
   baseline_interval = "t0to5",
+  test_type = "pairwise.t.test",
   interval_length = 5,
   treatment_colour_theme = sample_treatment_names_and_colours,
   save_output_as_RDS = "no"

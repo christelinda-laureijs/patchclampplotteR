@@ -1231,6 +1231,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #'   current_type = "eEPSC",
 #'   parameter = "amplitude",
 #'   baseline_interval = "t0to5",
+#'   test_type = "pairwise.t.test",
 #'   interval_length = 5,
 #'   treatment_colour_theme = sample_treatment_names_and_colours,
 #'   save_output_as_RDS = "no"
@@ -1500,20 +1501,6 @@ perform_t_tests_for_summary_plot <- function(data,
   )
 
   t_test_table <- merge(positions_df, t_test_table, by = "group2") %>%
-    dplyr::select(
-      .data$treatment,
-      .data$.y.,
-      .data$group1,
-      .data$group2,
-      .data$n1,
-      .data$n1,
-      .data$statistic,
-      .data$df,
-      .data$p_string,
-      .data$p.adj,
-      .data$significance_stars,
-      .data$asterisk_time
-    ) %>%
     dplyr::arrange(match(.data$treatment, treatment_info$treatment))
 
   if (save_output_as_RDS == "yes") {
