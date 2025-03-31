@@ -148,10 +148,13 @@ their associated colours as hex values. See
 should look like.</p></dd>
 
 
-<dt id="arg-p-adjust-method">p_adjust_method<a class="anchor" aria-label="anchor" href="#arg-p-adjust-method"></a></dt>
-<dd><p>This argument is directly related to <code>p.adjust.method</code> in <code><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html" class="external-link">rstatix::t_test</a></code>. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include <code>"holm"</code>, <code>"hochberg"</code>, <code>"hommel"</code>, <code>"bonferroni"</code>, <code>"BH"</code>, <code>"BY"</code>, <code>"fdr"</code>, <code>"none"</code> (although <code>"none"</code> is not recommended).
-#' @param test_type A character (must be <code>"pairwise.wilcox.test"</code> or <code>"pairwise.t.test"</code>)
+<dt id="arg-test-type">test_type<a class="anchor" aria-label="anchor" href="#arg-test-type"></a></dt>
+<dd><p>A character (must be <code>"pairwise.wilcox.test"</code> or <code>"pairwise.t.test"</code>)
 describing the statistical model used in this function.</p></dd>
+
+
+<dt id="arg-p-adjust-method">p_adjust_method<a class="anchor" aria-label="anchor" href="#arg-p-adjust-method"></a></dt>
+<dd><p>This argument is directly related to <code>p.adjust.method</code> in <code><a href="https://rpkgs.datanovia.com/rstatix/reference/t_test.html" class="external-link">rstatix::t_test</a></code>. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include <code>"holm"</code>, <code>"hochberg"</code>, <code>"hommel"</code>, <code>"bonferroni"</code>, <code>"BH"</code>, <code>"BY"</code>, <code>"fdr"</code>, <code>"none"</code> (although <code>"none"</code> is not recommended).</p></dd>
 
 
 <dt id="arg-save-output-as-rds">save_output_as_RDS<a class="anchor" aria-label="anchor" href="#arg-save-output-as-rds"></a></dt>
@@ -184,44 +187,45 @@ current amplitudes were created.</p></div>
 <span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span></span>
 <span class="r-in"><span>  parameter <span class="op">=</span> <span class="st">"amplitude"</span>,</span></span>
 <span class="r-in"><span>  baseline_interval <span class="op">=</span> <span class="st">"t0to5"</span>,</span></span>
+<span class="r-in"><span>  test_type <span class="op">=</span> <span class="st">"pairwise.t.test"</span>,</span></span>
 <span class="r-in"><span>  interval_length <span class="op">=</span> <span class="fl">5</span>,</span></span>
 <span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span></span>
 <span class="r-in"><span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        treatment                 .y. group1  group2 n1 statistic df p_string</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        Control mean_P1_transformed  t0to5 t10to15  4      4.89  3    0.033</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        Control mean_P1_transformed  t0to5 t15to20  4      6.96  3    0.018</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        Control mean_P1_transformed  t0to5 t20to25  4      8.01  3    0.016</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        Control mean_P1_transformed  t0to5  t5to10  4      2.28  3     0.11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5          HNMPA mean_P1_transformed  t0to5 t10to15  5      3.15  4     0.13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          HNMPA mean_P1_transformed  t0to5 t15to20  5      2.99  4     0.13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7          HNMPA mean_P1_transformed  t0to5 t20to25  5      3.19  4     0.13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8          HNMPA mean_P1_transformed  t0to5  t5to10  5      3.10  4     0.13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9            PPP mean_P1_transformed  t0to5 t10to15  5      0.89  4     0.84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10           PPP mean_P1_transformed  t0to5 t15to20  5      1.50  4     0.63</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11           PPP mean_P1_transformed  t0to5 t20to25  5      1.96  4     0.48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12           PPP mean_P1_transformed  t0to5  t5to10  5      0.78  4     0.84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 PPP_and_HNMPA mean_P1_transformed  t0to5 t10to15  5      0.94  4   &gt; 0.99</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 PPP_and_HNMPA mean_P1_transformed  t0to5 t15to20  5      0.84  4   &gt; 0.99</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 PPP_and_HNMPA mean_P1_transformed  t0to5 t20to25  5      1.39  4     0.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 PPP_and_HNMPA mean_P1_transformed  t0to5  t5to10  5     -0.59  4   &gt; 0.99</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    p.adj significance_stars asterisk_time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  0.033                  *          12.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  0.018                  *          17.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  0.016                  *          22.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  0.107                              7.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  0.133                             12.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  0.133                             17.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  0.133                             22.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  0.133                              7.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  0.844                             12.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 0.627                             17.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 0.484                             22.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 0.844                              7.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 1.000                             12.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 1.000                             17.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 0.952                             22.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 1.000                              7.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     group2 asterisk_time     treatment                 .y. group1 n1 n2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  t10to15          12.5       Control mean_P1_transformed  t0to5  4  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  t15to20          17.5       Control mean_P1_transformed  t0to5  4  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  t20to25          22.5       Control mean_P1_transformed  t0to5  4  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   t5to10           7.5       Control mean_P1_transformed  t0to5  4  4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  t10to15          12.5         HNMPA mean_P1_transformed  t0to5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  t15to20          17.5         HNMPA mean_P1_transformed  t0to5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  t20to25          22.5         HNMPA mean_P1_transformed  t0to5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   t5to10           7.5         HNMPA mean_P1_transformed  t0to5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  t10to15          12.5           PPP mean_P1_transformed  t0to5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 t15to20          17.5           PPP mean_P1_transformed  t0to5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 t20to25          22.5           PPP mean_P1_transformed  t0to5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  t5to10           7.5           PPP mean_P1_transformed  t0to5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 t10to15          12.5 PPP_and_HNMPA mean_P1_transformed  t0to5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 t15to20          17.5 PPP_and_HNMPA mean_P1_transformed  t0to5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 t20to25          22.5 PPP_and_HNMPA mean_P1_transformed  t0to5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16  t5to10           7.5 PPP_and_HNMPA mean_P1_transformed  t0to5  5  5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    statistic df     p p.adj p.adj.signif p_string significance_stars</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       4.89  3 0.016 0.033            *    0.033                  *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       6.96  3 0.006 0.018            *    0.018                  *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       8.01  3 0.004 0.016            *    0.016                  *</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       2.28  3 0.107 0.107           ns     0.11                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       3.15  4 0.035 0.133           ns     0.13                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       2.99  4 0.040 0.133           ns     0.13                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7       3.19  4 0.033 0.133           ns     0.13                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8       3.10  4 0.036 0.133           ns     0.13                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9       0.89  4 0.422 0.844           ns     0.84                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      1.50  4 0.209 0.627           ns     0.63                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11      1.96  4 0.121 0.484           ns     0.48                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12      0.78  4 0.481 0.844           ns     0.84                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13      0.94  4 0.402 1.000           ns   &gt; 0.99                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14      0.84  4 0.447 1.000           ns   &gt; 0.99                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15      1.39  4 0.238 0.952           ns     0.95                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16     -0.59  4 0.586 1.000           ns   &gt; 0.99                   </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
