@@ -645,6 +645,10 @@ runs a loop over each letter, generating a ggplot object for each
 recording.</p>
 <p>Please see the documentation for <code><a href="../reference/plot_raw_current_data.html">plot_raw_current_data()</a></code>
 to learn about the arguments in more detail.</p>
+<blockquote>
+<p>If you want to save your plots, set save_plot_png = “yes” in the
+function below!</p>
+</blockquote>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_eEPSC_control_plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_raw_current_data.html">plot_raw_current_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">raw_eEPSC_df</span>,</span>
@@ -656,7 +660,8 @@ to learn about the arguments in more detail.</p>
 <span>  hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span>
 <span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span>
-<span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span></span>
+<span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span>
+<span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><code><a href="../reference/plot_raw_current_data.html">plot_raw_current_data()</a></code> will return a list of ggplot
 objects. To see all of your plots at once, type the name of the object
@@ -672,8 +677,9 @@ letter.</p>
 <div class="section level5">
 <h5 id="make-representative-plot-for-posterspresentations">Make representative plot for posters/presentations<a class="anchor" aria-label="anchor" href="#make-representative-plot-for-posterspresentations"></a>
 </h5>
-<p>You may want to remove the title and subtitle for a poster or
-publication.</p>
+<p>You may want to modify one of these plots and save it on its own as a
+representative cell for a poster or publication. One common task is to
+remove the title and subtitle.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">representative_cell_control</span> <span class="op">&lt;-</span> <span class="va">raw_eEPSC_control_plots</span><span class="op">$</span><span class="va">L</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -681,7 +687,11 @@ publication.</p>
 <span><span class="va">representative_cell_control</span></span></code></pre></div>
 <p><img src="patchclampplotteR_files/figure-html/unnamed-chunk-7-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>You can then save this plot using <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave()</a></code> from
-<code>ggplot2</code>.</p>
+<code>ggplot2</code>. Remember, if you want to save all of your plots,
+set <code>save_plot_png = "yes"</code> when running the
+<code><a href="../reference/plot_raw_current_data.html">plot_raw_current_data()</a></code>. This <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave()</a></code> is just
+for if you want to save a plot that is heavily modified from the
+default.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave</a></span><span class="op">(</span><span class="va">representative_cell_control</span>,</span>
 <span>  path <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"Figures/eEPSC/Raw-plots"</span><span class="op">)</span>,</span>
@@ -837,7 +847,8 @@ decreased by 50% after the hormone, the value of
 <span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
 <span>  y_variable <span class="op">=</span> <span class="st">"amplitude"</span>,</span>
 <span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span>
-<span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span></span>
+<span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span>
+<span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_segment()`).</span></span></code></pre></div>
