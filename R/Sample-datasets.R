@@ -808,7 +808,7 @@ NULL
 #'
 #' @name sample_AP_count_data
 #' @docType data
-#' @format An .rda file containing 340 objects of 16 variables.
+#' @format An .rda file containing 340 objects of 15 variables.
 #' \describe{
 #'  \item{`letter, synapses, ID, sex, animal, treatment, etc.`}{All columns that were produced in
 #'  [add_new_cells()]. Please see [sample_cell_characteristics] for detailed
@@ -818,7 +818,6 @@ NULL
 #'  \item{`sweep`}{The sweep.}
 #'  \item{`no_of_APs`}{The number of action potentials present in the sweep.}
 #'  \item{`AP_frequency}{The frequency of the action potentials (Hz) in a sweep. This column is generated in `add_new_cells()`.}
-#'  \item{`current_injection`}{The value of the current injection (in pA)  at a particular sweep.}
 #' }
 #' @keywords data
 #'

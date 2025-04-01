@@ -49,7 +49,9 @@ Most plots have an argument called `save_png`, which you can set to "yes" or
 "yes", this will save the plot as a `.png` using `ggsave()` and export it to a
 folder. The subfolder will vary depending on the plot type. For example, all
 plots generated using `plot_PPR_data_one_treatment()` will be exported to
-"Figures/Evoked-currents/PPR" relative to your project directory. If you want
+"Figures/Evoked-currents/PPR" relative to your project directory.
+
+If you want
 further control over the export options, you can also use `ggsave()` to manually
 save a ggplot object. 
 
@@ -64,6 +66,39 @@ ggsave(
   dpi = 300
 )
 ```
+
+## How do I remove built-in titles?
+
+One quick way to do this (such as for a representative cell) is to add a `theme()` layer and remove various components with `element_blank()`. Here is an example of the default output of `plot_raw_current_data()` with a built-in title and subtitle:
+
+```{r}
+raw_eEPSC_control_plots <- plot_raw_current_data(
+  data = sample_raw_eEPSC_df,
+  plot_treatment = "Control",
+  plot_category = 2,
+  current_type = "eEPSC",
+  y_variable = "P1",
+  pruned = "no",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+  theme_options = sample_theme_options,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
+
+control_cell_plot <- raw_eEPSC_control_plots$L
+control_cell_plot
+```
+
+To remove the title and subtitle, run this code:
+
+```{r}
+control_cell_plot <- control_cell_plot +
+  theme(plot.title = element_blank(), plot.subtitle = element_blank())
+
+control_cell_plot
+```
+
+You can now save this plot with `ggsave()`.
 
 
 ## How do I change the plot text sizes? 

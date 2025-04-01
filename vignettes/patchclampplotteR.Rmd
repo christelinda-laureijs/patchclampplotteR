@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 
 library(reactable)
 library(dplyr)
+library(ggplot2)
 ```
 
 # How to use patchclampplotteR
@@ -324,7 +325,11 @@ head(raw_eEPSC_df, n = 20) %>%
 ```
 
 
-You can use `dplyr` functions to quickly explore your data. Here's just one example of a quick and useful analysis:
+You can use `dplyr` functions to quickly explore your data. Here's how to do three common analyses:
+
+* Count number of cells per group
+* Get number of cells, slices, and animals per group
+* Identify the maximum recording length of each cell.
 
 ### Count number of cells per sex and treatment
 
@@ -348,6 +353,53 @@ raw_eEPSC_df %>%
   count(sex) %>%
   arrange(treatment, sex) %>%
   reactable()
+```
+
+#### Get number of slices, cells, and animals
+
+```{r presentation-slice-counts, eval=F, echo=T}
+cell_counts <- raw_eEPSC_df %>%
+  select(-animal) %>%
+  tidyr::separate_wider_delim(cell,
+                       delim = ".",
+                       names = c("animal", "slice", "cell")) %>% 
+  group_by(category, treatment, sex) %>% 
+  summarize(no_animals = n_distinct(animal),
+            no_slices = n_distinct(animal, slice),
+            no_cells = n_distinct(animal, slice, cell))
+
+cell_counts
+```
+
+```{r actual-cell-counts-results, eval=T, echo=F}
+cell_counts <- raw_eEPSC_df %>%
+  select(-animal) %>%
+  tidyr::separate_wider_delim(cell,
+                       delim = ".",
+                       names = c("animal", "slice", "cell")) %>% 
+  group_by(category, treatment, sex) %>% 
+  summarize(no_animals = n_distinct(animal),
+            no_slices = n_distinct(animal, slice),
+            no_cells = n_distinct(animal, slice, cell))
+
+reactable(cell_counts)
+```
+
+#### Identify maximum recording length
+
+This is particularly helpful to see if there are recordings that don't meet the length requirements for a t-test (you may get errors if some recordings are shorter than others).
+
+
+```{r get-max-times-display, eval=F, echo=T}
+raw_eEPSC_df %>% 
+  group_by(letter) %>% 
+  summarize(max_time = max(time))
+```
+
+```{r actual-max-times, echo=F, eval=T}
+raw_eEPSC_df %>% 
+  group_by(letter) %>% 
+  summarize(max_time = max(time)) %>% reactable()
 ```
 
 
@@ -485,6 +537,30 @@ If you want to observe just one specific plot, you can select it by letter.
 
 ```{r view-one-raw-plot, fig.alt = "A plot of evoked current amplitude (in pA) over time in minutes showing a decrease in evoked current amplitude after adding insulin."}
 raw_eEPSC_control_plots$L
+```
+
+#### Make representative plot for posters/presentations
+
+You may want to remove the title and subtitle for a poster or publication.
+
+```{r}
+representative_cell_control <- raw_eEPSC_control_plots$L +
+  theme(plot.title = element_blank(), plot.subtitle = element_blank())
+
+representative_cell_control
+```
+
+You can then save this plot using `ggsave()` from `ggplot2`.
+
+```{r eval=F, echo=T}
+ggsave(representative_cell_control,
+      path = here("Figures/eEPSC/Raw-plots"),
+      file = "Representative-cell-control.png",
+      width = 7,
+      height = 5,
+      units = "in",
+      dpi = 300
+)
 ```
 
 ### Step 2: Prune data
@@ -654,6 +730,8 @@ The *pruned data* from all cells within a specific treatment and sex (`$all_cell
 > **NOTE!** You will be making summary plots with the **pruned data** (`$all_cells`) dataframe, but you will be running t-tests with the **summary data** (`$summary_data`)!
 
 Use the `perform_t_tests_for_summary_plot()` function, and give the object a useful name. You will later insert this object into the `t_test_df` argument of `plot_summary_current_data()`.
+
+> Be sure to check the assumptions of your data! If the data do not pass assumptions of normality and homogeneity of variables, use `test_type = "pairwise.wilcox.test"`.
 
 ```{r evoked-t-test-table}
 evoked_t_test_results <- perform_t_tests_for_summary_plot(
