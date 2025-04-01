@@ -519,6 +519,8 @@ generating a ggplot object for each recording.
 Please see the documentation for `plot_raw_current_data()` to learn about the
 arguments in more detail.
 
+> If you want to save your plots, set save_plot_png = "yes" in the function below!
+
 ```{r make-raw-plots}
 raw_eEPSC_control_plots <- plot_raw_current_data(
   data = raw_eEPSC_df,
@@ -530,7 +532,8 @@ raw_eEPSC_control_plots <- plot_raw_current_data(
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
   theme_options = sample_theme_options,
-  treatment_colour_theme = sample_treatment_names_and_colours
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_plot_png = "no"
 )
 ```
 
@@ -548,7 +551,7 @@ raw_eEPSC_control_plots$L
 
 #### Make representative plot for posters/presentations
 
-You may want to remove the title and subtitle for a poster or publication.
+You may want to modify one of these plots and save it on its own as a representative cell for a poster or publication. One common task is to remove the title and subtitle.
 
 ```{r}
 representative_cell_control <- raw_eEPSC_control_plots$L +
@@ -557,7 +560,7 @@ representative_cell_control <- raw_eEPSC_control_plots$L +
 representative_cell_control
 ```
 
-You can then save this plot using `ggsave()` from `ggplot2`.
+You can then save this plot using `ggsave()` from `ggplot2`. Remember, if you want to save all of your plots, set `save_plot_png = "yes"` when running the `plot_raw_current_data()`. This `ggsave()` is just for if you want to save a plot that is heavily modified from the default.
 
 ```{r eval=F, echo=T}
 ggsave(representative_cell_control,
@@ -632,7 +635,8 @@ pruned_eEPSC_control_plots <- plot_raw_current_data(
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
   theme_options = sample_theme_options,
-  treatment_colour_theme = sample_treatment_names_and_colours
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_plot_png = "no"
 )
 ```
 
@@ -710,7 +714,8 @@ plot_percent_change_comparisons(
   current_type = "eEPSC",
   y_variable = "amplitude",
   treatment_colour_theme = sample_treatment_names_and_colours,
-  theme_options = sample_theme_options
+  theme_options = sample_theme_options,
+  save_plot_png = "no"
 )
 ```
 
@@ -781,7 +786,8 @@ plot_summary_current_data(
   shade_intervals = "no",
   hormone_or_HFS_start_time = 5,
   treatment_colour_theme = sample_treatment_names_and_colours,
-  theme_options = sample_theme_options
+  theme_options = sample_theme_options,
+  save_plot_png = "no"
 )
 ```
 

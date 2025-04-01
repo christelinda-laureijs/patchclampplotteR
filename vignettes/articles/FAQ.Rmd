@@ -44,8 +44,8 @@ cars_plot
 
 ## How do I save my plots outside of R?
 
-Most plots have an argument called `save_png`, which you can set to "yes" or
-"no" (the default is "no" to cut down on run time). If `save_png` is set to
+Most plots have an argument called `save_plot_png`, which you can set to "yes" or
+"no" (the default is "no" to cut down on run time). If `save_plot_png` is set to
 "yes", this will save the plot as a `.png` using `ggsave()` and export it to a
 folder. The subfolder will vary depending on the plot type. For example, all
 plots generated using `plot_PPR_data_one_treatment()` will be exported to
