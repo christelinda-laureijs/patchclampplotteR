@@ -817,7 +817,7 @@ NULL
 #'  the timepoint that the data point belongs to.}
 #'  \item{`sweep`}{The sweep.}
 #'  \item{`no_of_APs`}{The number of action potentials present in the sweep.}
-#'  \item{`AP_frequency}{The frequency of the action potentials (Hz) in a sweep. This column is generated in `add_new_cells()`.}
+#'  \item{`AP_frequency`}{The frequency of the action potentials (Hz) in a sweep. This column is generated in `add_new_cells()`.}
 #' }
 #' @keywords data
 #'

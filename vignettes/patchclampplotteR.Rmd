@@ -292,7 +292,7 @@ add_new_cells(
   old_raw_data_csv = "Data/Raw-eEPSC-df.csv",
   data_type = "eEPSC",
   write_new_csv = "yes",
-  new_file_name = "Data/Raw-eEPSC-df.csv", #Note! This will overwrite your old Raw-eEPSC-df.csv file! 
+  new_file_name = "Data/Raw-eEPSC-df.csv", # Note! This will overwrite your old Raw-eEPSC-df.csv file!
   decimal_places = 2
 )
 ```
@@ -361,12 +361,15 @@ raw_eEPSC_df %>%
 cell_counts <- raw_eEPSC_df %>%
   select(-animal) %>%
   tidyr::separate_wider_delim(cell,
-                       delim = ".",
-                       names = c("animal", "slice", "cell")) %>% 
-  group_by(category, treatment, sex) %>% 
-  summarize(no_animals = n_distinct(animal),
-            no_slices = n_distinct(animal, slice),
-            no_cells = n_distinct(animal, slice, cell))
+    delim = ".",
+    names = c("animal", "slice", "cell")
+  ) %>%
+  group_by(category, treatment, sex) %>%
+  summarize(
+    no_animals = n_distinct(animal),
+    no_slices = n_distinct(animal, slice),
+    no_cells = n_distinct(animal, slice, cell)
+  )
 
 cell_counts
 ```
@@ -375,12 +378,15 @@ cell_counts
 cell_counts <- raw_eEPSC_df %>%
   select(-animal) %>%
   tidyr::separate_wider_delim(cell,
-                       delim = ".",
-                       names = c("animal", "slice", "cell")) %>% 
-  group_by(category, treatment, sex) %>% 
-  summarize(no_animals = n_distinct(animal),
-            no_slices = n_distinct(animal, slice),
-            no_cells = n_distinct(animal, slice, cell))
+    delim = ".",
+    names = c("animal", "slice", "cell")
+  ) %>%
+  group_by(category, treatment, sex) %>%
+  summarize(
+    no_animals = n_distinct(animal),
+    no_slices = n_distinct(animal, slice),
+    no_cells = n_distinct(animal, slice, cell)
+  )
 
 reactable(cell_counts)
 ```
@@ -391,15 +397,16 @@ This is particularly helpful to see if there are recordings that don't meet the 
 
 
 ```{r get-max-times-display, eval=F, echo=T}
-raw_eEPSC_df %>% 
-  group_by(letter) %>% 
+raw_eEPSC_df %>%
+  group_by(letter) %>%
   summarize(max_time = max(time))
 ```
 
 ```{r actual-max-times, echo=F, eval=T}
-raw_eEPSC_df %>% 
-  group_by(letter) %>% 
-  summarize(max_time = max(time)) %>% reactable()
+raw_eEPSC_df %>%
+  group_by(letter) %>%
+  summarize(max_time = max(time)) %>%
+  reactable()
 ```
 
 
@@ -554,12 +561,12 @@ You can then save this plot using `ggsave()` from `ggplot2`.
 
 ```{r eval=F, echo=T}
 ggsave(representative_cell_control,
-      path = here("Figures/eEPSC/Raw-plots"),
-      file = "Representative-cell-control.png",
-      width = 7,
-      height = 5,
-      units = "in",
-      dpi = 300
+  path = here("Figures/eEPSC/Raw-plots"),
+  file = "Representative-cell-control.png",
+  width = 7,
+  height = 5,
+  units = "in",
+  dpi = 300
 )
 ```
 
@@ -581,8 +588,6 @@ pruned_eEPSC_df <- make_pruned_EPSC_data(
   baseline_length = 5,
   interval_length = 1
 )
-
-
 ```
 
 ```{r echo=T, eval=F}

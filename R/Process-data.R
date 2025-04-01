@@ -1334,15 +1334,15 @@ perform_t_tests_for_summary_plot <- function(data,
 
     if (parameter == "amplitude") {
       if (test_type == "pairwise.t.test") {
-      t_test_results <- t_test_data %>%
-        dplyr::filter(.data$category == test_category) %>%
-        dplyr::group_by(.data$treatment) %>%
-        rstatix::pairwise_t_test(
-          mean_P1_transformed ~ interval,
-          ref.group = baseline_interval,
-          paired = TRUE,
-          p.adjust.method = p_adjust_method
-        )
+        t_test_results <- t_test_data %>%
+          dplyr::filter(.data$category == test_category) %>%
+          dplyr::group_by(.data$treatment) %>%
+          rstatix::pairwise_t_test(
+            mean_P1_transformed ~ interval,
+            ref.group = baseline_interval,
+            paired = TRUE,
+            p.adjust.method = p_adjust_method
+          )
       }
 
       if (test_type == "pairwise.wilcox.test") {
@@ -1382,15 +1382,15 @@ perform_t_tests_for_summary_plot <- function(data,
 
     if (parameter == "amplitude") {
       if (test_type == "pairwise.t.test") {
-      t_test_results <- t_test_data %>%
-        dplyr::filter(.data$category == test_category) %>%
-        dplyr::group_by(.data$treatment) %>%
-        rstatix::pairwise_t_test(
-          mean_transformed_amplitude ~ interval,
-          ref.group = baseline_interval,
-          paired = TRUE,
-          p.adjust.method = p_adjust_method
-        )
+        t_test_results <- t_test_data %>%
+          dplyr::filter(.data$category == test_category) %>%
+          dplyr::group_by(.data$treatment) %>%
+          rstatix::pairwise_t_test(
+            mean_transformed_amplitude ~ interval,
+            ref.group = baseline_interval,
+            paired = TRUE,
+            p.adjust.method = p_adjust_method
+          )
       }
 
       if (test_type == "pairwise.wilcox.test") {
@@ -1408,15 +1408,15 @@ perform_t_tests_for_summary_plot <- function(data,
 
     if (parameter == "raw_amplitude") {
       if (test_type == "pairwise.t.test") {
-      t_test_results <- t_test_data %>%
-        dplyr::filter(.data$category == test_category) %>%
-        dplyr::group_by(.data$treatment) %>%
-        rstatix::pairwise_t_test(
-          mean_raw_amplitude ~ interval,
-          ref.group = baseline_interval,
-          paired = TRUE,
-          p.adjust.method = p_adjust_method
-        )
+        t_test_results <- t_test_data %>%
+          dplyr::filter(.data$category == test_category) %>%
+          dplyr::group_by(.data$treatment) %>%
+          rstatix::pairwise_t_test(
+            mean_raw_amplitude ~ interval,
+            ref.group = baseline_interval,
+            paired = TRUE,
+            p.adjust.method = p_adjust_method
+          )
       }
 
       if (test_type == "pairwise.wilcox.test") {
@@ -1434,15 +1434,15 @@ perform_t_tests_for_summary_plot <- function(data,
 
     if (parameter == "frequency") {
       if (test_type == "pairwise.t.test") {
-      t_test_results <- t_test_data %>%
-        dplyr::filter(.data$category == test_category) %>%
-        dplyr::group_by(.data$treatment) %>%
-        rstatix::pairwise_t_test(
-          mean_transformed_frequency ~ interval,
-          ref.group = baseline_interval,
-          paired = TRUE,
-          p.adjust.method = p_adjust_method
-        )
+        t_test_results <- t_test_data %>%
+          dplyr::filter(.data$category == test_category) %>%
+          dplyr::group_by(.data$treatment) %>%
+          rstatix::pairwise_t_test(
+            mean_transformed_frequency ~ interval,
+            ref.group = baseline_interval,
+            paired = TRUE,
+            p.adjust.method = p_adjust_method
+          )
       }
 
       if (test_type == "pairwise.wilcox.test") {
@@ -1460,15 +1460,15 @@ perform_t_tests_for_summary_plot <- function(data,
 
     if (parameter == "raw_frequency") {
       if (test_type == "pairwise.t.test") {
-      t_test_results <- t_test_data %>%
-        dplyr::filter(.data$category == test_category) %>%
-        dplyr::group_by(.data$treatment) %>%
-        rstatix::pairwise_t_test(
-          mean_raw_frequency ~ interval,
-          ref.group = baseline_interval,
-          paired = TRUE,
-          p.adjust.method = p_adjust_method
-        )
+        t_test_results <- t_test_data %>%
+          dplyr::filter(.data$category == test_category) %>%
+          dplyr::group_by(.data$treatment) %>%
+          rstatix::pairwise_t_test(
+            mean_raw_frequency ~ interval,
+            ref.group = baseline_interval,
+            paired = TRUE,
+            p.adjust.method = p_adjust_method
+          )
       }
       if (test_type == "pairwise.wilcox.test") {
         t_test_results <- t_test_data %>%

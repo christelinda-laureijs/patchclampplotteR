@@ -58,7 +58,7 @@ cells appended to it. If \code{data_type == "AP_parameter"} two new columns will
 added based on calculations from the existing columns. These are
 \code{latency_to_fire} (which is \code{time_to_peak} - \code{injection_start_time}) and
 \code{antipeak_time_relative_to_threshold} (which is \code{time_of_antipeak} -
-\code{time_of_threshold}). If \code{data_type == "AP_count"} two new columns will be added. These are \code{AP_frequency} (in Hz) and \code{current_injection} (in pA).
+\code{time_of_threshold}). If \code{data_type == "AP_count"} one new column will be added. These is \code{AP_frequency} (in Hz).
 }
 \description{
 This function enables you to append new raw recording data onto an existing

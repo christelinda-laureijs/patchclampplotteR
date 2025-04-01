@@ -222,7 +222,7 @@ import_theme_colours <- function(filename) {
 #' added based on calculations from the existing columns. These are
 #' `latency_to_fire` (which is `time_to_peak` - `injection_start_time`) and
 #' `antipeak_time_relative_to_threshold` (which is `time_of_antipeak` -
-#' `time_of_threshold`). If `data_type == "AP_count"` two new columns will be added. These are `AP_frequency` (in Hz) and `current_injection` (in pA).
+#' `time_of_threshold`). If `data_type == "AP_count"` one new column will be added. These is `AP_frequency` (in Hz).
 #'
 #' @export
 #'
@@ -509,20 +509,20 @@ add_new_cells <- function(new_raw_data_csv,
     new_raw_data <- new_raw_data %>%
       dplyr::rename(no_of_APs = .data$no_of_aps) %>%
       dplyr::mutate(
-        AP_frequency = .data$no_of_APs / length_of_current_injection,
-        current_injection = dplyr::case_when(
-          sweep == 1 ~ -50,
-          sweep == 2 ~ -40,
-          sweep == 3 ~ -30,
-          sweep == 4 ~ -20,
-          sweep == 5 ~ -10,
-          sweep == 6 ~ 0,
-          sweep == 7 ~ 10,
-          sweep == 8 ~ 20,
-          sweep == 9 ~ 30,
-          sweep == 10 ~ 40,
-          T ~ 50
-        )
+        AP_frequency = .data$no_of_APs / length_of_current_injection#,
+        # current_injection = dplyr::case_when(
+        #   sweep == 1 ~ -50,
+        #   sweep == 2 ~ -40,
+        #   sweep == 3 ~ -30,
+        #   sweep == 4 ~ -20,
+        #   sweep == 5 ~ -10,
+        #   sweep == 6 ~ 0,
+        #   sweep == 7 ~ 10,
+        #   sweep == 8 ~ 20,
+        #   sweep == 9 ~ 30,
+        #   sweep == 10 ~ 40,
+        #   T ~ 50
+        #)
       )
   }
 

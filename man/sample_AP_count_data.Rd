@@ -7,7 +7,7 @@
 the control period (state == "Baseline") or after insulin has been applied
 (state == "Insulin"). These were obtained by counting the number of action potentials present within each sweep. The data were then merged with the \code{sample_cell_characteristics} data through \code{add_new_cells()} with \code{data_type = "AP_count"}.}
 \format{
-An .rda file containing 340 objects of 16 variables.
+An .rda file containing 340 objects of 15 variables.
 \describe{
 \item{\verb{letter, synapses, ID, sex, animal, treatment, etc.}}{All columns that were produced in
 \code{\link[=add_new_cells]{add_new_cells()}}. Please see \link{sample_cell_characteristics} for detailed
@@ -16,7 +16,7 @@ column descriptions.}
 the timepoint that the data point belongs to.}
 \item{\code{sweep}}{The sweep.}
 \item{\code{no_of_APs}}{The number of action potentials present in the sweep.}
-\item{\verb{AP_frequency\}\{The frequency of the action potentials (Hz) in a sweep. This column is generated in }add_new_cells()\verb{.\} \\item\{}current_injection`}{The value of the current injection (in pA)  at a particular sweep.}
+\item{\code{AP_frequency}}{The frequency of the action potentials (Hz) in a sweep. This column is generated in \code{add_new_cells()}.}
 }
 }
 \description{

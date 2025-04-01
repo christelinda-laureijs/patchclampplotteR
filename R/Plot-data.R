@@ -3025,7 +3025,7 @@ plot_AP_frequencies_single_treatment <- function(data,
   ap_plot_count_data <- ap_data %>%
     dplyr::filter(.data$category == plot_category) %>%
     dplyr::filter(.data$treatment == plot_treatment) %>%
-    dplyr::group_by(.data$state, .data$current_injection) %>%
+    dplyr::group_by(.data$state, .data$sweep) %>%
     dplyr::summarize(
       mean_AP_frequency = mean(.data$AP_frequency),
       SE = stats::sd(.data$AP_frequency) / sqrt(dplyr::n()),
@@ -3035,7 +3035,7 @@ plot_AP_frequencies_single_treatment <- function(data,
   single_treatment_AP_plot <- ap_plot_count_data %>%
     ggplot2::ggplot(
       ggplot2::aes(
-        x = .data$current_injection,
+        x = .data$sweep,
         y = .data$mean_AP_frequency,
         ymin = .data$mean_AP_frequency - .data$SE,
         ymax = .data$mean_AP_frequency + .data$SE,
@@ -3044,7 +3044,7 @@ plot_AP_frequencies_single_treatment <- function(data,
       )
     ) +
     ggplot2::geom_pointrange(size = 1, linewidth = 0.6) +
-    ggplot2::labs(x = "Current Injection (pA)", y = "AP Frequency (Hz)", color = NULL, shape = NULL) +
+    ggplot2::labs(x = "Sweep", y = "AP Frequency (Hz)", color = NULL, shape = NULL) +
     ggplot2::scale_color_manual(
       values = c(theme_options["mean_point_colour", "value"], plot_colour),
       labels = c(
@@ -3091,7 +3091,7 @@ plot_AP_frequencies_single_treatment <- function(data,
   if (test_type != "none") {
     # Maximum y-axis values required for correct positioning of significance stars over plot
     max_mean_AP_frequencies <- ap_plot_count_data %>%
-      dplyr::group_by(.data$current_injection) %>%
+      dplyr::group_by(.data$sweep) %>%
       dplyr::summarize(
         max_AP_frequency = max(.data$mean_AP_frequency),
         max_se = max(.data$SE)
@@ -3101,7 +3101,7 @@ plot_AP_frequencies_single_treatment <- function(data,
     frequency_comparison_model <- ap_data %>%
       dplyr::filter(.data$category == plot_category) %>%
       dplyr::filter(.data$treatment == plot_treatment) %>%
-      dplyr::group_by(.data$current_injection)
+      dplyr::group_by(.data$sweep)
 
 
     if (test_type == "t.test") {
@@ -3136,7 +3136,7 @@ plot_AP_frequencies_single_treatment <- function(data,
         significance_stars = dplyr::case_when(p.adj.signif == "ns" ~ "", T ~ p.adj.signif)
       )
 
-    frequency_comparison_test_results_final <- merge(frequency_comparison_test_results, max_mean_AP_frequencies, by = "current_injection")
+    frequency_comparison_test_results_final <- merge(frequency_comparison_test_results, max_mean_AP_frequencies, by = "sweep")
 
     if (save_output_as_RDS == "yes") {
       RDS_path <- "Data/Output-Data-from-R/"
@@ -3166,7 +3166,7 @@ plot_AP_frequencies_single_treatment <- function(data,
         ggplot2::geom_text(
           data = frequency_comparison_test_results_final,
           ggplot2::aes(
-            x = .data$current_injection,
+            x = .data$sweep,
             y = .data$max_AP_frequency + .data$max_se + geom_signif_y_spacer,
             label = .data$significance_stars
           ),
@@ -3180,7 +3180,7 @@ plot_AP_frequencies_single_treatment <- function(data,
         ggplot2::geom_text(
           data = frequency_comparison_test_results_final,
           ggplot2::aes(
-            x = .data$current_injection,
+            x = .data$sweep,
             y = .data$max_AP_frequency + .data$max_se + geom_signif_y_spacer,
             label = .data$p_string
           ),
@@ -3345,14 +3345,14 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 
   AP_frequency_plot <- plot_data %>%
     dplyr::filter(.data$category == plot_category) %>%
-    dplyr::group_by(.data$treatment, .data$state, .data$current_injection) %>%
+    dplyr::group_by(.data$treatment, .data$state, .data$sweep) %>%
     dplyr::summarize(
       mean_AP_frequency = mean(.data$AP_frequency),
       SE = stats::sd(.data$AP_frequency) / sqrt(dplyr::n()),
     ) %>%
     ggplot2::ggplot(
       ggplot2::aes(
-        x = .data$current_injection,
+        x = .data$sweep,
         y = .data$mean_AP_frequency,
         ymin = .data$mean_AP_frequency - .data$SE,
         ymax = .data$mean_AP_frequency + .data$SE,
