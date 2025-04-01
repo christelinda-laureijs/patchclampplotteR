@@ -431,6 +431,7 @@ plot_baseline_data <- function(data,
 #'   [sample_treatment_names_and_colours] for an example of what this dataframe
 #'   should look like.
 #' @param geom_text_family A character value describing the font family used for the scale bar annotations. Defaults to `""` (empty, will use default system font), but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
+#' @param colour_by_sex A character ("yes" or "no") describing if the colour should change based on sex. If "yes", the male data will be coloured according to the `colours` column of `treatment_colour_theme`, and female data will be coloured according to the `very_pale_colours` column of `treatment_colour_theme`. If "no", all plots will be coloured using the `colours` column.
 #'
 #' @returns A list of ggplot objects, where each list element is a scatterplot
 #'   of one recording. If `save_plot_png == "yes"`, it will also generate a .png
@@ -490,6 +491,7 @@ plot_raw_current_data <-
            hormone_or_HFS_start_time = 5,
            hormone_end_time = NULL,
            theme_options,
+           colour_by_sex = "no",
            treatment_colour_theme,
            geom_text_family = "",
            save_plot_png = "no",
@@ -517,6 +519,10 @@ plot_raw_current_data <-
       cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
     }
 
+    if (!colour_by_sex %in% c("yes", "no")) {
+      cli::cli_abort(c("x" = "`colour_by_sex` argument must be either \"yes\" or \"no\""))
+    }
+
 
     if (is.null(hormone_or_HFS_start_time) ||
       !is.numeric(hormone_or_HFS_start_time)) {
@@ -537,9 +543,22 @@ plot_raw_current_data <-
 
     letters <- as.character(unique(unlist(df$letter)))
 
+    if (colour_by_sex == "no") {
     plot_colour <- treatment_colour_theme %>%
       dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
       dplyr::pull(.data$colours)
+    }
+
+    if (colour_by_sex == "yes") {
+      male_plot_colour <- treatment_colour_theme %>%
+        dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
+        dplyr::pull(.data$colours)
+
+      female_plot_colour <- treatment_colour_theme %>%
+        dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
+        dplyr::pull(.data$very_pale_colours)
+
+    }
 
     treatment_label <- treatment_colour_theme %>%
       dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
@@ -698,7 +717,13 @@ plot_raw_current_data <-
             } else {
               as.numeric(theme_options["female_shape", "value"])
             },
-            colour = plot_colour,
+            colour = if (colour_by_sex == "no") {
+              plot_colour
+            } else if (unique(plot_df$sex) == "Male") {
+              male_plot_colour
+            } else if (unique(plot_df$sex) == "Female") {
+              female_plot_colour
+            },
             size = 1,
             alpha = 1
           )
@@ -710,7 +735,13 @@ plot_raw_current_data <-
             } else {
               as.numeric(theme_options["female_shape", "value"])
             },
-            colour = plot_colour,
+            colour = if (colour_by_sex == "no") {
+              plot_colour
+            } else if (unique(plot_df$sex) == "Male") {
+              male_plot_colour
+            } else if (unique(plot_df$sex) == "Female") {
+              female_plot_colour
+            },
             size = if (current_type == "sEPSC" & pruned == "no") {
               1
             } else {
