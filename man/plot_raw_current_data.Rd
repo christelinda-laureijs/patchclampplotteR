@@ -15,7 +15,9 @@ plot_raw_current_data(
   hormone_or_HFS_start_time = 5,
   hormone_end_time = NULL,
   theme_options,
-  colour_by_sex = "no",
+  male_label = "Male",
+  female_label = "Female",
+  colour_by_sex = "yes",
   treatment_colour_theme,
   geom_text_family = "",
   save_plot_png = "no",
@@ -64,6 +66,10 @@ a hormone stopped being applied, such as for a washout experiment.}
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should
 look like.}
+
+\item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for male data in the \code{sex} column, and it must be consistent across data sheets. Defaults to \code{"Male"}.}
+
+\item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for female data in the \code{sex} column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
 
 \item{colour_by_sex}{A character ("yes" or "no") describing if the colour should change based on sex. If "yes", the male data will be coloured according to the \code{colours} column of \code{treatment_colour_theme}, and female data will be coloured according to the \code{very_pale_colours} column of \code{treatment_colour_theme}. If "no", all plots will be coloured using the \code{colours} column.}
 

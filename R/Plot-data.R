@@ -420,6 +420,8 @@ plot_baseline_data <- function(data,
 #'   the annotation line start point.
 #' @param hormone_end_time A numeric value indicating the time (in minutes) when
 #'   a hormone stopped being applied, such as for a washout experiment.
+#' @param male_label A character value used to describe how males are encoded in the `sex` column of the dataframe used in `data`. This MUST match the value for male data in the `sex` column, and it must be consistent across data sheets. Defaults to `"Male"`.
+#' @param female_label A character value used to describe how females are encoded in the `sex` column of the dataframe used in `data`. This MUST match the value for female data in the `sex` column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to `"Female"`.
 #' @param theme_options A dataframe containing theme options. See
 #'   [sample_theme_options] for an example of what this dataframe should
 #'   look like.
@@ -491,7 +493,9 @@ plot_raw_current_data <-
            hormone_or_HFS_start_time = 5,
            hormone_end_time = NULL,
            theme_options,
-           colour_by_sex = "no",
+           male_label = "Male",
+           female_label = "Female",
+           colour_by_sex = "yes",
            treatment_colour_theme,
            geom_text_family = "",
            save_plot_png = "no",
@@ -712,16 +716,16 @@ plot_raw_current_data <-
         y_variable == "amplitude") {
         list_of_plots[[i]] <- list_of_plots[[i]] +
           ggplot2::geom_pointrange(
-            shape = if (unique(plot_df$sex) == "Male") {
+            shape = if (unique(plot_df$sex) == male_label) {
               as.numeric(theme_options["male_shape", "value"])
             } else {
               as.numeric(theme_options["female_shape", "value"])
             },
             colour = if (colour_by_sex == "no") {
               plot_colour
-            } else if (unique(plot_df$sex) == "Male") {
+            } else if (unique(plot_df$sex) == male_label) {
               male_plot_colour
-            } else if (unique(plot_df$sex) == "Female") {
+            } else if (unique(plot_df$sex) == female_label) {
               female_plot_colour
             },
             size = 1,
@@ -730,16 +734,16 @@ plot_raw_current_data <-
       } else {
         list_of_plots[[i]] <- list_of_plots[[i]] +
           ggplot2::geom_point(
-            shape = if (unique(plot_df$sex) == "Male") {
+            shape = if (unique(plot_df$sex) == male_label) {
               as.numeric(theme_options["male_shape", "value"])
             } else {
               as.numeric(theme_options["female_shape", "value"])
             },
             colour = if (colour_by_sex == "no") {
               plot_colour
-            } else if (unique(plot_df$sex) == "Male") {
+            } else if (unique(plot_df$sex) == male_label) {
               male_plot_colour
-            } else if (unique(plot_df$sex) == "Female") {
+            } else if (unique(plot_df$sex) == female_label) {
               female_plot_colour
             },
             size = if (current_type == "sEPSC" & pruned == "no") {
@@ -1250,23 +1254,23 @@ plot_summary_current_data <- function(data,
 
   # Nested if statements enable correct legend labels even if only one sex is present
 
-  if (is.na(df$n[df$sex == "Female"][1])) {
+  if (is.na(df$n[df$sex == female_label][1])) {
     treatment_plot <- treatment_plot +
       ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"])), labels = c((paste0(
-        "Males, n = ", df$n[df$sex == "Male"][1]
+        "Males, n = ", df$n[df$sex == male_label][1]
       )))) +
       ggplot2::scale_color_manual(values = c(plot_colour), labels = c((paste0(
-        "Males, n = ", df$n[df$sex == "Male"][1]
+        "Males, n = ", df$n[df$sex == male_label][1]
       ))))
-  } else if (is.na(df$n[df$sex == "Male"][1])) {
+  } else if (is.na(df$n[df$sex == male_label][1])) {
     treatment_plot <- treatment_plot +
       ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"])), labels = c((paste0(
-        "Females, n = ", df$n[df$sex == "Female"][1]
+        "Females, n = ", df$n[df$sex == female_label][1]
       )))) +
       ggplot2::scale_color_manual(
         values = c(plot_colour_pale),
         labels = c((paste0(
-          "Females, n = ", df$n[df$sex == "Female"][1]
+          "Females, n = ", df$n[df$sex == female_label][1]
         )))
       )
   } else {
@@ -1274,17 +1278,17 @@ plot_summary_current_data <- function(data,
       ggplot2::scale_shape_manual(
         values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])),
         labels = c((paste0(
-          "Females, n = ", df$n[df$sex == "Female"][1]
+          "Females, n = ", df$n[df$sex == female_label][1]
         )), (paste0(
-          "Males, n = ", df$n[df$sex == "Male"][1]
+          "Males, n = ", df$n[df$sex == male_label][1]
         )))
       ) +
       ggplot2::scale_color_manual(
         values = c(plot_colour_pale, plot_colour),
         labels = c((paste0(
-          "Females, n = ", df$n[df$sex == "Female"][1]
+          "Females, n = ", df$n[df$sex == female_label][1]
         )), (paste0(
-          "Males, n = ", df$n[df$sex == "Male"][1]
+          "Males, n = ", df$n[df$sex == male_label][1]
         )))
       )
   }

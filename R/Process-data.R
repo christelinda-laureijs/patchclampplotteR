@@ -1491,6 +1491,13 @@ perform_t_tests_for_summary_plot <- function(data,
       significance_stars = dplyr::case_when(.data$p.adj.signif == "ns" ~ "", T ~ .data$p.adj.signif)
     )
 
+  if (test_type == "pairwise.wilcox.test") {
+    t_test_table <- t_test_table %>%
+      dplyr::mutate(
+        df = .data$n1 - 1
+      )
+  }
+
   # Need sequence of integers from 1 to the maximum number of intervals
   # to generate asterisk_time as a function of the number of intervals
   integer_sequence <- seq(1, length(unique(t_test_table$group2)), by = 1)
