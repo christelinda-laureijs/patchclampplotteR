@@ -3495,9 +3495,9 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #' ## All sweeps
 #'
 #' # Use as.character(unique(sample_ap_abf_baseline$episode)
-#' (replace sample_ap_abf_baseline with whatever you inserted
-#' into the data argument) to create a list of all the sweeps
-#' in your recording. ("epi1", "epi2", "epi3"...)
+#' # (replace sample_ap_abf_baseline with whatever you inserted
+#' # into the data argument) to create a list of all the sweeps
+#' # in your recording. ("epi1", "epi2", "epi3"...)
 #'
 #' plot_AP_trace(
 #'   data = sample_ap_abf_baseline,
