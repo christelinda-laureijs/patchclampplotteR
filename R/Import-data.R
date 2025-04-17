@@ -203,7 +203,7 @@ import_theme_colours <- function(filename) {
 #'   Since this function appends the new data to the old data, this must be of
 #'   the same current_type as the new data (e.g. the columns must be the same).
 #'   If this is the first time you are running this function, start with a blank
-#'   .csv file containing just the column titles in the first row.
+#'   .csv file containing just the column titles in the first row, and some text (e.g. `"text"`) below the `letter` column. This is required so that R correctly recognizes the columns.
 #' @param data_type A character (`"eEPSC"`, `"sEPSC"`, `"AP_parameter"` or `"AP_count"`) describing the data type that is being imported.
 #' @param write_new_csv A character (`"yes"` or `"no"`) describing if the new data
 #'   should be written to a csv file. Defaults to `"yes"`. Please specify

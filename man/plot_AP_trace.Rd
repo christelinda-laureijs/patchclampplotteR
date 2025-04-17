@@ -108,7 +108,49 @@ WARNING: If you choose to plot current injections (\code{y_var = "current"}) you
 }
 \examples{
 
-# Viridis
+# Plot one trace
+
+## One sweep
+plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  y_var = "voltage",
+  sweeps = "epi10",
+  colour_scale_option = "single_colour",
+  trace_colour = "#4294ff",
+  plot_category = 2,
+  plot_treatment = "Control"
+)
+
+## Multiple sweeps
+plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  y_var = "voltage",
+  sweeps = c("epi10", "epi1"),
+  colour_scale_option = "single_colour",
+  trace_colour = "#4294ff",
+  plot_category = 2,
+  plot_treatment = "Control"
+)
+
+## All sweeps
+
+# Use `as.character(unique(sample_ap_abf_baseline$episode)`
+(replace `sample_ap_abf_baseline` with whatever you inserted
+into the `data` argument) to create a list of all the sweeps
+in your recording. ("epi1", "epi2", "epi3"...)
+
+plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  y_var = "voltage",
+  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+  colour_scale_option = "single_colour",
+  trace_colour = "#4294ff",
+  plot_category = 2,
+  plot_treatment = "Control"
+)
+
+# Colour themes
+## Viridis
 
 plot_AP_trace(
   data = sample_ap_abf_baseline,
@@ -122,7 +164,7 @@ plot_AP_trace(
   end = 0.8
 )
 
-# Custom colours
+## Custom colours
 plot_AP_trace(
   data = sample_ap_abf_baseline,
   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
@@ -138,7 +180,7 @@ plot_AP_trace(
   plot_treatment = "Control"
 )
 
-# Single colour
+## Single colour
 plot_AP_trace(
   data = sample_ap_abf_baseline,
   y_var = "voltage",

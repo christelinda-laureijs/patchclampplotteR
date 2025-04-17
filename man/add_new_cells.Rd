@@ -34,7 +34,7 @@ to include the cell characteristics for the new letters in
 Since this function appends the new data to the old data, this must be of
 the same current_type as the new data (e.g. the columns must be the same).
 If this is the first time you are running this function, start with a blank
-.csv file containing just the column titles in the first row.}
+.csv file containing just the column titles in the first row, and some text (e.g. \code{"text"}) below the \code{letter} column. This is required so that R correctly recognizes the columns.}
 
 \item{data_type}{A character (\code{"eEPSC"}, \code{"sEPSC"}, \code{"AP_parameter"} or \code{"AP_count"}) describing the data type that is being imported.}
 
