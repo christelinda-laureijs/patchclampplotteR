@@ -214,7 +214,97 @@ project directory.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Plot one trace</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## One sweep</span></span></span>
+<span class="r-in"><span><span class="fu">plot_AP_trace</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_ap_abf_baseline</span>,</span></span>
+<span class="r-in"><span>  y_var <span class="op">=</span> <span class="st">"voltage"</span>,</span></span>
+<span class="r-in"><span>  sweeps <span class="op">=</span> <span class="st">"epi10"</span>,</span></span>
+<span class="r-in"><span>  colour_scale_option <span class="op">=</span> <span class="st">"single_colour"</span>,</span></span>
+<span class="r-in"><span>  trace_colour <span class="op">=</span> <span class="st">"#4294ff"</span>,</span></span>
+<span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_AP_trace-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Multiple sweeps</span></span></span>
+<span class="r-in"><span><span class="fu">plot_AP_trace</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_ap_abf_baseline</span>,</span></span>
+<span class="r-in"><span>  y_var <span class="op">=</span> <span class="st">"voltage"</span>,</span></span>
+<span class="r-in"><span>  sweeps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"epi10"</span>, <span class="st">"epi1"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  colour_scale_option <span class="op">=</span> <span class="st">"single_colour"</span>,</span></span>
+<span class="r-in"><span>  trace_colour <span class="op">=</span> <span class="st">"#4294ff"</span>,</span></span>
+<span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_AP_trace-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## All sweeps</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use as.character(unique(sample_ap_abf_baseline$episode)</span></span></span>
+<span class="r-in"><span><span class="co"># (replace sample_ap_abf_baseline with whatever you inserted</span></span></span>
+<span class="r-in"><span><span class="co"># into the data argument) to create a list of all the sweeps</span></span></span>
+<span class="r-in"><span><span class="co"># in your recording. ("epi1", "epi2", "epi3"...)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plot_AP_trace</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_ap_abf_baseline</span>,</span></span>
+<span class="r-in"><span>  y_var <span class="op">=</span> <span class="st">"voltage"</span>,</span></span>
+<span class="r-in"><span>  sweeps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sample_ap_abf_baseline</span><span class="op">$</span><span class="va">episode</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  colour_scale_option <span class="op">=</span> <span class="st">"single_colour"</span>,</span></span>
+<span class="r-in"><span>  trace_colour <span class="op">=</span> <span class="st">"#4294ff"</span>,</span></span>
+<span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_AP_trace-3.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Colour themes</span></span></span>
+<span class="r-in"><span><span class="co">## Viridis</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plot_AP_trace</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_ap_abf_baseline</span>,</span></span>
+<span class="r-in"><span>  sweeps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sample_ap_abf_baseline</span><span class="op">$</span><span class="va">episode</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  colour_scale_option <span class="op">=</span> <span class="st">"viridis"</span>,</span></span>
+<span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span></span>
+<span class="r-in"><span>  direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  option <span class="op">=</span> <span class="st">"plasma"</span>,</span></span>
+<span class="r-in"><span>  begin <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>  end <span class="op">=</span> <span class="fl">0.8</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_AP_trace-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Custom colours</span></span></span>
+<span class="r-in"><span><span class="fu">plot_AP_trace</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_ap_abf_baseline</span>,</span></span>
+<span class="r-in"><span>  sweeps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sample_ap_abf_baseline</span><span class="op">$</span><span class="va">episode</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  custom_scale_colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"#edd03a"</span>, <span class="st">"#cced34"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"#a3fd3d"</span>, <span class="st">"#6bfe64"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"#31f199"</span>, <span class="st">"#18dcc3"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"#29bbec"</span>, <span class="st">"#4294ff"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"#466be3"</span>, <span class="st">"#4040a2"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+<span class="r-in"><span>  colour_scale_option <span class="op">=</span> <span class="st">"custom"</span>,</span></span>
+<span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_AP_trace-5.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Single colour</span></span></span>
+<span class="r-in"><span><span class="fu">plot_AP_trace</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_ap_abf_baseline</span>,</span></span>
+<span class="r-in"><span>  y_var <span class="op">=</span> <span class="st">"voltage"</span>,</span></span>
+<span class="r-in"><span>  sweeps <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sample_ap_abf_baseline</span><span class="op">$</span><span class="va">episode</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  colour_scale_option <span class="op">=</span> <span class="st">"single_colour"</span>,</span></span>
+<span class="r-in"><span>  trace_colour <span class="op">=</span> <span class="st">"#4294ff"</span>,</span></span>
+<span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot_AP_trace-6.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
