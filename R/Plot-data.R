@@ -3746,7 +3746,8 @@ plot_AP_trace <-
 #' @param y_variable A character value (`"raw_amplitude"` or `"raw_frequency"`) only.
 #'   Normalized amplitude and frequency are not available because all baseline
 #'   values are 100.
-#' @param geom_signif_size A numeric value describing the size of the geom_signif bracket size. Defaults to `0.5`, which is a good thickness for most applications.
+#' @param y_variable_signif_brackets A character value. This should be identical to the column of your raw data (e.g. `"mean_raw_frequency"` or `"mean_raw_amplitude"`) unless your data did not pass assumptions and you had to transform it. `y_variable_signif_brackets` should be the name of the column of `data` which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data.
+#' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.5`, which is a good thickness for most applications.
 #'
 #' @inheritParams plot_variance_comparison_data
 #' @inheritParams plot_baseline_data
@@ -3762,6 +3763,7 @@ plot_AP_trace <-
 #'   plot_category = 2,
 #'   plot_treatment = "Control",
 #'   y_variable = "raw_amplitude",
+#'   y_variable_signif_brackets = "mean_raw_amplitude",
 #'   included_sexes = "both",
 #'   facet_by_sex = "no",
 #'   hormone_added = "Insulin",
@@ -3781,6 +3783,7 @@ plot_AP_trace <-
 #'   plot_category = 2,
 #'   plot_treatment = "Control",
 #'   y_variable = "raw_amplitude",
+#'   y_variable_signif_brackets = "mean_raw_amplitude",
 #'   included_sexes = "both",
 #'   facet_by_sex = "yes",
 #'   hormone_added = "Insulin",
@@ -3802,6 +3805,7 @@ plot_spontaneous_current_parameter_comparison <-
            male_label = "Male",
            female_label = "Female",
            y_variable = "raw_amplitude",
+           y_variable_signif_brackets = "mean_raw_amplitude",
            hormone_added = "Insulin",
            baseline_interval = "t0to5",
            post_hormone_interval = "t20to25",
@@ -3982,6 +3986,7 @@ plot_spontaneous_current_parameter_comparison <-
     if (test_type != "none") {
       sEPSC_comparison_plot <- sEPSC_comparison_plot +
         ggsignif::geom_signif(
+          ggplot2::aes(x = .data$interval, y = .data[[y_variable_signif_brackets]]),
           comparisons = list(c(
             baseline_interval, post_hormone_interval
           )),
