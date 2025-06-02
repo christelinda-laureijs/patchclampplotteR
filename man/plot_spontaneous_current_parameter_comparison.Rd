@@ -13,7 +13,7 @@ plot_spontaneous_current_parameter_comparison(
   male_label = "Male",
   female_label = "Female",
   y_variable = "raw_amplitude",
-  y_variable_signif_brackets = "mean_raw_amplitude",
+  y_variable_signif_brackets = NULL,
   hormone_added = "Insulin",
   baseline_interval = "t0to5",
   post_hormone_interval = "t20to25",
@@ -53,7 +53,7 @@ were present on the brain slice, or the animals were fasted, etc.}
 Normalized amplitude and frequency are not available because all baseline
 values are 100.}
 
-\item{y_variable_signif_brackets}{A character value. This should be identical to \code{y_variable} unless your data did not pass assumptions and you had to transform it. \code{y_variable_signif_brackets} should be the name of the column of \code{data} which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data.}
+\item{y_variable_signif_brackets}{A character value. You should only use this if your data did not pass assumptions and you had to transform it. \code{y_variable_signif_brackets} should be the name of the column of \code{data} which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, this will default to the raw data column.}
 
 \item{hormone_added}{A character value that will be used as the label over
 the line annotating the period when a hormone was applied. Examples include
@@ -122,7 +122,6 @@ plot_spontaneous_current_parameter_comparison(
   plot_category = 2,
   plot_treatment = "Control",
   y_variable = "raw_amplitude",
-  y_variable_signif_brackets = "mean_raw_amplitude",
   included_sexes = "both",
   facet_by_sex = "no",
   hormone_added = "Insulin",
@@ -142,7 +141,6 @@ plot_spontaneous_current_parameter_comparison(
   plot_category = 2,
   plot_treatment = "Control",
   y_variable = "raw_amplitude",
-  y_variable_signif_brackets = "mean_raw_amplitude",
   included_sexes = "both",
   facet_by_sex = "yes",
   hormone_added = "Insulin",
