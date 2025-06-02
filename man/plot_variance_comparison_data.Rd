@@ -18,6 +18,7 @@ plot_variance_comparison_data(
   male_label = "Male",
   female_label = "Female",
   test_type,
+  y_variable_signif_brackets = NULL,
   map_signif_level_values = F,
   geom_signif_family = "",
   geom_signif_text_size = 5,
@@ -74,6 +75,8 @@ will likely change this to the hormone or protocol name.}
 \item{test_type}{A character (must be \code{"wilcox.test"}, \code{"t.test"} or \code{"none"})
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}
+
+\item{y_variable_signif_brackets}{A character value. You should only use this if your data did not pass assumptions and you had to transform it. \code{y_variable_signif_brackets} should be the name of the column of \code{data} which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, this will default to the raw data column.}
 
 \item{map_signif_level_values}{A \code{TRUE/FALSE} value or a list of character values for mapping p-values. If \code{TRUE}, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If \code{FALSE}, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  \code{map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}} to only display the p-values when they are below 0.1.}
 

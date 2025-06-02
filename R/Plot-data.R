@@ -1770,6 +1770,7 @@ plot_percent_change_comparisons <- function(data,
 #'   match the `post_hormone_interval` used in [make_variance_data()].
 #' @param baseline_label A character value for the x-axis label applied to the
 #'   pre-hormone state. Defaults to `"Baseline"`.
+#' @param y_variable_signif_brackets A character value. You should only use this if your data did not pass assumptions and you had to transform it. `y_variable_signif_brackets` should be the name of the column of `data` which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, this will default to the raw data column.
 #' @param post_hormone_label A character value for x-axis label applied to
 #'   the post-hormone or post-protocol state. Defaults to `"Post-hormone"` but you
 #'   will likely change this to the hormone or protocol name.
@@ -1838,6 +1839,7 @@ plot_variance_comparison_data <- function(data,
                                           male_label = "Male",
                                           female_label = "Female",
                                           test_type,
+                                          y_variable_signif_brackets = NULL,
                                           map_signif_level_values = F,
                                           geom_signif_family = "",
                                           geom_signif_text_size = 5,
@@ -1925,26 +1927,31 @@ plot_variance_comparison_data <- function(data,
   if (variance_measure == "cv") {
     y_axis_title <- "1/CV^2^"
 
-    variance_comparison_plot <- variance_comparison_data %>%
-      ggplot2::ggplot(
-        ggplot2::aes(
-          x = .data$interval,
-          y = .data$cv_inverse_square
-        )
-      )
+    if (is.null(y_variable_signif_brackets)) {
+      y_var <- "cv_inverse_square"
+    } else {
+      y_var <- y_variable_signif_brackets
+    }
+
   }
 
   if (variance_measure == "VMR") {
     y_axis_title <- "VMR"
 
-
-    variance_comparison_plot <- variance_comparison_data %>%
-      ggplot2::ggplot(ggplot2::aes(
-        x = .data$interval,
-        y = .data$VMR
-      ))
+    if (is.null(y_variable_signif_brackets)) {
+      y_var <- "VMR"
+    } else {
+      y_var <- y_variable_signif_brackets
+    }
   }
 
+  variance_comparison_plot <- variance_comparison_data %>%
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x = .data$interval,
+        y = .data[[y_var]]
+      )
+    )
 
   if (facet_by_sex == "yes") {
     variance_comparison_plot <- variance_comparison_plot +
@@ -1960,8 +1967,6 @@ plot_variance_comparison_data <- function(data,
       ggplot2::facet_wrap(~ .data$sex)
   }
 
-
-
   if (facet_by_sex == "no") {
     variance_comparison_plot <- variance_comparison_plot +
       ggplot2::geom_point(
@@ -1974,6 +1979,7 @@ plot_variance_comparison_data <- function(data,
   if (test_type != "none") {
     variance_comparison_plot <- variance_comparison_plot +
       ggsignif::geom_signif(
+        ggplot2::aes(x = .data$interval, y = .data[[y_var]]),
         comparisons = list(c(
           baseline_interval, post_hormone_interval
         )),
