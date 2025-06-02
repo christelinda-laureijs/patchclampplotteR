@@ -75,6 +75,7 @@ connecting the "before" data point to the "after" data point for each letter.</p
 <span>  male_label <span class="op">=</span> <span class="st">"Male"</span>,</span>
 <span>  female_label <span class="op">=</span> <span class="st">"Female"</span>,</span>
 <span>  <span class="va">test_type</span>,</span>
+<span>  y_variable_signif_brackets <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  map_signif_level_values <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>  geom_signif_family <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  geom_signif_text_size <span class="op">=</span> <span class="fl">5</span>,</span>
@@ -160,6 +161,10 @@ will likely change this to the hormone or protocol name.</p></dd>
 <dd><p>A character (must be <code>"wilcox.test"</code>, <code>"t.test"</code> or <code>"none"</code>)
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.</p></dd>
+
+
+<dt id="arg-y-variable-signif-brackets">y_variable_signif_brackets<a class="anchor" aria-label="anchor" href="#arg-y-variable-signif-brackets"></a></dt>
+<dd><p>A character value. You should only use this if your data did not pass assumptions and you had to transform it. <code>y_variable_signif_brackets</code> should be the name of the column of <code>data</code> which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, this will default to the raw data column.</p></dd>
 
 
 <dt id="arg-map-signif-level-values">map_signif_level_values<a class="anchor" aria-label="anchor" href="#arg-map-signif-level-values"></a></dt>
@@ -288,7 +293,7 @@ due to a pre- or post-synaptic mechanism. For more information, please see
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
