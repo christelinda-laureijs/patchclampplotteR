@@ -75,8 +75,8 @@ dataframe, and it also converts time to minutes.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A dataframe with 5 columns:</p>
-<ul><li><p><code>time</code> Time value from Clampfit which is in milliseconds x 10. For example, 5 seconds = 50000 in this column.</p></li>
+    <p>A dataframe with 5 or 6 columns, depending on the value of <code>recording_mode</code>.</p>
+<ul><li><p><code>time</code> Time value from Clampfit which is in milliseconds x 10. For example, 5 seconds = 50000 in this column. Only appears if <code>recording_mode = "current_clamp"</code>.</p></li>
 <li><p><code>episode</code> Character value (e.g. "epi1", "epi2") which corresponds
 directly to "sweep" in Clampfit.</p></li>
 <li><p><code>current</code> Current in pA.</p></li>
