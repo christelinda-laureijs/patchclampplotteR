@@ -81,8 +81,8 @@ dataframe, and it also converts time to minutes.</p>
 directly to "sweep" in Clampfit.</p></li>
 <li><p><code>current</code> Current in pA.</p></li>
 <li><p><code>voltage</code> Voltage in mV.</p></li>
-<li><p><code>time_sec</code> Time in seconds.</p></li>
-<li><p><code>time_sec_total</code> The total elapsed time in seconds. Useful for when you want to plot raw data vs. time for multiple sweeps.</p></li>
+<li><p><code>time_sec</code> Time in seconds. Note that this resets each sweep (for example, this may be <code>0</code> to <code>5</code> seconds for <code>"epi1"</code>, then <code>0</code> to <code>5</code> seconds for <code>"epi2"</code>). For the cumulative elapsed time, see <code>time_sec_total</code>.</p></li>
+<li><p><code>time_sec_total</code> The total cumulative elapsed time in seconds. Useful for when you want to plot raw data vs. time for multiple sweeps.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
