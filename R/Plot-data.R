@@ -3452,9 +3452,9 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 #' @param scale_bar_x_start A numeric value (in `scale_bar_x_unit`s, so likely milliseconds) describing the x-axis position of
 #'   the scale bar (default is `880`).
 #' @param scale_bar_x_length A numeric value describing the horizontal span (in `scale_bar_x_unit`s, so likely milliseconds) of the scale bar (default is `100`).
-#' @param scale_bar_y_start A numeric value describing the y-axis position (in `scale_bar_x_unit`s, so likely mV) of
+#' @param scale_bar_y_start A numeric value describing the y-axis position (in `scale_bar_y_unit`s, so likely mV) of
 #'   the scale bar (default is `-30`).
-#' @param scale_bar_y_length A numeric value describing the vertical span (in `scale_bar_x_unit`s, so likely mV) of the scale bar (default is `40`).
+#' @param scale_bar_y_length A numeric value describing the vertical span (in `scale_bar_y_unit`s, so likely mV) of the scale bar (default is `40`).
 #' @param scaling_factor A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is `10`, and this value will likely not need to be changed.
 #' @param scale_bar_y_unit A character value (defaults to `"mV"`) which will be present on the scale bar label.
 #' @param scale_bar_x_unit A character value (defaults to `"ms"`) which will be present on the scale bar label.

@@ -76,10 +76,10 @@ the scale bar (default is \code{880}).}
 
 \item{scaling_factor}{A numeric value describing the scaling factor applied by Clampfit to convert recording time to time in milliseconds. The default is \code{10}, and this value will likely not need to be changed.}
 
-\item{scale_bar_y_start}{A numeric value describing the y-axis position (in \code{scale_bar_x_unit}s, so likely mV) of
+\item{scale_bar_y_start}{A numeric value describing the y-axis position (in \code{scale_bar_y_unit}s, so likely mV) of
 the scale bar (default is \code{-30}).}
 
-\item{scale_bar_y_length}{A numeric value describing the vertical span (in \code{scale_bar_x_unit}s, so likely mV) of the scale bar (default is \code{40}).}
+\item{scale_bar_y_length}{A numeric value describing the vertical span (in \code{scale_bar_y_unit}s, so likely mV) of the scale bar (default is \code{40}).}
 
 \item{scale_bar_y_unit}{A character value (defaults to \code{"mV"}) which will be present on the scale bar label.}
 

@@ -113,8 +113,8 @@ import_cell_characteristics_df <- function(filename) {
 #'  directly to "sweep" in Clampfit.
 #'  \item `current` Current in pA.
 #'  \item `voltage` Voltage in mV.
-#'  \item `time_sec` Time in seconds.
-#'  \item `time_sec_total` The total elapsed time in seconds. Useful for when you want to plot raw data vs. time for multiple sweeps.
+#'  \item `time_sec` Time in seconds. Note that this resets each sweep (for example, this may be `0` to `5` seconds for `"epi1"`, then `0` to `5` seconds for `"epi2"`). For the cumulative elapsed time, see `time_sec_total`.
+#'  \item `time_sec_total` The total cumulative elapsed time in seconds. Useful for when you want to plot raw data vs. time for multiple sweeps.
 #' }
 #'
 #' @export
@@ -132,7 +132,8 @@ import_ABF_file <-
     }
 
     data <- abftools::abf2_load(here::here(file_name)) %>%
-      abftools::MeltAbf()
+      abftools::MeltAbf() %>%
+      dplyr::rename_with(tolower)
 
     if (recording_mode == "voltage_clamp") {
       data <- data %>%
@@ -144,11 +145,15 @@ import_ABF_file <-
         dplyr::rename("voltage" = .data$chan1, "current" = .data$chan2)
     }
 
+    list_of_episodes <- data$episode
+
+    max_episode <- max(as.numeric(stringr::str_replace_all(list_of_episodes, "epi", "")))
+
     data <- data %>%
-      dplyr::rename_with(tolower) %>%
+      dplyr::mutate(episode = factor(.data$episode, levels = paste0("epi", seq(1, max_episode, by = 1)))) %>%
       dplyr::mutate(time_sec = .data$time / 10000) %>%
       dplyr::arrange(.data$episode, .data$time_sec) %>%
-      dplyr::mutate(time_sec_total = dplyr::row_number()*0.0001) %>%
+      dplyr::mutate(time_sec_total = dplyr::row_number() * 0.0001) %>%
       invisible()
   }
 
