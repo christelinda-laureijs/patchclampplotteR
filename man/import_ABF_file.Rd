@@ -21,6 +21,7 @@ directly to "sweep" in Clampfit.
 \item \code{current} Current in pA.
 \item \code{voltage} Voltage in mV.
 \item \code{time_sec} Time in seconds.
+\item \code{time_sec_total} The total elapsed time in seconds. Useful for when you want to plot raw data vs. time for multiple sweeps.
 }
 }
 \description{

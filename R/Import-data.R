@@ -114,6 +114,7 @@ import_cell_characteristics_df <- function(filename) {
 #'  \item `current` Current in pA.
 #'  \item `voltage` Voltage in mV.
 #'  \item `time_sec` Time in seconds.
+#'  \item `time_sec_total` The total elapsed time in seconds. Useful for when you want to plot raw data vs. time for multiple sweeps.
 #' }
 #'
 #' @export
@@ -146,6 +147,8 @@ import_ABF_file <-
     data <- data %>%
       dplyr::rename_with(tolower) %>%
       dplyr::mutate(time_sec = .data$time / 10000) %>%
+      dplyr::arrange(.data$episode, .data$time_sec) %>%
+      dplyr::mutate(time_sec_total = dplyr::row_number()*0.0001) %>%
       invisible()
   }
 
