@@ -105,10 +105,10 @@ import_cell_characteristics_df <- function(filename) {
 #' @param file_name Filepath to an `.abf` file (e.g. "Data/23711004.abf")
 #' @param recording_mode The mode used for the recording. If in `recording_mode = "voltage_clamp"` (e.g. clamping cell at -70 mV and measuring current amplitude) the primary channel (`chan1`) is set to `"current"` and the secondary channel (`chan2`) is `"voltage"`. If `recording_mode = "current_clamp"`, these values are reversed, where the primary channel is `"voltage"` and the secondary channel is `"current"`.
 #'
-#' @returns A dataframe with 5 columns:
+#' @returns A dataframe with 5 or 6 columns, depending on the value of `recording_mode`.
 #'
 #' \itemize{
-#'  \item `time` Time value from Clampfit which is in milliseconds x 10. For example, 5 seconds = 50000 in this column.
+#'  \item `time` Time value from Clampfit which is in milliseconds x 10. For example, 5 seconds = 50000 in this column. Only appears if `recording_mode = "current_clamp"`.
 #'  \item `episode` Character value (e.g. "epi1", "epi2") which corresponds
 #'  directly to "sweep" in Clampfit.
 #'  \item `current` Current in pA.
@@ -153,7 +153,14 @@ import_ABF_file <-
       dplyr::mutate(episode = factor(.data$episode, levels = paste0("epi", seq(1, max_episode, by = 1)))) %>%
       dplyr::mutate(time_sec = .data$time / 10000) %>%
       dplyr::arrange(.data$episode, .data$time_sec) %>%
-      dplyr::mutate(time_sec_total = dplyr::row_number() * 0.0001) %>%
+      dplyr::mutate(time_sec_total = dplyr::row_number() * 0.0001)
+
+    if (recording_mode == "voltage_clamp") {
+      data <- data %>%
+        dplyr::select(-.data$time)
+    }
+
+    data %>%
       invisible()
   }
 

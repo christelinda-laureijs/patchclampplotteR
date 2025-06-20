@@ -12,10 +12,10 @@ import_ABF_file(file_name, recording_mode)
 \item{recording_mode}{The mode used for the recording. If in \code{recording_mode = "voltage_clamp"} (e.g. clamping cell at -70 mV and measuring current amplitude) the primary channel (\code{chan1}) is set to \code{"current"} and the secondary channel (\code{chan2}) is \code{"voltage"}. If \code{recording_mode = "current_clamp"}, these values are reversed, where the primary channel is \code{"voltage"} and the secondary channel is \code{"current"}.}
 }
 \value{
-A dataframe with 5 columns:
+A dataframe with 5 or 6 columns, depending on the value of \code{recording_mode}.
 
 \itemize{
-\item \code{time} Time value from Clampfit which is in milliseconds x 10. For example, 5 seconds = 50000 in this column.
+\item \code{time} Time value from Clampfit which is in milliseconds x 10. For example, 5 seconds = 50000 in this column. Only appears if \code{recording_mode = "current_clamp"}.
 \item \code{episode} Character value (e.g. "epi1", "epi2") which corresponds
 directly to "sweep" in Clampfit.
 \item \code{current} Current in pA.
