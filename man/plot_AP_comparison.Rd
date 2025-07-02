@@ -12,6 +12,7 @@ plot_AP_comparison(
   facet_by_sex = "no",
   male_label = "Male",
   female_label = "Female",
+  left_sex = "Female",
   baseline_label = "Baseline",
   post_hormone_label = "Post-hormone",
   y_variable,
@@ -49,6 +50,8 @@ applied continuously after a 5-minute baseline period.}
 \item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for male data in the \code{sex} column, and it must be consistent across data sheets. Defaults to \code{"Male"}.}
 
 \item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for female data in the \code{sex} column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
+
+\item{left_sex}{A character value ("Female" or "Male") describing the sex that will appear on the left side of a faceted plot. Only applies if \code{facet_by_sex} is \code{"yes"}.}
 
 \item{baseline_label}{A character value for the x-axis label applied to the
 pre-hormone state. Defaults to \code{"Baseline"}.}

@@ -2250,6 +2250,7 @@ plot_PPR_data_single_treatment <- function(data,
                                            facet_by_sex = "no",
                                            male_label = "Male",
                                            female_label = "Female",
+                                           left_sex = "Female",
                                            baseline_label = "Baseline",
                                            post_hormone_label = "Post-hormone",
                                            y_axis_title = "PPR",
@@ -2272,6 +2273,10 @@ plot_PPR_data_single_treatment <- function(data,
 
   if (!save_plot_png %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
+  }
+
+  if (!left_sex %in% c("Female", "Male")) {
+    cli::cli_abort(c("x" = "`left_sex` argument must be either \"Female\" or \"Male\""))
   }
 
   if (!included_sexes %in% c("both", "male", "female")) {
@@ -2324,8 +2329,15 @@ plot_PPR_data_single_treatment <- function(data,
 
 
     if (facet_by_sex == "yes") {
-      plot_data <- plot_data %>%
-        dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+      if (left_sex == "Female") {
+        plot_data <- plot_data %>%
+          dplyr::mutate(sex = factor(.data$sex, levels = c(female_label, male_label)))
+      }
+
+      if (left_sex == "Male") {
+        plot_data <- plot_data %>%
+          dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+      }
 
       facet_label <- "-faceted-by-sex"
     }
@@ -2779,6 +2791,7 @@ plot_AP_comparison <-
            facet_by_sex = "no",
            male_label = "Male",
            female_label = "Female",
+           left_sex = "Female",
            baseline_label = "Baseline",
            post_hormone_label = "Post-hormone",
            y_variable,
@@ -2801,6 +2814,10 @@ plot_AP_comparison <-
 
     if (!test_type %in% c("wilcox.test", "t.test", "none")) {
       cli::cli_abort(c("x" = "'test_type' argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
+    }
+
+    if (!left_sex %in% c("Female", "Male")) {
+      cli::cli_abort(c("x" = "`left_sex` argument must be either \"Female\" or \"Male\""))
     }
 
     if (!included_sexes %in% c("both", "male", "female")) {
@@ -2856,8 +2873,16 @@ plot_AP_comparison <-
 
 
       if (facet_by_sex == "yes") {
+
+        if (left_sex == "Female") {
         plot_data <- plot_data %>%
-          dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+          dplyr::mutate(sex = factor(.data$sex, levels = c(female_label, male_label)))
+        }
+
+        if (left_sex == "Male") {
+          plot_data <- plot_data %>%
+            dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+        }
 
         facet_label <- "-faceted-by-sex"
       }
@@ -3832,6 +3857,7 @@ plot_spontaneous_current_parameter_comparison <-
            facet_by_sex = "no",
            male_label = "Male",
            female_label = "Female",
+           left_sex = "Female",
            y_variable = "raw_amplitude",
            y_variable_signif_brackets = NULL,
            hormone_added = "Insulin",
@@ -3858,6 +3884,10 @@ plot_spontaneous_current_parameter_comparison <-
 
     if (!facet_by_sex %in% c("yes", "no")) {
       cli::cli_abort(c("x" = "`facet_by_sex` argument must be either \"yes\" or \"no\""))
+    }
+
+    if (!left_sex %in% c("Female", "Male")) {
+      cli::cli_abort(c("x" = "`left_sex` argument must be either \"Female\" or \"Male\""))
     }
 
     if (!included_sexes %in% c("both", "male", "female")) {
@@ -3907,8 +3937,16 @@ plot_spontaneous_current_parameter_comparison <-
 
 
     if (facet_by_sex == "yes") {
-      sEPSC_comparison_plot_data <- sEPSC_comparison_plot_data %>%
-        dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+
+      if (left_sex == "Female") {
+        sEPSC_comparison_plot_data <- sEPSC_comparison_plot_data %>%
+          dplyr::mutate(sex = factor(.data$sex, levels = c(female_label, male_label)))
+      }
+
+      if (left_sex == "Male") {
+        sEPSC_comparison_plot_data <- sEPSC_comparison_plot_data %>%
+          dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+      }
 
       facet_label <- "-faceted-by-sex"
     }

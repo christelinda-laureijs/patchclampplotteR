@@ -12,6 +12,7 @@ plot_spontaneous_current_parameter_comparison(
   facet_by_sex = "no",
   male_label = "Male",
   female_label = "Female",
+  left_sex = "Female",
   y_variable = "raw_amplitude",
   y_variable_signif_brackets = NULL,
   hormone_added = "Insulin",
@@ -48,6 +49,8 @@ were present on the brain slice, or the animals were fasted, etc.}
 \item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for male data in the \code{sex} column, and it must be consistent across data sheets. Defaults to \code{"Male"}.}
 
 \item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for female data in the \code{sex} column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
+
+\item{left_sex}{A character value ("Female" or "Male") describing the sex that will appear on the left side of a faceted plot. Only applies if \code{facet_by_sex} is \code{"yes"}.}
 
 \item{y_variable}{A character value (\code{"raw_amplitude"} or \code{"raw_frequency"}) only.
 Normalized amplitude and frequency are not available because all baseline

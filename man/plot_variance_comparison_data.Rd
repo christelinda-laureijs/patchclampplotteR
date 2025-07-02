@@ -17,6 +17,7 @@ plot_variance_comparison_data(
   included_sexes = "both",
   male_label = "Male",
   female_label = "Female",
+  left_sex = "Female",
   test_type,
   y_variable_signif_brackets = NULL,
   map_signif_level_values = F,
@@ -71,6 +72,8 @@ will likely change this to the hormone or protocol name.}
 \item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for male data in the \code{sex} column, and it must be consistent across data sheets. Defaults to \code{"Male"}.}
 
 \item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for female data in the \code{sex} column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
+
+\item{left_sex}{A character value ("Female" or "Male") describing the sex that will appear on the left side of a faceted plot. Only applies if \code{facet_by_sex} is \code{"yes"}.}
 
 \item{test_type}{A character (must be \code{"wilcox.test"}, \code{"t.test"} or \code{"none"})
 describing the statistical model used to create a significance bracket
