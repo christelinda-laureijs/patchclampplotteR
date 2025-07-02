@@ -32,9 +32,21 @@ dataframe, and it also converts time to minutes.
 \details{
 The file progresses from \code{.abf} to an array and then to a dataframe that can be
 easily manipulated in R. Be sure to assign a value to the dataframe so you can use it in later functions.
+
+To export a flattened \code{.abf} file as a \code{.csv} file, you can use \code{fwrite()} from the \code{data.table} package.
 }
 \examples{
 
 import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
+
+# To export this dataset as a csv use `fwrite()` from the `data.table` package and `here()` from the `here` package.
+
+\dontrun{
+recording1 <- import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
+
+
+}
+
+#
 
 }

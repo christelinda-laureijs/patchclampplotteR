@@ -102,6 +102,8 @@ import_cell_characteristics_df <- function(filename) {
 #' The file progresses from `.abf` to an array and then to a dataframe that can be
 #' easily manipulated in R. Be sure to assign a value to the dataframe so you can use it in later functions.
 #'
+#' To export a flattened `.abf` file as a `.csv` file, you can use `fwrite()` from the `data.table` package.
+#'
 #' @param file_name Filepath to an `.abf` file (e.g. "Data/23711004.abf")
 #' @param recording_mode The mode used for the recording. If in `recording_mode = "voltage_clamp"` (e.g. clamping cell at -70 mV and measuring current amplitude) the primary channel (`chan1`) is set to `"current"` and the secondary channel (`chan2`) is `"voltage"`. If `recording_mode = "current_clamp"`, these values are reversed, where the primary channel is `"voltage"` and the secondary channel is `"current"`.
 #'
@@ -122,6 +124,18 @@ import_cell_characteristics_df <- function(filename) {
 #' @examples
 #'
 #' import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
+#'
+#' # To export this dataset as a csv use `fwrite()`
+#' from the `data.table` package and `here()` from the `here` package.
+#'
+#' \dontrun{
+#' recording1 <- import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
+#'
+# data.table::fwrite(recording1, here("recording1.csv"))
+#'
+#' }
+#'
+#' #
 #'
 import_ABF_file <-
   function(file_name, recording_mode) {
