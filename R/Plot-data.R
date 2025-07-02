@@ -3324,7 +3324,10 @@ plot_AP_frequencies_multiple_treatments <- function(data,
   }
 
   if (include_all_treatments == "yes") {
-    treatment_info <- treatment_colour_theme
+    treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(.data$category == plot_category)
+
+
     plot_data <- data %>%
       dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
       droplevels()
@@ -3360,8 +3363,10 @@ plot_AP_frequencies_multiple_treatments <- function(data,
 
   if (include_all_treatments == "no") {
     treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(.data$category == plot_category) %>%
       dplyr::filter(.data$treatment %in% list_of_treatments)
     plot_data <- data %>%
+      dplyr::filter(.data$category == plot_category) %>%
       dplyr::filter(.data$treatment %in% list_of_treatments) %>%
       droplevels()
   }
