@@ -102,7 +102,7 @@ knitr::include_graphics("figures/AP-properties.png")
 
 1b. If the y-axis scale is off (see the warning box above), double-click
 on the y-axis to open the `Modify Signal Parameters` box. Change the
-`V/pA` ratio to 0.01, and click "OK". This will re-scale the y-axis to
+`V/pA` ratio to 0.01, and click "Save" and then "OK" (you will see a warning about permanently changing the recording - don't worry about this, and just be sure to say "no" to saving changes when closing the file later). This will re-scale the y-axis to
 the correct units relative to the current injections. Double-check that
 the x-axis is in milliseconds!
 

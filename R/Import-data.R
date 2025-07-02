@@ -433,6 +433,11 @@ add_new_cells <- function(new_raw_data_csv,
   new_raw_data <- utils::read.csv(here::here(new_raw_data_csv)) %>%
     dplyr::rename_with(tolower)
 
+  if(sum(stringr::str_detect(new_raw_data$letter, "^$") > 0)) {cli::cli_abort(c(
+    "x" = "There is at least one empty cell somewhere in the letter column.",
+    "i" = "Did you forget to fill in the letters for one of your recordings?"
+  ))}
+
   if (data_type %in% c("eEPSC", "sEPSC", "AP_parameter")) {
     new_raw_data <- new_raw_data %>%
       dplyr::mutate(id = factor(.data$id)) %>%
