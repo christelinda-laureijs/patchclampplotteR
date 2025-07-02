@@ -242,6 +242,11 @@ Cursor 1 is lower, then Clampfit may identify the location at Cursor 1
 as the after-hyperpolarization region if you forget to move the cursor
 to the threshold (see step 11).</p>
 </blockquote>
+<blockquote>
+<p>Also, make sure that Cursor 2 does not cross a second action
+potential. The range between Cursors 1 and 2 should only cover one
+action potential.</p>
+</blockquote>
 <p><img src="figures/AP-cursors.png" alt="A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than Cursor 2." width="75%" style="display: block; margin: auto;"></p>
 <ol start="5" style="list-style-type: decimal">
 <li><p>Click on the arithmetic button (it is the button with basic math
@@ -322,6 +327,11 @@ crosses the threshold.
 <p><strong>Warning!</strong> If you do not reposition Cursor 1 to be at
 the time of threshold, the values for <code>time_of_peak</code> and
 <code>time_of_antipeak</code> will be incorrect!</p>
+</blockquote>
+<blockquote>
+<p>You don’t need to move Cursor 2 if it is correctly positioned from
+earlier steps (it should be in the after hyperpolarization region, lower
+than Cursor 1, and not touching a second action potential).</p>
 </blockquote>
 <ol start="12" style="list-style-type: decimal">
 <li><p>Click on the Statistics button (a small icon with a summation
