@@ -1906,6 +1906,8 @@ plot_variance_comparison_data <- function(data,
     plot_shape <- as.numeric(theme_options["female_shape", "value"])
   }
 
+  facet_label <- ""
+
   if (included_sexes == "both") {
     variance_comparison_data <- variance_comparison_data
     sex_annotation <- ""
@@ -2341,6 +2343,7 @@ plot_PPR_data_single_treatment <- function(data,
       y = .data$mean_PPR_cell
     ))
 
+  facet_label <- ""
 
   if (facet_by_sex == "yes") {
     PPR_one_plot <- PPR_one_plot +
@@ -2828,6 +2831,8 @@ plot_AP_comparison <-
 
       plot_shape <- as.numeric(theme_options["female_shape", "value"])
     }
+
+    facet_label <- ""
 
     if (included_sexes == "both") {
       plot_data <- data
@@ -3939,6 +3944,7 @@ plot_spontaneous_current_parameter_comparison <-
       plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
     }
 
+    facet_label <- ""
 
     if (facet_by_sex == "no") {
       facet_label <- ""
