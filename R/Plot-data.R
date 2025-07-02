@@ -1775,6 +1775,7 @@ plot_percent_change_comparisons <- function(data,
 #'   the post-hormone or post-protocol state. Defaults to `"Post-hormone"` but you
 #'   will likely change this to the hormone or protocol name.
 #' @param mean_line_thickness A numeric value describing the thickness of the line used to indicate the mean for a group. Defaults to `1.2`.
+#' @param left_sex A character value ("Female" or "Male") describing the sex that will appear on the left side of a faceted plot. Only applies if `facet_by_sex` is `"yes"`.
 #' @param mean_point_size A numeric value describing the size of the points used to indicate the means. Defaults to `2.5`.
 #' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.4`, which is a good thickness for most applications.
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -1838,6 +1839,7 @@ plot_variance_comparison_data <- function(data,
                                           included_sexes = "both",
                                           male_label = "Male",
                                           female_label = "Female",
+                                          left_sex = "Female",
                                           test_type,
                                           y_variable_signif_brackets = NULL,
                                           map_signif_level_values = F,
@@ -1862,6 +1864,10 @@ plot_variance_comparison_data <- function(data,
 
   if (!facet_by_sex %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`facet_by_sex` argument must be either \"yes\" or \"no\""))
+  }
+
+  if (!left_sex %in% c("Female", "Male")) {
+    cli::cli_abort(c("x" = "`left_sex` argument must be either \"Female\" or \"Male\""))
   }
 
   if (facet_by_sex == "yes" & included_sexes != "both") {
@@ -1913,8 +1919,16 @@ plot_variance_comparison_data <- function(data,
     sex_annotation <- ""
 
     if (facet_by_sex == "yes") {
+
+      if (left_sex == "Female") {
       variance_comparison_data <- variance_comparison_data %>%
-        dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+        dplyr::mutate(sex = factor(.data$sex, levels = c(female_label, male_label)))
+      }
+
+      if (left_sex == "Male") {
+        variance_comparison_data <- variance_comparison_data %>%
+          dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+      }
 
       facet_label <- "-faceted-by-sex"
     }
