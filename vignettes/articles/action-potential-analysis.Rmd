@@ -142,6 +142,8 @@ knitr::include_graphics("figures/AP-cursor-1-placement.png")
 > after-hyperpolarization region if you forget to move the cursor to the
 > threshold (see step 11).
 
+> Also, make sure that Cursor 2 does not cross a second action potential. The range between Cursors 1 and 2 should only cover one action potential.
+
 ```{r cursor-image, fig.alt = "A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than Cursor 2."}
 knitr::include_graphics("figures/AP-cursors.png")
 ```
@@ -215,6 +217,8 @@ knitr::include_graphics("figures/AP-cursors-new.png")
 > **Warning!** If you do not reposition Cursor 1 to be at the time of
 > threshold, the values for `time_of_peak` and `time_of_antipeak` will
 > be incorrect!
+
+> You don't need to move Cursor 2 if it is correctly positioned from earlier steps (it should be in the after hyperpolarization region, lower than Cursor 1, and not touching a second action potential).
 
 12. Click on the Statistics button (a small icon with a summation symbol
     on top of it) or press `Alt+s`.
