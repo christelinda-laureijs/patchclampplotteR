@@ -39,7 +39,8 @@ To export a flattened \code{.abf} file as a \code{.csv} file, you can use \code{
 
 import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
 
-# To export this dataset as a csv use `fwrite()` from the `data.table` package and `here()` from the `here` package.
+# To export this dataset as a csv use `fwrite()`
+# from the `data.table` package and `here()` from the `here` package.
 
 \dontrun{
 recording1 <- import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
