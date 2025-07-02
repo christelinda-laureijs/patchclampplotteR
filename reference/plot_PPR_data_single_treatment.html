@@ -69,6 +69,7 @@ paired-pulse ratio (PPR) on the y-axis. There are also lines connecting the
 <span>  facet_by_sex <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  male_label <span class="op">=</span> <span class="st">"Male"</span>,</span>
 <span>  female_label <span class="op">=</span> <span class="st">"Female"</span>,</span>
+<span>  left_sex <span class="op">=</span> <span class="st">"Female"</span>,</span>
 <span>  baseline_label <span class="op">=</span> <span class="st">"Baseline"</span>,</span>
 <span>  post_hormone_label <span class="op">=</span> <span class="st">"Post-hormone"</span>,</span>
 <span>  y_axis_title <span class="op">=</span> <span class="st">"PPR"</span>,</span>
@@ -123,6 +124,10 @@ applied continuously after a 5-minute baseline period.</p></dd>
 
 <dt id="arg-female-label">female_label<a class="anchor" aria-label="anchor" href="#arg-female-label"></a></dt>
 <dd><p>A character value used to describe how females are encoded in the <code>sex</code> column of the dataframe used in <code>data</code>. This MUST match the value for female data in the <code>sex</code> column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to <code>"Female"</code>.</p></dd>
+
+
+<dt id="arg-left-sex">left_sex<a class="anchor" aria-label="anchor" href="#arg-left-sex"></a></dt>
+<dd><p>A character value ("Female" or "Male") describing the sex that will appear on the left side of a faceted plot. Only applies if <code>facet_by_sex</code> is <code>"yes"</code>.</p></dd>
 
 
 <dt id="arg-baseline-label">baseline_label<a class="anchor" aria-label="anchor" href="#arg-baseline-label"></a></dt>
