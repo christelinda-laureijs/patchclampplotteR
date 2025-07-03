@@ -1977,7 +1977,7 @@ plot_variance_comparison_data <- function(data,
         size = 1.8
       ) +
       ggplot2::scale_shape_manual(
-        values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))
+        values = if (left_sex == "Female") {c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))} else {c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))}
       ) +
       ggplot2::guides(shape = "none") +
       ggplot2::facet_wrap(~ .data$sex)
@@ -2377,7 +2377,7 @@ plot_PPR_data_single_treatment <- function(data,
         color = theme_options["connecting_line_colour", "value"],
         size = 1.8
       ) +
-      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+      ggplot2::scale_shape_manual(values = if (left_sex == "Female") {c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))} else {c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))}) +
       ggplot2::guides(shape = "none") +
       ggplot2::facet_wrap(~ .data$sex)
   }
@@ -2931,7 +2931,7 @@ plot_AP_comparison <-
           alpha = 0.9,
           position = ggplot2::position_jitter(width = 0.02, height = 0)
         ) +
-        ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+        ggplot2::scale_shape_manual(values = if (left_sex == "Female") {c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))} else {c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))}) +
         ggplot2::scale_color_manual(values = c(plot_colour, plot_colour_pale)) +
         ggplot2::guides(shape = "none") +
         ggplot2::stat_summary(
@@ -4043,7 +4043,7 @@ plot_spontaneous_current_parameter_comparison <-
           size = 2,
           color = plot_colour
         ) +
-        ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
+        ggplot2::scale_shape_manual(values = if (left_sex == "Female") {c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))} else {c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))}) +
         ggplot2::stat_summary(
           fun.data = ggplot2::mean_se,
           geom = "pointrange",
