@@ -548,9 +548,9 @@ plot_raw_current_data <-
     letters <- as.character(unique(unlist(df$letter)))
 
     if (colour_by_sex == "no") {
-    plot_colour <- treatment_colour_theme %>%
-      dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
-      dplyr::pull(.data$colours)
+      plot_colour <- treatment_colour_theme %>%
+        dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
+        dplyr::pull(.data$colours)
     }
 
     if (colour_by_sex == "yes") {
@@ -561,7 +561,6 @@ plot_raw_current_data <-
       female_plot_colour <- treatment_colour_theme %>%
         dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
         dplyr::pull(.data$very_pale_colours)
-
     }
 
     treatment_label <- treatment_colour_theme %>%
@@ -1919,10 +1918,9 @@ plot_variance_comparison_data <- function(data,
     sex_annotation <- ""
 
     if (facet_by_sex == "yes") {
-
       if (left_sex == "Female") {
-      variance_comparison_data <- variance_comparison_data %>%
-        dplyr::mutate(sex = factor(.data$sex, levels = c(female_label, male_label)))
+        variance_comparison_data <- variance_comparison_data %>%
+          dplyr::mutate(sex = factor(.data$sex, levels = c(female_label, male_label)))
       }
 
       if (left_sex == "Male") {
@@ -1948,7 +1946,6 @@ plot_variance_comparison_data <- function(data,
     } else {
       y_var <- y_variable_signif_brackets
     }
-
   }
 
   if (variance_measure == "VMR") {
@@ -1977,7 +1974,11 @@ plot_variance_comparison_data <- function(data,
         size = 1.8
       ) +
       ggplot2::scale_shape_manual(
-        values = if (left_sex == "Female") {c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))} else {c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))}
+        values = if (left_sex == "Female") {
+          c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))
+        } else {
+          c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))
+        }
       ) +
       ggplot2::guides(shape = "none") +
       ggplot2::facet_wrap(~ .data$sex)
@@ -2377,7 +2378,11 @@ plot_PPR_data_single_treatment <- function(data,
         color = theme_options["connecting_line_colour", "value"],
         size = 1.8
       ) +
-      ggplot2::scale_shape_manual(values = if (left_sex == "Female") {c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))} else {c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))}) +
+      ggplot2::scale_shape_manual(values = if (left_sex == "Female") {
+        c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))
+      } else {
+        c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))
+      }) +
       ggplot2::guides(shape = "none") +
       ggplot2::facet_wrap(~ .data$sex)
   }
@@ -2873,10 +2878,9 @@ plot_AP_comparison <-
 
 
       if (facet_by_sex == "yes") {
-
         if (left_sex == "Female") {
-        plot_data <- plot_data %>%
-          dplyr::mutate(sex = factor(.data$sex, levels = c(female_label, male_label)))
+          plot_data <- plot_data %>%
+            dplyr::mutate(sex = factor(.data$sex, levels = c(female_label, male_label)))
         }
 
         if (left_sex == "Male") {
@@ -2931,7 +2935,11 @@ plot_AP_comparison <-
           alpha = 0.9,
           position = ggplot2::position_jitter(width = 0.02, height = 0)
         ) +
-        ggplot2::scale_shape_manual(values = if (left_sex == "Female") {c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))} else {c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))}) +
+        ggplot2::scale_shape_manual(values = if (left_sex == "Female") {
+          c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))
+        } else {
+          c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))
+        }) +
         ggplot2::scale_color_manual(values = c(plot_colour, plot_colour_pale)) +
         ggplot2::guides(shape = "none") +
         ggplot2::stat_summary(
@@ -3937,7 +3945,6 @@ plot_spontaneous_current_parameter_comparison <-
 
 
     if (facet_by_sex == "yes") {
-
       if (left_sex == "Female") {
         sEPSC_comparison_plot_data <- sEPSC_comparison_plot_data %>%
           dplyr::mutate(sex = factor(.data$sex, levels = c(female_label, male_label)))
@@ -3969,7 +3976,6 @@ plot_spontaneous_current_parameter_comparison <-
       } else {
         y_var <- y_variable_signif_brackets
       }
-
     }
 
     if (included_sexes == "male") {
@@ -4043,7 +4049,11 @@ plot_spontaneous_current_parameter_comparison <-
           size = 2,
           color = plot_colour
         ) +
-        ggplot2::scale_shape_manual(values = if (left_sex == "Female") {c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))} else {c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))}) +
+        ggplot2::scale_shape_manual(values = if (left_sex == "Female") {
+          c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))
+        } else {
+          c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))
+        }) +
         ggplot2::stat_summary(
           fun.data = ggplot2::mean_se,
           geom = "pointrange",
@@ -4771,10 +4781,11 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
   }
 
   if (!is.null(pruned_eEPSC_dataframe) &
-      !is.null(pruned_sEPSC_dataframe)) {
+    !is.null(pruned_sEPSC_dataframe)) {
     table_data <- merge(pruned_eEPSC_dataframe$for_table,
-                        pruned_sEPSC_dataframe$for_table,
-                        by = "letter") %>%
+      pruned_sEPSC_dataframe$for_table,
+      by = "letter"
+    ) %>%
       merge(cell_characteristics_dataframe, by = "letter") %>%
       merge(treatment_colour_theme, by = c("category", "treatment")) %>%
       dplyr::select(

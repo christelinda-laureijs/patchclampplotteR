@@ -132,7 +132,6 @@ import_cell_characteristics_df <- function(filename) {
 #' recording1 <- import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
 #'
 # data.table::fwrite(recording1, here("recording1.csv"))
-#'
 #' }
 #'
 #' #
@@ -433,10 +432,12 @@ add_new_cells <- function(new_raw_data_csv,
   new_raw_data <- utils::read.csv(here::here(new_raw_data_csv)) %>%
     dplyr::rename_with(tolower)
 
-  if(sum(stringr::str_detect(new_raw_data$letter, "^$") > 0)) {cli::cli_abort(c(
-    "x" = "There is at least one empty cell somewhere in the letter column.",
-    "i" = "Did you forget to fill in the letters for one of your recordings?"
-  ))}
+  if (sum(stringr::str_detect(new_raw_data$letter, "^$") > 0)) {
+    cli::cli_abort(c(
+      "x" = "There is at least one empty cell somewhere in the letter column.",
+      "i" = "Did you forget to fill in the letters for one of your recordings?"
+    ))
+  }
 
   if (data_type %in% c("eEPSC", "sEPSC", "AP_parameter")) {
     new_raw_data <- new_raw_data %>%
@@ -543,7 +544,7 @@ add_new_cells <- function(new_raw_data_csv,
     new_raw_data <- new_raw_data %>%
       dplyr::rename(no_of_APs = .data$no_of_aps) %>%
       dplyr::mutate(
-        AP_frequency = .data$no_of_APs / length_of_current_injection#,
+        AP_frequency = .data$no_of_APs / length_of_current_injection # ,
         # current_injection = dplyr::case_when(
         #   sweep == 1 ~ -50,
         #   sweep == 2 ~ -40,
@@ -556,7 +557,7 @@ add_new_cells <- function(new_raw_data_csv,
         #   sweep == 9 ~ 30,
         #   sweep == 10 ~ 40,
         #   T ~ 50
-        #)
+        # )
       )
   }
 
