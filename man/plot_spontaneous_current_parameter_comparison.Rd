@@ -56,7 +56,7 @@ were present on the brain slice, or the animals were fasted, etc.}
 Normalized amplitude and frequency are not available because all baseline
 values are 100.}
 
-\item{y_variable_signif_brackets}{A character value. You should only use this if your data did not pass assumptions and you had to transform it. \code{y_variable_signif_brackets} should be the name of the column of \code{data} which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, this will default to the raw data column.}
+\item{y_variable_signif_brackets}{A character value. You should only use this if your data did not pass assumptions and you had to transform it. \code{y_variable_signif_brackets} should be the name of the column of \code{data} which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, leave this argument blank, and the function will automatically use the correct column associated with \code{y_variable}.}
 
 \item{hormone_added}{A character value that will be used as the label over
 the line annotating the period when a hormone was applied. Examples include

@@ -2435,7 +2435,7 @@ plot_PPR_data_single_treatment <- function(data,
       )
   }
 
-  #
+  #   Old code for a different visual approach
   #   ggplot2::annotate(
   #     geom = "segment",
   #     x = baseline_label,
@@ -2767,6 +2767,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' @param post_hormone_label A character value that MUST correspond to one of the values in the `State` column. In the sample dataset, this is `"Insulin"`. This is required for the wilcox.test or t.test comparisons of `"Baseline"` vs. `"Insulin"`.
 #' @param y_variable A character value naming the variable to be plotted on the y-axis. Must be a column present in `data`. Examples include `peak_amplitude`, `time_to_peak`, `antipeak_amplitude` and `half_width`.
 #' @param y_axis_title A character value used to define a "pretty" version of `y_variable`. This will become the y-axis label on the ggplot. Examples include `"Peak Amplitude (pA)"` or `"Time to Peak (ms)"`.
+#' @param y_variable_signif_brackets A character value. You should only use this if your data did not pass assumptions and you had to transform it. `y_variable_signif_brackets` should be the name of the column of `data` which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, leave this argument blank, and the function will automatically use the correct column associated with `y_variable`.
 #' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.5`, which is a good thickness for most applications.
 #'
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
@@ -2803,6 +2804,7 @@ plot_AP_comparison <-
            post_hormone_label = "Post-hormone",
            y_variable,
            y_axis_title,
+           y_variable_signif_brackets = NULL,
            test_type,
            map_signif_level_values = F,
            geom_point_size = 3.8,
@@ -2842,6 +2844,11 @@ plot_AP_comparison <-
       )
     }
 
+    if (is.null(y_variable_signif_brackets)) {
+      y_var_brackets <- y_variable
+    } else {
+      y_var_brackets <- y_variable_signif_brackets
+    }
 
     plot_colour <- treatment_colour_theme %>%
       dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
@@ -2965,6 +2972,7 @@ plot_AP_comparison <-
 
     if (test_type != "none") {
       ap_parameter_plot <- ap_parameter_plot + ggsignif::geom_signif(
+        ggplot2::aes(x = .data$state, y = .data[[y_var_brackets]]),
         comparisons = list(c(baseline_label, post_hormone_label)),
         test = test_type,
         test.args = list(paired = TRUE),

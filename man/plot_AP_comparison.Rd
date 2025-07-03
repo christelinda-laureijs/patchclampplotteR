@@ -17,6 +17,7 @@ plot_AP_comparison(
   post_hormone_label = "Post-hormone",
   y_variable,
   y_axis_title,
+  y_variable_signif_brackets = NULL,
   test_type,
   map_signif_level_values = F,
   geom_point_size = 3.8,
@@ -61,6 +62,8 @@ pre-hormone state. Defaults to \code{"Baseline"}.}
 \item{y_variable}{A character value naming the variable to be plotted on the y-axis. Must be a column present in \code{data}. Examples include \code{peak_amplitude}, \code{time_to_peak}, \code{antipeak_amplitude} and \code{half_width}.}
 
 \item{y_axis_title}{A character value used to define a "pretty" version of \code{y_variable}. This will become the y-axis label on the ggplot. Examples include \code{"Peak Amplitude (pA)"} or \code{"Time to Peak (ms)"}.}
+
+\item{y_variable_signif_brackets}{A character value. You should only use this if your data did not pass assumptions and you had to transform it. \code{y_variable_signif_brackets} should be the name of the column of \code{data} which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, leave this argument blank, and the function will automatically use the correct column associated with \code{y_variable}.}
 
 \item{test_type}{A character (must be \code{"wilcox.test"}, \code{"t.test"} or \code{"none"})
 describing the statistical model used to create a significance bracket

@@ -45,7 +45,6 @@ import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_cla
 \dontrun{
 recording1 <- import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
 
-
 }
 
 #
