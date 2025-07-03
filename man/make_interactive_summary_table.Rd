@@ -6,8 +6,8 @@
 \usage{
 make_interactive_summary_table(
   cell_characteristics_dataframe,
-  pruned_eEPSC_dataframe,
-  pruned_sEPSC_dataframe,
+  pruned_eEPSC_dataframe = NULL,
+  pruned_sEPSC_dataframe = NULL,
   treatment_colour_theme,
   include_all_treatments = "yes",
   list_of_treatments = NULL,

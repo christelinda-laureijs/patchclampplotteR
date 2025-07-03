@@ -1977,7 +1977,7 @@ plot_variance_comparison_data <- function(data,
         size = 1.8
       ) +
       ggplot2::scale_shape_manual(
-        values = c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))
+        values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))
       ) +
       ggplot2::guides(shape = "none") +
       ggplot2::facet_wrap(~ .data$sex)
@@ -2377,7 +2377,7 @@ plot_PPR_data_single_treatment <- function(data,
         color = theme_options["connecting_line_colour", "value"],
         size = 1.8
       ) +
-      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))) +
+      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
       ggplot2::guides(shape = "none") +
       ggplot2::facet_wrap(~ .data$sex)
   }
@@ -2931,7 +2931,7 @@ plot_AP_comparison <-
           alpha = 0.9,
           position = ggplot2::position_jitter(width = 0.02, height = 0)
         ) +
-        ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))) +
+        ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
         ggplot2::scale_color_manual(values = c(plot_colour, plot_colour_pale)) +
         ggplot2::guides(shape = "none") +
         ggplot2::stat_summary(
@@ -4043,7 +4043,7 @@ plot_spontaneous_current_parameter_comparison <-
           size = 2,
           color = plot_colour
         ) +
-        ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))) +
+        ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))) +
         ggplot2::stat_summary(
           fun.data = ggplot2::mean_se,
           geom = "pointrange",
@@ -4694,8 +4694,8 @@ plot_cell_coordinates_data <- function(data,
 #' )
 #'
 make_interactive_summary_table <- function(cell_characteristics_dataframe,
-                                           pruned_eEPSC_dataframe,
-                                           pruned_sEPSC_dataframe,
+                                           pruned_eEPSC_dataframe = NULL,
+                                           pruned_sEPSC_dataframe = NULL,
                                            treatment_colour_theme,
                                            include_all_treatments = "yes",
                                            list_of_treatments = NULL,
@@ -4715,36 +4715,94 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
     cli::cli_abort(c("x" = "`include_all_categories` must be either \"yes\" or \"no\"."))
   }
 
-  table_data <-
-    merge(pruned_eEPSC_dataframe$for_table, pruned_sEPSC_dataframe$for_table, by = "letter") %>%
-    merge(cell_characteristics_dataframe, by = "letter") %>%
-    merge(treatment_colour_theme %>% dplyr::select(-.data$category), by = "treatment") %>%
-    dplyr::select(
-      c(
-        .data$letter,
-        .data$display_names,
-        .data$treatment,
-        .data$synapses,
-        .data$sex,
-        .data$P1_transformed,
-        .data$spont_amplitude_transformed,
-        .data$R_a,
-        .data$days_alone,
-        .data$animal_or_slicing_problems,
-        .data$X,
-        .data$Y,
-        .data$age,
-        .data$animal,
-        .data$category,
-        .data$cell,
-        .data$colours
+
+  if (is.null(pruned_sEPSC_dataframe)) {
+    table_data <-
+      pruned_eEPSC_dataframe$for_table %>%
+      merge(cell_characteristics_dataframe, by = "letter") %>%
+      merge(treatment_colour_theme, by = c("category", "treatment")) %>%
+      dplyr::select(
+        c(
+          .data$letter,
+          .data$display_names,
+          .data$treatment,
+          .data$synapses,
+          .data$sex,
+          .data$P1_transformed,
+          .data$R_a,
+          .data$days_alone,
+          .data$animal_or_slicing_problems,
+          .data$X,
+          .data$Y,
+          .data$age,
+          .data$animal,
+          .data$category,
+          .data$cell,
+          .data$colours
+        )
       )
-    ) %>%
+  }
+
+  if (is.null(pruned_eEPSC_dataframe)) {
+    table_data <-
+      pruned_sEPSC_dataframe$for_table %>%
+      merge(cell_characteristics_dataframe, by = "letter") %>%
+      merge(treatment_colour_theme, by = c("category", "treatment")) %>%
+      dplyr::select(
+        c(
+          .data$letter,
+          .data$display_names,
+          .data$treatment,
+          .data$synapses,
+          .data$sex,
+          .data$spont_amplitude_transformed,
+          .data$R_a,
+          .data$days_alone,
+          .data$animal_or_slicing_problems,
+          .data$X,
+          .data$Y,
+          .data$age,
+          .data$animal,
+          .data$category,
+          .data$cell,
+          .data$colours
+        )
+      )
+  }
+
+  if (!is.null(pruned_eEPSC_dataframe) &
+      !is.null(pruned_sEPSC_dataframe)) {
+    table_data <- merge(pruned_eEPSC_dataframe$for_table,
+                        pruned_sEPSC_dataframe$for_table,
+                        by = "letter") %>%
+      merge(cell_characteristics_dataframe, by = "letter") %>%
+      merge(treatment_colour_theme, by = c("category", "treatment")) %>%
+      dplyr::select(
+        c(
+          .data$letter,
+          .data$display_names,
+          .data$treatment,
+          .data$synapses,
+          .data$sex,
+          .data$P1_transformed,
+          .data$spont_amplitude_transformed,
+          .data$R_a,
+          .data$days_alone,
+          .data$animal_or_slicing_problems,
+          .data$X,
+          .data$Y,
+          .data$age,
+          .data$animal,
+          .data$category,
+          .data$cell,
+          .data$colours
+        )
+      )
+  }
+
+  table_data <- table_data %>%
     dplyr::rename_with(stringr::str_to_title) %>%
-    dplyr::mutate(
-      X = round(.data$X, -1),
-      Y = round(.data$Y, -1)
-    )
+    dplyr::mutate(X = round(.data$X, -1), Y = round(.data$Y, -1))
 
 
   if (include_all_treatments == "yes") {
