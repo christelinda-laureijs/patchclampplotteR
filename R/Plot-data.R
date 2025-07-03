@@ -1940,21 +1940,23 @@ plot_variance_comparison_data <- function(data,
 
   if (variance_measure == "cv") {
     y_axis_title <- "1/CV^2^"
+    y_var <- "cv_inverse_square"
 
     if (is.null(y_variable_signif_brackets)) {
-      y_var <- "cv_inverse_square"
+      y_var_brackets <- "cv_inverse_square"
     } else {
-      y_var <- y_variable_signif_brackets
+      y_var_brackets <- y_variable_signif_brackets
     }
   }
 
   if (variance_measure == "VMR") {
     y_axis_title <- "VMR"
+    y_var <- "VMR"
 
     if (is.null(y_variable_signif_brackets)) {
-      y_var <- "VMR"
+      y_var_brackets <- "VMR"
     } else {
-      y_var <- y_variable_signif_brackets
+      y_var_brackets <- y_variable_signif_brackets
     }
   }
 
@@ -1996,7 +1998,7 @@ plot_variance_comparison_data <- function(data,
   if (test_type != "none") {
     variance_comparison_plot <- variance_comparison_plot +
       ggsignif::geom_signif(
-        ggplot2::aes(x = .data$interval, y = .data[[y_var]]),
+        ggplot2::aes(x = .data$interval, y = .data[[y_var_brackets]]),
         comparisons = list(c(
           baseline_interval, post_hormone_interval
         )),
@@ -3809,7 +3811,7 @@ plot_AP_trace <-
 #' @param y_variable A character value (`"raw_amplitude"` or `"raw_frequency"`) only.
 #'   Normalized amplitude and frequency are not available because all baseline
 #'   values are 100.
-#' @param y_variable_signif_brackets A character value. You should only use this if your data did not pass assumptions and you had to transform it. `y_variable_signif_brackets` should be the name of the column of `data` which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, this will default to the raw data column.
+#' @param y_variable_signif_brackets A character value. You should only use this if your data did not pass assumptions and you had to transform it. `y_variable_signif_brackets` should be the name of the column of `data` which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, leave this argument blank, and the function will automatically use the correct column associated with `y_variable`.
 #' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.5`, which is a good thickness for most applications.
 #'
 #' @inheritParams plot_variance_comparison_data
@@ -3960,21 +3962,23 @@ plot_spontaneous_current_parameter_comparison <-
 
     if (y_variable == "raw_amplitude") {
       y_title <- "sEPSC Amplitude (pA)"
+      y_var <- "mean_raw_amplitude"
 
       if (is.null(y_variable_signif_brackets)) {
-        y_var <- "mean_raw_amplitude"
+        y_var_brackets <- "mean_raw_amplitude"
       } else {
-        y_var <- y_variable_signif_brackets
+        y_var_brackets <- y_variable_signif_brackets
       }
     }
 
     if (y_variable == "raw_frequency") {
       y_title <- "sEPSC Frequency (Hz)"
+      y_var <- "mean_raw_frequency"
 
       if (is.null(y_variable_signif_brackets)) {
-        y_var <- "mean_raw_frequency"
+        y_var_brackets <- "mean_raw_frequency"
       } else {
-        y_var <- y_variable_signif_brackets
+        y_var_brackets <- y_variable_signif_brackets
       }
     }
 
@@ -4074,7 +4078,7 @@ plot_spontaneous_current_parameter_comparison <-
     if (test_type != "none") {
       sEPSC_comparison_plot <- sEPSC_comparison_plot +
         ggsignif::geom_signif(
-          ggplot2::aes(x = .data$interval, y = .data[[y_var]]),
+          ggplot2::aes(x = .data$interval, y = .data[[y_var_brackets]]),
           comparisons = list(c(
             baseline_interval, post_hormone_interval
           )),
