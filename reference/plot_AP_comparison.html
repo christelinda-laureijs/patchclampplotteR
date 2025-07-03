@@ -65,6 +65,7 @@
 <span>  post_hormone_label <span class="op">=</span> <span class="st">"Post-hormone"</span>,</span>
 <span>  <span class="va">y_variable</span>,</span>
 <span>  <span class="va">y_axis_title</span>,</span>
+<span>  y_variable_signif_brackets <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">test_type</span>,</span>
 <span>  map_signif_level_values <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>  geom_point_size <span class="op">=</span> <span class="fl">3.8</span>,</span>
@@ -136,6 +137,10 @@ pre-hormone state. Defaults to <code>"Baseline"</code>.</p></dd>
 
 <dt id="arg-y-axis-title">y_axis_title<a class="anchor" aria-label="anchor" href="#arg-y-axis-title"></a></dt>
 <dd><p>A character value used to define a "pretty" version of <code>y_variable</code>. This will become the y-axis label on the ggplot. Examples include <code>"Peak Amplitude (pA)"</code> or <code>"Time to Peak (ms)"</code>.</p></dd>
+
+
+<dt id="arg-y-variable-signif-brackets">y_variable_signif_brackets<a class="anchor" aria-label="anchor" href="#arg-y-variable-signif-brackets"></a></dt>
+<dd><p>A character value. You should only use this if your data did not pass assumptions and you had to transform it. <code>y_variable_signif_brackets</code> should be the name of the column of <code>data</code> which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, leave this argument blank, and the function will automatically use the correct column associated with <code>y_variable</code>.</p></dd>
 
 
 <dt id="arg-test-type">test_type<a class="anchor" aria-label="anchor" href="#arg-test-type"></a></dt>
