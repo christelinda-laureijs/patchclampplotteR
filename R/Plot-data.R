@@ -1364,7 +1364,7 @@ plot_summary_current_data <- function(data,
     if (significance_display_method == "stars") {
       treatment_plot <- treatment_plot +
         ggplot2::geom_text(
-          data = t_test_df %>% dplyr::filter(.data$treatment == plot_treatment),
+          data = t_test_df %>% dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment),
           ggplot2::aes(
             x = .data$asterisk_time,
             y = y_axis_limit - 50,
@@ -1379,7 +1379,7 @@ plot_summary_current_data <- function(data,
     if (significance_display_method == "p-values") {
       treatment_plot <- treatment_plot +
         ggplot2::geom_text(
-          data = t_test_df %>% dplyr::filter(.data$treatment == plot_treatment),
+          data = t_test_df %>% dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment),
           ggplot2::aes(
             x = .data$asterisk_time,
             y = y_axis_limit - 50,
