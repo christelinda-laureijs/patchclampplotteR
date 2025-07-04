@@ -72,9 +72,10 @@ be used to apply significance stars to the plot in
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">perform_t_tests_for_summary_plot</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
-<span>  <span class="va">test_category</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span>
 <span>  list_of_treatments <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  include_all_categories <span class="op">=</span> <span class="st">"yes"</span>,</span>
+<span>  list_of_categories <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
 <span>  parameter <span class="op">=</span> <span class="st">"amplitude"</span>,</span>
 <span>  baseline_interval <span class="op">=</span> <span class="st">"t0to5"</span>,</span>
@@ -95,12 +96,6 @@ be used to apply significance stars to the plot in
 <code><a href="make_summary_EPSC_data.html">make_summary_EPSC_data()</a></code>. If <code>current_type</code> is "eEPSC", this must be the <code>$summary_data</code> element of the list produced by <code><a href="make_summary_EPSC_data.html">make_summary_EPSC_data()</a></code>.</p></dd>
 
 
-<dt id="arg-test-category">test_category<a class="anchor" aria-label="anchor" href="#arg-test-category"></a></dt>
-<dd><p>A numeric value describing the experimental category. In
-the sample dataset for this package, 2 represents experiments where insulin
-was applied continuously after a 5-minute baseline period.</p></dd>
-
-
 <dt id="arg-include-all-treatments">include_all_treatments<a class="anchor" aria-label="anchor" href="#arg-include-all-treatments"></a></dt>
 <dd><p>A character (<code>"yes"</code> or <code>"no"</code>) specifying if the
 plot will include data from all treatments. If <code>"no"</code>, you must specify a
@@ -111,6 +106,18 @@ list of treatments in <code>list_of_treatments</code>.</p></dd>
 <dd><p>A list of character values describing the
 treatments that will be in the plot. Defaults to <code>NULL</code>, since
 include_all_treatments is <code>"yes"</code> by default.</p></dd>
+
+
+<dt id="arg-include-all-categories">include_all_categories<a class="anchor" aria-label="anchor" href="#arg-include-all-categories"></a></dt>
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>) specifying if the
+table will include data from all categories. If <code>"no"</code>, you must specify a
+list of categories in <code>list_of_categories</code>.</p></dd>
+
+
+<dt id="arg-list-of-categories">list_of_categories<a class="anchor" aria-label="anchor" href="#arg-list-of-categories"></a></dt>
+<dd><p>A list of character values describing the
+categories that will be in the table. Defaults to <code>NULL</code>, since
+<code>include_all_categories</code> is <code>"yes"</code> by default.</p></dd>
 
 
 <dt id="arg-current-type">current_type<a class="anchor" aria-label="anchor" href="#arg-current-type"></a></dt>
@@ -181,7 +188,6 @@ current amplitudes were created.</p></div>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">perform_t_tests_for_summary_plot</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_summary_eEPSC_df</span><span class="op">$</span><span class="va">summary_data</span>,</span></span>
-<span class="r-in"><span>  test_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span></span>
 <span class="r-in"><span>  list_of_treatments <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
 <span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span></span>
@@ -192,40 +198,28 @@ current amplitudes were created.</p></div>
 <span class="r-in"><span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span></span>
 <span class="r-in"><span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     group2 asterisk_time     treatment                 .y. group1 n1 n2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  t10to15          12.5       Control mean_P1_transformed  t0to5  4  4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  t15to20          17.5       Control mean_P1_transformed  t0to5  4  4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  t20to25          22.5       Control mean_P1_transformed  t0to5  4  4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   t5to10           7.5       Control mean_P1_transformed  t0to5  4  4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  t10to15          12.5         HNMPA mean_P1_transformed  t0to5  5  5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  t15to20          17.5         HNMPA mean_P1_transformed  t0to5  5  5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  t20to25          22.5         HNMPA mean_P1_transformed  t0to5  5  5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   t5to10           7.5         HNMPA mean_P1_transformed  t0to5  5  5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  t10to15          12.5           PPP mean_P1_transformed  t0to5  5  5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 t15to20          17.5           PPP mean_P1_transformed  t0to5  5  5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 t20to25          22.5           PPP mean_P1_transformed  t0to5  5  5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12  t5to10           7.5           PPP mean_P1_transformed  t0to5  5  5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 t10to15          12.5 PPP_and_HNMPA mean_P1_transformed  t0to5  5  5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 t15to20          17.5 PPP_and_HNMPA mean_P1_transformed  t0to5  5  5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 t20to25          22.5 PPP_and_HNMPA mean_P1_transformed  t0to5  5  5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16  t5to10           7.5 PPP_and_HNMPA mean_P1_transformed  t0to5  5  5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    statistic df     p p.adj p.adj.signif p_string significance_stars</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       4.89  3 0.016 0.033            *    0.033                  *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       6.96  3 0.006 0.018            *    0.018                  *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       8.01  3 0.004 0.016            *    0.016                  *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       2.28  3 0.107 0.107           ns     0.11                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       3.15  4 0.035 0.133           ns     0.13                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       2.99  4 0.040 0.133           ns     0.13                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7       3.19  4 0.033 0.133           ns     0.13                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8       3.10  4 0.036 0.133           ns     0.13                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9       0.89  4 0.422 0.844           ns     0.84                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      1.50  4 0.209 0.627           ns     0.63                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11      1.96  4 0.121 0.484           ns     0.48                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12      0.78  4 0.481 0.844           ns     0.84                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13      0.94  4 0.402 1.000           ns   &gt; 0.99                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14      0.84  4 0.447 1.000           ns   &gt; 0.99                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15      1.39  4 0.238 0.952           ns     0.95                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16     -0.59  4 0.586 1.000           ns   &gt; 0.99                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 16 × 15</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   category, treatment [4]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    group2  asterisk_time category treatment   .y.   group1    n1    n2 statistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> t5to10            7.5 2        Control     mean… t0to5      4     4      2.28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> t10to15          12.5 2        Control     mean… t0to5      4     4      4.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> t15to20          17.5 2        Control     mean… t0to5      4     4      6.96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> t20to25          22.5 2        Control     mean… t0to5      4     4      8.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> t5to10            7.5 2        HNMPA       mean… t0to5      5     5      3.1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> t10to15          12.5 2        HNMPA       mean… t0to5      5     5      3.15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> t15to20          17.5 2        HNMPA       mean… t0to5      5     5      2.99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> t20to25          22.5 2        HNMPA       mean… t0to5      5     5      3.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> t5to10            7.5 2        PPP         mean… t0to5      5     5      0.78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> t10to15          12.5 2        PPP         mean… t0to5      5     5      0.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> t15to20          17.5 2        PPP         mean… t0to5      5     5      1.5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> t20to25          22.5 2        PPP         mean… t0to5      5     5      1.96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> t5to10            7.5 2        PPP_and_HN… mean… t0to5      5     5     -<span style="color: #BB0000;">0.59</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> t10to15          12.5 2        PPP_and_HN… mean… t0to5      5     5      0.94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> t15to20          17.5 2        PPP_and_HN… mean… t0to5      5     5      0.84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> t20to25          22.5 2        PPP_and_HN… mean… t0to5      5     5      1.39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: df &lt;dbl&gt;, p &lt;dbl&gt;, p.adj &lt;dbl&gt;, p.adj.signif &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   p_string &lt;chr&gt;, significance_stars &lt;chr&gt;</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
