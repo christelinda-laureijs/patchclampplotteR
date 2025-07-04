@@ -29,7 +29,7 @@ plot_summary_current_data(
   significance_display_method = "stars",
   geom_signif_text_size = 5,
   geom_signif_family = "",
-  t_test_df,
+  t_test_df = NULL,
   large_axis_text = "no",
   shade_intervals = "no",
   theme_options,

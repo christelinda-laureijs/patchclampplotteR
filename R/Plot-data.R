@@ -955,7 +955,7 @@ plot_summary_current_data <- function(data,
                                       significance_display_method = "stars",
                                       geom_signif_text_size = 5,
                                       geom_signif_family = "",
-                                      t_test_df,
+                                      t_test_df = NULL,
                                       large_axis_text = "no",
                                       shade_intervals = "no",
                                       theme_options,
@@ -4674,13 +4674,15 @@ plot_cell_coordinates_data <- function(data,
 #' identify trends in response to a hormone/protocol for all cells belonging to
 #' a particular treatment.
 #'
+#' If you only have one type of current data you can omit one dataframe. For example, if you have evoked current data but not spontaneous current data, fill in `pruned_eEPSC_dataframe`, and delete the argument `pruned_sEPSC_dataframe`, or fill it in as `NULL`.
+#'
 #' @inheritParams plot_baseline_data
 #' @param cell_characteristics_dataframe A dataframe containing the cell
 #'   characteristics, generated from [import_cell_characteristics_df()].
 #' @param pruned_eEPSC_dataframe A dataframe containing pruned evoked current
-#'   data, generated from [make_pruned_EPSC_data()], where `current_type == "eEPSC"`.
+#'   data, generated from [make_pruned_EPSC_data()], where `current_type == "eEPSC"`. Defaults to NULL to enable flexibility if you only have spontaneous data.
 #' @param pruned_sEPSC_dataframe A dataframe containing pruned spontaneous
-#'   current data, generated from [make_pruned_EPSC_data()], where `current_type == "sEPSC"`.
+#'   current data, generated from [make_pruned_EPSC_data()], where `current_type == "sEPSC"`. Defaults to NULL to enable flexibility if you only have evoked current data.
 #' @param include_all_categories A character (`"yes"` or `"no"`) specifying if the
 #'   plot will include data from all categories. If `"no"`, you must specify a
 #'   list of categories in `list_of_categories`.
@@ -4703,6 +4705,9 @@ plot_cell_coordinates_data <- function(data,
 #' @examples
 #'
 #' # Note, the number of treatments is limited to "Control" and "PPP" to reduce run-time
+#'
+#' ## Both evoked and spontaneous data
+#'
 #' make_interactive_summary_table(
 #'   cell_characteristics_dataframe = sample_cell_characteristics,
 #'   pruned_eEPSC_dataframe = sample_pruned_eEPSC_df,
@@ -4715,6 +4720,29 @@ plot_cell_coordinates_data <- function(data,
 #'   save_output_as_RDS = "no"
 #' )
 #'
+#' ## Evoked current data only
+#' make_interactive_summary_table(
+#'   cell_characteristics_dataframe = sample_cell_characteristics,
+#'   pruned_eEPSC_dataframe = sample_pruned_eEPSC_df,
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   include_all_treatments = "no",
+#'   list_of_treatments = c("Control", "PPP"),
+#'   include_all_categories = "yes",
+#'   list_of_categories = NULL,
+#'   save_output_as_RDS = "no"
+#' )
+#'
+#' ## Spontaneous current data only
+#' make_interactive_summary_table(
+#'   cell_characteristics_dataframe = sample_cell_characteristics,
+#'   pruned_sEPSC_dataframe = sample_pruned_sEPSC_df,
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   include_all_treatments = "no",
+#'   list_of_treatments = c("Control", "PPP"),
+#'   include_all_categories = "yes",
+#'   list_of_categories = NULL,
+#'   save_output_as_RDS = "no"
+#' )
 make_interactive_summary_table <- function(cell_characteristics_dataframe,
                                            pruned_eEPSC_dataframe = NULL,
                                            pruned_sEPSC_dataframe = NULL,

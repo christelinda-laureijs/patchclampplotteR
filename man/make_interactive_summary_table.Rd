@@ -22,10 +22,10 @@ make_interactive_summary_table(
 characteristics, generated from \code{\link[=import_cell_characteristics_df]{import_cell_characteristics_df()}}.}
 
 \item{pruned_eEPSC_dataframe}{A dataframe containing pruned evoked current
-data, generated from \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}, where \code{current_type == "eEPSC"}.}
+data, generated from \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}, where \code{current_type == "eEPSC"}. Defaults to NULL to enable flexibility if you only have spontaneous data.}
 
 \item{pruned_sEPSC_dataframe}{A dataframe containing pruned spontaneous
-current data, generated from \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}, where \code{current_type == "sEPSC"}.}
+current data, generated from \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}, where \code{current_type == "sEPSC"}. Defaults to NULL to enable flexibility if you only have evoked current data.}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See
@@ -77,10 +77,15 @@ response of a group of cells.
 The sparklines are colour-coded by treatment, allowing you to quickly
 identify trends in response to a hormone/protocol for all cells belonging to
 a particular treatment.
+
+If you only have one type of current data you can omit one dataframe. For example, if you have evoked current data but not spontaneous current data, fill in \code{pruned_eEPSC_dataframe}, and delete the argument \code{pruned_sEPSC_dataframe}, or fill it in as \code{NULL}.
 }
 \examples{
 
 # Note, the number of treatments is limited to "Control" and "PPP" to reduce run-time
+
+## Both evoked and spontaneous data
+
 make_interactive_summary_table(
   cell_characteristics_dataframe = sample_cell_characteristics,
   pruned_eEPSC_dataframe = sample_pruned_eEPSC_df,
@@ -93,4 +98,27 @@ make_interactive_summary_table(
   save_output_as_RDS = "no"
 )
 
+## Evoked current data only
+make_interactive_summary_table(
+  cell_characteristics_dataframe = sample_cell_characteristics,
+  pruned_eEPSC_dataframe = sample_pruned_eEPSC_df,
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  include_all_treatments = "no",
+  list_of_treatments = c("Control", "PPP"),
+  include_all_categories = "yes",
+  list_of_categories = NULL,
+  save_output_as_RDS = "no"
+)
+
+## Spontaneous current data only
+make_interactive_summary_table(
+  cell_characteristics_dataframe = sample_cell_characteristics,
+  pruned_sEPSC_dataframe = sample_pruned_sEPSC_df,
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  include_all_treatments = "no",
+  list_of_treatments = c("Control", "PPP"),
+  include_all_categories = "yes",
+  list_of_categories = NULL,
+  save_output_as_RDS = "no"
+)
 }
