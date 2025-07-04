@@ -6,9 +6,10 @@
 \usage{
 perform_t_tests_for_summary_plot(
   data,
-  test_category,
   include_all_treatments = "yes",
   list_of_treatments = NULL,
+  include_all_categories = "yes",
+  list_of_categories = NULL,
   current_type = "eEPSC",
   parameter = "amplitude",
   baseline_interval = "t0to5",
@@ -23,10 +24,6 @@ perform_t_tests_for_summary_plot(
 \item{data}{A dataframe containing the summary data generated from
 \code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}}. If \code{current_type} is "eEPSC", this must be the \verb{$summary_data} element of the list produced by \code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}}.}
 
-\item{test_category}{A numeric value describing the experimental category. In
-the sample dataset for this package, 2 represents experiments where insulin
-was applied continuously after a 5-minute baseline period.}
-
 \item{include_all_treatments}{A character (\code{"yes"} or \code{"no"}) specifying if the
 plot will include data from all treatments. If \code{"no"}, you must specify a
 list of treatments in \code{list_of_treatments}.}
@@ -34,6 +31,14 @@ list of treatments in \code{list_of_treatments}.}
 \item{list_of_treatments}{A list of character values describing the
 treatments that will be in the plot. Defaults to \code{NULL}, since
 include_all_treatments is \code{"yes"} by default.}
+
+\item{include_all_categories}{A character (\code{"yes"} or \code{"no"}) specifying if the
+table will include data from all categories. If \code{"no"}, you must specify a
+list of categories in \code{list_of_categories}.}
+
+\item{list_of_categories}{A list of character values describing the
+categories that will be in the table. Defaults to \code{NULL}, since
+\code{include_all_categories} is \code{"yes"} by default.}
 
 \item{current_type}{A character describing the current type. Allowed values
 are \code{"eEPSC"} or \code{"sEPSC"}.}
@@ -83,7 +88,6 @@ be used to apply significance stars to the plot in
 \examples{
 perform_t_tests_for_summary_plot(
   data = sample_summary_eEPSC_df$summary_data,
-  test_category = 2,
   include_all_treatments = "yes",
   list_of_treatments = NULL,
   current_type = "eEPSC",

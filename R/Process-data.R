@@ -1201,11 +1201,14 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #' @inheritParams plot_baseline_data
 #' @inheritParams make_normalized_EPSC_data
 #' @param p_adjust_method This argument is directly related to `p.adjust.method` in `rstatix::t_test`. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include `"holm"`, `"hochberg"`, `"hommel"`, `"bonferroni"`, `"BH"`, `"BY"`, `"fdr"`, `"none"` (although `"none"` is not recommended).
+#' @param include_all_categories A character (`"yes"` or `"no"`) specifying if the
+#'   table will include data from all categories. If `"no"`, you must specify a
+#'   list of categories in `list_of_categories`.
+#' @param list_of_categories A list of character values describing the
+#'   categories that will be in the table. Defaults to `NULL`, since
+#'   `include_all_categories` is `"yes"` by default.
 #' @param test_type A character (must be `"pairwise.wilcox.test"` or `"pairwise.t.test"`)
 #'   describing the statistical model used in this function.
-#' @param test_category A numeric value describing the experimental category. In
-#'   the sample dataset for this package, 2 represents experiments where insulin
-#'   was applied continuously after a 5-minute baseline period.
 #' @param parameter A character value specifying the parameter to be plotted on
 #'   the y-axis. For evoked currents (`current_type = "eEPSC"`), the available
 #'   parameter is "amplitude", which contains amplitudes normalized relative to
@@ -1225,7 +1228,6 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #' @examples
 #' perform_t_tests_for_summary_plot(
 #'   data = sample_summary_eEPSC_df$summary_data,
-#'   test_category = 2,
 #'   include_all_treatments = "yes",
 #'   list_of_treatments = NULL,
 #'   current_type = "eEPSC",
@@ -1237,9 +1239,10 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #'   save_output_as_RDS = "no"
 #' )
 perform_t_tests_for_summary_plot <- function(data,
-                                             test_category,
                                              include_all_treatments = "yes",
                                              list_of_treatments = NULL,
+                                             include_all_categories = "yes",
+                                             list_of_categories = NULL,
                                              current_type = "eEPSC",
                                              parameter = "amplitude",
                                              baseline_interval = "t0to5",
@@ -1266,16 +1269,44 @@ perform_t_tests_for_summary_plot <- function(data,
     cli::cli_abort(c("x" = "`include_all_treatments` must be either \"yes\" or \"no\"."))
   }
 
+  if (!include_all_categories %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`include_all_categories` must be either \"yes\" or \"no\"."))
+  }
+
   if (!p_adjust_method %in% c("holm", "hochberg", "hommel", "bonferroni", "BH", "BY", "fdr", "none")) {
     cli::cli_abort(c("x" = "`p_adjust_method` argument must be one of: \"holm\", \"hochberg\", \"hommel\", \"bonferroni\", \"BH\", \"BY\", \"fdr\", or \"none\""))
   }
 
-  if (include_all_treatments == "yes") {
-    treatment_info <- treatment_colour_theme
-    t_test_data <- data %>%
-      dplyr::semi_join(treatment_info, by = c("treatment")) %>%
-      dplyr::filter(.data$treatment %in% treatment_info$treatment)
+  treatment_info <- treatment_colour_theme
+  t_test_data <- data
 
+  if (include_all_categories == "yes") {
+    if (!is.null(list_of_categories)) {
+      cli::cli_alert_info(
+        "include_all_categories = \"yes\", but you included a list of categories to filter. All categories will be used."
+      )
+    }
+  } else {
+    if (is.null(list_of_categories)) {
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_categories` = \"",
+          include_all_categories,
+          "\", but `list_of_categories` is NULL."
+        ),
+        "i" = "Did you forget to add a list of categories?"
+      ))
+    }
+
+    treatment_info <- treatment_info %>%
+      dplyr::filter(.data$category %in% list_of_categories)
+    t_test_data <- t_test_data %>%
+      dplyr::filter(.data$category %in% list_of_categories) %>%
+      droplevels()
+  }
+
+
+  if (include_all_treatments == "yes") {
     if (!is.null(list_of_treatments)) {
       cli::cli_alert_info(
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
@@ -1309,9 +1340,9 @@ perform_t_tests_for_summary_plot <- function(data,
       cli::cli_abort(c("x" = "`baseline_interval` must be a character (e.g. \"t0to5\", \"t0to3\")"))
     }
 
-    treatment_info <- treatment_colour_theme %>%
+    treatment_info <- treatment_info %>%
       dplyr::filter(.data$treatment %in% list_of_treatments)
-    t_test_data <- data %>%
+    t_test_data <- t_test_data %>%
       dplyr::filter(.data$treatment %in% list_of_treatments) %>%
       droplevels()
   }
@@ -1335,8 +1366,7 @@ perform_t_tests_for_summary_plot <- function(data,
     if (parameter == "amplitude") {
       if (test_type == "pairwise.t.test") {
         t_test_results <- t_test_data %>%
-          dplyr::filter(.data$category == test_category) %>%
-          dplyr::group_by(.data$treatment) %>%
+          dplyr::group_by(.data$category, .data$treatment) %>%
           rstatix::pairwise_t_test(
             mean_P1_transformed ~ interval,
             ref.group = baseline_interval,
@@ -1347,8 +1377,7 @@ perform_t_tests_for_summary_plot <- function(data,
 
       if (test_type == "pairwise.wilcox.test") {
         t_test_results <- t_test_data %>%
-          dplyr::filter(.data$category == test_category) %>%
-          dplyr::group_by(.data$treatment) %>%
+          dplyr::group_by(.data$category, .data$treatment) %>%
           rstatix::pairwise_wilcox_test(
             mean_P1_transformed ~ interval,
             ref.group = baseline_interval,
@@ -1383,8 +1412,7 @@ perform_t_tests_for_summary_plot <- function(data,
     if (parameter == "amplitude") {
       if (test_type == "pairwise.t.test") {
         t_test_results <- t_test_data %>%
-          dplyr::filter(.data$category == test_category) %>%
-          dplyr::group_by(.data$treatment) %>%
+          dplyr::group_by(.data$category, .data$treatment) %>%
           rstatix::pairwise_t_test(
             mean_transformed_amplitude ~ interval,
             ref.group = baseline_interval,
@@ -1395,8 +1423,7 @@ perform_t_tests_for_summary_plot <- function(data,
 
       if (test_type == "pairwise.wilcox.test") {
         t_test_results <- t_test_data %>%
-          dplyr::filter(.data$category == test_category) %>%
-          dplyr::group_by(.data$treatment) %>%
+          dplyr::group_by(.data$category, .data$treatment) %>%
           rstatix::pairwise_wilcox_test(
             mean_transformed_amplitude ~ interval,
             ref.group = baseline_interval,
@@ -1409,8 +1436,7 @@ perform_t_tests_for_summary_plot <- function(data,
     if (parameter == "raw_amplitude") {
       if (test_type == "pairwise.t.test") {
         t_test_results <- t_test_data %>%
-          dplyr::filter(.data$category == test_category) %>%
-          dplyr::group_by(.data$treatment) %>%
+          dplyr::group_by(.data$category, .data$treatment) %>%
           rstatix::pairwise_t_test(
             mean_raw_amplitude ~ interval,
             ref.group = baseline_interval,
@@ -1421,8 +1447,7 @@ perform_t_tests_for_summary_plot <- function(data,
 
       if (test_type == "pairwise.wilcox.test") {
         t_test_results <- t_test_data %>%
-          dplyr::filter(.data$category == test_category) %>%
-          dplyr::group_by(.data$treatment) %>%
+          dplyr::group_by(.data$category, .data$treatment) %>%
           rstatix::pairwise_wilcox_test(
             mean_raw_amplitude ~ interval,
             ref.group = baseline_interval,
@@ -1435,8 +1460,7 @@ perform_t_tests_for_summary_plot <- function(data,
     if (parameter == "frequency") {
       if (test_type == "pairwise.t.test") {
         t_test_results <- t_test_data %>%
-          dplyr::filter(.data$category == test_category) %>%
-          dplyr::group_by(.data$treatment) %>%
+          dplyr::group_by(.data$category, .data$treatment) %>%
           rstatix::pairwise_t_test(
             mean_transformed_frequency ~ interval,
             ref.group = baseline_interval,
@@ -1447,8 +1471,7 @@ perform_t_tests_for_summary_plot <- function(data,
 
       if (test_type == "pairwise.wilcox.test") {
         t_test_results <- t_test_data %>%
-          dplyr::filter(.data$category == test_category) %>%
-          dplyr::group_by(.data$treatment) %>%
+          dplyr::group_by(.data$category, .data$treatment) %>%
           rstatix::pairwise_wilcox_test(
             mean_transformed_frequency ~ interval,
             ref.group = baseline_interval,
@@ -1461,8 +1484,7 @@ perform_t_tests_for_summary_plot <- function(data,
     if (parameter == "raw_frequency") {
       if (test_type == "pairwise.t.test") {
         t_test_results <- t_test_data %>%
-          dplyr::filter(.data$category == test_category) %>%
-          dplyr::group_by(.data$treatment) %>%
+          dplyr::group_by(.data$category, .data$treatment) %>%
           rstatix::pairwise_t_test(
             mean_raw_frequency ~ interval,
             ref.group = baseline_interval,
@@ -1472,8 +1494,7 @@ perform_t_tests_for_summary_plot <- function(data,
       }
       if (test_type == "pairwise.wilcox.test") {
         t_test_results <- t_test_data %>%
-          dplyr::filter(.data$category == test_category) %>%
-          dplyr::group_by(.data$treatment) %>%
+          dplyr::group_by(.data$category, .data$treatment) %>%
           rstatix::pairwise_wilcox_test(
             mean_raw_frequency ~ interval,
             ref.group = baseline_interval,

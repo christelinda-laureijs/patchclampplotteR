@@ -4688,7 +4688,7 @@ plot_cell_coordinates_data <- function(data,
 #'   list of categories in `list_of_categories`.
 #' @param list_of_categories A list of character values describing the
 #'   categories that will be in the plot. Defaults to `NULL`, since
-#'   include_all_categories is `"yes"` by default.
+#'   `include_all_categories` is `"yes"` by default.
 #' @param save_output_as_RDS A character (`"yes"` or `"no"`) describing if the
 #'   resulting object should be saved as an RDS file in the folder `"Data/Output-Data-from-R"`. The function will automatically create this folder if it doesn't already exist.
 #'   Note: This is not the interactive table, but it is the raw dataframe that

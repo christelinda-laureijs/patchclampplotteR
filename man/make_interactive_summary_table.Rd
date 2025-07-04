@@ -46,7 +46,7 @@ list of categories in \code{list_of_categories}.}
 
 \item{list_of_categories}{A list of character values describing the
 categories that will be in the plot. Defaults to \code{NULL}, since
-include_all_categories is \code{"yes"} by default.}
+\code{include_all_categories} is \code{"yes"} by default.}
 
 \item{save_output_as_RDS}{A character (\code{"yes"} or \code{"no"}) describing if the
 resulting object should be saved as an RDS file in the folder \code{"Data/Output-Data-from-R"}. The function will automatically create this folder if it doesn't already exist.
