@@ -4908,17 +4908,6 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
       ))
     }
 
-    if (!is.character(list_of_categories)) {
-      cli::cli_abort(c(
-        "x" = paste0(
-          "`include_all_categories` = \"",
-          include_all_categories,
-          "\", but `list_of_categories` is not a character object or list of characters."
-        ),
-        "i" = "Did you forget to add a list of categories?"
-      ))
-    }
-
     table_data <- table_data %>%
       dplyr::filter(.data$Category %in% list_of_categories)
   }
