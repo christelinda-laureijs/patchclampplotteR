@@ -12,6 +12,7 @@ plot_cv_data(
   included_sexes = "both",
   male_label = "Male",
   female_label = "Female",
+  x_label = "Time (min)",
   theme_options,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
@@ -40,6 +41,8 @@ should look like.}
 \item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for male data in the \code{sex} column, and it must be consistent across data sheets. Defaults to \code{"Male"}.}
 
 \item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for female data in the \code{sex} column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
+
+\item{x_label}{A character value specifying the x-axis label. Defaults to "Time (min)".}
 
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should

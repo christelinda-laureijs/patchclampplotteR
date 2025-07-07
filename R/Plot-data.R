@@ -408,6 +408,7 @@ plot_baseline_data <- function(data,
 #'   select `"mean_P1"`, you must set the `pruned` argument to `"yes"`. For
 #'   spontaneous currents (`current_type = "sEPSC"`), the available y_variables
 #'   are `"amplitude"` or `"frequency"`.
+#' @param x_label A character value specifying the x-axis label. Defaults to "Time (min)".
 #' @param pruned A character value (`"yes"` or `"no"`) specifying if the data are
 #'   pruned. The plot will then present the data as means with error bars.
 #' @param hormone_added A character value that will be used as the label over
@@ -496,6 +497,7 @@ plot_raw_current_data <-
            male_label = "Male",
            female_label = "Female",
            colour_by_sex = "yes",
+           x_label = "Time (min)",
            treatment_colour_theme,
            geom_text_family = "",
            save_plot_png = "no",
@@ -707,7 +709,7 @@ plot_raw_current_data <-
             unique(plot_df$sex)
           )
         ) +
-        ggplot2::labs(x = "Time (min)", y = y_title) +
+        ggplot2::labs(x = x_label, y = y_title) +
         ggplot_theme
 
       if (current_type == "sEPSC" &
@@ -843,6 +845,35 @@ plot_raw_current_data <-
     return(list_of_plots)
   }
 
+
+
+# make_facet_plot <- function(data,
+#                             plot_category,
+#                             plot_treatment,
+#                             plot_sex,
+#                             y_variable = "P1",
+#                             xlabel = "Time (min)",
+#                             ylabel = "eEPSC amplitude (pA)") {
+#   plot_colour <- my_theme_colours %>%
+#     dplyr::filter(category == facet_category &
+#                     treatment == facet_treatment) %>%
+#     dplyr::pull(colours)
+#
+#   facet_plot <- data %>% dplyr::filter(category == facet_category &
+#                                          treatment == facet_treatment &
+#                                          sex == facet_sex) %>%
+#     ggplot2::ggplot(aes(x = time, y = .data[[y_variable]])) +
+#     ggplot2::geom_point(color = plot_colour) + segoe_theme +
+#     ggplot2::facet_wrap(. ~ .data$letter, ncol = 3, scales = "free_y") +
+#     ggplot2::labs(x = xlabel, y = ylabel)
+#
+#   return(facet_plot)
+# }
+
+
+
+
+
 #' Make a summary plot for a specific treatment
 #'
 #' This function enables you to create a scatterplot of mean evoked (or
@@ -951,6 +982,7 @@ plot_summary_current_data <- function(data,
                                       annotation_y_min = 0,
                                       annotation_y_max = 40,
                                       y_axis_limit,
+                                      x_label = "Time (min)",
                                       signif_stars = "no",
                                       significance_display_method = "stars",
                                       geom_signif_text_size = 5,
@@ -1218,7 +1250,7 @@ plot_summary_current_data <- function(data,
     ggplot2::geom_hline(yintercept = 100, linetype = "dashed") +
     ggplot2::coord_cartesian(ylim = c(0, y_axis_limit)) +
     ggplot2::labs(
-      x = "Time (min)",
+      x = x_label,
       y = y_title,
       shape = NULL,
       color = NULL
@@ -2121,6 +2153,7 @@ plot_cv_data <- function(data,
                          included_sexes = "both",
                          male_label = "Male",
                          female_label = "Female",
+                         x_label = "Time (min)",
                          theme_options,
                          save_plot_png = "no",
                          ggplot_theme = patchclampplotteR_theme()) {
@@ -2160,7 +2193,7 @@ plot_cv_data <- function(data,
     dplyr::filter(.data$treatment == plot_treatment) %>%
     ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data$cv_P1_all_cells)) +
     ggplot2::geom_point(color = plot_colour) +
-    ggplot2::labs(x = "Time (min)", y = "CV") +
+    ggplot2::labs(x = x_label, y = "CV") +
     ggplot_theme
 
   if (save_plot_png == "yes") {

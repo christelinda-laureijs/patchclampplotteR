@@ -18,6 +18,7 @@ plot_raw_current_data(
   male_label = "Male",
   female_label = "Female",
   colour_by_sex = "yes",
+  x_label = "Time (min)",
   treatment_colour_theme,
   geom_text_family = "",
   save_plot_png = "no",
@@ -72,6 +73,8 @@ look like.}
 \item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for female data in the \code{sex} column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
 
 \item{colour_by_sex}{A character ("yes" or "no") describing if the colour should change based on sex. If "yes", the male data will be coloured according to the \code{colours} column of \code{treatment_colour_theme}, and female data will be coloured according to the \code{very_pale_colours} column of \code{treatment_colour_theme}. If "no", all plots will be coloured using the \code{colours} column.}
+
+\item{x_label}{A character value specifying the x-axis label. Defaults to "Time (min)".}
 
 \item{treatment_colour_theme}{A dataframe containing treatment names and
 their associated colours as hex values. See

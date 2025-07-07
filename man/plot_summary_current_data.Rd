@@ -25,6 +25,7 @@ plot_summary_current_data(
   annotation_y_min = 0,
   annotation_y_max = 40,
   y_axis_limit,
+  x_label = "Time (min)",
   signif_stars = "no",
   significance_display_method = "stars",
   geom_signif_text_size = 5,
@@ -101,6 +102,8 @@ file. Use relative paths to specify files. For example, a figure in the \code{Fi
 \item{annotation_y_max}{A numeric value describing the maximum value on the y-axis for the representative trace. Change this if your representative trace image looks squished or stretched.}
 
 \item{y_axis_limit}{A numeric value describing the maximum value on the y-axis.}
+
+\item{x_label}{A character value specifying the x-axis label. Defaults to "Time (min)".}
 
 \item{signif_stars}{A character (\code{"yes"} or \code{"no"}) describing if significance
 stars should be included as an overlay in the plot. If \code{"yes"}, you must
