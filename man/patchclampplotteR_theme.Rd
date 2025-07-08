@@ -4,7 +4,10 @@
 \alias{patchclampplotteR_theme}
 \title{Add a customized ggplot2 theme}
 \usage{
-patchclampplotteR_theme()
+patchclampplotteR_theme(font_family = NULL)
+}
+\arguments{
+\item{font_family}{A character value describing the font family used for all text in the ggplot (axis text, axis titles, plot title, etc.). This must be a loaded font in R, which can be facilitated by loading packages like \code{extrafont} at the start of your document.}
 }
 \value{
 A ggplot theme

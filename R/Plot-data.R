@@ -2,6 +2,8 @@
 #'
 #' This is an attractive ggplot2 theme readily available to use with any plots when `patchclampplotteR` is loaded. It is built on top of `theme_classic()` and features bold and easy to read axis titles, well-spaced margins, and a clean layout.
 #'
+#' @param font_family A character value describing the font family used for all text in the ggplot (axis text, axis titles, plot title, etc.). This must be a loaded font in R, which can be facilitated by loading packages like `extrafont` at the start of your document.
+#'
 #' @returns A ggplot theme
 #' @export
 #'
@@ -13,10 +15,10 @@
 #'   ggplot2::labs(x = "Speed (mph)", y = "Stopping Distance (ft)") +
 #'   patchclampplotteR_theme()
 #'
-patchclampplotteR_theme <- function() {
+patchclampplotteR_theme <- function(font_family = NULL) {
   ggplot2::theme_classic() %+replace%
     ggplot2::theme(
-      text = ggplot2::element_text(),
+      text = ggplot2::element_text(family = font_family),
       plot.title = ggplot2::element_text(
         color = "black",
         size = 20,
@@ -54,6 +56,8 @@ patchclampplotteR_theme <- function() {
 #' @return A ggplot theme
 #' @export
 #'
+#' @inheritParams patchclampplotteR_theme
+#'
 #' @seealso [patchclampplotteR_theme()] for the original theme and [make_facet_plot()].
 #'
 #' @examples
@@ -62,8 +66,8 @@ patchclampplotteR_theme <- function() {
 #'   ggplot2::geom_point() +
 #'   patchclampplotteR_facet_theme()
 #'
-patchclampplotteR_facet_theme <- function() {
-  patchclampplotteR_theme() +
+patchclampplotteR_facet_theme <- function(font_family = NULL) {
+  patchclampplotteR_theme(font_family = font_family) +
     ggplot2::theme(
       strip.text = ggplot2::element_text(size = 20),
       panel.spacing = grid::unit(2, "lines"),
