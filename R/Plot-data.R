@@ -901,6 +901,14 @@ plot_raw_current_data <-
 #' @inheritParams plot_raw_current_data
 #'
 #' @examples
+#'
+#' get_fig_height(
+#'   data = sample_raw_eEPSC_df,
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   plot_sex = "Male"
+#' )
+#'
 get_fig_height <- function(data,
                            plot_category,
                            plot_treatment,
@@ -963,12 +971,12 @@ make_facet_plot <- function(data,
                             plot_category,
                             plot_treatment,
                             plot_sex,
-                            pruned,
+                            pruned = "no",
                             current_type = "eEPSC",
                             y_variable = "P1",
                             x_label = "Time (min)",
                             treatment_colour_theme,
-                            ggplot_theme = patchclampplotteR_theme()) {
+                            ggplot_theme = patchclampplotteR_facet_theme()) {
   if (is.null(current_type) ||
     length(current_type) != 1L ||
     !current_type %in% c("eEPSC", "sEPSC")) {

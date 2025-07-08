@@ -50,6 +50,8 @@ reference:
     Functions to plot the data.
   contents:
   - patchclampplotteR_theme
+  - patchclampplotteR_facet_theme
+  - get_fig_height
   - insert_png_as_ggplot
   - plot_cell_coordinates_data
 - subtitle: Evoked and spontaneous currents
@@ -58,6 +60,7 @@ reference:
   - plot_summary_current_data
   - plot_baseline_data
   - plot_percent_change_comparisons
+  - make_facet_plot
 
 - subtitle: Spontaneous currents only
   contents:
