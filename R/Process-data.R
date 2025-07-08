@@ -1532,7 +1532,8 @@ perform_t_tests_for_summary_plot <- function(data,
     dplyr::arrange(match(.data$treatment, treatment_info$treatment))
 
   t_test_table <- t_test_table %>%
-    dplyr::group_by(.data$category, .data$treatment) %>% dplyr::arrange(.data$asterisk_time, .by_group = TRUE)
+    dplyr::group_by(.data$category, .data$treatment) %>%
+    dplyr::arrange(.data$asterisk_time, .by_group = TRUE)
 
   if (save_output_as_RDS == "yes") {
     RDS_path <- "Data/Output-Data-from-R/"

@@ -59,15 +59,17 @@ patchclampplotteR_theme <- function() {
 #' @examples
 patchclampplotteR_facet_theme <- function() {
   patchclampplotteR_theme() +
-    ggplot2::theme(strip.text = ggplot2::element_text(size = 20),
-          panel.spacing = grid::unit(2, "lines"),
-          axis.title = ggplot2::element_text(size = 20),
-          plot.title = ggplot2::element_text(size = 40),
-          plot.subtitle = ggplot2::element_text(
-            size = 20,
-            hjust = 0.5,
-            margin = ggplot2::margin(b = 50)
-          ))
+    ggplot2::theme(
+      strip.text = ggplot2::element_text(size = 20),
+      panel.spacing = grid::unit(2, "lines"),
+      axis.title = ggplot2::element_text(size = 20),
+      plot.title = ggplot2::element_text(size = 40),
+      plot.subtitle = ggplot2::element_text(
+        size = 20,
+        hjust = 0.5,
+        margin = ggplot2::margin(b = 50)
+      )
+    )
 }
 
 
@@ -911,8 +913,8 @@ get_fig_height <- function(data,
       plot_height = dplyr::case_when(nrows == 1 ~ 7, nrows == 2 ~ 10, T ~ nrows * 4)
     ) %>%
     dplyr::filter(.data$category == plot_category &
-                    .data$treatment == plot_treatment &
-                    .data$sex == plot_sex) %>%
+      .data$treatment == plot_treatment &
+      .data$sex == plot_sex) %>%
     dplyr::pull(.data$plot_height)
   return(fig_height)
 }
@@ -934,29 +936,29 @@ get_fig_height <- function(data,
 #' # Raw eEPSC facet plots
 #'
 #' make_facet_plot(sample_raw_eEPSC_df,
-#' plot_category = 2,
-#' plot_treatment = "Control",
-#' plot_sex = "Male",
-#' pruned = "no",
-#' current_type = "eEPSC",
-#' y_variable = "P1",
-#' treatment_colour_theme = sample_treatment_names_and_colours,
-#' ggplot_theme = patchclampplotteR_facet_theme())
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   plot_sex = "Male",
+#'   pruned = "no",
+#'   current_type = "eEPSC",
+#'   y_variable = "P1",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   ggplot_theme = patchclampplotteR_facet_theme()
+#' )
 #'
 #'
 #' # Pruned eEPSC facet plots
 #'
 #' make_facet_plot(sample_pruned_eEPSC_df$individual_cells,
-#' plot_category = 2,
-#' plot_treatment = "Control",
-#' plot_sex = "Male",
-#' pruned = "yes",
-#' current_type = "eEPSC",
-#' y_variable = "mean_P1",
-#' treatment_colour_theme = sample_treatment_names_and_colours,
-#' ggplot_theme = patchclampplotteR_facet_theme())
-
-
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   plot_sex = "Male",
+#'   pruned = "yes",
+#'   current_type = "eEPSC",
+#'   y_variable = "mean_P1",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   ggplot_theme = patchclampplotteR_facet_theme()
+#' )
 make_facet_plot <- function(data,
                             plot_category,
                             plot_treatment,
@@ -967,10 +969,9 @@ make_facet_plot <- function(data,
                             x_label = "Time (min)",
                             treatment_colour_theme,
                             ggplot_theme = patchclampplotteR_theme()) {
-
   if (is.null(current_type) ||
-      length(current_type) != 1L ||
-      !current_type %in% c("eEPSC", "sEPSC")) {
+    length(current_type) != 1L ||
+    !current_type %in% c("eEPSC", "sEPSC")) {
     cli::cli_abort(c("x" = "'current_type' argument must be 'eEPSC' or 'sEPSC'."))
   }
 
@@ -1040,7 +1041,7 @@ make_facet_plot <- function(data,
 
 
   if (current_type == "sEPSC") {
-    #filepath <- "Figures/Spontaneous-currents/Output-individual-plots"
+    # filepath <- "Figures/Spontaneous-currents/Output-individual-plots"
 
     allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
 
@@ -1087,12 +1088,13 @@ make_facet_plot <- function(data,
 
   plot_colour <- treatment_colour_theme %>%
     dplyr::filter(.data$category == plot_category &
-                    .data$treatment == plot_treatment) %>%
+      .data$treatment == plot_treatment) %>%
     dplyr::pull(.data$colours)
 
-  facet_plot <- data %>% dplyr::filter(.data$category == plot_category &
-                                         .data$treatment == plot_treatment &
-                                         .data$sex == plot_sex) %>%
+  facet_plot <- data %>%
+    dplyr::filter(.data$category == plot_category &
+      .data$treatment == plot_treatment &
+      .data$sex == plot_sex) %>%
     ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data[[y_variable]])) +
     ggplot2::geom_point(color = plot_colour) +
     ggplot2::facet_wrap(. ~ .data$letter, ncol = 3, scales = "free_y") +
