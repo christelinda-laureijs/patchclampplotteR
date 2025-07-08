@@ -12,6 +12,13 @@ A ggplot theme
 \description{
 This is a modified version of \code{\link[=patchclampplotteR_theme]{patchclampplotteR_theme()}} that is optimized for plots produced with \code{\link[=make_facet_plot]{make_facet_plot()}}. It features large, easy-to-read axis labels and titles for individual facets, and margins that allow for easier readability.
 }
+\examples{
+ggplot2::ggplot(ggplot2::mpg, ggplot2::aes(displ, cty)) +
+  ggplot2::facet_grid(cols = ggplot2::vars(cyl)) +
+  ggplot2::geom_point() +
+  patchclampplotteR_facet_theme()
+
+}
 \seealso{
 \code{\link[=patchclampplotteR_theme]{patchclampplotteR_theme()}} for the original theme and \code{\link[=make_facet_plot]{make_facet_plot()}}.
 }

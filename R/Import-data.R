@@ -20,10 +20,11 @@ import_ext_data <- function(file = NULL) {
 #'
 #' `import_cell_characteristics_df()` is a wrapper around `read.csv()` to import
 #' a .csv file with information about a cell (animal, age, sex, synapses, X- and
-#' Y-coordinates, etc.). It replaces `NA` values in the `R_a` column with `0` to
-#' remove errors caused by missing data. The resulting dataframe can be merged
-#' with raw data into a summary table and used in downstream statistical
-#' analyses.
+#' Y-coordinates, and access resistance etc.). It replaces `NA` values in the `R_a` column with `0` to
+#' remove errors caused by missing data. The function will also generate useful columns such as `percent_change_access` which describes the percent change in access of the final `R_a` reading relative to the `R_a` at the start of the recording. This can be helpful for cell exclusion based on access.
+#'
+#' The resulting dataframe can be merged with raw data into a summary table
+#' and used in downstream statistical analyses.
 #'
 #' @param filename A filepath to a .csv file containing information on cell
 #'   characteristics. The function uses `here::here()` to locate the filepath.
@@ -57,7 +58,8 @@ import_ext_data <- function(file = NULL) {
 #' monitored at several timepoints throughout the recording. See the section
 #' `R_a` formatting below.
 #' \item `days_alone` A numeric value representing the number of days that the animal was alone in a cage. This will always be 1 for some treatments, like fasting, but should ideally be low to reduce the effects of social isolation-related stress.
-#' \item `animal_or_slicing_problems` A character value (`"yes"` or `"no"`) indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use `"yes"` if the slices were crumpling during slicing or the animal was unusually anxious.)
+#' \item `animal_or_slicing_problems` A character value (`"yes"` or `"no"`) indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use `"yes"` if the slices were crumpling during slicing or the animal was unusually anxious.
+#' \item `percent_change_access` A numeric value indicating the percent change in access (`R_a`) over the recording. This is calculated by subtracting the first value of `R_a` from the last value of `R_a` and expressing the change in access as a percentage of the starting `R_a`. You could use this to assist with excluding cells based on changes in access.
 #'
 #' }
 #' @section `R_a` formatting:
@@ -84,12 +86,23 @@ import_ext_data <- function(file = NULL) {
 #'   with cell characteristics and raw data as sparklines.
 
 import_cell_characteristics_df <- function(filename) {
-  utils::read.csv(here::here(filename)) %>%
+
+  cell_characteristics <- utils::read.csv(here::here(filename)) %>%
     dplyr::mutate(
       R_a = lapply(stringr::str_split(.data$R_a, pattern = ", "), FUN = as.numeric),
       R_a = lapply(.data$R_a, FUN = tidyr::replace_na, replace = 0),
       letter = factor(.data$letter)
-    )
+    ) %>%
+
+    # Get percent change in access over recording
+    dplyr::mutate(
+      starting_access = purrr::map_dbl(.data$R_a, dplyr::first),
+      ending_access = purrr::map_dbl(.data$R_a, dplyr::last),
+      percent_change_access = round((.data$ending_access - .data$starting_access) / .data$starting_access * 100, 0)
+    ) %>%
+    dplyr::select(-.data$starting_access, -.data$ending_access)
+
+  return(cell_characteristics)
 }
 
 

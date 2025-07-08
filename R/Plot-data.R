@@ -57,6 +57,11 @@ patchclampplotteR_theme <- function() {
 #' @seealso [patchclampplotteR_theme()] for the original theme and [make_facet_plot()].
 #'
 #' @examples
+#' ggplot2::ggplot(ggplot2::mpg, ggplot2::aes(displ, cty)) +
+#'   ggplot2::facet_grid(cols = ggplot2::vars(cyl)) +
+#'   ggplot2::geom_point() +
+#'   patchclampplotteR_facet_theme()
+#'
 patchclampplotteR_facet_theme <- function() {
   patchclampplotteR_theme() +
     ggplot2::theme(

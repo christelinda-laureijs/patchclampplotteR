@@ -17,10 +17,12 @@ A dataframe
 \description{
 \code{import_cell_characteristics_df()} is a wrapper around \code{read.csv()} to import
 a .csv file with information about a cell (animal, age, sex, synapses, X- and
-Y-coordinates, etc.). It replaces \code{NA} values in the \code{R_a} column with \code{0} to
-remove errors caused by missing data. The resulting dataframe can be merged
-with raw data into a summary table and used in downstream statistical
-analyses.
+Y-coordinates, and access resistance etc.). It replaces \code{NA} values in the \code{R_a} column with \code{0} to
+remove errors caused by missing data. The function will also generate useful columns such as \code{percent_change_access} which describes the percent change in access of the final \code{R_a} reading relative to the \code{R_a} at the start of the recording. This can be helpful for cell exclusion based on access.
+}
+\details{
+The resulting dataframe can be merged with raw data into a summary table
+and used in downstream statistical analyses.
 }
 \section{Required columns}{
 
@@ -49,7 +51,8 @@ and months when reporting animal ages). Do not use characters (e.g. avoid
 monitored at several timepoints throughout the recording. See the section
 \code{R_a} formatting below.
 \item \code{days_alone} A numeric value representing the number of days that the animal was alone in a cage. This will always be 1 for some treatments, like fasting, but should ideally be low to reduce the effects of social isolation-related stress.
-\item \code{animal_or_slicing_problems} A character value (\code{"yes"} or \code{"no"}) indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use \code{"yes"} if the slices were crumpling during slicing or the animal was unusually anxious.)
+\item \code{animal_or_slicing_problems} A character value (\code{"yes"} or \code{"no"}) indicating if there were any problems during any point of the slice preparation process or animal handling. For example, use \code{"yes"} if the slices were crumpling during slicing or the animal was unusually anxious.
+\item \code{percent_change_access} A numeric value indicating the percent change in access (\code{R_a}) over the recording. This is calculated by subtracting the first value of \code{R_a} from the last value of \code{R_a} and expressing the change in access as a percentage of the starting \code{R_a}. You could use this to assist with excluding cells based on changes in access.
 
 }
 }
