@@ -63,6 +63,7 @@ in evoked current amplitudes over time.</p>
 <span>  included_sexes <span class="op">=</span> <span class="st">"both"</span>,</span>
 <span>  male_label <span class="op">=</span> <span class="st">"Male"</span>,</span>
 <span>  female_label <span class="op">=</span> <span class="st">"Female"</span>,</span>
+<span>  x_label <span class="op">=</span> <span class="st">"Time (min)"</span>,</span>
 <span>  <span class="va">theme_options</span>,</span>
 <span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  ggplot_theme <span class="op">=</span> <span class="fu"><a href="patchclampplotteR_theme.html">patchclampplotteR_theme</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -108,6 +109,10 @@ should look like.</p></dd>
 
 <dt id="arg-female-label">female_label<a class="anchor" aria-label="anchor" href="#arg-female-label"></a></dt>
 <dd><p>A character value used to describe how females are encoded in the <code>sex</code> column of the dataframe used in <code>data</code>. This MUST match the value for female data in the <code>sex</code> column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to <code>"Female"</code>.</p></dd>
+
+
+<dt id="arg-x-label">x_label<a class="anchor" aria-label="anchor" href="#arg-x-label"></a></dt>
+<dd><p>A character value specifying the x-axis label. Defaults to "Time (min)".</p></dd>
 
 
 <dt id="arg-theme-options">theme_options<a class="anchor" aria-label="anchor" href="#arg-theme-options"></a></dt>

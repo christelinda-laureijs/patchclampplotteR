@@ -11,6 +11,7 @@
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/index.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/news/index.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/add_new_cells.html</loc></url>
+<url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/get_fig_height.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/import_ABF_file.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/import_cell_characteristics_df.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/import_ext_data.html</loc></url>
@@ -18,12 +19,14 @@
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/index.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/insert_png_as_ggplot.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/make_PPR_data.html</loc></url>
+<url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/make_facet_plot.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/make_interactive_summary_table.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/make_normalized_EPSC_data.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/make_pruned_EPSC_data.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/make_summary_EPSC_data.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/make_variance_data.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/patchclampplotteR-package.html</loc></url>
+<url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/patchclampplotteR_facet_theme.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/patchclampplotteR_theme.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/perform_t_tests_for_summary_plot.html</loc></url>
 <url><loc>https://christelinda-laureijs.github.io/patchclampplotteR/reference/plot_AP_comparison.html</loc></url>
