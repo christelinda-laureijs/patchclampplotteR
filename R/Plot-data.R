@@ -5090,6 +5090,7 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
           .data$sex,
           .data$spont_amplitude_transformed,
           .data$R_a,
+          .data$percent_change_access,
           .data$days_alone,
           .data$animal_or_slicing_problems,
           .data$X,
@@ -5121,6 +5122,7 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
           .data$P1_transformed,
           .data$spont_amplitude_transformed,
           .data$R_a,
+          .data$percent_change_access,
           .data$days_alone,
           .data$animal_or_slicing_problems,
           .data$X,
@@ -5266,7 +5268,8 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
           labels = c("first", "last"),
           decimals = 1
         )
-      )
+      ),
+      Percent_change_access = reactable::colDef(name = "% Change in R_a")
     )
   ))
 
