@@ -9,12 +9,12 @@ make_facet_plot(
   plot_category,
   plot_treatment,
   plot_sex,
-  pruned,
+  pruned = "no",
   current_type = "eEPSC",
   y_variable = "P1",
   x_label = "Time (min)",
   treatment_colour_theme,
-  ggplot_theme = patchclampplotteR_theme()
+  ggplot_theme = patchclampplotteR_facet_theme()
 )
 }
 \arguments{
@@ -66,25 +66,27 @@ Make facet plot of raw data
 # Raw eEPSC facet plots
 
 make_facet_plot(sample_raw_eEPSC_df,
-plot_category = 2,
-plot_treatment = "Control",
-plot_sex = "Male",
-pruned = "no",
-current_type = "eEPSC",
-y_variable = "P1",
-treatment_colour_theme = sample_treatment_names_and_colours,
-ggplot_theme = patchclampplotteR_facet_theme())
+  plot_category = 2,
+  plot_treatment = "Control",
+  plot_sex = "Male",
+  pruned = "no",
+  current_type = "eEPSC",
+  y_variable = "P1",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  ggplot_theme = patchclampplotteR_facet_theme()
+)
 
 
 # Pruned eEPSC facet plots
 
 make_facet_plot(sample_pruned_eEPSC_df$individual_cells,
-plot_category = 2,
-plot_treatment = "Control",
-plot_sex = "Male",
-pruned = "yes",
-current_type = "eEPSC",
-y_variable = "mean_P1",
-treatment_colour_theme = sample_treatment_names_and_colours,
-ggplot_theme = patchclampplotteR_facet_theme())
+  plot_category = 2,
+  plot_treatment = "Control",
+  plot_sex = "Male",
+  pruned = "yes",
+  current_type = "eEPSC",
+  y_variable = "mean_P1",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  ggplot_theme = patchclampplotteR_facet_theme()
+)
 }

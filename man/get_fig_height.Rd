@@ -30,6 +30,16 @@ This function produces a dataframe with the ideal figure height for the facet pl
 \details{
 This function is ideal if combined with the chunk options of an RMarkdown document. Set \code{fig.width = 14} and \code{fig.height = get_fig_height(...)}. Replace the \code{...} with the correct category, treatment and sex you'd like to plot. Plot only one facet plot per chunk.
 }
+\examples{
+
+get_fig_height(
+  data = sample_raw_eEPSC_df,
+  plot_category = 2,
+  plot_treatment = "Control",
+  plot_sex = "Male"
+)
+
+}
 \seealso{
 \code{\link[=make_facet_plot]{make_facet_plot()}}
 }
