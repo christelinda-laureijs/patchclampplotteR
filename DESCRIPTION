@@ -29,6 +29,7 @@ Imports:
     here,
     jpeg,
     magrittr,
+    plyr,
     png,
     reactable,
     reactablefmtr,

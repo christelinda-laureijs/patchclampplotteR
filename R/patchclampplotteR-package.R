@@ -8,6 +8,7 @@
 #' @importFrom ggsignif geom_signif
 #' @importFrom ggtext element_markdown
 #' @importFrom jpeg readJPEG
+#' @importFrom plyr round_any
 #' @importFrom png readPNG
 #' @importFrom reactable reactable
 #' @importFrom reactablefmtr react_sparkline

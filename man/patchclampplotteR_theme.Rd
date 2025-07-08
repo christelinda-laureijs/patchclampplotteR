@@ -10,7 +10,7 @@ patchclampplotteR_theme()
 A ggplot theme
 }
 \description{
-Add a customized ggplot2 theme
+This is an attractive ggplot2 theme readily available to use with any plots when \code{patchclampplotteR} is loaded. It is built on top of \code{theme_classic()} and features bold and easy to read axis titles, well-spaced margins, and a clean layout.
 }
 \examples{
 
@@ -19,4 +19,7 @@ ggplot2::ggplot(cars, ggplot2::aes(x = speed, y = dist)) +
   ggplot2::labs(x = "Speed (mph)", y = "Stopping Distance (ft)") +
   patchclampplotteR_theme()
 
+}
+\seealso{
+\code{\link[=patchclampplotteR_facet_theme]{patchclampplotteR_facet_theme()}} to use with \code{\link[=make_facet_plot]{make_facet_plot()}}.
 }

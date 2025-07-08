@@ -1,8 +1,11 @@
 #' Add a customized ggplot2 theme
 #'
+#' This is an attractive ggplot2 theme readily available to use with any plots when `patchclampplotteR` is loaded. It is built on top of `theme_classic()` and features bold and easy to read axis titles, well-spaced margins, and a clean layout.
+#'
 #' @returns A ggplot theme
 #' @export
 #'
+#' @seealso [patchclampplotteR_facet_theme()] to use with [make_facet_plot()].
 #' @examples
 #'
 #' ggplot2::ggplot(cars, ggplot2::aes(x = speed, y = dist)) +
@@ -39,6 +42,34 @@ patchclampplotteR_theme <- function() {
       strip.text = ggplot2::element_text(size = 12, face = "italic")
     )
 }
+
+
+
+
+
+#' The patchclampplotteR theme for facet plots
+#'
+#' This is a modified version of [patchclampplotteR_theme()] that is optimized for plots produced with [make_facet_plot()]. It features large, easy-to-read axis labels and titles for individual facets, and margins that allow for easier readability.
+#'
+#' @return A ggplot theme
+#' @export
+#'
+#' @seealso [patchclampplotteR_theme()] for the original theme and [make_facet_plot()].
+#'
+#' @examples
+patchclampplotteR_facet_theme <- function() {
+  patchclampplotteR_theme() +
+    ggplot2::theme(strip.text = ggplot2::element_text(size = 20),
+          panel.spacing = grid::unit(2, "lines"),
+          axis.title = ggplot2::element_text(size = 20),
+          plot.title = ggplot2::element_text(size = 40),
+          plot.subtitle = ggplot2::element_text(
+            size = 20,
+            hjust = 0.5,
+            margin = ggplot2::margin(b = 50)
+          ))
+}
+
 
 #' Make baseline comparison plot
 #'
@@ -525,6 +556,10 @@ plot_raw_current_data <-
       cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
     }
 
+    if (!pruned %in% c("yes", "no")) {
+      cli::cli_abort(c("x" = "`pruned` argument must be either \"yes\" or \"no\""))
+    }
+
     if (!colour_by_sex %in% c("yes", "no")) {
       cli::cli_abort(c("x" = "`colour_by_sex` argument must be either \"yes\" or \"no\""))
     }
@@ -595,7 +630,7 @@ plot_raw_current_data <-
         if (pruned == "yes") {
           cli::cli_abort(c(
             "x" = "`pruned` = \"yes\", but `y_variable` = \"P1\". ",
-            "i" = "Did you want to use pruned data? If so, please set `y_variable` to \"mean_P1\" instead of \"P1\"."
+            "i" = "Did you want to use pruned data? If so, please set `y_variable` to \"mean_P1\" instead of \"P1\" and be sure to use the `$individual_cells` component of a pruned dataframe produced by `make_pruned_EPSC_data()`."
           ))
         }
       }
@@ -606,7 +641,7 @@ plot_raw_current_data <-
         if (pruned == "yes") {
           cli::cli_abort(c(
             "x" = "`pruned` = \"yes\", but `y_variable` = \"P1_transformed\". ",
-            "i" = "Did you want to use pruned data? If so, please set `y_variable` to \"mean_P1\" instead of \"P1\"."
+            "i" = "Did you want to use pruned data? If so, please set `y_variable` to \"mean_P1\" instead of \"P1\" and be sure to use the `$individual_cells` component of a pruned dataframe produced by `make_pruned_EPSC_data()`."
           ))
         }
       }
@@ -618,7 +653,7 @@ plot_raw_current_data <-
         if (pruned == "no") {
           cli::cli_abort(c(
             "x" = "`y_variable` = \"mean_P1\", but pruned = \"no\".",
-            "i" = "Are you trying to create a pruned plot? If so, change `pruned` to \"yes\" and ensure that you have specified the correct dataframe in the data argument."
+            "i" = "Are you trying to create a pruned plot? If so, change `pruned` to \"yes\" and ensure that you have specified the correct dataframe in the data argument. This is the `$individual_cells` component of a pruned dataframe produced by `make_pruned_EPSC_data()`."
           ))
         }
       }
@@ -847,28 +882,225 @@ plot_raw_current_data <-
 
 
 
-# make_facet_plot <- function(data,
-#                             plot_category,
-#                             plot_treatment,
-#                             plot_sex,
-#                             y_variable = "P1",
-#                             xlabel = "Time (min)",
-#                             ylabel = "eEPSC amplitude (pA)") {
-#   plot_colour <- my_theme_colours %>%
-#     dplyr::filter(category == facet_category &
-#                     treatment == facet_treatment) %>%
-#     dplyr::pull(colours)
-#
-#   facet_plot <- data %>% dplyr::filter(category == facet_category &
-#                                          treatment == facet_treatment &
-#                                          sex == facet_sex) %>%
-#     ggplot2::ggplot(aes(x = time, y = .data[[y_variable]])) +
-#     ggplot2::geom_point(color = plot_colour) + segoe_theme +
-#     ggplot2::facet_wrap(. ~ .data$letter, ncol = 3, scales = "free_y") +
-#     ggplot2::labs(x = xlabel, y = ylabel)
-#
-#   return(facet_plot)
-# }
+
+#' Get figure height
+#'
+#' This function produces a dataframe with the ideal figure height for the facet plots produced by `make_facet_plot()`. These facet plots have a three-column layout with varying numbers of rows. This function first determines the number of rows required for a three-column layout, and then determines the required figure height. Typically, this is four times the number of rows.
+#'
+#' This function is ideal if combined with the chunk options of an RMarkdown document. Set `fig.width = 14` and `fig.height = get_fig_height(...)`. Replace the `...` with the correct category, treatment and sex you'd like to plot. Plot only one facet plot per chunk.
+#'
+#' @returns A dataframe with a numerical value indicating the ideal figure height for each combination of category, treatment and sex.
+#' @param plot_sex A character value ("Male" or "Female") corresponding to the sex you would like to plot.
+#'
+#'
+#' @export
+#'
+#' @seealso [make_facet_plot()]
+#' @inheritParams plot_raw_current_data
+#'
+#' @examples
+get_fig_height <- function(data,
+                           plot_category,
+                           plot_treatment,
+                           plot_sex) {
+  fig_height <- data %>%
+    dplyr::group_by(.data$category, .data$treatment, .data$sex) %>%
+    dplyr::summarize(n_cells = length(unique(.data$letter))) %>%
+    dplyr::mutate(
+      nrows = plyr::round_any(.data$n_cells, 3, ceiling) / 3,
+      plot_height = dplyr::case_when(nrows == 1 ~ 7, nrows == 2 ~ 10, T ~ nrows * 4)
+    ) %>%
+    dplyr::filter(.data$category == plot_category &
+                    .data$treatment == plot_treatment &
+                    .data$sex == plot_sex) %>%
+    dplyr::pull(.data$plot_height)
+  return(fig_height)
+}
+
+
+
+#' Make facet plot of raw data
+#'
+#' @param plot_sex A character value ("Male" or "Female") corresponding to the sex you would like to plot.
+#'
+#' @returns A ggplot object, which is a facetted plot of the raw data.
+#' @export
+#'
+#' @inheritParams plot_raw_current_data
+#'
+#' @examples
+#'
+#'
+#' # Raw eEPSC facet plots
+#'
+#' make_facet_plot(sample_raw_eEPSC_df,
+#' plot_category = 2,
+#' plot_treatment = "Control",
+#' plot_sex = "Male",
+#' pruned = "no",
+#' current_type = "eEPSC",
+#' y_variable = "P1",
+#' treatment_colour_theme = sample_treatment_names_and_colours,
+#' ggplot_theme = patchclampplotteR_facet_theme())
+#'
+#'
+#' # Pruned eEPSC facet plots
+#'
+#' make_facet_plot(sample_pruned_eEPSC_df$individual_cells,
+#' plot_category = 2,
+#' plot_treatment = "Control",
+#' plot_sex = "Male",
+#' pruned = "yes",
+#' current_type = "eEPSC",
+#' y_variable = "mean_P1",
+#' treatment_colour_theme = sample_treatment_names_and_colours,
+#' ggplot_theme = patchclampplotteR_facet_theme())
+
+
+make_facet_plot <- function(data,
+                            plot_category,
+                            plot_treatment,
+                            plot_sex,
+                            pruned,
+                            current_type = "eEPSC",
+                            y_variable = "P1",
+                            x_label = "Time (min)",
+                            treatment_colour_theme,
+                            ggplot_theme = patchclampplotteR_theme()) {
+
+  if (is.null(current_type) ||
+      length(current_type) != 1L ||
+      !current_type %in% c("eEPSC", "sEPSC")) {
+    cli::cli_abort(c("x" = "'current_type' argument must be 'eEPSC' or 'sEPSC'."))
+  }
+
+  if (!pruned %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`pruned` argument must be either \"yes\" or \"no\""))
+  }
+
+
+  if (current_type == "eEPSC") {
+    # The plots should go to specific folders depending on current type
+    filepath <- "Figures/Evoked-currents/Output-facet-plots"
+
+    allowed_y_variables_list <- "\"P1\", \"P1_transformed\", \"mean_P1\", or \"PPR\""
+
+    if (!y_variable %in% c("P1", "P1_transformed", "mean_P1", "PPR")) {
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`y_variable` must be ",
+          allowed_y_variables_list,
+          " for current_type \"",
+          current_type,
+          "\"."
+        ),
+        "i" = "Check that you have the correct combination of `y_variable`, `current_type` and `data.`"
+      ))
+    }
+
+    if (y_variable == "P1") {
+      y_title <- "eEPSC Amplitude (pA)"
+
+      if (pruned == "yes") {
+        cli::cli_abort(c(
+          "x" = "`pruned` = \"yes\", but `y_variable` = \"P1\". ",
+          "i" = "Did you want to use pruned data? If so, please set `y_variable` to \"mean_P1\" instead of \"P1\" and be sure to use the `$individual_cells` component of a pruned dataframe produced by `make_pruned_EPSC_data()`."
+        ))
+      }
+    }
+
+    if (y_variable == "P1_transformed") {
+      y_title <- "eEPSC Amplitude (% Baseline)"
+
+      if (pruned == "yes") {
+        cli::cli_abort(c(
+          "x" = "`pruned` = \"yes\", but `y_variable` = \"P1_transformed\". ",
+          "i" = "Did you want to use pruned data? If so, please set `y_variable` to \"mean_P1\" instead of \"P1\" and be sure to use the `$individual_cells` component of a pruned dataframe produced by `make_pruned_EPSC_data()`."
+        ))
+      }
+    }
+
+    if (y_variable == "mean_P1") {
+      y_title <- "eEPSC Amplitude (pA)"
+
+
+      if (pruned == "no") {
+        cli::cli_abort(c(
+          "x" = "`y_variable` = \"mean_P1\", but pruned = \"no\".",
+          "i" = "Are you trying to create a pruned plot? If so, change `pruned` to \"yes\" and ensure that you have specified the correct dataframe in the data argument."
+        ))
+      }
+    }
+
+    if (y_variable == "PPR") {
+      y_title <- "Paired-pulse Ratio"
+      annotation <- "_PPR"
+    }
+  }
+
+
+  if (current_type == "sEPSC") {
+    #filepath <- "Figures/Spontaneous-currents/Output-individual-plots"
+
+    allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
+
+    if (!y_variable %in% c("amplitude", "frequency")) {
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`y_variable` must be ",
+          allowed_y_variables_list,
+          " for `current_type` \"",
+          current_type,
+          "\"."
+        ),
+        "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type` or `data.`"
+      ))
+    }
+
+
+    if (y_variable == "amplitude") {
+      y_title <- "sEPSC Amplitude (pA)"
+      annotation <- "_amplitude"
+
+      if (pruned == "yes") {
+        annotation <- "_amplitude_pruned"
+      }
+    }
+
+    if (y_variable == "frequency") {
+      y_title <- "sEPSC Frequency (Hz)"
+      annotation <- "_frequency"
+    }
+  }
+
+  if (pruned == "yes" & y_variable == "mean_P1") {
+    annotation <- "_pruned"
+  }
+
+  if (pruned == "no" & y_variable == "P1") {
+    annotation <- ""
+  }
+
+  if (y_variable == "P1_transformed") {
+    annotation <- "_normalized"
+  }
+
+  plot_colour <- treatment_colour_theme %>%
+    dplyr::filter(.data$category == plot_category &
+                    .data$treatment == plot_treatment) %>%
+    dplyr::pull(.data$colours)
+
+  facet_plot <- data %>% dplyr::filter(.data$category == plot_category &
+                                         .data$treatment == plot_treatment &
+                                         .data$sex == plot_sex) %>%
+    ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data[[y_variable]])) +
+    ggplot2::geom_point(color = plot_colour) +
+    ggplot2::facet_wrap(. ~ .data$letter, ncol = 3, scales = "free_y") +
+    ggplot2::labs(x = x_label, y = y_title) +
+    ggplot_theme
+
+  return(facet_plot)
+}
 
 
 
@@ -3119,7 +3351,6 @@ plot_AP_frequencies_single_treatment <- function(data,
   if (!included_sexes %in% c("both", "male", "female")) {
     cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
   }
-
 
   if (!test_type %in% c("wilcox.test", "t.test", "none")) {
     cli::cli_abort(c("x" = "'test_type' argument must be one of: \"wilcox.test\", \"t.test\", or \"none\""))
