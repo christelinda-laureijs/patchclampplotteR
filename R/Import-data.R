@@ -530,11 +530,11 @@ add_new_cells <- function(new_raw_data_csv,
       ) %>%
       dplyr::mutate(
         latency_to_fire = .data$time_to_peak - injection_start_time,
-        antipeak_time_relative_to_threshold = .data$time_of_antipeak - .data$time_of_threshold,
-        peak_amplitude = dplyr::case_when(
-          is.na(.data$peak_amplitude) ~ 0,
-          T ~ .data$peak_amplitude
-        )
+        antipeak_time_relative_to_threshold = .data$time_of_antipeak - .data$time_of_threshold
+        # peak_amplitude = dplyr::case_when(
+        #   is.na(.data$peak_amplitude) ~ 0,
+        #   T ~ .data$peak_amplitude
+        # )
       )
   }
 
