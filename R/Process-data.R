@@ -330,8 +330,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
   if (save_output_as_RDS == "yes") {
     RDS_path <- "Data/Output-Data-from-R/"
 
-    if (!dir.exists(RDS_path)) {
-      dir.create(RDS_path, recursive = TRUE)
+    if (!dir.exists(here::here(RDS_path))) {
+      dir.create(here::here(RDS_path), recursive = TRUE)
 
       cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }
@@ -785,8 +785,8 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
   if (save_output_as_RDS == "yes") {
     RDS_path <- "Data/Output-Data-from-R/"
 
-    if (!dir.exists(RDS_path)) {
-      dir.create(RDS_path, recursive = TRUE)
+    if (!dir.exists(here::here(RDS_path))) {
+      dir.create(here::here(RDS_path), recursive = TRUE)
 
       cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }
@@ -1174,8 +1174,8 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
   if (save_output_as_RDS == "yes") {
     RDS_path <- "Data/Output-Data-from-R/"
 
-    if (!dir.exists(RDS_path)) {
-      dir.create(RDS_path, recursive = TRUE)
+    if (!dir.exists(here::here(RDS_path))) {
+      dir.create(here::here(RDS_path), recursive = TRUE)
 
       cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
 
@@ -1555,8 +1555,8 @@ perform_t_tests_for_summary_plot <- function(data,
   if (save_output_as_RDS == "yes") {
     RDS_path <- "Data/Output-Data-from-R/"
 
-    if (!dir.exists(RDS_path)) {
-      dir.create(RDS_path, recursive = TRUE)
+    if (!dir.exists(here::here(RDS_path))) {
+      dir.create(here::here(RDS_path), recursive = TRUE)
 
       cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }
@@ -1717,8 +1717,8 @@ make_variance_data <- function(data,
   if (save_output_as_RDS == "yes") {
     RDS_path <- "Data/Output-Data-from-R/"
 
-    if (!dir.exists(RDS_path)) {
-      dir.create(RDS_path, recursive = TRUE)
+    if (!dir.exists(here::here(RDS_path))) {
+      dir.create(here::here(RDS_path), recursive = TRUE)
 
       cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }
@@ -1854,8 +1854,8 @@ make_PPR_data <- function(data,
   if (save_output_as_RDS == "yes") {
     RDS_path <- "Data/Output-Data-from-R/"
 
-    if (!dir.exists(RDS_path)) {
-      dir.create(RDS_path, recursive = TRUE)
+    if (!dir.exists(here::here(RDS_path))) {
+      dir.create(here::here(RDS_path), recursive = TRUE)
 
       cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }

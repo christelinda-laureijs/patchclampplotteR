@@ -3527,8 +3527,8 @@ plot_AP_frequencies_single_treatment <- function(data,
     if (save_output_as_RDS == "yes") {
       RDS_path <- "Data/Output-Data-from-R/"
 
-      if (!dir.exists(RDS_path)) {
-        dir.create(RDS_path, recursive = TRUE)
+      if (!dir.exists(here::here(RDS_path))) {
+        dir.create(here::here(RDS_path), recursive = TRUE)
 
         cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
       }
@@ -5203,8 +5203,8 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
   if (save_output_as_RDS == "yes") {
     RDS_path <- "Data/Output-Data-from-R/"
 
-    if (!dir.exists(RDS_path)) {
-      dir.create(RDS_path, recursive = TRUE)
+    if (!dir.exists(here::here(RDS_path))) {
+      dir.create(here::here(RDS_path), recursive = TRUE)
 
       cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }
