@@ -5269,7 +5269,7 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
           decimals = 1
         )
       ),
-      Percent_change_access = reactable::colDef(name = "% Change in R_a")
+      Percent_change_access = reactable::colDef(name = "% Change in Access")
     )
   ))
 
