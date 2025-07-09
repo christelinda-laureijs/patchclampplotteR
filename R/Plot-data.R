@@ -3529,6 +3529,8 @@ plot_AP_frequencies_single_treatment <- function(data,
 
       if (!dir.exists(RDS_path)) {
         dir.create(RDS_path)
+
+        cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
       }
 
       saveRDS(
@@ -5203,6 +5205,8 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
 
     if (!dir.exists(RDS_path)) {
       dir.create(RDS_path)
+
+      cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }
 
     saveRDS(table_data, file = here::here(paste0(

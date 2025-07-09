@@ -332,6 +332,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 
     if (!dir.exists(RDS_path)) {
       dir.create(RDS_path)
+      cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }
 
     saveRDS(raw_df, file = here::here(
@@ -785,6 +786,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 
     if (!dir.exists(RDS_path)) {
       dir.create(RDS_path)
+      cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }
 
     saveRDS(pruned_data_final, file = here::here(
@@ -1172,6 +1174,8 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 
     if (!dir.exists(RDS_path)) {
       dir.create(RDS_path)
+
+      cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }
 
     saveRDS(summary_data_final, file = here::here(
@@ -1540,6 +1544,8 @@ perform_t_tests_for_summary_plot <- function(data,
 
     if (!dir.exists(RDS_path)) {
       dir.create(RDS_path)
+
+      cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }
 
     saveRDS(t_test_table, file = here::here(
@@ -1700,6 +1706,8 @@ make_variance_data <- function(data,
 
     if (!dir.exists(RDS_path)) {
       dir.create(RDS_path)
+
+      cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }
 
     saveRDS(variance_data, file = here::here(paste0(
@@ -1835,6 +1843,7 @@ make_PPR_data <- function(data,
 
     if (!dir.exists(RDS_path)) {
       dir.create(RDS_path)
+      cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
     }
 
     saveRDS(PPR_df, file = here::here(paste0(

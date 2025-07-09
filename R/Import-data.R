@@ -86,14 +86,12 @@ import_ext_data <- function(file = NULL) {
 #'   with cell characteristics and raw data as sparklines.
 
 import_cell_characteristics_df <- function(filename) {
-
   cell_characteristics <- utils::read.csv(here::here(filename)) %>%
     dplyr::mutate(
       R_a = lapply(stringr::str_split(.data$R_a, pattern = ", "), FUN = as.numeric),
       R_a = lapply(.data$R_a, FUN = tidyr::replace_na, replace = 0),
       letter = factor(.data$letter)
     ) %>%
-
     # Get percent change in access over recording
     dplyr::mutate(
       starting_access = purrr::map_dbl(.data$R_a, dplyr::first),
