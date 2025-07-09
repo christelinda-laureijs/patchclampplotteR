@@ -1178,16 +1178,27 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
       dir.create(RDS_path, recursive = TRUE)
 
       cli::cli_alert_success(cli::col_green(paste0("Created new folder called ", RDS_path)))
+
+      saveRDS(summary_data_final, file = here::here(
+        paste0(
+          RDS_path,
+          "summary_",
+          current_type,
+          "_data.rds"
+        )
+      ))
+    } else {
+      saveRDS(summary_data_final, file = here::here(
+        paste0(
+          RDS_path,
+          "summary_",
+          current_type,
+          "_data.rds"
+        )
+      ))
     }
 
-    saveRDS(summary_data_final, file = here::here(
-      paste0(
-        RDS_path,
-        "summary_",
-        current_type,
-        "_data.rds"
-      )
-    ))
+
   }
 
   return(summary_data_final)
