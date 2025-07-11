@@ -3298,6 +3298,7 @@ plot_AP_comparison <-
 #' @inheritParams plot_spontaneous_current_parameter_comparison
 #'
 #' @param data Action potential frequency data imported through `add_new_cells()` with `data_type == "AP_count"`
+#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name.
 #' @param p_adjust_method This argument is directly related to `p.adjust.method` in `rstatix::t_test`. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include `"holm"`, `"hochberg"`, `"hommel"`, `"bonferroni"`, `"BH"`, `"BY"`, `"fdr"`, `"none"` (although `"none"` is not recommended).
 #' @param significance_display_method A character value (`"stars"` or `"p-value"`) describing how significance values should be displayed. These annotations will not appear if `test_type` is `"none"`.)
 #' @param geom_signif_y_spacer A numeric value describing the vertical spacing applied to the significance markers. Defaults to 1, but can be set to a higher value if the p-values or significance stars are too close to the error bars.
@@ -3626,7 +3627,7 @@ plot_AP_frequencies_single_treatment <- function(data,
 #' This function allows you to generate a plot of action potential frequency (y-axis) for each current injection (x-axis), coloured by treatment. The linetype indicates which state the data belong to (a recording taken during the baseline or after a hormone or treatment).
 #'
 #' @param data Action potential frequency data imported through `add_new_cells()` with `data_type == "AP_count"`
-#'
+#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name.
 #' @inheritParams plot_PPR_data_multiple_treatments
 #'
 #' @returns
