@@ -940,6 +940,14 @@ get_fig_height <- function(data,
 
 #' Make facet plot of raw data
 #'
+#' This function provides a useful way to quickly plot all data for a specific treatment and sex in one facet plot. This can be helpful if you want to create a display of the different treatments.
+#'
+#' I have found it helpful to use this with knitr's RMarkdown features to create an interactive HTML page with the raw plots from all my cells, an interactive summary table ([make_interactive_summary_table()]), and summary plots ([plot_summary_current_data()]) for all treatments. This makes it easier to review cells while preparing presentations.
+#'
+#' If you are using [make_facet_plot()] within an RMarkdown document, you will need to change the `fig.height` and `fig.width` options.
+#'
+#'  (Taken from the documentation for [get_fig_height()]): Set `fig.width = 14` and `fig.height = get_fig_height(...)`. Replace the `...` with the correct category, treatment and sex you'd like to plot. Plot only one facet plot per chunk.
+#'
 #' @param plot_sex A character value ("Male" or "Female") corresponding to the sex you would like to plot.
 #'
 #' @returns A ggplot object, which is a facetted plot of the raw data.

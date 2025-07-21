@@ -58,7 +58,14 @@ should look like.}
 A ggplot object, which is a facetted plot of the raw data.
 }
 \description{
-Make facet plot of raw data
+This function provides a useful way to quickly plot all data for a specific treatment and sex in one facet plot. This can be helpful if you want to create a display of the different treatments.
+}
+\details{
+I have found it helpful to use this with knitr's RMarkdown features to create an interactive HTML page with the raw plots from all my cells, an interactive summary table (\code{\link[=make_interactive_summary_table]{make_interactive_summary_table()}}), and summary plots (\code{\link[=plot_summary_current_data]{plot_summary_current_data()}}) for all treatments. This makes it easier to review cells while preparing presentations.
+
+If you are using \code{\link[=make_facet_plot]{make_facet_plot()}} within an RMarkdown document, you will need to change the \code{fig.height} and \code{fig.width} options.
+
+(Taken from the documentation for \code{\link[=get_fig_height]{get_fig_height()}}): Set \code{fig.width = 14} and \code{fig.height = get_fig_height(...)}. Replace the \code{...} with the correct category, treatment and sex you'd like to plot. Plot only one facet plot per chunk.
 }
 \examples{
 
