@@ -43,7 +43,7 @@ the y-axis. For evoked currents (\code{current_type = "eEPSC"}), the available
 y_variables are \code{"P1"}, \code{"P1_transformed"}, \code{"mean_P1"} and \code{"PPR"}. \emph{Note}: If you
 select \code{"mean_P1"}, you must set the \code{pruned} argument to \code{"yes"}. For
 spontaneous currents (\code{current_type = "sEPSC"}), the available y_variables
-are \code{"amplitude"} or \code{"frequency"}.}
+are \code{"amplitude"} or \code{"frequency"}. NOTE: \code{"frequency"} is only available if \code{pruned = "yes"}.}
 
 \item{x_label}{A character value specifying the x-axis label. Defaults to "Time (min)".}
 

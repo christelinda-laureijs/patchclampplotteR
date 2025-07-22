@@ -449,7 +449,7 @@ plot_baseline_data <- function(data,
 #'   y_variables are `"P1"`, `"P1_transformed"`, `"mean_P1"` and `"PPR"`. *Note*: If you
 #'   select `"mean_P1"`, you must set the `pruned` argument to `"yes"`. For
 #'   spontaneous currents (`current_type = "sEPSC"`), the available y_variables
-#'   are `"amplitude"` or `"frequency"`.
+#'   are `"amplitude"` or `"frequency"`. NOTE: `"frequency"` is only available if `pruned = "yes"`.
 #' @param x_label A character value specifying the x-axis label. Defaults to "Time (min)".
 #' @param pruned A character value (`"yes"` or `"no"`) specifying if the data are
 #'   pruned. The plot will then present the data as means with error bars.
@@ -679,20 +679,44 @@ plot_raw_current_data <-
     if (current_type == "sEPSC") {
       filepath <- "Figures/Spontaneous-currents/Output-individual-plots"
 
-      allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
+      if (pruned == "yes") {
+        allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
 
-      if (!y_variable %in% c("amplitude", "frequency")) {
-        cli::cli_abort(c(
-          "x" = paste0(
-            "`y_variable` must be ",
-            allowed_y_variables_list,
-            " for `current_type` \"",
-            current_type,
-            "\"."
-          ),
-          "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type` or `data.`"
-        ))
+        if (!y_variable %in% c("amplitude", "frequency")) {
+          cli::cli_abort(
+            c(
+              "x" = paste0(
+                "`y_variable` must be ",
+                allowed_y_variables_list,
+                " for `current_type` \"",
+                current_type,
+                "\" when `pruned` is set to \"yes\"."
+              ),
+              "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`."
+            )
+          )
+        }
       }
+
+    if (pruned == "no") {
+      allowed_y_variables_list <- "\"amplitude\""
+
+      if (!y_variable %in% c("amplitude")) {
+        cli::cli_abort(
+          c(
+            "x" = paste0(
+              "`y_variable` must be ",
+              allowed_y_variables_list,
+              " for `current_type` \"",
+              current_type,
+              "\" when pruned is set to \"no\"."
+            ),
+            "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`."
+          )
+        )
+      }
+
+    }
 
 
       if (y_variable == "amplitude") {
