@@ -242,7 +242,9 @@ import_theme_colours <- function(filename) {
 #'   Since this function appends the new data to the old data, this must be of
 #'   the same current_type as the new data (e.g. the columns must be the same).
 #'   If this is the first time you are running this function, start with a blank
-#'   .csv file containing just the column titles in the first row, and some text (e.g. `"text"`) below the `letter` column. This is required so that R correctly recognizes the columns.
+#'   .csv file containing just some text (e.g. `letter`) in cell `A1`. This is required because R cannot recognize an empty `.csv` sheet as a valid file.
+#' @param software A character (`"Clampfit"` or `"MiniAnalysis"`) describing what software tool was used to analyze the data in `new_raw_data_csv`. This is relevant when `data_type` is `"sEPSC"` because the exported data is different. Defaults to `"Clampfit"`.
+#' @param bin_width A numeric value (defaults to `5`) describing the time interval in seconds (bin width) of the histogram used in MiniAnalysis. This is only relevant when `data_type = "sEPSC"` and `software = "MiniAnalysis"`.
 #' @param data_type A character (`"eEPSC"`, `"sEPSC"`, `"AP_parameter"` or `"AP_count"`) describing the data type that is being imported.
 #' @param write_new_csv A character (`"yes"` or `"no"`) describing if the new data
 #'   should be written to a csv file. Defaults to `"yes"`. Please specify
@@ -257,11 +259,11 @@ import_theme_colours <- function(filename) {
 #' @return
 #'
 #' A dataframe consisting of the old raw data with information from the new
-#' cells appended to it. If `data_type == "AP_parameter"` two new columns will also be
+#' cells appended to it. If `data_type = "AP_parameter"` two new columns will also be
 #' added based on calculations from the existing columns. These are
 #' `latency_to_fire` (which is `time_to_peak` - `injection_start_time`) and
 #' `antipeak_time_relative_to_threshold` (which is `time_of_antipeak` -
-#' `time_of_threshold`). If `data_type == "AP_count"` one new column will be added. These is `AP_frequency` (in Hz).
+#' `time_of_threshold`). If `data_type = "AP_count"` one new column will be added. These is `AP_frequency` (in Hz).
 #'
 #' @export
 #'
@@ -272,7 +274,7 @@ import_theme_colours <- function(filename) {
 #'
 #' @section Required Columns:
 #'
-#' If the data are evoked currents (`data_type == "eEPSC"`), the data must
+#' If the data are evoked currents (`data_type = "eEPSC"`), the data must
 #' contain the following four columns:
 #'
 #' \itemize{
@@ -286,7 +288,7 @@ import_theme_colours <- function(filename) {
 #'  amplitude of the second evoked current in pA.
 #' }
 #'
-#' If the data are spontaneous currents (`data_type == "sEPSC"`), the data
+#' If the data are spontaneous currents (`data_type = "sEPSC"`) and these were exported from Clampfit (`software = "Clampfit"`), the data
 #' must contain the following columns:
 #' \itemize{
 #'  \item `letter` A character value that is a unique identifier for a single
@@ -300,10 +302,23 @@ import_theme_colours <- function(filename) {
 #'  \item `trace` A numeric value representing the trace (automatically
 #'  generated in Clampfit) where the current occurred.
 #'  \item `amplitude` A numeric value representing the amplitude of the evoked
-#'  current in pA.
+#'  current in pA (automatically generated in Clampfit).
 #'  \item `time_of_peak` A numeric value representing the time of the peak in
-#'  milliseconds relative to trace number. This is automatically calculated in
-#'  Clampfit.
+#'  milliseconds relative to trace number (automatically generated in Clampfit).
+#' }
+#'
+#'
+#' If the data are spontaneous currents (`data_type = "sEPSC"`) and these were exported from the histogram tool in MiniAnalysis (`software = "MiniAnalysis"`), the data
+#' must contain the following columns:
+#' \itemize{
+#'  \item `letter` A character value that is a unique identifier for a single
+#'  recording. Used to link data sets for evoked or spontaneous currents and
+#'  cell-characteristics.
+#'  \item `ID` A character value for the recording filename.
+#'  \item `amplitude` The average sEPSC amplitude, averaged over the time interval (bin width) that you chose for the histogram (automatically generated from histogram tool in MiniAnalysis).
+#'  \item `SE` The standard error of `amplitude` (automatically generated from histogram tool in MiniAnalysis).
+#'  \item `time` The time in seconds (exported automatically from the histogram, depending on the bin width that you set).
+#'  \item `num_events` The number of synaptic events (sEPSCs) during the time interval (bin width). This is also automatically generated in MiniAnalysis.
 #' }
 #'
 #'  If the data are action potential parameters (`data_type == "AP_parameter"`), the data
@@ -338,14 +353,25 @@ import_theme_colours <- function(filename) {
 #' }
 #'
 #' @examples
+#'
+#'
+#' # NOTE: Remember, if you are running this for the first time,
+#' # don't start with a blank csv for `old_raw_data_csv`.
+#' # `old_raw_data_csv` must have at least some text
+#' # in cell `A1` for R to recognize it.
+#'
+#' # NOTE: If you are importing spontaneous current data from MiniAnalysis,
+#' # don't forget to set `bin_width` to match what you used
+#' # in the histogram tool in MiniAnalysis!
+#'
 #' \dontrun{
 #' add_new_cells(
-#'   new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
-#'   cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
-#'   old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
+#'   new_raw_data_csv = "sample_new_eEPSC_data.csv",
+#'   cell_characteristics_csv = "sample_cell_characteristics.csv",
+#'   old_raw_data_csv = "sample_eEPSC_data.csv",
 #'   data_type = "eEPSC",
 #'   write_new_csv = "no",
-#'   new_file_name = "20241118-Raw-eEPSC-Data.csv",
+#'   new_file_name = "Raw-eEPSC-Data.csv",
 #'   decimal_places = 2
 #' )
 #' }
@@ -354,6 +380,8 @@ add_new_cells <- function(new_raw_data_csv,
                           cell_characteristics_csv,
                           old_raw_data_csv,
                           data_type,
+                          software = "MiniAnalysis",
+                          bin_width = 5,
                           write_new_csv = "yes",
                           new_file_name,
                           decimal_places = 2,
@@ -396,6 +424,10 @@ add_new_cells <- function(new_raw_data_csv,
 
   if (!write_new_csv %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "'write_new_csv' argument must be either 'yes' or 'no'"))
+  }
+
+  if (!software %in% c("Clampfit", "MiniAnalysis")) {
+    cli::cli_abort(c("x" = "'software' argument must be either 'Clampfit' or 'MiniAnalysis'"))
   }
 
   if (!is.null(new_raw_data_name) &
@@ -478,6 +510,7 @@ add_new_cells <- function(new_raw_data_csv,
       dplyr::mutate(time = (dplyr::row_number() - 1) / 12)
   }
 
+
   if (data_type == "sEPSC") {
     if (any(grepl("eEPSC|AP_parameter|AP_count", list_of_argument_names))) {
       if (menu(
@@ -490,18 +523,27 @@ add_new_cells <- function(new_raw_data_csv,
           "\n Are you sure that you selected the correct files corresponding to the data type you've chosen?"
         )
       ) != 1) {
-        cli::cli_abort(c("x" = "Cannot combine files of mixed data types", "i" = "Please double-check that you have selected csv files belonging to the same data type."))
+        cli::cli_abort(
+          c("x" = "Cannot combine files of mixed data types", "i" = "Please double-check that you have selected csv files belonging to the same data type.")
+        )
       }
     }
 
-    new_raw_data <- new_raw_data %>%
-      dplyr::group_by(.data$letter) %>%
-      dplyr::mutate(
-        amplitude = (-1) * .data$amplitude,
-        time = ((.data$recording_num - 1) * 300 + (.data$trace - 1) * 5 + (.data$time_of_peak /
-          1000)
-        ) / 60
-      )
+    if (software == "Clampfit") {
+      new_raw_data <- new_raw_data %>%
+        dplyr::group_by(.data$letter) %>%
+        dplyr::mutate(amplitude = (-1) * .data$amplitude,
+                      time = ((.data$recording_num - 1) * 300 + (.data$trace - 1) * 5 + (.data$time_of_peak /
+                                                                                           1000)
+                      ) / 60)
+    }
+
+    if (software == "MiniAnalysis") {
+      new_raw_data <- new_raw_data %>%
+        dplyr::mutate(
+          frequency = .data$num_events/bin_width
+        )
+    }
   }
 
 

@@ -9,6 +9,8 @@ add_new_cells(
   cell_characteristics_csv,
   old_raw_data_csv,
   data_type,
+  software = "MiniAnalysis",
+  bin_width = 5,
   write_new_csv = "yes",
   new_file_name,
   decimal_places = 2,
@@ -34,9 +36,13 @@ to include the cell characteristics for the new letters in
 Since this function appends the new data to the old data, this must be of
 the same current_type as the new data (e.g. the columns must be the same).
 If this is the first time you are running this function, start with a blank
-.csv file containing just the column titles in the first row, and some text (e.g. \code{"text"}) below the \code{letter} column. This is required so that R correctly recognizes the columns.}
+.csv file containing just some text (e.g. \code{letter}) in cell \code{A1}. This is required because R cannot recognize an empty \code{.csv} sheet as a valid file.}
 
 \item{data_type}{A character (\code{"eEPSC"}, \code{"sEPSC"}, \code{"AP_parameter"} or \code{"AP_count"}) describing the data type that is being imported.}
+
+\item{software}{A character (\code{"Clampfit"} or \code{"MiniAnalysis"}) describing what software tool was used to analyze the data in \code{new_raw_data_csv}. This is relevant when \code{data_type} is \code{"sEPSC"} because the exported data is different. Defaults to \code{"Clampfit"}.}
+
+\item{bin_width}{A numeric value (defaults to \code{5}) describing the time interval in seconds (bin width) of the histogram used in MiniAnalysis. This is only relevant when \code{data_type = "sEPSC"} and \code{software = "MiniAnalysis"}.}
 
 \item{write_new_csv}{A character (\code{"yes"} or \code{"no"}) describing if the new data
 should be written to a csv file. Defaults to \code{"yes"}. Please specify
@@ -54,11 +60,11 @@ Examples include \code{"Data/20241118-Raw-eEPSC-data.csv"}.}
 }
 \value{
 A dataframe consisting of the old raw data with information from the new
-cells appended to it. If \code{data_type == "AP_parameter"} two new columns will also be
+cells appended to it. If \code{data_type = "AP_parameter"} two new columns will also be
 added based on calculations from the existing columns. These are
 \code{latency_to_fire} (which is \code{time_to_peak} - \code{injection_start_time}) and
 \code{antipeak_time_relative_to_threshold} (which is \code{time_of_antipeak} -
-\code{time_of_threshold}). If \code{data_type == "AP_count"} one new column will be added. These is \code{AP_frequency} (in Hz).
+\code{time_of_threshold}). If \code{data_type = "AP_count"} one new column will be added. These is \code{AP_frequency} (in Hz).
 }
 \description{
 This function enables you to append new raw recording data onto an existing
@@ -70,7 +76,7 @@ also formats the dataset so it is immediately ready for use in functions like
 \section{Required Columns}{
 
 
-If the data are evoked currents (\code{data_type == "eEPSC"}), the data must
+If the data are evoked currents (\code{data_type = "eEPSC"}), the data must
 contain the following four columns:
 
 \itemize{
@@ -84,7 +90,7 @@ amplitude of the first evoked current in pA.
 amplitude of the second evoked current in pA.
 }
 
-If the data are spontaneous currents (\code{data_type == "sEPSC"}), the data
+If the data are spontaneous currents (\code{data_type = "sEPSC"}) and these were exported from Clampfit (\code{software = "Clampfit"}), the data
 must contain the following columns:
 \itemize{
 \item \code{letter} A character value that is a unique identifier for a single
@@ -98,10 +104,22 @@ It should be set to 1.
 \item \code{trace} A numeric value representing the trace (automatically
 generated in Clampfit) where the current occurred.
 \item \code{amplitude} A numeric value representing the amplitude of the evoked
-current in pA.
+current in pA (automatically generated in Clampfit).
 \item \code{time_of_peak} A numeric value representing the time of the peak in
-milliseconds relative to trace number. This is automatically calculated in
-Clampfit.
+milliseconds relative to trace number (automatically generated in Clampfit).
+}
+
+If the data are spontaneous currents (\code{data_type = "sEPSC"}) and these were exported from the histogram tool in MiniAnalysis (\code{software = "MiniAnalysis"}), the data
+must contain the following columns:
+\itemize{
+\item \code{letter} A character value that is a unique identifier for a single
+recording. Used to link data sets for evoked or spontaneous currents and
+cell-characteristics.
+\item \code{ID} A character value for the recording filename.
+\item \code{amplitude} The average sEPSC amplitude, averaged over the time interval (bin width) that you chose for the histogram (automatically generated from histogram tool in MiniAnalysis).
+\item \code{SE} The standard error of \code{amplitude} (automatically generated from histogram tool in MiniAnalysis).
+\item \code{time} The time in seconds (exported automatically from the histogram, depending on the bin width that you set).
+\item \code{num_events} The number of synaptic events (sEPSCs) during the time interval (bin width). This is also automatically generated in MiniAnalysis.
 }
 
 If the data are action potential parameters (\code{data_type == "AP_parameter"}), the data
@@ -137,14 +155,25 @@ to threshold.
 }
 
 \examples{
+
+
+# NOTE: Remember, if you are running this for the first time,
+# don't start with a blank csv for `old_raw_data_csv`.
+# `old_raw_data_csv` must have at least some text
+# in cell `A1` for R to recognize it.
+
+# NOTE: If you are importing spontaneous current data from MiniAnalysis,
+# don't forget to set `bin_width` to match what you used
+# in the histogram tool in MiniAnalysis!
+
 \dontrun{
 add_new_cells(
-  new_raw_data_csv = import_ext_data("sample_new_eEPSC_data.csv"),
-  cell_characteristics_csv = import_ext_data("sample_cell_characteristics.csv"),
-  old_raw_data_csv = import_ext_data("sample_eEPSC_data.csv"),
+  new_raw_data_csv = "sample_new_eEPSC_data.csv",
+  cell_characteristics_csv = "sample_cell_characteristics.csv",
+  old_raw_data_csv = "sample_eEPSC_data.csv",
   data_type = "eEPSC",
   write_new_csv = "no",
-  new_file_name = "20241118-Raw-eEPSC-Data.csv",
+  new_file_name = "Raw-eEPSC-Data.csv",
   decimal_places = 2
 )
 }
