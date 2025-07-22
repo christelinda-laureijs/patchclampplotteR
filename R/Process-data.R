@@ -674,7 +674,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         sd_amplitude = stats::sd(.data$amplitude_transformed, na.rm = TRUE),
         n = dplyr::n(),
         # Gets number of currents within each minute
-        frequency = .data$n / 60,
+        frequency = .data$n / (60*interval_length),
         # Frequency in Hz
         se = .data$sd_amplitude / sqrt(.data$n),
         letter = unique(.data$letter),
