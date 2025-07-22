@@ -190,7 +190,7 @@ cell-characteristics.</p></li>
 <li><p><code>ID</code> A character value for the recording filename.</p></li>
 <li><p><code>amplitude</code> The average sEPSC amplitude, averaged over the time interval (bin width) that you chose for the histogram (automatically generated from histogram tool in MiniAnalysis).</p></li>
 <li><p><code>SE</code> The standard error of <code>amplitude</code> (automatically generated from histogram tool in MiniAnalysis).</p></li>
-<li><p><code>time</code> The time in seconds (exported automatically from the histogram, depending on the bin width that you set).</p></li>
+<li><p><code>time</code> The time in seconds (exported automatically from the histogram, depending on the bin width that you set). <code>add_new_cells()</code> will automatically convert this to minutes.</p></li>
 <li><p><code>num_events</code> The number of synaptic events (sEPSCs) during the time interval (bin width). This is also automatically generated in MiniAnalysis.</p></li>
 </ul><p>If the data are action potential parameters (<code>data_type == "AP_parameter"</code>), the data
 must contain the following columns:</p><ul><li><p><code>letter</code> A character value that is a unique identifier for a single

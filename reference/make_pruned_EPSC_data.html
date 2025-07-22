@@ -71,6 +71,7 @@ summary values for every n rows.</p>
 <span>  max_time_value <span class="op">=</span> <span class="fl">25</span>,</span>
 <span>  baseline_length <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  interval_length <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  software <span class="op">=</span> <span class="st">"Clampfit"</span>,</span>
 <span>  decimal_places <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  save_output_as_RDS <span class="op">=</span> <span class="st">"no"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -113,6 +114,10 @@ high frequency stimulation. Defaults to <code>5</code>.</p></dd>
 <dd><p>Length of each interval (in minutes). Used to divide
 the dataset into broad ranges for statistical analysis. Defaults to <code>1</code> for
 one summary point per minute.</p></dd>
+
+
+<dt id="arg-software">software<a class="anchor" aria-label="anchor" href="#arg-software"></a></dt>
+<dd><p>A character (<code>"Clampfit"</code> or <code>"MiniAnalysis"</code>) describing what software tool was used to analyze the data in <code>new_raw_data_csv</code>. This is relevant when <code>data_type</code> is <code>"sEPSC"</code> because the exported data is different. Defaults to <code>"Clampfit"</code>.</p></dd>
 
 
 <dt id="arg-decimal-places">decimal_places<a class="anchor" aria-label="anchor" href="#arg-decimal-places"></a></dt>
@@ -288,7 +293,7 @@ recording's baseline. Generated automatically in
 contain the basic columns mentioned in <strong>Required basic columns</strong> plus the
 columns listed below. For more detail, have a look at <a href="sample_raw_sEPSC_df.html">sample_raw_sEPSC_df</a>
 to see an example of what the incoming raw dataset in the <code>data</code> argument
-should look like.</p>
+should look like.NOTE: If you exported your spontaneous data from the histogram tool in MiniAnalysis, you must set software to "MiniAnalysis".</p>
 <ul><li><p><code>interval</code> A character value indicating the interval that the data
 belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
 automatically in <code><a href="make_normalized_EPSC_data.html">make_normalized_EPSC_data()</a></code>.</p></li>
