@@ -118,7 +118,7 @@ cell-characteristics.
 \item \code{ID} A character value for the recording filename.
 \item \code{amplitude} The average sEPSC amplitude, averaged over the time interval (bin width) that you chose for the histogram (automatically generated from histogram tool in MiniAnalysis).
 \item \code{SE} The standard error of \code{amplitude} (automatically generated from histogram tool in MiniAnalysis).
-\item \code{time} The time in seconds (exported automatically from the histogram, depending on the bin width that you set).
+\item \code{time} The time in seconds (exported automatically from the histogram, depending on the bin width that you set). \code{add_new_cells()} will automatically convert this to minutes.
 \item \code{num_events} The number of synaptic events (sEPSCs) during the time interval (bin width). This is also automatically generated in MiniAnalysis.
 }
 

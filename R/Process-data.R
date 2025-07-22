@@ -177,7 +177,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
   }
 
   if (!negative_transform_currents %in% c("yes", "no")) {
-    cli::cli_abort(c("x" = "`negative_transform_currents` argument must be either 'eEPSC' or 'sEPSC'"))
+    cli::cli_abort(c("x" = "`negative_transform_currents` argument must be either 'yes' or 'no'"))
   }
 
 
@@ -361,6 +361,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'   Required columns section below, which will already be generated for you
 #'   from the output of [make_normalized_EPSC_data()].
 #' @inheritParams make_normalized_EPSC_data
+#' @inheritParams add_new_cells
 #' @param interval_length Length of each interval (in minutes). Used to divide
 #'   the dataset into broad ranges for statistical analysis. Defaults to `1` for
 #'   one summary point per minute.
@@ -548,6 +549,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #' to see an example of what the incoming raw dataset in the `data` argument
 #' should look like.
 #'
+#' # NOTE: If you exported your spontaneous data from the histogram tool in MiniAnalysis, you must set `software` to "MiniAnalysis".
+#'
 #' \itemize{
 #'  \item `interval` A character value indicating the interval that the data
 #'  belong to (e.g. "t0to5" for the first 5 minutes, "t5to10"). Generated
@@ -603,6 +606,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
                                   max_time_value = 25,
                                   baseline_length = 5,
                                   interval_length = 1,
+                                  software = "Clampfit",
                                   decimal_places = 2,
                                   save_output_as_RDS = "no") {
   time_sequence <- seq(from = min_time_value, to = max_time_value, by = interval_length)
@@ -612,6 +616,10 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
     length(current_type) != 1L ||
     !current_type %in% c("eEPSC", "sEPSC")) {
     cli::cli_abort(c("x" = "'current_type' argument must be either 'eEPSC' or 'sEPSC'"))
+  }
+
+  if (!software %in% c("Clampfit", "MiniAnalysis")) {
+    cli::cli_abort(c("x" = "'software' argument must be either 'Clampfit' or 'MiniAnalysis'"))
   }
 
   if (!save_output_as_RDS %in% c("yes", "no")) {
@@ -667,6 +675,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
   }
 
   if (current_type == "sEPSC") {
+    if (software == "Clampfit") {
     pruned_df_individual_cells <- pruned_df_individual_cells %>%
       dplyr::reframe(
         mean_amplitude = mean(.data$amplitude_transformed, na.rm = TRUE),
@@ -693,11 +702,41 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
         frequency_transformed = (.data$frequency / .data$baseline_mean_frequency) * 100
       ) %>%
       dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
+    }
+
+
+
+    if (software == "MiniAnalysis") {
+      pruned_df_individual_cells <- pruned_df_individual_cells %>%
+        dplyr::reframe(
+          mean_amplitude = mean(.data$amplitude_transformed, na.rm = TRUE),
+          mean_raw_amplitude = mean(.data$amplitude, na.rm = TRUE),
+          sd_amplitude = stats::sd(.data$amplitude_transformed, na.rm = TRUE),
+          n = dplyr::n(),
+          frequency = mean(.data$frequency),
+          se = .data$sd_amplitude / sqrt(.data$n),
+          letter = unique(.data$letter),
+          category = unique(.data$category),
+          interval = dplyr::first(.data$interval),
+          synapses = unique(.data$synapses),
+          days_alone = unique(.data$days_alone),
+          animal_or_slicing_problems = unique(.data$animal_or_slicing_problems),
+          time = max(.data$time) # Time at interval end; used for plots
+        ) %>%
+        dplyr::group_by(.data$letter) %>%
+        # Obtain normalized frequency
+        dplyr::mutate(
+          baseline_range = (.data$time <= baseline_length),
+          baseline_mean_frequency = sum(.data$frequency * .data$baseline_range) / sum(.data$baseline_range),
+          frequency_transformed = (.data$frequency / .data$baseline_mean_frequency) * 100
+        ) %>%
+        dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
+    }
 
     pruned_df_for_table <- pruned_df_individual_cells %>%
       dplyr::group_by(.data$letter) %>%
       dplyr::summarize(spont_amplitude_transformed = list(.data$mean_amplitude))
-  }
+    }
 
 
   # Prune all cells

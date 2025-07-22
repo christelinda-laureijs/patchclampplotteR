@@ -11,6 +11,7 @@ make_pruned_EPSC_data(
   max_time_value = 25,
   baseline_length = 5,
   interval_length = 1,
+  software = "Clampfit",
   decimal_places = 2,
   save_output_as_RDS = "no"
 )
@@ -38,6 +39,8 @@ high frequency stimulation. Defaults to \code{5}.}
 \item{interval_length}{Length of each interval (in minutes). Used to divide
 the dataset into broad ranges for statistical analysis. Defaults to \code{1} for
 one summary point per minute.}
+
+\item{software}{A character (\code{"Clampfit"} or \code{"MiniAnalysis"}) describing what software tool was used to analyze the data in \code{new_raw_data_csv}. This is relevant when \code{data_type} is \code{"sEPSC"} because the exported data is different. Defaults to \code{"Clampfit"}.}
 
 \item{decimal_places}{A numeric value indicating the number of decimal places
 the data should be rounded to. Used to reduce file size and prevent an
@@ -237,7 +240,7 @@ If the data are spontaneous currents (current_type == "sEPSC"), the data must
 contain the basic columns mentioned in \strong{Required basic columns} plus the
 columns listed below. For more detail, have a look at \link{sample_raw_sEPSC_df}
 to see an example of what the incoming raw dataset in the \code{data} argument
-should look like.
+should look like.NOTE: If you exported your spontaneous data from the histogram tool in MiniAnalysis, you must set software to "MiniAnalysis".
 
 \itemize{
 \item \code{interval} A character value indicating the interval that the data

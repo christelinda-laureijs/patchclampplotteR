@@ -317,7 +317,7 @@ import_theme_colours <- function(filename) {
 #'  \item `ID` A character value for the recording filename.
 #'  \item `amplitude` The average sEPSC amplitude, averaged over the time interval (bin width) that you chose for the histogram (automatically generated from histogram tool in MiniAnalysis).
 #'  \item `SE` The standard error of `amplitude` (automatically generated from histogram tool in MiniAnalysis).
-#'  \item `time` The time in seconds (exported automatically from the histogram, depending on the bin width that you set).
+#'  \item `time` The time in seconds (exported automatically from the histogram, depending on the bin width that you set). `add_new_cells()` will automatically convert this to minutes.
 #'  \item `num_events` The number of synaptic events (sEPSCs) during the time interval (bin width). This is also automatically generated in MiniAnalysis.
 #' }
 #'
@@ -541,7 +541,8 @@ add_new_cells <- function(new_raw_data_csv,
     if (software == "MiniAnalysis") {
       new_raw_data <- new_raw_data %>%
         dplyr::mutate(
-          frequency = .data$num_events/bin_width
+          frequency = .data$num_events/bin_width,
+          time = .data$time/60 # convert time in seconds to minutes
         )
     }
   }
