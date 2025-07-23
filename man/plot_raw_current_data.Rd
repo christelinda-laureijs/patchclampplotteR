@@ -49,7 +49,7 @@ spontaneous currents (\code{current_type = "sEPSC"}), the available y_variables
 are \code{"amplitude"} or \code{"frequency"}. NOTE: \code{"frequency"} is only available if \code{pruned = "yes"}.}
 
 \item{pruned}{A character value (\code{"yes"} or \code{"no"}) specifying if the data are
-pruned. The plot will then present the data as means with error bars.}
+pruned. The plot will then present the data as means with error bars. This is only relevant for y variables like \code{mean_P1} for \code{current_type = "eEPSC"}.}
 
 \item{hormone_added}{A character value that will be used as the label over
 the line annotating the period when a hormone was applied. Examples include

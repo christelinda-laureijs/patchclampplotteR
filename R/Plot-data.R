@@ -452,7 +452,7 @@ plot_baseline_data <- function(data,
 #'   are `"amplitude"` or `"frequency"`. NOTE: `"frequency"` is only available if `pruned = "yes"`.
 #' @param x_label A character value specifying the x-axis label. Defaults to "Time (min)".
 #' @param pruned A character value (`"yes"` or `"no"`) specifying if the data are
-#'   pruned. The plot will then present the data as means with error bars.
+#'   pruned. The plot will then present the data as means with error bars. This is only relevant for y variables like `mean_P1` for `current_type = "eEPSC"`.
 #' @param hormone_added A character value that will be used as the label over
 #'   the line annotating the period when a hormone was applied. Examples include
 #'   `"500 nM Insulin"`, `"CCK + Leptin"`, and `"Insulin"`. If you applied a
@@ -1089,22 +1089,47 @@ make_facet_plot <- function(data,
   }
 
 
+
+
   if (current_type == "sEPSC") {
-    # filepath <- "Figures/Spontaneous-currents/Output-individual-plots"
 
-    allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
+    if (pruned == "yes") {
+      allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
 
-    if (!y_variable %in% c("amplitude", "frequency")) {
-      cli::cli_abort(c(
-        "x" = paste0(
-          "`y_variable` must be ",
-          allowed_y_variables_list,
-          " for `current_type` \"",
-          current_type,
-          "\"."
-        ),
-        "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type` or `data.`"
-      ))
+      if (!y_variable %in% c("amplitude", "frequency")) {
+        cli::cli_abort(
+          c(
+            "x" = paste0(
+              "`y_variable` must be ",
+              allowed_y_variables_list,
+              " for `current_type` \"",
+              current_type,
+              "\" when `pruned` is set to \"yes\"."
+            ),
+            "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`."
+          )
+        )
+      }
+    }
+
+    if (pruned == "no") {
+      allowed_y_variables_list <- "\"amplitude\""
+
+      if (!y_variable %in% c("amplitude")) {
+        cli::cli_abort(
+          c(
+            "x" = paste0(
+              "`y_variable` must be ",
+              allowed_y_variables_list,
+              " for `current_type` \"",
+              current_type,
+              "\" when pruned is set to \"no\"."
+            ),
+            "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`."
+          )
+        )
+      }
+
     }
 
 
@@ -1140,11 +1165,23 @@ make_facet_plot <- function(data,
       .data$treatment == plot_treatment) %>%
     dplyr::pull(.data$colours)
 
-  facet_plot <- data %>%
+
+  facet_plot_data <- data %>%
     dplyr::filter(.data$category == plot_category &
-      .data$treatment == plot_treatment &
-      .data$sex == plot_sex) %>%
-    ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data[[y_variable]])) +
+                    .data$treatment == plot_treatment &
+                    .data$sex == plot_sex)
+
+  if (current_type == "sEPSC" &
+      pruned == "yes" &
+      y_variable == "amplitude") {
+    facet_plot <- facet_plot_data %>%
+      ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data$mean_amplitude))
+  } else {
+
+  facet_plot <- facet_plot_data %>%
+    ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data[[y_variable]]))}
+
+  facet_plot <- facet_plot +
     ggplot2::geom_point(color = plot_colour) +
     ggplot2::facet_wrap(. ~ .data$letter, ncol = 3, scales = "free_y") +
     ggplot2::labs(x = x_label, y = y_title) +

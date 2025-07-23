@@ -33,7 +33,7 @@ were present on the brain slice, or the animals were fasted, etc.}
 \item{plot_sex}{A character value ("Male" or "Female") corresponding to the sex you would like to plot.}
 
 \item{pruned}{A character value (\code{"yes"} or \code{"no"}) specifying if the data are
-pruned. The plot will then present the data as means with error bars.}
+pruned. The plot will then present the data as means with error bars. This is only relevant for y variables like \code{mean_P1} for \code{current_type = "eEPSC"}.}
 
 \item{current_type}{A character describing the current type. Allowed values
 are \code{"eEPSC"} or \code{"sEPSC"}.}
