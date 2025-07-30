@@ -4205,6 +4205,11 @@ plot_AP_trace <-
 #'
 #' # Facet by sex
 #'
+#' # NOTE: To reduce the package file size, there is only one data point
+#' # per sex for the sEPSC data. This is why there are error messages in the example.
+#' # The plot will not have these errors if you have more than one data point
+#' # per sex.
+#'
 #' plot_spontaneous_current_parameter_comparison(
 #'   data = sample_summary_sEPSC_df$summary_data,
 #'   plot_category = 2,
@@ -4902,10 +4907,8 @@ plot_cell_coordinates_data <- function(data,
   max_percent_change <- plot_data %>%
     dplyr::ungroup() %>%
     dplyr::summarise(max(.data$percent_change)) %>%
-    dplyr::pull()
-
-  max_percent_change <- round(max_percent_change / 10) * 10
-
+    dplyr::pull() %>%
+    ceiling()
 
   coordinates_plot <- plot_data %>%
     ggplot2::ggplot(ggplot2::aes(x = .data$X, y = .data$Y, color = .data$percent_change, shape = .data$sex)) +

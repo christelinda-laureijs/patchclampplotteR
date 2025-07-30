@@ -139,6 +139,11 @@ plot_spontaneous_current_parameter_comparison(
 
 # Facet by sex
 
+# NOTE: To reduce the package file size, there is only one data point
+# per sex for the sEPSC data. This is why there are error messages in the example.
+# The plot will not have these errors if you have more than one data point
+# per sex.
+
 plot_spontaneous_current_parameter_comparison(
   data = sample_summary_sEPSC_df$summary_data,
   plot_category = 2,
