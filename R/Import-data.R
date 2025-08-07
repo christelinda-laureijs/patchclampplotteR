@@ -466,6 +466,11 @@ add_new_cells <- function(new_raw_data_csv,
       dplyr::mutate(days_alone = factor(.data$days_alone))
   }
 
+  if ("animal" %in% colnames(cell_characteristics)) {
+    cell_characteristics <- cell_characteristics %>%
+      dplyr::mutate(animal = factor(.data$animal))
+  }
+
   if ("animal_or_slicing_problems" %in% colnames(cell_characteristics)) {
     cell_characteristics <- cell_characteristics %>%
       dplyr::mutate(animal_or_slicing_problems = factor(.data$animal_or_slicing_problems))
@@ -709,6 +714,11 @@ add_new_cells <- function(new_raw_data_csv,
       dplyr::rename(cell = .data$cells)
 
     cli::cli_alert_info("Renamed column 'cells' to 'cell'")
+  }
+
+  if ("animal" %in% colnames(old_raw_data)) {
+    old_raw_data <- old_raw_data %>%
+      dplyr::mutate(animal = factor(.data$animal))
   }
 
   letters_in_old_raw_data <- unique(old_raw_data$letter)
