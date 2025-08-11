@@ -1114,7 +1114,8 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
           .data$sd_transformed_frequency,
           .data$se_transformed_frequency,
           .data$mean_raw_frequency,
-          .data$time
+          .data$time,
+          .data$n
         )
       ) %>%
       tidyr::pivot_wider(
@@ -1140,7 +1141,8 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
           .data$sd_transformed_frequency,
           .data$se_transformed_frequency,
           .data$mean_raw_amplitude,
-          .data$time
+          .data$time,
+          .data$n
         )
       ) %>%
       tidyr::pivot_wider(
