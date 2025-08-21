@@ -512,7 +512,7 @@ add_new_cells <- function(new_raw_data_csv,
     new_raw_data <- new_raw_data %>%
       dplyr::rename(P1 = .data$p1, P2 = .data$p2) %>%
       dplyr::group_by(.data$letter) %>%
-      dplyr::mutate(time = (dplyr::row_number() - 1) / 12)
+      dplyr::mutate(time = (dplyr::row_number()) / 12)
   }
 
 

@@ -1258,7 +1258,7 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
 #'
 #' @inheritParams plot_baseline_data
 #' @inheritParams make_normalized_EPSC_data
-#' @param p_adjust_method This argument is directly related to `p.adjust.method` in `rstatix::t_test`. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include `"holm"`, `"hochberg"`, `"hommel"`, `"bonferroni"`, `"BH"`, `"BY"`, `"fdr"`, `"none"` (although `"none"` is not recommended).
+#' @param p_adjust_method This argument is directly related to `p.adjust.method` in `rstatix::t_test`. This is the method used to adjust the p-value in multiple pairwise comparisons. Allowed values include `"holm"`, `"hochberg"`, `"hommel"`, `"bonferroni"`, `"BH"`, `"BY"`, `"fdr"`, `"none"` (although `"none"` is NOT recommended).
 #' @param include_all_categories A character (`"yes"` or `"no"`) specifying if the
 #'   table will include data from all categories. If `"no"`, you must specify a
 #'   list of categories in `list_of_categories`.
