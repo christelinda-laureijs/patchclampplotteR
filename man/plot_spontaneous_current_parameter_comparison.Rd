@@ -24,8 +24,11 @@ plot_spontaneous_current_parameter_comparison(
   geom_signif_text_size = 5,
   large_axis_text = "no",
   treatment_colour_theme,
+  mean_line_thickness = 1.2,
+  mean_point_size = 2.5,
   geom_signif_size = 0.5,
   theme_options,
+  plot_type = "violin",
   save_plot_png,
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -91,11 +94,17 @@ their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
 
+\item{mean_line_thickness}{A numeric value describing the thickness of the line used to indicate the mean for a group. Defaults to \code{1.2}.}
+
+\item{mean_point_size}{A numeric value describing the size of the points used to indicate the means. Defaults to \code{2.5}.}
+
 \item{geom_signif_size}{A numeric value describing the size of the \code{geom_signif} bracket size. Defaults to \code{0.5}, which is a good thickness for most applications.}
 
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should
 look like.}
+
+\item{plot_type}{A character value (\code{"violin"} or \code{"lineplot"}) which determines how the data are plotted. This can be a pale gray violin plot with a sina plot overlay, or a lineplot where "before" and "after" values for each cell are connected with a line.}
 
 \item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but

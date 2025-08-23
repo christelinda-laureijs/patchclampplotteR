@@ -4174,6 +4174,7 @@ plot_AP_trace <-
 #' @param y_variable A character value (`"raw_amplitude"` or `"raw_frequency"`) only.
 #'   Normalized amplitude and frequency are not available because all baseline
 #'   values are 100.
+#' @param plot_type A character value (`"violin"` or `"lineplot"`) which determines how the data are plotted. This can be a pale gray violin plot with a sina plot overlay, or a lineplot where "before" and "after" values for each cell are connected with a line.
 #' @param y_variable_signif_brackets A character value. You should only use this if your data did not pass assumptions and you had to transform it. `y_variable_signif_brackets` should be the name of the column of `data` which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, leave this argument blank, and the function will automatically use the correct column associated with `y_variable`.
 #' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.5`, which is a good thickness for most applications.
 #'
@@ -4401,15 +4402,38 @@ plot_spontaneous_current_parameter_comparison <-
             color = NA,
             scale = "width",
             width = 0.2
-          ) +
+          )
+
+        if (facet_by_sex == "yes") {
+          sEPSC_comparison_plot <- sEPSC_comparison_plot +
           ggforce::geom_sina(
+            ggplot2::aes(shape = .data$sex),
             bw = 12,
             alpha = 0.8,
             maxwidth = 0.3,
             size = 2,
-            color = plot_colour,
-            shape = plot_shape
+            color = plot_colour
           ) +
+          ggplot2::scale_shape_manual(values = if (left_sex == "Female") {
+            c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))
+          } else {
+            c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))
+          })
+        }
+
+        if (facet_by_sex == "no") {
+          sEPSC_comparison_plot <- sEPSC_comparison_plot +
+            ggforce::geom_sina(
+              bw = 12,
+              alpha = 0.8,
+              maxwidth = 0.3,
+              size = 2,
+              color = plot_colour,
+              shape = plot_shape
+            )
+        }
+
+        sEPSC_comparison_plot <- sEPSC_comparison_plot +
           ggplot2::stat_summary(
             fun.data = ggplot2::mean_se,
             geom = "pointrange",
