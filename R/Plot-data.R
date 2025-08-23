@@ -698,25 +698,24 @@ plot_raw_current_data <-
         }
       }
 
-    if (pruned == "no") {
-      allowed_y_variables_list <- "\"amplitude\""
+      if (pruned == "no") {
+        allowed_y_variables_list <- "\"amplitude\""
 
-      if (!y_variable %in% c("amplitude")) {
-        cli::cli_abort(
-          c(
-            "x" = paste0(
-              "`y_variable` must be ",
-              allowed_y_variables_list,
-              " for `current_type` \"",
-              current_type,
-              "\" when pruned is set to \"no\"."
-            ),
-            "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`."
+        if (!y_variable %in% c("amplitude")) {
+          cli::cli_abort(
+            c(
+              "x" = paste0(
+                "`y_variable` must be ",
+                allowed_y_variables_list,
+                " for `current_type` \"",
+                current_type,
+                "\" when pruned is set to \"no\"."
+              ),
+              "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`."
+            )
           )
-        )
+        }
       }
-
-    }
 
 
       if (y_variable == "amplitude") {
@@ -1092,7 +1091,6 @@ make_facet_plot <- function(data,
 
 
   if (current_type == "sEPSC") {
-
     if (pruned == "yes") {
       allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
 
@@ -1129,7 +1127,6 @@ make_facet_plot <- function(data,
           )
         )
       }
-
     }
 
 
@@ -1168,18 +1165,18 @@ make_facet_plot <- function(data,
 
   facet_plot_data <- data %>%
     dplyr::filter(.data$category == plot_category &
-                    .data$treatment == plot_treatment &
-                    .data$sex == plot_sex)
+      .data$treatment == plot_treatment &
+      .data$sex == plot_sex)
 
   if (current_type == "sEPSC" &
-      pruned == "yes" &
-      y_variable == "amplitude") {
+    pruned == "yes" &
+    y_variable == "amplitude") {
     facet_plot <- facet_plot_data %>%
       ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data$mean_amplitude))
   } else {
-
-  facet_plot <- facet_plot_data %>%
-    ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data[[y_variable]]))}
+    facet_plot <- facet_plot_data %>%
+      ggplot2::ggplot(ggplot2::aes(x = .data$time, y = .data[[y_variable]]))
+  }
 
   facet_plot <- facet_plot +
     ggplot2::geom_point(color = plot_colour) +
@@ -4337,7 +4334,6 @@ plot_spontaneous_current_parameter_comparison <-
     }
 
     if (facet_by_sex == "no") {
-
       facet_label <- ""
     }
 
@@ -4395,17 +4391,17 @@ plot_spontaneous_current_parameter_comparison <-
       ggplot2::guides(shape = "none")
 
 
-     if (plot_type == "violin") {
-        sEPSC_comparison_plot <- sEPSC_comparison_plot +
-          ggplot2::geom_violin(
-            fill = theme_options["gray_shading_colour", "value"],
-            color = NA,
-            scale = "width",
-            width = 0.2
-          )
+    if (plot_type == "violin") {
+      sEPSC_comparison_plot <- sEPSC_comparison_plot +
+        ggplot2::geom_violin(
+          fill = theme_options["gray_shading_colour", "value"],
+          color = NA,
+          scale = "width",
+          width = 0.2
+        )
 
-        if (facet_by_sex == "yes") {
-          sEPSC_comparison_plot <- sEPSC_comparison_plot +
+      if (facet_by_sex == "yes") {
+        sEPSC_comparison_plot <- sEPSC_comparison_plot +
           ggforce::geom_sina(
             ggplot2::aes(shape = .data$sex),
             bw = 12,
@@ -4419,45 +4415,47 @@ plot_spontaneous_current_parameter_comparison <-
           } else {
             c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))
           })
-        }
+      }
 
-        if (facet_by_sex == "no") {
-          sEPSC_comparison_plot <- sEPSC_comparison_plot +
-            ggforce::geom_sina(
-              bw = 12,
-              alpha = 0.8,
-              maxwidth = 0.3,
-              size = 2,
-              color = plot_colour,
-              shape = plot_shape
-            )
-        }
-
+      if (facet_by_sex == "no") {
         sEPSC_comparison_plot <- sEPSC_comparison_plot +
-          ggplot2::stat_summary(
-            fun.data = ggplot2::mean_se,
-            geom = "pointrange",
-            color = theme_options["mean_point_colour", "value"],
-            size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
-            alpha = 0.8
+          ggforce::geom_sina(
+            bw = 12,
+            alpha = 0.8,
+            maxwidth = 0.3,
+            size = 2,
+            color = plot_colour,
+            shape = plot_shape
           )
       }
+
+      sEPSC_comparison_plot <- sEPSC_comparison_plot +
+        ggplot2::stat_summary(
+          fun.data = ggplot2::mean_se,
+          geom = "pointrange",
+          color = theme_options["mean_point_colour", "value"],
+          size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
+          alpha = 0.8
+        )
+    }
 
 
     if (plot_type == "lineplot") {
       sEPSC_comparison_plot <- sEPSC_comparison_plot +
 
         ggplot2::geom_point(ggplot2::aes(shape = .data$sex),
-                            color = theme_options["connecting_line_colour", "value"],
-                            size = 1.8) +
+          color = theme_options["connecting_line_colour", "value"],
+          size = 1.8
+        ) +
         ggplot2::scale_shape_manual(values = if (left_sex == "Female") {
           c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))
         } else {
           c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))
         }) +
         ggplot2::geom_line(ggplot2::aes(group = .data$letter),
-                           color = theme_options["connecting_line_colour", "value"],
-                           linewidth = 0.4) +
+          color = theme_options["connecting_line_colour", "value"],
+          linewidth = 0.4
+        ) +
         ggplot2::stat_summary(
           ggplot2::aes(group = 1),
           fun.data = ggplot2::mean_se,
@@ -4486,13 +4484,11 @@ plot_spontaneous_current_parameter_comparison <-
             shape = plot_shape
           )
       }
-
-
     }
 
     if (facet_by_sex == "yes") {
       sEPSC_comparison_plot <- sEPSC_comparison_plot +
-        ggplot2::facet_wrap( ~ .data$sex)
+        ggplot2::facet_wrap(~ .data$sex)
     }
 
 

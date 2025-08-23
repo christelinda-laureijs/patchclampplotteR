@@ -676,32 +676,32 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
 
   if (current_type == "sEPSC") {
     if (software == "Clampfit") {
-    pruned_df_individual_cells <- pruned_df_individual_cells %>%
-      dplyr::reframe(
-        mean_amplitude = mean(.data$amplitude_transformed, na.rm = TRUE),
-        mean_raw_amplitude = mean(.data$amplitude, na.rm = TRUE),
-        sd_amplitude = stats::sd(.data$amplitude_transformed, na.rm = TRUE),
-        n = dplyr::n(),
-        # Gets number of currents within each minute
-        frequency = .data$n / (60*interval_length),
-        # Frequency in Hz
-        se = .data$sd_amplitude / sqrt(.data$n),
-        letter = unique(.data$letter),
-        category = unique(.data$category),
-        interval = dplyr::first(.data$interval),
-        synapses = unique(.data$synapses),
-        days_alone = unique(.data$days_alone),
-        animal_or_slicing_problems = unique(.data$animal_or_slicing_problems),
-        time = max(.data$time) # Time at interval end; used for plots
-      ) %>%
-      dplyr::group_by(.data$letter) %>%
-      # Obtain normalized frequency
-      dplyr::mutate(
-        baseline_range = (.data$time <= baseline_length),
-        baseline_mean_frequency = sum(.data$frequency * .data$baseline_range) / sum(.data$baseline_range),
-        frequency_transformed = (.data$frequency / .data$baseline_mean_frequency) * 100
-      ) %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
+      pruned_df_individual_cells <- pruned_df_individual_cells %>%
+        dplyr::reframe(
+          mean_amplitude = mean(.data$amplitude_transformed, na.rm = TRUE),
+          mean_raw_amplitude = mean(.data$amplitude, na.rm = TRUE),
+          sd_amplitude = stats::sd(.data$amplitude_transformed, na.rm = TRUE),
+          n = dplyr::n(),
+          # Gets number of currents within each minute
+          frequency = .data$n / (60 * interval_length),
+          # Frequency in Hz
+          se = .data$sd_amplitude / sqrt(.data$n),
+          letter = unique(.data$letter),
+          category = unique(.data$category),
+          interval = dplyr::first(.data$interval),
+          synapses = unique(.data$synapses),
+          days_alone = unique(.data$days_alone),
+          animal_or_slicing_problems = unique(.data$animal_or_slicing_problems),
+          time = max(.data$time) # Time at interval end; used for plots
+        ) %>%
+        dplyr::group_by(.data$letter) %>%
+        # Obtain normalized frequency
+        dplyr::mutate(
+          baseline_range = (.data$time <= baseline_length),
+          baseline_mean_frequency = sum(.data$frequency * .data$baseline_range) / sum(.data$baseline_range),
+          frequency_transformed = (.data$frequency / .data$baseline_mean_frequency) * 100
+        ) %>%
+        dplyr::mutate(dplyr::across(dplyr::where(is.numeric), \(x) round(x, decimal_places)))
     }
 
 
@@ -736,7 +736,7 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
     pruned_df_for_table <- pruned_df_individual_cells %>%
       dplyr::group_by(.data$letter) %>%
       dplyr::summarize(spont_amplitude_transformed = list(.data$mean_amplitude))
-    }
+  }
 
 
   # Prune all cells
@@ -1238,8 +1238,6 @@ make_summary_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df
         )
       ))
     }
-
-
   }
 
   return(summary_data_final)
