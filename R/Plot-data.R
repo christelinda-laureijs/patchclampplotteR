@@ -4247,8 +4247,11 @@ plot_spontaneous_current_parameter_comparison <-
            geom_signif_text_size = 5,
            large_axis_text = "no",
            treatment_colour_theme,
+           mean_line_thickness = 1.2,
+           mean_point_size = 2.5,
            geom_signif_size = 0.5,
            theme_options,
+           plot_type = "violin",
            save_plot_png,
            ggplot_theme = patchclampplotteR_theme()) {
     if (is.null(baseline_interval) ||
@@ -4258,6 +4261,10 @@ plot_spontaneous_current_parameter_comparison <-
 
     if (!save_plot_png %in% c("yes", "no")) {
       cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
+    }
+
+    if (!plot_type %in% c("violin", "lineplot")) {
+      cli::cli_abort(c("x" = "`plot_type` argument must be either \"violin\" or \"lineplot\""))
     }
 
     if (!facet_by_sex %in% c("yes", "no")) {
@@ -4328,6 +4335,11 @@ plot_spontaneous_current_parameter_comparison <-
       facet_label <- "-faceted-by-sex"
     }
 
+    if (facet_by_sex == "no") {
+
+      facet_label <- ""
+    }
+
     if (y_variable == "raw_amplitude") {
       y_title <- "sEPSC Amplitude (pA)"
       y_var <- "mean_raw_amplitude"
@@ -4374,73 +4386,90 @@ plot_spontaneous_current_parameter_comparison <-
       plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
     }
 
-    facet_label <- ""
+    sEPSC_comparison_plot <- sEPSC_comparison_plot_data %>%
+      ggplot2::ggplot(ggplot2::aes(x = .data$interval, y = .data[[y_var]])) +
+      ggplot2::labs(x = NULL, y = y_title) +
+      ggplot2::scale_x_discrete(labels = c("Baseline", hormone_added)) +
+      ggplot_theme +
+      ggplot2::guides(shape = "none")
 
-    if (facet_by_sex == "no") {
-      facet_label <- ""
 
-      sEPSC_comparison_plot <- sEPSC_comparison_plot_data %>%
-        ggplot2::ggplot(ggplot2::aes(x = .data$interval, y = .data[[y_var]])) +
-        ggplot2::geom_violin(
-          fill = theme_options["gray_shading_colour", "value"],
-          color = NA,
-          scale = "width",
-          width = 0.2
-        ) +
-        ggforce::geom_sina(
-          bw = 12,
-          alpha = 0.8,
-          maxwidth = 0.3,
-          size = 2,
-          color = plot_colour,
-          shape = plot_shape
-        ) +
-        ggplot2::stat_summary(
-          fun.data = ggplot2::mean_se,
-          geom = "pointrange",
-          color = theme_options["mean_point_colour", "value"],
-          size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
-          alpha = 0.8
-        )
-    }
+     if (plot_type == "violin") {
+        sEPSC_comparison_plot <- sEPSC_comparison_plot +
+          ggplot2::geom_violin(
+            fill = theme_options["gray_shading_colour", "value"],
+            color = NA,
+            scale = "width",
+            width = 0.2
+          ) +
+          ggforce::geom_sina(
+            bw = 12,
+            alpha = 0.8,
+            maxwidth = 0.3,
+            size = 2,
+            color = plot_colour,
+            shape = plot_shape
+          ) +
+          ggplot2::stat_summary(
+            fun.data = ggplot2::mean_se,
+            geom = "pointrange",
+            color = theme_options["mean_point_colour", "value"],
+            size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
+            alpha = 0.8
+          )
+      }
 
-    if (facet_by_sex == "yes") {
-      sEPSC_comparison_plot <- sEPSC_comparison_plot_data %>%
-        ggplot2::ggplot(ggplot2::aes(x = .data$interval, y = .data[[y_var]])) +
-        ggplot2::geom_violin(
-          fill = theme_options["gray_shading_colour", "value"],
-          color = NA,
-          scale = "width",
-          width = 0.2
-        ) +
-        ggforce::geom_sina(
-          ggplot2::aes(shape = .data$sex),
-          bw = 12,
-          alpha = 0.8,
-          maxwidth = 0.3,
-          size = 2,
-          color = plot_colour
-        ) +
+
+    if (plot_type == "lineplot") {
+      sEPSC_comparison_plot <- sEPSC_comparison_plot +
+
+        ggplot2::geom_point(ggplot2::aes(shape = .data$sex),
+                            color = theme_options["connecting_line_colour", "value"],
+                            size = 1.8) +
         ggplot2::scale_shape_manual(values = if (left_sex == "Female") {
           c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"]))
         } else {
           c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))
         }) +
+        ggplot2::geom_line(ggplot2::aes(group = .data$letter),
+                           color = theme_options["connecting_line_colour", "value"],
+                           linewidth = 0.4) +
         ggplot2::stat_summary(
+          ggplot2::aes(group = 1),
           fun.data = ggplot2::mean_se,
-          geom = "pointrange",
-          color = theme_options["mean_point_colour", "value"],
-          size = as.numeric(theme_options["mean_point_size", "value"]) + 0.2,
-          alpha = 0.8
-        ) +
-        ggplot2::guides(shape = "none") +
-        ggplot2::facet_wrap(~ .data$sex)
+          geom = "line",
+          colour = plot_colour,
+          linewidth = mean_line_thickness
+        )
+
+
+      if (facet_by_sex == "yes") {
+        sEPSC_comparison_plot <- sEPSC_comparison_plot +
+          ggplot2::stat_summary(
+            ggplot2::aes(shape = .data$sex),
+            fun.data = ggplot2::mean_se,
+            geom = "point",
+            colour = plot_colour,
+            size = mean_point_size
+          )
+      } else {
+        sEPSC_comparison_plot <- sEPSC_comparison_plot +
+          ggplot2::stat_summary(
+            fun.data = ggplot2::mean_se,
+            geom = "point",
+            colour = plot_colour,
+            size = mean_point_size,
+            shape = plot_shape
+          )
+      }
+
+
     }
 
-    sEPSC_comparison_plot <- sEPSC_comparison_plot +
-      ggplot2::labs(x = NULL, y = y_title) +
-      ggplot2::scale_x_discrete(labels = c("Baseline", hormone_added)) +
-      ggplot_theme
+    if (facet_by_sex == "yes") {
+      sEPSC_comparison_plot <- sEPSC_comparison_plot +
+        ggplot2::facet_wrap( ~ .data$sex)
+    }
 
 
     if (test_type != "none") {
