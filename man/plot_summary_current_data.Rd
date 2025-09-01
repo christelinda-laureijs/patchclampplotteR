@@ -12,6 +12,7 @@ plot_summary_current_data(
   y_variable = "amplitude",
   hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
+  hormone_end_time = NULL,
   legend_position = "right",
   legend_position_inside = c(0.13, 0.15),
   included_sexes = "both",
@@ -70,7 +71,10 @@ annotation arrow will be added instead.}
 
 \item{hormone_or_HFS_start_time}{A numeric value indicating the time (in
 minutes) when a hormone was added or when HFS was applied. This will set
-the annotation line start point.}
+the annotation line start point. This can also be set to \code{NULL} if you want to create your own more complex annotations (for example, for washout, or multiple hormones added at different times). To add your own annotations, use \code{ggplot2::annotate(geom = "segment")} as a starting point.}
+
+\item{hormone_end_time}{A numeric value indicating the time (in minutes) when
+a hormone stopped being applied, such as for a washout experiment.}
 
 \item{legend_position}{A character value (\code{"left"}, \code{"right"}, \code{"top"}, \code{"bottom"}, \code{"inside"}) which describes the location of the legend. If you set this to \code{"inside"}, you may need to adjust the location of the representative trace with \code{annotation_x_min}, \code{annotation_x_max}, etc. Or, you can choose to insert the representative trace as a separate geom using the \code{patchwork} package (e.g. set up a two-row patchwork with the representative trace in the top row, and the summary plot in the second row).}
 

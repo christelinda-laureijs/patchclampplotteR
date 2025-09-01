@@ -127,7 +127,9 @@ HNMPA_recording_FT
 
 
 ```{r echo=F, eval=T}
-HNMPA_recording_FT + ggplot2::annotate(geom = "segment", x = 0, xend = 25, y = 168, yend = 168) + ggplot2::annotate(geom = "text", x = 0, y = 177, label = "HNMPA", hjust = 0)
+HNMPA_recording_FT + 
+  ggplot2::annotate(geom = "segment", x = 0, xend = 25, y = 168, yend = 168) + 
+  ggplot2::annotate(geom = "text", x = 0, y = 177, label = "HNMPA", hjust = 0)
 ```
 
 
@@ -250,6 +252,8 @@ You can use the `included_sexes` argument in `plot_summary_current_data()`. It d
 ## How can I plot many treatments at once and/or plot even faster?
 
 Let's say that you are running a plotting function repeatedly, but only changing one argument at once (like `plot_treatment`). To reduce repetitive code, you can use `pmap()` from the `purrr` package to run a function with a list of treatments.
+
+> P.S. Do you want to plot many raw recordings at once? You may want to read the documentation for the function `make_facet_plot()`!
 
 First, I am adding a new column to `sample_treatment_names_and_colours` which contains the filepath to each representative trace .png file.
 
@@ -458,11 +462,12 @@ This package replaces manual plot creation and data analysis in GraphPad Prism a
 
 Ruby is a rat, and she's also become an unofficial lab mascot for the Crosby lab! She loves helping out with data analysis, welcoming newcomers to the lab, keeping lab members company, and serving as an emotional support rat. She found a way to sneak into some of the documentation for this package!
 
+
 ```{r ruby-desk-picture, echo=F, fig.align='center', fig.alt = "A picture of a knitted white rat looking directly at the viewer.", fig.cap = "Ruby says 'Hi humans!!'"}
 knitr::include_graphics("figures/Ruby-table.jpg")
 ```
 
-When the lab humans aren't around, Ruby can often be found at the computer or snuggling up with her friends, Millie and Lilly, in one of the many hiding places in the lab.
+When the lab humans aren't around, Ruby can often be found at the computer or snuggling up with her friends, Millie and Lily, in one of the many hiding places in the lab.
 
 ```{r ruby-picture, echo=F, fig.align='center', fig.alt = "A picture of a knitted white rat sitting on a keyboard and working at a computer."}
 knitr::include_graphics("figures/Ruby-desk.jpg")

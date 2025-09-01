@@ -549,7 +549,8 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #' to see an example of what the incoming raw dataset in the `data` argument
 #' should look like.
 #'
-#' # NOTE: If you exported your spontaneous data from the histogram tool in MiniAnalysis, you must set `software` to "MiniAnalysis".
+#' NOTE: If you exported your spontaneous data from the histogram tool in
+#' ' MiniAnalysis, you must set `software` to "MiniAnalysis".
 #'
 #' \itemize{
 #'  \item `interval` A character value indicating the interval that the data

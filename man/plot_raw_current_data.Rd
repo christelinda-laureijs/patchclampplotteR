@@ -59,7 +59,7 @@ annotation arrow will be added instead.}
 
 \item{hormone_or_HFS_start_time}{A numeric value indicating the time (in
 minutes) when a hormone was added or when HFS was applied. This will set
-the annotation line start point.}
+the annotation line start point. This can also be set to \code{NULL} if you want to create your own more complex annotations (for example, for washout, or multiple hormones added at different times). To add your own annotations, use \code{ggplot2::annotate(geom = "segment")} as a starting point.}
 
 \item{hormone_end_time}{A numeric value indicating the time (in minutes) when
 a hormone stopped being applied, such as for a washout experiment.}

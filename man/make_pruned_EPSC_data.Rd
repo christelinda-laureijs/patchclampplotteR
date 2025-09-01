@@ -240,7 +240,10 @@ If the data are spontaneous currents (current_type == "sEPSC"), the data must
 contain the basic columns mentioned in \strong{Required basic columns} plus the
 columns listed below. For more detail, have a look at \link{sample_raw_sEPSC_df}
 to see an example of what the incoming raw dataset in the \code{data} argument
-should look like.NOTE: If you exported your spontaneous data from the histogram tool in MiniAnalysis, you must set software to "MiniAnalysis".
+should look like.
+
+NOTE: If you exported your spontaneous data from the histogram tool in
+' MiniAnalysis, you must set \code{software} to "MiniAnalysis".
 
 \itemize{
 \item \code{interval} A character value indicating the interval that the data

@@ -460,7 +460,7 @@ plot_baseline_data <- function(data,
 #'   annotation arrow will be added instead.
 #' @param hormone_or_HFS_start_time A numeric value indicating the time (in
 #'   minutes) when a hormone was added or when HFS was applied. This will set
-#'   the annotation line start point.
+#'   the annotation line start point. This can also be set to `NULL` if you want to create your own more complex annotations (for example, for washout, or multiple hormones added at different times). To add your own annotations, use `ggplot2::annotate(geom = "segment")` as a starting point.
 #' @param hormone_end_time A numeric value indicating the time (in minutes) when
 #'   a hormone stopped being applied, such as for a washout experiment.
 #' @param male_label A character value used to describe how males are encoded in the `sex` column of the dataframe used in `data`. This MUST match the value for male data in the `sex` column, and it must be consistent across data sheets. Defaults to `"Male"`.
@@ -1286,6 +1286,7 @@ plot_summary_current_data <- function(data,
                                       y_variable = "amplitude",
                                       hormone_added = "Insulin",
                                       hormone_or_HFS_start_time = 5,
+                                      hormone_end_time = NULL,
                                       legend_position = "right",
                                       legend_position_inside = c(0.13, 0.15),
                                       included_sexes = "both",
@@ -1385,10 +1386,22 @@ plot_summary_current_data <- function(data,
   }
 
 
-  if (is.null(hormone_or_HFS_start_time) ||
-    !is.numeric(hormone_or_HFS_start_time)) {
-    cli::cli_abort(c("x" = "`hormone_or_HFS_start_time` must be numeric
-      (e.g. 5 for HFS or a hormone applied at five minutes into the recording)."))
+
+  if (!is.null(hormone_or_HFS_start_time)) {
+    if (!is.numeric(hormone_or_HFS_start_time)) {
+      cli::cli_abort(
+        c(
+          "x" = "`hormone_or_HFS_start_time` must be numeric
+      (e.g. 5 for HFS or a hormone applied at five minutes into the recording)."
+        )
+      )
+    }
+  }
+
+  if (!is.null(hormone_end_time) &
+      !is.numeric(hormone_end_time)) {
+    cli::cli_abort(c("x" = "`hormone_end_time` must be numeric
+        (e.g. 25 for a hormone ending at 25 minutes)."))
   }
 
   df <-
@@ -1649,13 +1662,17 @@ plot_summary_current_data <- function(data,
   # If hormone_added = Insulin, CCK, i.e. anything other than "HFS" (high frequency stimulation),
   # add an annotated line over the application period:
 
-  if (hormone_added != "HFS") {
+  if (hormone_added != "HFS" & !is.null(hormone_or_HFS_start_time)) {
     treatment_plot <-
       treatment_plot +
       ggplot2::annotate(
         geom = "segment",
         x = hormone_or_HFS_start_time,
-        xend = xmax,
+        xend = if (is.null(hormone_end_time)) {
+          xmax
+        } else {
+          hormone_end_time
+        },
         y = ymax,
         yend = ymax,
         colour = theme_options["line_col", "value"],
@@ -1677,7 +1694,7 @@ plot_summary_current_data <- function(data,
   }
 
 
-  if (hormone_added == "HFS") {
+  if (hormone_added == "HFS" & !is.null(hormone_or_HFS_start_time)) {
     # Get limits of x- and y-axes
     ymax <- ggplot2::layer_scales(treatment_plot)$y$get_limits()[2]
     xmax <- ggplot2::layer_scales(treatment_plot)$x$get_limits()[2]
