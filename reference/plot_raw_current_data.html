@@ -147,7 +147,7 @@ annotation arrow will be added instead.</p></dd>
 <dt id="arg-hormone-or-hfs-start-time">hormone_or_HFS_start_time<a class="anchor" aria-label="anchor" href="#arg-hormone-or-hfs-start-time"></a></dt>
 <dd><p>A numeric value indicating the time (in
 minutes) when a hormone was added or when HFS was applied. This will set
-the annotation line start point.</p></dd>
+the annotation line start point. This can also be set to <code>NULL</code> if you want to create your own more complex annotations (for example, for washout, or multiple hormones added at different times). To add your own annotations, use <code>ggplot2::annotate(geom = "segment")</code> as a starting point.</p></dd>
 
 
 <dt id="arg-hormone-end-time">hormone_end_time<a class="anchor" aria-label="anchor" href="#arg-hormone-end-time"></a></dt>
