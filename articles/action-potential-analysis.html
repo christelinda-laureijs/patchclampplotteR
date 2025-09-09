@@ -88,9 +88,11 @@
     
     
 <p>This vignette will demonstrate how to analyze action potential
-properties using a raw .abf file. You will identify the first current
-injection that resulted in action potentials and then select the first
-action potential within this sweep for further analyses.</p>
+properties in Clampfit using a raw .abf file. You will identify the
+first current injection that resulted in action potentials and then
+select the first action potential within this sweep for further
+analyses. The data can then be processed and plotted in R using
+<code>patchclampplotteR</code> functions.</p>
 <div class="figure" style="text-align: center">
 <img src="figures/AP-first-trace.png" alt="An image of a current clamp steps recording with the first action potential outlined with a box." width="75%"><p class="caption">
 The box outlines the first action potential on the first sweep with
@@ -262,18 +264,26 @@ the <code>Expression</code> box, write <code>t11=diff(t6)</code>
 <h3 id="find-threshold">Find threshold<a class="anchor" aria-label="anchor" href="#find-threshold"></a>
 </h3>
 <ol start="7" style="list-style-type: decimal">
-<li><p>Click on <code>Edit</code> -&gt; <code>Transfer Traces</code> and
+<li>Click on <code>Edit</code> -&gt; <code>Transfer Traces</code> and
 set the <code>Region to transfer</code> as <code>Cursors 1..2</code>. In
 the <code>Trace Selection</code> category, choose only
-<code>Vm_primary ()</code> as the signal. Select <code>t_x</code> and
-<code>t11</code> for the traces, then click OK.</p></li>
-<li><p>Click on the Results sheet (<code>Window</code> -&gt;
-<code>Results1</code>). The <code>Results</code> page will display three
-columns: <code>Time (ms)</code>,
+<code>Vm_primary ()</code> as the signal. Ensure that
+<code>start time at zero</code> is checked. Select <code>t_x</code> and
+<code>t11</code> for the traces, then click <code>OK</code>.</li>
+</ol>
+<blockquote>
+<p><strong>Quick Tip!</strong> An even faster keyboard shortcut is
+<code>Alt+e+t+s</code>, which will immediately open the correct signal
+selection box. Only use this if you are sure that the settings are
+correct.</p>
+</blockquote>
+<ol start="8" style="list-style-type: decimal">
+<li>Click on the Results sheet (<code>Window</code> -&gt;
+<code>Results1</code> or <code>Alt+w+2</code>). The <code>Results</code>
+page will display three columns: <code>Time (ms)</code>,
 <code>Trace #6 (or #5, #7, etc.)</code>, and <code>Trace #11</code>.
 <code>Trace #x</code> is the membrane potential in mV, and
-<code>Trace #11</code> is the derivative of
-<code>Trace #x</code>.</p></li>
+<code>Trace #11</code> is the derivative of <code>Trace #x</code>.</li>
 </ol>
 <blockquote>
 <p><strong>Warning!</strong> The Results page of the transferred traces
@@ -358,17 +368,25 @@ you from accidentally copying old data</li>
 <code>time of antipeak</code>, <code>half-width</code>
 </li>
 </ul>
-<p>Click OK and then <code>Window</code> -&gt; <code>Results1</code> to
-see the Results page.</p>
+<p>Click OK and then <code>Window</code> -&gt; <code>Results1</code>
+(<code>Alt+w+2</code>) to see the Results page.</p>
 <p><img src="figures/AP-statistics-box.png" alt="A screenshot of the Statistics box of Clampfit showing the correct options to select." width="75%" style="display: block; margin: auto;"></p>
 <ol start="14" style="list-style-type: decimal">
-<li><p>Go to the row corresponding to Trace <code>t_x</code>. Select all
+<li>Go to the row corresponding to Trace <code>t_x</code>. Select all
 data except for the <code>File Path</code> column (unless you think you
 will need it later) and paste it into the .csv file. You’ll notice that
 the .csv column names are different than the column names in the
 <code>Results</code> sheet. I changed these column names to make them
-easier to use in R code.</p></li>
-<li><p>Your .csv file should now look like this.</p></li>
+easier to use in R code.</li>
+</ol>
+<blockquote>
+<p><strong>Warning!</strong> There is a bug in Clampfit 11.3 (but not
+11.4 or 10.6) that leads to incorrect time units for parameters such as
+time_of_antipeak. Ensure that your parameters have consistent units
+before moving ahead!</p>
+</blockquote>
+<ol start="15" style="list-style-type: decimal">
+<li>Your .csv file should now look like this.</li>
 </ol>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-e5c8c404fe174e4c81bd" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"letter":["BN"],"state":["Baseline"],"time_of_threshold":[373.5],"t_x":[-32.1],"t11":[10.38],"ID":["23711003.abf"],"first_sweep_with_APs":[6],"trace_start":[5021],"peak_amplitude":[72.54],"time_to_peak":[0.7],"antipeak_amplitude":[-17.73],"time_of_antipeak":[4.4],"half_width":[1.09]},"columns":[{"id":"letter","name":"letter","type":"character"},{"id":"state","name":"state","type":"character"},{"id":"time_of_threshold","name":"time_of_threshold","type":"numeric"},{"id":"t_x","name":"t_x","type":"numeric"},{"id":"t11","name":"t11","type":"numeric"},{"id":"ID","name":"ID","type":"character"},{"id":"first_sweep_with_APs","name":"first_sweep_with_APs","type":"numeric"},{"id":"trace_start","name":"trace_start","type":"numeric"},{"id":"peak_amplitude","name":"peak_amplitude","type":"numeric"},{"id":"time_to_peak","name":"time_to_peak","type":"numeric"},{"id":"antipeak_amplitude","name":"antipeak_amplitude","type":"numeric"},{"id":"time_of_antipeak","name":"time_of_antipeak","type":"numeric"},{"id":"half_width","name":"half_width","type":"numeric"}],"dataKey":"12e9d60e1759c119e1cbdd973e7944a8"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><ol start="16" style="list-style-type: decimal">
