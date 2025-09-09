@@ -19,7 +19,19 @@ library(patchclampplotteR)
 library(here)
 library(reactable)
 library(purrr)
+library(dplyr)
 ```
+
+# Data FAQ
+
+## How do I quickly get cell counts per group?
+
+The most efficient way to do this is to use the `select()` function from dplyr.
+
+```{r}
+sample_summary_eEPSC_df$mean_SE %>% select(category, treatment, sex, n)
+```
+
 
 # Plotting FAQ
 

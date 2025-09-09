@@ -297,7 +297,7 @@ add_new_cells(
 )
 ```
 
-You can comment out this code for now, as you don't need to repeatedly run it each time you run your RMardown file. Just un-comment it and run it whenever you have new data.
+You can comment out this code for now, as you don't need to repeatedly run it each time you run your RMarkdown file. Just un-comment it and run it whenever you have new data.
 
 `add_new_cells()` also has the ability to import spontaneous data, action potential parameter data, and action potential count data. Please see the documentation for `add_new_cells()` for more information!
 
