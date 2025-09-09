@@ -99,7 +99,7 @@ of it) or press `Alt+s`.
 knitr::include_graphics("figures/Evoked-currents-statistics-box.png")
 ```
 
-12. Click OK and view the `Results` sheet (`Window` -> `Results1`). Copy the R1S1 and R2S1 columns, which correspond to the first and second evoked currents, respectively.
+12. Click OK and view the `Results` sheet (`Window` -> `Results1` or `Alt+w+2`). Copy the R1S1 and R2S1 columns, which correspond to the first and second evoked currents, respectively.
 
 13. Paste these values into the `P1` and `P2` columns.
 
