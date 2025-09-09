@@ -284,12 +284,14 @@ NULL
 #'
 #' This is an example of the summary eEPSC data produced using
 #' [make_summary_EPSC_data()]. It is useful for demonstrating functions that
-#' build off of this dataset, such as [plot_summary_current_data()]. This is a list of two dataframes.
+#' build off of this dataset, such as [plot_summary_current_data()]. This is a list of three dataframes.
 #'
 #'
 #' @name sample_summary_eEPSC_df
 #' @docType data
-#' @format An .rda file containing a list of two dataframes. The first dataframe (`$percent_change_data`) contains the mean current amplitude for each interval, with a final column (`percent_change`) containing the final percent change in amplitude in the last interval relative to the baseline interval. The second dataframe (`$summary_data`) contains summary statistics for each interval. See below for more details.
+#' @format An .rda file containing a list of three dataframes. The first dataframe (`$percent_change_data`) contains the mean current amplitude for each interval, with a final column (`percent_change`) containing the final percent change in amplitude in the last interval relative to the baseline interval. The second dataframe (`$summary_data`) contains summary statistics for each interval. The third dataframe (`$mean_SE`) contains averaged evoked current amplitudes (with standard error) for each time interval. This is useful for publications where you want to report your findings as means +/- SE or SD.
+#'
+#' See below for more details.
 #'
 #' ## `$percent_change_data`
 #' \describe{
@@ -367,6 +369,28 @@ NULL
 #'  \item{`days_alone`}{A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.}
 #'  \item{`animal_or_slicing_problems`}{A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).}
 #' }
+#'
+#' ## `$mean_SE`
+#'
+#' \itemize{
+#'  \item `category` The experiment category (please see `import_cell_characteristics_df()` for more details).
+#'  \item `sex` The sex of the animal
+#'  \item `treatment` The treatment applied.
+#'  \item `n` The number of data points (i.e. cells)
+#'  \item `mean_baseline_raw_P1` The average evoked current amplitude (taken from `mean_P1_raw`) during the `baseline_interval`.
+#'  \item `sd_baseline_raw_P1` The standard deviation of `mean_baseline_raw_P1.`
+#'  \item `se_baseline_raw_P1` The standard error of `mean_baseline_raw_P1`. Taken by dividing `sd_baseline_raw_P1` by the square root of `n`.
+#'  \item `mean_ending_raw_P1` The average evoked current amplitude (taken from `mean_P1_raw`) during the `ending_interval`.
+#'  \item `sd_ending_raw_P1` The standard deviation of `mean_ending_raw_P1.`
+#'  \item `se_ending_raw_P1` The standard error of `mean_ending_raw_P1`. Taken by dividing `sd_ending_raw_P1` by the square root of `n`.
+#'
+#'  \item `VMR` The variance-to-mean ratio (VMR) of `P1_transformed`.
+#'  \item `interval` A character value indicating the interval that the data
+#'  point belongs to. For example, `interval` will be "t0to5" for any data
+#'  points from 0 to 5 minutes. Example values: "t0to5", "t5to10", etc.
+#'  \item `letter, synapses, sex, treatment, etc.` Unmodified columns from the
+#'  original dataset describing the cell's properties.
+#' }
 #' @keywords data
 #'
 #' @seealso [make_normalized_EPSC_data()] and [make_pruned_EPSC_data()]
@@ -383,7 +407,9 @@ NULL
 #'
 #' @name sample_summary_sEPSC_df
 #' @docType data
-#' @format An .rda file containing 70 objects of 16 variables.
+#' @format An list of 5 dataframes. The first dataframe (`$summary_data`) contains spontaneous current data for each cell, averaged per interval. The second and third dataframes (`$percent_change_amplitude` and `$percent_change_frequency`) have columns expressing the percent change in spontaneous current amplitude or frequency in the last time interval (`t15to20`) relative to the baseline (`t0to5`). The third and fourth dataframes (`$mean_SE_amplitude` and `$mean_SE_frequency` contain mean and standard deviation and error values for each interval for spontaneous current amplitude and frequency, respectively.
+#'
+#' ## `$summary_data`
 #' \describe{
 #'  \item{`category`}{A factor representing the experiment type. Used to
 #'  assign top-level groups for further analyses, with `treatment` as subgroups. For example, "1" may refer to an experiment where you applied high-frequency stimulation (HFS) to a cell, while "2" is an experiment where you added a hormone like leptin. "3" may be an experiment where you applied HFS in the continuous presence of leptin.}
@@ -417,6 +443,11 @@ NULL
 #'  \item{`days_alone`}{A numeric value describing the number of days that the animal was left alone in a cage. This typically ranges from 0 to 2. Fasted animals will have 1 day alone.}
 #'  \item{`animal_or_slicing_problems`}{A character value ("yes" or "no") describing if there were any issues with the animal (for example, the animal was unusually anxious) or slicing (there were delays during the process, the slices were crumpling, etc.).}
 #' }
+#'
+#' The second and third dataframes contain percent change data for spontaneous current amplitude and frequency, respectively. The columns are the same as the ones produced for evoked currents (read the documentation for `sample_summary_eEPSC_df$percent_change_data`.
+#'
+#' The fourth and fifth dataframes contain the mean, SE, SD, and n data for spontaneous current amplitude and frequency, respectively. Read the description for the `sample_summary_eEPSC_df$mean_SE` to learn about these columns.
+#'
 #' @keywords data
 #'
 #' @seealso [make_normalized_EPSC_data()] and [make_pruned_EPSC_data()]
