@@ -26,6 +26,7 @@ plot_PPR_data_single_treatment(
   mean_point_size = 2.5,
   geom_signif_size = 0.4,
   treatment_colour_theme,
+  filename_suffix = "",
   theme_options,
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
@@ -86,6 +87,10 @@ comparing the pre- and post-hormone groups.}
 their associated colours as hex values. See
 \link{sample_treatment_names_and_colours} for an example of what this dataframe
 should look like.}
+
+\item{filename_suffix}{Optional character value to add a suffix to the
+filename of the .png file created with this plot. Could be useful if you want to specify anything about the data (for example, to distinguish between recordings produced in MiniAnalysis
+vs. Clampfit).}
 
 \item{theme_options}{A dataframe containing theme options. See
 \link{sample_theme_options} for an example of what this dataframe should

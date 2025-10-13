@@ -30,6 +30,7 @@ plot_variance_comparison_data(
   treatment_colour_theme,
   theme_options,
   save_plot_png = "no",
+  filename_suffix = "",
   ggplot_theme = patchclampplotteR_theme()
 )
 }
@@ -108,6 +109,10 @@ look like.}
 \item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
 they will all go in subfolders below \verb{Figures/} in your project directory.}
+
+\item{filename_suffix}{Optional character value to add a suffix to the
+filename of the .png file created with this plot. Could be useful if you want to specify anything about the data (for example, to distinguish between recordings produced in MiniAnalysis
+vs. Clampfit).}
 
 \item{ggplot_theme}{The name of a ggplot theme or your custom theme. This will be added as a layer to a ggplot object. The default is \code{patchclampplotteR_theme()}, but other valid entries include \code{theme_bw()}, \code{theme_classic()} or the name of a custom ggplot theme stored as an object.}
 }

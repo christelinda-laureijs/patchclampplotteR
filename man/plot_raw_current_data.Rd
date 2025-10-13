@@ -21,6 +21,7 @@ plot_raw_current_data(
   x_label = "Time (min)",
   treatment_colour_theme,
   geom_text_family = "",
+  filename_suffix = "",
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -82,6 +83,10 @@ their associated colours as hex values. See
 should look like.}
 
 \item{geom_text_family}{A character value describing the font family used for the scale bar annotations. Defaults to \code{""} (empty, will use default system font), but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
+
+\item{filename_suffix}{Optional character value to add a suffix to the
+filename of the .png file created with this plot. Could be useful if you want to specify anything about the data (for example, to distinguish between recordings produced in MiniAnalysis
+vs. Clampfit).}
 
 \item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but

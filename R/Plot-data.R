@@ -475,6 +475,9 @@ plot_baseline_data <- function(data,
 #'   their associated colours as hex values. See
 #'   [sample_treatment_names_and_colours] for an example of what this dataframe
 #'   should look like.
+#' @param filename_suffix Optional character value to add a suffix to the
+#'   filename of the .png file created with this plot. Could be useful if you want to specify anything about the data (for example, to distinguish between recordings produced in MiniAnalysis
+#'   vs. Clampfit).
 #' @param geom_text_family A character value describing the font family used for the scale bar annotations. Defaults to `""` (empty, will use default system font), but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
 #' @param colour_by_sex A character ("yes" or "no") describing if the colour should change based on sex. If "yes", the male data will be coloured according to the `colours` column of `treatment_colour_theme`, and female data will be coloured according to the `very_pale_colours` column of `treatment_colour_theme`. If "no", all plots will be coloured using the `colours` column.
 #'
@@ -542,6 +545,7 @@ plot_raw_current_data <-
            x_label = "Time (min)",
            treatment_colour_theme,
            geom_text_family = "",
+           filename_suffix = "",
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
     list_of_plots <- list()
@@ -901,7 +905,7 @@ plot_raw_current_data <-
         ggplot2::ggsave(
           list_of_plots[[i]],
           path = here::here(filepath),
-          file = paste0(i, annotation, ".png"),
+          file = paste0(i, annotation, filename_suffix, ".png"),
           width = 7,
           height = 5,
           units = "in",
@@ -1234,6 +1238,9 @@ make_facet_plot <- function(data,
 #' @param shade_intervals A character (`"yes"` or `"no"`). If `"yes"`, a ggplot theme
 #'   layer will be applied which adds lightly shaded rectangles to highlight
 #'   5-minute intervals.
+#' @param filename_suffix Optional character value to add a suffix to the
+#'   filename of the .png file created with this plot. Could be useful if you want to specify anything about the data (for example, to distinguish between recordings produced in MiniAnalysis
+#'   vs. Clampfit).
 #' @param position_dodge_size A numeric value describing the distance that points should be dodged through `ggplot2::position_dodge()`. Defaults to `0.1`.
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
 #'   a .png file exported to `Figures/Evoked-currents/Output-summary-plots` or
@@ -1311,6 +1318,7 @@ plot_summary_current_data <- function(data,
                                       theme_options,
                                       treatment_colour_theme,
                                       save_plot_png = "no",
+                                      filename_suffix = "",
                                       ggplot_theme = patchclampplotteR_theme()) {
   if (is.null(current_type) ||
     length(current_type) != 1L ||
@@ -1799,6 +1807,7 @@ plot_summary_current_data <- function(data,
         file_name_ending,
         text_size,
         sex_annotation,
+        filename_suffix,
         ".png"
       ),
       width = 10,
@@ -2217,6 +2226,7 @@ plot_variance_comparison_data <- function(data,
                                           treatment_colour_theme,
                                           theme_options,
                                           save_plot_png = "no",
+                                          filename_suffix = "",
                                           ggplot_theme = patchclampplotteR_theme()) {
   if (is.null(post_hormone_interval) ||
     !is.character(post_hormone_interval)) {
@@ -2435,6 +2445,7 @@ plot_variance_comparison_data <- function(data,
         variance_measure,
         sex_annotation,
         facet_label,
+        filename_suffix,
         ".png"
       ),
       width = 7,
@@ -2490,6 +2501,7 @@ plot_cv_data <- function(data,
                          x_label = "Time (min)",
                          theme_options,
                          save_plot_png = "no",
+                         filename_suffix = "",
                          ggplot_theme = patchclampplotteR_theme()) {
   if (!save_plot_png %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
@@ -2534,7 +2546,7 @@ plot_cv_data <- function(data,
     ggplot2::ggsave(
       plot = cv_plot,
       path = here::here("Figures/Evoked-currents/CV"),
-      file = paste0("CV_plot-category-", plot_category, "-", plot_treatment, sex_annotation, ".png"),
+      file = paste0("CV_plot-category-", plot_category, "-", plot_treatment, sex_annotation, filename_suffix, ".png"),
       width = 7,
       height = 5,
       units = "in",
@@ -2634,6 +2646,7 @@ plot_PPR_data_single_treatment <- function(data,
                                            mean_point_size = 2.5,
                                            geom_signif_size = 0.4,
                                            treatment_colour_theme,
+                                           filename_suffix = "",
                                            theme_options,
                                            save_plot_png = "no",
                                            ggplot_theme = patchclampplotteR_theme()) {
@@ -2870,7 +2883,7 @@ plot_PPR_data_single_treatment <- function(data,
     ggplot2::ggsave(
       plot = PPR_one_plot,
       path = here::here("Figures/Evoked-currents/PPR"),
-      file = paste0("PPR_comparison-category-", plot_category, "-", plot_treatment, sex_annotation, facet_label, ".png"),
+      file = paste0("PPR_comparison-category-", plot_category, "-", plot_treatment, sex_annotation, facet_label, filename_suffix, ".png"),
       width = 7,
       height = 5,
       units = "in",
@@ -4267,7 +4280,8 @@ plot_spontaneous_current_parameter_comparison <-
            geom_signif_size = 0.5,
            theme_options,
            plot_type = "violin",
-           save_plot_png,
+           save_plot_png = "no",
+           filename_suffix = "",
            ggplot_theme = patchclampplotteR_theme()) {
     if (is.null(baseline_interval) ||
       !is.character(baseline_interval)) {
@@ -4552,6 +4566,7 @@ plot_spontaneous_current_parameter_comparison <-
           plot_treatment,
           sex_annotation,
           facet_label,
+          filename_suffix,
           ".png"
         ),
         width = 7,
@@ -4661,6 +4676,7 @@ plot_spontaneous_current_trace <-
            plot_x_max = 3,
            plot_y_min = -60,
            plot_y_max = 15,
+           filename_suffix = "",
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
     if (!include_scale_bar %in% c("yes", "no")) {
@@ -4747,7 +4763,7 @@ plot_spontaneous_current_trace <-
       ggplot2::ggsave(
         plot = representative_traces_plot,
         path = here::here("Figures/Spontaneous-currents/Representative-Traces"),
-        file = paste0("Spontaneous-current-trace-category-", plot_category, "-", plot_treatment, "-", state, "-", sex, "-", letter, ".png"),
+        file = paste0("Spontaneous-current-trace-category-", plot_category, "-", plot_treatment, "-", state, "-", sex, "-", letter, filename_suffix, ".png"),
         width = 7,
         height = 5,
         units = "in",

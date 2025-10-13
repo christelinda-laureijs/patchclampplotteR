@@ -33,6 +33,7 @@ plot_spontaneous_current_trace(
   plot_x_max = 3,
   plot_y_min = -60,
   plot_y_max = 15,
+  filename_suffix = "",
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
 )
@@ -111,6 +112,10 @@ the scale bar (default is \code{15}).}
 
 \item{plot_y_max}{A numeric value describing the maximum value on the y-axis
 (in pA). Defaults to \code{5}. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!}
+
+\item{filename_suffix}{Optional character value to add a suffix to the
+filename of the .png file created with this plot. Could be useful if you
+have specified a custom list of treatments.}
 
 \item{save_plot_png}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, the plot will be
 saved as a .png using \code{ggsave()}. The filepath depends on the current type, but
