@@ -66,6 +66,7 @@ in evoked current amplitudes over time.</p>
 <span>  x_label <span class="op">=</span> <span class="st">"Time (min)"</span>,</span>
 <span>  <span class="va">theme_options</span>,</span>
 <span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span>,</span>
+<span>  filename_suffix <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  ggplot_theme <span class="op">=</span> <span class="fu"><a href="patchclampplotteR_theme.html">patchclampplotteR_theme</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -125,6 +126,12 @@ look like.</p></dd>
 <dd><p>A character (<code>"yes"</code> or <code>"no"</code>). If <code>"yes"</code>, the plot will be
 saved as a .png using ggsave. The filepath depends on the current type, but
 they will all go in subfolders below <code>Figures/</code> in your project directory.</p></dd>
+
+
+<dt id="arg-filename-suffix">filename_suffix<a class="anchor" aria-label="anchor" href="#arg-filename-suffix"></a></dt>
+<dd><p>Optional character value to add a suffix to the
+filename of the .png file created with this plot. Could be useful if you want to specify anything about the data (for example, to distinguish between recordings produced in MiniAnalysis
+vs. Clampfit).</p></dd>
 
 
 <dt id="arg-ggplot-theme">ggplot_theme<a class="anchor" aria-label="anchor" href="#arg-ggplot-theme"></a></dt>

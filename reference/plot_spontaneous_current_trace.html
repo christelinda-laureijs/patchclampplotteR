@@ -90,6 +90,7 @@ ggplot object with an optional scale bar.</p>
 <span>  plot_x_max <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  plot_y_min <span class="op">=</span> <span class="op">-</span><span class="fl">60</span>,</span>
 <span>  plot_y_max <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>  filename_suffix <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  ggplot_theme <span class="op">=</span> <span class="fu"><a href="patchclampplotteR_theme.html">patchclampplotteR_theme</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -227,6 +228,12 @@ the scale bar (default is <code>15</code>).</p></dd>
 <dt id="arg-plot-y-max">plot_y_max<a class="anchor" aria-label="anchor" href="#arg-plot-y-max"></a></dt>
 <dd><p>A numeric value describing the maximum value on the y-axis
 (in pA). Defaults to <code>5</code>. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!</p></dd>
+
+
+<dt id="arg-filename-suffix">filename_suffix<a class="anchor" aria-label="anchor" href="#arg-filename-suffix"></a></dt>
+<dd><p>Optional character value to add a suffix to the
+filename of the .png file created with this plot. Could be useful if you
+have specified a custom list of treatments.</p></dd>
 
 
 <dt id="arg-save-plot-png">save_plot_png<a class="anchor" aria-label="anchor" href="#arg-save-plot-png"></a></dt>

@@ -90,6 +90,7 @@ applied.</p>
 <span>  x_label <span class="op">=</span> <span class="st">"Time (min)"</span>,</span>
 <span>  <span class="va">treatment_colour_theme</span>,</span>
 <span>  geom_text_family <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  filename_suffix <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  ggplot_theme <span class="op">=</span> <span class="fu"><a href="patchclampplotteR_theme.html">patchclampplotteR_theme</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -186,6 +187,12 @@ should look like.</p></dd>
 
 <dt id="arg-geom-text-family">geom_text_family<a class="anchor" aria-label="anchor" href="#arg-geom-text-family"></a></dt>
 <dd><p>A character value describing the font family used for the scale bar annotations. Defaults to <code>""</code> (empty, will use default system font), but can be replaced with a named font. Use a package like <code>extrafont</code> to load system fonts into R.</p></dd>
+
+
+<dt id="arg-filename-suffix">filename_suffix<a class="anchor" aria-label="anchor" href="#arg-filename-suffix"></a></dt>
+<dd><p>Optional character value to add a suffix to the
+filename of the .png file created with this plot. Could be useful if you want to specify anything about the data (for example, to distinguish between recordings produced in MiniAnalysis
+vs. Clampfit).</p></dd>
 
 
 <dt id="arg-save-plot-png">save_plot_png<a class="anchor" aria-label="anchor" href="#arg-save-plot-png"></a></dt>

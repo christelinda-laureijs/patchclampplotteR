@@ -83,6 +83,7 @@ paired-pulse ratio (PPR) on the y-axis. There are also lines connecting the
 <span>  mean_point_size <span class="op">=</span> <span class="fl">2.5</span>,</span>
 <span>  geom_signif_size <span class="op">=</span> <span class="fl">0.4</span>,</span>
 <span>  <span class="va">treatment_colour_theme</span>,</span>
+<span>  filename_suffix <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  <span class="va">theme_options</span>,</span>
 <span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  ggplot_theme <span class="op">=</span> <span class="fu"><a href="patchclampplotteR_theme.html">patchclampplotteR_theme</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -188,6 +189,12 @@ comparing the pre- and post-hormone groups.</p></dd>
 their associated colours as hex values. See
 <a href="sample_treatment_names_and_colours.html">sample_treatment_names_and_colours</a> for an example of what this dataframe
 should look like.</p></dd>
+
+
+<dt id="arg-filename-suffix">filename_suffix<a class="anchor" aria-label="anchor" href="#arg-filename-suffix"></a></dt>
+<dd><p>Optional character value to add a suffix to the
+filename of the .png file created with this plot. Could be useful if you want to specify anything about the data (for example, to distinguish between recordings produced in MiniAnalysis
+vs. Clampfit).</p></dd>
 
 
 <dt id="arg-theme-options">theme_options<a class="anchor" aria-label="anchor" href="#arg-theme-options"></a></dt>
