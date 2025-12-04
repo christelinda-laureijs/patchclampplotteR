@@ -1,5 +1,18 @@
 # FAQ
 
+### How do I update the package?
+
+To update the package, you just need to re-install the package using the
+same code you used to install it the first time:
+
+``` r
+pak::pak("christelinda-laureijs/patchclampplotteR")
+```
+
+A message will appear asking you to type `y` (for “yes”) for updating
+your existing package files. After this, your package should be up to
+date!
+
 ## Data FAQ
 
 ### How do I quickly get cell counts per group?

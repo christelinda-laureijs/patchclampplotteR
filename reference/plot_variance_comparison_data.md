@@ -103,11 +103,7 @@ plot_variance_comparison_data(
   A character value (`"both"`, `"male"` or `"female"`). Useful if you
   want to have a plot with data from one sex only. Defaults to `"both"`.
   If you choose a single sex, the resulting plot will have
-  `"-males-only"` or `"-females-only"` in the file name. WARNING!! If
-  you choose `"male"` or `"female"`, you MUST ensure that the
-  `t_test_df` contains data that has been filtered to only include one
-  sex. Otherwise, the significance stars will represent both sexes and
-  it will be inaccurate.
+  `"-males-only"` or `"-females-only"` in the file name.
 
 - male_label:
 

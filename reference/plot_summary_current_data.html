@@ -89,6 +89,14 @@ presented as mean +/- the standard error.</p>
 <span>  geom_signif_text_size <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  geom_signif_family <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  t_test_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  t_test_df_male <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  t_test_df_female <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stars_position <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stars_position_male <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stars_position_female <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stars_colour <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  stars_colour_male <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  stars_colour_female <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  large_axis_text <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  shade_intervals <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  <span class="va">theme_options</span>,</span>
@@ -163,7 +171,7 @@ a hormone stopped being applied, such as for a washout experiment.</p></dd>
 
 
 <dt id="arg-included-sexes">included_sexes<a class="anchor" aria-label="anchor" href="#arg-included-sexes"></a></dt>
-<dd><p>A character value (<code>"both"</code>, <code>"male"</code> or <code>"female"</code>). Useful if you want to have a plot with data from one sex only. Defaults to <code>"both"</code>. If you choose a single sex, the resulting plot will have <code>"-males-only"</code> or <code>"-females-only"</code> in the file name. WARNING!! If you choose <code>"male"</code> or <code>"female"</code>, you MUST ensure that the <code>t_test_df</code> contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.</p></dd>
+<dd><p>A character value (<code>"both"</code>, <code>"male"</code> or <code>"female"</code>). Useful if you want to have a plot with data from one sex only. Defaults to <code>"both"</code>. If you choose a single sex, the resulting plot will have <code>"-males-only"</code> or <code>"-females-only"</code> in the file name. WARNING!! If you choose <code>"male"</code> or <code>"female"</code>, you MUST ensure that the <code>t_test_df</code> accurately represents what you want to demonstrate: significance for both sexes grouped together (use <code>t_test_df</code>) or significance for each sex separately (use <code>t_test_df_male</code> and <code>t_test_df_female</code> and adjust these heights using <code>stars_position_male</code> and <code>stars_position_female</code>).</p></dd>
 
 
 <dt id="arg-male-label">male_label<a class="anchor" aria-label="anchor" href="#arg-male-label"></a></dt>
@@ -238,7 +246,49 @@ using <code><a href="perform_t_tests_for_summary_plot.html">perform_t_tests_for_
 <dd><p>A dataframe of t-test results, which has been generated
 using <code><a href="perform_t_tests_for_summary_plot.html">perform_t_tests_for_summary_plot()</a></code>. Important note! The t-test
 dataframe must be filtered to match the same conditions in the <code>data</code>
-argument, or the significance stars will be misleading.</p></dd>
+argument, or the significance stars will be misleading. For example, if you want to show
+significance for both sexes as a group, use this.
+If you want to show male and female significance values separately,
+use <code>t_test_df_male</code> and <code>t_test_df_female</code> and adjust their heights
+with <code>stars_position_male</code> and <code>stars_position_female</code>. If you only have data for one sex, you could use either option.</p></dd>
+
+
+<dt id="arg-t-test-df-male">t_test_df_male<a class="anchor" aria-label="anchor" href="#arg-t-test-df-male"></a></dt>
+<dd><p>A dataframe of t-test results (male only), which has been generated
+using <code><a href="perform_t_tests_for_summary_plot.html">perform_t_tests_for_summary_plot()</a></code>. This data has been filtered to only include male data before being put through <code><a href="perform_t_tests_for_summary_plot.html">perform_t_tests_for_summary_plot()</a></code>.</p></dd>
+
+
+<dt id="arg-t-test-df-female">t_test_df_female<a class="anchor" aria-label="anchor" href="#arg-t-test-df-female"></a></dt>
+<dd><p>A dataframe of t-test results (female only), which has been generated
+using <code><a href="perform_t_tests_for_summary_plot.html">perform_t_tests_for_summary_plot()</a></code>. This data has been filtered to only include female data before being put through <code><a href="perform_t_tests_for_summary_plot.html">perform_t_tests_for_summary_plot()</a></code>.</p></dd>
+
+
+<dt id="arg-stars-position">stars_position<a class="anchor" aria-label="anchor" href="#arg-stars-position"></a></dt>
+<dd><p>A numeric value stating the position on the y-axis of
+the significance stars. If you want to specify these for the sexes separately,
+use <code>stars_position_male</code> and <code>stars_position_female</code>. Defaults to <code>NULL</code> which automatically defaults to <code>y_axis_limit - 50</code>.</p></dd>
+
+
+<dt id="arg-stars-position-male">stars_position_male<a class="anchor" aria-label="anchor" href="#arg-stars-position-male"></a></dt>
+<dd><p>A numeric value stating the position on the y-axis of
+the significance stars for the male data specified by <code>t_test_df_male</code>. Defaults to <code>NULL</code> which sets it at <code>y_axis_limit - 50</code>.</p></dd>
+
+
+<dt id="arg-stars-position-female">stars_position_female<a class="anchor" aria-label="anchor" href="#arg-stars-position-female"></a></dt>
+<dd><p>A numeric value stating the position on the y-axis of
+the significance stars for the male data specified by <code>t_test_df_female</code>. Defaults to <code>NULL</code> which sets it at <code>y_axis_limit - 75</code>.</p></dd>
+
+
+<dt id="arg-stars-colour">stars_colour<a class="anchor" aria-label="anchor" href="#arg-stars-colour"></a></dt>
+<dd><p>A character value (can be a hex code or a named R colour like <code>"red"</code>) describing the colour of the significance stars. Defaults to <code>"Black"</code>.</p></dd>
+
+
+<dt id="arg-stars-colour-male">stars_colour_male<a class="anchor" aria-label="anchor" href="#arg-stars-colour-male"></a></dt>
+<dd><p>A character value (can be a hex code or a named R colour like <code>"red"</code>) describing the colour of the significance stars for male data. Use only if you have put data in <code>t_test_df_male</code>. Defaults to <code>"Black"</code>.</p></dd>
+
+
+<dt id="arg-stars-colour-female">stars_colour_female<a class="anchor" aria-label="anchor" href="#arg-stars-colour-female"></a></dt>
+<dd><p>A character value (can be a hex code or a named R colour like <code>"red"</code>) describing the colour of the significance stars for female data. Use only if you have put data in <code>t_test_df_female</code>. Defaults to <code>"Black"</code>.</p></dd>
 
 
 <dt id="arg-large-axis-text">large_axis_text<a class="anchor" aria-label="anchor" href="#arg-large-axis-text"></a></dt>
@@ -307,6 +357,39 @@ summary data used in this plot.</p></div>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Both sexes with significance stars for separate sexes</span></span></span>
+<span class="r-in"><span><span class="co"># Note: The significance stars are sample data</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plot_summary_current_data</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">all_cells</span>,</span></span>
+<span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span></span>
+<span class="r-in"><span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span></span>
+<span class="r-in"><span>  y_variable <span class="op">=</span> <span class="st">"amplitude"</span>,</span></span>
+<span class="r-in"><span>   hormone_added <span class="op">=</span> <span class="st">"Insulin"</span>,</span></span>
+<span class="r-in"><span>  hormone_or_HFS_start_time <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>   included_sexes <span class="op">=</span> <span class="st">"both"</span>,</span></span>
+<span class="r-in"><span>   include_representative_trace <span class="op">=</span> <span class="st">"yes"</span>,</span></span>
+<span class="r-in"><span>   representative_trace_filename <span class="op">=</span> <span class="fu"><a href="import_ext_data.html">import_ext_data</a></span><span class="op">(</span><span class="st">"Control-trace.png"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>   y_axis_limit <span class="op">=</span> <span class="fl">175</span>,</span></span>
+<span class="r-in"><span>   signif_stars <span class="op">=</span> <span class="st">"yes"</span>,</span></span>
+<span class="r-in"><span>   t_test_df_male <span class="op">=</span> <span class="va">sample_eEPSC_t_test_df_male</span>,</span></span>
+<span class="r-in"><span>   t_test_df_female <span class="op">=</span> <span class="va">sample_eEPSC_t_test_df_female</span>,</span></span>
+<span class="r-in"><span>   stars_position_male <span class="op">=</span> <span class="fl">30</span>,</span></span>
+<span class="r-in"><span>   stars_position_female <span class="op">=</span> <span class="fl">70</span>,</span></span>
+<span class="r-in"><span>   stars_colour_male <span class="op">=</span> <span class="st">"#6600cc"</span>,</span></span>
+<span class="r-in"><span>   stars_colour_female <span class="op">=</span> <span class="st">"#d6b8f5"</span>,</span></span>
+<span class="r-in"><span>   large_axis_text <span class="op">=</span> <span class="st">"no"</span>,</span></span>
+<span class="r-in"><span>   shade_intervals <span class="op">=</span> <span class="st">"no"</span>,</span></span>
+<span class="r-in"><span>   treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span></span>
+<span class="r-in"><span>   theme_options <span class="op">=</span> <span class="va">sample_theme_options</span></span></span>
+<span class="r-in"><span> <span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 25 rows containing missing values or values outside the scale range</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_segment()`).</span>
+<span class="r-plt img"><img src="plot_summary_current_data-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># Both sexes with significance stars from grouped data</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">plot_summary_current_data</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">all_cells</span>,</span></span>
 <span class="r-in"><span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span></span>
@@ -328,7 +411,7 @@ summary data used in this plot.</p></div>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 25 rows containing missing values or values outside the scale range</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_segment()`).</span>
-<span class="r-plt img"><img src="plot_summary_current_data-1.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plot_summary_current_data-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

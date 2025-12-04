@@ -139,6 +139,12 @@ amplitudes, not spontaneous currents.
 - [`sample_eEPSC_t_test_df`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/sample_eEPSC_t_test_df.md)
   : Paired t-test results comparing evoked current amplitudes relative
   to baseline
+- [`sample_eEPSC_t_test_df_male`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/sample_eEPSC_t_test_df_male.md)
+  : Paired t-test results comparing evoked current amplitudes relative
+  to baseline in males only
+- [`sample_eEPSC_t_test_df_female`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/sample_eEPSC_t_test_df_female.md)
+  : Paired t-test results comparing evoked current amplitudes relative
+  to baseline in females only
 
 ### Spontaneous current (sEPSC) data
 

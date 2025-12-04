@@ -344,6 +344,11 @@ selection to extend these columns all the way down.
 
 33. Repeat for the number of recordings that you need to analyze.
 
+> Note! If your baseline is longer than 5 minutes, you should ensure
+> that you take the last 5 minutes of this recording. Otherwise, you may
+> be misrepresenting the sections of the recording that belong in the
+> baseline region!
+
 34. You are now ready to import your data into R! Use the
     [`add_new_cells()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/add_new_cells.md)
     function with `data_type = "sEPSC"`. You may find it helpful to read

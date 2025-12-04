@@ -82,6 +82,17 @@
 
     
     
+<div class="section level3">
+<h3 id="how-do-i-update-the-package">How do I update the package?<a class="anchor" aria-label="anchor" href="#how-do-i-update-the-package"></a>
+</h3>
+<p>To update the package, you just need to re-install the package using
+the same code you used to install it the first time:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"christelinda-laureijs/patchclampplotteR"</span><span class="op">)</span></span></code></pre></div>
+<p>A message will appear asking you to type <code>y</code> (for “yes”)
+for updating your existing package files. After this, your package
+should be up to date!</p>
+</div>
 <div class="section level2">
 <h2 id="data-faq">Data FAQ<a class="anchor" aria-label="anchor" href="#data-faq"></a>
 </h2>
@@ -90,7 +101,7 @@
 </h3>
 <p>The most efficient way to do this is to use the <code>select()</code>
 function from dplyr.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sample_summary_eEPSC_df</span><span class="op">$</span><span class="va">mean_SE</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select</span><span class="op">(</span><span class="va">category</span>, <span class="va">treatment</span>, <span class="va">sex</span>, <span class="va">n</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 4</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Groups:   category, treatment [4]</span></span></span>
@@ -126,7 +137,7 @@ position in <code><a href="../reference/plot_summary_current_data.html">plot_sum
 width.</p>
 </blockquote>
 <p>This is the plot we will use throughout the FAQ:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cars_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">cars</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">speed</span>, y <span class="op">=</span> <span class="va">dist</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Speed (mph)"</span>, y <span class="op">=</span> <span class="st">"Distance (ft)"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -147,7 +158,7 @@ example, all plots generated using
 “Figures/Evoked-currents/PPR” relative to your project directory.</p>
 <p>If you want further control over the export options, you can also use
 <code>ggsave()</code> to manually save a ggplot object.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ggsave</span><span class="op">(</span></span>
 <span>  <span class="va">cars_plot</span>,</span>
 <span>  path <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"Figures/Raw-plots"</span><span class="op">)</span>,</span>
@@ -166,7 +177,7 @@ add a <code>theme()</code> layer and remove various components with
 <code>element_blank()</code>. Here is an example of the default output
 of <code><a href="../reference/plot_raw_current_data.html">plot_raw_current_data()</a></code> with a built-in title and
 subtitle:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_eEPSC_control_plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_raw_current_data.html">plot_raw_current_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_raw_eEPSC_df</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
@@ -184,7 +195,7 @@ subtitle:</p>
 <span><span class="va">control_cell_plot</span></span></code></pre></div>
 <p><img src="FAQ_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" width="700" style="display: block; margin: auto;"></p>
 <p>To remove the title and subtitle, run this code:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">control_cell_plot</span> <span class="op">&lt;-</span> <span class="va">control_cell_plot</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>, plot.subtitle <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -202,11 +213,11 @@ any number of annotations using <code>+ annotation(...)</code>. Two of
 the most common annotations will be lines
 (<code>annotation(type = "segment")</code>) and
 text(<code>annotation(type = "text")</code>).</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">HNMPA_recording_FT</span></span></code></pre></div>
 <p><img src="FAQ_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="700" style="display: block; margin: auto;"></p>
 <p><img src="FAQ_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="700" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">HNMPA_recording_FT</span> <span class="op">+</span> <span class="fu">annotate</span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"segment"</span>, x <span class="op">=</span> <span class="fl">0</span>, xend <span class="op">=</span> <span class="fl">25</span>, y <span class="op">=</span> <span class="fl">168</span>, yend <span class="op">=</span> <span class="fl">168</span><span class="op">)</span> <span class="op">+</span> <span class="fu">annotate</span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">177</span>, label <span class="op">=</span> <span class="st">"HNMPA"</span>, hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -218,7 +229,7 @@ to “yes” to add a ggplot theme layer which increases and adjusts the
 plot to be ideal for posters or presentations. If you want more control
 over the font sizes, you can also apply a new <code>theme()</code> layer
 and specify the text elements manually. For example:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cars_plot</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">25</span>, color <span class="op">=</span> <span class="st">"darkmagenta"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="FAQ_files/figure-html/magenta-text-1.png" class="r-plt" alt="A scatterplot of stopping distance in feet versus speed in miles per hour. The graph is a plain scatterplot with no background or gridlines, but the axis title text is now coloured magenta." width="700" style="display: block; margin: auto;"></p>
@@ -241,7 +252,7 @@ font.</p>
 alternatives, such as the <code>showtext</code> package, which makes it
 particularly easy to add Google fonts and system fonts.</p>
 </blockquote>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/fbertran/extrafont" class="external-link">extrafont</a></span><span class="op">)</span></span>
 <span><span class="fu">font_import</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -249,7 +260,7 @@ particularly easy to add Google fonts and system fonts.</p>
 <p>If you already have the fonts installed in R, you just need to run
 <code><a href="https://github.com/fbertran/extrafont" class="external-link">library(extrafont)</a></code> at the start of your document to have
 the fonts available to use.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cars_plot</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">25</span>, color <span class="op">=</span> <span class="st">"darkmagenta"</span>, family <span class="op">=</span> <span class="st">"Calibri"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>To apply these theme changes globally (i.e. all plots in your file),
@@ -276,7 +287,7 @@ just the elements that you specified.</p>
 since the <code>ggplot_theme</code> argument requires a named object. In
 this example, I will creatively call it <code>my_new_theme</code>.</p>
 </blockquote>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_new_theme</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/patchclampplotteR_theme.html">patchclampplotteR_theme</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%+replace%</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span></span>
 <span>    text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">25</span>, color <span class="op">=</span> <span class="st">"#333333"</span><span class="op">)</span>,</span>
@@ -285,13 +296,13 @@ this example, I will creatively call it <code>my_new_theme</code>.</p>
 <span>    axis.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>face <span class="op">=</span> <span class="st">"italic"</span>, size <span class="op">=</span> <span class="fl">8</span>, color <span class="op">=</span> <span class="st">"#999999"</span><span class="op">)</span>,</span>
 <span>    axis.line <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cars_plot</span> <span class="op">+</span> <span class="va">my_new_theme</span></span></code></pre></div>
 <p><img src="FAQ_files/figure-html/cars-plot-new-theme-1.png" class="r-plt" alt="A scatterplot of stopping distance in feet versus speed in miles per hour. The graph has a new theme that makes it have gridlines in the background and no axis lines. The axis text is now a pale gray colour." width="700" style="display: block; margin: auto;"></p>
 <p>Now, insert this theme into the <code>ggplot_theme</code> argument.
 This is one of the sample action potential plots with the default theme
 applied:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_comparison.html">plot_AP_comparison</a></span><span class="op">(</span></span>
 <span>  <span class="va">sample_AP_data</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
@@ -308,7 +319,7 @@ applied:</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="FAQ_files/figure-html/plot-ap-comparison-old-theme-1.png" class="r-plt" alt="A scatterplot showing peak amplitude in pico amps versus experiment state (baseline or insulin) on the x-axis. The default patchclampplotteR theme has been applied, so it has a plain background and bold black axis lines." width="700" style="display: block; margin: auto;"></p>
 <p>Here’s what the same plot looks like with the new theme:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_comparison.html">plot_AP_comparison</a></span><span class="op">(</span></span>
 <span>  <span class="va">sample_AP_data</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span>,</span>
@@ -350,7 +361,7 @@ read the documentation for the function
 <p>First, I am adding a new column to
 <code>sample_treatment_names_and_colours</code> which contains the
 filepath to each representative trace .png file.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">evoked_trace_filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"vignettes/articles/figures/Category-2-Control-Trace.png"</span>,</span>
 <span>  <span class="st">"vignettes/articles/figures/Category-2-HNMPA-Trace.png"</span>,</span>
@@ -367,7 +378,7 @@ use the <code>treatment</code> column in the <code>plot_treatment</code>
 argument and the <code>representative_trace_filepath</code> column for
 the <code>representative_trace_filename</code> argument. See below - the
 summary plots for all treatments were produced with one code chunk!</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pmap</span><span class="op">(</span></span>
 <span>  .l <span class="op">=</span> <span class="va">list_of_treatments</span>,</span>
 <span>  .f <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span></span>
@@ -413,7 +424,7 @@ summary plots for all treatments were produced with one code chunk!</p>
 called <code>include_all_treatments</code>. Change this to “no” and then
 define a list of treatments in the <code>list_of_treatments</code>
 argument.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_frequencies_multiple_treatments.html">plot_AP_frequencies_multiple_treatments</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_AP_count_data</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"no"</span>,</span>
@@ -439,13 +450,13 @@ plotting functions.</p>
 <div class="reactable html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:auto;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"category":[2,2,2,2],"treatment":["Control","HNMPA","PPP","PPP_and_HNMPA"],"display_names":["Control","HNMPA","PPP","PPP\n&\nHNMPA"],"colours":["#6600cc","#e86c00","#0093fb","#411900"],"very_pale_colours":["#d6b8f5","#ffc38f","#8fd0ff","#bf9b84"]},"columns":[{"id":"category","name":"category","type":"numeric"},{"id":"treatment","name":"treatment","type":"character"},{"id":"display_names","name":"display_names","type":"character"},{"id":"colours","name":"colours","type":"character"},{"id":"very_pale_colours","name":"very_pale_colours","type":"character"}],"dataKey":"eb5657555b229dd928435f67209c0d95"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>First, check out how many treatment groups you have using
 <code>unique(raw_eEPSC_df$treatment)</code>.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sample_raw_eEPSC_df</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] Control       HNMPA         PPP           PPP_and_HNMPA</span></span>
 <span><span class="co">#&gt; Levels: Control HNMPA PPP PPP_and_HNMPA</span></span></code></pre></div>
 <p>Next, modify this code to set up your own dataframe with your own
 hormone names and colours.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_theme_colours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  category <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  treatment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"HNMPA"</span>, <span class="st">"PPP"</span>, <span class="st">"PPP_and_HNMPA"</span><span class="op">)</span>,</span>
@@ -455,7 +466,7 @@ hormone names and colours.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Every time a plot contains the argument
 <code>treatment_colour_theme</code>, refer to your custom dataframe.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_PPR_data_multiple_treatments.html">plot_PPR_data_multiple_treatments</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_PPR_df</span>,</span>
 <span>  include_all_treatments <span class="op">=</span> <span class="st">"yes"</span>,</span>
@@ -478,7 +489,7 @@ shapes for male vs. female data points:</p>
 <script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"tag":{"name":"Reactable","attribs":{"data":{".rownames":["gray_shading_colour","line_col","rectangle_shading_colour","both_sexes_shape","male_shape","female_shape","mean_point_colour","connecting_line_width","connecting_line_colour","mean_point_size","baseline_group_colour"],"value":["#dcdcdc","#333333","#f6f6f6","15","16","17","#000000","0.2","#bfbfbf","0.5","#727a85"]},"columns":[{"id":".rownames","name":"","type":"character","sortable":false,"filterable":false,"rowHeader":true},{"id":"value","name":"value","type":"character"}],"dataKey":"4934944c667b0150bdc944f15e37e42d"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script><p>To use the default values, just use <code>sample_theme_options</code>
 in the <code>theme_options</code> argument of any plotting function in
 <code>patchclampplotteR</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_summary_current_data.html">plot_summary_current_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">all_cells</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -514,7 +525,7 @@ column (<code>option</code>) into the <code>rownames</code>. This is a
 mandatory step to allow the theme_options to be indexed by row name in
 plotting functions.</p>
 <p>Step 4: Run the following code:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">my_custom_theme_options</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"my_custom_theme_options.csv"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -530,7 +541,7 @@ Step 5.</p>
 <p>I changed <code>line_col</code> to orange, and I also changed
 <code>male_shape</code> and <code>female_shape</code>. See, the graph
 looks different now!</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_summary_current_data.html">plot_summary_current_data</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_pruned_eEPSC_df</span><span class="op">$</span><span class="va">all_cells</span>,</span>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>

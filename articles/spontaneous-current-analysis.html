@@ -472,13 +472,20 @@ of which file is which.</p>
 <code>+</code> sign on the lower right hand corner of the selection to
 extend these columns all the way down.</p>
 <ol start="33" style="list-style-type: decimal">
-<li><p>Repeat for the number of recordings that you need to
-analyze.</p></li>
-<li><p>You are now ready to import your data into R! Use the
+<li>Repeat for the number of recordings that you need to analyze.</li>
+</ol>
+<blockquote>
+<p>Note! If your baseline is longer than 5 minutes, you should ensure
+that you take the last 5 minutes of this recording. Otherwise, you may
+be misrepresenting the sections of the recording that belong in the
+baseline region!</p>
+</blockquote>
+<ol start="34" style="list-style-type: decimal">
+<li>You are now ready to import your data into R! Use the
 <code><a href="../reference/add_new_cells.html">add_new_cells()</a></code> function with
 <code>data_type = "sEPSC"</code>. You may find it helpful to read the <a href="https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html">Get
 Started</a> guide if you are setting up your data for the first
-time.</p></li>
+time.</li>
 </ol>
 </div>
 <div class="section level2">

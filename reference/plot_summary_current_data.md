@@ -36,6 +36,14 @@ plot_summary_current_data(
   geom_signif_text_size = 5,
   geom_signif_family = "",
   t_test_df = NULL,
+  t_test_df_male = NULL,
+  t_test_df_female = NULL,
+  stars_position = NULL,
+  stars_position_male = NULL,
+  stars_position_female = NULL,
+  stars_colour = "black",
+  stars_colour_male = "black",
+  stars_colour_female = "black",
   large_axis_text = "no",
   shade_intervals = "no",
   theme_options,
@@ -127,9 +135,11 @@ plot_summary_current_data(
   If you choose a single sex, the resulting plot will have
   `"-males-only"` or `"-females-only"` in the file name. WARNING!! If
   you choose `"male"` or `"female"`, you MUST ensure that the
-  `t_test_df` contains data that has been filtered to only include one
-  sex. Otherwise, the significance stars will represent both sexes and
-  it will be inaccurate.
+  `t_test_df` accurately represents what you want to demonstrate:
+  significance for both sexes grouped together (use `t_test_df`) or
+  significance for each sex separately (use `t_test_df_male` and
+  `t_test_df_female` and adjust these heights using
+  `stars_position_male` and `stars_position_female`).
 
 - male_label:
 
@@ -239,7 +249,68 @@ plot_summary_current_data(
   [`perform_t_tests_for_summary_plot()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/perform_t_tests_for_summary_plot.md).
   Important note! The t-test dataframe must be filtered to match the
   same conditions in the `data` argument, or the significance stars will
-  be misleading.
+  be misleading. For example, if you want to show significance for both
+  sexes as a group, use this. If you want to show male and female
+  significance values separately, use `t_test_df_male` and
+  `t_test_df_female` and adjust their heights with `stars_position_male`
+  and `stars_position_female`. If you only have data for one sex, you
+  could use either option.
+
+- t_test_df_male:
+
+  A dataframe of t-test results (male only), which has been generated
+  using
+  [`perform_t_tests_for_summary_plot()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/perform_t_tests_for_summary_plot.md).
+  This data has been filtered to only include male data before being put
+  through
+  [`perform_t_tests_for_summary_plot()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/perform_t_tests_for_summary_plot.md).
+
+- t_test_df_female:
+
+  A dataframe of t-test results (female only), which has been generated
+  using
+  [`perform_t_tests_for_summary_plot()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/perform_t_tests_for_summary_plot.md).
+  This data has been filtered to only include female data before being
+  put through
+  [`perform_t_tests_for_summary_plot()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/perform_t_tests_for_summary_plot.md).
+
+- stars_position:
+
+  A numeric value stating the position on the y-axis of the significance
+  stars. If you want to specify these for the sexes separately, use
+  `stars_position_male` and `stars_position_female`. Defaults to `NULL`
+  which automatically defaults to `y_axis_limit - 50`.
+
+- stars_position_male:
+
+  A numeric value stating the position on the y-axis of the significance
+  stars for the male data specified by `t_test_df_male`. Defaults to
+  `NULL` which sets it at `y_axis_limit - 50`.
+
+- stars_position_female:
+
+  A numeric value stating the position on the y-axis of the significance
+  stars for the male data specified by `t_test_df_female`. Defaults to
+  `NULL` which sets it at `y_axis_limit - 75`.
+
+- stars_colour:
+
+  A character value (can be a hex code or a named R colour like `"red"`)
+  describing the colour of the significance stars. Defaults to
+  `"Black"`.
+
+- stars_colour_male:
+
+  A character value (can be a hex code or a named R colour like `"red"`)
+  describing the colour of the significance stars for male data. Use
+  only if you have put data in `t_test_df_male`. Defaults to `"Black"`.
+
+- stars_colour_female:
+
+  A character value (can be a hex code or a named R colour like `"red"`)
+  describing the colour of the significance stars for female data. Use
+  only if you have put data in `t_test_df_female`. Defaults to
+  `"Black"`.
 
 - large_axis_text:
 
@@ -322,6 +393,39 @@ for the function that will produce the summary data used in this plot.
 ## Examples
 
 ``` r
+# Both sexes with significance stars for separate sexes
+# Note: The significance stars are sample data
+
+
+plot_summary_current_data(
+  data = sample_pruned_eEPSC_df$all_cells,
+  plot_category = 2,
+  plot_treatment = "Control",
+  current_type = "eEPSC",
+  y_variable = "amplitude",
+   hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+   included_sexes = "both",
+   include_representative_trace = "yes",
+   representative_trace_filename = import_ext_data("Control-trace.png"),
+   y_axis_limit = 175,
+   signif_stars = "yes",
+   t_test_df_male = sample_eEPSC_t_test_df_male,
+   t_test_df_female = sample_eEPSC_t_test_df_female,
+   stars_position_male = 30,
+   stars_position_female = 70,
+   stars_colour_male = "#6600cc",
+   stars_colour_female = "#d6b8f5",
+   large_axis_text = "no",
+   shade_intervals = "no",
+   treatment_colour_theme = sample_treatment_names_and_colours,
+   theme_options = sample_theme_options
+ )
+#> Warning: Removed 25 rows containing missing values or values outside the scale range
+#> (`geom_segment()`).
+
+# Both sexes with significance stars from grouped data
+
 plot_summary_current_data(
   data = sample_pruned_eEPSC_df$all_cells,
   plot_category = 2,
