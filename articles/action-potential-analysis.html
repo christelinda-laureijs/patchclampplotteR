@@ -75,8 +75,8 @@
 
 
 <script src="action-potential-analysis_files/core-js-2.5.3/shim.min.js"></script><script src="action-potential-analysis_files/react-18.2.0/react.min.js"></script><script src="action-potential-analysis_files/react-18.2.0/react-dom.min.js"></script><script src="action-potential-analysis_files/reactwidget-2.0.0/react-tools.js"></script><link href="action-potential-analysis_files/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
-<script src="action-potential-analysis_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="action-potential-analysis_files/reactable-0.4.4/reactable.css" rel="stylesheet">
-<script src="action-potential-analysis_files/reactable-binding-0.4.4/reactable.js"></script><div class="row">
+<script src="action-potential-analysis_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="action-potential-analysis_files/reactable-0.4.5/reactable.css" rel="stylesheet">
+<script src="action-potential-analysis_files/reactable-binding-0.4.5/reactable.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Action Potential Analysis</h1>
             
@@ -94,7 +94,7 @@ select the first action potential within this sweep for further
 analyses. The data can then be processed and plotted in R using
 <code>patchclampplotteR</code> functions.</p>
 <div class="figure" style="text-align: center">
-<img src="figures/AP-first-trace.png" alt="An image of a current clamp steps recording with the first action potential outlined with a box." width="75%"><p class="caption">
+<img src="figures/AP-first-trace.png" class="r-plt" alt="An image of a current clamp steps recording with the first action potential outlined with a box." width="75%"><p class="caption">
 The box outlines the first action potential on the first sweep with
 action potentials.
 </p>
@@ -171,7 +171,7 @@ unusual or interesting things about the recording, or flag a
 nice-looking recording for use in a paper.</li>
 </ul>
 <a href="data:text/csv;base64,bGV0dGVyLHN0YXRlLHRpbWVfb2ZfdGhyZXNob2xkLHRfeCx0MTEsSUQsZmlyc3Rfc3dlZXBfd2l0aF9BUHMsdHJhY2Vfc3RhcnQscGVha19hbXBsaXR1ZGUsdGltZV90b19wZWFrLGFudGlwZWFrX2FtcGxpdHVkZSx0aW1lX29mX2FudGlwZWFrLGhhbGZfd2lkdGgsYXBfbm90ZXMK" download="sample-blank-ap-parameter-data.csv">Download sample-blank-ap-parameter-data.csv</a>
-<p><img src="figures/AP-properties.png" alt="An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/AP-properties.png" class="r-plt" alt="An image of an action potential with labels indicating properties such as the peak amplitude, half-width, after-hyperpolarization, and latency to fire." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="get-derivative">Get derivative<a class="anchor" aria-label="anchor" href="#get-derivative"></a>
@@ -199,7 +199,7 @@ just be sure to say “no” to saving changes when closing the file later).
 This will re-scale the y-axis to the correct units relative to the
 current injections. Double-check that the x-axis is in milliseconds!</p>
 <div class="figure" style="text-align: center">
-<img src="figures/Fix-y-scale.png" alt="A screenshot of a dialog box in Clampfit with an option to change the V/pA ratio to 0.01." width="75%"><p class="caption">
+<img src="figures/Fix-y-scale.png" class="r-plt" alt="A screenshot of a dialog box in Clampfit with an option to change the V/pA ratio to 0.01." width="75%"><p class="caption">
 Sometimes the V/pA ratio is altered, so you may need to change it to
 0.01.
 </p>
@@ -212,7 +212,7 @@ click on <code>View</code> -&gt; <code>Data Display</code> -&gt;
 <code>Sweeps</code>.</p>
 <p>1d. You can also click on the <code>Auto Scale All Y Axes</code>
 button (orange arrow) to help you see the data faster.</p>
-<p><img src="figures/Viewer-buttons.png" alt="A screenshot of the Show Signals buttons and other viewing buttons available in the upper toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Viewer-buttons.png" class="r-plt" alt="A screenshot of the Show Signals buttons and other viewing buttons available in the upper toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Press the “Enter” key to show just one sweep at a time. It will
 begin at the sweep corresponding to the lowest current injection. Use
@@ -228,7 +228,7 @@ area before the slope of the curve increases steeply). Cursor 2 should
 be in the after-hyperpolarization region.</p></li>
 </ol>
 <div class="figure" style="text-align: center">
-<img src="figures/AP-cursor-1-placement.png" alt="A screenshot of an action potential with a green dot indicating the position of cursor 1. Cursor 1 should be at the middle portion of the curve, not the beginning of the curve (too early) or near the peak (too late)." width="75%"><p class="caption">
+<img src="figures/AP-cursor-1-placement.png" class="r-plt" alt="A screenshot of an action potential with a green dot indicating the position of cursor 1. Cursor 1 should be at the middle portion of the curve, not the beginning of the curve (too early) or near the peak (too late)." width="75%"><p class="caption">
 The ideal placement of Cursor 1 should be in the middle of the curve.
 Left: Cursor 1 is placed where the curve is very steep, and it is likely
 that you will miss the threshold. Middle: Cursor 1 is very low, so
@@ -249,7 +249,7 @@ to the threshold (see step 11).</p>
 potential. The range between Cursors 1 and 2 should only cover one
 action potential.</p>
 </blockquote>
-<p><img src="figures/AP-cursors.png" alt="A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than Cursor 2." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/AP-cursors.png" class="r-plt" alt="A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is located at a point with a y-axis value that is greater than Cursor 2." width="75%" style="display: block; margin: auto;"></p>
 <ol start="5" style="list-style-type: decimal">
 <li><p>Click on the arithmetic button (it is the button with basic math
 symbols), then Add Traces. Write “1” and click OK. This will add a new
@@ -258,7 +258,7 @@ empty trace, called <code>t11</code>.</p></li>
 the <code>Expression</code> box, write <code>t11=diff(t6)</code>
 (replace <code>t6</code> with your value for <code>t_x</code>).</p></li>
 </ol>
-<p><img src="figures/AP-expression-box.png" alt="A screenshot of the Arithmetic box of Clampfit showing the formula t11=diff(t6) inserted into the expression field." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/AP-expression-box.png" class="r-plt" alt="A screenshot of the Arithmetic box of Clampfit showing the formula t11=diff(t6) inserted into the expression field." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="find-threshold">Find threshold<a class="anchor" aria-label="anchor" href="#find-threshold"></a>
@@ -327,7 +327,7 @@ this:</li>
 (<code>time</code>) to match the <code>time_of_threshold</code>.</li>
 </ol>
 <div class="figure" style="text-align: center">
-<img src="figures/AP-cursors-new.png" alt="A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold." width="75%"><p class="caption">
+<img src="figures/AP-cursors-new.png" class="r-plt" alt="A screenshot of Clampfit showing cursors positioned around the first action potential. The first cursor is now located at the x-value where the membrane potential is equal to the threshold." width="75%"><p class="caption">
 Note how Cursor 1 is shifted to the right relative to the earlier cursor
 image. It is now located at the x-value where the membrane potential
 crosses the threshold.
@@ -370,7 +370,7 @@ you from accidentally copying old data</li>
 </ul>
 <p>Click OK and then <code>Window</code> -&gt; <code>Results1</code>
 (<code>Alt+w+2</code>) to see the Results page.</p>
-<p><img src="figures/AP-statistics-box.png" alt="A screenshot of the Statistics box of Clampfit showing the correct options to select." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/AP-statistics-box.png" class="r-plt" alt="A screenshot of the Statistics box of Clampfit showing the correct options to select." width="75%" style="display: block; margin: auto;"></p>
 <ol start="14" style="list-style-type: decimal">
 <li>Go to the row corresponding to Trace <code>t_x</code>. Select all
 data except for the <code>File Path</code> column (unless you think you
@@ -428,7 +428,7 @@ change after your treatment.</p></li>
 <span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span>,</span>
 <span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="action-potential-analysis_files/figure-html/ap-comparison-1.png" alt="A plot of peak amplitude in pico amps versus state (baseline or insulin). The data are coloured according to state, where baseline points are gray and insulin points are purple. Insulin decreased action potential amplitude." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="action-potential-analysis_files/figure-html/ap-comparison-1.png" class="r-plt" alt="A plot of peak amplitude in pico amps versus state (baseline or insulin). The data are coloured according to state, where baseline points are gray and insulin points are purple. Insulin decreased action potential amplitude." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="count">Count action potentials<a class="anchor" aria-label="anchor" href="#count"></a>
@@ -462,7 +462,7 @@ number 1 in cell <code>C2</code>. Then, type the number 2 in cell
 <p>18b. Select <code>C2</code> and <code>C3</code> together, then hover
 your mouse over the bottom right corner of the group until you see a
 small black plus symbol.</p>
-<p><img src="figures/Excel-plus.png" alt="A screenshot of Excel with two cells selected. A plus symbol is present on the bottom right corner of the selection." width="25%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Excel-plus.png" class="r-plt" alt="A screenshot of Excel with two cells selected. A plus symbol is present on the bottom right corner of the selection." width="25%" style="display: block; margin: auto;"></p>
 <p>18c. Click and hold down the mouse key and drag the selection down to
 <code>C11</code> to generate a sequence from 1 to 10.</p>
 <p>18d. The entire range from <code>C2</code> to <code>C11</code> should
@@ -488,7 +488,7 @@ click on <code>View</code> -&gt; <code>Data Display</code> -&gt;
 <code>Sweeps</code>. You can also click on the
 <code>Auto Scale All Y Axes</code> button (orange arrow) to help you see
 the data faster.</p>
-<p><img src="figures/Viewer-buttons.png" alt="A screenshot of the Show Signals buttons and other viewing buttons available in the upper toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Viewer-buttons.png" class="r-plt" alt="A screenshot of the Show Signals buttons and other viewing buttons available in the upper toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 <ol start="20" style="list-style-type: decimal">
 <li>Press the <code>Enter</code> key to view one sweep at a time, and
 use <code>&lt;</code> and <code>&gt;</code> to cycle through the sweeps.
@@ -535,7 +535,7 @@ with 0s now.</p>
 <span>  theme_options <span class="op">=</span> <span class="va">sample_theme_options</span>,</span>
 <span>  save_plot_png <span class="op">=</span> <span class="st">"no"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="action-potential-analysis_files/figure-html/ap-frequencies-one-treatment-1.png" alt="A plot of Action Potential Frequency in Hz versus current injection on the x-axis. The data are coloured gray for baseline data and purple for insulin data. The plot is showing that action potential frequency was lower after adding insulin." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="action-potential-analysis_files/figure-html/ap-frequencies-one-treatment-1.png" class="r-plt" alt="A plot of Action Potential Frequency in Hz versus current injection on the x-axis. The data are coloured gray for baseline data and purple for insulin data. The plot is showing that action potential frequency was lower after adding insulin." width="75%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_AP_frequencies_multiple_treatments.html">plot_AP_frequencies_multiple_treatments</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">sample_AP_count_data</span>,</span>
@@ -543,7 +543,7 @@ with 0s now.</p>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  treatment_colour_theme <span class="op">=</span> <span class="va">sample_treatment_names_and_colours</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="action-potential-analysis_files/figure-html/ap-plot-frequencies-multiple-treatments-1.png" alt="A smoothed line plot showing action potential frequency in Hz versus current injection in picoamps for four different treatments at two states (baseline vs. insulin). Overall, insulin decreased action potential frequency in all treatments." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="action-potential-analysis_files/figure-html/ap-plot-frequencies-multiple-treatments-1.png" class="r-plt" alt="A smoothed line plot showing action potential frequency in Hz versus current injection in picoamps for four different treatments at two states (baseline vs. insulin). Overall, insulin decreased action potential frequency in all treatments." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="plotting-sweeps">Plotting Sweeps<a class="anchor" aria-label="anchor" href="#plotting-sweeps"></a>
@@ -578,7 +578,7 @@ use. These include <code>begin</code>, <code>option</code>,
 <span>  begin <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  end <span class="op">=</span> <span class="fl">0.8</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="action-potential-analysis_files/figure-html/ap-trace-viridis-1.png" alt="A plot of current clamp steps where each sweep is coloured a different colour. The colour scheme is part of the plasma theme from the viridis package." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="action-potential-analysis_files/figure-html/ap-trace-viridis-1.png" class="r-plt" alt="A plot of current clamp steps where each sweep is coloured a different colour. The colour scheme is part of the plasma theme from the viridis package." width="75%" style="display: block; margin: auto;"></p>
 <p>This is how you would plot selected sweeps. Include a list of one or
 more values corresponding to the sweep names (“epi1” to “epi10” in this
 example).</p>
@@ -594,7 +594,7 @@ example).</p>
 <span>  begin <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  end <span class="op">=</span> <span class="fl">0.8</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="action-potential-analysis_files/figure-html/ap-trace-viridis-three-sweeps-1.png" alt="A plot of current clamp steps showing three sweeps only." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="action-potential-analysis_files/figure-html/ap-trace-viridis-three-sweeps-1.png" class="r-plt" alt="A plot of current clamp steps showing three sweeps only." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="custom-scale">Custom scale<a class="anchor" aria-label="anchor" href="#custom-scale"></a>
@@ -611,7 +611,7 @@ in the <code>custom_scale_colours</code> argument.</p>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-2-1.png" alt="A series of action potential sweeps where each sweep is a different colour. The colour scheme is part of the turbo rainbow scheme from yellow to blue." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="A series of action potential sweeps where each sweep is a different colour. The colour scheme is part of the turbo rainbow scheme from yellow to blue." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="single-colour">Single colour<a class="anchor" aria-label="anchor" href="#single-colour"></a>
@@ -625,7 +625,7 @@ in the <code>custom_scale_colours</code> argument.</p>
 <span>  plot_category <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  plot_treatment <span class="op">=</span> <span class="st">"Control"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-3-1.png" alt="A series of action potential sweeps that are all coloured purple." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="action-potential-analysis_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="A series of action potential sweeps that are all coloured purple." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="faq">FAQ<a class="anchor" aria-label="anchor" href="#faq"></a>
@@ -639,11 +639,11 @@ to measure. However, for your AP count data, please just indicate
 <code>0</code> for all current injections.</p>
 <p><em>What do I do if there are action potentials outside of the time
 when a current injection was applied?</em></p>
-<p><img src="figures/APs-outside-sweep.png" alt="A screenshot of a recording in Clampfit showing action potentials present outside of the range where a current injection was applied." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/APs-outside-sweep.png" class="r-plt" alt="A screenshot of a recording in Clampfit showing action potentials present outside of the range where a current injection was applied." width="75%" style="display: block; margin: auto;"></p>
 <p>This can happen with very excitable cells. Only count the action
 potentials that occurred within the injection period.</p>
 <p><em>Should I count an action potential that looks very wavy?</em></p>
-<p><img src="figures/Wavy-APs-check.png" alt="A screenshot of a recording in Clampfit showing wavy action potentials. Valid action potentials are indicated with check marks" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Wavy-APs-check.png" class="r-plt" alt="A screenshot of a recording in Clampfit showing wavy action potentials. Valid action potentials are indicated with check marks" width="75%" style="display: block; margin: auto;"></p>
 <p>Only include the action potential if it clearly crosses the
 threshold, comes to a sharp peak, and has an after-hyperpolarization
 period.</p>
@@ -665,7 +665,7 @@ Subthalamic Neurons to Cortical Input. Journal of Neuroscience, 30(39),
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

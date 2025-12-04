@@ -1,0 +1,559 @@
+# Action Potential Analysis
+
+This vignette will demonstrate how to analyze action potential
+properties in Clampfit using a raw .abf file. You will identify the
+first current injection that resulted in action potentials and then
+select the first action potential within this sweep for further
+analyses. The data can then be processed and plotted in R using
+`patchclampplotteR` functions.
+
+![An image of a current clamp steps recording with the first action
+potential outlined with a box.](figures/AP-first-trace.png)
+
+The box outlines the first action potential on the first sweep with
+action potentials.
+
+> You will identify the threshold using the first derivative method.
+> This means that the threshold corresponds to the membrane potential
+> where the action potential velocity is 10 mV/ms or greater (Farries et
+> al., 2010).
+
+### Set up data sheet
+
+Before you begin, you should set up a .csv file. I would suggest using a
+consistent naming scheme that includes the date. I use the
+`YYYYMMDD-title.csv` format, such as `20250113-AP-analysis.csv`. This
+makes it easy to identify when I last analyzed my data, and the files
+sort easily.
+
+In your .csv file, fill row 1 with the following column titles. Notice
+that all (except for `ID` are in lowercase.
+
+- `letter` The unique letter identifier of a single cell. You can use
+  this to link data from different recordings taken from the same cell.
+- `state` A character value. In this example, the values are `Baseline`
+  and `Insulin`, indicating a current clamp protocol taken after the
+  cell had been exposed to 500 nM insulin for 25 minutes.
+- `time_of_threshold` A numerical value (in ms) used to determine
+  properties like the latency to fire.
+- `t_x` The membrane potential at the moment that an action potential is
+  initiated, also known as the threshold.
+- `t11` The derivative of the trace you are analyzing. Must be 10 mV/ms
+  or greater to properly identify the threshold.
+- `ID` A character value indicating the recording number. This
+  corresponds to the `File Name` column that is automatically generated
+  in the Results sheet in Clampfit.
+- `first_sweep_with_APs` A number representing the earliest sweep number
+  where action potentials first appeared.
+- `trace_start` This is an automatic value calculated by Clampfit, and
+  it corresponds to the sweep number. It is not used in any analyses,
+  but it will automatically be included in the Results sheet in
+  Clampfit. It’s faster to just copy all the data rather than try to
+  exclude this value.
+- `peak_amplitude` The membrane potential (in mV) during maximum
+  depolarization.
+- `time_to_peak` The time of the peak amplitude (in ms), which should
+  also be relative to the `time_of_threshold` if you have repositioned
+  Cursor 1 to the `time_of_threshold`.
+- `antipeak_amplitude` The afterhyperpolarization amplitude (in mV)
+- `time_of_antipeak` The time of the after-hyperpolarization (in ms),
+  which should be relative to the `time_of_threshold`.
+- `half_width` The width of the action potential when the membrane
+  potential is half of the `peak_amplitude`.
+- `ap_notes` An optional column where you can note any unusual or
+  interesting things about the recording, or flag a nice-looking
+  recording for use in a paper.
+
+[Download
+sample-blank-ap-parameter-data.csv](data:text/csv;base64,bGV0dGVyLHN0YXRlLHRpbWVfb2ZfdGhyZXNob2xkLHRfeCx0MTEsSUQsZmlyc3Rfc3dlZXBfd2l0aF9BUHMsdHJhY2Vfc3RhcnQscGVha19hbXBsaXR1ZGUsdGltZV90b19wZWFrLGFudGlwZWFrX2FtcGxpdHVkZSx0aW1lX29mX2FudGlwZWFrLGhhbGZfd2lkdGgsYXBfbm90ZXMK)
+
+![An image of an action potential with labels indicating properties such
+as the peak amplitude, half-width, after-hyperpolarization, and latency
+to fire.](figures/AP-properties.png)
+
+### Get derivative
+
+1.  Open the .abf file containing the current clamp step protocol in
+    Clampfit. Ensure that the x-axis shows time in milliseconds. If it
+    shows seconds, double-click the x-axis, and change the
+    `Elapsed Time` from `Automatic` to `Milliseconds`.
+
+> **Warning!** The y-axis values should generally be around -70 mV
+> during the flat regions outside of the current injection. Sometimes
+> the scaling factor in Clampfit is distorted (for unknown reasons) and
+> the y-axis may be in the thousands range. If this happens, follow step
+> 1b).
+
+1b. If the y-axis scale is off (see the warning box above), double-click
+on the y-axis to open the `Modify Signal Parameters` box. Change the
+`V/pA` ratio to 0.01, and click “Save” and then “OK” (you will see a
+warning about permanently changing the recording - don’t worry about
+this, and just be sure to say “no” to saving changes when closing the
+file later). This will re-scale the y-axis to the correct units relative
+to the current injections. Double-check that the x-axis is in
+milliseconds!
+
+![A screenshot of a dialog box in Clampfit with an option to change the
+V/pA ratio to 0.01.](figures/Fix-y-scale.png)
+
+Sometimes the V/pA ratio is altered, so you may need to change it to
+0.01.
+
+1c. Click on the `Show Aquistion Signals` button and then
+`Previous Signal` (blue arrow in the figure below) to view the sweeps
+showing changes in current (`Vm_primary`). The traces should all be
+stacked on top of each other, but if they are not, click on `View` -\>
+`Data Display` -\> `Sweeps`.
+
+1d. You can also click on the `Auto Scale All Y Axes` button (orange
+arrow) to help you see the data faster.
+
+![A screenshot of the Show Signals buttons and other viewing buttons
+available in the upper toolbar in Clampfit.](figures/Viewer-buttons.png)
+
+2.  Press the “Enter” key to show just one sweep at a time. It will
+    begin at the sweep corresponding to the lowest current injection.
+    Use greater than symbol (`>`) to cycle up through the sweeps.
+
+3.  Move up to sweeps corresponding to higher current injections until
+    you identify the first sweep that contains an action potential. I
+    will call this `t_x`, since it may be `t5` in one recording, or `t6`
+    in another, etc.
+
+4.  Position Cursors 1 and 2 around the first action potential in `t_x`.
+    Cursor 1 should be before the threshold (aim for the area before the
+    slope of the curve increases steeply). Cursor 2 should be in the
+    after-hyperpolarization region.
+
+![A screenshot of an action potential with a green dot indicating the
+position of cursor 1. Cursor 1 should be at the middle portion of the
+curve, not the beginning of the curve (too early) or near the peak (too
+late).](figures/AP-cursor-1-placement.png)
+
+The ideal placement of Cursor 1 should be in the middle of the curve.
+Left: Cursor 1 is placed where the curve is very steep, and it is likely
+that you will miss the threshold. Middle: Cursor 1 is very low, so
+Clampfit may identify this as the after-hyperpolarization. Right: This
+is the ideal spot, where the cursor is early enough to capture the
+threshold in the search region.
+
+> **Warning!** It is important that Cursor 2 touches the curve at a
+> value that is lower than the voltage value for Cursor 1. If Cursor 1
+> is lower, then Clampfit may identify the location at Cursor 1 as the
+> after-hyperpolarization region if you forget to move the cursor to the
+> threshold (see step 11).
+
+> Also, make sure that Cursor 2 does not cross a second action
+> potential. The range between Cursors 1 and 2 should only cover one
+> action potential.
+
+![A screenshot of Clampfit showing cursors positioned around the first
+action potential. The first cursor is located at a point with a y-axis
+value that is greater than Cursor 2.](figures/AP-cursors.png)
+
+5.  Click on the arithmetic button (it is the button with basic math
+    symbols), then Add Traces. Write “1” and click OK. This will add a
+    new empty trace, called `t11`.
+
+6.  `t11` should be the derivative of `t_x`. In the `Expression` box,
+    write `t11=diff(t6)` (replace `t6` with your value for `t_x`).
+
+![A screenshot of the Arithmetic box of Clampfit showing the formula
+t11=diff(t6) inserted into the expression
+field.](figures/AP-expression-box.png)
+
+### Find threshold
+
+7.  Click on `Edit` -\> `Transfer Traces` and set the
+    `Region to transfer` as `Cursors 1..2`. In the `Trace Selection`
+    category, choose only `Vm_primary ()` as the signal. Ensure that
+    `start time at zero` is checked. Select `t_x` and `t11` for the
+    traces, then click `OK`.
+
+> **Quick Tip!** An even faster keyboard shortcut is `Alt+e+t+s`, which
+> will immediately open the correct signal selection box. Only use this
+> if you are sure that the settings are correct.
+
+8.  Click on the Results sheet (`Window` -\> `Results1` or `Alt+w+2`).
+    The `Results` page will display three columns: `Time (ms)`,
+    `Trace #6 (or #5, #7, etc.)`, and `Trace #11`. `Trace #x` is the
+    membrane potential in mV, and `Trace #11` is the derivative of
+    `Trace #x`.
+
+> **Warning!** The Results page of the transferred traces does not
+> delete data between files. If you are doing several analyses in one
+> session, ensure that you are looking at the correct columns
+> corresponding to the active recording.
+
+> **Note** If you recently opened a results file in Clampfit, it will
+> automatically overwrite the contents of Sheet 14, and you will not see
+> the transferred traces. If you don’t see any results, you may need to
+> close and re-open Clampfit.
+
+9.  Scroll down the `Trace #11` column (the derivative column) until you
+    see a series of positive values with increasing magnitude (e.g. \>
+    100 or more). This is where the derivative is increasing. Select the
+    first value within this series that is greater than or equal to 10
+    mV/ms. Copy the value of all three columns in this row.
+
+> *Note* There may be isolated peaks within the derivative that are
+> greater than 10 mV/ms. Only select this value if it is part of a
+> series of increasingly larger positive values, followed by a series of
+> negative values.
+
+10. If the scaling is correct, the threshold (`t_x`) should be around
+    -30 mV for a healthy cell. Your .csv file should now look like this:
+
+### Measure action potential properties
+
+11. Double-click on Cursor 1 and change its x-position value (`time`) to
+    match the `time_of_threshold`.
+
+![A screenshot of Clampfit showing cursors positioned around the first
+action potential. The first cursor is now located at the x-value where
+the membrane potential is equal to the
+threshold.](figures/AP-cursors-new.png)
+
+Note how Cursor 1 is shifted to the right relative to the earlier cursor
+image. It is now located at the x-value where the membrane potential
+crosses the threshold.
+
+> **Warning!** If you do not reposition Cursor 1 to be at the time of
+> threshold, the values for `time_of_peak` and `time_of_antipeak` will
+> be incorrect!
+
+> You don’t need to move Cursor 2 if it is correctly positioned from
+> earlier steps (it should be in the after hyperpolarization region,
+> lower than Cursor 1, and not touching a second action potential).
+
+12. Click on the Statistics button (a small icon with a summation symbol
+    on top of it) or press `Alt+s`.
+
+13. Set the following settings:
+
+- Trace Selection: Choose `Vm_primary ()`. `t_x` and `t11` will
+  automatically be selected.
+- Peak Polarity: `Vm_primary`, `Positive-going`
+- Baseline Region: Fixed at
+  `[paste in the threshold value (column t_x in your sheet) here]`
+- Search Region 1: Range: `Cursors 1..2`
+- Destination Option: `Replace results in sheet` (prevents you from
+  accidentally copying old data
+- Column Order: `Measurement, Region, Signal`
+- Measurements: `peak_amplitude`, `time of peak`, `antipeak amplitude`,
+  `time of antipeak`, `half-width`
+
+Click OK and then `Window` -\> `Results1` (`Alt+w+2`) to see the Results
+page.
+
+![A screenshot of the Statistics box of Clampfit showing the correct
+options to select.](figures/AP-statistics-box.png)
+
+14. Go to the row corresponding to Trace `t_x`. Select all data except
+    for the `File Path` column (unless you think you will need it later)
+    and paste it into the .csv file. You’ll notice that the .csv column
+    names are different than the column names in the `Results` sheet. I
+    changed these column names to make them easier to use in R code.
+
+> **Warning!** There is a bug in Clampfit 11.3 (but not 11.4 or 10.6)
+> that leads to incorrect time units for parameters such as
+> time_of_antipeak. Ensure that your parameters have consistent units
+> before moving ahead!
+
+15. Your .csv file should now look like this.
+
+16. While you still have this file open, you may want to count action
+    potentials (see the section on [counting action potentials](#count)
+    below). Or, you could wait and do these separately, which you might
+    find more efficient.
+
+17. A completed dataset should look something like the spreadsheet
+    below.
+
+> *Note* If there are no action potentials in the later recording,
+> insert the values for the columns `letter` and `state` and leave all
+> the others blank.
+
+18. You are now ready to import your data into R! Use the
+    [`add_new_cells()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/add_new_cells.md)
+    function with `data_type = "AP_parameter"`. You may find it helpful
+    to read the [Get
+    Started](https://christelinda-laureijs.github.io/patchclampplotteR/articles/patchclampplotteR.html)
+    guide if you are setting up your data for the first time.
+
+19. Use the
+    [`plot_AP_comparison()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/plot_AP_comparison.md)
+    function to see how parameters like `peak_amplitude` and
+    `half-width` change after your treatment.
+
+``` r
+plot_AP_comparison(
+  sample_AP_data,
+  plot_treatment = "Control",
+  plot_category = 2,
+  y_variable = "peak_amplitude",
+  y_axis_title = "Peak Amplitude (pA)",
+  theme_options = sample_theme_options,
+  baseline_label = "Baseline",
+  test_type = "wilcox.test",
+  post_hormone_label = "Insulin",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_plot_png = "no"
+)
+```
+
+![A plot of peak amplitude in pico amps versus state (baseline or
+insulin). The data are coloured according to state, where baseline
+points are gray and insulin points are purple. Insulin decreased action
+potential
+amplitude.](action-potential-analysis_files/figure-html/ap-comparison-1.png)
+
+### Count action potentials
+
+The next step is to count the number of action potentials in each sweep.
+This will allow you to later make a plot of action potential frequency
+vs. current injection and see how a treatment affect action potential
+frequency.
+
+18. Create a separate .csv file (for example
+    `20250113-AP-count-data.csv`). This file should have four columns:
+
+- `letter` The unique letter identifier of a single cell.
+- `state` A character value (“Baseline” or “Insulin” in this example)
+- `sweep` A number from 1 to 10 (see step 18a to generate this)
+- `no_of_APs` a numerical value indicating the number of action
+  potentials
+
+18a. To generate a repeated sequence from 1-10 quickly, type the number
+1 in cell `C2`. Then, type the number 2 in cell `C3`.
+
+18b. Select `C2` and `C3` together, then hover your mouse over the
+bottom right corner of the group until you see a small black plus
+symbol.
+
+![A screenshot of Excel with two cells selected. A plus symbol is
+present on the bottom right corner of the
+selection.](figures/Excel-plus.png)
+
+18c. Click and hold down the mouse key and drag the selection down to
+`C11` to generate a sequence from 1 to 10.
+
+18d. The entire range from `C2` to `C11` should be selected. Move your
+mouse to the bottom right corner of the cell until you see the `+`
+symbol again. Hold down the `Ctrl` key and drag this selection down.
+This will generate the sequence from 1-10 repeatedly (e.g. 1, 2, 3, 4,
+5, 6, 7, 8, 9, 10, 1, 2, 3…)
+
+18e. You can then copy and paste this range repeatedly to fill your
+column.
+
+19. Open a current clamp steps recording in Clampfit (you may be coming
+    directly from step 16 when you [measured action potential
+    properties](#measure)).
+
+19b. *Ignore these instructions if you’ve already set up the plot view*
+You may need to zoom in to see it better. Click on the
+`Show Aquistion Signals` button and then `Previous Signal` (blue arrow
+in the figure below) to view the sweeps showing changes in current
+(`Im_primary ()`). The traces should all be stacked on top of each
+other, but if they are not, click on `View` -\> `Data Display` -\>
+`Sweeps`. You can also click on the `Auto Scale All Y Axes` button
+(orange arrow) to help you see the data faster.
+
+![A screenshot of the Show Signals buttons and other viewing buttons
+available in the upper toolbar in Clampfit.](figures/Viewer-buttons.png)
+
+20. Press the `Enter` key to view one sweep at a time, and use `<` and
+    `>` to cycle through the sweeps. Count the number of action
+    potentials in each sweep, and record them in the `no_of_APs` column.
+
+> Yes, this step may seem super simple, but that’s because it is - look
+> at each sweep and count the number of action potentials present!
+
+20b. *Tip!* If there are no action potentials in a sweep, leave the cell
+in your Excel sheet blank. After you have finished collecting data from
+many cells, you can automatically fill blank cells with `0`.
+
+20c. Select the `no_of_APs` column. Then, click on `Home` -\> `Editing`
+-\> `Find and Select` -\> `Go to Special` and then choose `Blanks`.
+
+20d. All of the blank cells should be selected. Type the number `0`, and
+then press `Ctrl + Enter` or `Cmd + Enter` on a Mac. All blank values
+should be filled with 0s now.
+
+21. Here is an example of what one recording could look like:
+
+22. You are now ready to import the data into R! Use
+    [`add_new_cells()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/add_new_cells.md)
+    with `data_type == "AP_count"`.
+
+23. Here is an example of the type of plots you can create!
+
+``` r
+plot_AP_frequencies_single_treatment(
+  data = sample_AP_count_data,
+  plot_treatment = "Control",
+  plot_category = 2,
+  baseline_label = "Baseline",
+  hormone_added = "Insulin",
+  significance_display_method = "stars",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  large_axis_text = "no",
+  test_type = "wilcox.test",
+  theme_options = sample_theme_options,
+  save_plot_png = "no"
+)
+```
+
+![A plot of Action Potential Frequency in Hz versus current injection on
+the x-axis. The data are coloured gray for baseline data and purple for
+insulin data. The plot is showing that action potential frequency was
+lower after adding
+insulin.](action-potential-analysis_files/figure-html/ap-frequencies-one-treatment-1.png)
+
+``` r
+plot_AP_frequencies_multiple_treatments(
+  data = sample_AP_count_data,
+  include_all_treatments = "yes",
+  plot_category = 2,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
+```
+
+![A smoothed line plot showing action potential frequency in Hz versus
+current injection in picoamps for four different treatments at two
+states (baseline vs. insulin). Overall, insulin decreased action
+potential frequency in all
+treatments.](action-potential-analysis_files/figure-html/ap-plot-frequencies-multiple-treatments-1.png)
+
+## Plotting Sweeps
+
+You can plot action potential recordings using `plot_AP_traces()`. Use a
+dataframe generated using
+[`import_ABF_file()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/import_ABF_file.md)
+with `recording_mode = "current_clamp"`. You can then plot all sweeps
+using `sweeps = as.character(unique(sample_ap_abf_baseline$episode))`.
+Just replace `sample_ap_abf_baseline` with the dataframe that you
+inserted into the `data` argument. Set `colour_scale_option` to one of
+three options: “viridis”, “custom” or “single_colour”.
+
+### Viridis
+
+“viridis” enables the beautiful colourblind-friendly viridis palettes
+from the `viridis` package. Look at the [documentation for
+`scale_color_viridis`](https://sjmgarnier.github.io/viridis/reference/scale_viridis.html)
+to learn about options you can use. These include `begin`, `option`,
+`theme` and more.
+
+``` r
+plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+  colour_scale_option = "viridis",
+  plot_category = 2,
+  plot_treatment = "Control",
+  direction = -1,
+  option = "plasma",
+  begin = 0,
+  end = 0.8
+)
+```
+
+![A plot of current clamp steps where each sweep is coloured a different
+colour. The colour scheme is part of the plasma theme from the viridis
+package.](action-potential-analysis_files/figure-html/ap-trace-viridis-1.png)
+
+This is how you would plot selected sweeps. Include a list of one or
+more values corresponding to the sweep names (“epi1” to “epi10” in this
+example).
+
+``` r
+plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  sweeps = c("epi1", "epi5", "epi10"),
+  colour_scale_option = "viridis",
+  plot_category = 2,
+  plot_treatment = "Control",
+  direction = -1,
+  option = "plasma",
+  begin = 0,
+  end = 0.8
+)
+```
+
+![A plot of current clamp steps showing three sweeps
+only.](action-potential-analysis_files/figure-html/ap-trace-viridis-three-sweeps-1.png)
+
+### Custom scale
+
+If you use `colour_scale_option = "custom"` you must define a list of
+character values (can be hex values or named colours) in the
+`custom_scale_colours` argument.
+
+``` r
+plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+  custom_scale_colours = c("#edd03a", "#cced34", "#a3fd3d", "#6bfe64", "#31f199", "#18dcc3", "#29bbec", "#4294ff", "#466be3", "#4040a2"),
+  colour_scale_option = "custom",
+  plot_category = 2,
+  plot_treatment = "Control"
+)
+```
+
+![A series of action potential sweeps where each sweep is a different
+colour. The colour scheme is part of the turbo rainbow scheme from
+yellow to
+blue.](action-potential-analysis_files/figure-html/unnamed-chunk-2-1.png)
+
+### Single colour
+
+``` r
+plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+  trace_colour = "#6600cc",
+  colour_scale_option = "single_colour",
+  plot_category = 2,
+  plot_treatment = "Control"
+)
+```
+
+![A series of action potential sweeps that are all coloured
+purple.](action-potential-analysis_files/figure-html/unnamed-chunk-3-1.png)
+
+### FAQ
+
+*What do I do if there are no action potentials following treatment?*
+
+Do not discard this cell; this is important and meaningful data! Fill in
+only the letter and state, and leave all other columns blank. R will
+fill this with NA values, since there are no action potential properties
+to measure. However, for your AP count data, please just indicate `0`
+for all current injections.
+
+*What do I do if there are action potentials outside of the time when a
+current injection was applied?*
+
+![A screenshot of a recording in Clampfit showing action potentials
+present outside of the range where a current injection was
+applied.](figures/APs-outside-sweep.png)
+
+This can happen with very excitable cells. Only count the action
+potentials that occurred within the injection period.
+
+*Should I count an action potential that looks very wavy?*
+
+![A screenshot of a recording in Clampfit showing wavy action
+potentials. Valid action potentials are indicated with check
+marks](figures/Wavy-APs-check.png)
+
+Only include the action potential if it clearly crosses the threshold,
+comes to a sharp peak, and has an after-hyperpolarization period.
+
+References
+
+Farries, M. A., Kita, H., & Wilson, C. J. (2010). Dynamic Spike
+Threshold and Zero Membrane Slope Conductance Shape the Response of
+Subthalamic Neurons to Cortical Input. Journal of Neuroscience, 30(39),
+13180–13191. <https://doi.org/10.1523/JNEUROSCI.1909-10.2010>

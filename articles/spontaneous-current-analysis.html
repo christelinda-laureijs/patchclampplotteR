@@ -89,13 +89,13 @@ currents while avoiding spikes from stimulus artifacts and noise. This
 article will show you how to analyze spontaneous currents in raw .abf
 recordings using Event Detection in Clampfit. The data will then be
 ready for further analyses with <code>patchclampplotteR</code>.</p>
-<p><img src="figures/Noise-vs-currents-labelled-diagram.png" alt="An image of a current clamp steps recording with annotations. Large spikes are true currents and small spikes are noise." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Noise-vs-currents-labelled-diagram.png" class="r-plt" alt="An image of a current clamp steps recording with annotations. Large spikes are true currents and small spikes are noise." width="75%" style="display: block; margin: auto;"></p>
 <p>There are many advanced approaches to noise exclusion in
 electrophysiological recordings (see <a href="https://doi.org/10.1073/pnas.2315804121" class="external-link">Wang et al., 2023</a>; <a href="https://doi.org/10.1016/S0956-5663(02)00053-2" class="external-link">Kudoh &amp;
 Taguchi, 2002</a>; and <a href="https://doi.org/10.1016/j.bpj.2012.08.039" class="external-link">Pernía-Andrade et al.,
 2012</a> for some methods). I am using a simple threshold method, where
 any spikes below the threshold are not counted as synaptic events.</p>
-<p><img src="figures/Threshold-figure.png" alt="An image of a current clamp steps recording with annotations. After adding a threshold, only currents are identified." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Threshold-figure.png" class="r-plt" alt="An image of a current clamp steps recording with annotations. After adding a threshold, only currents are identified." width="75%" style="display: block; margin: auto;"></p>
 <p>In this method, the threshold is five times the standard deviation
 (SD) of the noise amplitudes during a flat baseline region. This is
 comparable to the root mean square noise (RMS) used in MiniAnalysis.</p>
@@ -122,7 +122,7 @@ series.</p></li>
 recording from a single cell. All the recordings will be combined into a
 continuous recording with no gaps.</p></li>
 </ol>
-<p><img src="figures/Concatenate-files.png" alt="A screenshot of the Concatenate files dialog box in Clampfit showing that all files are selected." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Concatenate-files.png" class="r-plt" alt="A screenshot of the Concatenate files dialog box in Clampfit showing that all files are selected." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="view-recording">View recording<a class="anchor" aria-label="anchor" href="#view-recording"></a>
@@ -137,7 +137,7 @@ click on <code>View</code> -&gt; <code>Data Display</code> -&gt;
 <li><p>You can also click on the <code>Auto Scale All Y Axes</code>
 button (orange arrow) to help you see the data faster.</p></li>
 </ol>
-<p><img src="figures/Viewer-buttons.png" alt="A screenshot of the Show Signals buttons and other viewering buttons available in the upper toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Viewer-buttons.png" class="r-plt" alt="A screenshot of the Show Signals buttons and other viewering buttons available in the upper toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="create-data-sheet">Create data sheet<a class="anchor" aria-label="anchor" href="#create-data-sheet"></a>
@@ -181,7 +181,7 @@ must set a detection threshold.</p>
 and minimal noise. Place Cursors 1 and 2 around this region.</li>
 </ol>
 <div class="figure" style="text-align: center">
-<img src="figures/Spont-currents-baseline.png" alt="A screenshot of a recording in Clampfit with cursors surrounding a relatively flat region of the recording." width="75%"><p class="caption">
+<img src="figures/Spont-currents-baseline.png" class="r-plt" alt="A screenshot of a recording in Clampfit with cursors surrounding a relatively flat region of the recording." width="75%"><p class="caption">
 Cursors 1 and 2 are surrounding a good baseline region.
 </p>
 </div>
@@ -279,7 +279,7 @@ lengths and noise rejection.</p></li>
 <code>All Visible Traces</code> is selected.</p></li>
 </ol>
 <div class="figure" style="text-align: center">
-<img src="figures/Threshold-search-box.png" alt="A screenshot of the Event Detection Search Box in Clampfit." width="75%"><p class="caption">
+<img src="figures/Threshold-search-box.png" class="r-plt" alt="A screenshot of the Event Detection Search Box in Clampfit." width="75%"><p class="caption">
 You can double-check that you have selected the correct number of sweeps
 (here it should be t1..360) by checking the total sweep number in the
 bottom right corner (Sweep 360 of 360).
@@ -290,7 +290,7 @@ bottom right corner (Sweep 360 of 360).
 on the <code>Search Parameters</code> button on the bottom left side of
 the toolbar.</li>
 </ol>
-<p><img src="figures/Search-parameter-button.png" alt="A screenshot of the Search Parameters button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Search-parameter-button.png" class="r-plt" alt="A screenshot of the Search Parameters button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="identify-currents">Identify currents<a class="anchor" aria-label="anchor" href="#identify-currents"></a>
@@ -299,7 +299,7 @@ the toolbar.</li>
 <li>Click on the <code>Full Scale X Axis</code> button to view the
 entire trace.</li>
 </ol>
-<p><img src="figures/Full-scale-x-axis.png" alt="A screenshot of the Full Scale X Axis button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;">
+<p><img src="figures/Full-scale-x-axis.png" class="r-plt" alt="A screenshot of the Full Scale X Axis button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;">
 &gt; <strong>Warning!</strong> If you do not check “Full Scale X axis”,
 Clampfit will continuously scroll through the recording and it will take
 much longer to run.</p>
@@ -316,7 +316,7 @@ Event Viewer button. On the lower-right side, click the
 </li>
 <li>Close the Event Viewer window</li>
 </ul>
-<p><img src="figures/Event-viewer-button.png" alt="A screenshot of the Event Viewer button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Event-viewer-button.png" class="r-plt" alt="A screenshot of the Event Viewer button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 <blockquote>
 <p><strong>Warning!</strong> If you do not close the Event Viewer (and
 perform the other items in Step 21), Clampfit will try to refresh and
@@ -328,14 +328,14 @@ freeze and crash the software.</p>
 will draw a blue dot on each event. This may take a few minutes for
 large files.</li>
 </ol>
-<p><img src="figures/Nonstop-button.png" alt="A screenshot of the Nonstop button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Nonstop-button.png" class="r-plt" alt="A screenshot of the Nonstop button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 <ol start="22" style="list-style-type: decimal">
 <li>When the Event Detection has stopped, the nonstop button will become
 greyed out there will be a small notification sound. This is what the
 recording will look like after all events have been detected.</li>
 </ol>
 <div class="figure" style="text-align: center">
-<img src="figures/Event-detection-finished.png" alt="A screenshot of the recording after Event Detection is complete. Currents are highlighted in blue." width="75%"><p class="caption">
+<img src="figures/Event-detection-finished.png" class="r-plt" alt="A screenshot of the recording after Event Detection is complete. Currents are highlighted in blue." width="75%"><p class="caption">
 In this screenshot, events are highlighted in blue with a sketch of the
 event placed above. There are so many spontaneous currents, that the
 sketches have turned into a solid blue bar!
@@ -350,12 +350,12 @@ need to exclude any stimulus artifacts and evoked currents that were
 included in the event detection. Clampfit does not have an easy way to
 select multiple currents at once. However, one work-around is to create
 a plot of current amplitude over time and select points to delete.</p>
-<p><img src="figures/Labelled-currents-diagram.png" alt="A screenshot of a recording with evoked currents highlighted in blue, and spontaneous currents highlighted in green." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Labelled-currents-diagram.png" class="r-plt" alt="A screenshot of a recording with evoked currents highlighted in blue, and spontaneous currents highlighted in green." width="75%" style="display: block; margin: auto;"></p>
 <ol start="23" style="list-style-type: decimal">
 <li>Click on the <code>Define Graphs</code> button and choose the
 <code>Scatterplot</code> option.</li>
 </ol>
-<p><img src="figures/Define-graphs-button.png" alt="A screenshot of the Define Graphs button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Define-graphs-button.png" class="r-plt" alt="A screenshot of the Define Graphs button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 <ol start="24" style="list-style-type: decimal">
 <li><p>Set the x-axis to <code>Time to Peak</code> and the y-axis to
 <code>Peak amplitude</code>.</p></li>
@@ -382,7 +382,7 @@ corner to “draw” a box. This will select all points in the box that you
 outlined.</li>
 </ol>
 <div class="figure" style="text-align: center">
-<img src="figures/Event-detection-graph-screenshot.png" alt="A screenshot of a plot of peak amplitude in pico amps over time to peak in milliseconds, with evoked currents highlighted in a bold blue outline." width="75%"><p class="caption">
+<img src="figures/Event-detection-graph-screenshot.png" class="r-plt" alt="A screenshot of a plot of peak amplitude in pico amps over time to peak in milliseconds, with evoked currents highlighted in a bold blue outline." width="75%"><p class="caption">
 In this screenshot, notice how the stimulus artifacts are grouped
 together in one place. I have selected these points with my mouse.
 </p>
@@ -395,7 +395,7 @@ all non-spontaneous current events.</p></li>
 <li><p>Click on the <code>Process Selection</code> button that looks
 like a yellow triangle overlapping a blue triangle.</p></li>
 </ol>
-<p><img src="figures/Process-events-button.png" alt="A screenshot of the Process Selection button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;">
+<p><img src="figures/Process-events-button.png" class="r-plt" alt="A screenshot of the Process Selection button available in the lower toolbar in Clampfit." width="25%" style="display: block; margin: auto;">
 29. A dialog box will pop up. In the <code>Process</code> selection,
 click on <code>Change state</code> and then <code>Reject</code>.</p>
 <ol start="30" style="list-style-type: decimal">
@@ -491,7 +491,7 @@ noise or a very unstable baseline) in the Trace Selection box of Step
 11. Select the traces you want to exclude, then <code>Invert</code> your
 selection.</p>
 <div class="figure" style="text-align: center">
-<img src="figures/Messy-sweep.png" alt="A screenshot of a recording with a very noisy sweep highlighted in red." width="75%"><p class="caption">
+<img src="figures/Messy-sweep.png" class="r-plt" alt="A screenshot of a recording with a very noisy sweep highlighted in red." width="75%"><p class="caption">
 It will be difficult to accurately identify true currents in this sweep.
 </p>
 </div>
@@ -507,7 +507,7 @@ It will be difficult to accurately identify true currents in this sweep.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

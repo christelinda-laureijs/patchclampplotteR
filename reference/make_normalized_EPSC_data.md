@@ -1,0 +1,267 @@
+# Import and normalize raw current data
+
+`make_normalized_EPSC_data()` creates a dataframe of evoked or
+spontaneous current data from a raw .csv file. The function will create
+a new column containing the evoked or spontaneous current amplitudes
+normalized relative to the mean current amplitude during the baseline
+period. For evoked current data, the function also adds a column for the
+paired pulse ratio (`PPR = P2/P1`, where `P2` is the amplitude of the
+second evoked current).
+
+## Usage
+
+``` r
+make_normalized_EPSC_data(
+  filename = "Data/Sample-eEPSC-data.csv",
+  current_type = "eEPSC",
+  min_time_value = 0,
+  max_time_value = 25,
+  baseline_length = 5,
+  interval_length = 5,
+  decimal_places = 2,
+  negative_transform_currents = "yes",
+  save_output_as_RDS = "no"
+)
+```
+
+## Arguments
+
+- filename:
+
+  A filepath to a .csv file. See
+  [`add_new_cells()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/add_new_cells.md)
+  for the function that will merge raw data (a .csv with 4 columns:
+  `letter`, `ID`, `P1`, and `P2`) and a `cell-characteristics.csv` file
+  (with columns for factors like `animal`, `age`, `sex`, `synapses`).
+  Please see the section on "Required columns" below.
+
+- current_type:
+
+  A character describing the current type. Allowed values are `"eEPSC"`
+  or `"sEPSC"`.
+
+- min_time_value:
+
+  Minimum time value (numeric; in minutes), which defaults to `0`.
+
+- max_time_value:
+
+  Maximum recording length (numeric; in minutes). All data points will
+  be filtered to time values less than or equal to this value. Defaults
+  to `25`.
+
+- baseline_length:
+
+  Length of the baseline (numeric; in minutes). Refers to data collected
+  before applying a hormone, antagonist, or a protocol like high
+  frequency stimulation. Defaults to `5`.
+
+- interval_length:
+
+  Length of each interval (numeric; in minutes). Used to divide the
+  dataset into broad ranges for statistical analysis. Important!
+  `max_recording_length` must be evenly divisible by `interval_length`.
+  Defaults to `5`.
+
+- decimal_places:
+
+  A numeric value indicating the number of decimal places the data
+  should be rounded to. Used to reduce file size and prevent an
+  incorrect representation of the number of significant digits.
+
+- negative_transform_currents:
+
+  A character (`"yes"` or `"no"`) describing if `P1` and `P2` should be
+  negative transformed. If "yes", the values will be multiplied by (-1).
+  This only applies when `current_type == "eEPSC"` - It will be ignored
+  for spontaneous current data.
+
+- save_output_as_RDS:
+
+  A character (`"yes"` or `"no"`) describing if the resulting object
+  should be saved as an RDS file in the raw data folder.
+
+## Value
+
+A dataframe that can be viewed and used for further analyses in R. New
+or modified columns include:
+
+- `P1` (for evoked currents only) May be negative-transformed if
+  `negative_transform` == `"yes"`
+
+- `P2` (for evoked currents only) May be negative-transformed if
+  `negative_transform` == `"yes"`
+
+- `PPR` (for evoked currents only) A numeric value that represents the
+  paired pulse ratio (PPR) of the evoked currents, generated using
+  `dplyr::mutate(PPR = P2/P1)`.
+
+- `interval` A character value indicating the interval that the data
+  point belongs to. For example, `interval` will be `"t0to5"` for any
+  data points from 0 to 5 minutes. Example values: `"t0to5"`,
+  `"t5to10"`, etc.
+
+- `baseline_range` A logical value required for the baseline
+  transformation. It is set to `TRUE` when time is within the baseline
+  period (e.g. `Time <= 5`) and `FALSE` at all other times.
+
+- `baseline_mean` A numeric value representing the mean evoked current
+  amplitude during the baseline period. There is a different
+  baseline_mean for each letter.
+
+- `P1_transformed` (for evoked currents only) A numeric value
+  representing the first evoked current amplitude (pA) normalized
+  relative to the mean amplitude during the recording's baseline.
+
+- `P2_transformed` (for evoked currents only) A numeric value
+  representing the second evoked current amplitude (pA) normalized
+  relative to the mean amplitude during the recording's baseline.
+
+- `amplitude_transformed` (for spontaneous currents only) A numeric
+  value representing the spontaneous current amplitude (pA) normalized
+  relative to the mean amplitude during the recording's baseline.
+
+## Required basic columns
+
+It doesn't matter if the data are evoked or current type - these columns
+should be included in your data.
+
+- `letter` A character value that is a unique identifier for a single
+  recording. Used to link data sets for evoked or spontaneous currents
+  and cell-characteristics.
+
+- `synapses` A character value (e.g. `"Glutamate"` or `"GABA"`).
+
+- `sex` A character value (e.g. `"Male"` or `"Female"`).
+
+- `treatment` A character value (e.g. `"Control"`, `"HNMPA"`).
+
+- `time` A numeric value that represents time in minutes. This column is
+  autogenerated in
+  [`add_new_cells()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/add_new_cells.md).
+
+- `ID` A character value for the recording filename.
+
+- `X` A numeric value representing the x-value of the cell's location in
+  µm. Leave this blank if you don't have this data.
+
+- `Y` A numeric value representing the y-value of the cell's location in
+  µm. Leave this blank if you don't have this data.
+
+- `age` A numeric value representing the animal's age. Can be any value
+  as long as the time units are consistent throughout (e.g. don't mix up
+  days and months when reporting animal ages).
+
+- `animal` A numeric value representing the animal's ID or number.
+
+- `category` A numeric value representing the experiment type. Used to
+  assign top-level groups for further analyses, with `treatment` as
+  subgroups.
+
+- `cell` A character or numeric value representing the cell. For
+  example, use `3.1.1` for animal \#3, slice \#1, cell \#1.
+
+- `R_a` A list of values for the access resistance, which would have
+  been monitored at several timepoints throughout the recording. See the
+  documentation for the `R_a` column in the documentation for
+  `sample_cell_characteristics` with
+  [`?sample_cell_characteristics`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/sample_cell_characteristics.md).
+
+- `notes` An optional character column with notes about any issues,
+  sweeps that were removed during Clampfit processing, etc.
+
+- `days_alone` A numeric value describing the number of days that the
+  animal was left alone in a cage. This typically ranges from 0 to 2.
+  Fasted animals will have 1 day alone.
+
+- `animal_or_slicing_problems` A character value (`"yes"` or `"no"`)
+  describing if there were any issues with the animal (for example, the
+  animal was unusually anxious) or slicing (there were delays during the
+  process, the slices were crumpling, etc.).
+
+**Evoked current data**:
+
+If the data are evoked currents (`current_type == "eEPSC"`), the data
+must contain the basic columns mentioned in **Required basic columns**
+plus these columns:
+
+- `P1` A numeric value representing the amplitude of the first evoked
+  current in pA.
+
+- `P2` A numeric value representing the amplitude of the second evoked
+  current in pA.
+
+**Spontaneous current data:**
+
+If the data are spontaneous currents (`current_type == "sEPSC"`), the
+data must contain the basic columns mentioned in **Required basic
+columns** plus these columns:
+
+- `recording_num` A numeric value representing the recording number.
+  This was incorporated before we switched to concatenating all
+  recordings into one, but it needs to remain here to prevent breaking
+  previous projects. It should be set to `1`.
+
+- `trace` A numeric value representing the trace (automatically
+  generated in Clampfit) where the current occurred.
+
+- `time_of_peak` A numeric value representing the time of the peak in
+  milliseconds relative to trace number. This is automatically
+  calculated in Clampfit.
+
+- `time` A numeric value representing the absolute time when the current
+  happened, relative to the start of the recording. This is
+  autogenerated. See
+  [`add_new_cells()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/add_new_cells.md)
+  for a description of how the true time value (`time`) is calculated
+  from the `recording_num` and `trace.`
+
+- `amplitude` A numeric value representing the amplitude of the evoked
+  current in pA.
+
+## See also
+
+[`add_new_cells()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/add_new_cells.md)
+to add new recording data to your existing raw csv. It will merge raw
+data (a .csv with 4 columns: `letter`, `ID`, `P1`, and `P2`) and a
+`cell-characteristics.csv` file (with columns for factors like `animal`,
+`age`, `sex`, `synapses`).
+
+[`add_new_cells()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/add_new_cells.md)
+and
+[`make_summary_EPSC_data()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/make_summary_EPSC_data.md)
+for functions that further process the data.
+
+## Examples
+
+``` r
+make_normalized_EPSC_data(
+  filename = import_ext_data("sample_eEPSC_data.csv"),
+  current_type = "eEPSC",
+  min_time_value = 0,
+  max_time_value = 25,
+  interval_length = 5,
+  baseline_length = 5,
+  decimal_places = 2,
+  negative_transform_currents = "yes"
+)
+#> # A tibble: 2,107 × 25
+#> # Groups:   letter [7]
+#>      x.1 letter synapses  sex   treatment  time ID          P1    P2     X     Y
+#>    <dbl> <fct>  <fct>     <fct> <fct>     <dbl> <fct>    <dbl> <dbl> <dbl> <dbl>
+#>  1     1 AO     Glutamate Male  Control    0    23623002  17.4  78.4    NA    NA
+#>  2     2 AO     Glutamate Male  Control    0.08 23623002  24.1  58.9    NA    NA
+#>  3     3 AO     Glutamate Male  Control    0.17 23623002  35.6  60.0    NA    NA
+#>  4     4 AO     Glutamate Male  Control    0.25 23623002  15.8  32.3    NA    NA
+#>  5     5 AO     Glutamate Male  Control    0.33 23623002  53.9  26.4    NA    NA
+#>  6     6 AO     Glutamate Male  Control    0.42 23623002  45.5  74.8    NA    NA
+#>  7     7 AO     Glutamate Male  Control    0.5  23623002  28.1  69.6    NA    NA
+#>  8     8 AO     Glutamate Male  Control    0.58 23623002  27.8  62.0    NA    NA
+#>  9     9 AO     Glutamate Male  Control    0.67 23623002  60.0  52.7    NA    NA
+#> 10    10 AO     Glutamate Male  Control    0.75 23623002  46.9  60.3    NA    NA
+#> # ℹ 2,097 more rows
+#> # ℹ 14 more variables: age <dbl>, animal <dbl>, category <fct>, cell <chr>,
+#> #   notes <lgl>, days_alone <fct>, animal_or_slicing_problems <fct>, R_a <chr>,
+#> #   PPR <dbl>, interval <fct>, baseline_range <lgl>, baseline_mean <dbl>,
+#> #   P1_transformed <dbl>, P2_transformed <dbl>
+```

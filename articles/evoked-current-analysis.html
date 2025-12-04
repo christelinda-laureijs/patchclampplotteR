@@ -73,8 +73,8 @@
 
 
 <script src="evoked-current-analysis_files/core-js-2.5.3/shim.min.js"></script><script src="evoked-current-analysis_files/react-18.2.0/react.min.js"></script><script src="evoked-current-analysis_files/react-18.2.0/react-dom.min.js"></script><script src="evoked-current-analysis_files/reactwidget-2.0.0/react-tools.js"></script><link href="evoked-current-analysis_files/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
-<script src="evoked-current-analysis_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="evoked-current-analysis_files/reactable-0.4.4/reactable.css" rel="stylesheet">
-<script src="evoked-current-analysis_files/reactable-binding-0.4.4/reactable.js"></script><div class="row">
+<script src="evoked-current-analysis_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="evoked-current-analysis_files/reactable-0.4.5/reactable.css" rel="stylesheet">
+<script src="evoked-current-analysis_files/reactable-binding-0.4.5/reactable.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Evoked Current Analysis</h1>
             
@@ -93,7 +93,7 @@ a .csv file.</p>
 evoked currents per sweep. The paired-pulse ratio (PPR) is the ratio of
 the second evoked current amplitude to the first.</p>
 <div class="figure" style="text-align: center">
-<img src="figures/Evoked-currents-schematic.png" alt="A sketch showing a horizontal line with two downward-pointing peaks separated by a short distance. These are the two evoked currents." width="75%"><p class="caption">
+<img src="figures/Evoked-currents-schematic.png" class="r-plt" alt="A sketch showing a horizontal line with two downward-pointing peaks separated by a short distance. These are the two evoked currents." width="75%"><p class="caption">
 This drawing shows the first and second evoked currents. The ratio
 between them is the paired-pulse ratio (PPR)
 </p>
@@ -117,7 +117,7 @@ series.</p></li>
 recording from a single cell. All the recordings will be combined into a
 continuous recording with no gaps.</p></li>
 </ol>
-<p><img src="figures/Concatenate-files.png" alt="A screenshot of the Concatenate files dialog box in Clampfit showing that all files are selected." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Concatenate-files.png" class="r-plt" alt="A screenshot of the Concatenate files dialog box in Clampfit showing that all files are selected." width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="create-data-sheet">Create data sheet<a class="anchor" aria-label="anchor" href="#create-data-sheet"></a>
@@ -164,7 +164,7 @@ click on <code>View</code> -&gt; <code>Data Display</code> -&gt;
 <li><p>You can also click on the <code>Auto Scale All Y Axes</code>
 button (orange arrow) to help you see the data faster.</p></li>
 </ol>
-<p><img src="figures/Viewer-buttons.png" alt="A screenshot of the Show Signals buttons and other viewing buttons available in the upper toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Viewer-buttons.png" class="r-plt" alt="A screenshot of the Show Signals buttons and other viewing buttons available in the upper toolbar in Clampfit." width="25%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="set-up-cursors">Set up cursors<a class="anchor" aria-label="anchor" href="#set-up-cursors"></a>
@@ -180,7 +180,7 @@ current, and second evoked current.</p></li>
 Cursors 3 and 4 should surround the first evoked current, and Cursors 5
 and 6 should surround the second evoked current.</p></li>
 </ol>
-<p><img src="figures/Evoked-currents-cursors.png" alt="A screenshot of the correct cursor alignment in Clampfit." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Evoked-currents-cursors.png" class="r-plt" alt="A screenshot of the correct cursor alignment in Clampfit." width="75%" style="display: block; margin: auto;"></p>
 <blockquote>
 <p><strong>Warning!</strong> Ensure that the cursors fully enclose the
 evoked currents and that they do NOT include the stimulus artifacts.</p>
@@ -243,7 +243,7 @@ action potential data</a>.</p>
 search region, so make sure that both search regions ONLY have
 <code>Peak_amplitude</code> checked!</p>
 </blockquote>
-<p><img src="figures/Evoked-currents-statistics-box.png" alt="A screenshot of the correct statistics options selected in Clampfit." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Evoked-currents-statistics-box.png" class="r-plt" alt="A screenshot of the correct statistics options selected in Clampfit." width="75%" style="display: block; margin: auto;"></p>
 <ol start="12" style="list-style-type: decimal">
 <li><p>Click OK and view the <code>Results</code> sheet
 (<code>Window</code> -&gt; <code>Results1</code> or
@@ -291,10 +291,10 @@ artifacts.</em></p>
 noise or a very unstable baseline) in the Trace Selection box of Step
 11. Select the traces you want to exclude, then <code>Invert</code> your
 selection.</p>
-<p><img src="figures/Messy-sweep-2.png" alt="A screenshot of a recording with a very noisy sweep highlighted in red." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Messy-sweep-2.png" class="r-plt" alt="A screenshot of a recording with a very noisy sweep highlighted in red." width="75%" style="display: block; margin: auto;"></p>
 <p><em>What does it mean when there are two currents close
 together?</em></p>
-<p><img src="figures/Multivesicular-release.png" alt="A screenshot of a recording with two currents after a stimulation. This is an example of multivesicular release." width="75%" style="display: block; margin: auto;"></p>
+<p><img src="figures/Multivesicular-release.png" class="r-plt" alt="A screenshot of a recording with two currents after a stimulation. This is an example of multivesicular release." width="75%" style="display: block; margin: auto;"></p>
 <p>If you see two peaks instead of one expected evoked current, this
 could be an example of multivesicular release. Make a note of this,
 since the treatment could lead to changes in synaptic activity through
@@ -346,7 +346,7 @@ ensure that Search Region 2 is enabled.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

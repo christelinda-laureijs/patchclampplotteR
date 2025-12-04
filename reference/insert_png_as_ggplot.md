@@ -1,0 +1,91 @@
+# Import an image as a ggplot object
+
+This function will insert an external `.png` or `.jpg` file over an
+empty ggplot object. The resulting ggplot object can then be included
+with other ggplot layouts. This is useful for when you want to use the
+image in a multiplot layout. For example, in a publication, figure "1A"
+may be a schematic of your experimental set-up that you created
+elsewhere and saved as a `.png` or `.jpg` file. Rather than inserting
+this as a standalone image, you can use this function to store your
+image as a ggplot object, and combine it with other ggplot plots in a
+flexible layout using the `patchwork` library.
+
+## Usage
+
+``` r
+insert_png_as_ggplot(
+  filename,
+  x_axis_max = 10,
+  y_axis_max = 10,
+  xmin = -Inf,
+  xmax = Inf,
+  ymin = -Inf,
+  ymax = Inf
+)
+```
+
+## Arguments
+
+- filename:
+
+  A character value specifying a path to the .png file. Examples include
+  "Figures/methods-schematic.png"
+
+- x_axis_max:
+
+  A numeric value describing the maximum value of the sample dataset
+  used to create the "empty" dataframe underneath the plot. You may need
+  to change this to better match the aspect ratio of your .png. Defaults
+  to 10.
+
+- y_axis_max:
+
+  A numeric value describing the maximum value of the sample dataset
+  used to create the "empty" dataframe underneath the plot. You may need
+  to change this to better match the aspect ratio of your .png. Defaults
+  to 10
+
+- xmin:
+
+  The minimum position of the image on the x-axis. Defaults to `-Inf`
+  which is the left-most plot boundary.
+
+- xmax:
+
+  The maximum position of the image on the x-axis. The minimum position
+  of the image on the x-axis. Defaults to `Inf` which is the right-most
+  plot boundary.
+
+- ymin:
+
+  The minimum position of the image on the y-axis. Defaults to `-Inf`
+  which is the lowest plot boundary.
+
+- ymax:
+
+  The minimum position of the image on the y-axis. Defaults to `-Inf`
+  which is the highest plot boundary on the y-axis.
+
+## Value
+
+A ggplot object featuring your png file on an empty plot background.
+There are no plot elements (e.g. no axis titles).
+
+## Details
+
+This function is very similar to `wrap_elements()` from the `patchwork`
+package in that it allows you to insert a non-ggplot2 object to a
+patchwork layout. However, `insert_png_as_ggplot()` gives you much finer
+control over the dimensions of the plot and the amount of space it can
+take up.
+
+## Examples
+
+``` r
+# Note: In your code, simply insert the filename
+# as a character value. Do not use import_ext_data()
+
+
+insert_png_as_ggplot(import_ext_data("rat-methods.jpg"))
+
+```
