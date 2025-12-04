@@ -2386,7 +2386,7 @@ plot_variance_comparison_data <- function(data,
         textsize = geom_signif_text_size,
         size = geom_signif_size
       ) +
-      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
+      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, 0.2)))
   }
 
   variance_comparison_plot <- variance_comparison_plot +
@@ -3116,7 +3116,7 @@ plot_PPR_data_multiple_treatments <- function(data,
         margin_top = 0.1,
         extend_line = 0.03
       ) +
-      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
+      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, 0.2)))
   }
 
   if (save_plot_png == "yes") {
@@ -3363,7 +3363,7 @@ plot_AP_comparison <-
         size = geom_signif_size,
         color = theme_options["baseline_group_colour", "value"]
       ) +
-        ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
+        ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, 0.2)))
     }
 
 
@@ -4538,7 +4538,7 @@ plot_spontaneous_current_parameter_comparison <-
           textsize = geom_signif_text_size,
           size = geom_signif_size
         ) +
-        ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, .2)))
+        ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, 0.2)))
     }
 
     if (large_axis_text == "yes") {

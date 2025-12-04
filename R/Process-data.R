@@ -1623,12 +1623,8 @@ perform_t_tests_for_summary_plot <- function(data,
 #' (2020)](https://doi.org/10.1016/j.jneumeth.2019.108526).
 #'
 #' @inheritParams plot_baseline_data
+#' @inheritParams make_interactive_summary_table
 #' @inheritParams make_normalized_EPSC_data
-#' @param df_category A numeric value describing the experimental category. In
-#'   the sample dataset for this package, 2 represents experiments where insulin
-#'   was applied continuously after a 5-minute baseline period. Here,
-#'   `plot_treatment` represents antagonists that were present on the brain
-#'   slice, or the animals were fasted, etc.
 #' @param post_hormone_interval A character value indicating the name of the
 #'   interval used as "after" timepoint for comparison. Defaults to `"t20to25"`,
 #'   but can be changed. Make sure that this matches an interval present in
@@ -1655,7 +1651,8 @@ perform_t_tests_for_summary_plot <- function(data,
 #'
 #' make_variance_data(
 #'   data = sample_summary_eEPSC_df$summary_data,
-#'   df_category = 2,
+#'   include_all_categories = "no",
+#'   list_of_categories = c(2),
 #'   include_all_treatments = "yes",
 #'   list_of_treatments = NULL,
 #'   baseline_interval = "t0to5",
@@ -1665,7 +1662,8 @@ perform_t_tests_for_summary_plot <- function(data,
 #' )
 #'
 make_variance_data <- function(data,
-                               df_category,
+                               include_all_categories = "yes",
+                               list_of_categories = NULL,
                                include_all_treatments = "yes",
                                list_of_treatments = NULL,
                                baseline_interval = "t0to5",
@@ -1680,12 +1678,48 @@ make_variance_data <- function(data,
     cli::cli_abort(c("x" = "`include_all_treatments` must be either \"yes\" or \"no\"."))
   }
 
-  if (include_all_treatments == "yes") {
+  # Category filter
+
+  if (include_all_categories == "yes") {
+    if (!is.null(list_of_categories)) {
+      cli::cli_alert_info(
+        "include_all_categories = \"yes\", but you included a list of categories to filter. All categories will be used."
+      )
+    }
+    dataframe <- data
+
+
+    treatment_info <- treatment_colour_theme
+
+  } else {
+    if (is.null(list_of_categories)) {
+      cli::cli_abort(c(
+        "x" = paste0(
+          "`include_all_categories` = \"",
+          include_all_categories,
+          "\", but `list_of_categories` is NULL."
+        ),
+        "i" = "Did you forget to add a list of categories?"
+      ))
+    }
+
     dataframe <- data %>%
+      dplyr::filter(.data$category %in% list_of_categories) %>%
+      droplevels()
+
+
+    treatment_info <- treatment_colour_theme %>%
+      dplyr::filter(.data$category %in% list_of_categories)
+  }
+
+
+
+  if (include_all_treatments == "yes") {
+    dataframe <- dataframe %>%
       dplyr::filter(.data$treatment %in% treatment_colour_theme$treatment) %>%
       droplevels()
 
-    treatment_info <- treatment_colour_theme
+    treatment_info <- treatment_info
 
     if (!is.null(list_of_treatments)) {
       cli::cli_alert_info(
@@ -1725,18 +1759,17 @@ make_variance_data <- function(data,
       cli::cli_abort(c("x" = "`post_hormone_interval` must be a character (e.g. \"t20to25\")"))
     }
 
-    dataframe <- data %>%
+    dataframe <- dataframe %>%
       dplyr::filter(.data$treatment %in% list_of_treatments) %>%
       droplevels()
 
-    treatment_info <- treatment_colour_theme %>%
+    treatment_info <- treatment_info %>%
       dplyr::filter(.data$treatment %in% list_of_treatments)
   }
 
 
 
   variance_data <- dataframe %>%
-    dplyr::filter(.data$category == df_category) %>%
     dplyr::filter(.data$interval == baseline_interval |
       .data$interval == post_hormone_interval) %>%
     dplyr::mutate(
@@ -1746,7 +1779,7 @@ make_variance_data <- function(data,
         T ~ interval
       )
     ) %>%
-    dplyr::group_by(.data$treatment, .data$state, .data$sex) %>%
+    dplyr::group_by(.data$category, .data$treatment, .data$state, .data$sex) %>%
     dplyr::mutate(
       mean_cv_inverse_square = mean(.data$cv_inverse_square),
       mean_VMR = mean(.data$VMR)

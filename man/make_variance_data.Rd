@@ -6,7 +6,8 @@
 \usage{
 make_variance_data(
   data,
-  df_category,
+  include_all_categories = "yes",
+  list_of_categories = NULL,
   include_all_treatments = "yes",
   list_of_treatments = NULL,
   baseline_interval = "t0to5",
@@ -19,11 +20,13 @@ make_variance_data(
 \item{data}{A dataframe containing the summary data generated from
 \code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}}. If \code{current_type} is "eEPSC", this must be the \verb{$summary_data} element of the list produced by \code{\link[=make_summary_EPSC_data]{make_summary_EPSC_data()}}.}
 
-\item{df_category}{A numeric value describing the experimental category. In
-the sample dataset for this package, 2 represents experiments where insulin
-was applied continuously after a 5-minute baseline period. Here,
-\code{plot_treatment} represents antagonists that were present on the brain
-slice, or the animals were fasted, etc.}
+\item{include_all_categories}{A character (\code{"yes"} or \code{"no"}) specifying if the
+plot will include data from all categories. If \code{"no"}, you must specify a
+list of categories in \code{list_of_categories}.}
+
+\item{list_of_categories}{A list of character values describing the
+categories that will be in the plot. Defaults to \code{NULL}, since
+\code{include_all_categories} is \code{"yes"} by default.}
 
 \item{include_all_treatments}{A character (\code{"yes"} or \code{"no"}) specifying if the
 plot will include data from all treatments. If \code{"no"}, you must specify a
@@ -49,7 +52,11 @@ their associated colours as hex values. See
 should look like.}
 
 \item{save_output_as_RDS}{A character (\code{"yes"} or \code{"no"}) describing if the
-resulting object should be saved as an RDS file in the raw data folder.}
+resulting object should be saved as an RDS file in the folder \code{"Data/Output-Data-from-R"}. The function will automatically create this folder if it doesn't already exist.
+Note: This is not the interactive table, but it is the raw dataframe that
+is later inserted into \code{reactable::reactable()}. This is useful if you want
+to build your own table using a different package, or you want to generate
+a customized reactable table yourself.}
 }
 \value{
 A dataframe containing all of the columns within the summary data
@@ -78,7 +85,8 @@ more information, please see \href{https://doi.org/10.1016/j.jneumeth.2019.10852
 
 make_variance_data(
   data = sample_summary_eEPSC_df$summary_data,
-  df_category = 2,
+  include_all_categories = "no",
+  list_of_categories = c(2),
   include_all_treatments = "yes",
   list_of_treatments = NULL,
   baseline_interval = "t0to5",
