@@ -103,6 +103,8 @@ reference:
   - sample_eEPSC_variance_df
   - sample_PPR_df
   - sample_eEPSC_t_test_df
+  - sample_eEPSC_t_test_df_male
+  - sample_eEPSC_t_test_df_female
 
 - subtitle: Spontaneous current (sEPSC) data
   desc: >
