@@ -42,7 +42,7 @@ used to differentiate different protocol types. In the sample dataset for
 this package, \code{plot_category == 2} represents experiments where insulin was
 applied continuously after a 5-minute baseline period.}
 
-\item{included_sexes}{A character value (\code{"both"}, \code{"male"} or \code{"female"}). Useful if you want to have a plot with data from one sex only. Defaults to \code{"both"}. If you choose a single sex, the resulting plot will have \code{"-males-only"} or \code{"-females-only"} in the file name. WARNING!! If you choose \code{"male"} or \code{"female"}, you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+\item{included_sexes}{A character value (\code{"both"}, \code{"male"} or \code{"female"}). Useful if you want to have a plot with data from one sex only. Defaults to \code{"both"}. If you choose a single sex, the resulting plot will have \code{"-males-only"} or \code{"-females-only"} in the file name.}
 
 \item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for male data in the \code{sex} column, and it must be consistent across data sheets. Defaults to \code{"Male"}.}
 

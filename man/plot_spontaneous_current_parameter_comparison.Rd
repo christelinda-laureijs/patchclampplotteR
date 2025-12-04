@@ -46,7 +46,7 @@ applied continuously after a 5-minute baseline period.}
 like to plot (e.g. \code{"Control"}). \code{plot_treatment} represents antagonists that
 were present on the brain slice, or the animals were fasted, etc.}
 
-\item{included_sexes}{A character value (\code{"both"}, \code{"male"} or \code{"female"}). Useful if you want to have a plot with data from one sex only. Defaults to \code{"both"}. If you choose a single sex, the resulting plot will have \code{"-males-only"} or \code{"-females-only"} in the file name. WARNING!! If you choose \code{"male"} or \code{"female"}, you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+\item{included_sexes}{A character value (\code{"both"}, \code{"male"} or \code{"female"}). Useful if you want to have a plot with data from one sex only. Defaults to \code{"both"}. If you choose a single sex, the resulting plot will have \code{"-males-only"} or \code{"-females-only"} in the file name.}
 
 \item{facet_by_sex}{A character value (\code{"yes"} or \code{"no"}) describing if the plots should be faceted by sex. This is only available if \code{"included_sexes"} is \code{"both"}. The resulting plot will be split in two, with male data on the left and female data on the right.}
 

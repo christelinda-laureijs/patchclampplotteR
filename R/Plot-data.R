@@ -94,6 +94,7 @@ patchclampplotteR_facet_theme <- function(font_family = NULL) {
 #' @inheritParams plot_summary_current_data
 #' @param data A dataframe containing the summary data generated from
 #'   [make_summary_EPSC_data()]. If `current_type` is "eEPSC", this must be the `$summary_data` element of the list produced by [make_summary_EPSC_data()].
+#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name.
 #' @param plot_category A numeric value specifying the category, which can be
 #'   used to differentiate different protocol types. In the sample dataset for
 #'   this package, `plot_category == 2` represents experiments where insulin was
@@ -1217,7 +1218,7 @@ make_facet_plot <- function(data,
 #' @param annotation_x_max A numeric value describing the maximum value on the x-axis for the representative trace. Change this if your representative trace image looks squished or stretched.
 #' @param annotation_y_min A numeric value describing the minimum value on the y-axis for the representative trace. Defaults to `0`, which will place it at the lower left corner of the plot (when combined with the default value for `annotation_x_min`).
 #' @param annotation_y_max A numeric value describing the maximum value on the y-axis for the representative trace. Change this if your representative trace image looks squished or stretched.
-#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name. WARNING!! If you choose `"male"` or `"female"`, you MUST ensure that the `t_test_df` contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.
+#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name. WARNING!! If you choose `"male"` or `"female"`, you MUST ensure that the `t_test_df` accurately represents what you want to demonstrate: significance for both sexes grouped together (use `t_test_df`) or significance for each sex separately (use `t_test_df_male` and `t_test_df_female` and adjust these heights using `stars_position_male` and `stars_position_female`).
 #' @param male_label A character value used to describe how males are encoded in the `sex` column of the dataframe used in `data`. This MUST match the value for male data in the `sex` column, and it must be consistent across data sheets. Defaults to `"Male"`.
 #' @param female_label A character value used to describe how females are encoded in the `sex` column of the dataframe used in `data`. This MUST match the value for female data in the `sex` column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to `"Female"`.
 #' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
@@ -1231,7 +1232,25 @@ make_facet_plot <- function(data,
 #' @param t_test_df A dataframe of t-test results, which has been generated
 #'   using [perform_t_tests_for_summary_plot()]. Important note! The t-test
 #'   dataframe must be filtered to match the same conditions in the `data`
-#'   argument, or the significance stars will be misleading.
+#'   argument, or the significance stars will be misleading. For example, if you want to show
+#'   significance for both sexes as a group, use this.
+#'   If you want to show male and female significance values separately,
+#'   use `t_test_df_male` and `t_test_df_female` and adjust their heights
+#'   with `stars_position_male` and `stars_position_female`. If you only have data for one sex, you could use either option.
+#' @param t_test_df_male A dataframe of t-test results (male only), which has been generated
+#'   using [perform_t_tests_for_summary_plot()]. This data has been filtered to only include male data before being put through [perform_t_tests_for_summary_plot()].
+#' @param t_test_df_female A dataframe of t-test results (female only), which has been generated
+#'   using [perform_t_tests_for_summary_plot()]. This data has been filtered to only include female data before being put through [perform_t_tests_for_summary_plot()].
+#' @param stars_position A numeric value stating the position on the y-axis of
+#' the significance stars. If you want to specify these for the sexes separately,
+#' use `stars_position_male` and `stars_position_female`. Defaults to `NULL` which automatically defaults to `y_axis_limit - 50`.
+#' @param stars_position_male A numeric value stating the position on the y-axis of
+#' the significance stars for the male data specified by `t_test_df_male`. Defaults to `NULL` which sets it at `y_axis_limit - 50`.
+#' @param stars_position_female A numeric value stating the position on the y-axis of
+#' the significance stars for the male data specified by `t_test_df_female`. Defaults to `NULL` which sets it at `y_axis_limit - 75`.
+#' @param stars_colour A character value (can be a hex code or a named R colour like `"red"`) describing the colour of the significance stars. Defaults to `"Black"`.
+#' @param stars_colour_male A character value (can be a hex code or a named R colour like `"red"`) describing the colour of the significance stars for male data. Use only if you have put data in `t_test_df_male`. Defaults to `"Black"`.
+#' @param stars_colour_female A character value (can be a hex code or a named R colour like `"red"`) describing the colour of the significance stars for female data. Use only if you have put data in `t_test_df_female`. Defaults to `"Black"`.
 #' @param large_axis_text A character (`"yes"` or `"no"`). If `"yes"`, a ggplot theme layer will be applied which increases the size of the axis text.
 #' @param legend_position A character value (`"left"`, `"right"`, `"top"`, `"bottom"`, `"inside"`) which describes the location of the legend. If you set this to `"inside"`, you may need to adjust the location of the representative trace with `annotation_x_min`, `annotation_x_max`, etc. Or, you can choose to insert the representative trace as a separate geom using the `patchwork` package (e.g. set up a two-row patchwork with the representative trace in the top row, and the summary plot in the second row).
 #' @param legend_position_inside A list of two numeric values describing the coordinates of the legend. This only applies if `legend_position = "inside"`.
@@ -1266,6 +1285,36 @@ make_facet_plot <- function(data,
 #'   summary data used in this plot.
 #'
 #' @examples
+#'
+#' # Both sexes with significance stars for separate sexes
+#' # Note: The significance stars are sample data
+#'
+#'
+#' plot_summary_current_data(
+#'   data = sample_pruned_eEPSC_df$all_cells,
+#'   plot_category = 2,
+#'   plot_treatment = "Control",
+#'   current_type = "eEPSC",
+#'   y_variable = "amplitude",
+#'    hormone_added = "Insulin",
+#'   hormone_or_HFS_start_time = 5,
+#'    included_sexes = "both",
+#'    include_representative_trace = "yes",
+#'    representative_trace_filename = import_ext_data("Control-trace.png"),
+#'    y_axis_limit = 175,
+#'    signif_stars = "yes",
+#'    t_test_df_male = sample_eEPSC_t_test_df_male,
+#'    t_test_df_female = sample_eEPSC_t_test_df_female,
+#'    stars_position_male = 30,
+#'    stars_position_female = 70,
+#'    stars_colour_male = "#6600cc",
+#'    stars_colour_female = "#d6b8f5",
+#'    large_axis_text = "no",
+#'    shade_intervals = "no",
+#'    treatment_colour_theme = sample_treatment_names_and_colours,
+#'    theme_options = sample_theme_options
+#'  )
+#' # Both sexes with significance stars from grouped data
 #'
 #' plot_summary_current_data(
 #'   data = sample_pruned_eEPSC_df$all_cells,
@@ -1313,6 +1362,14 @@ plot_summary_current_data <- function(data,
                                       geom_signif_text_size = 5,
                                       geom_signif_family = "",
                                       t_test_df = NULL,
+                                      t_test_df_male = NULL,
+                                      t_test_df_female = NULL,
+                                      stars_position = NULL,
+                                      stars_position_male = NULL,
+                                      stars_position_female = NULL,
+                                      stars_colour = "black",
+                                      stars_colour_male = "black",
+                                      stars_colour_female = "black",
                                       large_axis_text = "no",
                                       shade_intervals = "no",
                                       theme_options,
@@ -1335,6 +1392,37 @@ plot_summary_current_data <- function(data,
       "i" = "If you are adding a hormone, examples include \"Insulin\", \"CCK\", etc.",
       "i" = "`hormone_added` will be the label for the annotation line on the plot."
     ))
+  }
+
+
+  if (signif_stars == "yes") {
+    if (!is.null(t_test_df) & !is.null(t_test_df_male) |
+        !is.null(t_test_df) & !is.null(t_test_df_female)) {
+      cli::cli_abort(c(
+        "x" = "You have filled out both `t_test_df` and `t_test_df_female` or `t_test_df_male`, but you must choose to fill out either `t_test_df` (which contains both sexes) or the t-tests for individual sexes separately.",
+        "i" = "Did you accidentally leave this filled in from previous code with both sexes?",
+        "i" = "If you want to display two sexes with separate significance stars, use `t_test_df_female` and `t_test_df_male`"
+      ))
+
+    }
+  }
+
+  if (is.null(stars_position)) {
+    stars_y_position = y_axis_limit - 50
+  } else {
+    stars_y_position = stars_position
+  }
+
+  if (is.null(stars_position_male)) {
+    stars_y_position_male = y_axis_limit - 50
+  } else {
+    stars_y_position_male = stars_position_male
+  }
+
+  if (is.null(stars_position_female)) {
+    stars_y_position_female = y_axis_limit - 75
+  } else {
+    stars_y_position_female = stars_position_female
   }
 
   if (!significance_display_method %in% c("stars", "p-values")) {
@@ -1382,13 +1470,13 @@ plot_summary_current_data <- function(data,
   }
 
 
-  if (signif_stars == "yes" & is.null(t_test_df)) {
+  if (signif_stars == "yes" & is.null(t_test_df) & is.null(t_test_df_female) & is.null(t_test_df_male)) {
     cli::cli_abort(
       c(
-        "x" = "`signif_stars` == \"yes\" but `t_test_df` is NULL.",
+        "x" = "`signif_stars` == \"yes\" but all three `t_test_df` arguments are empty (NULL).",
         "i" = "This is probably because you did not specify a dataframe
       containing t-test summary data.",
-        "i" = "Please generate a t-test dataframe using `patchclampplotteR::perform_t_tests_for_summary_plot()` and insert the resulting dataframe into the `t_test_df` argument."
+        "i" = "Please generate a t-test dataframe using `patchclampplotteR::perform_t_tests_for_summary_plot()` and insert the resulting dataframe into the `t_test_df`, `t_test_df_male` or `t_test_df_female` argument."
       )
     )
   }
@@ -1735,36 +1823,129 @@ plot_summary_current_data <- function(data,
   }
 
   if (signif_stars == "yes") {
-    if (significance_display_method == "stars") {
-      treatment_plot <- treatment_plot +
-        ggplot2::geom_text(
-          data = t_test_df %>% dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment),
-          ggplot2::aes(
-            x = .data$asterisk_time,
-            y = y_axis_limit - 50,
-            label = .data$significance_stars
-          ),
-          inherit.aes = FALSE,
-          size = geom_signif_text_size,
-          family = geom_signif_family
-        )
+    if (!is.null(t_test_df) & is.null(t_test_df_male) & is.null(t_test_df_female)) {
+      if (significance_display_method == "stars") {
+        treatment_plot <- treatment_plot +
+          ggplot2::geom_text(
+            data = t_test_df %>% dplyr::filter(
+              .data$category == plot_category &
+                .data$treatment == plot_treatment
+            ),
+            ggplot2::aes(
+              x = .data$asterisk_time,
+              y = stars_y_position,
+              label = .data$significance_stars
+            ),
+            inherit.aes = FALSE,
+            size = geom_signif_text_size,
+            family = geom_signif_family,
+            colour = stars_colour
+          )
+      }
+
+      if (significance_display_method == "p-values") {
+        treatment_plot <- treatment_plot +
+          ggplot2::geom_text(
+            data = t_test_df %>% dplyr::filter(
+              .data$category == plot_category &
+                .data$treatment == plot_treatment
+            ),
+            ggplot2::aes(
+              x = .data$asterisk_time,
+              y = stars_y_position,
+              label = .data$p_string
+            ),
+            inherit.aes = FALSE,
+            size = geom_signif_text_size,
+            family = geom_signif_family,
+            colour = stars_colour
+          )
+      }
     }
 
-    if (significance_display_method == "p-values") {
-      treatment_plot <- treatment_plot +
-        ggplot2::geom_text(
-          data = t_test_df %>% dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment),
-          ggplot2::aes(
-            x = .data$asterisk_time,
-            y = y_axis_limit - 50,
-            label = .data$p_string
-          ),
-          inherit.aes = FALSE,
-          size = geom_signif_text_size,
-          family = geom_signif_family
-        )
+
+    if (!is.null(t_test_df_male)) {
+      if (significance_display_method == "stars") {
+        treatment_plot <- treatment_plot +
+          ggplot2::geom_text(
+            data = t_test_df_male %>% dplyr::filter(
+              .data$category == plot_category &
+                .data$treatment == plot_treatment
+            ),
+            ggplot2::aes(
+              x = .data$asterisk_time,
+              y = stars_y_position_male,
+              label = .data$significance_stars
+            ),
+            inherit.aes = FALSE,
+            size = geom_signif_text_size,
+            family = geom_signif_family,
+            colour = stars_colour_male
+          )
+      }
+
+      if (significance_display_method == "p-values") {
+        treatment_plot <- treatment_plot +
+          ggplot2::geom_text(
+            data = t_test_df_male %>% dplyr::filter(
+              .data$category == plot_category &
+                .data$treatment == plot_treatment
+            ),
+            ggplot2::aes(
+              x = .data$asterisk_time,
+              y = stars_y_position_male,
+              label = .data$p_string
+            ),
+            inherit.aes = FALSE,
+            size = geom_signif_text_size,
+            family = geom_signif_family,
+            colour = stars_colour_male
+          )
+      }
+    }
+
+    if (!is.null(t_test_df_female)) {
+      if (significance_display_method == "stars") {
+        treatment_plot <- treatment_plot +
+          ggplot2::geom_text(
+            data = t_test_df_female %>% dplyr::filter(
+              .data$category == plot_category &
+                .data$treatment == plot_treatment
+            ),
+            ggplot2::aes(
+              x = .data$asterisk_time,
+              y = stars_y_position_female,
+              label = .data$significance_stars
+            ),
+            inherit.aes = FALSE,
+            size = geom_signif_text_size,
+            family = geom_signif_family,
+            colour = stars_colour_female
+          )
+      }
+
+      if (significance_display_method == "p-values") {
+        treatment_plot <- treatment_plot +
+          ggplot2::geom_text(
+            data = t_test_df_female %>% dplyr::filter(
+              .data$category == plot_category &
+                .data$treatment == plot_treatment
+            ),
+            ggplot2::aes(
+              x = .data$asterisk_time,
+              y = stars_y_position_female,
+              label = .data$p_string
+            ),
+            inherit.aes = FALSE,
+            size = geom_signif_text_size,
+            family = geom_signif_family,
+            colour = stars_colour_female
+          )
+      }
     }
   }
+
+
 
 
   if (include_representative_trace == "yes") {
@@ -1829,7 +2010,7 @@ plot_summary_current_data <- function(data,
 #' @inheritParams plot_baseline_data
 #'
 #' @param data A dataframe generated from `make_summary_EPSC_data()`. If `current_type = "eEPSC"`, this must be the percent change dataframe generated from `make_summary_EPSC_data()`. Use `$percent_change` to access this dataframe. If `current_type = "sEPSC"`, this can either be `$percent_change_amplitude` or `$percent_change_frequency`.
-#'
+#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name.
 #' @param y_variable A character value (must be `"amplitude"` for `current_type = "eEPSC"`. For `current_type = "sEPSC"`, this must be `"amplitude"` or `"frequency"`, corresponding to `$percent_change_amplitude` or `$percent_change_frequency`, respectively).
 #'
 #' @returns
@@ -2145,6 +2326,7 @@ plot_percent_change_comparisons <- function(data,
 #' @param baseline_label A character value for the x-axis label applied to the
 #'   pre-hormone state. Defaults to `"Baseline"`.
 #' @param y_variable_signif_brackets A character value. You should only use this if your data did not pass assumptions and you had to transform it. `y_variable_signif_brackets` should be the name of the column of `data` which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, this will default to the raw data column.
+#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name.
 #' @param post_hormone_label A character value for x-axis label applied to
 #'   the post-hormone or post-protocol state. Defaults to `"Post-hormone"` but you
 #'   will likely change this to the hormone or protocol name.
@@ -2468,7 +2650,7 @@ plot_variance_comparison_data <- function(data,
 #' @inheritParams plot_baseline_data
 #' @param data A dataframe of the pruned current data for all cells. This is the
 #'   third dataframe in the list generated from [make_pruned_EPSC_data()].
-#'
+#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name.
 #' @export
 #'
 #' @returns A ggplot object. If `save_plot_png == "yes"` it will also generate a
@@ -2579,7 +2761,7 @@ plot_cv_data <- function(data,
 #'   describing the statistical model used to create a significance bracket
 #'   comparing the pre- and post-hormone groups.
 #' @param map_signif_level_values A `TRUE/FALSE` value or a list of character values for mapping p-values. If `TRUE`, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If `FALSE`, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  `map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}` to only display the p-values when they are below 0.1.
-
+#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name.
 #' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.4`, which is a good thickness for most applications.
 #' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`. Defaults to `""` (empty value, will be replaced with default system font), but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
 #' @param y_axis_title A character value describing the y-axis title text. Defaults to `"PPR"` but could be expanded (e.g. `"Paired pulse ratio"`).
@@ -2916,6 +3098,7 @@ plot_PPR_data_single_treatment <- function(data,
 
 #' @param data Paired pulse ratio data generated from [make_PPR_data()].
 #' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.3`, which is a good thickness for most applications.
+#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name.
 #'
 #' @export
 #'
@@ -3145,6 +3328,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' @param data The action potential data generated from `add_new_cells()` with `data_type == "AP"`.
 #' @param geom_point_size A numeric value describing the size of the points on the plot. Defaults to `3.8`.
 #' @param post_hormone_label A character value that MUST correspond to one of the values in the `State` column. In the sample dataset, this is `"Insulin"`. This is required for the wilcox.test or t.test comparisons of `"Baseline"` vs. `"Insulin"`.
+#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name.
 #' @param y_variable A character value naming the variable to be plotted on the y-axis. Must be a column present in `data`. Examples include `peak_amplitude`, `time_to_peak`, `antipeak_amplitude` and `half_width`.
 #' @param y_axis_title A character value used to define a "pretty" version of `y_variable`. This will become the y-axis label on the ggplot. Examples include `"Peak Amplitude (pA)"` or `"Time to Peak (ms)"`.
 #' @param y_variable_signif_brackets A character value. You should only use this if your data did not pass assumptions and you had to transform it. `y_variable_signif_brackets` should be the name of the column of `data` which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, leave this argument blank, and the function will automatically use the correct column associated with `y_variable`.
@@ -4197,6 +4381,7 @@ plot_AP_trace <-
 #' `ggsignif::geom_signif()`.
 #'
 #' @param data Summary data for spontaneous currents generated using [make_summary_EPSC_data()] where `current_type == "sEPSC"`.
+#' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name.
 #' @param facet_by_sex A character value (`"yes"` or `"no"`) describing if the plots should be faceted by sex. This is only available if `"included_sexes"` is `"both"`. The resulting plot will be split in two, with male data on the left and female data on the right.
 #' @param y_variable A character value (`"raw_amplitude"` or `"raw_frequency"`) only.
 #'   Normalized amplitude and frequency are not available because all baseline

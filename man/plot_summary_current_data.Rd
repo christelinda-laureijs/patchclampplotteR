@@ -32,6 +32,14 @@ plot_summary_current_data(
   geom_signif_text_size = 5,
   geom_signif_family = "",
   t_test_df = NULL,
+  t_test_df_male = NULL,
+  t_test_df_female = NULL,
+  stars_position = NULL,
+  stars_position_male = NULL,
+  stars_position_female = NULL,
+  stars_colour = "black",
+  stars_colour_male = "black",
+  stars_colour_female = "black",
   large_axis_text = "no",
   shade_intervals = "no",
   theme_options,
@@ -81,7 +89,7 @@ a hormone stopped being applied, such as for a washout experiment.}
 
 \item{legend_position_inside}{A list of two numeric values describing the coordinates of the legend. This only applies if \code{legend_position = "inside"}.}
 
-\item{included_sexes}{A character value (\code{"both"}, \code{"male"} or \code{"female"}). Useful if you want to have a plot with data from one sex only. Defaults to \code{"both"}. If you choose a single sex, the resulting plot will have \code{"-males-only"} or \code{"-females-only"} in the file name. WARNING!! If you choose \code{"male"} or \code{"female"}, you MUST ensure that the \code{t_test_df} contains data that has been filtered to only include one sex. Otherwise, the significance stars will represent both sexes and it will be inaccurate.}
+\item{included_sexes}{A character value (\code{"both"}, \code{"male"} or \code{"female"}). Useful if you want to have a plot with data from one sex only. Defaults to \code{"both"}. If you choose a single sex, the resulting plot will have \code{"-males-only"} or \code{"-females-only"} in the file name. WARNING!! If you choose \code{"male"} or \code{"female"}, you MUST ensure that the \code{t_test_df} accurately represents what you want to demonstrate: significance for both sexes grouped together (use \code{t_test_df}) or significance for each sex separately (use \code{t_test_df_male} and \code{t_test_df_female} and adjust these heights using \code{stars_position_male} and \code{stars_position_female}).}
 
 \item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for male data in the \code{sex} column, and it must be consistent across data sheets. Defaults to \code{"Male"}.}
 
@@ -124,7 +132,33 @@ using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary
 \item{t_test_df}{A dataframe of t-test results, which has been generated
 using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. Important note! The t-test
 dataframe must be filtered to match the same conditions in the \code{data}
-argument, or the significance stars will be misleading.}
+argument, or the significance stars will be misleading. For example, if you want to show
+significance for both sexes as a group, use this.
+If you want to show male and female significance values separately,
+use \code{t_test_df_male} and \code{t_test_df_female} and adjust their heights
+with \code{stars_position_male} and \code{stars_position_female}. If you only have data for one sex, you could use either option.}
+
+\item{t_test_df_male}{A dataframe of t-test results (male only), which has been generated
+using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. This data has been filtered to only include male data before being put through \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}.}
+
+\item{t_test_df_female}{A dataframe of t-test results (female only), which has been generated
+using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. This data has been filtered to only include female data before being put through \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}.}
+
+\item{stars_position}{A numeric value stating the position on the y-axis of
+the significance stars. If you want to specify these for the sexes separately,
+use \code{stars_position_male} and \code{stars_position_female}. Defaults to \code{NULL} which automatically defaults to \code{y_axis_limit - 50}.}
+
+\item{stars_position_male}{A numeric value stating the position on the y-axis of
+the significance stars for the male data specified by \code{t_test_df_male}. Defaults to \code{NULL} which sets it at \code{y_axis_limit - 50}.}
+
+\item{stars_position_female}{A numeric value stating the position on the y-axis of
+the significance stars for the male data specified by \code{t_test_df_female}. Defaults to \code{NULL} which sets it at \code{y_axis_limit - 75}.}
+
+\item{stars_colour}{A character value (can be a hex code or a named R colour like \code{"red"}) describing the colour of the significance stars. Defaults to \code{"Black"}.}
+
+\item{stars_colour_male}{A character value (can be a hex code or a named R colour like \code{"red"}) describing the colour of the significance stars for male data. Use only if you have put data in \code{t_test_df_male}. Defaults to \code{"Black"}.}
+
+\item{stars_colour_female}{A character value (can be a hex code or a named R colour like \code{"red"}) describing the colour of the significance stars for female data. Use only if you have put data in \code{t_test_df_female}. Defaults to \code{"Black"}.}
 
 \item{large_axis_text}{A character (\code{"yes"} or \code{"no"}). If \code{"yes"}, a ggplot theme layer will be applied which increases the size of the axis text.}
 
@@ -177,6 +211,36 @@ summarized by treatment and sex, and averaged per minute. The data are
 presented as mean +/- the standard error.
 }
 \examples{
+
+# Both sexes with significance stars for separate sexes
+# Note: The significance stars are sample data
+
+
+plot_summary_current_data(
+  data = sample_pruned_eEPSC_df$all_cells,
+  plot_category = 2,
+  plot_treatment = "Control",
+  current_type = "eEPSC",
+  y_variable = "amplitude",
+   hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+   included_sexes = "both",
+   include_representative_trace = "yes",
+   representative_trace_filename = import_ext_data("Control-trace.png"),
+   y_axis_limit = 175,
+   signif_stars = "yes",
+   t_test_df_male = sample_eEPSC_t_test_df_male,
+   t_test_df_female = sample_eEPSC_t_test_df_female,
+   stars_position_male = 30,
+   stars_position_female = 70,
+   stars_colour_male = "#6600cc",
+   stars_colour_female = "#d6b8f5",
+   large_axis_text = "no",
+   shade_intervals = "no",
+   treatment_colour_theme = sample_treatment_names_and_colours,
+   theme_options = sample_theme_options
+ )
+# Both sexes with significance stars from grouped data
 
 plot_summary_current_data(
   data = sample_pruned_eEPSC_df$all_cells,
