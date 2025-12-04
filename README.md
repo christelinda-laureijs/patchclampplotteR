@@ -53,20 +53,27 @@ Plot evoked current amplitudes summarized by sex:
 
 ``` r
 plot_summary_current_data(
+  data = sample_pruned_eEPSC_df$all_cells,
   plot_category = 2,
   plot_treatment = "Control",
-  data = sample_pruned_eEPSC_df$all_cells,
   current_type = "eEPSC",
   y_variable = "amplitude",
-  significance_display_method = "stars",
-  include_representative_trace = "no",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+  included_sexes = "both",
+  include_representative_trace = "yes",
+  representative_trace_filename = import_ext_data("Control-trace.png"),
   y_axis_limit = 175,
   signif_stars = "yes",
-  t_test_df = sample_eEPSC_t_test_df,
-  hormone_added = "Insulin",
+  significance_display_method = "stars",
+  t_test_df_male = sample_eEPSC_t_test_df_male,
+  t_test_df_female = sample_eEPSC_t_test_df_female,
+  stars_position_male = 30,
+  stars_position_female = 70,
+  stars_colour_male = "#6600cc",
+  stars_colour_female = "#d6b8f5",
   large_axis_text = "no",
   shade_intervals = "no",
-  hormone_or_HFS_start_time = 5,
   treatment_colour_theme = sample_treatment_names_and_colours,
   theme_options = sample_theme_options
 )
