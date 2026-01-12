@@ -60,6 +60,7 @@
 <span>  pruned <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  current_type <span class="op">=</span> <span class="st">"eEPSC"</span>,</span>
 <span>  y_variable <span class="op">=</span> <span class="st">"P1"</span>,</span>
+<span>  software <span class="op">=</span> <span class="st">"Clampfit"</span>,</span>
 <span>  x_label <span class="op">=</span> <span class="st">"Time (min)"</span>,</span>
 <span>  <span class="va">treatment_colour_theme</span>,</span>
 <span>  ggplot_theme <span class="op">=</span> <span class="fu"><a href="patchclampplotteR_facet_theme.html">patchclampplotteR_facet_theme</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -109,6 +110,10 @@ y_variables are <code>"P1"</code>, <code>"P1_transformed"</code>, <code>"mean_P1
 select <code>"mean_P1"</code>, you must set the <code>pruned</code> argument to <code>"yes"</code>. For
 spontaneous currents (<code>current_type = "sEPSC"</code>), the available y_variables
 are <code>"amplitude"</code> or <code>"frequency"</code>. NOTE: <code>"frequency"</code> is only available if <code>pruned = "yes"</code>.</p></dd>
+
+
+<dt id="arg-software">software<a class="anchor" aria-label="anchor" href="#arg-software"></a></dt>
+<dd><p>A character (<code>"Clampfit"</code> or <code>"MiniAnalysis"</code>) describing what software tool was used to analyze the data in <code>new_raw_data_csv</code>. This is relevant when <code>data_type</code> is <code>"sEPSC"</code> because the exported data is different. Defaults to <code>"Clampfit"</code>.</p></dd>
 
 
 <dt id="arg-x-label">x_label<a class="anchor" aria-label="anchor" href="#arg-x-label"></a></dt>

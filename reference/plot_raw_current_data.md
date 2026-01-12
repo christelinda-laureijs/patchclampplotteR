@@ -26,6 +26,7 @@ plot_raw_current_data(
   male_label = "Male",
   female_label = "Female",
   colour_by_sex = "yes",
+  software = "Clampfit",
   x_label = "Time (min)",
   treatment_colour_theme,
   geom_text_family = "",
@@ -130,6 +131,13 @@ plot_raw_current_data(
   be coloured according to the `very_pale_colours` column of
   `treatment_colour_theme`. If "no", all plots will be coloured using
   the `colours` column.
+
+- software:
+
+  A character (`"Clampfit"` or `"MiniAnalysis"`) describing what
+  software tool was used to analyze the data in `new_raw_data_csv`. This
+  is relevant when `data_type` is `"sEPSC"` because the exported data is
+  different. Defaults to `"Clampfit"`.
 
 - x_label:
 

@@ -15,6 +15,7 @@ make_facet_plot(
   pruned = "no",
   current_type = "eEPSC",
   y_variable = "P1",
+  software = "Clampfit",
   x_label = "Time (min)",
   treatment_colour_theme,
   ggplot_theme = patchclampplotteR_facet_theme()
@@ -69,6 +70,13 @@ make_facet_plot(
   to `"yes"`. For spontaneous currents (`current_type = "sEPSC"`), the
   available y_variables are `"amplitude"` or `"frequency"`. NOTE:
   `"frequency"` is only available if `pruned = "yes"`.
+
+- software:
+
+  A character (`"Clampfit"` or `"MiniAnalysis"`) describing what
+  software tool was used to analyze the data in `new_raw_data_csv`. This
+  is relevant when `data_type` is `"sEPSC"` because the exported data is
+  different. Defaults to `"Clampfit"`.
 
 - x_label:
 
