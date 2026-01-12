@@ -12,6 +12,7 @@ make_facet_plot(
   pruned = "no",
   current_type = "eEPSC",
   y_variable = "P1",
+  software = "Clampfit",
   x_label = "Time (min)",
   treatment_colour_theme,
   ggplot_theme = patchclampplotteR_facet_theme()
@@ -44,6 +45,8 @@ y_variables are \code{"P1"}, \code{"P1_transformed"}, \code{"mean_P1"} and \code
 select \code{"mean_P1"}, you must set the \code{pruned} argument to \code{"yes"}. For
 spontaneous currents (\code{current_type = "sEPSC"}), the available y_variables
 are \code{"amplitude"} or \code{"frequency"}. NOTE: \code{"frequency"} is only available if \code{pruned = "yes"}.}
+
+\item{software}{A character (\code{"Clampfit"} or \code{"MiniAnalysis"}) describing what software tool was used to analyze the data in \code{new_raw_data_csv}. This is relevant when \code{data_type} is \code{"sEPSC"} because the exported data is different. Defaults to \code{"Clampfit"}.}
 
 \item{x_label}{A character value specifying the x-axis label. Defaults to "Time (min)".}
 

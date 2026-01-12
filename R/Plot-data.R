@@ -476,6 +476,7 @@ plot_baseline_data <- function(data,
 #'   their associated colours as hex values. See
 #'   [sample_treatment_names_and_colours] for an example of what this dataframe
 #'   should look like.
+#' @param software A character (`"Clampfit"` or `"MiniAnalysis"`) describing what software tool was used to analyze the data in `new_raw_data_csv`. This is relevant when `data_type` is `"sEPSC"` because the exported data is different. Defaults to `"Clampfit"`.
 #' @param filename_suffix Optional character value to add a suffix to the
 #'   filename of the .png file created with this plot. Could be useful if you want to specify anything about the data (for example, to distinguish between recordings produced in MiniAnalysis
 #'   vs. Clampfit).
@@ -543,6 +544,7 @@ plot_raw_current_data <-
            male_label = "Male",
            female_label = "Female",
            colour_by_sex = "yes",
+           software = "Clampfit",
            x_label = "Time (min)",
            treatment_colour_theme,
            geom_text_family = "",
@@ -578,6 +580,11 @@ plot_raw_current_data <-
 
     if (!colour_by_sex %in% c("yes", "no")) {
       cli::cli_abort(c("x" = "`colour_by_sex` argument must be either \"yes\" or \"no\""))
+    }
+
+
+    if (!software %in% c("Clampfit", "MiniAnalysis")) {
+      cli::cli_abort(c("x" = "'software' argument must be either 'Clampfit' or 'MiniAnalysis'"))
     }
 
 
@@ -684,44 +691,74 @@ plot_raw_current_data <-
     if (current_type == "sEPSC") {
       filepath <- "Figures/Spontaneous-currents/Output-individual-plots"
 
-      if (pruned == "yes") {
-        allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
 
-        if (!y_variable %in% c("amplitude", "frequency")) {
-          cli::cli_abort(
-            c(
-              "x" = paste0(
-                "`y_variable` must be ",
-                allowed_y_variables_list,
-                " for `current_type` \"",
-                current_type,
-                "\" when `pruned` is set to \"yes\"."
-              ),
-              "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`."
+      if (software == "Clampfit") {
+        if (pruned == "yes") {
+          allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
+
+          if (!y_variable %in% c("amplitude", "frequency")) {
+            cli::cli_abort(
+              c(
+                "x" = paste0(
+                  "`y_variable` must be ",
+                  allowed_y_variables_list,
+                  " for `current_type` \"",
+                  current_type,
+                  "\" when `pruned` is set to \"yes\"."
+                ),
+                "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`."
+              )
             )
-          )
+          }
         }
+
+        if (pruned == "no") {
+          allowed_y_variables_list <- "\"amplitude\""
+
+          if (!y_variable %in% c("amplitude")) {
+            cli::cli_abort(
+              c(
+                "x" = paste0(
+                  "`y_variable` must be ",
+                  allowed_y_variables_list,
+                  " for `current_type` \"",
+                  current_type,
+                  "\" when pruned is set to \"no\".",
+                  " and when software type is ",
+                  software
+                ),
+                "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency when the software type is Clampfit, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`. It is possible to plot raw frequency with pruned = \"no\" if software type is MiniAnalysis."
+              )
+            )
+          }
+        }
+
       }
 
-      if (pruned == "no") {
-        allowed_y_variables_list <- "\"amplitude\""
 
-        if (!y_variable %in% c("amplitude")) {
-          cli::cli_abort(
-            c(
-              "x" = paste0(
-                "`y_variable` must be ",
-                allowed_y_variables_list,
-                " for `current_type` \"",
-                current_type,
-                "\" when pruned is set to \"no\"."
-              ),
-              "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`."
+      if (software == "MiniAnalysis") {
+        if (pruned == "no") {
+          allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
+
+          if (!y_variable %in% c("amplitude", "frequency")) {
+            cli::cli_abort(
+              c(
+                "x" = paste0(
+                  "`y_variable` must be ",
+                  allowed_y_variables_list,
+                  " for `current_type` \"",
+                  current_type,
+                  "\" when pruned is set to \"no\".",
+                  " and when software type is ",
+                  software
+                ),
+                "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency when the software type is Clampfit, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`. It is possible to plot raw frequency with pruned = \"no\" if software type is MiniAnalysis."
+              )
             )
-          )
+          }
         }
-      }
 
+      }
 
       if (y_variable == "amplitude") {
         y_title <- "sEPSC Amplitude (pA)"
@@ -1019,6 +1056,7 @@ make_facet_plot <- function(data,
                             pruned = "no",
                             current_type = "eEPSC",
                             y_variable = "P1",
+                            software = "Clampfit",
                             x_label = "Time (min)",
                             treatment_colour_theme,
                             ggplot_theme = patchclampplotteR_facet_theme()) {
@@ -1031,6 +1069,12 @@ make_facet_plot <- function(data,
   if (!pruned %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`pruned` argument must be either \"yes\" or \"no\""))
   }
+
+
+  if (!software %in% c("Clampfit", "MiniAnalysis")) {
+    cli::cli_abort(c("x" = "'software' argument must be either 'Clampfit' or 'MiniAnalysis'"))
+  }
+
 
 
   if (current_type == "eEPSC") {
@@ -1109,28 +1153,51 @@ make_facet_plot <- function(data,
               current_type,
               "\" when `pruned` is set to \"yes\"."
             ),
-            "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`."
+            "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency when the software type is Clampfit, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`. It is possible to plot raw frequency with pruned = \"no\" if software type is MiniAnalysis."
           )
         )
       }
     }
 
     if (pruned == "no") {
-      allowed_y_variables_list <- "\"amplitude\""
+      if (software == "Clampfit") {
+        allowed_y_variables_list <- "\"amplitude\""
 
-      if (!y_variable %in% c("amplitude")) {
-        cli::cli_abort(
-          c(
-            "x" = paste0(
-              "`y_variable` must be ",
-              allowed_y_variables_list,
-              " for `current_type` \"",
-              current_type,
-              "\" when pruned is set to \"no\"."
-            ),
-            "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`."
+        if (!y_variable %in% c("amplitude")) {
+          cli::cli_abort(
+            c(
+              "x" = paste0(
+                "`y_variable` must be ",
+                allowed_y_variables_list,
+                " for `current_type` \"",
+                current_type,
+                "\" when pruned is set to \"no\"."
+              ),
+              "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.` If you want to plot frequency when the software type is Clampfit, this is currently only available when `pruned` = \"yes\", using a dataset created with `make_pruned_EPSC_data()`. It is possible to plot raw frequency with pruned = \"no\" if software type is MiniAnalysis."
+            )
           )
-        )
+        }
+      }
+
+
+
+      if (software == "MiniAnalysis") {
+        allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
+
+        if (!y_variable %in% c("amplitude", "frequency")) {
+          cli::cli_abort(
+            c(
+              "x" = paste0(
+                "`y_variable` must be ",
+                allowed_y_variables_list,
+                " for `current_type` \"",
+                current_type,
+                "\" when pruned is set to \"no\"."
+              ),
+              "i" = "Check to make sure that you have a logical combination of `y_variable`, `current_type`, `pruned` or `data.`."
+            )
+          )
+        }
       }
     }
 
@@ -3169,6 +3236,9 @@ plot_PPR_data_multiple_treatments <- function(data,
       cli::cli_alert_info(
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
+
+      list_of_treatments_to_use <- unique(plot_data$treatment)
+
     }
   } else {
     if (is.null(list_of_treatments)) {
@@ -3193,14 +3263,16 @@ plot_PPR_data_multiple_treatments <- function(data,
       ))
     }
 
+    list_of_treatments_to_use <- list_of_treatments
+
     treatment_info <- treatment_colour_theme %>%
       dplyr::filter(.data$category == plot_category) %>%
-      dplyr::filter(.data$treatment %in% list_of_treatments) %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments_to_use) %>%
       droplevels()
 
 
     plot_data <- data %>%
-      dplyr::filter(.data$treatment %in% list_of_treatments) %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments_to_use) %>%
       droplevels()
   }
 
@@ -5139,6 +5211,8 @@ plot_cell_coordinates_data <- function(data,
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
+
+    list_of_treatments_to_use <- unique(plot_data$treatment)
   } else {
     if (is.null(list_of_treatments)) {
       cli::cli_abort(c(
@@ -5162,9 +5236,11 @@ plot_cell_coordinates_data <- function(data,
       ))
     }
 
+    list_of_treatments_to_use <- list_of_treatments
+
     plot_data <- data %>%
       dplyr::filter(.data$category == plot_category) %>%
-      dplyr::filter(.data$treatment %in% list_of_treatments) %>%
+      dplyr::filter(.data$treatment %in% list_of_treatments_to_use) %>%
       droplevels()
   }
 
@@ -5490,6 +5566,10 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
         "include_all_treatments = \"yes\", but you included a list of treatments to filter. All treatments will be used."
       )
     }
+
+    list_of_treatments_to_use <- unique(table_data$treatment)
+
+
   } else {
     if (is.null(list_of_treatments)) {
       cli::cli_abort(c(
@@ -5513,8 +5593,10 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
       ))
     }
 
+    list_of_treatments_to_use <- list_of_treatments
+
     table_data <- table_data %>%
-      dplyr::filter(.data$Treatment %in% list_of_treatments)
+      dplyr::filter(.data$Treatment %in% list_of_treatments_to_use)
   }
   # Category filter
 
