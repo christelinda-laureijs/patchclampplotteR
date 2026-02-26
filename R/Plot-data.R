@@ -1285,6 +1285,7 @@ make_facet_plot <- function(data,
 #' @param annotation_x_max A numeric value describing the maximum value on the x-axis for the representative trace. Change this if your representative trace image looks squished or stretched.
 #' @param annotation_y_min A numeric value describing the minimum value on the y-axis for the representative trace. Defaults to `0`, which will place it at the lower left corner of the plot (when combined with the default value for `annotation_x_min`).
 #' @param annotation_y_max A numeric value describing the maximum value on the y-axis for the representative trace. Change this if your representative trace image looks squished or stretched.
+#' @param include_sex_in_legend A character (`"yes"` or `"no"`) describing if the legend should include the sexes or just cell counts. For example, this determines if the legend will be "n = 3" or "Males, n = 3".
 #' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name. WARNING!! If you choose `"male"` or `"female"`, you MUST ensure that the `t_test_df` accurately represents what you want to demonstrate: significance for both sexes grouped together (use `t_test_df`) or significance for each sex separately (use `t_test_df_male` and `t_test_df_female` and adjust these heights using `stars_position_male` and `stars_position_female`).
 #' @param male_label A character value used to describe how males are encoded in the `sex` column of the dataframe used in `data`. This MUST match the value for male data in the `sex` column, and it must be consistent across data sheets. Defaults to `"Male"`.
 #' @param female_label A character value used to describe how females are encoded in the `sex` column of the dataframe used in `data`. This MUST match the value for female data in the `sex` column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to `"Female"`.
@@ -1415,6 +1416,7 @@ plot_summary_current_data <- function(data,
                                       included_sexes = "both",
                                       male_label = "Male",
                                       female_label = "Female",
+                                      include_sex_in_legend = "yes",
                                       include_representative_trace = "no",
                                       representative_trace_filename = NULL,
                                       position_dodge_size = 0,
@@ -1449,6 +1451,11 @@ plot_summary_current_data <- function(data,
     !current_type %in% c("eEPSC", "sEPSC")) {
     cli::cli_abort(c("x" = "'current_type' argument must be either 'eEPSC' or 'sEPSC'"))
   }
+
+  if (!include_sex_in_legend %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "'include_sex_in_legend' must be either 'yes' or 'no'"))
+  }
+
 
   if (is.null(hormone_added) ||
     length(hormone_added) != 1L ||
@@ -1778,42 +1785,44 @@ plot_summary_current_data <- function(data,
 
   # Nested if statements enable correct legend labels even if only one sex is present
 
+
   if (is.na(df$n[df$sex == female_label][1])) {
     treatment_plot <- treatment_plot +
-      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"])), labels = c((paste0(
-        "Males, n = ", df$n[df$sex == male_label][1]
-      )))) +
-      ggplot2::scale_color_manual(values = c(plot_colour), labels = c((paste0(
-        "Males, n = ", df$n[df$sex == male_label][1]
-      ))))
+      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"])),
+                                  labels = if (include_sex_in_legend == "yes") {
+                                    paste0("Males, n = ", df$n[df$sex == male_label][1])
+      } else {paste0("n = ", df$n[df$sex == male_label][1])}) +
+      ggplot2::scale_color_manual(values = c(plot_colour), labels = if (include_sex_in_legend == "yes") {
+        paste0("Males, n = ", df$n[df$sex == male_label][1])
+      } else {paste0("n = ", df$n[df$sex == male_label][1])})
   } else if (is.na(df$n[df$sex == male_label][1])) {
     treatment_plot <- treatment_plot +
-      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"])), labels = c((paste0(
-        "Females, n = ", df$n[df$sex == female_label][1]
-      )))) +
+      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"])),
+                                  labels = if (include_sex_in_legend == "yes") {
+                                    paste0("Females, n = ", df$n[df$sex == female_label][1])
+                                  } else {paste0("n = ", df$n[df$sex == female_label][1])}) +
       ggplot2::scale_color_manual(
         values = c(plot_colour_pale),
-        labels = c((paste0(
-          "Females, n = ", df$n[df$sex == female_label][1]
-        )))
+        labels = if (include_sex_in_legend == "yes") {
+          paste0("Females, n = ", df$n[df$sex == female_label][1])
+        } else {paste0("n = ", df$n[df$sex == female_label][1])}
       )
   } else {
     treatment_plot <- treatment_plot +
       ggplot2::scale_shape_manual(
         values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])),
-        labels = c((paste0(
-          "Females, n = ", df$n[df$sex == female_label][1]
-        )), (paste0(
-          "Males, n = ", df$n[df$sex == male_label][1]
-        )))
-      ) +
+        labels = if (include_sex_in_legend == "yes") {
+          c((paste0("Females, n = ", df$n[df$sex == female_label][1])),
+            (paste0("Males, n = ", df$n[df$sex == male_label][1])))
+        } else {c((paste0("n = ", df$n[df$sex == female_label][1])),
+                  (paste0("n = ", df$n[df$sex == male_label][1])))}) +
       ggplot2::scale_color_manual(
         values = c(plot_colour_pale, plot_colour),
-        labels = c((paste0(
-          "Females, n = ", df$n[df$sex == female_label][1]
-        )), (paste0(
-          "Males, n = ", df$n[df$sex == male_label][1]
-        )))
+        labels = if (include_sex_in_legend == "yes") {
+          c((paste0("Females, n = ", df$n[df$sex == female_label][1])),
+            (paste0("Males, n = ", df$n[df$sex == male_label][1])))
+        } else {c((paste0("n = ", df$n[df$sex == female_label][1])),
+                  (paste0("n = ", df$n[df$sex == male_label][1])))}
       )
   }
 

@@ -18,6 +18,7 @@ plot_summary_current_data(
   included_sexes = "both",
   male_label = "Male",
   female_label = "Female",
+  include_sex_in_legend = "yes",
   include_representative_trace = "no",
   representative_trace_filename = NULL,
   position_dodge_size = 0,
@@ -94,6 +95,8 @@ a hormone stopped being applied, such as for a washout experiment.}
 \item{male_label}{A character value used to describe how males are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for male data in the \code{sex} column, and it must be consistent across data sheets. Defaults to \code{"Male"}.}
 
 \item{female_label}{A character value used to describe how females are encoded in the \code{sex} column of the dataframe used in \code{data}. This MUST match the value for female data in the \code{sex} column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to \code{"Female"}.}
+
+\item{include_sex_in_legend}{A character (\code{"yes"} or \code{"no"}) describing if the legend should include the sexes or just cell counts. For example, this determines if the legend will be "n = 3" or "Males, n = 3".}
 
 \item{include_representative_trace}{A character (\code{"yes"} or \code{"no"}) describing if
 a representative trace should be included as an overlay to the plot. This
