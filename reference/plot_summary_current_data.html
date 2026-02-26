@@ -75,6 +75,7 @@ presented as mean +/- the standard error.</p>
 <span>  included_sexes <span class="op">=</span> <span class="st">"both"</span>,</span>
 <span>  male_label <span class="op">=</span> <span class="st">"Male"</span>,</span>
 <span>  female_label <span class="op">=</span> <span class="st">"Female"</span>,</span>
+<span>  include_sex_in_legend <span class="op">=</span> <span class="st">"yes"</span>,</span>
 <span>  include_representative_trace <span class="op">=</span> <span class="st">"no"</span>,</span>
 <span>  representative_trace_filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  position_dodge_size <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -180,6 +181,10 @@ a hormone stopped being applied, such as for a washout experiment.</p></dd>
 
 <dt id="arg-female-label">female_label<a class="anchor" aria-label="anchor" href="#arg-female-label"></a></dt>
 <dd><p>A character value used to describe how females are encoded in the <code>sex</code> column of the dataframe used in <code>data</code>. This MUST match the value for female data in the <code>sex</code> column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to <code>"Female"</code>.</p></dd>
+
+
+<dt id="arg-include-sex-in-legend">include_sex_in_legend<a class="anchor" aria-label="anchor" href="#arg-include-sex-in-legend"></a></dt>
+<dd><p>A character (<code>"yes"</code> or <code>"no"</code>) describing if the legend should include the sexes or just cell counts. For example, this determines if the legend will be "n = 3" or "Males, n = 3".</p></dd>
 
 
 <dt id="arg-include-representative-trace">include_representative_trace<a class="anchor" aria-label="anchor" href="#arg-include-representative-trace"></a></dt>

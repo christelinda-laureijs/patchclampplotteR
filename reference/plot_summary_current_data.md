@@ -22,6 +22,7 @@ plot_summary_current_data(
   included_sexes = "both",
   male_label = "Male",
   female_label = "Female",
+  include_sex_in_legend = "yes",
   include_representative_trace = "no",
   representative_trace_filename = NULL,
   position_dodge_size = 0,
@@ -155,6 +156,12 @@ plot_summary_current_data(
   value for female data in the `sex` column, and it must be consistent
   across data sheets. This must be consistent in all data sheets.
   Defaults to `"Female"`.
+
+- include_sex_in_legend:
+
+  A character (`"yes"` or `"no"`) describing if the legend should
+  include the sexes or just cell counts. For example, this determines if
+  the legend will be "n = 3" or "Males, n = 3".
 
 - include_representative_trace:
 

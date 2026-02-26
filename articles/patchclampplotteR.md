@@ -405,8 +405,12 @@ cell_counts <- raw_eEPSC_df %>%
 cell_counts
 ```
 
-    #> `summarise()` has grouped output by 'category', 'treatment'. You can override
-    #> using the `.groups` argument.
+    #> `summarise()` has regrouped the output.
+    #> ℹ Summaries were computed grouped by category, treatment, and sex.
+    #> ℹ Output is grouped by category and treatment.
+    #> ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+    #> ℹ Use `summarise(.by = c(category, treatment, sex))` for per-operation grouping
+    #>   (`?dplyr::dplyr_by`) instead.
 
 ##### Identify maximum recording length
 
