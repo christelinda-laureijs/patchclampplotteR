@@ -82,6 +82,7 @@ take up.
 ## Examples
 
 ``` r
+
 # Note: In your code, simply insert the filename
 # as a character value. Do not use import_ext_data()
 

@@ -220,6 +220,7 @@ contain the `plot_category`.
 ## Examples
 
 ``` r
+
 plot_cell_coordinates_data(
   data = sample_summary_eEPSC_df$percent_change_data,
   background_slice_filename = import_ext_data("DMH-brain-slice.jpg"),

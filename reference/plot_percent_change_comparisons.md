@@ -150,6 +150,7 @@ More documentation will be updated soon.
 ## Examples
 
 ``` r
+
 plot_percent_change_comparisons(
   data = sample_summary_eEPSC_df$percent_change_data,
   plot_category = 2,

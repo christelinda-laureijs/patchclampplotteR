@@ -201,6 +201,7 @@ you MUST change `scale_bar_y_unit` to the correct unit (likely `"pA"`).
 ## Examples
 
 ``` r
+
 # Plot one trace
 
 ## One sweep

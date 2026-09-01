@@ -6,6 +6,7 @@ To update the package, you just need to re-install the package using the
 same code you used to install it the first time:
 
 ``` r
+
 pak::pak("christelinda-laureijs/patchclampplotteR")
 ```
 
@@ -21,6 +22,7 @@ The most efficient way to do this is to use the `select()` function from
 dplyr.
 
 ``` r
+
 sample_summary_eEPSC_df$mean_SE %>% select(category, treatment, sex, n)
 #> # A tibble: 8 × 4
 #> # Groups:   category, treatment [4]
@@ -60,6 +62,7 @@ customizing the ggplot output of functions like
 This is the plot we will use throughout the FAQ:
 
 ``` r
+
 cars_plot <- ggplot(cars, aes(x = speed, y = dist)) +
   geom_point() +
   labs(x = "Speed (mph)", y = "Distance (ft)") +
@@ -86,6 +89,7 @@ If you want further control over the export options, you can also use
 `ggsave()` to manually save a ggplot object.
 
 ``` r
+
 ggsave(
   cars_plot,
   path = here("Figures/Raw-plots"),
@@ -106,6 +110,7 @@ Here is an example of the default output of
 with a built-in title and subtitle:
 
 ``` r
+
 raw_eEPSC_control_plots <- plot_raw_current_data(
   data = sample_raw_eEPSC_df,
   plot_treatment = "Control",
@@ -128,6 +133,7 @@ control_cell_plot
 To remove the title and subtitle, run this code:
 
 ``` r
+
 control_cell_plot <- control_cell_plot +
   theme(plot.title = element_blank(), plot.subtitle = element_blank())
 
@@ -147,6 +153,7 @@ common annotations will be lines (`annotation(type = "segment")`) and
 text(`annotation(type = "text")`).
 
 ``` r
+
 HNMPA_recording_FT
 ```
 
@@ -155,6 +162,7 @@ HNMPA_recording_FT
 ![](FAQ_files/figure-html/unnamed-chunk-6-1.png)
 
 ``` r
+
 HNMPA_recording_FT + annotate(geom = "segment", x = 0, xend = 25, y = 168, yend = 168) + annotate(geom = "text", x = 0, y = 177, label = "HNMPA", hjust = 0)
 ```
 
@@ -168,6 +176,7 @@ also apply a new `theme()` layer and specify the text elements manually.
 For example:
 
 ``` r
+
 cars_plot +
   theme(text = element_text(size = 25, color = "darkmagenta"))
 ```
@@ -193,6 +202,7 @@ available to you in R.
 > particularly easy to add Google fonts and system fonts.
 
 ``` r
+
 library(extrafont)
 font_import()
 
@@ -204,6 +214,7 @@ If you already have the fonts installed in R, you just need to run
 start of your document to have the fonts available to use.
 
 ``` r
+
 cars_plot +
   theme(text = element_text(size = 25, color = "darkmagenta", family = "Calibri"))
 ```
@@ -233,6 +244,7 @@ replace just the elements that you specified.
 > will creatively call it `my_new_theme`.
 
 ``` r
+
 my_new_theme <- patchclampplotteR_theme() %+replace%
   theme(
     text = element_text(size = 25, color = "#333333"),
@@ -244,6 +256,7 @@ my_new_theme <- patchclampplotteR_theme() %+replace%
 ```
 
 ``` r
+
 cars_plot + my_new_theme
 ```
 
@@ -256,6 +269,7 @@ Now, insert this theme into the `ggplot_theme` argument. This is one of
 the sample action potential plots with the default theme applied:
 
 ``` r
+
 plot_AP_comparison(
   sample_AP_data,
   plot_treatment = "Control",
@@ -280,6 +294,7 @@ lines.](FAQ_files/figure-html/plot-ap-comparison-old-theme-1.png)
 Here’s what the same plot looks like with the new theme:
 
 ``` r
+
 plot_AP_comparison(
   sample_AP_data,
   plot_treatment = "Control",
@@ -325,6 +340,7 @@ First, I am adding a new column to `sample_treatment_names_and_colours`
 which contains the filepath to each representative trace .png file.
 
 ``` r
+
 evoked_trace_filename <- c(
   "vignettes/articles/figures/Category-2-Control-Trace.png",
   "vignettes/articles/figures/Category-2-HNMPA-Trace.png",
@@ -346,6 +362,7 @@ can use the `treatment` column in the `plot_treatment` argument and the
 for all treatments were produced with one code chunk!
 
 ``` r
+
 pmap(
   .l = list_of_treatments,
   .f = ~ with(
@@ -405,6 +422,7 @@ and then define a list of treatments in the `list_of_treatments`
 argument.
 
 ``` r
+
 plot_AP_frequencies_multiple_treatments(
   data = sample_AP_count_data,
   include_all_treatments = "no",
@@ -434,6 +452,7 @@ First, check out how many treatment groups you have using
 `unique(raw_eEPSC_df$treatment)`.
 
 ``` r
+
 unique(sample_raw_eEPSC_df$treatment)
 #> [1] Control       HNMPA         PPP           PPP_and_HNMPA
 #> Levels: Control HNMPA PPP PPP_and_HNMPA
@@ -443,6 +462,7 @@ Next, modify this code to set up your own dataframe with your own
 hormone names and colours.
 
 ``` r
+
 my_theme_colours <- data.frame(
   category = c(2, 2, 2, 2),
   treatment = c("Control", "HNMPA", "PPP", "PPP_and_HNMPA"),
@@ -456,6 +476,7 @@ Every time a plot contains the argument `treatment_colour_theme`, refer
 to your custom dataframe.
 
 ``` r
+
 plot_PPR_data_multiple_treatments(
   data = sample_PPR_df,
   include_all_treatments = "yes",
@@ -485,6 +506,7 @@ To use the default values, just use `sample_theme_options` in the
 `patchclampplotteR`.
 
 ``` r
+
 plot_summary_current_data(
   data = sample_pruned_eEPSC_df$all_cells,
   plot_category = 2,
@@ -532,6 +554,7 @@ to be indexed by row name in plotting functions.
 Step 4: Run the following code:
 
 ``` r
+
 library(tibble)
 
 my_custom_theme_options <- read.csv("my_custom_theme_options.csv") %>%
@@ -552,6 +575,7 @@ I changed `line_col` to orange, and I also changed `male_shape` and
 `female_shape`. See, the graph looks different now!
 
 ``` r
+
 plot_summary_current_data(
   data = sample_pruned_eEPSC_df$all_cells,
   plot_category = 2,

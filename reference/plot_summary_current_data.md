@@ -400,6 +400,7 @@ for the function that will produce the summary data used in this plot.
 ## Examples
 
 ``` r
+
 # Both sexes with significance stars for separate sexes
 # Note: The significance stars are sample data
 

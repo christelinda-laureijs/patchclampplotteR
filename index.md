@@ -25,6 +25,7 @@ package.](reference/figures/README-plot-sampler.png)
 Plot raw evoked currents for a specific cell:
 
 ``` r
+
 raw_eEPSC_control_plots <- plot_raw_current_data(
   data = sample_raw_eEPSC_df,
   plot_treatment = "Control",
@@ -48,6 +49,7 @@ insulin.](reference/figures/README-example-raw-eEPSC-plot-1.png)
 Plot evoked current amplitudes summarized by sex:
 
 ``` r
+
 plot_summary_current_data(
   data = sample_pruned_eEPSC_df$all_cells,
   plot_category = 2,
@@ -85,6 +87,7 @@ Plot a representative recording trace showing spontaneous currents from
 a raw Axon Binary File (.ABF):
 
 ``` r
+
 plot_spontaneous_current_trace(
   data = sample_abf_file,
   plot_colour = "#6600cc",
@@ -104,6 +107,7 @@ current](reference/figures/README-example-spontaneous-current-trace-plot-1.png)
 Plot action potential traces…
 
 ``` r
+
 plot_AP_trace(
   data = sample_ap_abf_baseline,
   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
@@ -124,6 +128,7 @@ colour](reference/figures/README-ap-trace-viridis-1.png)
 treatments.
 
 ``` r
+
 plot_AP_frequencies_single_treatment(
   data = sample_AP_count_data,
   plot_treatment = "Control",
@@ -151,6 +156,7 @@ You can install the development version of patchclampplotteR from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("christelinda-laureijs/patchclampplotteR")
 ```
@@ -159,6 +165,7 @@ And then load the package with
 [`library()`](https://rdrr.io/r/base/library.html):
 
 ``` r
+
 library(patchclampplotteR)
 ```
 

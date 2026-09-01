@@ -219,6 +219,7 @@ description for the `$mean_SE` to learn about these columns.
 ## Examples
 
 ``` r
+
 # Evoked Currents
 # Will return a list of three dataframes
 

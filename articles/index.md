@@ -21,4 +21,10 @@
   Clampfit, and then prepare the data for use with the package
   patchclampplotteR.
 
+- [Tips for Code
+  Organization](https://christelinda-laureijs.github.io/patchclampplotteR/articles/tips-for-organizing-your-code.md):
+
+  Learn how to write clean and organized code, avoid lengthy documents,
+  and display key plots efficiently.
+
 - [FAQ](https://christelinda-laureijs.github.io/patchclampplotteR/articles/FAQ.md):

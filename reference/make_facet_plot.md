@@ -126,6 +126,7 @@ Plot only one facet plot per chunk.
 
 ``` r
 
+
 # Raw eEPSC facet plots
 
 make_facet_plot(sample_raw_eEPSC_df,

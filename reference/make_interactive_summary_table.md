@@ -122,6 +122,7 @@ data, fill in `pruned_eEPSC_dataframe`, and delete the argument
 ## Examples
 
 ``` r
+
 # Note, the number of treatments is limited to "Control" and "PPP" to reduce run-time
 
 ## Both evoked and spontaneous data

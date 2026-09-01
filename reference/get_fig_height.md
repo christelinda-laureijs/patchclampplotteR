@@ -61,6 +61,7 @@ per chunk.
 ## Examples
 
 ``` r
+
 get_fig_height(
   data = sample_raw_eEPSC_df,
   plot_category = 2,

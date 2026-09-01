@@ -33,6 +33,7 @@ variables.
 ## Examples
 
 ``` r
+
 plot_spontaneous_current_trace(
   data = sample_abf_file,
   plot_colour = "#6600cc",

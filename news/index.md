@@ -9,6 +9,7 @@ clamp recordings.
 The package can be installed from GitHub by using:
 
 ``` r
+
 pak::pak("christelinda-laureijs/patchclampplotteR")
 ```
 

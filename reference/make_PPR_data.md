@@ -94,6 +94,7 @@ and
 ## Examples
 
 ``` r
+
 make_PPR_data(
   data = sample_raw_eEPSC_df,
   include_all_treatments = "yes",

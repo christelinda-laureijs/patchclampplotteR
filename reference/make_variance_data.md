@@ -119,6 +119,7 @@ to plot this data.
 ## Examples
 
 ``` r
+
 make_variance_data(
   data = sample_summary_eEPSC_df$summary_data,
   include_all_categories = "no",

@@ -436,6 +436,7 @@ for a description of how baseline normalization works.
 ## Examples
 
 ``` r
+
 # Evoked Current Data
 make_pruned_EPSC_data(
   data = sample_raw_eEPSC_df,

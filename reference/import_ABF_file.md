@@ -65,6 +65,7 @@ To export a flattened `.abf` file as a `.csv` file, you can use
 ## Examples
 
 ``` r
+
 import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
 
 # To export this dataset as a csv use `fwrite()`

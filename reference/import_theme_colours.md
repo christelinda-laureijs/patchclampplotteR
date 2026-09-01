@@ -30,5 +30,6 @@ A dataframe with one column and row names.
 ## Examples
 
 ``` r
+
 import_theme_colours(import_ext_data("sample_theme_options.csv"))
 ```

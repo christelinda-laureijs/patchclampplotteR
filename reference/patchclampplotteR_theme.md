@@ -33,6 +33,7 @@ to use with
 ## Examples
 
 ``` r
+
 ggplot2::ggplot(cars, ggplot2::aes(x = speed, y = dist)) +
   ggplot2::geom_point() +
   ggplot2::labs(x = "Speed (mph)", y = "Stopping Distance (ft)") +

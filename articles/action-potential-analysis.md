@@ -287,6 +287,7 @@ options to select.](figures/AP-statistics-box.png)
     `half-width` change after your treatment.
 
 ``` r
+
 plot_AP_comparison(
   sample_AP_data,
   plot_treatment = "Control",
@@ -390,6 +391,7 @@ should be filled with 0s now.
 23. Here is an example of the type of plots you can create!
 
 ``` r
+
 plot_AP_frequencies_single_treatment(
   data = sample_AP_count_data,
   plot_treatment = "Control",
@@ -412,6 +414,7 @@ lower after adding
 insulin.](action-potential-analysis_files/figure-html/ap-frequencies-one-treatment-1.png)
 
 ``` r
+
 plot_AP_frequencies_multiple_treatments(
   data = sample_AP_count_data,
   include_all_treatments = "yes",
@@ -446,6 +449,7 @@ to learn about options you can use. These include `begin`, `option`,
 `theme` and more.
 
 ``` r
+
 plot_AP_trace(
   data = sample_ap_abf_baseline,
   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
@@ -468,6 +472,7 @@ more values corresponding to the sweep names (“epi1” to “epi10” in this
 example).
 
 ``` r
+
 plot_AP_trace(
   data = sample_ap_abf_baseline,
   sweeps = c("epi1", "epi5", "epi10"),
@@ -491,6 +496,7 @@ character values (can be hex values or named colours) in the
 `custom_scale_colours` argument.
 
 ``` r
+
 plot_AP_trace(
   data = sample_ap_abf_baseline,
   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
@@ -509,6 +515,7 @@ blue.](action-potential-analysis_files/figure-html/unnamed-chunk-2-1.png)
 ### Single colour
 
 ``` r
+
 plot_AP_trace(
   data = sample_ap_abf_baseline,
   sweeps = as.character(unique(sample_ap_abf_baseline$episode)),

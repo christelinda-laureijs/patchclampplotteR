@@ -196,6 +196,7 @@ will include `_normalized` in the filename. Example filenames include
 ## Examples
 
 ``` r
+
 # Plot raw data
 plot_raw_current_data(
   data = sample_raw_eEPSC_df,

@@ -249,6 +249,7 @@ to make the data required to make this plot.
 ## Examples
 
 ``` r
+
 # Without facets
 
 plot_variance_comparison_data(

@@ -1,5 +1,5 @@
-pandoc: 3.1.11
-pkgdown: 2.2.0
+pandoc: 3.8.3
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   articles/action-potential-analysis: action-potential-analysis.html
@@ -7,7 +7,8 @@ articles:
   articles/FAQ: FAQ.html
   patchclampplotteR: patchclampplotteR.html
   articles/spontaneous-current-analysis: spontaneous-current-analysis.html
-last_built: 2026-02-26T03:55Z
+  articles/tips-for-organizing-your-code: tips-for-organizing-your-code.html
+last_built: 2026-09-01T16:13Z
 urls:
   reference: https://christelinda-laureijs.github.io/patchclampplotteR/reference
   article: https://christelinda-laureijs.github.io/patchclampplotteR/articles

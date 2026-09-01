@@ -39,12 +39,14 @@ You can install the development version of patchclampplotteR from
 Only do this once per computer, or if there’s a major update.
 
 ``` r
+
 pak::pak("christelinda-laureijs/patchclampplotteR")
 ```
 
 And then load the package each time you want to use it:
 
 ``` r
+
 library(patchclampplotteR)
 ```
 
@@ -59,6 +61,7 @@ somewhere near the top of your .Rmd file so everything is in one place,
 and the functions are loaded for future analyses.
 
 ``` r
+
 library(here)
 library(dplyr)
 library(ggplot2)
@@ -161,6 +164,7 @@ category.](Treatment-schematic.jpg)
 > `cell_info.csv` located within the `Data/` subfolder.
 
 ``` r
+
 cell_characteristics <- import_cell_characteristics_df("Data/sample_cell_characteristics.csv")
 
 cell_characteristics
@@ -195,6 +199,7 @@ file containing four columns: `letter`, `ID`, `P1` and `P2`:
 > columns like `ID`, `X`, `Y`, `P1`, and `P2`.
 
 ``` r
+
 sample_eEPSC_data <- read.csv("Data/sample_new_eEPSC_data.csv")
 
 sample_eEPSC_data
@@ -234,6 +239,7 @@ function, and carefully read the warning messages.
 > is why the filenames start with “Data/”.
 
 ``` r
+
 first_time_df <- add_new_cells(
   new_raw_data_csv = "Data/sample_new_eEPSC_data.csv",
   cell_characteristics_csv = "Data/sample_cell_characteristics.csv",
@@ -282,6 +288,7 @@ letter is completely missing from the dataset. See, `"FX"` is now
 included!
 
 ``` r
+
 unique(first_time_df$letter)
 #> [1] "FX" "GR" "HC"
 ```
@@ -300,6 +307,7 @@ files were merged without any issues, change `write_new_csv = "no"` to
 > must end with “.csv”.
 
 ``` r
+
 first_time_df <- add_new_cells(
   new_raw_data_csv = "Data/sample_new_eEPSC_data.csv",
   cell_characteristics_csv = "Data/sample_cell_characteristics.csv",
@@ -325,6 +333,7 @@ effectively overwrites your data each time, adding your new data as rows
 to the bottom of your existing datasheet.
 
 ``` r
+
 add_new_cells(
   new_raw_data_csv = "sample_new_eEPSC_data.csv",
   cell_characteristics_csv = "sample_cell_characteristics.csv",
@@ -355,11 +364,13 @@ size, I am printing just the first 20 rows. The full dataset contains \>
 5680 rows!)
 
 ``` r
+
 # Don't forget to run library(here) at the top of your document!
 raw_eEPSC_df <- read.csv(here("Data/Raw-eEPSC-df.csv"))
 ```
 
 ``` r
+
 head(raw_eEPSC_df, n = 20)
 ```
 
@@ -378,6 +389,7 @@ this line of code on the raw data. Here, I filtered the data to category
 then counted the number of cells per sex.
 
 ``` r
+
 raw_eEPSC_df %>%
   filter(category == 2) %>%
   filter(time == 0) %>%
@@ -389,6 +401,7 @@ raw_eEPSC_df %>%
 ##### Get number of slices, cells, and animals
 
 ``` r
+
 cell_counts <- raw_eEPSC_df %>%
   select(-animal) %>%
   tidyr::separate_wider_delim(cell,
@@ -419,6 +432,7 @@ meet the length requirements for a t-test (you may get errors if some
 recordings are shorter than others).
 
 ``` r
+
 raw_eEPSC_df %>%
   group_by(letter) %>%
   summarize(max_time = max(time))
@@ -440,6 +454,7 @@ First, check out how many treatment groups you have using
 `unique(raw_eEPSC_df$treatment)`.
 
 ``` r
+
 unique(raw_eEPSC_df$treatment)
 #> [1] Control       HNMPA         PPP           PPP_and_HNMPA
 #> Levels: Control HNMPA PPP PPP_and_HNMPA
@@ -449,6 +464,7 @@ Next, modify this code to set up your own dataframe with your treatment
 names and colours.
 
 ``` r
+
 my_theme_colours <- data.frame(
   category = c(2, 2, 2, 2),
   treatment = c("Control", "HNMPA", "PPP", "PPP_and_HNMPA"),
@@ -496,6 +512,7 @@ converted to (roughly) 100%.
 > amplitudes to positive values.
 
 ``` r
+
 raw_eEPSC_df <- make_normalized_EPSC_data(
   filename = "sample_eEPSC_data.csv",
   current_type = "eEPSC",
@@ -510,6 +527,7 @@ raw_eEPSC_df <- make_normalized_EPSC_data(
 To view the data, type the name of the object `raw_eEPSC_df`
 
 ``` r
+
 raw_eEPSC_df
 ```
 
@@ -567,6 +585,7 @@ to learn about the arguments in more detail.
 > function below!
 
 ``` r
+
 raw_eEPSC_control_plots <- plot_raw_current_data(
   data = raw_eEPSC_df,
   plot_treatment = "Control",
@@ -588,6 +607,7 @@ type the name of the object that you just made
 (`raw_eEPSC_control_plots`):
 
 ``` r
+
 raw_eEPSC_control_plots
 ```
 
@@ -595,6 +615,7 @@ If you want to observe just one specific plot, you can select it by
 letter.
 
 ``` r
+
 raw_eEPSC_control_plots$L
 ```
 
@@ -609,6 +630,7 @@ representative cell for a poster or publication. One common task is to
 remove the title and subtitle.
 
 ``` r
+
 representative_cell_control <- raw_eEPSC_control_plots$L +
   theme(plot.title = element_blank(), plot.subtitle = element_blank())
 
@@ -627,6 +649,7 @@ is just for if you want to save a plot that is heavily modified from the
 default.
 
 ``` r
+
 ggsave(representative_cell_control,
   path = here("Figures/eEPSC/Raw-plots"),
   file = "Representative-cell-control.png",
@@ -650,6 +673,7 @@ will perform the same function.
 > `interval_length` to something other than `1`.
 
 ``` r
+
 pruned_eEPSC_df <- make_pruned_EPSC_data(
   data = raw_eEPSC_df,
   current_type = "eEPSC",
@@ -661,6 +685,7 @@ pruned_eEPSC_df <- make_pruned_EPSC_data(
 ```
 
 ``` r
+
 pruned_eEPSC_df
 ```
 
@@ -670,6 +695,7 @@ write `pruned_eEPSC_df$individual_cells` to access the first dataframe
 in the list:
 
 ``` r
+
 pruned_eEPSC_df$individual_cells
 ```
 
@@ -716,6 +742,7 @@ arguments:
 - `pruned`: Change this to “yes”
 
 ``` r
+
 pruned_eEPSC_control_plots <- plot_raw_current_data(
   data = pruned_eEPSC_df$individual_cells,
   plot_treatment = "Control",
@@ -731,6 +758,7 @@ pruned_eEPSC_control_plots <- plot_raw_current_data(
 ```
 
 ``` r
+
 pruned_eEPSC_control_plots$L
 ```
 
@@ -764,6 +792,7 @@ length was already specified during the
 function from earlier.
 
 ``` r
+
 summary_eEPSC_df <- make_summary_EPSC_data(
   data = raw_eEPSC_df,
   current_type = "eEPSC",
@@ -783,6 +812,7 @@ interval (`ending_interval`) relative to the baseline
 the hormone, the value of `percent_change` is 0.5.
 
 ``` r
+
 head(summary_eEPSC_df$percent_change_data, n = 30)
 ```
 
@@ -790,6 +820,7 @@ You can plot the percent change in current amplitude during the
 `ending_interval` relative to the `starting_interval`.
 
 ``` r
+
 plot_percent_change_comparisons(
   data = sample_summary_eEPSC_df$percent_change_data,
   plot_category = 2,
@@ -813,6 +844,7 @@ want to report the mean ± SE before and after applying a hormone, along
 with *n*, the sample size.
 
 ``` r
+
 summary_eEPSC_df$mean_SE
 ```
 
@@ -845,6 +877,7 @@ object into the `t_test_df` argument of
 > `test_type = "pairwise.wilcox.test"`.
 
 ``` r
+
 evoked_t_test_results <- perform_t_tests_for_summary_plot(
   data = sample_summary_eEPSC_df$summary_data,
   include_all_treatments = "yes",
@@ -941,6 +974,7 @@ can also choose to limit the PPR values to a certain range to exclude
 outliers.
 
 ``` r
+
 PPR_df <- make_PPR_data(
   data = raw_eEPSC_df,
   include_all_treatments = "yes",
@@ -954,6 +988,7 @@ PPR_df <- make_PPR_data(
 ```
 
 ``` r
+
 head(PPR_df, n = 10)
 ```
 
@@ -962,6 +997,7 @@ head(PPR_df, n = 10)
 For a specific treatment:
 
 ``` r
+
 plot_PPR_data_single_treatment(
   data = PPR_df,
   plot_treatment = "Control",
@@ -985,6 +1021,7 @@ You could also facet this by sex (note this data has only one datapoint
 for females):
 
 ``` r
+
 plot_PPR_data_single_treatment(
   data = PPR_df,
   plot_treatment = "Control",
@@ -1008,6 +1045,7 @@ sex](patchclampplotteR_files/figure-html/plot-one-ppr-treatment-facet-1.png)
 For multiple treatments:
 
 ``` r
+
 plot_PPR_data_multiple_treatments(
   data = PPR_df,
   include_all_treatments = "yes",
@@ -1042,6 +1080,7 @@ current data (e.g. data generated from
 #### Create variance dataset
 
 ``` r
+
 variance_df <- make_variance_data(
   data = summary_eEPSC_df$summary_data,
   include_all_categories = "no",
@@ -1062,6 +1101,7 @@ squared, and the variance-to-mean ratio. Here, I have faceted the plots
 by sex
 
 ``` r
+
 cv_comparison_control_plot <- plot_variance_comparison_data(
   data = variance_df,
   plot_category = 2,
@@ -1103,6 +1143,7 @@ scatterplot showing changes in the variance-to-mean ratio across
 time.](patchclampplotteR_files/figure-html/variance-comparison-plots-cv-vmr-definition-1.png)
 
 ``` r
+
 vmr_comparison_control_plot
 ```
 
@@ -1123,6 +1164,7 @@ values are “raw_amplitude” or “raw_frequency”.
 > line.
 
 ``` r
+
 plot_baseline_data(
   data = summary_eEPSC_df$summary_data,
   current_type = "eEPSC",

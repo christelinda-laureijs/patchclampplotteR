@@ -109,6 +109,7 @@ project directory.
 ## Examples
 
 ``` r
+
 plot_AP_frequencies_multiple_treatments(
   data = sample_AP_count_data,
   include_all_treatments = "yes",
