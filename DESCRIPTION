@@ -52,5 +52,6 @@ BugReports: https://github.com/christelinda-laureijs/patchclampplotteR/issues
 Remotes: 
     Crystal-YWu/abftools,
     timelyportfolio/dataui
+    kcuilla/reactablefmtr
 VignetteBuilder: knitr
 Language: en-CA
