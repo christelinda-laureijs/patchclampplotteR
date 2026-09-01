@@ -423,6 +423,6 @@ output:
 To help get you started, I've included an excerpt of what part of this
 document could look like from my own `Plot-Viewer.Rmd` file:
 
-```{r sample-plot-viewer-code, out.width="50%" fig.alt = "A screenshot of the rmarkdown document that I use. Level one heading is glutamate. Level 2 heading is Insulin with a tabset command. Level 3 headings are Male and Female. Within these level 3 subheadings there are chunks using the make facet plot code to produce raw plots."}
+```{r sample-plot-viewer-code, out.width="50%", fig.alt = "A screenshot of the rmarkdown document that I use. Level one heading is glutamate. Level 2 heading is Insulin with a tabset command. Level 3 headings are Male and Female. Within these level 3 subheadings there are chunks using the make facet plot code to produce raw plots."}
 knitr::include_graphics("figures/Plot-viewer-demo.png")
 ```
