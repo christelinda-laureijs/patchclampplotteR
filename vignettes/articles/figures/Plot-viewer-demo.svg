@@ -27,7 +27,7 @@
      showborder="true"
      inkscape:zoom="0.60599587"
      inkscape:cx="1433.1781"
-     inkscape:cy="604.7896"
+     inkscape:cy="662.54577"
      inkscape:window-width="1920"
      inkscape:window-height="1111"
      inkscape:window-x="-9"
@@ -57,7 +57,10 @@
          id="image1-4"
          x="-1.1102673"
          y="-2.7533383" /></g><g
-       id="g2"><image
+       id="g2"
+       inkscape:export-filename="Plot-viewer-demo.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><image
          width="9.3643513"
          height="6.9022079"
          preserveAspectRatio="none"
