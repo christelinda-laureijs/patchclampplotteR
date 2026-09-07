@@ -125,11 +125,13 @@ paired wilcox test and add brackets with significance stars through
 }
 \examples{
 
-plot_change_as_connected_lines(data = sample_summary_eEPSC_df$summary_data,
-                     plot_treatment = "Control",
-                     plot_category = 2,
-                     included_sexes = "both",
-                     post_hormone_interval = "t20to25",
-                     theme_options = sample_theme_options,
-                     treatment_colour_theme = sample_treatment_names_and_colours)
+plot_change_as_connected_lines(
+  data = sample_summary_eEPSC_df$summary_data,
+  plot_treatment = "Control",
+  plot_category = 2,
+  included_sexes = "both",
+  post_hormone_interval = "t20to25",
+  theme_options = sample_theme_options,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
 }

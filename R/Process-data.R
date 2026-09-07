@@ -706,7 +706,6 @@ make_pruned_EPSC_data <- function(data = patchclampplotteR::sample_raw_eEPSC_df,
     }
 
 
-
     if (software == "MiniAnalysis") {
       pruned_df_individual_cells <- pruned_df_individual_cells %>%
         dplyr::reframe(
@@ -1610,7 +1609,6 @@ perform_t_tests_for_summary_plot <- function(data,
 }
 
 
-
 #' Make dataframe with variance measures
 #'
 #' `make_variance_data` creates a dataframe containing variance measures at two
@@ -1690,7 +1688,6 @@ make_variance_data <- function(data,
 
 
     treatment_info <- treatment_colour_theme
-
   } else {
     if (is.null(list_of_categories)) {
       cli::cli_abort(c(
@@ -1711,7 +1708,6 @@ make_variance_data <- function(data,
     treatment_info <- treatment_colour_theme %>%
       dplyr::filter(.data$category %in% list_of_categories)
   }
-
 
 
   if (include_all_treatments == "yes") {
@@ -1766,7 +1762,6 @@ make_variance_data <- function(data,
     treatment_info <- treatment_info %>%
       dplyr::filter(.data$treatment %in% list_of_treatments)
   }
-
 
 
   variance_data <- dataframe %>%

@@ -225,24 +225,24 @@ plot_summary_current_data(
   plot_treatment = "Control",
   current_type = "eEPSC",
   y_variable = "amplitude",
-   hormone_added = "Insulin",
+  hormone_added = "Insulin",
   hormone_or_HFS_start_time = 5,
-   included_sexes = "both",
-   include_representative_trace = "yes",
-   representative_trace_filename = import_ext_data("Control-trace.png"),
-   y_axis_limit = 175,
-   signif_stars = "yes",
-   t_test_df_male = sample_eEPSC_t_test_df_male,
-   t_test_df_female = sample_eEPSC_t_test_df_female,
-   stars_position_male = 30,
-   stars_position_female = 70,
-   stars_colour_male = "#6600cc",
-   stars_colour_female = "#d6b8f5",
-   large_axis_text = "no",
-   shade_intervals = "no",
-   treatment_colour_theme = sample_treatment_names_and_colours,
-   theme_options = sample_theme_options
- )
+  included_sexes = "both",
+  include_representative_trace = "yes",
+  representative_trace_filename = import_ext_data("Control-trace.png"),
+  y_axis_limit = 175,
+  signif_stars = "yes",
+  t_test_df_male = sample_eEPSC_t_test_df_male,
+  t_test_df_female = sample_eEPSC_t_test_df_female,
+  stars_position_male = 30,
+  stars_position_female = 70,
+  stars_colour_male = "#6600cc",
+  stars_colour_female = "#d6b8f5",
+  large_axis_text = "no",
+  shade_intervals = "no",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
+)
 # Both sexes with significance stars from grouped data
 
 plot_summary_current_data(

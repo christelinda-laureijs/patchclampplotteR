@@ -27,27 +27,34 @@ A numeric or character value.
 
 # This will use the default `upper_threshold` value of 0.1.
 
-plot_change_as_connected_lines(data = sample_summary_eEPSC_df$summary_data,
-                     plot_treatment = "Control",
-                     plot_category = 2,
-                     included_sexes = "both",
-                     map_signif_level_values = return_p_value_as_stars,
-                     post_hormone_interval = "t20to25",
-                     theme_options = sample_theme_options,
-                     treatment_colour_theme = sample_treatment_names_and_colours)
+plot_change_as_connected_lines(
+  data = sample_summary_eEPSC_df$summary_data,
+  plot_treatment = "Control",
+  plot_category = 2,
+  included_sexes = "both",
+  map_signif_level_values = return_p_value_as_stars,
+  post_hormone_interval = "t20to25",
+  theme_options = sample_theme_options,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
 
 # Change upper_threshold
 
 # To change this value, you must use an anonymous function
 # because `map_signif_level` requires a numeric, single argument `p`.
 
-plot_change_as_connected_lines(data = sample_summary_eEPSC_df$summary_data,
-                     plot_treatment = "Control",
-                     plot_category = 2,
-                     included_sexes = "both",
-                     map_signif_level_values = function(p) return_p_value_as_stars(p,
-                                                               upper_threshold = 0.2),
-                     post_hormone_interval = "t20to25",
-                     theme_options = sample_theme_options,
-                     treatment_colour_theme = sample_treatment_names_and_colours)
+plot_change_as_connected_lines(
+  data = sample_summary_eEPSC_df$summary_data,
+  plot_treatment = "Control",
+  plot_category = 2,
+  included_sexes = "both",
+  map_signif_level_values = function(p) {
+    return_p_value_as_stars(p,
+      upper_threshold = 0.2
+    )
+  },
+  post_hormone_interval = "t20to25",
+  theme_options = sample_theme_options,
+  treatment_colour_theme = sample_treatment_names_and_colours
+)
 }

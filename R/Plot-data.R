@@ -46,9 +46,6 @@ patchclampplotteR_theme <- function(font_family = NULL) {
 }
 
 
-
-
-
 #' The patchclampplotteR theme for facet plots
 #'
 #' This is a modified version of [patchclampplotteR_theme()] that is optimized for plots produced with [make_facet_plot()]. It features large, easy-to-read axis labels and titles for individual facets, and margins that allow for easier readability.
@@ -732,7 +729,6 @@ plot_raw_current_data <-
             )
           }
         }
-
       }
 
 
@@ -757,7 +753,6 @@ plot_raw_current_data <-
             )
           }
         }
-
       }
 
       if (y_variable == "amplitude") {
@@ -957,8 +952,6 @@ plot_raw_current_data <-
   }
 
 
-
-
 #' Get figure height
 #'
 #' This function produces a dataframe with the ideal figure height for the facet plots produced by `make_facet_plot()`. These facet plots have a three-column layout with varying numbers of rows. This function first determines the number of rows required for a three-column layout, and then determines the required figure height. Typically, this is four times the number of rows.
@@ -1000,7 +993,6 @@ get_fig_height <- function(data,
     dplyr::pull(.data$plot_height)
   return(fig_height)
 }
-
 
 
 #' Make facet plot of raw data
@@ -1076,7 +1068,6 @@ make_facet_plot <- function(data,
   }
 
 
-
   if (current_type == "eEPSC") {
     # The plots should go to specific folders depending on current type
     filepath <- "Figures/Evoked-currents/Output-facet-plots"
@@ -1137,8 +1128,6 @@ make_facet_plot <- function(data,
   }
 
 
-
-
   if (current_type == "sEPSC") {
     if (pruned == "yes") {
       allowed_y_variables_list <- "\"amplitude\" or \"frequency\""
@@ -1178,7 +1167,6 @@ make_facet_plot <- function(data,
           )
         }
       }
-
 
 
       if (software == "MiniAnalysis") {
@@ -1258,9 +1246,6 @@ make_facet_plot <- function(data,
 
   return(facet_plot)
 }
-
-
-
 
 
 #' Make a summary plot for a specific treatment
@@ -1364,24 +1349,24 @@ make_facet_plot <- function(data,
 #'   plot_treatment = "Control",
 #'   current_type = "eEPSC",
 #'   y_variable = "amplitude",
-#'    hormone_added = "Insulin",
+#'   hormone_added = "Insulin",
 #'   hormone_or_HFS_start_time = 5,
-#'    included_sexes = "both",
-#'    include_representative_trace = "yes",
-#'    representative_trace_filename = import_ext_data("Control-trace.png"),
-#'    y_axis_limit = 175,
-#'    signif_stars = "yes",
-#'    t_test_df_male = sample_eEPSC_t_test_df_male,
-#'    t_test_df_female = sample_eEPSC_t_test_df_female,
-#'    stars_position_male = 30,
-#'    stars_position_female = 70,
-#'    stars_colour_male = "#6600cc",
-#'    stars_colour_female = "#d6b8f5",
-#'    large_axis_text = "no",
-#'    shade_intervals = "no",
-#'    treatment_colour_theme = sample_treatment_names_and_colours,
-#'    theme_options = sample_theme_options
-#'  )
+#'   included_sexes = "both",
+#'   include_representative_trace = "yes",
+#'   representative_trace_filename = import_ext_data("Control-trace.png"),
+#'   y_axis_limit = 175,
+#'   signif_stars = "yes",
+#'   t_test_df_male = sample_eEPSC_t_test_df_male,
+#'   t_test_df_female = sample_eEPSC_t_test_df_female,
+#'   stars_position_male = 30,
+#'   stars_position_female = 70,
+#'   stars_colour_male = "#6600cc",
+#'   stars_colour_female = "#d6b8f5",
+#'   large_axis_text = "no",
+#'   shade_intervals = "no",
+#'   treatment_colour_theme = sample_treatment_names_and_colours,
+#'   theme_options = sample_theme_options
+#' )
 #' # Both sexes with significance stars from grouped data
 #'
 #' plot_summary_current_data(
@@ -1471,32 +1456,31 @@ plot_summary_current_data <- function(data,
 
   if (signif_stars == "yes") {
     if (!is.null(t_test_df) & !is.null(t_test_df_male) |
-        !is.null(t_test_df) & !is.null(t_test_df_female)) {
+      !is.null(t_test_df) & !is.null(t_test_df_female)) {
       cli::cli_abort(c(
         "x" = "You have filled out both `t_test_df` and `t_test_df_female` or `t_test_df_male`, but you must choose to fill out either `t_test_df` (which contains both sexes) or the t-tests for individual sexes separately.",
         "i" = "Did you accidentally leave this filled in from previous code with both sexes?",
         "i" = "If you want to display two sexes with separate significance stars, use `t_test_df_female` and `t_test_df_male`"
       ))
-
     }
   }
 
   if (is.null(stars_position)) {
-    stars_y_position = y_axis_limit - 50
+    stars_y_position <- y_axis_limit - 50
   } else {
-    stars_y_position = stars_position
+    stars_y_position <- stars_position
   }
 
   if (is.null(stars_position_male)) {
-    stars_y_position_male = y_axis_limit - 50
+    stars_y_position_male <- y_axis_limit - 50
   } else {
-    stars_y_position_male = stars_position_male
+    stars_y_position_male <- stars_position_male
   }
 
   if (is.null(stars_position_female)) {
-    stars_y_position_female = y_axis_limit - 75
+    stars_y_position_female <- y_axis_limit - 75
   } else {
-    stars_y_position_female = stars_position_female
+    stars_y_position_female <- stars_position_female
   }
 
   if (!significance_display_method %in% c("stars", "p-values")) {
@@ -1556,7 +1540,6 @@ plot_summary_current_data <- function(data,
   }
 
 
-
   if (!is.null(hormone_or_HFS_start_time)) {
     if (!is.numeric(hormone_or_HFS_start_time)) {
       cli::cli_abort(
@@ -1569,7 +1552,7 @@ plot_summary_current_data <- function(data,
   }
 
   if (!is.null(hormone_end_time) &
-      !is.numeric(hormone_end_time)) {
+    !is.numeric(hormone_end_time)) {
     cli::cli_abort(c("x" = "`hormone_end_time` must be numeric
         (e.g. 25 for a hormone ending at 25 minutes)."))
   }
@@ -1788,41 +1771,66 @@ plot_summary_current_data <- function(data,
 
   if (is.na(df$n[df$sex == female_label][1])) {
     treatment_plot <- treatment_plot +
-      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["male_shape", "value"])),
-                                  labels = if (include_sex_in_legend == "yes") {
-                                    paste0("Males, n = ", df$n[df$sex == male_label][1])
-      } else {paste0("n = ", df$n[df$sex == male_label][1])}) +
+      ggplot2::scale_shape_manual(
+        values = c(as.numeric(theme_options["male_shape", "value"])),
+        labels = if (include_sex_in_legend == "yes") {
+          paste0("Males, n = ", df$n[df$sex == male_label][1])
+        } else {
+          paste0("n = ", df$n[df$sex == male_label][1])
+        }
+      ) +
       ggplot2::scale_color_manual(values = c(plot_colour), labels = if (include_sex_in_legend == "yes") {
         paste0("Males, n = ", df$n[df$sex == male_label][1])
-      } else {paste0("n = ", df$n[df$sex == male_label][1])})
+      } else {
+        paste0("n = ", df$n[df$sex == male_label][1])
+      })
   } else if (is.na(df$n[df$sex == male_label][1])) {
     treatment_plot <- treatment_plot +
-      ggplot2::scale_shape_manual(values = c(as.numeric(theme_options["female_shape", "value"])),
-                                  labels = if (include_sex_in_legend == "yes") {
-                                    paste0("Females, n = ", df$n[df$sex == female_label][1])
-                                  } else {paste0("n = ", df$n[df$sex == female_label][1])}) +
+      ggplot2::scale_shape_manual(
+        values = c(as.numeric(theme_options["female_shape", "value"])),
+        labels = if (include_sex_in_legend == "yes") {
+          paste0("Females, n = ", df$n[df$sex == female_label][1])
+        } else {
+          paste0("n = ", df$n[df$sex == female_label][1])
+        }
+      ) +
       ggplot2::scale_color_manual(
         values = c(plot_colour_pale),
         labels = if (include_sex_in_legend == "yes") {
           paste0("Females, n = ", df$n[df$sex == female_label][1])
-        } else {paste0("n = ", df$n[df$sex == female_label][1])}
+        } else {
+          paste0("n = ", df$n[df$sex == female_label][1])
+        }
       )
   } else {
     treatment_plot <- treatment_plot +
       ggplot2::scale_shape_manual(
         values = c(as.numeric(theme_options["female_shape", "value"]), as.numeric(theme_options["male_shape", "value"])),
         labels = if (include_sex_in_legend == "yes") {
-          c((paste0("Females, n = ", df$n[df$sex == female_label][1])),
-            (paste0("Males, n = ", df$n[df$sex == male_label][1])))
-        } else {c((paste0("n = ", df$n[df$sex == female_label][1])),
-                  (paste0("n = ", df$n[df$sex == male_label][1])))}) +
+          c(
+            (paste0("Females, n = ", df$n[df$sex == female_label][1])),
+            (paste0("Males, n = ", df$n[df$sex == male_label][1]))
+          )
+        } else {
+          c(
+            (paste0("n = ", df$n[df$sex == female_label][1])),
+            (paste0("n = ", df$n[df$sex == male_label][1]))
+          )
+        }
+      ) +
       ggplot2::scale_color_manual(
         values = c(plot_colour_pale, plot_colour),
         labels = if (include_sex_in_legend == "yes") {
-          c((paste0("Females, n = ", df$n[df$sex == female_label][1])),
-            (paste0("Males, n = ", df$n[df$sex == male_label][1])))
-        } else {c((paste0("n = ", df$n[df$sex == female_label][1])),
-                  (paste0("n = ", df$n[df$sex == male_label][1])))}
+          c(
+            (paste0("Females, n = ", df$n[df$sex == female_label][1])),
+            (paste0("Males, n = ", df$n[df$sex == male_label][1]))
+          )
+        } else {
+          c(
+            (paste0("n = ", df$n[df$sex == female_label][1])),
+            (paste0("n = ", df$n[df$sex == male_label][1]))
+          )
+        }
       )
   }
 
@@ -2020,8 +2028,6 @@ plot_summary_current_data <- function(data,
       }
     }
   }
-
-
 
 
   if (include_representative_trace == "yes") {
@@ -2369,8 +2375,6 @@ plot_percent_change_comparisons <- function(data,
 }
 
 
-
-
 #' Plot variance comparison for a treatment
 #'
 #' `plot_variance_comparison_data()` creates a connected  plot with time as a
@@ -2459,7 +2463,6 @@ plot_percent_change_comparisons <- function(data,
 #'   theme_options = sample_theme_options
 #' )
 #'
-
 plot_variance_comparison_data <- function(data,
                                           plot_category,
                                           plot_treatment,
@@ -2815,7 +2818,6 @@ plot_cv_data <- function(data,
 
   return(cv_plot)
 }
-
 
 
 #' Make a PPR plot for a single treatment
@@ -3248,7 +3250,6 @@ plot_PPR_data_multiple_treatments <- function(data,
       )
 
       list_of_treatments_to_use <- unique(plot_data$treatment)
-
     }
   } else {
     if (is.null(list_of_treatments)) {
@@ -3428,40 +3429,41 @@ plot_PPR_data_multiple_treatments <- function(data,
 #'
 #' @examples
 #'
-#' plot_change_as_connected_lines(data = sample_summary_eEPSC_df$summary_data,
-#'                      plot_treatment = "Control",
-#'                      plot_category = 2,
-#'                      included_sexes = "both",
-#'                      post_hormone_interval = "t20to25",
-#'                      theme_options = sample_theme_options,
-#'                      treatment_colour_theme = sample_treatment_names_and_colours)
-
+#' plot_change_as_connected_lines(
+#'   data = sample_summary_eEPSC_df$summary_data,
+#'   plot_treatment = "Control",
+#'   plot_category = 2,
+#'   included_sexes = "both",
+#'   post_hormone_interval = "t20to25",
+#'   theme_options = sample_theme_options,
+#'   treatment_colour_theme = sample_treatment_names_and_colours
+#' )
 plot_change_as_connected_lines <- function(data,
-                                 baseline_interval = "t0to5",
-                                 post_hormone_interval = "t20to25",
-                                 plot_treatment = "Control",
-                                 plot_category = 2,
-                                 included_sexes = "both",
-                                 y_axis_title = "eEPSC Amplitude (% Baseline)",
-                                 male_label = "Male",
-                                 female_label = "Female",
-                                 facet_by_sex = "yes",
-                                 left_sex = "Female",
-                                 geom_point_size = 2,
-                                 test_type = "wilcox.test",
-                                 map_signif_level_values = F,
-                                 geom_signif_family = "",
-                                 geom_signif_text_size = 5,
-                                 geom_signif_size = 0.4,
-                                 baseline_label = "Baseline",
-                                 post_hormone_label = "Post-Hormone",
-                                 treatment_colour_theme,
-                                 large_axis_text = "no",
-                                 save_plot_png = "no",
-                                 filename_suffix = "",
-                                 theme_options,
-                                 y_variable_signif_brackets = NULL,
-                                 ggplot_theme = patchclampplotteR_theme()) {
+                                           baseline_interval = "t0to5",
+                                           post_hormone_interval = "t20to25",
+                                           plot_treatment = "Control",
+                                           plot_category = 2,
+                                           included_sexes = "both",
+                                           y_axis_title = "eEPSC Amplitude (% Baseline)",
+                                           male_label = "Male",
+                                           female_label = "Female",
+                                           facet_by_sex = "yes",
+                                           left_sex = "Female",
+                                           geom_point_size = 2,
+                                           test_type = "wilcox.test",
+                                           map_signif_level_values = F,
+                                           geom_signif_family = "",
+                                           geom_signif_text_size = 5,
+                                           geom_signif_size = 0.4,
+                                           baseline_label = "Baseline",
+                                           post_hormone_label = "Post-Hormone",
+                                           treatment_colour_theme,
+                                           large_axis_text = "no",
+                                           save_plot_png = "no",
+                                           filename_suffix = "",
+                                           theme_options,
+                                           y_variable_signif_brackets = NULL,
+                                           ggplot_theme = patchclampplotteR_theme()) {
   if (!large_axis_text %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`large_axis_text` argument must be either \"yes\" or \"no\""))
   }
@@ -3479,12 +3481,12 @@ plot_change_as_connected_lines <- function(data,
   }
 
   if (is.null(baseline_interval) ||
-      !is.character(baseline_interval)) {
+    !is.character(baseline_interval)) {
     cli::cli_abort(c("x" = "`baseline_interval` must be a character (e.g. \"t0to5\" or \"t0to3\")"))
   }
 
   if (is.null(post_hormone_interval) ||
-      !is.character(post_hormone_interval)) {
+    !is.character(post_hormone_interval)) {
     cli::cli_abort(c("x" = "`post_hormone_interval` must be a character (e.g. \"t20to25\")"))
   }
 
@@ -3507,8 +3509,8 @@ plot_change_as_connected_lines <- function(data,
 
   treatment_info <- treatment_colour_theme %>%
     dplyr::filter(.data$category == plot_category &
-                    .data$treatment == plot_treatment)
-  plot_colour <-  treatment_info %>%
+      .data$treatment == plot_treatment)
+  plot_colour <- treatment_info %>%
     dplyr::pull(.data$colours)
 
   plot_colour_pale <- treatment_info %>%
@@ -3561,14 +3563,13 @@ plot_change_as_connected_lines <- function(data,
   }
 
 
-
   if (is.null(y_variable_signif_brackets)) {
     y_var_brackets <- "mean_P1_transformed"
   } else {
     y_var_brackets <- y_variable_signif_brackets
   }
 
-  plot_data <-  plot_data %>%
+  plot_data <- plot_data %>%
     dplyr::filter(.data$treatment == plot_treatment) %>%
     dplyr::filter(.data$category == plot_category) %>%
     dplyr::mutate(
@@ -3590,32 +3591,39 @@ plot_change_as_connected_lines <- function(data,
       colour = "#c7c7c7"
     ) +
     ggplot2::geom_line(ggplot2::aes(group = .data$letter),
-                       color = theme_options["connecting_line_colour", "value"],
-                       linewidth = 0.4)
+      color = theme_options["connecting_line_colour", "value"],
+      linewidth = 0.4
+    )
 
   if (facet_by_sex == "yes") {
     connected_line_plot <- connected_line_plot +
       ggplot2::geom_point(ggplot2::aes(shape = .data$sex, colour = .data$sex), size = geom_point_size) +
       ggplot2::scale_shape_manual(values = if (left_sex == "Female") {
-        c(as.numeric(theme_options["female_shape", "value"]),
-          as.numeric(theme_options["male_shape", "value"]))
+        c(
+          as.numeric(theme_options["female_shape", "value"]),
+          as.numeric(theme_options["male_shape", "value"])
+        )
       } else {
-        c(as.numeric(theme_options["male_shape", "value"]),
-          as.numeric(theme_options["female_shape", "value"]))
+        c(
+          as.numeric(theme_options["male_shape", "value"]),
+          as.numeric(theme_options["female_shape", "value"])
+        )
       }) +
       ggplot2::scale_color_manual(
         values = c(plot_colour, plot_colour_pale),
         breaks = c(male_label, female_label)
       ) +
       ggplot2::guides(shape = "none", colour = "none") +
-      ggplot2::facet_wrap( ~ .data$sex)
+      ggplot2::facet_wrap(~ .data$sex)
   }
 
   if (facet_by_sex == "no") {
     connected_line_plot <- connected_line_plot +
-      ggplot2::geom_point(color = plot_colour,
-                          size = geom_point_size,
-                          shape = plot_shape)
+      ggplot2::geom_point(
+        color = plot_colour,
+        size = geom_point_size,
+        shape = plot_shape
+      )
   }
 
 
@@ -3673,7 +3681,6 @@ plot_change_as_connected_lines <- function(data,
   }
 
   return(connected_line_plot)
-
 }
 
 #' Display p-values as significance stars or numbers
@@ -3696,31 +3703,36 @@ plot_change_as_connected_lines <- function(data,
 #'
 #' # This will use the default `upper_threshold` value of 0.1.
 #'
-#' plot_change_as_connected_lines(data = sample_summary_eEPSC_df$summary_data,
-#'                      plot_treatment = "Control",
-#'                      plot_category = 2,
-#'                      included_sexes = "both",
-#'                      map_signif_level_values = return_p_value_as_stars,
-#'                      post_hormone_interval = "t20to25",
-#'                      theme_options = sample_theme_options,
-#'                      treatment_colour_theme = sample_treatment_names_and_colours)
+#' plot_change_as_connected_lines(
+#'   data = sample_summary_eEPSC_df$summary_data,
+#'   plot_treatment = "Control",
+#'   plot_category = 2,
+#'   included_sexes = "both",
+#'   map_signif_level_values = return_p_value_as_stars,
+#'   post_hormone_interval = "t20to25",
+#'   theme_options = sample_theme_options,
+#'   treatment_colour_theme = sample_treatment_names_and_colours
+#' )
 #'
 #' # Change upper_threshold
 #'
 #' # To change this value, you must use an anonymous function
 #' # because `map_signif_level` requires a numeric, single argument `p`.
 #'
-#' plot_change_as_connected_lines(data = sample_summary_eEPSC_df$summary_data,
-#'                      plot_treatment = "Control",
-#'                      plot_category = 2,
-#'                      included_sexes = "both",
-#'                      map_signif_level_values = function(p) return_p_value_as_stars(p,
-#'                                                                upper_threshold = 0.2),
-#'                      post_hormone_interval = "t20to25",
-#'                      theme_options = sample_theme_options,
-#'                      treatment_colour_theme = sample_treatment_names_and_colours)
-
-
+#' plot_change_as_connected_lines(
+#'   data = sample_summary_eEPSC_df$summary_data,
+#'   plot_treatment = "Control",
+#'   plot_category = 2,
+#'   included_sexes = "both",
+#'   map_signif_level_values = function(p) {
+#'     return_p_value_as_stars(p,
+#'       upper_threshold = 0.2
+#'     )
+#'   },
+#'   post_hormone_interval = "t20to25",
+#'   theme_options = sample_theme_options,
+#'   treatment_colour_theme = sample_treatment_names_and_colours
+#' )
 return_p_value_as_stars <- function(p, upper_threshold = 0.1) {
   if (p <= 0.0001) {
     return("****")
@@ -4095,7 +4107,6 @@ plot_AP_frequencies_single_treatment <- function(data,
   plot_colour <- treatment_colour_theme %>%
     dplyr::filter(.data$category == plot_category & .data$treatment == plot_treatment) %>%
     dplyr::pull(.data$colours)
-
 
 
   if (included_sexes == "male") {
@@ -4794,7 +4805,6 @@ plot_AP_trace <-
   }
 
 
-
 #' Visually compare spontaneous current parameters
 #'
 #' [plot_spontaneous_current_parameter_comparison()] is a useful function to see
@@ -4953,7 +4963,6 @@ plot_spontaneous_current_parameter_comparison <-
       dplyr::filter(.data$category == plot_category &
         .data$treatment == plot_treatment) %>%
       dplyr::pull(.data$colours)
-
 
 
     sEPSC_comparison_plot_data <- data %>%
@@ -5388,8 +5397,6 @@ plot_spontaneous_current_trace <-
   }
 
 
-
-
 #' Import an image as a ggplot object
 #'
 #' This function will insert an external `.png` or `.jpg` file over an empty ggplot object. The resulting ggplot object can then be included with other ggplot layouts. This is useful for when you want to use the image in a multiplot layout. For example, in a publication, figure "1A" may be a schematic of your experimental set-up that you created elsewhere and saved as a `.png` or `.jpg` file. Rather than inserting this as a standalone image, you can use this function to store your image as a ggplot object, and combine it with other ggplot plots in a flexible layout using the `patchwork` library.
@@ -5455,7 +5462,6 @@ insert_png_as_ggplot <- function(filename,
 
   return(plot)
 }
-
 
 
 #' Plot cell location data
@@ -5714,8 +5720,6 @@ plot_cell_coordinates_data <- function(data,
 }
 
 
-
-
 #' Make interactive overview table of all recordings
 #'
 #' This function pulls information from multiple dataframes to display
@@ -5924,8 +5928,6 @@ make_interactive_summary_table <- function(cell_characteristics_dataframe,
     }
 
     list_of_treatments_to_use <- unique(table_data$treatment)
-
-
   } else {
     if (is.null(list_of_treatments)) {
       cli::cli_abort(c(
