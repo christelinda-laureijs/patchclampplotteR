@@ -261,6 +261,10 @@ Functions to plot the data.
   : Plot percent change comparisons
 - [`make_facet_plot()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/make_facet_plot.md)
   : Make facet plot of raw data
+- [`plot_change_as_connected_lines()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/plot_change_as_connected_lines.md)
+  : Plot change in eEPSC amplitude with a connected line plot
+- [`return_p_value_as_stars()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/return_p_value_as_stars.md)
+  : Display p-values as significance stars or numbers
 
 ### Spontaneous currents only
 

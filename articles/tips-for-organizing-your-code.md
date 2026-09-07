@@ -37,7 +37,7 @@ structure:
 
 # Data analysis
 
-## Evoked current data 
+## Evoked current data
 
 ### Amplitudes
 
@@ -182,8 +182,10 @@ penguins %>%
   geom_point(size = 3, alpha = 0.7) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)", colour = "Species") +
   theme_minimal() +
-  theme(axis.title.x = element_text(size = 15, margin = margin(t = 20)),
-        axis.title.y = element_text(size = 15, margin = margin(r = 20)))
+  theme(
+    axis.title.x = element_text(size = 15, margin = margin(t = 20)),
+    axis.title.y = element_text(size = 15, margin = margin(r = 20))
+  )
 ```
 
 It is good to get into these habits as you are writing code, but there
@@ -394,7 +396,7 @@ the html theme and enable a floating table of contents.
     ---
     title: "Plot Viewer"
     author: "Type your name here"
-    date: "September 01, 2026"
+    date: "September 07, 2026"
     output: 
       html_document:
         theme: cosmo
