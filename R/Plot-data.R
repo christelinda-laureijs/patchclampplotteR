@@ -2459,6 +2459,7 @@ plot_percent_change_comparisons <- function(data,
 #'   theme_options = sample_theme_options
 #' )
 #'
+
 plot_variance_comparison_data <- function(data,
                                           plot_category,
                                           plot_treatment,
@@ -3396,6 +3397,352 @@ plot_PPR_data_multiple_treatments <- function(data,
   }
 
   return(PPR_summary_plot)
+}
+
+
+#' Plot change in eEPSC amplitude with a connected line plot
+#'
+#' `plot_change_as_connected_lines()` creates a connected line plot to show change in eEPSC amplitude over time. Each line connects a cell's "before" point to the "after" value, with time (i.e. baseline and t20to25) on the x-axis and the
+#' eEPSC amplitude on the y-axis.
+#'
+#' If you specify a `test_type`, the function will perform a paired t-test or
+#' paired wilcox test and add brackets with significance stars through
+#' `ggsignif::geom_signif()`.
+#'
+#' @inheritParams plot_PPR_data_single_treatment
+#'
+#' @param y_variable_signif_brackets A character value. You should only use this if your data did not pass assumptions and you had to transform it. `y_variable_signif_brackets` should be the name of the column of `data` which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, leave this argument blank, and the function will automatically use the correct column associated with `y_variable`.
+#' @param geom_point_size A numeric value describing the size of the points on the plot. Defaults to `2`.
+#' @param baseline_interval A character value indicating the name of the
+#'   interval used as the baseline. Defaults to `"t0to5"`, but can be changed.
+#'   Make sure that this matches the baseline interval that you have in the summary data. Defaults to "t0to5".
+#' @param post_hormone_interval A character value specifying the interval used
+#'   for the data points after a hormone or protocol was applied. This must
+#'   match the `post_hormone_interval` present in the summary data. Defaults to "t20to25".
+#'
+#' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
+#'   a .png file in the folder `Figures/Evoked-currents` relative to the
+#'   project directory. The treatment will be included in the filename.
+#'
+#' @export
+#'
+#' @examples
+#'
+#' plot_change_as_connected_lines(data = sample_summary_eEPSC_df$summary_data,
+#'                      plot_treatment = "Control",
+#'                      plot_category = 2,
+#'                      included_sexes = "both",
+#'                      post_hormone_interval = "t20to25",
+#'                      theme_options = sample_theme_options,
+#'                      treatment_colour_theme = sample_treatment_names_and_colours)
+
+plot_change_as_connected_lines <- function(data,
+                                 baseline_interval = "t0to5",
+                                 post_hormone_interval = "t20to25",
+                                 plot_treatment = "Control",
+                                 plot_category = 2,
+                                 included_sexes = "both",
+                                 y_axis_title = "eEPSC Amplitude (% Baseline)",
+                                 male_label = "Male",
+                                 female_label = "Female",
+                                 facet_by_sex = "yes",
+                                 left_sex = "Female",
+                                 geom_point_size = 2,
+                                 test_type = "wilcox.test",
+                                 map_signif_level_values = F,
+                                 geom_signif_family = "",
+                                 geom_signif_text_size = 5,
+                                 geom_signif_size = 0.4,
+                                 baseline_label = "Baseline",
+                                 post_hormone_label = "Post-Hormone",
+                                 treatment_colour_theme,
+                                 large_axis_text = "no",
+                                 save_plot_png = "no",
+                                 filename_suffix = "",
+                                 theme_options,
+                                 y_variable_signif_brackets = NULL,
+                                 ggplot_theme = patchclampplotteR_theme()) {
+  if (!large_axis_text %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`large_axis_text` argument must be either \"yes\" or \"no\""))
+  }
+
+  if (!save_plot_png %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
+  }
+
+  if (!left_sex %in% c("Female", "Male")) {
+    cli::cli_abort(c("x" = "`left_sex` argument must be either \"Female\" or \"Male\""))
+  }
+
+  if (!included_sexes %in% c("both", "male", "female")) {
+    cli::cli_abort(c("x" = "`included_sexes` argument must be one of: \"both\", \"male\" or \"female\""))
+  }
+
+  if (is.null(baseline_interval) ||
+      !is.character(baseline_interval)) {
+    cli::cli_abort(c("x" = "`baseline_interval` must be a character (e.g. \"t0to5\" or \"t0to3\")"))
+  }
+
+  if (is.null(post_hormone_interval) ||
+      !is.character(post_hormone_interval)) {
+    cli::cli_abort(c("x" = "`post_hormone_interval` must be a character (e.g. \"t20to25\")"))
+  }
+
+
+  if (!test_type %in% c("wilcox.test", "t.test", "none")) {
+    cli::cli_abort(
+      c("x" = "`test_type` argument must be one of: \"wilcox.test\", \"t.test\", or \"none\"")
+    )
+  }
+
+  if (!facet_by_sex %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`facet_by_sex` argument must be either \"yes\" or \"no\""))
+  }
+
+  if (facet_by_sex == "yes" & included_sexes != "both") {
+    cli::cli_abort(
+      c("x" = "You set `facet_by_sex` to 'yes' but `included_sexes` is not 'both'. Faceting by sex is only possible when `included_sexes` is 'both'")
+    )
+  }
+
+  treatment_info <- treatment_colour_theme %>%
+    dplyr::filter(.data$category == plot_category &
+                    .data$treatment == plot_treatment)
+  plot_colour <-  treatment_info %>%
+    dplyr::pull(.data$colours)
+
+  plot_colour_pale <- treatment_info %>%
+    dplyr::pull(.data$very_pale_colours)
+
+
+  if (included_sexes == "male") {
+    plot_data <- data %>%
+      dplyr::filter(.data$sex == male_label)
+
+    sex_annotation <- "-males-only"
+
+    plot_shape <- as.numeric(theme_options["male_shape", "value"])
+  }
+
+
+  if (included_sexes == "female") {
+    plot_data <- data %>%
+      dplyr::filter(.data$sex == female_label)
+
+    sex_annotation <- "-females-only"
+
+    plot_shape <- as.numeric(theme_options["female_shape", "value"])
+  }
+
+  if (included_sexes == "both") {
+    plot_data <- data
+    sex_annotation <- ""
+
+    plot_shape <- as.numeric(theme_options["both_sexes_shape", "value"])
+
+
+    if (facet_by_sex == "yes") {
+      if (left_sex == "Female") {
+        plot_data <- plot_data %>%
+          dplyr::mutate(sex = factor(.data$sex, levels = c(female_label, male_label)))
+      }
+
+      if (left_sex == "Male") {
+        plot_data <- plot_data %>%
+          dplyr::mutate(sex = factor(.data$sex, levels = c(male_label, female_label)))
+      }
+
+      facet_label <- "-faceted-by-sex"
+    }
+
+    if (facet_by_sex == "no") {
+      facet_label <- ""
+    }
+  }
+
+
+
+  if (is.null(y_variable_signif_brackets)) {
+    y_var_brackets <- "mean_P1_transformed"
+  } else {
+    y_var_brackets <- y_variable_signif_brackets
+  }
+
+  plot_data <-  plot_data %>%
+    dplyr::filter(.data$treatment == plot_treatment) %>%
+    dplyr::filter(.data$category == plot_category) %>%
+    dplyr::mutate(
+      treatment = stringr::str_replace_all(
+        .data$treatment,
+        stats::setNames(treatment_info$display_names, treatment_info$treatment)
+      ),
+      treatment = factor(.data$treatment, levels = treatment_info$display_names)
+    ) %>%
+    dplyr::filter(.data$interval %in% c(baseline_interval, post_hormone_interval))
+
+  facet_label <- ""
+
+  connected_line_plot <- plot_data %>%
+    ggplot2::ggplot(ggplot2::aes(x = .data$interval, y = .data$mean_P1_transformed)) +
+    ggplot2::geom_hline(
+      yintercept = 100,
+      linetype = "dashed",
+      colour = "#c7c7c7"
+    ) +
+    ggplot2::geom_line(ggplot2::aes(group = .data$letter),
+                       color = theme_options["connecting_line_colour", "value"],
+                       linewidth = 0.4)
+
+  if (facet_by_sex == "yes") {
+    connected_line_plot <- connected_line_plot +
+      ggplot2::geom_point(ggplot2::aes(shape = .data$sex, colour = .data$sex), size = geom_point_size) +
+      ggplot2::scale_shape_manual(values = if (left_sex == "Female") {
+        c(as.numeric(theme_options["female_shape", "value"]),
+          as.numeric(theme_options["male_shape", "value"]))
+      } else {
+        c(as.numeric(theme_options["male_shape", "value"]),
+          as.numeric(theme_options["female_shape", "value"]))
+      }) +
+      ggplot2::scale_color_manual(
+        values = c(plot_colour, plot_colour_pale),
+        breaks = c(male_label, female_label)
+      ) +
+      ggplot2::guides(shape = "none", colour = "none") +
+      ggplot2::facet_wrap( ~ .data$sex)
+  }
+
+  if (facet_by_sex == "no") {
+    connected_line_plot <- connected_line_plot +
+      ggplot2::geom_point(color = plot_colour,
+                          size = geom_point_size,
+                          shape = plot_shape)
+  }
+
+
+  connected_line_plot <- connected_line_plot +
+    ggplot2::labs(y = y_axis_title, x = NULL) +
+    ggplot_theme +
+    ggplot2::scale_x_discrete(labels = c(baseline_label, post_hormone_label))
+
+
+  if (test_type != "none") {
+    connected_line_plot <- connected_line_plot +
+      ggsignif::geom_signif(
+        ggplot2::aes(x = .data$interval, y = .data[[y_var_brackets]]),
+        comparisons = list(c(baseline_interval, post_hormone_interval)),
+        test = test_type,
+        test.args = list(paired = TRUE),
+        map_signif_level = map_signif_level_values,
+        family = geom_signif_family,
+        vjust = -0.3,
+        textsize = geom_signif_text_size,
+        size = geom_signif_size
+      ) +
+      ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, 0.2)))
+  }
+
+  if (large_axis_text == "yes") {
+    connected_line_plot <- connected_line_plot +
+      ggplot2::theme(
+        axis.text.x = ggplot2::element_text(size = 24, margin = ggplot2::margin(t = 10)),
+        axis.title.y = ggplot2::element_text(size = 28, face = "plain"),
+        legend.text = ggplot2::element_text(size = 18),
+        legend.key.spacing.y = grid::unit(0.5, "cm")
+      )
+  }
+
+  if (save_plot_png == "yes") {
+    ggplot2::ggsave(
+      plot = connected_line_plot,
+      path = here::here("Figures/Evoked-currents"),
+      file = paste0(
+        "Connected-line-plots-category-",
+        plot_category,
+        "-",
+        plot_treatment,
+        sex_annotation,
+        facet_label,
+        filename_suffix,
+        ".png"
+      ),
+      width = 7,
+      height = 5,
+      units = "in",
+      dpi = 300
+    )
+  }
+
+  return(connected_line_plot)
+
+}
+
+#' Display p-values as significance stars or numbers
+#'
+#' `return_p_value_as_stars()` is useful to display p-values in a plot. It inserts into the `map_signif_level_values` argument of any plotting function in this `patchclampplotteR` package (which is really the `map_signif_level` of `ggsignif::geom_signif()`). `map_signif_level_values = FALSE` or `map_signif_level_values = TRUE` will display only stars or only numbers. This function will display stars for values <= 0.05 like usual, but it will display raw numeric values is the p-value is between 0.05 and 0.1. This is for transparency when significance values are close to 0.05 threshold. The upper threshold can be adjusted.
+#'
+#' @param p A numeric value which is the p-value.
+#' @param upper_threshold A numeric value describing the upper value cutoff when p-values will no longer be displayed as numeric, but "ns" instead. Defaults to 0.1 so p-values between 0.05 and 0.1 will display as numbers.
+#'
+#' @returns A numeric or character value.
+#' @export
+#'
+#' @examples
+#'
+#'
+#' # Simplest use
+#'
+#' # Use for `map_signif_level_values`
+#' # in any plotting function in `patchclampplotteR`.
+#'
+#' # This will use the default `upper_threshold` value of 0.1.
+#'
+#' plot_change_as_connected_lines(data = sample_summary_eEPSC_df$summary_data,
+#'                      plot_treatment = "Control",
+#'                      plot_category = 2,
+#'                      included_sexes = "both",
+#'                      map_signif_level_values = return_p_value_as_stars,
+#'                      post_hormone_interval = "t20to25",
+#'                      theme_options = sample_theme_options,
+#'                      treatment_colour_theme = sample_treatment_names_and_colours)
+#'
+#' # Change upper_threshold
+#'
+#' # To change this value, you must use an anonymous function
+#' # because `map_signif_level` requires a numeric, single argument `p`.
+#'
+#' plot_change_as_connected_lines(data = sample_summary_eEPSC_df$summary_data,
+#'                      plot_treatment = "Control",
+#'                      plot_category = 2,
+#'                      included_sexes = "both",
+#'                      map_signif_level_values = function(p) return_p_value_as_stars(p,
+#'                                                                upper_threshold = 0.2),
+#'                      post_hormone_interval = "t20to25",
+#'                      theme_options = sample_theme_options,
+#'                      treatment_colour_theme = sample_treatment_names_and_colours)
+
+
+return_p_value_as_stars <- function(p, upper_threshold = 0.1) {
+  if (p <= 0.0001) {
+    return("****")
+  } else {
+    if (p <= 0.001) {
+      return("***")
+    } else {
+      if (p <= 0.01) {
+        return("**")
+      } else {
+        if (p <= 0.05) {
+          return("*")
+        } else {
+          if (p < upper_threshold & p > 0.05) {
+            return(signif(p, 2))
+          } else {
+            return("ns")
+          }
+        }
+      }
+    }
+  }
 }
 
 

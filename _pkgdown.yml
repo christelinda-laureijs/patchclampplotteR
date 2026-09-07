@@ -61,6 +61,8 @@ reference:
   - plot_baseline_data
   - plot_percent_change_comparisons
   - make_facet_plot
+  - plot_change_as_connected_lines
+  - return_p_value_as_stars
 
 - subtitle: Spontaneous currents only
   contents:
