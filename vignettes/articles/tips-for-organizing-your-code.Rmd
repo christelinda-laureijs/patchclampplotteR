@@ -20,7 +20,6 @@ knitr::opts_chunk$set(
 library(dplyr)
 library(ggplot2)
 library(patchclampplotteR)
-library(patchwork)
 ```
 
 When analyzing electrophysiology data, you will often end up with an
@@ -438,18 +437,20 @@ ap_trace <- plot_AP_trace(
   begin = 0,
   end = 0.8
 )
-
-
 ```
 
 
 Here is an example. I used `fig.width = 12, fig.height = 10` in the chunk options.
 
-```{r basic-patchwork-theme, echo = T, fig.width = 12, fig.height = 10}
+```{r basic-patchwork-theme, echo = T, eval=F, fig.width = 12, fig.height = 10}
 (raw_plot + summary_plot)/
   (ppr_plot + ap_trace)
 ```
 
+
+```{r patchwork-example-1, fig.alt = "A screenshot of a figure with four subfigures arranged in a 2x2 grid."}
+knitr::include_graphics("figures/patchwork-example-1.png")
+```
 
 To add figure captions, just add the `plot_annotation()` function. Previously I also defined a `ggplot` theme that makes the figure captions **bold**:
 
@@ -463,9 +464,13 @@ patchwork_theme <- theme(plot.tag = element_text(
 
 Use the `+` sign to add the `plot_annotation` and use the `&` symbol to add a ggplot theme (your own or a pre-built theme). 
 
-```{r sample-with-figure-numbers, echo = T, fig.width = 12, fig.height = 10}
-(raw_plot + summary_plot)/
+```{r sample-with-figure-numbers, echo = T, eval = FALSE, fig.width = 12, fig.height = 10}
+patchwork_example_2 <- (raw_plot + summary_plot)/
   (ppr_plot + ap_trace) + plot_annotation(tag_levels = "A") & patchwork_theme
+```
+
+```{r patchwork-example-2, fig.alt = "A screenshot of a figure with four subfigures arranged in a 2x2 grid. This time, each subfigure has a capital letter label."}
+knitr::include_graphics("figures/patchwork-example-2.png")
 ```
 
 To add a figure caption, use the `fig.cap = "Insert figure caption here"` chunk option. 
