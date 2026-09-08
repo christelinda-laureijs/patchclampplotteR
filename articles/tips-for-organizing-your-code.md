@@ -350,8 +350,72 @@ then present multiple plots in one chunk by adding them together.
 
 For example `p1 + p2` will result in two plots displayed side-by-side,
 and `(p1 + p2)/(p3 + p4)` will result in a grid of four plots arranged
-in a 2 pattern. I encourage you to read the patchwork documentation for
-more guidelines.
+in a 2 pattern. I encourage you to read the [patchwork package
+website](https://patchwork.data-imaginist.com) for more useful tips!
+
+Here is an example. I used `fig.width = 12, fig.height = 10` in the
+chunk options.
+
+``` r
+
+(raw_plot + summary_plot)/
+  (ppr_plot + ap_trace)
+```
+
+![A screenshot of a figure with four subfigures arranged in a 2x2
+grid.](figures/patchwork-example-1.png)
+
+To add figure captions, just add the `plot_annotation()` function.
+Previously I also defined a `ggplot` theme that makes the figure
+captions **bold**:
+
+``` r
+
+patchwork_theme <- theme(plot.tag = element_text(
+  size = 18,
+  margin = margin(r = 8, b = 8),
+  face = "bold"
+))
+```
+
+Use the `+` sign to add the `plot_annotation` and use the `&` symbol to
+add a ggplot theme (your own or a pre-built theme).
+
+``` r
+
+patchwork_example_2 <- (raw_plot + summary_plot)/
+  (ppr_plot + ap_trace) + plot_annotation(tag_levels = "A") & patchwork_theme
+```
+
+![A screenshot of a figure with four subfigures arranged in a 2x2 grid.
+This time, each subfigure has a capital letter
+label.](figures/patchwork-example-2.png)
+
+To add a figure caption, use the
+`fig.cap = "Insert figure caption here"` chunk option.
+
+> Pro tip! If your figure caption gets too long, you can separate out
+> knitr chunk options onto separate lines using `#|`. I will show an
+> example below:
+
+    #| insulin-plots,
+    #| fig.cap = "Sample insulin plots A) Raw evoked current plot
+    #| B) Summary evoked current plot
+    #| C) PPR plot
+    #| D) Action potentials plot.",
+    #| out.width = "100%"
+
+    (raw_plot + summary_plot)/
+      (ppr_plot + ap_trace) + plot_annotation(tag_levels = "A") & patchwork_theme
+
+If your figure captions get too long, I highly recommend naming them as
+separate objects with names like `chapter_2_fig_1_cap` so you can easily
+refer to them.
+
+``` r
+
+chapter_2_fig_1_cap <- "Sample insulin plots A) Raw evoked current plot, B) Summary evoked current plot, C) PPR plot, D) Action potentials plot."
+```
 
 ## Tip 10: Showcase your work!
 
@@ -396,7 +460,7 @@ the html theme and enable a floating table of contents.
     ---
     title: "Plot Viewer"
     author: "Type your name here"
-    date: "September 07, 2026"
+    date: "September 08, 2026"
     output: 
       html_document:
         theme: cosmo
