@@ -12,12 +12,15 @@ knitr::opts_chunk$set(
   fig.align = "center",
   out.extra = "",
   out.width = "75%",
-  echo = FALSE
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
 )
 
 library(dplyr)
 library(ggplot2)
 library(patchclampplotteR)
+library(patchwork)
 ```
 
 When analyzing electrophysiology data, you will often end up with an
@@ -363,8 +366,130 @@ then present multiple plots in one chunk by adding them together.
 
 For example `p1 + p2` will result in two plots displayed side-by-side,
 and `(p1 + p2)/(p3 + p4)` will result in a grid of four plots arranged
-in a 2 \times 2 pattern. I encourage you to read the patchwork
-documentation for more guidelines.
+in a 2 \times 2 pattern. I encourage you to read the [patchwork package website](https://patchwork.data-imaginist.com) for more useful tips!
+
+
+```{r make-sample-plots}
+raw_plot <- plot_raw_current_data(
+  data = sample_raw_eEPSC_df %>% filter(letter == "AO"),
+  plot_treatment = "Control",
+  plot_category = 2,
+  current_type = "eEPSC",
+  y_variable = "P1",
+  pruned = "no",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+  theme_options = sample_theme_options,
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  save_plot_png = "no"
+)$AO + labs(title = NULL)
+
+
+summary_plot <- plot_summary_current_data(
+  data = sample_pruned_eEPSC_df$all_cells,
+  plot_category = 2,
+  plot_treatment = "Control",
+  current_type = "eEPSC",
+  y_variable = "amplitude",
+  hormone_added = "Insulin",
+  hormone_or_HFS_start_time = 5,
+  hormone_end_time = 25,
+  included_sexes = "both",
+  include_representative_trace = "yes",
+  representative_trace_filename = import_ext_data("Control-trace.png"),
+  y_axis_limit = 175,
+  signif_stars = "yes",
+  t_test_df_male = sample_eEPSC_t_test_df_male,
+  t_test_df_female = sample_eEPSC_t_test_df_female,
+  stars_position_male = 30,
+  stars_position_female = 70,
+  stars_colour_male = "#6600cc",
+  stars_colour_female = "#d6b8f5",
+  large_axis_text = "no",
+  shade_intervals = "no",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options
+)
+
+
+ppr_plot <- plot_PPR_data_single_treatment(
+  data = sample_PPR_df,
+  plot_treatment = "Control",
+  plot_category = 2,
+  baseline_label = "Baseline",
+  post_hormone_label = "Insulin",
+  included_sexes = "both",
+  facet_by_sex = "no",
+  test_type = "t.test",
+  large_axis_text = "no",
+  treatment_colour_theme = sample_treatment_names_and_colours,
+  theme_options = sample_theme_options,
+  save_plot_png = "no"
+)
+
+ap_trace <- plot_AP_trace(
+  data = sample_ap_abf_baseline,
+  sweeps = as.character(unique(sample_ap_abf_baseline$episode)),
+  colour_scale_option = "viridis",
+  plot_category = 2,
+  plot_treatment = "Control",
+  direction = -1,
+  option = "plasma",
+  begin = 0,
+  end = 0.8
+)
+
+
+```
+
+
+Here is an example. I used `fig.width = 12, fig.height = 10` in the chunk options.
+
+```{r basic-patchwork-theme, echo = T, fig.width = 12, fig.height = 10}
+(raw_plot + summary_plot)/
+  (ppr_plot + ap_trace)
+```
+
+
+To add figure captions, just add the `plot_annotation()` function. Previously I also defined a `ggplot` theme that makes the figure captions **bold**:
+
+```{r make-patchwork-theme, echo=T}
+patchwork_theme <- theme(plot.tag = element_text(
+  size = 18,
+  margin = margin(r = 8, b = 8),
+  face = "bold"
+))
+```
+
+Use the `+` sign to add the `plot_annotation` and use the `&` symbol to add a ggplot theme (your own or a pre-built theme). 
+
+```{r sample-with-figure-numbers, echo = T, fig.width = 12, fig.height = 10}
+(raw_plot + summary_plot)/
+  (ppr_plot + ap_trace) + plot_annotation(tag_levels = "A") & patchwork_theme
+```
+
+To add a figure caption, use the `fig.cap = "Insert figure caption here"` chunk option. 
+
+> Pro tip! If your figure caption gets too long, you can separate out knitr chunk options onto separate lines using `#|`. I will show an example below:
+
+```
+#| insulin-plots,
+#| fig.cap = "Sample insulin plots A) Raw evoked current plot
+#| B) Summary evoked current plot
+#| C) PPR plot
+#| D) Action potentials plot.",
+#| out.width = "100%"
+
+(raw_plot + summary_plot)/
+  (ppr_plot + ap_trace) + plot_annotation(tag_levels = "A") & patchwork_theme
+```
+
+If your figure captions get too long, I highly recommend naming them as separate objects with names like `chapter_2_fig_1_cap` so you can easily refer to them.
+
+```{r echo=T}
+chapter_2_fig_1_cap <- "Sample insulin plots A) Raw evoked current plot, B) Summary evoked current plot, C) PPR plot, D) Action potentials plot."
+```
+
 
 # Tip 10: Showcase your work!
 
