@@ -34,7 +34,7 @@ plot_change_as_connected_lines(
 )
 }
 \arguments{
-\item{data}{Paired pulse ratio data generated from \code{\link[=make_PPR_data]{make_PPR_data()}}.}
+\item{data}{Summary data to be plotted. This will be the output of \code{make_summary_current_data()} and will be third element of the list (\verb{$summary_data}). It will likely be in the form of \code{summary_eEPSC_df$summary_data}.}
 
 \item{baseline_interval}{A character value indicating the name of the
 interval used as the baseline. Defaults to \code{"t0to5"}, but can be changed.

@@ -3412,7 +3412,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' `ggsignif::geom_signif()`.
 #'
 #' @inheritParams plot_PPR_data_single_treatment
-#'
+#' @param data Summary data to be plotted. This will be the output of `make_summary_current_data()` and will be third element of the list (`$summary_data`). It will likely be in the form of `summary_eEPSC_df$summary_data`.
 #' @param y_variable_signif_brackets A character value. You should only use this if your data did not pass assumptions and you had to transform it. `y_variable_signif_brackets` should be the name of the column of `data` which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, leave this argument blank, and the function will automatically use the correct column associated with `y_variable`.
 #' @param geom_point_size A numeric value describing the size of the points on the plot. Defaults to `2`.
 #' @param baseline_interval A character value indicating the name of the
