@@ -42,8 +42,10 @@ plot_change_as_connected_lines(
 
 - data:
 
-  Paired pulse ratio data generated from
-  [`make_PPR_data()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/make_PPR_data.md).
+  Summary data to be plotted. This will be the output of
+  `make_summary_current_data()` and will be third element of the list
+  (`$summary_data`). It will likely be in the form of
+  `summary_eEPSC_df$summary_data`.
 
 - baseline_interval:
 

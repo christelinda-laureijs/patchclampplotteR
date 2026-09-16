@@ -460,7 +460,7 @@ the html theme and enable a floating table of contents.
     ---
     title: "Plot Viewer"
     author: "Type your name here"
-    date: "September 08, 2026"
+    date: "September 16, 2026"
     output: 
       html_document:
         theme: cosmo
