@@ -90,6 +90,9 @@ presented as mean +/- the standard error.</p>
 <span>  significance_display_method <span class="op">=</span> <span class="st">"stars"</span>,</span>
 <span>  geom_signif_text_size <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  geom_signif_family <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  geom_point_size_large_axis <span class="op">=</span> <span class="fl">1.3</span>,</span>
+<span>  geom_point_size <span class="op">=</span> <span class="fl">0.9</span>,</span>
+<span>  geom_point_alpha <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  t_test_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  t_test_df_male <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  t_test_df_female <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -115,7 +118,7 @@ presented as mean +/- the standard error.</p>
 
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>A dataframe containing pruned summary data for all cells. This is
-the third element of the list generated from <code><a href="make_pruned_EPSC_data.html">make_pruned_EPSC_data()</a></code>.</p></dd>
+the <code>$all_cells</code> element of the list generated from <code><a href="make_pruned_EPSC_data.html">make_pruned_EPSC_data()</a></code>.</p></dd>
 
 
 <dt id="arg-plot-category">plot_category<a class="anchor" aria-label="anchor" href="#arg-plot-category"></a></dt>
@@ -202,7 +205,7 @@ file. Use relative paths to specify files. For example, a figure in the <code>Fi
 
 
 <dt id="arg-position-dodge-size">position_dodge_size<a class="anchor" aria-label="anchor" href="#arg-position-dodge-size"></a></dt>
-<dd><p>A numeric value describing the distance that points should be dodged through <code><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html" class="external-link">ggplot2::position_dodge()</a></code>. Defaults to <code>0.1</code>.</p></dd>
+<dd><p>A numeric value describing the distance that points should be dodged through <code><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html" class="external-link">ggplot2::position_dodge()</a></code>. Defaults to <code>0</code>.</p></dd>
 
 
 <dt id="arg-annotation-x-min">annotation_x_min<a class="anchor" aria-label="anchor" href="#arg-annotation-x-min"></a></dt>
@@ -246,6 +249,18 @@ using <code><a href="perform_t_tests_for_summary_plot.html">perform_t_tests_for_
 
 <dt id="arg-geom-signif-family">geom_signif_family<a class="anchor" aria-label="anchor" href="#arg-geom-signif-family"></a></dt>
 <dd><p>A character value describing the font family used for the p-value annotations used by <code><a href="https://const-ae.github.io/ggsignif/reference/stat_signif.html" class="external-link">ggsignif::geom_signif()</a></code>. Defaults to <code>""</code> (empty, will use default system font), but can be replaced with a named font. Use a package like <code>extrafont</code> to load system fonts into R.</p></dd>
+
+
+<dt id="arg-geom-point-size-large-axis">geom_point_size_large_axis<a class="anchor" aria-label="anchor" href="#arg-geom-point-size-large-axis"></a></dt>
+<dd><p>A numeric value describing the <code>geom_point</code> size when you have set <code>large_axis_text = "yes"</code>. Defaults to 3.5.</p></dd>
+
+
+<dt id="arg-geom-point-size">geom_point_size<a class="anchor" aria-label="anchor" href="#arg-geom-point-size"></a></dt>
+<dd><p>A numeric value describing the typical <code>geom_point</code> size when you do not have <code>large_axis_text</code> enabled. Defaults to 0.9.</p></dd>
+
+
+<dt id="arg-geom-point-alpha">geom_point_alpha<a class="anchor" aria-label="anchor" href="#arg-geom-point-alpha"></a></dt>
+<dd><p>A numeric value describing the alpha of <code>geom_point</code> or <code>geom_pointrange</code>. Defaults to <code>0.7</code>.</p></dd>
 
 
 <dt id="arg-t-test-df">t_test_df<a class="anchor" aria-label="anchor" href="#arg-t-test-df"></a></dt>
@@ -357,7 +372,8 @@ currents.</p></li>
     <div class="dont-index"><p><code><a href="perform_t_tests_for_summary_plot.html">perform_t_tests_for_summary_plot()</a></code> which produces the significance
 stars appended to the plot.</p>
 <p><code><a href="make_pruned_EPSC_data.html">make_pruned_EPSC_data()</a></code> for the function that will produce the
-summary data used in this plot.</p></div>
+summary data used in this plot.</p>
+<p><code><a href="plot_change_as_connected_lines.html">plot_change_as_connected_lines()</a></code> to show this same data as lines connecting the "before" and "after" points.</p></div>
     </div>
 
     <div class="section level2">

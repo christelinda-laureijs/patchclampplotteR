@@ -148,7 +148,9 @@ plot_variance_comparison_data(
   p-values. If `TRUE`, p-values will be mapped with asterisks (e.g. \\
   for p \< 0.05, for p \< 0.01). If `FALSE`, raw p-values will display.
   You can also insert a list of custom mappings or a function. For
-  example, use
+  example, you can use the
+  [`return_p_value_as_stars()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/return_p_value_as_stars.md)
+  function. If you want to write your own function, write something like
   `map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}`
   to only display the p-values when they are below 0.1.
 

@@ -57,7 +57,15 @@ make_pruned_EPSC_data(
 
   Length of each interval (in minutes). Used to divide the dataset into
   broad ranges for statistical analysis. Defaults to `1` for one summary
-  point per minute.
+  point per minute. If you change this to `0.5` you will get 2 points
+  per minute, and if you change it to `0.2` you will get 5 points per
+  minute, and so on. You can also have values larger than 1 to plot
+  fewer points. For example, 5, will only plot a data point at 0, 5, 10
+  minutes, etc. You should ensure that this interval value is a clean
+  multiple of the maximum time point, or you will get `NA` for the
+  highest time point. For example, if your maximum time value is 20
+  minutes, you should use values that will divide evenly up to 20 (0.5,
+  0.2, 4, and 5 will work, but 0.1666 will not).
 
 - software:
 
@@ -103,7 +111,9 @@ logical names (e.g. `pruned_eEPSC_df$all_cells`). The dataframes are:
 
   - `interval_pruned` A character value describing the interval that was
     used for the pruning function. If the data are pruned per minute,
-    this will be "t0to1", "t1to2", "t2to3", etc.
+    this will be "t0to1", "t1to2", "t2to3", etc. You should ensure that
+    the interval is a multiple of the maximum time value so that you
+    will not have an `NA` value anywhere.
 
   - `mean_P1` The mean amplitude (in pA) of the first evoked current
     (P1) during a specific interval. This is an average of all data

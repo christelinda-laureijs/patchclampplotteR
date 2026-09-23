@@ -43,9 +43,8 @@ plot_change_as_connected_lines(
 - data:
 
   Summary data to be plotted. This will be the output of
-  `make_summary_current_data()` and will be third element of the list
-  (`$summary_data`). It will likely be in the form of
-  `summary_eEPSC_df$summary_data`.
+  `make_summary_current_data()` and will be `$summary_data` element of
+  the list (`$summary_data`).
 
 - baseline_interval:
 
@@ -131,7 +130,9 @@ plot_change_as_connected_lines(
   p-values. If `TRUE`, p-values will be mapped with asterisks (e.g. \\
   for p \< 0.05, for p \< 0.01). If `FALSE`, raw p-values will display.
   You can also insert a list of custom mappings or a function. For
-  example, use
+  example, you can use the
+  [`return_p_value_as_stars()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/return_p_value_as_stars.md)
+  function. If you want to write your own function, write something like
   `map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}`
   to only display the p-values when they are below 0.1.
 
@@ -227,6 +228,10 @@ project directory. The treatment will be included in the filename.
 If you specify a `test_type`, the function will perform a paired t-test
 or paired wilcox test and add brackets with significance stars through
 [`ggsignif::geom_signif()`](https://const-ae.github.io/ggsignif/reference/stat_signif.html).
+
+## See also
+
+[`plot_summary_current_data()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/plot_summary_current_data.md)
 
 ## Examples
 

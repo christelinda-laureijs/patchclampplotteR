@@ -114,7 +114,7 @@ high frequency stimulation. Defaults to <code>5</code>.</p></dd>
 <dt id="arg-interval-length">interval_length<a class="anchor" aria-label="anchor" href="#arg-interval-length"></a></dt>
 <dd><p>Length of each interval (in minutes). Used to divide
 the dataset into broad ranges for statistical analysis. Defaults to <code>1</code> for
-one summary point per minute.</p></dd>
+one summary point per minute. If you change this to <code>0.5</code> you will get 2 points per minute, and if you change it to <code>0.2</code> you will get 5 points per minute, and so on. You can also have values larger than 1 to plot fewer points. For example, 5, will only plot a data point at 0, 5, 10 minutes, etc. You should ensure that this interval value is a clean multiple of the maximum time point, or you will get <code>NA</code> for the highest time point. For example, if your maximum time value is 20 minutes, you should use values that will divide evenly up to 20 (0.5, 0.2, 4, and 5 will work, but 0.1666 will not).</p></dd>
 
 
 <dt id="arg-software">software<a class="anchor" aria-label="anchor" href="#arg-software"></a></dt>
@@ -150,7 +150,7 @@ contains columns already in the raw data, like <code>category</code>, <code>lett
 <code>sex</code> plus  new columns.</p>
 <p>New columns for evoked current data (<code>current_type == "eEPSC"</code>) include:</p><ul><li><p><code>interval_pruned</code> A character value describing the interval that was
 used for the pruning function. If the data are pruned per minute, this
-will be "t0to1", "t1to2", "t2to3", etc.</p></li>
+will be "t0to1", "t1to2", "t2to3", etc. You should ensure that the interval is a multiple of the maximum time value so that you will not have an <code>NA</code> value anywhere.</p></li>
 <li><p><code>mean_P1</code> The mean amplitude (in pA) of the first evoked current
 (P1) during a specific interval. This is an average of all data points
 within each interval. For example, the <code>mean_P1</code> for the interval "t0to1"

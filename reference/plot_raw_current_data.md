@@ -30,6 +30,9 @@ plot_raw_current_data(
   x_label = "Time (min)",
   treatment_colour_theme,
   geom_text_family = "",
+  geom_point_size = 1,
+  geom_point_size_raw_data = 3.5,
+  geom_point_alpha = 0.7,
   filename_suffix = "",
   save_plot_png = "no",
   ggplot_theme = patchclampplotteR_theme()
@@ -158,6 +161,24 @@ plot_raw_current_data(
   but can be replaced with a named font. Use a package like `extrafont`
   to load system fonts into R.
 
+- geom_point_size:
+
+  A numeric value describing the size of `geom_pointrange` for sEPSC
+  pruned amplitude values or `geom_point` size for sEPSC raw frequency
+  values. Defaults to `1`. Use `geom_point_size_raw_data` to specify the
+  point size for all other data types (eEPSC amplitude).
+
+- geom_point_size_raw_data:
+
+  A numeric value describing the size of `geom_point` for eEPSC data.
+  Defaults to `3.5`. If you are plotting sEPSC data, change
+  `geom_point_size` instead.
+
+- geom_point_alpha:
+
+  A numeric value describing the alpha of `geom_point` or
+  `geom_pointrange`. Defaults to `0.7`.
+
 - filename_suffix:
 
   Optional character value to add a suffix to the filename of the .png
@@ -227,7 +248,8 @@ plot_raw_current_data(
 
 # Plot pruned data
 
-# Note that this requires the third element of the list generated with `make_pruned_EPSC_data()`.
+# Note that this requires the `$individual_cells` element
+# of the list generated with `make_pruned_EPSC_data()`.
 
 plot_raw_current_data(
   data = sample_pruned_eEPSC_df$individual_cells,

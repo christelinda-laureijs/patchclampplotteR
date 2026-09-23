@@ -36,6 +36,9 @@ plot_summary_current_data(
   significance_display_method = "stars",
   geom_signif_text_size = 5,
   geom_signif_family = "",
+  geom_point_size_large_axis = 1.3,
+  geom_point_size = 0.9,
+  geom_point_alpha = 1,
   t_test_df = NULL,
   t_test_df_male = NULL,
   t_test_df_female = NULL,
@@ -60,7 +63,7 @@ plot_summary_current_data(
 - data:
 
   A dataframe containing pruned summary data for all cells. This is the
-  third element of the list generated from
+  `$all_cells` element of the list generated from
   [`make_pruned_EPSC_data()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/make_pruned_EPSC_data.md).
 
 - plot_category:
@@ -183,7 +186,7 @@ plot_summary_current_data(
   A numeric value describing the distance that points should be dodged
   through
   [`ggplot2::position_dodge()`](https://ggplot2.tidyverse.org/reference/position_dodge.html).
-  Defaults to `0.1`.
+  Defaults to `0`.
 
 - annotation_x_min:
 
@@ -249,6 +252,21 @@ plot_summary_current_data(
   Defaults to `""` (empty, will use default system font), but can be
   replaced with a named font. Use a package like `extrafont` to load
   system fonts into R.
+
+- geom_point_size_large_axis:
+
+  A numeric value describing the `geom_point` size when you have set
+  `large_axis_text = "yes"`. Defaults to 3.5.
+
+- geom_point_size:
+
+  A numeric value describing the typical `geom_point` size when you do
+  not have `large_axis_text` enabled. Defaults to 0.9.
+
+- geom_point_alpha:
+
+  A numeric value describing the alpha of `geom_point` or
+  `geom_pointrange`. Defaults to `0.7`.
 
 - t_test_df:
 
@@ -396,6 +414,10 @@ which produces the significance stars appended to the plot.
 
 [`make_pruned_EPSC_data()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/make_pruned_EPSC_data.md)
 for the function that will produce the summary data used in this plot.
+
+[`plot_change_as_connected_lines()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/plot_change_as_connected_lines.md)
+to show this same data as lines connecting the "before" and "after"
+points.
 
 ## Examples
 
