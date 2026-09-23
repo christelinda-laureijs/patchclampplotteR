@@ -364,7 +364,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #' @inheritParams add_new_cells
 #' @param interval_length Length of each interval (in minutes). Used to divide
 #'   the dataset into broad ranges for statistical analysis. Defaults to `1` for
-#'   one summary point per minute.
+#'   one summary point per minute. If you change this to `0.5` you will get 2 points per minute, and if you change it to `0.2` you will get 5 points per minute, and so on. You can also have values larger than 1 to plot fewer points. For example, 5, will only plot a data point at 0, 5, 10 minutes, etc. You should ensure that this interval value is a clean multiple of the maximum time point, or you will get `NA` for the highest time point. For example, if your maximum time value is 20 minutes, you should use values that will divide evenly up to 20 (0.5, 0.2, 4, and 5 will work, but 0.1666 will not).
 #'
 #' @returns A list containing 3 dataframes that can be viewed and used for
 #'   further analyses in R. These dataframes are:
@@ -391,7 +391,7 @@ make_normalized_EPSC_data <- function(filename = "Data/Sample-eEPSC-data.csv",
 #'  \itemize{
 #'    \item `interval_pruned` A character value describing the interval that was
 #'    used for the pruning function. If the data are pruned per minute, this
-#'    will be "t0to1", "t1to2", "t2to3", etc.
+#'    will be "t0to1", "t1to2", "t2to3", etc. You should ensure that the interval is a multiple of the maximum time value so that you will not have an `NA` value anywhere.
 #'    \item `mean_P1` The mean amplitude (in pA) of the first evoked current
 #'    (P1) during a specific interval. This is an average of all data points
 #'    within each interval. For example, the `mean_P1` for the interval "t0to1"

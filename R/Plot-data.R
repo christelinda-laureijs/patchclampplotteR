@@ -478,6 +478,9 @@ plot_baseline_data <- function(data,
 #'   filename of the .png file created with this plot. Could be useful if you want to specify anything about the data (for example, to distinguish between recordings produced in MiniAnalysis
 #'   vs. Clampfit).
 #' @param geom_text_family A character value describing the font family used for the scale bar annotations. Defaults to `""` (empty, will use default system font), but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
+#' @param geom_point_size A numeric value describing the size of `geom_pointrange` for sEPSC pruned amplitude values or `geom_point` size for sEPSC raw frequency values. Defaults to `1`. Use `geom_point_size_raw_data` to specify the point size for all other data types (eEPSC amplitude).
+#' @param geom_point_size_raw_data A numeric value describing the size of `geom_point` for eEPSC data. Defaults to `3.5`. If you are plotting sEPSC data, change `geom_point_size` instead.
+#' @param geom_point_alpha A numeric value describing the alpha of `geom_point` or `geom_pointrange`. Defaults to `0.7`.
 #' @param colour_by_sex A character ("yes" or "no") describing if the colour should change based on sex. If "yes", the male data will be coloured according to the `colours` column of `treatment_colour_theme`, and female data will be coloured according to the `very_pale_colours` column of `treatment_colour_theme`. If "no", all plots will be coloured using the `colours` column.
 #'
 #' @returns A list of ggplot objects, where each list element is a scatterplot
@@ -512,7 +515,8 @@ plot_baseline_data <- function(data,
 #'
 #' # Plot pruned data
 #'
-#' # Note that this requires the third element of the list generated with `make_pruned_EPSC_data()`.
+#' # Note that this requires the `$individual_cells` element
+#' # of the list generated with `make_pruned_EPSC_data()`.
 #'
 #' plot_raw_current_data(
 #'   data = sample_pruned_eEPSC_df$individual_cells,
@@ -545,6 +549,9 @@ plot_raw_current_data <-
            x_label = "Time (min)",
            treatment_colour_theme,
            geom_text_family = "",
+           geom_point_size = 1,
+           geom_point_size_raw_data = 3.5,
+           geom_point_alpha = 0.7,
            filename_suffix = "",
            save_plot_png = "no",
            ggplot_theme = patchclampplotteR_theme()) {
@@ -835,8 +842,8 @@ plot_raw_current_data <-
             } else if (unique(plot_df$sex) == female_label) {
               female_plot_colour
             },
-            size = 1,
-            alpha = 1
+            size = geom_point_size,
+            alpha = geom_point_alpha
           )
       } else {
         list_of_plots[[i]] <- list_of_plots[[i]] +
@@ -854,15 +861,11 @@ plot_raw_current_data <-
               female_plot_colour
             },
             size = if (current_type == "sEPSC" & pruned == "no") {
-              1
+              geom_point_size
             } else {
-              3.5
+              geom_point_size_raw_data
             },
-            alpha = if (pruned == "yes") {
-              1
-            } else {
-              0.7
-            }
+            alpha = geom_point_alpha
           )
       }
 
@@ -1258,7 +1261,7 @@ make_facet_plot <- function(data,
 #' @inheritParams plot_raw_current_data
 #' @inheritParams plot_baseline_data
 #' @param data A dataframe containing pruned summary data for all cells. This is
-#'   the third element of the list generated from [make_pruned_EPSC_data()].
+#'   the `$all_cells` element of the list generated from [make_pruned_EPSC_data()].
 #' @param include_representative_trace A character (`"yes"` or `"no"`) describing if
 #'   a representative trace should be included as an overlay to the plot. This
 #'   pulls from a png file stored in `Figures/Representative-Traces/`". Please
@@ -1276,6 +1279,8 @@ make_facet_plot <- function(data,
 #' @param female_label A character value used to describe how females are encoded in the `sex` column of the dataframe used in `data`. This MUST match the value for female data in the `sex` column, and it must be consistent across data sheets. This must be consistent in all data sheets. Defaults to `"Female"`.
 #' @param y_axis_limit A numeric value describing the maximum value on the y-axis.
 #' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`. Defaults to `""` (empty, will use default system font), but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
+#' @param geom_point_size_large_axis A numeric value describing the `geom_point` size when you have set `large_axis_text = "yes"`. Defaults to 3.5.
+#' @param geom_point_size A numeric value describing the typical `geom_point` size when you do not have `large_axis_text` enabled. Defaults to 0.9.
 #' @param geom_signif_text_size A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to `8`.
 #' @param signif_stars A character (`"yes"` or `"no"`) describing if significance
 #'   stars should be included as an overlay in the plot. If `"yes"`, you must
@@ -1313,7 +1318,7 @@ make_facet_plot <- function(data,
 #' @param filename_suffix Optional character value to add a suffix to the
 #'   filename of the .png file created with this plot. Could be useful if you want to specify anything about the data (for example, to distinguish between recordings produced in MiniAnalysis
 #'   vs. Clampfit).
-#' @param position_dodge_size A numeric value describing the distance that points should be dodged through `ggplot2::position_dodge()`. Defaults to `0.1`.
+#' @param position_dodge_size A numeric value describing the distance that points should be dodged through `ggplot2::position_dodge()`. Defaults to `0`.
 #' @returns A ggplot object. If `save_plot_png == "yes"`, it will also generate
 #'   a .png file exported to `Figures/Evoked-currents/Output-summary-plots` or
 #'   `Figures/Spontaneous-currents/Output-summary-plots`, depending on the
@@ -1336,6 +1341,8 @@ make_facet_plot <- function(data,
 #'   stars appended to the plot.
 #' @seealso [make_pruned_EPSC_data()] for the function that will produce the
 #'   summary data used in this plot.
+#' @seealso [plot_change_as_connected_lines()] to show this same data as lines connecting the "before" and "after" points.
+#'
 #'
 #' @examples
 #'
@@ -1416,6 +1423,9 @@ plot_summary_current_data <- function(data,
                                       significance_display_method = "stars",
                                       geom_signif_text_size = 5,
                                       geom_signif_family = "",
+                                      geom_point_size_large_axis = 1.3,
+                                      geom_point_size = 0.9,
+                                      geom_point_alpha = 1,
                                       t_test_df = NULL,
                                       t_test_df_male = NULL,
                                       t_test_df_female = NULL,
@@ -1716,15 +1726,16 @@ plot_summary_current_data <- function(data,
       )
   }
 
+
   treatment_plot <- treatment_plot +
     ggplot2::geom_pointrange(
       ggplot2::aes(color = .data$sex, shape = .data$sex),
       size = if (large_axis_text == "yes") {
-        1.3
+        geom_point_size_large_axis
       } else {
-        0.9
+        geom_point_size
       },
-      alpha = 1,
+      alpha = geom_point_alpha,
       position = ggplot2::position_dodge(width = if (current_type == "eEPSC") {
         position_dodge_size
       } else {
@@ -2840,7 +2851,7 @@ plot_cv_data <- function(data,
 #' @param test_type A character (must be `"wilcox.test"`, `"t.test"` or `"none"`)
 #'   describing the statistical model used to create a significance bracket
 #'   comparing the pre- and post-hormone groups.
-#' @param map_signif_level_values A `TRUE/FALSE` value or a list of character values for mapping p-values. If `TRUE`, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If `FALSE`, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  `map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}` to only display the p-values when they are below 0.1.
+#' @param map_signif_level_values A `TRUE/FALSE` value or a list of character values for mapping p-values. If `TRUE`, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If `FALSE`, raw p-values will display. You can also insert a list of custom mappings or a function. For example, you can use the `return_p_value_as_stars()` function. If you want to write your own function, write something like `map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}` to only display the p-values when they are below 0.1.
 #' @param included_sexes A character value (`"both"`, `"male"` or `"female"`). Useful if you want to have a plot with data from one sex only. Defaults to `"both"`. If you choose a single sex, the resulting plot will have `"-males-only"` or `"-females-only"` in the file name.
 #' @param geom_signif_size A numeric value describing the size of the `geom_signif` bracket size. Defaults to `0.4`, which is a good thickness for most applications.
 #' @param geom_signif_family A character value describing the font family used for the p-value annotations used by `ggsignif::geom_signif()`. Defaults to `""` (empty value, will be replaced with default system font), but can be replaced with a named font. Use a package like `extrafont` to load system fonts into R.
@@ -3412,7 +3423,7 @@ plot_PPR_data_multiple_treatments <- function(data,
 #' `ggsignif::geom_signif()`.
 #'
 #' @inheritParams plot_PPR_data_single_treatment
-#' @param data Summary data to be plotted. This will be the output of `make_summary_current_data()` and will be third element of the list (`$summary_data`). It will likely be in the form of `summary_eEPSC_df$summary_data`.
+#' @param data Summary data to be plotted. This will be the output of `make_summary_current_data()` and will be `$summary_data` element of the list (`$summary_data`).
 #' @param y_variable_signif_brackets A character value. You should only use this if your data did not pass assumptions and you had to transform it. `y_variable_signif_brackets` should be the name of the column of `data` which has the transformed data (e.g. log-transformed data). Raw data will be plotted, but the significance brackets (and t-test/wilcox test) will use the transformed data. If you did not transform the data, leave this argument blank, and the function will automatically use the correct column associated with `y_variable`.
 #' @param geom_point_size A numeric value describing the size of the points on the plot. Defaults to `2`.
 #' @param baseline_interval A character value indicating the name of the
@@ -3427,6 +3438,8 @@ plot_PPR_data_multiple_treatments <- function(data,
 #'   project directory. The treatment will be included in the filename.
 #'
 #' @export
+#'
+#' @seealso [plot_summary_current_data()]
 #'
 #' @examples
 #'

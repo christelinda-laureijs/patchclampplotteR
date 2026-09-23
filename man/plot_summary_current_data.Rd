@@ -32,6 +32,9 @@ plot_summary_current_data(
   significance_display_method = "stars",
   geom_signif_text_size = 5,
   geom_signif_family = "",
+  geom_point_size_large_axis = 1.3,
+  geom_point_size = 0.9,
+  geom_point_alpha = 1,
   t_test_df = NULL,
   t_test_df_male = NULL,
   t_test_df_female = NULL,
@@ -52,7 +55,7 @@ plot_summary_current_data(
 }
 \arguments{
 \item{data}{A dataframe containing pruned summary data for all cells. This is
-the third element of the list generated from \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}.}
+the \verb{$all_cells} element of the list generated from \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}}.}
 
 \item{plot_category}{A numeric value specifying the category, which can be
 used to differentiate different protocol types. In the sample dataset for
@@ -107,7 +110,7 @@ specify the file-name in \code{representative_trace_filename}.}
 filename of the representative trace. This should be the name of a .png
 file. Use relative paths to specify files. For example, a figure in the \code{Figures/Representative-Traces} subfolder would be entered as \code{representative_trace_filename = "Figures/Representative-Traces/Category-2-Control-Trace.png"}.}
 
-\item{position_dodge_size}{A numeric value describing the distance that points should be dodged through \code{ggplot2::position_dodge()}. Defaults to \code{0.1}.}
+\item{position_dodge_size}{A numeric value describing the distance that points should be dodged through \code{ggplot2::position_dodge()}. Defaults to \code{0}.}
 
 \item{annotation_x_min}{A numeric value describing the minimum value on the x-axis for the representative trace. Defaults to \code{1}, which will place it at the lower left corner of the plot (when combined with the default value for \code{annotation_y_min}).}
 
@@ -131,6 +134,12 @@ using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary
 \item{geom_signif_text_size}{A numeric value describing the size of the text annotations (significance stars or p-values) on the plot. Defaults to \code{8}.}
 
 \item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to \code{""} (empty, will use default system font), but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
+
+\item{geom_point_size_large_axis}{A numeric value describing the \code{geom_point} size when you have set \code{large_axis_text = "yes"}. Defaults to 3.5.}
+
+\item{geom_point_size}{A numeric value describing the typical \code{geom_point} size when you do not have \code{large_axis_text} enabled. Defaults to 0.9.}
+
+\item{geom_point_alpha}{A numeric value describing the alpha of \code{geom_point} or \code{geom_pointrange}. Defaults to \code{0.7}.}
 
 \item{t_test_df}{A dataframe of t-test results, which has been generated
 using \code{\link[=perform_t_tests_for_summary_plot]{perform_t_tests_for_summary_plot()}}. Important note! The t-test
@@ -272,4 +281,6 @@ stars appended to the plot.
 
 \code{\link[=make_pruned_EPSC_data]{make_pruned_EPSC_data()}} for the function that will produce the
 summary data used in this plot.
+
+\code{\link[=plot_change_as_connected_lines]{plot_change_as_connected_lines()}} to show this same data as lines connecting the "before" and "after" points.
 }

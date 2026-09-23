@@ -38,7 +38,7 @@ high frequency stimulation. Defaults to \code{5}.}
 
 \item{interval_length}{Length of each interval (in minutes). Used to divide
 the dataset into broad ranges for statistical analysis. Defaults to \code{1} for
-one summary point per minute.}
+one summary point per minute. If you change this to \code{0.5} you will get 2 points per minute, and if you change it to \code{0.2} you will get 5 points per minute, and so on. You can also have values larger than 1 to plot fewer points. For example, 5, will only plot a data point at 0, 5, 10 minutes, etc. You should ensure that this interval value is a clean multiple of the maximum time point, or you will get \code{NA} for the highest time point. For example, if your maximum time value is 20 minutes, you should use values that will divide evenly up to 20 (0.5, 0.2, 4, and 5 will work, but 0.1666 will not).}
 
 \item{software}{A character (\code{"Clampfit"} or \code{"MiniAnalysis"}) describing what software tool was used to analyze the data in \code{new_raw_data_csv}. This is relevant when \code{data_type} is \code{"sEPSC"} because the exported data is different. Defaults to \code{"Clampfit"}.}
 
@@ -75,7 +75,7 @@ New columns for evoked current data (\code{current_type == "eEPSC"}) include:
 \itemize{
 \item \code{interval_pruned} A character value describing the interval that was
 used for the pruning function. If the data are pruned per minute, this
-will be "t0to1", "t1to2", "t2to3", etc.
+will be "t0to1", "t1to2", "t2to3", etc. You should ensure that the interval is a multiple of the maximum time value so that you will not have an \code{NA} value anywhere.
 \item \code{mean_P1} The mean amplitude (in pA) of the first evoked current
 (P1) during a specific interval. This is an average of all data points
 within each interval. For example, the \code{mean_P1} for the interval "t0to1"

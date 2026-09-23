@@ -59,7 +59,7 @@ will likely change this to the hormone or protocol name.}
 describing the statistical model used to create a significance bracket
 comparing the pre- and post-hormone groups.}
 
-\item{map_signif_level_values}{A \code{TRUE/FALSE} value or a list of character values for mapping p-values. If \code{TRUE}, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If \code{FALSE}, raw p-values will display. You can also insert a list of custom mappings or a function. For example, use  \code{map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}} to only display the p-values when they are below 0.1.}
+\item{map_signif_level_values}{A \code{TRUE/FALSE} value or a list of character values for mapping p-values. If \code{TRUE}, p-values will be mapped with asterisks (e.g. \* for p < 0.05, for p < 0.01). If \code{FALSE}, raw p-values will display. You can also insert a list of custom mappings or a function. For example, you can use the \code{return_p_value_as_stars()} function. If you want to write your own function, write something like \code{map_signif_level_values = function(p) if (p < 0.1) {round(p, 3)} else {"ns"}} to only display the p-values when they are below 0.1.}
 
 \item{geom_signif_family}{A character value describing the font family used for the p-value annotations used by \code{ggsignif::geom_signif()}. Defaults to \code{""} (empty value, will be replaced with default system font), but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
