@@ -3967,7 +3967,10 @@ plot_AP_comparison <-
         } else {
           c(as.numeric(theme_options["male_shape", "value"]), as.numeric(theme_options["female_shape", "value"]))
         }) +
-        ggplot2::scale_color_manual(values = c(plot_colour, plot_colour_pale)) +
+        ggplot2::scale_color_manual(
+          values = c(plot_colour, plot_colour_pale),
+          breaks = c(male_label, female_label)
+        ) +
         ggplot2::guides(shape = "none") +
         ggplot2::stat_summary(
           ggplot2::aes(shape = .data$sex),
@@ -3998,8 +4001,7 @@ plot_AP_comparison <-
         family = geom_signif_family,
         vjust = -0.3,
         textsize = geom_signif_text_size,
-        size = geom_signif_size,
-        color = theme_options["baseline_group_colour", "value"]
+        size = geom_signif_size
       ) +
         ggplot2::scale_y_continuous(expand = ggplot2::expansion(mult = c(0.2, 0.2)))
     }
