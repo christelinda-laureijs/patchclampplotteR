@@ -232,7 +232,22 @@ included in the filename.
 7.  Import the file into R using
     [`import_ABF_file()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/import_ABF_file.md).
 
-8.  Insert this into the `data` argument.
+8.  Insert the stored abf fiile into the `data` argument of this
+    function.
+
+9.  Double-check that the plot x- and y-limits are not cutting off the
+    data.
+
+10. Adjust arguments like the `trace_annotation` and `plot_colour`.
+
+11. Try generating separate plots for both the baseline and
+    post-hormone/treatment conditions.
+
+12. You can later assemble them into a full figure using `p1 + p2`
+    notation with the `patchwork` library.
+
+13. If you keep the limits and scales the same for both plots, you can
+    hide the scale bar for one of the traces.
 
 This function is quite similar to
 [`plot_spontaneous_current_trace()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/plot_spontaneous_current_trace.md).
@@ -253,7 +268,7 @@ limits and scale!
 
 plot_evoked_current_trace(
 data = sample_evoked_current_trace_abf,
-include_scale_bar = "no",
+include_scale_bar = "yes",
 k_value = 100,
 include_scale_bar_label = "no",
 trace_annotation = "Baseline"

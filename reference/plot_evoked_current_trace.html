@@ -230,7 +230,12 @@ project directory, with the <code>filename</code> characters included in the fil
 <li><p>Flatten the stimulus artifacts by clicking on <code>Analyze</code> -&gt; <code>Force values</code>. Set the <code>Value to assign</code> as the <code>Mean between cursors 1..2, and region to force as </code>Cursors 3..4`.</p></li>
 <li><p>Save this file as a new <code>.abf</code> file with a different name than the original file.</p></li>
 <li><p>Import the file into R using <code><a href="import_ABF_file.html">import_ABF_file()</a></code>.</p></li>
-<li><p>Insert this into the <code>data</code> argument.</p></li>
+<li><p>Insert the stored abf fiile into the <code>data</code> argument of this function.</p></li>
+<li><p>Double-check that the plot x- and y-limits are not cutting off the data.</p></li>
+<li><p>Adjust arguments like the <code>trace_annotation</code> and <code>plot_colour</code>.</p></li>
+<li><p>Try generating separate plots for both the baseline and post-hormone/treatment conditions.</p></li>
+<li><p>You can later assemble them into a full figure using <code>p1 + p2</code> notation with the <code>patchwork</code> library.</p></li>
+<li><p>If you keep the limits and scales the same for both plots, you can hide the scale bar for one of the traces.</p></li>
 </ol><p>This function is quite similar to <code><a href="plot_spontaneous_current_trace.html">plot_spontaneous_current_trace()</a></code>.
 Some of the default values for plot ranges (e.g. <code>plot_x_min</code> and <code>plot_x_max</code>)
 are set to automatically be within the range of the evoked current trace.
@@ -249,7 +254,7 @@ that they all use the same plot limits and scale!</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">plot_evoked_current_trace</span><span class="op">(</span></span></span>
 <span class="r-in"><span>data <span class="op">=</span> <span class="va">sample_evoked_current_trace_abf</span>,</span></span>
-<span class="r-in"><span>include_scale_bar <span class="op">=</span> <span class="st">"no"</span>,</span></span>
+<span class="r-in"><span>include_scale_bar <span class="op">=</span> <span class="st">"yes"</span>,</span></span>
 <span class="r-in"><span>k_value <span class="op">=</span> <span class="fl">100</span>,</span></span>
 <span class="r-in"><span>include_scale_bar_label <span class="op">=</span> <span class="st">"no"</span>,</span></span>
 <span class="r-in"><span>trace_annotation <span class="op">=</span> <span class="st">"Baseline"</span></span></span>
