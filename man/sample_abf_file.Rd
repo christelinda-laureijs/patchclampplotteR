@@ -3,7 +3,7 @@
 \docType{data}
 \name{sample_abf_file}
 \alias{sample_abf_file}
-\title{Evoked current recording excerpt}
+\title{Evoked current recording excerpt for spontaneous current plot demonstration}
 \format{
 An Axon Binary Format (.abf) file with 43061 observations of 3
 variables.
@@ -16,7 +16,7 @@ variables.
 \description{
 This is an excerpt from a raw recording of evoked currents exported from
 Clampfit as an .abf file. It was then converted into a regular dataframe using the \code{\link[=import_ABF_file]{import_ABF_file()}}
-function. To reduce the package installation size, I kept only three columns from the original file. This dataset is used to demonstrate the
+function. To reduce the package installation size, I kept only three columns from the original file, and filtered it to data from 0.95 to 3.05 minutes. This dataset is used to demonstrate the
 \code{\link[=plot_spontaneous_current_trace]{plot_spontaneous_current_trace()}} function.
 }
 \examples{

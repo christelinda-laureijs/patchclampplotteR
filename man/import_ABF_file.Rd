@@ -37,6 +37,9 @@ To export a flattened \code{.abf} file as a \code{.csv} file, you can use \code{
 }
 \examples{
 
+# Important! Replace `import_ext_data` with `here`.
+# The `import_ext_data` is just here to make the example dataset in this package work.
+
 import_ABF_file(import_ext_data("sample_abf.abf"), recording_mode = "voltage_clamp")
 
 # To export this dataset as a csv use `fwrite()`

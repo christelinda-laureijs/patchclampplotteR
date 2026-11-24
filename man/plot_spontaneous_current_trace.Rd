@@ -67,37 +67,36 @@ will be added to the plot. Allowed values are \code{"yes"} and \code{"no"}.}
 
 \item{scale_bar_label_size}{A numeric value describing the size of the scale bar annotation text. Defaults to 4.}
 
-\item{trace_annotation}{A character value (e.g. \code{"Baseline"}) that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to \code{"Baseline"}.}
+\item{trace_annotation}{A character value (e.g. \code{"Baseline"}) that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to \code{""} for blank.}
 
-\item{trace_annotation_x_position}{A numeric value for the location of the \code{trace_annotation} on the x-axis. Defaults to \code{1}.}
+\item{trace_annotation_x_position}{A numeric value for the location of the \code{trace_annotation} on the x-axis.}
 
-\item{trace_annotation_y_position}{A numeric value for the location of the \code{trace_annotation} on the y-axis. Defaults to \code{6}.}
+\item{trace_annotation_y_position}{A numeric value for the location of the \code{trace_annotation} on the y-axis.}
 
 \item{geom_text_family}{A character value describing the font family used for the scale bar annotations. Defaults to \code{""} (empty, will use default system font), but can be replaced with a named font. Use a package like \code{extrafont} to load system fonts into R.}
 
-\item{geom_text_colour}{A character value describing the colour of the \code{trace_annotation} text. Defaults to \code{"#000000"}.}
+\item{geom_text_colour}{A character value describing the colour of the \code{trace_annotation} text. Defaults to \code{"#000000"}, but you can match it to \code{plot_colour} for consistency.}
 
 \item{geom_text_size}{A numeric value describing the size of the \code{trace_annotation} text. Defaults to \code{5}.}
 
 \item{plot_episode}{A character value describing the sweep (e.g. \code{epi1}) that
 will be used for the plot.}
 
-\item{trace_thickness}{A numeric value describing the thickness of the line.}
+\item{trace_thickness}{A numeric value describing the thickness of the trace line. Defaults to \code{0.8}.}
 
 \item{scale_bar_x_start}{A numeric value (in seconds) describing the x-axis position of
-the scale bar (default is \code{1.25}).}
+the scale bar.}
 
 \item{scale_bar_x_length}{A numeric value describing the horizontal span (in
 seconds) of the scale bar. This will automatically be converted and
-displayed in milliseconds (default is \code{0.5}).}
+displayed in milliseconds (default is \code{0.2} = 200 ms).}
 
-\item{scale_bar_y_length}{A numeric value describing the vertical span (in
-pA) of the scale bar (default is \code{20}).}
+\item{scale_bar_y_length}{A numeric value describing the vertical span (in pA) of the scale bar (default is \code{20} pA).}
 
 \item{scale_bar_y_start}{A numeric value describing the y-axis position (in pA) of
-the scale bar (default is \code{15}).}
+the scale bar.}
 
-\item{scale_bar_linewidth}{A numeric value describing the thickness of the scalebar line (default is \code{0.4}).}
+\item{scale_bar_linewidth}{A numeric value describing the thickness of the scalebar line (default is \code{0.75}).}
 
 \item{scale_bar_label_y_nudge}{An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to \code{1.5}.}
 
@@ -108,10 +107,10 @@ the scale bar (default is \code{15}).}
 (in seconds). Defaults to \code{3}.}
 
 \item{plot_y_min}{A numeric value describing the minimum value on the y-axis
-(in pA). Defaults to \code{-80}. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!}
+(in pA). Defaults to \code{-60}. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!}
 
 \item{plot_y_max}{A numeric value describing the maximum value on the y-axis
-(in pA). Defaults to \code{5}. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!}
+(in pA). Defaults to \code{15}. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!}
 
 \item{filename_suffix}{Optional character value to add a suffix to the
 filename of the .png file created with this plot. Could be useful if you

@@ -66,11 +66,11 @@ NULL
 # Sample ABF -----
 
 
-#' Evoked current recording excerpt
+#' Evoked current recording excerpt for spontaneous current plot demonstration
 #'
 #' This is an excerpt from a raw recording of evoked currents exported from
 #' Clampfit as an .abf file. It was then converted into a regular dataframe using the [import_ABF_file()]
-#' function. To reduce the package installation size, I kept only three columns from the original file. This dataset is used to demonstrate the
+#' function. To reduce the package installation size, I kept only three columns from the original file, and filtered it to data from 0.95 to 3.05 minutes. This dataset is used to demonstrate the
 #' [plot_spontaneous_current_trace()] function.
 #'
 #' @name sample_abf_file
@@ -98,6 +98,40 @@ NULL
 #'
 #' @seealso [plot_spontaneous_current_trace()]
 NULL
+
+
+
+#' Evoked current recording excerpt for evoked trace demonstration
+#'
+#' This is an excerpt from a raw recording of evoked currents exported from
+#' Clampfit as an .abf file. It was then converted into a regular dataframe using the [import_ABF_file()]
+#' function. To reduce the package installation size, I kept only data between 0.55 and 0.63 seconds (reducing it from 50000 rows to 801 rows). This dataset is used to demonstrate the
+#' [plot_evoked_current_trace()] function.
+#'
+#' @name sample_evoked_current_trace_abf
+#' @docType data
+#' @format An Axon Binary Format (.abf) file with 801 observations of 3
+#' variables.
+#' \describe{
+#'  \item{episode}{A factor representing the sweep, such as "epi1".}
+#'  \item{current}{Numeric value representing current amplitude in pA.}
+#'  \item{time_sec}{Time in seconds.}
+#' }
+#' @keywords data
+#' @examples
+#'
+#' plot_evoked_current_trace(
+#' data = sample_evoked_current_trace_abf,
+#' include_scale_bar = "no",
+#' k_value = 100,
+#' include_scale_bar_label = "no",
+#' trace_annotation = "Baseline"
+#' )
+#'
+#' @seealso [plot_evoked_current_trace()]
+NULL
+
+
 
 #' Action potential baseline recording
 #'

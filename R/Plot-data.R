@@ -5239,31 +5239,30 @@ plot_spontaneous_current_parameter_comparison <-
 #' @param plot_episode A character value describing the sweep (e.g. `epi1`) that
 #'   will be used for the plot.
 #' @param scale_bar_x_start A numeric value (in seconds) describing the x-axis position of
-#'   the scale bar (default is `1.25`).
+#'   the scale bar.
 #' @param scale_bar_x_length A numeric value describing the horizontal span (in
 #'   seconds) of the scale bar. This will automatically be converted and
-#'   displayed in milliseconds (default is `0.5`).
+#'   displayed in milliseconds (default is `0.2` = 200 ms).
 #' @param scale_bar_y_start A numeric value describing the y-axis position (in pA) of
-#'   the scale bar (default is `15`).
-#' @param scale_bar_y_length A numeric value describing the vertical span (in
-#'   pA) of the scale bar (default is `20`).
-#' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is `0.4`).
-#' @param trace_annotation A character value (e.g. `"Baseline"`) that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to `"Baseline"`.
-#' @param trace_annotation_x_position A numeric value for the location of the `trace_annotation` on the x-axis. Defaults to `1`.
-#' @param trace_annotation_y_position A numeric value for the location of the `trace_annotation` on the y-axis. Defaults to `6`.
+#'   the scale bar.
+#' @param scale_bar_y_length A numeric value describing the vertical span (in pA) of the scale bar (default is `20` pA).
+#' @param scale_bar_linewidth A numeric value describing the thickness of the scalebar line (default is `0.75`).
+#' @param trace_annotation A character value (e.g. `"Baseline"`) that will be added as text on the plot. Useful for labelling traces for publications and presentations. Defaults to `""` for blank.
+#' @param trace_annotation_x_position A numeric value for the location of the `trace_annotation` on the x-axis.
+#' @param trace_annotation_y_position A numeric value for the location of the `trace_annotation` on the y-axis.
 #' @param plot_colour A character value naming the colour of the plot.
-#' @param geom_text_colour A character value describing the colour of the `trace_annotation` text. Defaults to `"#000000"`.
+#' @param geom_text_colour A character value describing the colour of the `trace_annotation` text. Defaults to `"#000000"`, but you can match it to `plot_colour` for consistency.
 #' @param geom_text_size A numeric value describing the size of the `trace_annotation` text. Defaults to `5`.
 #' @param plot_x_min A numeric value describing the minimum value on the x-axis
 #'   (in seconds). Defaults to `1`.
 #' @param plot_x_max A numeric value describing the maximum value on the x-axis
 #'   (in seconds). Defaults to `3`.
 #' @param plot_y_min A numeric value describing the minimum value on the y-axis
-#'   (in pA). Defaults to `-80`. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
+#'   (in pA). Defaults to `-60`. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
 #' @param plot_y_max A numeric value describing the maximum value on the y-axis
-#'   (in pA). Defaults to `5`. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
+#'   (in pA). Defaults to `15`. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
 #' @param scale_bar_label_y_nudge An optional numeric value that will add additional padding between the scale bar x-axis label and the scale bar. Defaults to `1.5`.
-#' @param trace_thickness A numeric value describing the thickness of the line.
+#' @param trace_thickness A numeric value describing the thickness of the trace line. Defaults to `0.8`.
 #' @returns A ggplot object. If `save_plot_png` is defined as "yes", it will also
 #'   generate a .png file in the folder
 #'   `Figures/Spontaneous-currents/Representative-Traces` relative to the
@@ -5411,6 +5410,216 @@ plot_spontaneous_current_trace <-
 
     representative_traces_plot
   }
+
+
+
+
+#' Plot an evoked current trace
+#'
+#' This function allows you to generate an evoked current trace (averaged) from an `.abf` file, such as the representative traces seen above summary plots [plot_summary_current_data()]. Follow these steps:
+#'
+#'  1. Open a recording file in Clampfit, and select the traces you would like to average (e.g. 60 sweeps from the baseline).
+#'  2. Click on `Analyze` -> `Average Traces` and ensure that `Display resultant trace only` is checked. In `Select`, choose `All visible traces`.
+#'  3. The `.abf` file should now have only one sweep.
+#'  4. Surround a flat region of the trace with `cursors 1 and 2`, and the stimulus artifact with `cursors 3 and 4`.
+#'  5. Flatten the stimulus artifacts by clicking on `Analyze` -> `Force values`. Set the `Value to assign` as the `Mean between cursors 1..2, and region to force as `Cursors 3..4`.
+#'  6. Save this file as a new `.abf` file with a different name than the original file.
+#'  7. Import the file into R using [import_ABF_file()].
+#'  8. Insert this into the `data` argument.
+#'
+#'  This function is quite similar to [plot_spontaneous_current_trace()].
+#'  Some of the default values for plot ranges (e.g. `plot_x_min` and `plot_x_max`)
+#'  are set to automatically be within the range of the evoked current trace.
+#'  IMPORTANT! Do not forget to check that
+#'  your plot limits are not cutting off any part of your trace,
+#'  and ensure that if you only show the scale bars for one trace,
+#'  that they all use the same plot limits and scale!
+#'
+#' @inheritParams plot_spontaneous_current_trace
+#'
+#' @param filename A character value used for the filename when saving the ggplot object as a `.png`.
+#' @param geom_text_fontface A character value ("plain", "bold", "italic", "bold.italic"), used to describe the label defined in `text_annotation`. Defaults to "bold".
+#' @param scale_bar_x_length A numeric value describing the horizontal span (in seconds) of the scale bar. This will automatically be converted and displayed in milliseconds (default is `0.02` = 20 ms).
+#' @param scale_bar_y_length A numeric value describing the vertical span (in pA) of the scale bar (default is `50` pA).
+#' @param k_value Used define the `k` value used for smoothing in the GAM model. You can think of this as the number of nodes used in the model. Choose a higher value for a more detailed trace, and a lower number for a more smooth curve. Be careful not to distort the current trace by making this too smooth!
+#' @param plot_x_min A numeric value describing the minimum value on the x-axis
+#'   (in seconds). Defaults to `0.57`.
+#' @param plot_x_max A numeric value describing the maximum value on the x-axis
+#'   (in seconds). Defaults to `0.61`.
+#' @param plot_y_min A numeric value describing the minimum value on the y-axis
+#'   (in pA). Defaults to `-100`. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
+#' @param plot_y_max A numeric value describing the maximum value on the y-axis
+#'   (in pA). Defaults to `10`. !!Warning!! Be sure to check your raw current amplitudes and adjust this to avoid cutting off data!!
+#'
+#' @returns A ggplot object. If `save_plot_png` is defined as "yes", it will also
+#'   generate a .png file in the folder
+#'   `Figures/Representative-Traces` relative to the
+#'   project directory, with the `filename` characters included in the filename.
+#'
+#' @export
+#'
+#' @seealso [import_ABF_file()]
+#'
+#' @examples
+#'
+#' plot_evoked_current_trace(
+#' data = sample_evoked_current_trace_abf,
+#' include_scale_bar = "no",
+#' k_value = 100,
+#' include_scale_bar_label = "no",
+#' trace_annotation = "Baseline"
+#' )
+
+
+plot_evoked_current_trace <- function(data,
+                                       plot_colour = "#000000",
+                                       filename = "Cell-A-baseline-trace",
+                                       include_scale_bar = "yes",
+                                       include_scale_bar_label = "no",
+                                       scale_bar_label_size = 4,
+                                       trace_annotation = "",
+                                       trace_annotation_x_position = 0.57,
+                                       trace_annotation_y_position = 6,
+                                       geom_text_family = "",
+                                       geom_text_colour = "#000000",
+                                       geom_text_size = 9,
+                                       plot_episode = "epi1",
+                                       geom_text_fontface = "bold",
+                                       trace_thickness = 2,
+                                       scale_bar_x_start = 0.6,
+                                       scale_bar_x_length = 0.02,
+                                       scale_bar_y_length = 50,
+                                       scale_bar_y_start = -75,
+                                       k_value = 100,
+                                       scale_bar_linewidth = 0.75,
+                                       scale_bar_label_y_nudge = 1.5,
+                                       plot_x_min = 0.57,
+                                       plot_x_max = 0.61,
+                                       plot_y_min = -100,
+                                       plot_y_max = 10,
+                                       save_plot_png = "no",
+                                       ggplot_theme = patchclampplotteR_theme()) {
+  if (!include_scale_bar %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`include_scale_bar` argument must be one of: \"yes\" or \"no\""))
+  }
+
+  if (!include_scale_bar_label %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`include_scale_bar_label` argument must be one of: \"yes\" or \"no\""))
+  }
+
+  if (!save_plot_png %in% c("yes", "no")) {
+    cli::cli_abort(c("x" = "`save_plot_png` argument must be either \"yes\" or \"no\""))
+  }
+
+  representative_traces_plot_data <- data %>%
+    dplyr::filter(.data$episode == plot_episode) %>%
+    dplyr::filter(dplyr::between(.data$time_sec, plot_x_min, plot_x_max))
+
+  plot_max_y_value <- max(representative_traces_plot_data$current)
+
+  # Shifts whole plot up so that if the current is not at 0, it will move it there (allows multiple traces to have same height and be aligned vertically)
+
+
+  representative_traces_plot_data <- representative_traces_plot_data %>%
+    dplyr::mutate(current_transformed = .data$current - plot_max_y_value)
+
+  representative_traces_plot <- representative_traces_plot_data %>%
+    ggplot2::ggplot(ggplot2::aes(x = .data$time_sec, y = .data$current_transformed)) +
+    ggplot2::geom_smooth(
+      method = "gam",
+      se = FALSE,
+      color = plot_colour,
+      linewidth = trace_thickness,
+      formula = y ~ s(x, bs = "cs", k = k_value)
+    ) +
+    ggplot2::theme_void() +
+    ggplot2::annotate(
+      geom = "text",
+      x = trace_annotation_x_position,
+      y = trace_annotation_y_position,
+      fontface = geom_text_fontface,
+      label = trace_annotation,
+      family = geom_text_family,
+      size = geom_text_size,
+      color = geom_text_colour,
+      hjust = 0,
+      vjust = 0
+    )
+
+
+  if (!is.null(plot_y_min) & !is.null(plot_y_max)) {
+    representative_traces_plot <- representative_traces_plot +
+      ggplot2::coord_cartesian(ylim = c(plot_y_min, plot_y_max))
+  }
+  scale_bar_x_length_in_ms <- scale_bar_x_length * 1000
+
+  if (include_scale_bar == "yes") {
+    representative_traces_plot <- representative_traces_plot +
+      ggplot2::annotate(
+        "segment",
+        x = scale_bar_x_start,
+        xend = scale_bar_x_start + scale_bar_x_length,
+        y = scale_bar_y_start,
+        yend = scale_bar_y_start,
+        lwd = scale_bar_linewidth,
+        lineend = "square"
+      ) +
+      ggplot2::annotate(
+        "segment",
+        x = scale_bar_x_start,
+        xend = scale_bar_x_start,
+        y = scale_bar_y_start,
+        yend = scale_bar_y_start + scale_bar_y_length,
+        lwd = scale_bar_linewidth,
+        lineend = "square"
+      )
+
+
+    if (include_scale_bar_label == "yes") {
+      representative_traces_plot <- representative_traces_plot +
+        ggplot2::annotate(
+          "text",
+          x = scale_bar_x_start - (plot_x_max - plot_x_min) / 100,
+          y = scale_bar_y_start + 0.5 * scale_bar_y_length,
+          label = paste0(scale_bar_y_length, " pA"),
+          hjust = 1,
+          vjust = 0.5,
+          family = geom_text_family,
+          size = scale_bar_label_size
+        ) +
+        ggplot2::annotate(
+          "text",
+          x = scale_bar_x_start + 0.5 * scale_bar_x_length,
+          y = scale_bar_y_start - scale_bar_label_y_nudge,
+          label = paste0(scale_bar_x_length_in_ms, " ms"),
+          hjust = 0.5,
+          vjust = 1,
+          family = geom_text_family,
+          size = scale_bar_label_size
+        )
+    }
+  }
+
+  if (save_plot_png == "yes") {
+    ggplot2::ggsave(
+      plot = representative_traces_plot,
+      path = here::here("Figures/Representative-Traces"),
+      file = paste0("Evoked-current-trace-", filename, ".png"),
+      width = 7,
+      height = 5,
+      units = "in",
+      dpi = 300
+    )
+  }
+
+  representative_traces_plot
+}
+
+
+
+
+
+
 
 
 #' Import an image as a ggplot object
