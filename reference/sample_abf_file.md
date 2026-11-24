@@ -1,11 +1,12 @@
-# Evoked current recording excerpt
+# Evoked current recording excerpt for spontaneous current plot demonstration
 
 This is an excerpt from a raw recording of evoked currents exported from
 Clampfit as an .abf file. It was then converted into a regular dataframe
 using the
 [`import_ABF_file()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/import_ABF_file.md)
 function. To reduce the package installation size, I kept only three
-columns from the original file. This dataset is used to demonstrate the
+columns from the original file, and filtered it to data from 0.95 to
+3.05 minutes. This dataset is used to demonstrate the
 [`plot_spontaneous_current_trace()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/plot_spontaneous_current_trace.md)
 function.
 

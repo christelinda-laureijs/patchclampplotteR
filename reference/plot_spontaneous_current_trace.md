@@ -108,17 +108,17 @@ plot_spontaneous_current_trace(
 
   A character value (e.g. `"Baseline"`) that will be added as text on
   the plot. Useful for labelling traces for publications and
-  presentations. Defaults to `"Baseline"`.
+  presentations. Defaults to `""` for blank.
 
 - trace_annotation_x_position:
 
   A numeric value for the location of the `trace_annotation` on the
-  x-axis. Defaults to `1`.
+  x-axis.
 
 - trace_annotation_y_position:
 
   A numeric value for the location of the `trace_annotation` on the
-  y-axis. Defaults to `6`.
+  y-axis.
 
 - geom_text_family:
 
@@ -130,7 +130,8 @@ plot_spontaneous_current_trace(
 - geom_text_colour:
 
   A character value describing the colour of the `trace_annotation`
-  text. Defaults to `"#000000"`.
+  text. Defaults to `"#000000"`, but you can match it to `plot_colour`
+  for consistency.
 
 - geom_text_size:
 
@@ -144,33 +145,34 @@ plot_spontaneous_current_trace(
 
 - trace_thickness:
 
-  A numeric value describing the thickness of the line.
+  A numeric value describing the thickness of the trace line. Defaults
+  to `0.8`.
 
 - scale_bar_x_start:
 
   A numeric value (in seconds) describing the x-axis position of the
-  scale bar (default is `1.25`).
+  scale bar.
 
 - scale_bar_x_length:
 
   A numeric value describing the horizontal span (in seconds) of the
   scale bar. This will automatically be converted and displayed in
-  milliseconds (default is `0.5`).
+  milliseconds (default is `0.2` = 200 ms).
 
 - scale_bar_y_length:
 
   A numeric value describing the vertical span (in pA) of the scale bar
-  (default is `20`).
+  (default is `20` pA).
 
 - scale_bar_y_start:
 
   A numeric value describing the y-axis position (in pA) of the scale
-  bar (default is `15`).
+  bar.
 
 - scale_bar_linewidth:
 
   A numeric value describing the thickness of the scalebar line (default
-  is `0.4`).
+  is `0.75`).
 
 - scale_bar_label_y_nudge:
 
@@ -190,13 +192,13 @@ plot_spontaneous_current_trace(
 - plot_y_min:
 
   A numeric value describing the minimum value on the y-axis (in pA).
-  Defaults to `-80`. !!Warning!! Be sure to check your raw current
+  Defaults to `-60`. !!Warning!! Be sure to check your raw current
   amplitudes and adjust this to avoid cutting off data!!
 
 - plot_y_max:
 
   A numeric value describing the maximum value on the y-axis (in pA).
-  Defaults to `5`. !!Warning!! Be sure to check your raw current
+  Defaults to `15`. !!Warning!! Be sure to check your raw current
   amplitudes and adjust this to avoid cutting off data!!
 
 - filename_suffix:

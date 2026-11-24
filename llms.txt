@@ -265,6 +265,8 @@ Functions to plot the data.
   : Plot change in eEPSC amplitude with a connected line plot
 - [`return_p_value_as_stars()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/return_p_value_as_stars.md)
   : Display p-values as significance stars or numbers
+- [`plot_evoked_current_trace()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/plot_evoked_current_trace.md)
+  : Plot an evoked current trace
 
 ### Spontaneous currents only
 
@@ -306,7 +308,10 @@ Sample datasets for vignettes and examples.
 - [`sample_cell_characteristics`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/sample_cell_characteristics.md)
   : Information about sex, age, treatment, and animal ID
 - [`sample_abf_file`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/sample_abf_file.md)
-  : Evoked current recording excerpt
+  : Evoked current recording excerpt for spontaneous current plot
+  demonstration
+- [`sample_evoked_current_trace_abf`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/sample_evoked_current_trace_abf.md)
+  : Evoked current recording excerpt for evoked trace demonstration
 - [`sample_theme_options`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/sample_theme_options.md)
   : A dataframe of theme options for things like colours and line widths
 - [`sample_treatment_names_and_colours`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/sample_treatment_names_and_colours.md)
