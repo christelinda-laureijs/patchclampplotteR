@@ -4,7 +4,8 @@ This function allows you to generate an evoked current trace (averaged)
 from an `.abf` file, such as the representative traces seen above
 summary plots
 [`plot_summary_current_data()`](https://christelinda-laureijs.github.io/patchclampplotteR/reference/plot_summary_current_data.md).
-Follow these steps:
+This function uses `geom_smooth()` with `method = "gam"` to smooth the
+raw recording. Follow these steps to create a trace!
 
 ## Usage
 
@@ -267,10 +268,10 @@ limits and scale!
 ``` r
 
 plot_evoked_current_trace(
-data = sample_evoked_current_trace_abf,
-include_scale_bar = "yes",
-k_value = 100,
-include_scale_bar_label = "no",
-trace_annotation = "Baseline"
+  data = sample_evoked_current_trace_abf,
+  include_scale_bar = "yes",
+  k_value = 100,
+  include_scale_bar_label = "no",
+  trace_annotation = "Baseline"
 )
 ```

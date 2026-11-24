@@ -358,7 +358,7 @@ chunk options.
 
 ``` r
 
-(raw_plot + summary_plot)/
+(raw_plot + summary_plot) /
   (ppr_plot + ap_trace)
 ```
 
@@ -383,7 +383,7 @@ add a ggplot theme (your own or a pre-built theme).
 
 ``` r
 
-patchwork_example_2 <- (raw_plot + summary_plot)/
+patchwork_example_2 <- (raw_plot + summary_plot) /
   (ppr_plot + ap_trace) + plot_annotation(tag_levels = "A") & patchwork_theme
 ```
 
