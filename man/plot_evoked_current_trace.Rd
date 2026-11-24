@@ -122,7 +122,12 @@ This function allows you to generate an evoked current trace (averaged) from an 
 \item Flatten the stimulus artifacts by clicking on \code{Analyze} -> \verb{Force values}. Set the \verb{Value to assign} as the \verb{Mean between cursors 1..2, and region to force as }Cursors 3..4`.
 \item Save this file as a new \code{.abf} file with a different name than the original file.
 \item Import the file into R using \code{\link[=import_ABF_file]{import_ABF_file()}}.
-\item Insert this into the \code{data} argument.
+\item Insert the stored abf fiile into the \code{data} argument of this function.
+\item Double-check that the plot x- and y-limits are not cutting off the data.
+\item Adjust arguments like the \code{trace_annotation} and \code{plot_colour}.
+\item Try generating separate plots for both the baseline and post-hormone/treatment conditions.
+\item You can later assemble them into a full figure using \code{p1 + p2} notation with the \code{patchwork} library.
+\item If you keep the limits and scales the same for both plots, you can hide the scale bar for one of the traces.
 }
 
 This function is quite similar to \code{\link[=plot_spontaneous_current_trace]{plot_spontaneous_current_trace()}}.
@@ -137,7 +142,7 @@ that they all use the same plot limits and scale!
 
 plot_evoked_current_trace(
 data = sample_evoked_current_trace_abf,
-include_scale_bar = "no",
+include_scale_bar = "yes",
 k_value = 100,
 include_scale_bar_label = "no",
 trace_annotation = "Baseline"
