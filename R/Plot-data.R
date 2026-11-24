@@ -5412,11 +5412,13 @@ plot_spontaneous_current_trace <-
   }
 
 
-
-
 #' Plot an evoked current trace
 #'
-#' This function allows you to generate an evoked current trace (averaged) from an `.abf` file, such as the representative traces seen above summary plots [plot_summary_current_data()]. Follow these steps:
+#' This function allows you to generate an evoked current trace (averaged) from an `.abf` file,
+#' such as the representative traces seen above summary plots [plot_summary_current_data()].
+#' This function uses `geom_smooth()` with `method = "gam"`
+#' to smooth the raw recording.
+#' Follow these steps to create a trace!
 #'
 #'  1. Open a recording file in Clampfit, and select the traces you would like to average (e.g. 60 sweeps from the baseline).
 #'  2. Click on `Analyze` -> `Average Traces` and ensure that `Display resultant trace only` is checked. In `Select`, choose `All visible traces`.
@@ -5468,42 +5470,40 @@ plot_spontaneous_current_trace <-
 #' @examples
 #'
 #' plot_evoked_current_trace(
-#' data = sample_evoked_current_trace_abf,
-#' include_scale_bar = "yes",
-#' k_value = 100,
-#' include_scale_bar_label = "no",
-#' trace_annotation = "Baseline"
+#'   data = sample_evoked_current_trace_abf,
+#'   include_scale_bar = "yes",
+#'   k_value = 100,
+#'   include_scale_bar_label = "no",
+#'   trace_annotation = "Baseline"
 #' )
-
-
 plot_evoked_current_trace <- function(data,
-                                       plot_colour = "#000000",
-                                       filename = "Cell-A-baseline-trace",
-                                       include_scale_bar = "yes",
-                                       include_scale_bar_label = "no",
-                                       scale_bar_label_size = 4,
-                                       trace_annotation = "",
-                                       trace_annotation_x_position = 0.57,
-                                       trace_annotation_y_position = 6,
-                                       geom_text_family = "",
-                                       geom_text_colour = "#000000",
-                                       geom_text_size = 9,
-                                       plot_episode = "epi1",
-                                       geom_text_fontface = "bold",
-                                       trace_thickness = 2,
-                                       scale_bar_x_start = 0.6,
-                                       scale_bar_x_length = 0.02,
-                                       scale_bar_y_length = 50,
-                                       scale_bar_y_start = -75,
-                                       k_value = 100,
-                                       scale_bar_linewidth = 0.75,
-                                       scale_bar_label_y_nudge = 1.5,
-                                       plot_x_min = 0.57,
-                                       plot_x_max = 0.61,
-                                       plot_y_min = -100,
-                                       plot_y_max = 10,
-                                       save_plot_png = "no",
-                                       ggplot_theme = patchclampplotteR_theme()) {
+                                      plot_colour = "#000000",
+                                      filename = "Cell-A-baseline-trace",
+                                      include_scale_bar = "yes",
+                                      include_scale_bar_label = "no",
+                                      scale_bar_label_size = 4,
+                                      trace_annotation = "",
+                                      trace_annotation_x_position = 0.57,
+                                      trace_annotation_y_position = 6,
+                                      geom_text_family = "",
+                                      geom_text_colour = "#000000",
+                                      geom_text_size = 9,
+                                      plot_episode = "epi1",
+                                      geom_text_fontface = "bold",
+                                      trace_thickness = 2,
+                                      scale_bar_x_start = 0.6,
+                                      scale_bar_x_length = 0.02,
+                                      scale_bar_y_length = 50,
+                                      scale_bar_y_start = -75,
+                                      k_value = 100,
+                                      scale_bar_linewidth = 0.75,
+                                      scale_bar_label_y_nudge = 1.5,
+                                      plot_x_min = 0.57,
+                                      plot_x_max = 0.61,
+                                      plot_y_min = -100,
+                                      plot_y_max = 10,
+                                      save_plot_png = "no",
+                                      ggplot_theme = patchclampplotteR_theme()) {
   if (!include_scale_bar %in% c("yes", "no")) {
     cli::cli_abort(c("x" = "`include_scale_bar` argument must be one of: \"yes\" or \"no\""))
   }
@@ -5619,12 +5619,6 @@ plot_evoked_current_trace <- function(data,
 
   representative_traces_plot
 }
-
-
-
-
-
-
 
 
 #' Import an image as a ggplot object

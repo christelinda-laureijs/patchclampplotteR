@@ -111,7 +111,11 @@ generate a .png file in the folder
 project directory, with the \code{filename} characters included in the filename.
 }
 \description{
-This function allows you to generate an evoked current trace (averaged) from an \code{.abf} file, such as the representative traces seen above summary plots \code{\link[=plot_summary_current_data]{plot_summary_current_data()}}. Follow these steps:
+This function allows you to generate an evoked current trace (averaged) from an \code{.abf} file,
+such as the representative traces seen above summary plots \code{\link[=plot_summary_current_data]{plot_summary_current_data()}}.
+This function uses \code{geom_smooth()} with \code{method = "gam"}
+to smooth the raw recording.
+Follow these steps to create a trace!
 }
 \details{
 \enumerate{
@@ -141,11 +145,11 @@ that they all use the same plot limits and scale!
 \examples{
 
 plot_evoked_current_trace(
-data = sample_evoked_current_trace_abf,
-include_scale_bar = "yes",
-k_value = 100,
-include_scale_bar_label = "no",
-trace_annotation = "Baseline"
+  data = sample_evoked_current_trace_abf,
+  include_scale_bar = "yes",
+  k_value = 100,
+  include_scale_bar_label = "no",
+  trace_annotation = "Baseline"
 )
 }
 \seealso{

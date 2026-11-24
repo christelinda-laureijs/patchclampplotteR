@@ -22,11 +22,11 @@ function. To reduce the package installation size, I kept only data between 0.55
 \examples{
 
 plot_evoked_current_trace(
-data = sample_evoked_current_trace_abf,
-include_scale_bar = "yes",
-k_value = 100,
-include_scale_bar_label = "no",
-trace_annotation = "Baseline"
+  data = sample_evoked_current_trace_abf,
+  include_scale_bar = "yes",
+  k_value = 100,
+  include_scale_bar_label = "no",
+  trace_annotation = "Baseline"
 )
 
 }
